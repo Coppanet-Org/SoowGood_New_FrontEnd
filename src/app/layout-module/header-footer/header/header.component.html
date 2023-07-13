@@ -1,0 +1,42 @@
+<div class="w-full bg-primary absolute top-0">
+    <div class="container">
+        <div *ngIf="layout == 'admin'">
+            Admin Nav
+        </div>
+        <div class="container-items " *ngIf="layout == 'public'">
+            <div class="header-logo">
+                <img class="w-full" src="../../../../assets//SoowGood-Logo.png" alt="logo">
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" routerLink="/login" class="btn-primary">Login</button>
+                <button type="button" routerLink="/signup" onclick="my_modal_3.showModal()" class="btn-secondary">Signup</button>
+
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-8 rounded-full">
+                            <img src="../../../../assets/person.png" />
+                        </div>
+                    </label>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                        <li>
+                            <a class="justify-between">
+                                Profile
+                                <span class="badge">New</span>
+                            </a>
+                        </li>
+                        <li><a>Settings</a></li>
+                        <li><a>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <dialog id="my_modal_3" class="modal">
+            <form method="dialog" class="modal-box">
+                <button for="my-modal-3" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <h3 class="font-bold text-lg">Hello!</h3>
+                <p class="py-4">Press ESC key or click on ✕ button to close</p>
+            </form>
+        </dialog>
+    </div>
+</div>

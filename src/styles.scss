@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container {
+    @apply xs:max-w-full sm:w-full md:w-[80%] mr-auto ml-auto;
+  }
+  .container-items {
+    @apply flex items-center justify-between w-full h-20;
+  }
+  .header-logo {
+    @apply w-[220px];
+  }
+  .btn-primary {
+    @apply h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
+  }
+
+  .form-left {
+    @apply w-[50%] bg-primary h-full;
+  }
+  .form-right {
+    @apply w-[50%]  bg-primary;
+  }
+  .form_btn {
+    @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
+  }
+  .btn-secondary {
+    @apply py-2 px-5 mr-2 h-fit text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200;
+  }
+  .signup-form {
+    @apply flex items-center w-full h-screen bg-slate-100;
+  }
+  .signup-form__right {
+    @apply w-2/3 bg-hero-pattern h-full flex items-center bg-primary;
+  }
+
+  .signup-form__choose {
+    @apply flex justify-end items-center pr-5 relative overflow-hidden w-1/2 h-14 border-[1px] shadow-[0_5px_30px_0_rgba(31,34,120,.08)] rounded-md;
+  }
+
+  .signup-form__left {
+    @apply w-2/5  h-full;
+  }
+  .form_input{
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+  }
+}
