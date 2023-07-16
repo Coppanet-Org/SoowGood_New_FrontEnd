@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { LoginDto, UserInfoDto } from '../dto-models/models';
+import type { LoginDto, UserInfoDto, UserRegInfoDto } from '../dto-models/models';
 import type { IdentityUser } from '../volo/abp/identity/models';
 
 @Injectable({
@@ -28,9 +28,20 @@ export class UserAccountsService {
     { apiName: this.apiName,...config });
   
 
-  signupUserByUserDtoAndPasswordAndRole = (userDto: UserInfoDto, password: string, role: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+  registerByUser = (user: UserRegInfoDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
       method: 'POST',
+      responseType: 'text',
+      url: '/api/app/user-accounts/register',
+      body: user,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  signupUserByUserDtoAndPasswordAndRole = (userDto: UserInfoDto, password: string, role: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
       url: '/api/app/user-accounts/signup-user',
       params: { password, role },
       body: userDto,

@@ -44,20 +44,12 @@ export class SignupComponent implements OnInit {
     this.formGroup = this.fb.group({
       mobile: '',
       otp: '',
-      userTypeName: '',
-      // userName: "01845243080",
-      // name: "test",
-      // surname: "test",
-      // email: "test@abp.io",
-      // phoneNumber: "01845243080",
+      userTypeName: ''
     });
     this.userInfoForm = this.fb.group({
-      userName: this.mobile,
       name: "",
-      surname: "",
       email: "",
       password:"",
-      mobile: this.mobile,
       
     })
   }
@@ -112,33 +104,32 @@ export class SignupComponent implements OnInit {
     }
   }
   sendUserInfo(){
-    this.isLoading = true
+    this.isLoading = true;
+    let userTtpe = this.formGroup?.value.userTypeName
+    let password = this.userInfoForm.value.password;
     let userInfo ={      
-      "tenantId":'',
+      "tenantId": "",
       "userName": this.mobile,
-      "name": "",
+      "name": this.userInfoForm?.value.name,
       "surname": "",
-      "email": this.mobile+"@soowgood.com",
+      "email": this.userInfoForm.value.email,
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
       "isActive": true,
-      "lockoutEnabled":false,
-      "lockoutEnd":'2023-07-13',
-      'concurrencyStamp':''
+      "lockoutEnabled": false,
+      "lockoutEnd": "2023-07-16T07:38:44.382Z",
+      "concurrencyStamp": ""
     }
 
     
 this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,this.userInfoForm.value.password,'admin')//this.formGroup.value.userTypeName
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userTtpe)
       .subscribe((res: any) => {
           if (res) {
             this.isLoading = false
-            console.log(res);
-            
-          } else {
-            console.log("Otp cann't be generated!");
-          }
+            console.log(res);            
+          } 
         },
         (err) => {
           this.isLoading = false;
