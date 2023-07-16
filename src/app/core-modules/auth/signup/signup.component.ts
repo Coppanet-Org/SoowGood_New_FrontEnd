@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
 
@@ -33,6 +34,7 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
     private otpService: OtpService,
+    private _router: Router,
     private userAccountService : UserAccountsService
   ) {}
 
@@ -130,14 +132,14 @@ export class SignupComponent implements OnInit {
 
     
 this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,this.userInfoForm.value.password,'admin')//this.formGroup.value.userTypeName
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,this.userInfoForm.value.password,'Admin')//this.formGroup.value.userTypeName
       .subscribe((res: any) => {
           if (res) {
             this.isLoading = false
             console.log(res);
-            
+            this. _router.navigate(['/','doctor'])
           } else {
-            console.log("Otp cann't be generated!");
+            console.log("Otp can't be generated!");
           }
         },
         (err) => {
