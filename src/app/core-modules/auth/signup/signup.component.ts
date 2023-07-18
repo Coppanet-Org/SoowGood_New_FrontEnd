@@ -1,3 +1,4 @@
+import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,7 +6,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { OtpService, UserAccountsService } from 'src/app/proxy/services';
+import { DoctorProfileDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
+import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
 
 @Component({
@@ -29,11 +32,16 @@ export class SignupComponent implements OnInit {
   otpModal: boolean = false;
   userInfoModal:boolean= false;
 
+
+  doctorProfileDto:DoctorProfileInputDto= {} as DoctorProfileInputDto;
+
   constructor(
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
     private otpService: OtpService,
-    private userAccountService : UserAccountsService
+    private userAccountService: UserAccountsService,
+    private doctorProfileService: DoctorProfileService,
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -125,9 +133,20 @@ export class SignupComponent implements OnInit {
     
 this.userAccountService
       .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userTtpe)
-      .subscribe((res: any) => {
+      .subscribe((res: UserSignUpResultDto) => {
           if (res) {
             this.isLoading = false
+            //this.toasterService.info(res);
+            this.doctorProfileDto.userId=res.userId;
+            this.doctorProfileDto.fullName=res.name;
+            this.doctorProfileDto.email=res.email;
+            this.doctorProfileDto.mobileNo=res.phoneNumber;
+            this.doctorProfileDto.isActive=res.isActive;
+
+            this.doctorProfileService.create(this.doctorProfileDto)
+            .subscribe((profRes:any)=>{
+              console.log(profRes); 
+            })
             console.log(res);            
           } 
         },

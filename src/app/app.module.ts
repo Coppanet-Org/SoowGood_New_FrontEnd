@@ -31,7 +31,7 @@ const routerConfig: ExtraOptions = {
     }),
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes, routerConfig)
+    RouterModule.forRoot(appRoutes, routerConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],
