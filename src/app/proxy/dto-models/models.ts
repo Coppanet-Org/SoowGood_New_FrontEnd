@@ -1,4 +1,7 @@
 import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { DoctorTitle } from '../enums/doctor-title.enum';
+import type { Gender } from '../enums/gender.enum';
+import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
 export interface SmsInfo {
@@ -24,6 +27,63 @@ export interface SmsResponseDto {
   smsinfo: SmsInfo[];
 }
 
+export interface DegreeDto extends FullAuditedEntityDto<number> {
+  degreeName?: string;
+  description?: string;
+}
+
+export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  doctorName?: string;
+  degreeId?: number;
+  degree: DegreeDto;
+  degreeName?: string;
+  instituteName?: string;
+  instituteCity?: string;
+  zipCode?: string;
+  instituteCountry?: string;
+}
+
+export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  doctorTitle?: DoctorTitle;
+  doctorTitleName?: string;
+  dateOfBirth?: string;
+  gender?: Gender;
+  genderName?: string;
+  maritalStatus?: MaritalStatus;
+  maritalStatusName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  identityNumber?: string;
+  bmdcRegNo?: string;
+  bmdcRegExpiryDate?: string;
+  degrees: DoctorDegreeDto[];
+  specialityId?: number;
+  specialityName?: string;
+  doctorSpecialization: DoctorSpecializationDto[];
+  isIdFileUploaded?: boolean;
+  isSpecialityFileUploaded?: boolean;
+  isActive?: boolean;
+  userId?: string;
+  isOnline?: boolean;
+}
+
+export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  doctorName?: string;
+  specialityId?: number;
+  specialityName?: string;
+  specializationId?: number;
+  specializationName?: string;
+}
+
 export interface LoginDto {
   userName?: string;
   email?: string;
@@ -32,35 +92,34 @@ export interface LoginDto {
 }
 
 export interface OtpDto extends FullAuditedEntityDto<number> {
-  otpNo: number;
+  otpNo?: number;
   mobileNo?: string;
-  otpStatus: OtpStatus;
+  otpStatus?: OtpStatus;
   maxAttempt?: number;
 }
 
-export interface UserInfoDto {
+export interface UserInfoDto extends FullAuditedEntityDto<string> {
   tenantId?: string;
   userName?: string;
   name?: string;
   surname?: string;
   email?: string;
-  emailConfirmed: boolean;
+  emailConfirmed?: boolean;
   phoneNumber?: string;
-  phoneNumberConfirmed: boolean;
-  isActive: boolean;
-  lockoutEnabled: boolean;
+  phoneNumberConfirmed?: boolean;
+  isActive?: boolean;
+  lockoutEnabled?: boolean;
   lockoutEnd?: string;
   concurrencyStamp?: string;
 }
 
-export interface UserRegInfoDto {
+export interface UserSignUpResultDto {
+  userId?: string;
   userName?: string;
   name?: string;
-  surname?: string;
   email?: string;
   phoneNumber?: string;
-  isActive: boolean;
-  lockoutEnabled: boolean;
-  roleNames: string[];
-  password?: string;
+  isActive?: boolean;
+  success?: boolean;
+  message?: string;
 }

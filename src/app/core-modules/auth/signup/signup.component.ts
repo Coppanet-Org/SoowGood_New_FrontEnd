@@ -1,3 +1,4 @@
+import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,7 +6,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { OtpService, UserAccountsService } from 'src/app/proxy/services';
+import { DoctorProfileDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
+import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
 
 @Component({
@@ -29,11 +32,16 @@ export class SignupComponent implements OnInit {
   otpModal: boolean = false;
   userInfoModal:boolean= false;
 
+
+  doctorProfileDto:DoctorProfileInputDto= {} as DoctorProfileInputDto;
+
   constructor(
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
     private otpService: OtpService,
-    private userAccountService : UserAccountsService
+    private userAccountService: UserAccountsService,
+    private doctorProfileService: DoctorProfileService,
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -105,7 +113,7 @@ export class SignupComponent implements OnInit {
   }
   sendUserInfo(){
     this.isLoading = true;
-    let userTtpe = this.formGroup?.value.userTypeName
+    let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
     let userInfo ={      
       "tenantId": "",
@@ -124,10 +132,31 @@ export class SignupComponent implements OnInit {
 
     
 this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userTtpe)
-      .subscribe((res: any) => {
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
+      .subscribe((res: UserSignUpResultDto) => {
           if (res) {
             this.isLoading = false
+            if(userType==='Doctor'){
+              this.doctorProfileDto.userId=res.userId;
+              this.doctorProfileDto.fullName=res.name;
+              this.doctorProfileDto.email=res.email;
+              this.doctorProfileDto.mobileNo=res.phoneNumber;
+              this.doctorProfileDto.isActive=res.isActive;
+              
+              this.doctorProfileService.create(this.doctorProfileDto)
+                .subscribe((profRes:any)=>{
+                  console.log(profRes); 
+                })
+            }
+            else if(userType==='Agent')
+            {
+
+            }
+            else if(userType==='Patient')
+            {
+               
+            }
+            
             console.log(res);            
           } 
         },
