@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
 
@@ -32,6 +33,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
+    private _router :Router,
     private otpService: OtpService,
     private userAccountService : UserAccountsService
   ) {}
@@ -105,30 +107,30 @@ export class SignupComponent implements OnInit {
   }
   sendUserInfo(){
     this.isLoading = true;
-    let userTtpe = this.formGroup?.value.userTypeName
+    let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
     let userInfo ={      
-      "tenantId": "",
+      "tenantId": "", //
       "userName": this.mobile,
       "name": this.userInfoForm?.value.name,
-      "surname": "",
+      "surname": "", //
       "email": this.userInfoForm.value.email,
-      "emailConfirmed": true,
+      "emailConfirmed": true, //
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": true,
-      "lockoutEnabled": false,
-      "lockoutEnd": "2023-07-16T07:38:44.382Z",
-      "concurrencyStamp": ""
+      "isActive": true, //if doctor & agent then false
+      "lockoutEnabled": false, //
+      "lockoutEnd": "2023-07-16T07:38:44.382Z", //
+      "concurrencyStamp": "" //
     }
 
     
 this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userTtpe)
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
       .subscribe((res: any) => {
           if (res) {
             this.isLoading = false
-            console.log(res);            
+           this._router.navigate([userType.toLowerCase()])   
           } 
         },
         (err) => {

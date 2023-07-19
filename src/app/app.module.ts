@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from  'ng-otp-input';
+import { PatientComponent } from './features-modules/patient/patient.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
   // preloadingStrategy       : PreloadAllModules  [ R&D]
@@ -20,7 +23,7 @@ const routerConfig: ExtraOptions = {
   declarations: [
     AppComponent, 
     EmptyPageComponent, 
-    SignupComponent],
+    SignupComponent, PatientComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -29,6 +32,7 @@ const routerConfig: ExtraOptions = {
       environment,
       registerLocaleFn: registerLocale(),
     }),
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, routerConfig)

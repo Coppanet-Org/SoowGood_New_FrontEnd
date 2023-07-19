@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
@@ -25,6 +26,7 @@ module.exports = {
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
     },
+
     extend: {
 
       backgroundImage: {
@@ -39,12 +41,17 @@ module.exports = {
       colors: {
         'primary': '#01204e',
         'skyblue' : "#30bced",
+
         gray: {
           100: '#f7fafc',
           // ...
           900: '#1a202c',
         },
   
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        Roboto :['Roboto','sans-serif' ]
       },
     },
   },
