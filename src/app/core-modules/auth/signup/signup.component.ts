@@ -113,7 +113,7 @@ export class SignupComponent implements OnInit {
   }
   sendUserInfo(){
     this.isLoading = true;
-    let userTtpe = this.formGroup?.value.userTypeName
+    let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
     let userInfo ={      
       "tenantId": "",
@@ -132,21 +132,31 @@ export class SignupComponent implements OnInit {
 
     
 this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userTtpe)
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
       .subscribe((res: UserSignUpResultDto) => {
           if (res) {
             this.isLoading = false
-            //this.toasterService.info(res);
-            this.doctorProfileDto.userId=res.userId;
-            this.doctorProfileDto.fullName=res.name;
-            this.doctorProfileDto.email=res.email;
-            this.doctorProfileDto.mobileNo=res.phoneNumber;
-            this.doctorProfileDto.isActive=res.isActive;
+            if(userType==='Doctor'){
+              this.doctorProfileDto.userId=res.userId;
+              this.doctorProfileDto.fullName=res.name;
+              this.doctorProfileDto.email=res.email;
+              this.doctorProfileDto.mobileNo=res.phoneNumber;
+              this.doctorProfileDto.isActive=res.isActive;
+              
+              this.doctorProfileService.create(this.doctorProfileDto)
+                .subscribe((profRes:any)=>{
+                  console.log(profRes); 
+                })
+            }
+            else if(userType==='Agent')
+            {
 
-            this.doctorProfileService.create(this.doctorProfileDto)
-            .subscribe((profRes:any)=>{
-              console.log(profRes); 
-            })
+            }
+            else if(userType==='Patient')
+            {
+               
+            }
+            
             console.log(res);            
           } 
         },

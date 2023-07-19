@@ -33,10 +33,9 @@ export interface DegreeDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
-  doctorId: number;
-  doctorProfile: DoctorProfileDto;
+  doctorId?: number;
   doctorName?: string;
-  degreeId: number;
+  degreeId?: number;
   degree: DegreeDto;
   degreeName?: string;
   instituteName?: string;
@@ -77,14 +76,11 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
-  doctorId: number;
-  doctorProfile: DoctorProfileDto;
+  doctorId?: number;
   doctorName?: string;
   specialityId?: number;
-  speciality: SpecialityDto;
   specialityName?: string;
   specializationId?: number;
-  specialization: SpecializationDto;
   specializationName?: string;
 }
 
@@ -96,24 +92,10 @@ export interface LoginDto {
 }
 
 export interface OtpDto extends FullAuditedEntityDto<number> {
-  otpNo: number;
+  otpNo?: number;
   mobileNo?: string;
-  otpStatus: OtpStatus;
+  otpStatus?: OtpStatus;
   maxAttempt?: number;
-}
-
-export interface SpecialityDto extends FullAuditedEntityDto<number> {
-  specialityName?: string;
-  description?: string;
-  specializations: SpecializationDto[];
-}
-
-export interface SpecializationDto extends FullAuditedEntityDto<number> {
-  specialityId?: number;
-  speciality: SpecialityDto;
-  specialityName?: string;
-  specializationName?: string;
-  description?: string;
 }
 
 export interface UserInfoDto extends FullAuditedEntityDto<string> {
@@ -122,11 +104,11 @@ export interface UserInfoDto extends FullAuditedEntityDto<string> {
   name?: string;
   surname?: string;
   email?: string;
-  emailConfirmed: boolean;
+  emailConfirmed?: boolean;
   phoneNumber?: string;
-  phoneNumberConfirmed: boolean;
-  isActive: boolean;
-  lockoutEnabled: boolean;
+  phoneNumberConfirmed?: boolean;
+  isActive?: boolean;
+  lockoutEnabled?: boolean;
   lockoutEnd?: string;
   concurrencyStamp?: string;
 }
@@ -137,7 +119,7 @@ export interface UserSignUpResultDto {
   name?: string;
   email?: string;
   phoneNumber?: string;
-  isActive: boolean;
+  isActive?: boolean;
   success?: boolean;
   message?: string;
 }

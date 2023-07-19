@@ -3,16 +3,9 @@ import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 
-export interface DegreeInputDto extends FullAuditedEntityDto<number> {
-  degreeName?: string;
-  description?: string;
-}
-
 export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
-  doctorId: number;
-  doctorProfile: DoctorProfileInputDto;
-  degreeId: number;
-  degree: DegreeInputDto;
+  doctorId?: number;
+  degreeId?: number;
   instituteName?: string;
   instituteCity?: string;
   zipCode?: string;
@@ -47,23 +40,7 @@ export interface DoctorProfileInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<number> {
-  doctorId: number;
-  doctorProfile: DoctorProfileInputDto;
+  doctorId?: number;
   specialityId?: number;
-  speciality: SpecialityInputDto;
   specializationId?: number;
-  specialization: SpecializationInputDto;
-}
-
-export interface SpecialityInputDto extends FullAuditedEntityDto<number> {
-  specialityName?: string;
-  description?: string;
-  specializations: SpecializationInputDto[];
-}
-
-export interface SpecializationInputDto extends FullAuditedEntityDto<number> {
-  specialityId?: number;
-  speciality: SpecialityInputDto;
-  specializationName?: string;
-  description?: string;
 }
