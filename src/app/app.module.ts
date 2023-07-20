@@ -1,3 +1,4 @@
+import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocale } from '@abp/ng.core/locale';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,7 @@ import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -35,7 +37,9 @@ const routerConfig: ExtraOptions = {
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes, routerConfig)
+    RouterModule.forRoot(appRoutes, routerConfig),
+    HotToastModule.forRoot(),
+
   ],
   providers: [],
   bootstrap: [AppComponent],

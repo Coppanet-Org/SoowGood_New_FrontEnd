@@ -1,4 +1,10 @@
 <div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
+
+  <div [class]="showWarning ? 'showWarning alert alert-warning rounded-lg mb-4' : 'hideWarning' " >
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+    <span class="font-semibold">Your account is under review. Please submit your profile information! <a >Goto Profile Settings</a> </span>
+  </div>
+
     <div
       class="top bg-primary w-full border-[1px] pl-10 rounded-lg mb-[20px] h-[200px] flex  justify-between overflow-hidden">
       <div class="left w-[40%] flex flex-col justify-center">
@@ -46,7 +52,7 @@
                     d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
                 </svg>
               </div>
-              <div class="stat-title">New Registers</div>
+              <div class="stat-title"> New Registers</div>
               <div class="stat-value">1,200</div>
               <div class="stat-desc">↘︎ 90 (14%)</div>
             </div>
@@ -58,7 +64,7 @@
             <h2 class="dashbord-heading-text  h-fit">
               Today's Appointments
             </h2>
-            <button class="btn-secondary h-fit">View all</button>
+            <button class="btn-secondary h-fit" >View all</button>
           </div>
         </div>
       </div>

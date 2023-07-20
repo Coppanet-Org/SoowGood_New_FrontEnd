@@ -8,11 +8,12 @@ import {
 import { Router } from '@angular/router';
 import { OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
-
+import { HotToastService } from '@ngneat/hot-toast';
 @Component({
   selector: 'app-signup-component',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+
 })
 export class SignupComponent implements OnInit {
   formGroup!: FormGroup;
@@ -33,13 +34,14 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
+    private toastService: HotToastService,
     private _router :Router,
     private otpService: OtpService,
     private userAccountService : UserAccountsService
   ) {}
 
   ngOnInit(): void {
-    this.loadForm();
+    this.loadForm();  
   }
 
   loadForm() {
@@ -56,8 +58,7 @@ export class SignupComponent implements OnInit {
     })
   }
   sendOtp() {
-    console.log("call");
-    
+
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile
     this.isLoading = true
@@ -128,10 +129,20 @@ export class SignupComponent implements OnInit {
 this.userAccountService
       .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
       .subscribe((res: any) => {
-          if (res) {
+        let pres = JSON.parse(res)
+          if (!pres.success) {
+            console.log(pres);
             this.isLoading = false
-           this._router.navigate([userType.toLowerCase()])   
-          } 
+            this.toastService.error(pres.message,{
+              position: 'bottom-center'
+            })
+          } else{
+              this._router.navigate([userType.toLowerCase()])   
+              this.toastService.success(pres.message,{
+                position: 'bottom-center'
+              })
+              this.isLoading = false
+          }
         },
         (err) => {
           this.isLoading = false;
