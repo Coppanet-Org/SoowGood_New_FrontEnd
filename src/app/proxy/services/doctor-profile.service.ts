@@ -27,6 +27,14 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getByUserId = (userId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'GET',
+      url: `/api/app/doctor-profile/by-user-id/${userId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',

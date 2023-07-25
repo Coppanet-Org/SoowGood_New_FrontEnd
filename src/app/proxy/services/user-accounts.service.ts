@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { LoginDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
+import type { LoginDto, LoginResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
 import type { IdentityUser } from '../volo/abp/identity/models';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class UserAccountsService {
   
 
   loginByUserDto = (userDto: LoginDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, IdentityUser>({
+    this.restService.request<any, LoginResponseDto>({
       method: 'POST',
       url: '/api/app/user-accounts/login',
       body: userDto,

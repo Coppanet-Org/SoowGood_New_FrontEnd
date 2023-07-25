@@ -32,12 +32,21 @@ export interface DegreeDto extends FullAuditedEntityDto<number> {
   description?: string;
 }
 
+export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  chamberName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+}
+
 export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
   doctorId?: number;
   doctorName?: string;
   degreeId?: number;
-  degree: DegreeDto;
   degreeName?: string;
+  passingYear?: number;
   instituteName?: string;
   instituteCity?: string;
   zipCode?: string;
@@ -91,11 +100,32 @@ export interface LoginDto {
   rememberMe: boolean;
 }
 
+export interface LoginResponseDto {
+  userId?: string;
+  userName?: string;
+  roleName: string[];
+  success: boolean;
+  message?: string;
+}
+
 export interface OtpDto extends FullAuditedEntityDto<number> {
   otpNo?: number;
   mobileNo?: string;
   otpStatus?: OtpStatus;
   maxAttempt?: number;
+}
+
+export interface SpecialityDto extends FullAuditedEntityDto<number> {
+  specialityName?: string;
+  description?: string;
+  specializations: SpecializationDto[];
+}
+
+export interface SpecializationDto extends FullAuditedEntityDto<number> {
+  specialityId?: number;
+  specialityName?: string;
+  specializationName?: string;
+  description?: string;
 }
 
 export interface UserInfoDto extends FullAuditedEntityDto<string> {
@@ -121,5 +151,5 @@ export interface UserSignUpResultDto {
   phoneNumber?: string;
   isActive?: boolean;
   success?: boolean;
-  message?: string;
+  message: string[];
 }
