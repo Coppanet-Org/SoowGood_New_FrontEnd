@@ -1,10 +1,9 @@
-<div class="overflow-hidden" [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
+<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
     <div class="font-medium text-gray-900 text-left text-[28px] h-32 bg-white">
         <img src="../../../../../assets/doctor/dr-cover.jpg" class="w-full object-cover h-full" alt="">
     </div>
     <div class=" mx-auto">
         <div>
-
             <div class="bg-white relative shadow rounded-lg w-full mx-auto">
                 <div class="pl-10 pr-10">
                     <div class="flex justify-left">
@@ -14,104 +13,38 @@
 
                     <div class="mt-16 flex justify-between">
                         <div>
-                            <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">Pro. DR. Mizanur Rahman</h1>
-                            <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">General | Cardiologist</p>
+                            <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">Pro. DR.
+                                Mizanur Rahman</h1>
+                            <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">General |
+                                Cardiologist</p>
                         </div>
                         <div>
-                            <button class="btn-secondary hover:border-none hover:bg-primary hover:text-white">View Profile</button>
+                            <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">View
+                                Profile</button>
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-center my-5">
-                         <mat-tab-group indicator="false" style="width: 100%;">
-                            <mat-tab label="Basic Information">
-                                <div class="tab_content">
-                                        <!-- <provider-basic-info></provider-basic-info> -->
-                                        <form [formGroup]="form" class="formArea">
-                                            <div>
-                                                <div class="mt-8 ">
-                                                    <div>
-                                                        <div class="font-bold text-gray-600 text-xs leading-8 uppercase h-6 mx-2 mt-3">Full Name</div>
-                                                        <div class="flex flex-col md:flex-row">
-                                                            <div class="w-full flex-1 mx-2 svelte-1l8159u">
-                                                                <div class="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                                                    <input placeholder="First Name" class="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                                                            </div>
-                                                            <div class="w-full flex-1 mx-2 svelte-1l8159u">
-                                                                <div class="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                                                    <input placeholder="Last Name" class="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex flex-col md:flex-row">
-                                                            <div class="w-full mx-2 flex-1 svelte-1l8159u">
-                                                                <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase"> Username</div>
-                                                                <div class="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                                                    <input placeholder="Just a hint.." class="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                                                            </div>
-                                                            <div class="w-full mx-2 flex-1 svelte-1l8159u">
-                                                                <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase"> Your Email</div>
-                                                                <div class="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                                                    <input placeholder="jhon@doe.com" class="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex p-2 mt-4">
-                                                        <button class="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                                    hover:bg-gray-200  
-                                                    bg-gray-100 
-                                                    text-gray-700 
-                                                    border duration-200 ease-in-out 
-                                                    border-gray-600 transition">Previous</button>
-                                                        <div class="flex-auto flex flex-row-reverse">
-                                                            <button class="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                                    hover:bg-teal-600  
-                                                    bg-teal-600 
-                                                    text-teal-100 
-                                                    border duration-200 ease-in-out 
-                                                    border-teal-600 transition">Next</button>
-                                                            <button class="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                                    hover:bg-teal-200  
-                                                    bg-teal-100 
-                                                    text-teal-700 
-                                                    border duration-200 ease-in-out 
-                                                    border-teal-600 transition">Skip</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    
-                                </div>
-                            </mat-tab>
-                            <mat-tab label="Education & Experience ">
-                                <div class="tab_content">
-                                    <div>
-                                        <!-- <provider-education></provider-education> -->
-                                        Education 
-                                    </div>
-                                </div>
-                            </mat-tab>
-                     
+<hr>
 
-                            <mat-tab label="Skills & Pricing">
-                                <div class="tab_content">
-                                    <div>
-                                        <!-- <provider-skills></provider-skills> -->
-                                        Skill
-                                    </div>
-                                </div>
-                            </mat-tab>
 
-                            <mat-tab label="Hospital">
-                                <div class="tab_content">
-                                    <div>
-                                        <!-- <provider-clinic></provider-clinic> -->
-                                        Clinic
-                                    </div>
-                                </div>
-                            </mat-tab>
-                          </mat-tab-group>
-                        </div>
+                    <mat-stepper #stepper class="mt-5  mx-auto">  
+                        <mat-step [stepControl]="firstFormGroup" label="Basic Info">
+                           <app-basic-info></app-basic-info>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Education & Experience">
+
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Hospital">
+
+                        </mat-step>
+                        <mat-step label="Skill & Specializations">
+                            <div>
+                                <button mat-button matStepper Previous>Back</button>
+                                <button mat-button (click)="stepper.reset()">Reset</button>
+                            </div>
+                        </mat-step>
+                    </mat-stepper>
+
                 </div>
             </div>
 

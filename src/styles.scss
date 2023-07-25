@@ -53,4 +53,10 @@
   .dashbord-heading-subtext{
     @apply text-gray-500 font-light text-[14px] font-poppins
   }
+  .form-field-half {
+    @apply w-1/2
+  }
+  .mat_label{
+    @apply text-[14px] font-medium font-Roboto text-label
+  }
 }

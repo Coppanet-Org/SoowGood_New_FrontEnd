@@ -33,6 +33,7 @@
     "@ngneat/overview": "^3.0.0",
     "intersection-observer": "^0.12.2",
     "ng-otp-input": "^1.9.2",
+    "ngx-google-places-autocomplete": "^2.0.5",
     "rxjs": "~7.8.0",
     "subsink": "^1.0.2",
     "tslib": "^2.3.0",

@@ -7,6 +7,7 @@ import { RightSidebarComponent } from './component/right-sidebar/right-sidebar.c
 import { DashboardMenuComponent } from 'src/app/shared/components/dashboard-menu/dashboard-menu.component';
 import { DashboardMenuItemComponent } from 'src/app/shared/components/dashboard-menu-item/dashboard-menu-item.component';
 import { MyPatientsComponent } from './component/my-patients/my-patients.component';
+import { BasicInfoComponent } from './component/basic-info/basic-info.component';
 
 
 const routes: Route[] = [
@@ -71,6 +72,7 @@ const routes: Route[] = [
     DashboardMenuComponent,
     RightSidebarComponent,
     DashboardMenuItemComponent,
+
 
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],

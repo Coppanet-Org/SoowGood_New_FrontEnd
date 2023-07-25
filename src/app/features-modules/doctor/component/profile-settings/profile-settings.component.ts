@@ -1,5 +1,5 @@
 import { slideInFrom } from 'src/app/animation';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-profile-settings',
@@ -7,17 +7,28 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./profile-settings.component.scss'],
   animations: [slideInFrom('right')],
 })
-export class ProfileSettingsComponent {
+export class ProfileSettingsComponent implements OnInit  {
   animationDirection = 'right';
   selectedIndex:any
-  form:any = FormGroup;
   userId:any;
+
   constructor(
     private _fb: FormBuilder
   ){}
-  setFormConfig(): void {
-    this.form = this._fb.group({
-       
-    });
-}
+
+  ngOnInit(): void {
+
+  }
+  firstFormGroup = this._fb.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._fb.group({
+    secondCtrl: ['', Validators.required],
+  });
+  isLinear = false;
+
+  getUserData(userId:string): void {
+
+  }
+
 }
