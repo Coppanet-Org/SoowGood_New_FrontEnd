@@ -1,4 +1,3 @@
-import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
 import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
@@ -7,15 +6,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { OtpService, UserAccountsService } from 'src/app/proxy/services';
+import { DoctorProfileDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
+import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
-import { HotToastService } from '@ngneat/hot-toast';
+
 @Component({
   selector: 'app-signup-component',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
-
 })
 export class SignupComponent implements OnInit {
   formGroup!: FormGroup;
@@ -32,22 +31,21 @@ export class SignupComponent implements OnInit {
   selectedUserType: string = '';
   otpModal: boolean = false;
   userInfoModal:boolean= false;
-  completeProfileInfoModal: boolean = false
 
+
+  doctorProfileDto:DoctorProfileInputDto= {} as DoctorProfileInputDto;
 
   constructor(
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
-    private toastService: HotToastService,
-    private _router :Router,
     private otpService: OtpService,
     private userAccountService: UserAccountsService,
-    private DoctorProfileService : DoctorProfileService,
+    private doctorProfileService: DoctorProfileService,
     private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
-    this.loadForm();  
+    this.loadForm();
   }
 
   loadForm() {
@@ -64,7 +62,8 @@ export class SignupComponent implements OnInit {
     })
   }
   sendOtp() {
-
+    console.log("call");
+    
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile
     this.isLoading = true
@@ -96,6 +95,7 @@ export class SignupComponent implements OnInit {
           this.userInfoModal = res
         } else {
           this.errMsg = 'Invalid Otp!';
+          console.log(res);
         }
       });
     }
@@ -116,48 +116,54 @@ export class SignupComponent implements OnInit {
     let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
     let userInfo ={      
-      "tenantId": "", //
+      "tenantId": "",
       "userName": this.mobile,
       "name": this.userInfoForm?.value.name,
-      "surname": "", //
+      "surname": "",
       "email": this.userInfoForm.value.email,
-      "emailConfirmed": true, //
+      "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": true, //if doctor & agent then false
-      "lockoutEnabled": false, //
-      "lockoutEnd": "2023-07-16T07:38:44.382Z", //
-      "concurrencyStamp": "" //
+      "isActive": true,
+      "lockoutEnabled": false,
+      "lockoutEnd": "2023-07-16T07:38:44.382Z",
+      "concurrencyStamp": ""
     }
 
     
-this.userAccountService.signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType).subscribe((res: any) => {
-  console.log(res);
-  
-        let pres = JSON.parse(res)
-          if (!pres.success) {
-            this.completeProfileInfoModal = true
+this.userAccountService
+      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
+      .subscribe((res: UserSignUpResultDto) => {
+          if (res) {
             this.isLoading = false
-            this.toastService.error(pres.message?.map((e:string)=>e),{
-              position: 'bottom-center'
-            })
-          } else{
-              this._router.navigate([userType.toLowerCase()])   
-              this.toastService.success(pres.message,{
-                position: 'bottom-center'
-              })
-              this.isLoading = false
-          }
+            if(userType==='Doctor'){
+              this.doctorProfileDto.userId=res.userId;
+              this.doctorProfileDto.fullName=res.name;
+              this.doctorProfileDto.email=res.email;
+              this.doctorProfileDto.mobileNo=res.phoneNumber;
+              this.doctorProfileDto.isActive=res.isActive;
+              
+              this.doctorProfileService.create(this.doctorProfileDto)
+                .subscribe((profRes:any)=>{
+                  console.log(profRes); 
+                })
+            }
+            else if(userType==='Agent')
+            {
+
+            }
+            else if(userType==='Patient')
+            {
+               
+            }
+            
+            console.log(res);            
+          } 
         },
         (err) => {
           this.isLoading = false;
           console.log(err);
         }
       );
-  }
-
-  
-  updateUserInfo(){
-      
   }
 }
