@@ -1,3 +1,5 @@
+import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
+import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -30,6 +32,8 @@ export class SignupComponent implements OnInit {
   selectedUserType: string = '';
   otpModal: boolean = false;
   userInfoModal:boolean= false;
+  completeProfileInfoModal: boolean = false
+
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +41,9 @@ export class SignupComponent implements OnInit {
     private toastService: HotToastService,
     private _router :Router,
     private otpService: OtpService,
-    private userAccountService : UserAccountsService
+    private userAccountService: UserAccountsService,
+    private DoctorProfileService : DoctorProfileService,
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +96,6 @@ export class SignupComponent implements OnInit {
           this.userInfoModal = res
         } else {
           this.errMsg = 'Invalid Otp!';
-          console.log(res);
         }
       });
     }
@@ -126,14 +131,14 @@ export class SignupComponent implements OnInit {
     }
 
     
-this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
-      .subscribe((res: any) => {
+this.userAccountService.signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType).subscribe((res: any) => {
+  console.log(res);
+  
         let pres = JSON.parse(res)
           if (!pres.success) {
-            console.log(pres);
+            this.completeProfileInfoModal = true
             this.isLoading = false
-            this.toastService.error(pres.message,{
+            this.toastService.error(pres.message?.map((e:string)=>e),{
               position: 'bottom-center'
             })
           } else{
@@ -149,5 +154,10 @@ this.userAccountService
           console.log(err);
         }
       );
+  }
+
+  
+  updateUserInfo(){
+      
   }
 }
