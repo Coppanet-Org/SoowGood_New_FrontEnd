@@ -136,27 +136,28 @@ this.userAccountService
       .subscribe((res: UserSignUpResultDto) => {
           if (res) {
             this.isLoading = false
-            if(userType==='Doctor'){
-              this.doctorProfileDto.userId=res.userId;
-              this.doctorProfileDto.fullName=res.name;
-              this.doctorProfileDto.email=res.email;
-              this.doctorProfileDto.mobileNo=res.phoneNumber;
-              this.doctorProfileDto.isActive=res.isActive;
-              
-              this.doctorProfileService.create(this.doctorProfileDto)
-                .subscribe((profRes:any)=>{
-                  console.log(profRes); 
-                })
-            }
-            else if(userType==='Agent')
-            {
+            if(res.success===true){
+                if(userType==='Doctor'){
+                  this.doctorProfileDto.userId=res.userId;
+                  this.doctorProfileDto.fullName=res.name;
+                  this.doctorProfileDto.email=res.email;
+                  this.doctorProfileDto.mobileNo=res.phoneNumber;
+                  this.doctorProfileDto.isActive=res.isActive;
+                  
+                  this.doctorProfileService.create(this.doctorProfileDto)
+                    .subscribe((profRes:any)=>{
+                      console.log(profRes); 
+                    })
+                }
+                else if(userType==='Agent')
+                {
 
-            }
-            else if(userType==='Patient')
-            {
-               
-            }
-            
+                }
+                else if(userType==='Patient')
+                {
+                  
+                }
+            }               
             console.log(res);            
           } 
         },

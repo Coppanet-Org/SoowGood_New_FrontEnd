@@ -3,9 +3,19 @@ import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 
+export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  chamberName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+}
+
 export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
   doctorId?: number;
   degreeId?: number;
+  passingYear?: number;
   instituteName?: string;
   instituteCity?: string;
   zipCode?: string;
