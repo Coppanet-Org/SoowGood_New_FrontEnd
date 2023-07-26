@@ -189,7 +189,7 @@ export class SignupComponent implements OnInit {
 
 
 
-    console.log({ ...formData, ...this.doctorProfileDto });
+    console.log({ ...formData, ...this.newCreatedProfileDto });
 
     //this.doctorProfileService.update({ ...formData, ...this.doctorProfileDto }).subscribe((res) => {
     this.doctorProfileService.update({ ...formData, ...this.newCreatedProfileDto }).subscribe((res) => {
