@@ -1,7 +1,10 @@
 import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { AppointmentType } from '../enums/appointment-type.enum';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
+import type { ScheduleType } from '../enums/schedule-type.enum';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
 export interface SmsInfo {
@@ -53,6 +56,38 @@ export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
   instituteCountry?: string;
 }
 
+export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  doctorSchedule?: string;
+  appointmentType?: AppointmentType;
+  appointmentTypeName?: string;
+  currentFee?: number;
+  previousFee?: number;
+  feeAppliedFrom?: string;
+  followUpPeriod?: number;
+  reportShowPeriod?: number;
+  discount?: number;
+  discountAppliedFrom?: string;
+  descountPeriod?: number;
+  totalFee?: number;
+  isActive?: boolean;
+}
+
+export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  appointmentType?: AppointmentType;
+  currentFee?: number;
+  previousFee?: number;
+  feeAppliedFrom?: string;
+  followUpPeriod?: number;
+  reportShowPeriod?: number;
+  discount?: number;
+  discountAppliedFrom?: string;
+  descountPeriod?: number;
+  totalFee?: number;
+  isActive?: boolean;
+}
+
 export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   firstName?: string;
   lastName?: string;
@@ -82,6 +117,49 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   isActive?: boolean;
   userId?: string;
   isOnline?: boolean;
+}
+
+export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  doctorName?: string;
+  scheduleType?: ScheduleType;
+  scheduleTypeName?: string;
+  consultancyType?: ConsultancyType;
+  consultancyTypeName?: string;
+  chamberId?: number;
+  chamber?: string;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+  doctorScheduledDayOffs: DoctorScheduledDayOffDto[];
+  doctorFeesSetup: DoctorFeesSetupDto[];
+}
+
+export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
+  doctorId?: number;
+  scheduleType?: ScheduleType;
+  consultancyType?: ConsultancyType;
+  chamberId?: number;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+  doctorScheduledDayOffs: DoctorScheduledDayOffInputDto[];
+  doctorFeesSetup: DoctorFeesSetupInputDto[];
+}
+
+export interface DoctorScheduledDayOffDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  doctorScheduleName?: string;
+  offDay?: string;
+  isActive?: boolean;
+}
+
+export interface DoctorScheduledDayOffInputDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  offDay?: string;
+  isActive?: boolean;
 }
 
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {

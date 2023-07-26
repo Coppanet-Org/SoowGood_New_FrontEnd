@@ -2,6 +2,7 @@ export * from './degree.service';
 export * from './doctor-chamber.service';
 export * from './doctor-degree.service';
 export * from './doctor-profile.service';
+export * from './doctor-schedule.service';
 export * from './doctor-specialization.service';
 export * from './otp.service';
 export * from './speciality.service';
