@@ -44,12 +44,15 @@ export class DoctorProfileService {
   
 
   update = (input: DoctorProfileInputDto, config?: Partial<Rest.Config>) =>
+  
     this.restService.request<any, DoctorProfileDto>({
       method: 'PUT',
       url: '/api/app/doctor-profile',
       body: input,
     },
-    { apiName: this.apiName,...config });
+    { apiName: this.apiName,...config })
+
+    
 
   constructor(private restService: RestService) {}
 }

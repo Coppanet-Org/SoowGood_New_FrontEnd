@@ -186,7 +186,7 @@ handleFormData(formData: FormGroup) {
 
 
 
-console.log(this.doctorProfileDto);
+console.log({...formData,...this.doctorProfileDto});
 
 this.doctorProfileService.update({...formData,...this.doctorProfileDto}).subscribe((res)=>{
 
