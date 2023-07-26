@@ -1,12 +1,11 @@
+
 import { ToasterService } from '@abp/ng.theme.shared';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
-import { DoctorProfileDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import {  UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { SubSink } from 'SubSink';
@@ -31,11 +30,14 @@ export class SignupComponent implements OnInit {
   selectedUserType: string = '';
   otpModal: boolean = false;
   userInfoModal:boolean= false;
-
-
   doctorProfileDto:DoctorProfileInputDto= {} as DoctorProfileInputDto;
+  completeProfileInfoModal: boolean = false
+  receivedFormData!: FormGroup;
+
+
 
   constructor(
+
     private fb: FormBuilder,
     // private cdRef: ChangeDetectorRef,
     private otpService: OtpService,
@@ -134,7 +136,8 @@ export class SignupComponent implements OnInit {
 this.userAccountService
       .signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType)
       .subscribe((res: UserSignUpResultDto) => {
-          if (res) {
+          if (res.success) {
+            console.log(res); 
             this.isLoading = false
             if(userType==='Doctor'){
               this.doctorProfileDto.userId=res.userId;
@@ -146,6 +149,7 @@ this.userAccountService
               this.doctorProfileService.create(this.doctorProfileDto)
                 .subscribe((profRes:any)=>{
                   console.log(profRes); 
+                  this.completeProfileInfoModal = true
                 })
             }
             else if(userType==='Agent')
@@ -158,7 +162,13 @@ this.userAccountService
             }
             
             console.log(res);            
-          } 
+          }else{
+            res.message?.map((e:string)=> 
+            this.toasterService.error(e),{
+              position: 'bottom-center'
+              })
+
+          }
         },
         (err) => {
           this.isLoading = false;
@@ -166,4 +176,61 @@ this.userAccountService
         }
       );
   }
+
+
+handleFormData(formData: FormGroup) {
+  this.receivedFormData = formData;
+
+
+
+
+
+
+console.log(this.doctorProfileDto);
+
+this.doctorProfileService.update({...formData,...this.doctorProfileDto}).subscribe((res)=>{
+
+  console.log("hello", res);
+})
+  
+  // Do whatever you want with the form data received from the child
 }
+
+
+}
+
+
+
+
+
+
+// this.userAccountService.signupUserByUserDtoAndPasswordAndRole(userInfo,password,userType).subscribe((res: any) => {
+//   console.log(res);
+  
+//         let pres = JSON.parse(res)
+//           if (!pres.success) {
+//             this.completeProfileInfoModal = true
+//             this.isLoading = false
+//             this.toastService.error(pres.message?.map((e:string)=>e),{
+//               position: 'bottom-center'
+//             })
+//           } else{
+//               this._router.navigate([userType.toLowerCase()])   
+//               this.toastService.success(pres.message,{
+//                 position: 'bottom-center'
+//               })
+//               this.isLoading = false
+//           }
+//         },
+//         (err) => {
+//           this.isLoading = false;
+//           console.log(err);
+//         }
+//       );
+//   }
+
+  
+//   updateUserInfo(){
+      
+//   }
+// }

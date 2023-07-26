@@ -72,6 +72,7 @@
                 </div>
             </form>
         </div>
+
         <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
             [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
             <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
@@ -91,8 +92,8 @@
         </div>
 
         <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-            [style]="userInfoModal==true? '' : 'display:none'">
-            <h1 class="text-4xl font-medium">Signup</h1>
+            [style]="userInfoModal==true && completeProfileInfoModal==false ? '' : 'display:none'">
+            <h1 class="text-3xl font-semibold">Signup</h1>
             <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
             <form action="" class="mt-5" [formGroup]="userInfoForm">
 
@@ -130,6 +131,12 @@
                 </div>
             </form>
         </div>
+
+
+        <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300" [style]="completeProfileInfoModal==true ? '' : 'display:none'">
+            <app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
+        </div>
+
         <div>
             update info
         </div>
