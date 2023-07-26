@@ -9,7 +9,7 @@
             [style]="otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
             <h1 class="text-4xl font-medium">Signup</h1>
             <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-            <form action="" class="mt-10" [formGroup]="formGroup">
+            <form action="" class="mt-6" [formGroup]="formGroup">
                 <div class="grid-wrapper grid-col-auto">
                     <label for="radio-card-1" class="radio-card">
                         <input type="radio" id="radio-card-1" formControlName="userTypeName"
@@ -18,7 +18,7 @@
                             <span class="check-icon"></span>
                             <div class="card-content">
                                 <img src="../../../../assets/auth/doctor.png" alt="doctor">
-                                <h4 class="font-semibold">I am a Doctor</h4>
+                                <h4>I am a Doctor</h4>
                             </div>
                         </div>
                     </label>
@@ -29,21 +29,11 @@
                             <span class="check-icon"></span>
                             <div class="card-content">
                                 <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
-                                <h4 class="font-semibold">I am a Patient</h4>
+                                <h4>I am a Patient</h4>
                             </div>
                         </div>
                     </label>
-                    <label for="radio-card-3" class="radio-card">
-                        <input type="radio" id="radio-card-3" formControlName="userTypeName"
-                            [(ngModel)]="selectedUserType" value="Agent" />
-                        <div class="card-content-wrapper ">
-                            <span class="check-icon"></span>
-                            <div class="card-content">
-                                <img src="../../../../assets/auth/hospitalisation.png" alt="agent">
-                                <h4 class="font-semibold">I am a Agent</h4>
-                            </div>
-                        </div>
-                    </label>
+
                 </div>
                 <div class="flex flex-col space-y-5 mt-10">
                     <label for="mobile">
@@ -133,7 +123,8 @@
         </div>
 
 
-        <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300" [style]="completeProfileInfoModal==true ? '' : 'display:none'">
+        <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
+            [style]="completeProfileInfoModal==true ? '' : 'display:none'">
             <app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
         </div>
 

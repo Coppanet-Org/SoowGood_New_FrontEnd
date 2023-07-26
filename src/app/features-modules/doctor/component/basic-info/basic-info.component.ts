@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
+import { SpecialityService } from 'src/app/proxy/services';
+import { ListItem } from 'src/app/shared/model/common-model';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-basic-info',
@@ -7,54 +11,47 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./basic-info.component.scss']
 })
 export class BasicInfoComponent implements OnInit {
-  form:any = FormGroup;
-  titles:any=[
-    {value: 'professor', viewValue: 'Professor'},
-    {value: 'ass. professor', viewValue: 'Ass. Professor'},
-    {value: 'general medicine', viewValue: 'General Medicine'},
-  ]
-  genders = [
-    {name: 'Male', id: 1},
-    {name: 'Female', id: 2},
-    {name: 'Other', id: 3}
-];
-specialties =[
-  {name:"Cardiology",id:1},
-  {name:"Eye",id:2},
-]
+  form!: FormGroup;
+  genderList: ListItem[] = [];
+  titleList: ListItem[] = [];
+  maritalOptions: ListItem[] = [];
+  specialties:any=[];
+  @Output() formDataEvent = new EventEmitter<FormGroup>();
+  constructor(private fb: FormBuilder,private doctorSpeciality : SpecialityService) {}
+  ngOnInit(): void {
+    this.loadForm();
+    this.genderList = CommonService.getEnumList(Gender);
+    this.maritalOptions = CommonService.getEnumList(MaritalStatus);
+    this.titleList = CommonService.getEnumList(DoctorTitle);
+  
+    this.doctorSpeciality.getList().subscribe((res) => {
+      this.specialties = res;
+    });
+  }
 
-constructor(private _fb: FormBuilder){
-
-}
-
-ngOnInit(): void {
-  this.loadForm();  
-}
-
-
-loadForm() {
-  this.form = this._fb.group({
-    // id: [this.userId],
-    firstName:[''],
-    lastName:[''],
-    title:['',Validators.required],
-    gender: ['0', Validators.required],
-    fullName: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
-    email: [''], 
-    dob: ['', Validators.required],
-    maritalStatus:['',Validators.required],
-    city: [''],
-    userName: ['', Validators.required],
-    country: [''],
-    address: ['', Validators.required],
-    zipCode: ['', Validators.required],
-    bmdcreg: ['', Validators.required],
-    bmdcexdate: ['', Validators.required],
-    specialties:['',Validators.required]
-  })
-}
-onUpdateUserData(){
-  // this.service.getUserInfo().subscribe((res) => {})
-}
+  loadForm() {
+    this.form = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      doctorTitle: ['', Validators.required],
+      gender: ['', Validators.required],
+      fullName: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      city: [''],
+      country: [''],
+      mobileNo:[''],
+      email:[''],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      bmdcRegNo: ['', Validators.required],
+      bmdcRegExpiryDate: ['', Validators.required],
+      specialties:['',Validators.required],
+      identityNumber: ['', Validators.required],
+    });
+  }
+  sendDataToParent() {
+    this.formDataEvent.emit(this.form.value);
+    console.log(this.form.value);
+  }
 }
