@@ -5,8 +5,10 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\login",
-    "\\src\\app\\core-modules\\auth\\signup"
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\services"
   ],
+  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
   "PreviewInSolutionExplorer": false
 }

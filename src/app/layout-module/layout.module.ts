@@ -7,6 +7,7 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { Route, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header-footer/header/header.component';
 import { FooterComponent } from './header-footer/footer/footer.component';
+import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
 
 const routes: Route[] = [
   {
@@ -40,11 +41,30 @@ const routes: Route[] = [
   {
     path: 'doctor',
     component: DoctorLayoutComponent,
+    children:[
+        {
+          path: '',
+          loadChildren: () =>
+            import(
+              '../features-modules/doctor/doctor.module'
+            ).then((m) => m.DoctorModule)
+        },
+    ]
   },
   {
     path: 'patient',
-    component: DoctorLayoutComponent,
+    component: PatientLayoutComponent,
+    children:[
+        {
+          path: '',
+          loadChildren: () =>
+            import(
+              '../features-modules/patient/patient.module'
+            ).then((m) => m.PatientModule)
+        },
+    ]
   },
+
 ];
 
 @NgModule({
@@ -55,6 +75,7 @@ const routes: Route[] = [
     PublicLayoutComponent,
     HeaderComponent,
     FooterComponent,
+    DashboardHeaderComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
