@@ -35,6 +35,15 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getByUserName = (userName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/by-user-name',
+      params: { userName },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
@@ -44,15 +53,12 @@ export class DoctorProfileService {
   
 
   update = (input: DoctorProfileInputDto, config?: Partial<Rest.Config>) =>
-  
     this.restService.request<any, DoctorProfileDto>({
       method: 'PUT',
       url: '/api/app/doctor-profile',
       body: input,
     },
-    { apiName: this.apiName,...config })
-
-    
+    { apiName: this.apiName,...config });
 
   constructor(private restService: RestService) {}
 }
