@@ -152,7 +152,7 @@ export class SignupComponent implements OnInit {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
                   .subscribe((doctorDto: DoctorProfileDto) => {
                     this.newCreatedProfileDto = doctorDto;
-                    console.log(this.newCreatedProfileDto);
+                    //console.log(this.newCreatedProfileDto);
                   })
                 this.completeProfileInfoModal = true
               })
@@ -182,17 +182,27 @@ export class SignupComponent implements OnInit {
 
 
   handleFormData(formData: FormGroup) {
-    this.receivedFormData = formData;
+    // this.receivedFormData=formData.value;
+
+    this.newCreatedProfileDto.doctorTitle = formData.value.doctorTitle;
+    // this.newCreatedProfileDto.fullName = formData.value.fullName;
+    // this.newCreatedProfileDto.gender = formData.controls['gender'].value;
+    // this.newCreatedProfileDto.dateOfBirth = formData.controls['dateOfBirth'].value;
+    // this.newCreatedProfileDto.maritalStatus = formData.controls['maritalStatus'].value;
+    // this.newCreatedProfileDto.address = formData.controls['address'].value;
+    // this.newCreatedProfileDto.city = formData.controls['city'].value;
+    // this.newCreatedProfileDto.country = formData.controls['country'].value;
+    // this.newCreatedProfileDto.zipCode = formData.controls['zipCode'].value;
+    // this.newCreatedProfileDto.bmdcRegNo = formData.controls['bmdcRegNo'].value;
+    // this.newCreatedProfileDto.bmdcRegExpiryDate = formData.controls['bmdcRegExpiryDate'].value;
+    // this.newCreatedProfileDto.specialityId = formData.controls['specialties'].value;
+    // this.newCreatedProfileDto.identityNumber = formData.controls['identityNumber'].value;
 
 
+    console.log({ ...formData.value, ...this.doctorProfileDto });
 
-
-
-
-    console.log({ ...formData, ...this.doctorProfileDto });
-
-    //this.doctorProfileService.update({ ...formData, ...this.doctorProfileDto }).subscribe((res) => {
-    this.doctorProfileService.update({ ...formData, ...this.newCreatedProfileDto }).subscribe((res) => {
+    this.doctorProfileService.update({ ...formData.value, ...this.newCreatedProfileDto }).subscribe((res) => {
+    //this.doctorProfileService.update(this.newCreatedProfileDto).subscribe((res) => {
 
       console.log("hello", res);
     })
