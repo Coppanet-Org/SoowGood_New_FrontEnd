@@ -72,6 +72,6 @@ export class DoctorProfileInfoFormComponent implements OnInit {
 
   sendDataToParent() {
     this.formDataEvent.emit(this.form.value);
-    console.log(this.form.value);
+    //console.log(this.form.value);
   }
 }
