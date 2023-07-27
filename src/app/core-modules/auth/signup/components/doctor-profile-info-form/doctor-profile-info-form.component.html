@@ -1,0 +1,154 @@
+<h1 class="dashboard-heading-text text-3xl font-bold">Complete your profile</h1>
+<div class=" w-full  bg-white mt-6">
+    <form [formGroup]="form">
+        <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-primary">
+                        Your Title
+                    </label>
+                    <select formControlName="doctorTitle"  name="select" id="select"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                    <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
+                </select>
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Full Name
+                    </label>
+                    <input formControlName="fullName"  type="text" name="name" id="name" placeholder="Full Name"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                       Gender
+                    </label>
+                    <select formControlName="gender"  name="select" id="select"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                       Material Status
+                    </label>
+                    <select formControlName="maritalStatus"  name="select" id="select"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        <option *ngFor="let item of maritalOptions " value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="-mx-3 flex flex-wrap">
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Date of Birth
+                    </label>
+                    <input  formControlName="dateOfBirth"  type="date" name="date" id="date"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Identity Number
+                    </label>
+                    <input  formControlName="identityNumber" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        BMDC Reg Number
+                    </label>
+                    <input formControlName="bmdcRegNo" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        BMDC Exp. Date
+                    </label>
+                    <input formControlName="bmdcRegExpiryDate" type="date" name="date" id="date"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+
+
+            <div class="w-full px-3 sm:w-full">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Address
+                     </label>
+                    <input formControlName="address" type="text" name="area" id="area" placeholder="Enter area"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Country
+                     </label>
+                    <input formControlName="country" type="text" name="city" id="city" placeholder="Enter city"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        City
+                     </label>
+                    <input formControlName="city" type="text" name="state" id="state" placeholder="Enter state"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Zip Code
+                     </label>
+                    <input formControlName="zipCode" type="text" name="post-code" id="post-code" placeholder="Post Code"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                       Specialties
+                    </label>
+                    <select formControlName="specialties" name="select" id="select"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-slate-300">{{item.specialityName}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="flex items-center justify-end w-full">
+                <button
+                     (click)="sendDataToParent()"
+                    class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
+                    Complete Registration
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

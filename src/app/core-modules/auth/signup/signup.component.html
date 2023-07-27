@@ -1,14 +1,15 @@
 <div class="signup-form">
-    <div class="signup-form__left">
-        <img src="../../../../assets/Repeat Grid 3.png" alt="">
-        
-    </div>
-    <div class="signup-form__right drop-shadow-soft">
+  <div class="signup-form__left">
+    <img src="../../../../assets/Repeat Grid 3.png" alt="">
+
+  </div>
+    <div class="signup-form__right drop-shadow-soft relative">
+        <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
         <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
             [style]="otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
             <h1 class="text-4xl font-medium">Signup</h1>
             <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-            <form action="" class="mt-10" [formGroup]="formGroup">
+            <form action="" class="mt-6" [formGroup]="formGroup">
                 <div class="grid-wrapper grid-col-auto">
                     <label for="radio-card-1" class="radio-card">
                         <input type="radio" id="radio-card-1" formControlName="userTypeName"
@@ -17,7 +18,7 @@
                             <span class="check-icon"></span>
                             <div class="card-content">
                                 <img src="../../../../assets/auth/doctor.png" alt="doctor">
-                                <h4 class="font-semibold">I am a Doctor</h4>
+                                <h4>I am a Doctor</h4>
                             </div>
                         </div>
                     </label>
@@ -28,32 +29,19 @@
                             <span class="check-icon"></span>
                             <div class="card-content">
                                 <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
-                                <h4 class="font-semibold">I am a Patient</h4>
+                                <h4>I am a Patient</h4>
                             </div>
                         </div>
                     </label>
-                    <label for="radio-card-3" class="radio-card">
-                        <input type="radio" id="radio-card-3" formControlName="userTypeName"
-                            [(ngModel)]="selectedUserType" value="Agent" />
-                        <div class="card-content-wrapper ">
-                            <span class="check-icon"></span>
-                            <div class="card-content">
-                                <img src="../../../../assets/auth/hospitalisation.png" alt="agent">
-                                <h4 class="font-semibold">I am a Agent</h4>
-                            </div>
-                        </div>
-                    </label>
+
                 </div>
                 <div class="flex flex-col space-y-5 mt-10">
                     <label for="mobile">
                         <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-                        <input type="tel" formControlName="mobile" id="phone"
-                            class="form_input"
+                        <input type="tel" formControlName="mobile" id="phone" class="form_input"
                             placeholder="018-000-00000" required>
                     </label>
-                    <button
-                        class="form_btn"
-                        (click)="sendOtp()">
+                    <button class="form_btn" (click)="sendOtp()">
                         <div *ngIf="!isLoading" class="flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" stroke-width="2">
@@ -74,6 +62,7 @@
                 </div>
             </form>
         </div>
+
         <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
             [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
             <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
@@ -93,38 +82,34 @@
         </div>
 
         <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-            [style]="userInfoModal==true? '' : 'display:none'">
-            <h1 class="text-4xl font-medium">Signup</h1>
+            [style]="userInfoModal==true && completeProfileInfoModal==false ? '' : 'display:none'">
+            <h1 class="text-3xl font-semibold">Signup</h1>
             <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
             <form action="" class="mt-5" [formGroup]="userInfoForm">
 
                 <div class="flex flex-col space-y-5 mt-6">
                     <label for="name">
                         <p class="font-medium text-slate-700 pb-2">Name</p>
-                         <input type="text" class="form_input"  formControlName="name">
-                    </label> 
+                        <input type="text" class="form_input" formControlName="name">
+                    </label>
                     <label for="email">
                         <p class="font-medium text-slate-700 pb-2">Email</p>
-                         <input type="text" class="form_input" formControlName="email">
+                        <input type="text" class="form_input" formControlName="email">
                     </label>
                     <label for="password">
                         <p class="font-medium text-slate-700 pb-2">Password</p>
-                         <input type="password" class="form_input" formControlName="password">
+                        <input type="password" class="form_input" formControlName="password">
                     </label>
                     <label for="confirm-password">
                         <p class="font-medium text-slate-700 pb-2">Confirm Password</p>
-                         <input type="password" class="form_input">
+                        <input type="password" class="form_input">
                     </label>
 
                     <label for="mobile" hidden>
                         <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-                        <input type="tel" id="phone"
-                            class="form_input"
-                            placeholder="018-000-00000" required>
+                        <input type="tel" id="phone" class="form_input" placeholder="018-000-00000" required>
                     </label>
-                    <button
-                        class="form_btn mt-4"
-                        (click)="sendUserInfo()">
+                    <button class="form_btn mt-4" (click)="sendUserInfo()">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -136,7 +121,14 @@
                 </div>
             </form>
         </div>
+
+
+        <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
+            [style]="completeProfileInfoModal==true ? '' : 'display:none'">
+            <app-doctor-profile-info-form [doctorId]="docId" (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
+        </div>
+
     </div>
 
 
-</div>
+  </div>
