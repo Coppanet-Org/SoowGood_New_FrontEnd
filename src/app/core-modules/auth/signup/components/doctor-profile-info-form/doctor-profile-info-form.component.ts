@@ -40,13 +40,13 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
     });
-    this._route.queryParamMap.subscribe((params) => {
-      params.keys.forEach((key) => {
-        const doctorId = params.get(key);
-        this.doctorId = doctorId
-        this.fetchProfileInfo(doctorId)
-      });
-    });
+    //this._route.queryParamMap.subscribe((params) => {
+    //  params.keys.forEach((key) => {
+    //    const doctorId = params.get(key);
+    //    this.doctorId = doctorId
+        this.fetchProfileInfo(this.doctorId)
+     // });
+    //});
   }
   fetchProfileInfo(doctorId: any): void {
     this.doctorProfileService.get(doctorId).subscribe(
