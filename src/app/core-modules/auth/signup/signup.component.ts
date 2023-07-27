@@ -146,8 +146,12 @@ export class SignupComponent implements OnInit {
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
-                  .subscribe((doctorDto: DoctorProfileDto) => {
+                  .subscribe((doctorDto: DoctorProfileInputDto) => {
                     this.newCreatedProfileDto = doctorDto;
+                    this._router.navigate([userType.toLowerCase()], { queryParams: { id: doctorDto.id } }).then(r => r)
+              //        this.toasterService.success("Registration Successful"),{
+              //  position: 'bottom-center'
+              //}
                   })
                 this.completeProfileInfoModal = true
               })
@@ -178,8 +182,9 @@ export class SignupComponent implements OnInit {
 
 
     const doctorProfileInput: DoctorProfileInputDto = {
-      ...formData,
-      ...this.newCreatedProfileDto
+      degrees: [], // Set the appropriate value here or leave it empty based on your requirements
+      doctorSpecialization: [],
+      ...formData
     };
 
     let userType = this.formGroup?.value.userTypeName + '/profile-settings'
@@ -187,10 +192,10 @@ export class SignupComponent implements OnInit {
       if (res) {
         
         
-        this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
-                      this.toasterService.success("Registration Successful"),{
-                position: 'bottom-center'
-              }
+        //this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
+        //              this.toasterService.success("Registration Successful"),{
+        //        position: 'bottom-center'
+        //      }
       }
     })
   }
