@@ -194,10 +194,10 @@ export class SignupComponent implements OnInit {
 
 console.log(doctorProfileInput);
 
-        //this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
-        //              this.toasterService.success("Registration Successful"),{
-        //        position: 'bottom-center'
-        //      }
+        this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
+                      this.toasterService.success("Registration Successful"),{
+                position: 'bottom-center'
+              }
       }
     })
   }
