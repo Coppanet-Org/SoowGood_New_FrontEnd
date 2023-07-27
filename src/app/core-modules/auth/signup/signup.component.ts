@@ -125,7 +125,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": true,
+      "isActive": userType==="Patient"?true:false,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -183,21 +183,25 @@ export class SignupComponent implements OnInit {
 
 
     const doctorProfileInput: DoctorProfileInputDto = {
-      degrees: [], // Set the appropriate value here or leave it empty based on your requirements
+      degrees: [], 
       doctorSpecialization: [],
       ...formData
     };
-
+    doctorProfileInput.userId = this.doctorProfileDto.userId;
+    doctorProfileInput.fullName = this.doctorProfileDto.fullName;
+    doctorProfileInput.email = this.doctorProfileDto.email;
+    doctorProfileInput.mobileNo = this.doctorProfileDto.mobileNo;
+    doctorProfileInput.isActive = this.doctorProfileDto.isActive;
     let userType = this.formGroup?.value.userTypeName + '/profile-settings'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
 
-console.log(doctorProfileInput);
+        console.log(doctorProfileInput);
 
-        this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
-                      this.toasterService.success("Registration Successful"),{
-                position: 'bottom-center'
-              }
+        this._router.navigate([userType.toLowerCase()], { queryParams: { id: res.id } }).then(r => r)
+        this.toasterService.success("Registration Successful"), {
+          position: 'bottom-center'
+        }
       }
     })
   }
