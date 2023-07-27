@@ -192,6 +192,7 @@ export class SignupComponent implements OnInit {
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
 
+console.log(doctorProfileInput);
 
         //this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
         //              this.toasterService.success("Registration Successful"),{
