@@ -150,7 +150,7 @@ export class SignupComponent implements OnInit {
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
-                  .subscribe((doctorDto: DoctorProfileDto) => {
+                  .subscribe((doctorDto: DoctorProfileInputDto) => {
                     this.newCreatedProfileDto = doctorDto;
                     console.log(this.newCreatedProfileDto);
                   })
