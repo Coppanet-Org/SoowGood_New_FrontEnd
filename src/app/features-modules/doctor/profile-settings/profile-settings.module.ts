@@ -4,12 +4,26 @@ import { ProfileSettingsComponent } from './profile-settings.component';
 import { Route, RouterModule } from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
-import { BasicInfoComponent } from '../basic-info/basic-info.component';
+import { BasicInfoComponent } from '../component/basic-info/basic-info.component';
+import { EducationInfoComponent } from '../component/education-info/education-info.component';
+import { HospitalInfoComponent } from '../component/hospital-info/hospital-info.component';
+import { SpecializationInfoComponent } from '../component/specialization-info/specialization-info.component';
 
 const routes: Route[] = [
   {
     path: '',
     component: ProfileSettingsComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'education',
+        component: EducationInfoComponent
+      },
+    ],
   },
   
 ]
@@ -17,7 +31,10 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     ProfileSettingsComponent,
-    BasicInfoComponent
+    BasicInfoComponent,
+    EducationInfoComponent,
+    HospitalInfoComponent,
+    SpecializationInfoComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),

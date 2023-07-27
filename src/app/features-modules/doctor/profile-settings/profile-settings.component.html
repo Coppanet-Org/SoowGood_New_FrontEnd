@@ -25,21 +25,21 @@
 <hr>
 
 
-                    <mat-stepper  #stepper class="mt-5  mx-auto">  
-                        <mat-step [stepControl]="firstFormGroup" label="Basic Info">
+                    <mat-stepper  #stepper class="mt-5  mx-auto" [selectedIndex]="activeTab">  
+                        <mat-step [stepControl]="firstFormGroup" label="Basic Info" >
                            <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)" [isLoading]='loading'></app-basic-info>
                         </mat-step>
-                        <mat-step [stepControl]="secondFormGroup" label="Education & Experience">
+                        <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
 
                         </mat-step>
-                        <mat-step [stepControl]="secondFormGroup" label="Hospital">
-
-                        </mat-step>
-                        <mat-step label="Skill & Specializations">
+                        <mat-step label="Specializations">
                             <div>
                                 <button mat-button matStepper Previous>Back</button>
                                 <button mat-button (click)="stepper.reset()">Reset</button>
                             </div>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Hospital" >
+
                         </mat-step>
                     </mat-stepper>
 
