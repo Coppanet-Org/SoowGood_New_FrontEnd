@@ -20,16 +20,13 @@ export class DoctorProfileInfoFormComponent implements OnInit {
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
   specialties: any = [];
-  @Input() doctorId: any
+  doctorId: any
   @Output() formDataEvent = new EventEmitter<FormGroup>();
   @Output() profileData = new EventEmitter()
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality: SpecialityService,
-    private _route: ActivatedRoute,
-    private doctorProfileService: DoctorProfileService,
     private cdr: ChangeDetectorRef,
-    //private datePipe: DatePipe
 
   ) { }
   ngOnInit(): void {
@@ -40,30 +37,8 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
     });
+  }
 
-    this.fetchProfileInfo(this.doctorId)
-  }
-  fetchProfileInfo(doctorId: any): void {
-    this.doctorProfileService.get(doctorId).subscribe(
-      (profileInfo) => {
-        //console.log('Profile Information:', profileInfo);
-        //profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
-       // profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
-        this.form?.patchValue(profileInfo);
-        this.profileData.emit(profileInfo);
-      },
-      (error) => {
-        console.error('Error fetching profile information:', error);
-      }
-    );
-  }
-  //private formatDate(dateString: string | undefined): string {
-  //  if (!dateString) {
-  //    return '';
-  //  }
-  //  const date = new Date(dateString);
-  //  return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
-  //}
 
 loadForm() {
   this.form = this.fb.group({
@@ -82,14 +57,13 @@ loadForm() {
     bmdcRegExpiryDate: ['', Validators.required],
     specialties: ['', Validators.required],
     identityNumber: ['', Validators.required],
+
   });
 }
 
-loadDoctUserInfo(userName: string) {
-  //this.subs.sink=this.doctorProfileService.getByUserName()
-}
+
 
 sendDataToParent() {
-  this.formDataEvent.emit({ ...this.form.value, id:this.doctorId });
+  this.formDataEvent.emit(this.form.value);
 }
 }

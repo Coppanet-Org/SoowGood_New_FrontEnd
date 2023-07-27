@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
   userInfoModal: boolean = false;
   doctorProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
-  completeProfileInfoModal: boolean = false
+  completeProfileInfoModal: boolean = true
   receivedFormData!: FormGroup;
 
 
@@ -151,7 +151,8 @@ export class SignupComponent implements OnInit {
                     this.newCreatedProfileDto = doctorDto;
 
                     this.completeProfileInfoModal = true
-                    this.docId = doctorDto.id;
+                    this.docId = doctorDto.id
+console.log(doctorDto.id);
 
                   })
 
@@ -181,23 +182,26 @@ export class SignupComponent implements OnInit {
 
   handleFormData(formData: FormGroup) {
 
-
+    if (!formData.valid) {
+      return
+    }
     const doctorProfileInput: DoctorProfileInputDto = {
-      degrees: [], // Set the appropriate value here or leave it empty based on your requirements
+      degrees: [],
       doctorSpecialization: [],
-      ...formData
+      ...formData,
+      id:this.docId
     };
 
     let userType = this.formGroup?.value.userTypeName + '/profile-settings'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
+    console.log(res);
+    
+      
       if (res) {
-
-console.log(doctorProfileInput);
-
-        //this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
-        //              this.toasterService.success("Registration Successful"),{
-        //        position: 'bottom-center'
-        //      }
+        this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
+                     this.toasterService.success("Registration Successful"),{
+               position: 'bottom-center'
+             }
       }
     })
   }
