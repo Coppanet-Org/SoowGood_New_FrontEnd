@@ -1,4 +1,4 @@
-import { singleSlide, slideInFrom   } from './../../../../animation';
+import { singleSlide, slideInFrom   } from '../../../animation';
 import { Component, OnInit } from '@angular/core';
 
 
