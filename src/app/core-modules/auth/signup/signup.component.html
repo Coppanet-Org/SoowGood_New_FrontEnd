@@ -125,7 +125,7 @@
 
         <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
             [style]="completeProfileInfoModal==true ? '' : 'display:none'">
-            <app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
+            <app-doctor-profile-info-form [doctorId]="docId" (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
         </div>
 
     </div>
