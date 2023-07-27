@@ -7,7 +7,6 @@ import { DashboardMenuComponent } from 'src/app/shared/components/dashboard-menu
 import { DashboardMenuItemComponent } from 'src/app/shared/components/dashboard-menu-item/dashboard-menu-item.component';
 
 
-
 const routes: Route[] = [
   {
     path: '',
@@ -21,42 +20,42 @@ const routes: Route[] = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./component/dashboard/dashboard.module').then(
+          import('./dashboard/dashboard.module').then(
             (m) => m.DashboardModule
           ),
       },
       {
         path: 'appointments',
         loadChildren: () =>
-          import('./component/appointments/appointments.module').then(
+          import('./appointments/appointments.module').then(
             (m) => m.AppointmentsModule
           ),
       },
       {
         path: 'patients',
         loadChildren: () =>
-          import('./component/my-patients/my-patients.module').then(
+          import('./my-patients/my-patients.module').then(
             (m) => m.MyPatientsModule
           ),
       },
       {
         path: 'schedule',
         loadChildren: () =>
-          import('./component/appointments/appointments.module').then(
+          import('./appointments/appointments.module').then(
             (m) => m.AppointmentsModule
           ),
       },
       {
         path: 'billing',
         loadChildren: () =>
-          import('./component/billing/billing.module').then(
+          import('./billing/billing.module').then(
             (m) => m.BillingModule
           ),
       },
       {
         path: 'profile-settings',
         loadChildren: () =>
-          import('./component/profile-settings/profile-settings.module').then(
+          import('./profile-settings/profile-settings.module').then(
             (m) => m.ProfileSettingsModule
           ),
       },
@@ -69,9 +68,7 @@ const routes: Route[] = [
     DoctorComponent,
     DashboardMenuComponent,
     RightSidebarComponent,
-    DashboardMenuItemComponent,
-
-
+    DashboardMenuItemComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
