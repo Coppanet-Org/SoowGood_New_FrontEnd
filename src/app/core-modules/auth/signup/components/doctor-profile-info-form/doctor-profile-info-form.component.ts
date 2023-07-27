@@ -17,13 +17,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DoctorProfileInfoFormComponent implements OnInit {
   form!: FormGroup;
+  fullName: any;
+  email: any;
+  userId: any;
+  mobileNo: any;
+  isActive: boolean = false;
+
   genderList: ListItem[] = [];
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
   specialties: any = [];
-  @Input() doctorId: any
+  @Input() doctorId: any;
   @Output() formDataEvent = new EventEmitter<FormGroup>();
   @Output() profileData = new EventEmitter()
+
+  subs = new SubSink();
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality: SpecialityService,
@@ -31,7 +39,6 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     private doctorProfileService: DoctorProfileService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
-
   ) { }
   ngOnInit(): void {
     this.loadForm();
@@ -41,56 +48,30 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
     });
-    this.fetchProfileInfo(this.doctorId);
-  }
-  fetchProfileInfo(doctorId: any): void {
-    this.doctorProfileService.get(doctorId).subscribe(
-      (profileInfo) => {
-        console.log('Profile Information:', profileInfo);
-        profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
-        profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
-        this.form?.patchValue(profileInfo);
-        this.profileData.emit(profileInfo);
-      },
-      (error) => {
-        console.error('Error fetching profile information:', error);
-      }
-    );
-  }
-  private formatDate(dateString: string | undefined): string {
-    if (!dateString) {
-      return '';
-    }
-    const date = new Date(dateString);
-    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 
-loadForm() {
-  this.form = this.fb.group({
-    firstName: [''],
-    lastName: [''],
-    doctorTitle: ['', Validators.required],
-    gender: ['', Validators.required],
-    fullName: ['', Validators.required],
-    dateOfBirth: ['', Validators.required],
-    maritalStatus: ['', Validators.required],
-    city: [''],
-    country: [''],
-    address: ['', Validators.required],
-    zipCode: ['', Validators.required],
-    bmdcRegNo: ['', Validators.required],
-    bmdcRegExpiryDate: ['', Validators.required],
-    specialties: ['', Validators.required],
-    identityNumber: ['', Validators.required],
-  });
-}
+  loadForm() {
+    this.form = this.fb.group({
+      firstName: [null],
+      lastName: [null],
+      fullName: ['', Validators.required],
+      doctorTitle: ['', Validators.required],
+      gender: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      city: [null],
+      country: [''],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      bmdcRegNo: ['', Validators.required],
+      bmdcRegExpiryDate: ['', Validators.required],
+      specialties: ['', Validators.required],
+      identityNumber: ['', Validators.required],
+    });
+  }
 
-loadDoctUserInfo(userName: string) {
-  //this.subs.sink=this.doctorProfileService.getByUserName()
-}
-
-sendDataToParent() {
-  this.formDataEvent.emit({ ...this.form.value, id:this.doctorId });
-  console.log(this.form.value);
-}
+  sendDataToParent() {
+    this.formDataEvent.emit({ ...this.form.value, id: this.doctorId });
+    console.log(this.form.value);
+  }
 }
