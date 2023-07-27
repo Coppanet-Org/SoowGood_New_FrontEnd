@@ -13,10 +13,8 @@
 
                     <div class="mt-16 flex justify-between">
                         <div>
-                            <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">Pro. DR.
-                                Mizanur Rahman</h1>
-                            <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">General |
-                                Cardiologist</p>
+                            <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">{{profileInfo?.fullName}}</h1>
+                            <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext" >{{getTitle(profileInfo?.doctorTitle)}}</p>
                         </div>
                         <div>
                             <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">View
@@ -27,9 +25,9 @@
 <hr>
 
 
-                    <mat-stepper #stepper class="mt-5  mx-auto">  
+                    <mat-stepper  #stepper class="mt-5  mx-auto">  
                         <mat-step [stepControl]="firstFormGroup" label="Basic Info">
-                           <app-basic-info></app-basic-info>
+                           <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)" [isLoading]='loading'></app-basic-info>
                         </mat-step>
                         <mat-step [stepControl]="secondFormGroup" label="Education & Experience">
 
