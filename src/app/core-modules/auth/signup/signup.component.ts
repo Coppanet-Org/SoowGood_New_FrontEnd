@@ -19,6 +19,7 @@ import { SubSink } from 'SubSink';
 export class SignupComponent implements OnInit {
   formGroup!: FormGroup;
   userInfoForm!: FormGroup;
+  docId: any;
   mobile: string = '';
   userTYpe: string = '';
   otp?: number;
@@ -148,12 +149,12 @@ export class SignupComponent implements OnInit {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
                   .subscribe((doctorDto: DoctorProfileInputDto) => {
                     this.newCreatedProfileDto = doctorDto;
-                    this._router.navigate([userType.toLowerCase()], { queryParams: { id: doctorDto.id } }).then(r => r)
-              //        this.toasterService.success("Registration Successful"),{
-              //  position: 'bottom-center'
-              //}
+
+                    this.completeProfileInfoModal = true
+                    this.docId = doctorDto.id;
+
                   })
-                this.completeProfileInfoModal = true
+
               })
           }
           else if (userType === 'Agent') {
@@ -188,10 +189,10 @@ export class SignupComponent implements OnInit {
     };
 
     let userType = this.formGroup?.value.userTypeName + '/profile-settings'
-    this.doctorProfileService.update(doctorProfileInput ).subscribe((res) => {
+    this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
-        
-        
+
+
         //this._router.navigate([userType.toLowerCase()],{ queryParams: { id: res.id } }).then(r => r)
         //              this.toasterService.success("Registration Successful"),{
         //        position: 'bottom-center'

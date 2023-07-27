@@ -7,7 +7,7 @@ import { DoctorProfileService, SpecialityService } from 'src/app/proxy/services'
 import { ListItem } from 'src/app/shared/model/common-model';
 import { DoctorProfileInputDto } from '../../../../../proxy/input-dto';
 import { SubSink } from 'SubSink';
-import { DatePipe } from '@angular/common';
+//import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-doctor-profile-info-form',
@@ -20,8 +20,7 @@ export class DoctorProfileInfoFormComponent implements OnInit {
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
   specialties: any = [];
-  @Input() isLoading: boolean = false
-  doctorId: any
+  @Input() doctorId: any
   @Output() formDataEvent = new EventEmitter<FormGroup>();
   @Output() profileData = new EventEmitter()
   constructor(
@@ -30,7 +29,7 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     private _route: ActivatedRoute,
     private doctorProfileService: DoctorProfileService,
     private cdr: ChangeDetectorRef,
-    private datePipe: DatePipe
+    //private datePipe: DatePipe
 
   ) { }
   ngOnInit(): void {
@@ -52,9 +51,9 @@ export class DoctorProfileInfoFormComponent implements OnInit {
   fetchProfileInfo(doctorId: any): void {
     this.doctorProfileService.get(doctorId).subscribe(
       (profileInfo) => {
-        console.log('Profile Information:', profileInfo);
-        profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
-        profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
+        //console.log('Profile Information:', profileInfo);
+        //profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
+       // profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
         this.form?.patchValue(profileInfo);
         this.profileData.emit(profileInfo);
       },
@@ -63,13 +62,13 @@ export class DoctorProfileInfoFormComponent implements OnInit {
       }
     );
   }
-  private formatDate(dateString: string | undefined): string {
-    if (!dateString) {
-      return '';
-    }
-    const date = new Date(dateString);
-    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
-  }
+  //private formatDate(dateString: string | undefined): string {
+  //  if (!dateString) {
+  //    return '';
+  //  }
+  //  const date = new Date(dateString);
+  //  return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+  //}
 
 loadForm() {
   this.form = this.fb.group({
