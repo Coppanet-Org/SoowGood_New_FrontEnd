@@ -9,7 +9,7 @@
                     </label>
                     <select formControlName="doctorTitle"  name="select" id="select"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                    <option *ngFor="let item of titleList" [value]="item.id" class="font-semibold text-slate-300">{{item.name}}</option>
+                    <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
                 </select>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     </label>
                     <select formControlName="gender"  name="select" id="select"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                        <option *ngFor="let item of genderList" [value]="item.id" class="font-semibold text-slate-300">{{item.name}}</option>
+                        <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
                     </select>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     </label>
                     <select formControlName="maritalStatus"  name="select" id="select"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                        <option *ngFor="let item of maritalOptions " [value]="item.id" class="font-semibold text-slate-300">{{item.name}}</option>
+                        <option *ngFor="let item of maritalOptions " value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
 
                     </select>
                 </div>
@@ -137,7 +137,7 @@
                     </label>
                     <select formControlName="specialties" name="select" id="select"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                        <option *ngFor="let item of specialties" [value]="item.id" class="font-semibold text-slate-300">{{item.specialityName}}</option>
+                        <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-slate-300">{{item.specialityName}}</option>
 
                     </select>
                 </div>

@@ -125,7 +125,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": true,
+      "isActive": userType==="Patient"?true:false,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -191,7 +191,11 @@ console.log(doctorDto.id);
       ...formData,
       id:this.docId
     };
-
+    doctorProfileInput.userId = this.doctorProfileDto.userId;
+    doctorProfileInput.fullName = this.doctorProfileDto.fullName;
+    doctorProfileInput.email = this.doctorProfileDto.email;
+    doctorProfileInput.mobileNo = this.doctorProfileDto.mobileNo;
+    doctorProfileInput.isActive = this.doctorProfileDto.isActive;
     let userType = this.formGroup?.value.userTypeName + '/profile-settings'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
     console.log(res);

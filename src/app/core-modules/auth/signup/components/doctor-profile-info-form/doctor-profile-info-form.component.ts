@@ -7,8 +7,9 @@ import { DoctorProfileService, SpecialityService } from 'src/app/proxy/services'
 import { ListItem } from 'src/app/shared/model/common-model';
 import { DoctorProfileInputDto } from '../../../../../proxy/input-dto';
 import { SubSink } from 'SubSink';
-//import { DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-doctor-profile-info-form',
   templateUrl: './doctor-profile-info-form.component.html',
@@ -16,6 +17,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DoctorProfileInfoFormComponent implements OnInit {
   form!: FormGroup;
+  fullName: any;
+  email: any;
+  userId: any;
+  mobileNo: any;
+  isActive: boolean = false;
+
   genderList: ListItem[] = [];
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
@@ -23,6 +30,8 @@ export class DoctorProfileInfoFormComponent implements OnInit {
   doctorId: any
   @Output() formDataEvent = new EventEmitter<FormGroup>();
   @Output() profileData = new EventEmitter()
+
+  subs = new SubSink();
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality: SpecialityService,
@@ -40,26 +49,25 @@ export class DoctorProfileInfoFormComponent implements OnInit {
   }
 
 
-loadForm() {
-  this.form = this.fb.group({
-    firstName: [''],
-    lastName: [''],
-    doctorTitle: ['', Validators.required],
-    gender: ['', Validators.required],
-    fullName: ['', Validators.required],
-    dateOfBirth: ['', Validators.required],
-    maritalStatus: ['', Validators.required],
-    city: [''],
-    country: [''],
-    address: ['', Validators.required],
-    zipCode: ['', Validators.required],
-    bmdcRegNo: ['', Validators.required],
-    bmdcRegExpiryDate: ['', Validators.required],
-    specialties: ['', Validators.required],
-    identityNumber: ['', Validators.required],
-
-  });
-}
+  loadForm() {
+    this.form = this.fb.group({
+      firstName: [null],
+      lastName: [null],
+      fullName: ['', Validators.required],
+      doctorTitle: ['', Validators.required],
+      gender: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      city: [null],
+      country: [''],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      bmdcRegNo: ['', Validators.required],
+      bmdcRegExpiryDate: ['', Validators.required],
+      specialties: ['', Validators.required],
+      identityNumber: ['', Validators.required],
+    });
+  }
 
 
 
