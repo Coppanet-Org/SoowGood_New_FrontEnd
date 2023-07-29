@@ -1,6 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\volo",
+    "\\src\\app\\proxy\\volo\\abp",
+    "\\src\\app\\proxy\\volo\\abp\\domain",
+    "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
+    "\\src\\app\\proxy\\volo\\abp\\identity",
+    "\\src\\environments"
   ],
+  "SelectedNode": "\\src\\app\\proxy\\volo\\abp\\identity\\models.ts",
   "PreviewInSolutionExplorer": false
 }
