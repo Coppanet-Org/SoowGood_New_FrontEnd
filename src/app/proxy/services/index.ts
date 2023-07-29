@@ -4,6 +4,7 @@ export * from './doctor-degree.service';
 export * from './doctor-profile.service';
 export * from './doctor-schedule.service';
 export * from './doctor-specialization.service';
+export * from './documents-attachment.service';
 export * from './otp.service';
 export * from './speciality.service';
 export * from './specialization.service';
