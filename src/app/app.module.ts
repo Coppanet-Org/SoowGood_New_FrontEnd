@@ -1,4 +1,3 @@
-import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocale } from '@abp/ng.core/locale';
 import { NgModule } from '@angular/core';
@@ -16,7 +15,6 @@ import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
-import { DateParserFormatter } from '@abp/ng.theme.shared';
 
 
 const routerConfig: ExtraOptions = {
@@ -41,7 +39,9 @@ const routerConfig: ExtraOptions = {
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, routerConfig),
-    HotToastModule.forRoot(),
+    HotToastModule.forRoot({
+      position: 'bottom-right',
+    }),
 
   ],
   providers: [],

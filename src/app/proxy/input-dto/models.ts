@@ -47,6 +47,8 @@ export interface DoctorProfileInputDto extends FullAuditedEntityDto<number> {
   isActive?: boolean;
   userId?: string;
   isOnline?: boolean;
+  [key: string]: any;
+  
 }
 
 export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<number> {

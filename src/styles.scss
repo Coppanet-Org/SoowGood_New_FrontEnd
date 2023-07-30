@@ -28,7 +28,7 @@
     @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply py-2 px-5 mr-2 h-fit text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-primary   ;
+    @apply border-none hover:bg-secondary bg-primary text-white hover:text-white py-2.5 px-5 mr-2 h-fit text-sm font-normal focus:outline-none  rounded-md border border-gray-200;
   }
   .signup-form {
     @apply flex items-center w-full h-screen bg-slate-100;

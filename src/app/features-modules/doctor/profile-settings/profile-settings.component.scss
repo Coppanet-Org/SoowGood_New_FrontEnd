@@ -28,6 +28,9 @@
   padding: 5px;
   border-radius: 5px;
 }
+::ng-deep .mat-horizontal-content-container{
+  padding: 0!important;
+}
 ::ng-deep .mat-step-text-label{
   color: #ffffff;
   font-weight: 500;
