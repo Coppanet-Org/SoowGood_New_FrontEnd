@@ -3,161 +3,6 @@
     "app"
   ],
   "modules": {
-    "settingManagement": {
-      "rootPath": "settingManagement",
-      "remoteServiceName": "SettingManagement",
-      "controllers": {
-        "Volo.Abp.SettingManagement.EmailSettingsController": {
-          "controllerName": "EmailSettings",
-          "controllerGroupName": "EmailSettings",
-          "isRemoteService": true,
-          "isIntegrationService": false,
-          "apiVersion": null,
-          "type": "Volo.Abp.SettingManagement.EmailSettingsController",
-          "interfaces": [
-            {
-              "type": "Volo.Abp.SettingManagement.IEmailSettingsAppService",
-              "name": "IEmailSettingsAppService",
-              "methods": [
-                {
-                  "name": "GetAsync",
-                  "parametersOnMethod": [],
-                  "returnValue": {
-                    "type": "Volo.Abp.SettingManagement.EmailSettingsDto",
-                    "typeSimple": "Volo.Abp.SettingManagement.EmailSettingsDto"
-                  }
-                },
-                {
-                  "name": "UpdateAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto, Volo.Abp.SettingManagement.Application.Contracts",
-                      "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                      "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
-                  }
-                },
-                {
-                  "name": "SendTestEmailAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Volo.Abp.SettingManagement.SendTestEmailInput, Volo.Abp.SettingManagement.Application.Contracts",
-                      "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                      "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
-                  }
-                }
-              ]
-            }
-          ],
-          "actions": {
-            "GetAsync": {
-              "uniqueName": "GetAsync",
-              "name": "GetAsync",
-              "httpMethod": "GET",
-              "url": "api/setting-management/emailing",
-              "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
-              "returnValue": {
-                "type": "Volo.Abp.SettingManagement.EmailSettingsDto",
-                "typeSimple": "Volo.Abp.SettingManagement.EmailSettingsDto"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
-            },
-            "UpdateAsyncByInput": {
-              "uniqueName": "UpdateAsyncByInput",
-              "name": "UpdateAsync",
-              "httpMethod": "POST",
-              "url": "api/setting-management/emailing",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto, Volo.Abp.SettingManagement.Application.Contracts",
-                  "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                  "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                  "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
-            },
-            "SendTestEmailAsyncByInput": {
-              "uniqueName": "SendTestEmailAsyncByInput",
-              "name": "SendTestEmailAsync",
-              "httpMethod": "POST",
-              "url": "api/setting-management/emailing/send-test-email",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Volo.Abp.SettingManagement.SendTestEmailInput, Volo.Abp.SettingManagement.Application.Contracts",
-                  "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                  "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                  "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
-            }
-          }
-        }
-      }
-    },
     "featureManagement": {
       "rootPath": "featureManagement",
       "remoteServiceName": "AbpFeatureManagement",
@@ -2610,71 +2455,55 @@
         }
       }
     },
-    "permissionManagement": {
-      "rootPath": "permissionManagement",
-      "remoteServiceName": "AbpPermissionManagement",
+    "settingManagement": {
+      "rootPath": "settingManagement",
+      "remoteServiceName": "SettingManagement",
       "controllers": {
-        "Volo.Abp.PermissionManagement.PermissionsController": {
-          "controllerName": "Permissions",
-          "controllerGroupName": "Permissions",
+        "Volo.Abp.SettingManagement.EmailSettingsController": {
+          "controllerName": "EmailSettings",
+          "controllerGroupName": "EmailSettings",
           "isRemoteService": true,
           "isIntegrationService": false,
           "apiVersion": null,
-          "type": "Volo.Abp.PermissionManagement.PermissionsController",
+          "type": "Volo.Abp.SettingManagement.EmailSettingsController",
           "interfaces": [
             {
-              "type": "Volo.Abp.PermissionManagement.IPermissionAppService",
-              "name": "IPermissionAppService",
+              "type": "Volo.Abp.SettingManagement.IEmailSettingsAppService",
+              "name": "IEmailSettingsAppService",
               "methods": [
                 {
                   "name": "GetAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "providerName",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "providerKey",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
-                    "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
+                    "type": "Volo.Abp.SettingManagement.EmailSettingsDto",
+                    "typeSimple": "Volo.Abp.SettingManagement.EmailSettingsDto"
                   }
                 },
                 {
                   "name": "UpdateAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "providerName",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
+                      "name": "input",
+                      "typeAsString": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto, Volo.Abp.SettingManagement.Application.Contracts",
+                      "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
+                      "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
                       "isOptional": false,
                       "defaultValue": null
-                    },
-                    {
-                      "name": "providerKey",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "SendTestEmailAsync",
+                  "parametersOnMethod": [
                     {
                       "name": "input",
-                      "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
-                      "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
-                      "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                      "typeAsString": "Volo.Abp.SettingManagement.SendTestEmailInput, Volo.Abp.SettingManagement.Application.Contracts",
+                      "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
+                      "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
                       "isOptional": false,
                       "defaultValue": null
                     }
@@ -2688,126 +2517,44 @@
             }
           ],
           "actions": {
-            "GetAsyncByProviderNameAndProviderKey": {
-              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
+            "GetAsync": {
+              "uniqueName": "GetAsync",
               "name": "GetAsync",
               "httpMethod": "GET",
-              "url": "api/permission-management/permissions",
+              "url": "api/setting-management/emailing",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
-                "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
+                "type": "Volo.Abp.SettingManagement.EmailSettingsDto",
+                "typeSimple": "Volo.Abp.SettingManagement.EmailSettingsDto"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.PermissionManagement.IPermissionAppService"
+              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
             },
-            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
-              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
+            "UpdateAsyncByInput": {
+              "uniqueName": "UpdateAsyncByInput",
               "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/permission-management/permissions",
+              "httpMethod": "POST",
+              "url": "api/setting-management/emailing",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
                   "name": "input",
-                  "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
-                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
-                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeAsString": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto, Volo.Abp.SettingManagement.Application.Contracts",
+                  "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
+                  "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
                 {
                   "nameOnMethod": "input",
                   "name": "input",
                   "jsonName": null,
-                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
-                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "type": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
+                  "typeSimple": "Volo.Abp.SettingManagement.UpdateEmailSettingsDto",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -2820,7 +2567,44 @@
                 "typeSimple": "System.Void"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.PermissionManagement.IPermissionAppService"
+              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
+            },
+            "SendTestEmailAsyncByInput": {
+              "uniqueName": "SendTestEmailAsyncByInput",
+              "name": "SendTestEmailAsync",
+              "httpMethod": "POST",
+              "url": "api/setting-management/emailing/send-test-email",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Volo.Abp.SettingManagement.SendTestEmailInput, Volo.Abp.SettingManagement.Application.Contracts",
+                  "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
+                  "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Volo.Abp.SettingManagement.SendTestEmailInput",
+                  "typeSimple": "Volo.Abp.SettingManagement.SendTestEmailInput",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.SettingManagement.IEmailSettingsAppService"
             }
           }
         }
@@ -3328,11 +3112,11 @@
           "type": "SoowGoodWeb.Controllers.CommonController",
           "interfaces": [],
           "actions": {
-            "FileUploadComplain": {
-              "uniqueName": "FileUploadComplain",
-              "name": "FileUploadComplain",
+            "FileUploadDocuments": {
+              "uniqueName": "FileUploadDocuments",
+              "name": "FileUploadDocuments",
               "httpMethod": "POST",
-              "url": "api/Common/UploadDocuments",
+              "url": "api/Common/Documents",
               "supportedVersions": [],
               "parametersOnMethod": [],
               "parameters": [],
@@ -3413,6 +3197,157 @@
               "returnValue": {
                 "type": "Microsoft.AspNetCore.Mvc.IActionResult",
                 "typeSimple": "Microsoft.AspNetCore.Mvc.IActionResult"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SoowGoodWeb.Controllers.CommonController"
+            },
+            "GetDocumentAsyncByEntityTypeAndEntityIdAndAttachmentType": {
+              "uniqueName": "GetDocumentAsyncByEntityTypeAndEntityIdAndAttachmentType",
+              "name": "GetDocumentAsync",
+              "httpMethod": "GET",
+              "url": "api/Common/GetDocument",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "entityType",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "entityId",
+                  "typeAsString": "System.Nullable`1[[System.Int64, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Int64?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "attachmentType",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "entityType",
+                  "name": "entityType",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Query",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "entityId",
+                  "name": "entityId",
+                  "jsonName": null,
+                  "type": "System.Int64?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Query",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "attachmentType",
+                  "name": "attachmentType",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Query",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Int64",
+                "typeSimple": "number"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SoowGoodWeb.Controllers.CommonController"
+            },
+            "UpdateUploadAsyncByInput": {
+              "uniqueName": "UpdateUploadAsyncByInput",
+              "name": "UpdateUploadAsync",
+              "httpMethod": "PUT",
+              "url": "api/Common/UpdateUpload",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto, SoowGoodWeb.Application.Contracts",
+                  "type": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                  "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                  "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SoowGoodWeb.Controllers.CommonController"
+            },
+            "DeleteDocAsyncById": {
+              "uniqueName": "DeleteDocAsyncById",
+              "name": "DeleteDocAsync",
+              "httpMethod": "DELETE",
+              "url": "api/Common/DeleteDoc",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Int64, System.Private.CoreLib",
+                  "type": "System.Int64",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Int64",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Query",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
               },
               "allowAnonymous": null,
               "implementFrom": "SoowGoodWeb.Controllers.CommonController"
@@ -5124,11 +5059,11 @@
           "type": "SoowGoodWeb.Services.DocumentsAttachmentService",
           "interfaces": [],
           "actions": {
-            "GetAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType": {
-              "uniqueName": "GetAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType",
-              "name": "GetAttachmentInfo",
+            "GetDocumentInfoByEntityTypeAndEntityIdAndAttachmentType": {
+              "uniqueName": "GetDocumentInfoByEntityTypeAndEntityIdAndAttachmentType",
+              "name": "GetDocumentInfo",
               "httpMethod": "GET",
-              "url": "api/app/documents-attachment/attachment-info/{entityId}",
+              "url": "api/app/documents-attachment/document-info/{entityId}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
@@ -5141,8 +5076,8 @@
                 },
                 {
                   "name": "entityId",
-                  "typeAsString": "System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
-                  "type": "System.Int32?",
+                  "typeAsString": "System.Nullable`1[[System.Int64, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Int64?",
                   "typeSimple": "number?",
                   "isOptional": false,
                   "defaultValue": null
@@ -5173,7 +5108,84 @@
                   "nameOnMethod": "entityId",
                   "name": "entityId",
                   "jsonName": null,
-                  "type": "System.Int32?",
+                  "type": "System.Int64?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "attachmentType",
+                  "name": "attachmentType",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto",
+                "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SoowGoodWeb.Services.DocumentsAttachmentService"
+            },
+            "GetAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType": {
+              "uniqueName": "GetAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType",
+              "name": "GetAttachmentInfo",
+              "httpMethod": "GET",
+              "url": "api/app/documents-attachment/attachment-info/{entityId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "entityType",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "entityId",
+                  "typeAsString": "System.Nullable`1[[System.Int64, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Int64?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "attachmentType",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "entityType",
+                  "name": "entityType",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "entityId",
+                  "name": "entityId",
+                  "jsonName": null,
+                  "type": "System.Int64?",
                   "typeSimple": "number?",
                   "isOptional": false,
                   "defaultValue": null,
@@ -5247,8 +5259,8 @@
               "parametersOnMethod": [
                 {
                   "name": "id",
-                  "typeAsString": "System.Int32, System.Private.CoreLib",
-                  "type": "System.Int32",
+                  "typeAsString": "System.Int64, System.Private.CoreLib",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null
@@ -5267,7 +5279,7 @@
                   "nameOnMethod": "id",
                   "name": "id",
                   "jsonName": null,
-                  "type": "System.Int32",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null,
@@ -5293,7 +5305,7 @@
                 "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int32,SoowGoodWeb.DtoModels.DocumentsAttachmentDto>"
+              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int64,SoowGoodWeb.DtoModels.DocumentsAttachmentDto>"
             },
             "DeleteAsyncById": {
               "uniqueName": "DeleteAsyncById",
@@ -5304,8 +5316,8 @@
               "parametersOnMethod": [
                 {
                   "name": "id",
-                  "typeAsString": "System.Int32, System.Private.CoreLib",
-                  "type": "System.Int32",
+                  "typeAsString": "System.Int64, System.Private.CoreLib",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null
@@ -5316,7 +5328,7 @@
                   "nameOnMethod": "id",
                   "name": "id",
                   "jsonName": null,
-                  "type": "System.Int32",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null,
@@ -5330,7 +5342,7 @@
                 "typeSimple": "System.Void"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Int32>"
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Int64>"
             },
             "GetAsyncById": {
               "uniqueName": "GetAsyncById",
@@ -5341,8 +5353,8 @@
               "parametersOnMethod": [
                 {
                   "name": "id",
-                  "typeAsString": "System.Int32, System.Private.CoreLib",
-                  "type": "System.Int32",
+                  "typeAsString": "System.Int64, System.Private.CoreLib",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null
@@ -5353,7 +5365,7 @@
                   "nameOnMethod": "id",
                   "name": "id",
                   "jsonName": null,
-                  "type": "System.Int32",
+                  "type": "System.Int64",
                   "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null,
@@ -5367,7 +5379,7 @@
                 "typeSimple": "SoowGoodWeb.DtoModels.DocumentsAttachmentDto"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int32,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>"
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int64,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>"
             },
             "GetListAsyncByInput": {
               "uniqueName": "GetListAsyncByInput",
@@ -5428,7 +5440,7 @@
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SoowGoodWeb.DtoModels.DocumentsAttachmentDto>"
               },
               "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int32,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>"
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SoowGoodWeb.DtoModels.DocumentsAttachmentDto,SoowGoodWeb.DtoModels.DocumentsAttachmentDto,System.Int64,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>"
             }
           }
         },
@@ -6047,6 +6059,222 @@
           }
         }
       }
+    },
+    "permissionManagement": {
+      "rootPath": "permissionManagement",
+      "remoteServiceName": "AbpPermissionManagement",
+      "controllers": {
+        "Volo.Abp.PermissionManagement.PermissionsController": {
+          "controllerName": "Permissions",
+          "controllerGroupName": "Permissions",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Volo.Abp.PermissionManagement.PermissionsController",
+          "interfaces": [
+            {
+              "type": "Volo.Abp.PermissionManagement.IPermissionAppService",
+              "name": "IPermissionAppService",
+              "methods": [
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "providerName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "providerKey",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
+                    "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
+                  }
+                },
+                {
+                  "name": "UpdateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "providerName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "providerKey",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
+                      "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                      "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetAsyncByProviderNameAndProviderKey": {
+              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/permission-management/permissions",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
+                "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.PermissionManagement.IPermissionAppService"
+            },
+            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
+              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/permission-management/permissions",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
+                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.PermissionManagement.IPermissionAppService"
+            }
+          }
+        }
+      }
     }
   },
   "types": {
@@ -6078,6 +6306,334 @@
           "regex": null
         }
       ]
+    },
+    "SoowGoodWeb.DtoModels.DocumentsAttachmentDto": {
+      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Int64>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "FileName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OriginalFileName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Path",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "EntityType",
+          "jsonName": null,
+          "type": "SoowGoodWeb.Enums.EntityType?",
+          "typeSimple": "SoowGoodWeb.Enums.EntityType?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "EntityTypeName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "EntityId",
+          "jsonName": null,
+          "type": "System.Int64?",
+          "typeSimple": "number?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AttachmentType",
+          "jsonName": null,
+          "type": "SoowGoodWeb.Enums.AttachmentType?",
+          "typeSimple": "SoowGoodWeb.Enums.AttachmentType?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AttachmentTypeName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.FullAuditedEntityDto<T0>": {
+      "baseType": "Volo.Abp.Application.Dtos.AuditedEntityDto<TPrimaryKey>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "TPrimaryKey"
+      ],
+      "properties": [
+        {
+          "name": "IsDeleted",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DeleterId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DeletionTime",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.AuditedEntityDto<T0>": {
+      "baseType": "Volo.Abp.Application.Dtos.CreationAuditedEntityDto<TPrimaryKey>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "TPrimaryKey"
+      ],
+      "properties": [
+        {
+          "name": "LastModificationTime",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "LastModifierId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.CreationAuditedEntityDto<T0>": {
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto<TPrimaryKey>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "TPrimaryKey"
+      ],
+      "properties": [
+        {
+          "name": "CreationTime",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CreatorId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.EntityDto<T0>": {
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "TKey"
+      ],
+      "properties": [
+        {
+          "name": "Id",
+          "jsonName": null,
+          "type": "TKey",
+          "typeSimple": "TKey",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.EntityDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": []
+    },
+    "System.Nullable<T0>": {
+      "baseType": "System.ValueType",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "T"
+      ],
+      "properties": [
+        {
+          "name": "HasValue",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Value",
+          "jsonName": null,
+          "type": "T",
+          "typeSimple": "T",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SoowGoodWeb.Enums.EntityType": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "Doctor",
+        "Agent",
+        "Patient",
+        "Hospital"
+      ],
+      "enumValues": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "genericArguments": null,
+      "properties": null
+    },
+    "SoowGoodWeb.Enums.AttachmentType": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "ProfilePicture",
+        "DoctorDegreeDoc",
+        "DoctIdentityDoc",
+        "DoctorSpecialityDoc",
+        "Prescription",
+        "PatientLabreport"
+      ],
+      "enumValues": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "genericArguments": null,
+      "properties": null
     },
     "Volo.Abp.Account.RegisterDto": {
       "baseType": "Volo.Abp.ObjectExtending.ExtensibleObject",
@@ -11538,154 +12094,6 @@
         }
       ]
     },
-    "Volo.Abp.Application.Dtos.FullAuditedEntityDto<T0>": {
-      "baseType": "Volo.Abp.Application.Dtos.AuditedEntityDto<TPrimaryKey>",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": [
-        "TPrimaryKey"
-      ],
-      "properties": [
-        {
-          "name": "IsDeleted",
-          "jsonName": null,
-          "type": "System.Boolean",
-          "typeSimple": "boolean",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "DeleterId",
-          "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "DeletionTime",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "Volo.Abp.Application.Dtos.AuditedEntityDto<T0>": {
-      "baseType": "Volo.Abp.Application.Dtos.CreationAuditedEntityDto<TPrimaryKey>",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": [
-        "TPrimaryKey"
-      ],
-      "properties": [
-        {
-          "name": "LastModificationTime",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "LastModifierId",
-          "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "Volo.Abp.Application.Dtos.CreationAuditedEntityDto<T0>": {
-      "baseType": "Volo.Abp.Application.Dtos.EntityDto<TPrimaryKey>",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": [
-        "TPrimaryKey"
-      ],
-      "properties": [
-        {
-          "name": "CreationTime",
-          "jsonName": null,
-          "type": "System.DateTime",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "CreatorId",
-          "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "Volo.Abp.Application.Dtos.EntityDto<T0>": {
-      "baseType": "Volo.Abp.Application.Dtos.EntityDto",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": [
-        "TKey"
-      ],
-      "properties": [
-        {
-          "name": "Id",
-          "jsonName": null,
-          "type": "TKey",
-          "typeSimple": "TKey",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "Volo.Abp.Application.Dtos.EntityDto": {
-      "baseType": null,
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": null,
-      "properties": []
-    },
     "SoowGoodWeb.InputDto.DoctorChamberInputDto": {
       "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Int64>",
       "isEnum": false,
@@ -12394,41 +12802,6 @@
           "jsonName": null,
           "type": "System.Boolean?",
           "typeSimple": "boolean?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "System.Nullable<T0>": {
-      "baseType": "System.ValueType",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": [
-        "T"
-      ],
-      "properties": [
-        {
-          "name": "HasValue",
-          "jsonName": null,
-          "type": "System.Boolean",
-          "typeSimple": "boolean",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Value",
-          "jsonName": null,
-          "type": "T",
-          "typeSimple": "T",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -13744,163 +14117,6 @@
           "regex": null
         }
       ]
-    },
-    "SoowGoodWeb.DtoModels.DocumentsAttachmentDto": {
-      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Int32>",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": null,
-      "properties": [
-        {
-          "name": "FileName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "OriginalFileName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Path",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "EntityType",
-          "jsonName": null,
-          "type": "SoowGoodWeb.Enums.EntityType?",
-          "typeSimple": "SoowGoodWeb.Enums.EntityType?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "EntityTypeName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ImporterId",
-          "jsonName": null,
-          "type": "System.Int32?",
-          "typeSimple": "number?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "EntityId",
-          "jsonName": null,
-          "type": "System.Int32?",
-          "typeSimple": "number?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AttachmentType",
-          "jsonName": null,
-          "type": "SoowGoodWeb.Enums.AttachmentType?",
-          "typeSimple": "SoowGoodWeb.Enums.AttachmentType?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AttachmentTypeName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "SoowGoodWeb.Enums.EntityType": {
-      "baseType": "System.Enum",
-      "isEnum": true,
-      "enumNames": [
-        "Doctor",
-        "Agent",
-        "Patient",
-        "Hospital"
-      ],
-      "enumValues": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "genericArguments": null,
-      "properties": null
-    },
-    "SoowGoodWeb.Enums.AttachmentType": {
-      "baseType": "System.Enum",
-      "isEnum": true,
-      "enumNames": [
-        "ProfilePicture",
-        "DoctorDegreeDoc",
-        "DoctIdentityDoc",
-        "DoctorSpecialityDoc",
-        "Prescription",
-        "PatientLabreport"
-      ],
-      "enumValues": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
-      "genericArguments": null,
-      "properties": null
     },
     "SoowGoodWeb.DtoModels.OtpDto": {
       "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Int32>",

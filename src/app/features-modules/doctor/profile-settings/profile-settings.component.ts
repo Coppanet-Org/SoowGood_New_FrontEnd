@@ -1,7 +1,7 @@
-import { DoctorProfileService } from 'src/app/proxy/services';
+import { DoctorProfileService, DocumentsAttachmentService } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
-import {  ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorTitle } from 'src/app/proxy/enums';
@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { ToasterService } from '@abp/ng.theme.shared';
 import { environment } from '../../../../environments/environment';
+import { SubSink } from 'SubSink';
 import { HttpClient } from '@angular/common/http';
+import { DocumentsAttachmentDto } from '../../../proxy/dto-models';
 
 @Component({
   selector: 'app-profile-settings',
@@ -18,16 +20,18 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./profile-settings.component.scss'],
   animations: [slideInFrom('right')],
 })
-export class ProfileSettingsComponent implements OnInit  {
+export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
   animationDirection = 'right';
-  selectedIndex:any
-  userId:any;
-  loading:boolean=false;
-  profileInfo :any
-  doctorTitleList:ListItem[]=[]
-  title:any
+  selectedIndex: any
+  userId: any;
+  loading: boolean = false;
+  profileInfo: any
+  doctorTitleList: ListItem[] = []
+  title: any
   activeTab: string = '';
+
+  subs = new SubSink();
 
   fileList: File[] = [];
   fileNames: any[] = [];
@@ -36,31 +40,35 @@ export class ProfileSettingsComponent implements OnInit  {
   imagePath: any;
   upload: any;
 
+  profilePic: string = '';
+
   private apiUrl = `${environment.apis.default.url}/api`;
+  public picUrl = `${environment.apis.default.url}/`;
 
   constructor(
     private _fb: FormBuilder,
-    private doctorProfileService :DoctorProfileService,
+    private doctorProfileService: DoctorProfileService,
+    private doctorProfilePicService: DocumentsAttachmentService,
     private router: Router,
     private toastr: ToasterService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this.router.url;
     this.getLastPathSegment(currentURL);
-
+    
   }
-  
 
-  getTitle(title:string){
-   let doctortitle = this.doctorTitleList.find((e)=>e.id == title)
-   console.log("hello");
-   
-  return doctortitle?.name
-   
+
+  getTitle(title: string) {
+    let doctortitle = this.doctorTitleList.find((e) => e.id == title)
+    console.log("hello");
+
+    return doctortitle?.name
+
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -71,8 +79,9 @@ export class ProfileSettingsComponent implements OnInit  {
   isLinear = false;
 
 
-  getProfileData(data:any){
-    this.profileInfo = data
+  getProfileData(data: any) {
+    this.profileInfo = data;
+    this.getProfilePic();
   }
   handleFormData(formData: FormGroup) {
     this.loading = true
@@ -95,14 +104,23 @@ export class ProfileSettingsComponent implements OnInit  {
   }
   getLastPathSegment(url: string): void {
     const urlParts = url.split('/');
-     let pathName= urlParts[urlParts.length - 1];
+    let pathName = urlParts[urlParts.length - 1];
 
-     if (pathName == 'basic-info') {
-       this.activeTab = '0'
-      }
-      if (pathName == 'education') {
-       this.activeTab = '1'
-      }
+    if (pathName == 'basic-info') {
+      this.activeTab = '0'
+    }
+    if (pathName == 'education') {
+      this.activeTab = '1'
+    }
+  }
+
+  getProfilePic() {
+    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
+      let prePaths: string = "";
+      var re = /wwwroot/gi;
+      prePaths = at.path ? at.path : "";
+      this.profilePic = prePaths.replace(re, "");
+    });
   }
 
   uploadPic() {
@@ -144,7 +162,7 @@ export class ProfileSettingsComponent implements OnInit  {
     this.attachment.nativeElement.value = '';
   }
 
-  removeSelectedFile(index:any) {
+  removeSelectedFile(index: any) {
     // delete file name from fileNames list
     this.fileNames.splice(index, 1);
     // delete file from FileList
@@ -174,5 +192,5 @@ export class ProfileSettingsComponent implements OnInit  {
       this.cdRef.detectChanges();
     }
   }
-  
+
 }

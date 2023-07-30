@@ -9,29 +9,6 @@ import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
-export interface SmsInfo {
-  sms_status?: string;
-  status_message?: string;
-  sms_type?: string;
-  msisdn?: string;
-  sms_body?: string;
-  csms_id?: string;
-  reference_id?: string;
-}
-
-export interface SmsRequestParamDto {
-  msisdn?: string;
-  sms?: string;
-  csmsId?: string;
-}
-
-export interface SmsResponseDto {
-  status?: string;
-  status_code?: string;
-  error_message?: string;
-  smsinfo: SmsInfo[];
-}
-
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
@@ -181,7 +158,6 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   path?: string;
   entityType?: EntityType;
   entityTypeName?: string;
-  importerId?: number;
   entityId?: number;
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;
@@ -246,4 +222,27 @@ export interface UserSignUpResultDto {
   isActive?: boolean;
   success?: boolean;
   message: string[];
+}
+
+export interface SmsInfo {
+  sms_status?: string;
+  status_message?: string;
+  sms_type?: string;
+  msisdn?: string;
+  sms_body?: string;
+  csms_id?: string;
+  reference_id?: string;
+}
+
+export interface SmsRequestParamDto {
+  msisdn?: string;
+  sms?: string;
+  csmsId?: string;
+}
+
+export interface SmsResponseDto {
+  status?: string;
+  status_code?: string;
+  error_message?: string;
+  smsinfo: SmsInfo[];
 }

@@ -44,6 +44,15 @@ export class DocumentsAttachmentService {
     { apiName: this.apiName,...config });
   
 
+  getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType = (entityType: string, entityId: number, attachmentType: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DocumentsAttachmentDto>({
+      method: 'GET',
+      url: `/api/app/documents-attachment/document-info/${entityId}`,
+      params: { entityType, attachmentType },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: PagedAndSortedResultRequestDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<DocumentsAttachmentDto>>({
       method: 'GET',
