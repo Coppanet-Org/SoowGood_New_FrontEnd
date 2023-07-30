@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./education-info.component.scss']
 })
 export class EducationInfoComponent {
+  isLoading:boolean= false
 
+  sendDataToParent(){
+
+  }
+
+
+  
 }

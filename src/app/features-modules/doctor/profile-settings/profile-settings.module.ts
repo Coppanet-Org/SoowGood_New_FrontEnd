@@ -13,15 +13,29 @@ const routes: Route[] = [
   {
     path: '',
     component: ProfileSettingsComponent,
+
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'basic-info',
         pathMatch: 'full',
+      },
+      {
+        path: 'basic-info',
+        component: BasicInfoComponent,
+
       },
       {
         path: 'education',
         component: EducationInfoComponent
+      },
+      {
+        path: 'specialization',
+        component: SpecializationInfoComponent
+      },
+      {
+        path: 'hospital',
+        component: HospitalInfoComponent
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { DoctorProfileService, DocumentsAttachmentService } from 'src/app/proxy/services';
+import { DoctorProfileService } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -45,8 +45,16 @@ export class ProfileSettingsComponent implements OnInit {
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
 
+  
   constructor(
     private _fb: FormBuilder,
+    private doctorProfileService :DoctorProfileService,
+    private router : Router,
+    private cdr :ChangeDetectorRef,
+    private _router : Router,
+    private TosterService : TosterService,
+
+  ){}
     private doctorProfileService: DoctorProfileService,
     private doctorProfilePicService: DocumentsAttachmentService,
     private router: Router,
@@ -55,20 +63,19 @@ export class ProfileSettingsComponent implements OnInit {
     private http: HttpClient,
   ) { }
 
+  
   ngOnInit(): void {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this.router.url;
     this.getLastPathSegment(currentURL);
-    
   }
 
 
-  getTitle(title: string) {
-    let doctortitle = this.doctorTitleList.find((e) => e.id == title)
-    console.log("hello");
-
-    return doctortitle?.name
-
+  // this function need to optimize in future
+  getTitle(title:string){
+   let doctortitle = this.doctorTitleList.find((e)=>e.id == title)
+  return doctortitle?.name
+   
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -83,34 +90,86 @@ export class ProfileSettingsComponent implements OnInit {
     this.profileInfo = data;
     this.getProfilePic();
   }
-  handleFormData(formData: FormGroup) {
-    this.loading = true
-    const doctorProfileInput: DoctorProfileInputDto = {
-      degrees: [], // Set the appropriate value here or leave it empty based on your requirements
-      doctorSpecialization: [], // Set the appropriate value here or leave it empty based on your requirements
-      ...formData, // Copy all other form values to the DoctorProfileInputDto object
+  handleFormData(formData:any) {
+    const updatedProfile: DoctorProfileInputDto = {
+      ...formData,
     };
 
-    this.doctorProfileService.update(doctorProfileInput).subscribe(
-      (res) => {
-        if (res) {
-          this.loading = false
-        }
-      },
-      (error) => {
-        console.log(error.message);
+  
+    let changedProperties: string[] = [];
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
+        changedProperties.push(key);
       }
-    );
+    }
+  
+    if (changedProperties.length === 0) {
+      this.TosterService.customToast('Nothing has changed', 'warning');
+      this.loading = false;
+    } else {
+      this.loading = true;
+      this.doctorProfileService.update(updatedProfile).subscribe(
+        (res) => {
+          // res condition may apply, need to update in the future
+          this.loading = false;
+          let successMessage = '';
+
+          if (changedProperties.length > 0) {
+            if (changedProperties.length > 1) {
+              const lastProperty = changedProperties.pop();
+              const joinedProperties = changedProperties.join(', ');
+              successMessage = `${joinedProperties} and ${lastProperty} Successfully Updated!`;
+            } else {
+              successMessage = `${changedProperties[0]} Successfully Updated! `;
+            }
+          }
+  
+          this.TosterService.customToast(successMessage, 'success');
+          changedProperties = []
+          successMessage=''
+         
+          
+        },
+        (error) => {
+          this.loading = false;
+          this.TosterService.customToast(error.message, 'error');
+        }
+      );
+   
+    }
   }
+  
+  
+  
+  
   getLastPathSegment(url: string): void {
     const urlParts = url.split('/');
     let pathName = urlParts[urlParts.length - 1];
 
-    if (pathName == 'basic-info') {
-      this.activeTab = '0'
+     if (pathName == 'basic-info') {
+       this.activeTab = '0'
+      }
+      if (pathName == 'education') {
+       this.activeTab = '1'
+      }
+      if (pathName == 'specializations') {
+        this.activeTab = '2'
+       }
+      if (pathName == 'hospital') {
+        this.activeTab = '3'
+       }
+  }
+  onchangeStep(e:any){
+    if (e.selectedIndex == 0) {
+      this._router.navigate(['doctor/profile-settings/basic-info'])
     }
-    if (pathName == 'education') {
-      this.activeTab = '1'
+    if (e.selectedIndex == 1) {
+      this._router.navigate(['doctor/profile-settings/education'])
+    }
+    if (e.selectedIndex == 2) {
+      this._router.navigate(['doctor/profile-settings/specialization'])
+    }if (e.selectedIndex == 3) {
+      this._router.navigate(['doctor/profile-settings/hospital'])
     }
   }
 
@@ -194,3 +253,4 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
 }
+

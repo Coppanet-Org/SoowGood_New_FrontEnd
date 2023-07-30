@@ -10,25 +10,45 @@
             <img src="{{picUrl+profilePic}}" alt=""
                  class="object-cover rounded-lg mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110">
           </div>
-          
-          <!--style="display: none"-->
+
           <div class="mt-16 flex justify-between">
             <div>
-              <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">{{profileInfo?.fullName}}</h1>
-              <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">{{getTitle(profileInfo?.doctorTitle)}}</p>
+              <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">{{profileInfo?.fullName}}
+              </h1>
+              <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">
+                {{getTitle(profileInfo?.doctorTitle)}}</p>
             </div>
             <div>
-              <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">
-                View
-                Profile
-              </button>
-
+              <button
+                class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">View
+                Profile</button>
             </div>
           </div>
 
           <hr>
 
 
+          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-5  mx-auto"
+            [selectedIndex]="activeTab">
+            <mat-step [stepControl]="firstFormGroup" label="Basic Info" >
+              <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
+                [isLoading]='loading'></app-basic-info>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
+              <app-education-info></app-education-info>
+              
+            </mat-step>
+            <mat-step label="Specializations">
+              <app-specialization-info></app-specialization-info>
+              <div>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+                <button mat-button matStepper Previous>Back</button>
+              </div>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Hospital">
+              <app-hospital-info></app-hospital-info>
+            </mat-step>
+          </mat-stepper>
           <mat-stepper #stepper class="mt-5  mx-auto" [selectedIndex]="activeTab">
             <mat-step [stepControl]="firstFormGroup" label="Basic Info">
               <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)" [isLoading]='loading'></app-basic-info>
@@ -75,8 +95,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
