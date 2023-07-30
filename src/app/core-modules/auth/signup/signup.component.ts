@@ -185,7 +185,8 @@ export class SignupComponent implements OnInit {
     const doctorProfileInput: DoctorProfileInputDto = {
       degrees: [], 
       doctorSpecialization: [],
-      ...formData
+      ...formData,
+      id:this.docId
     };
     doctorProfileInput.userId = this.doctorProfileDto.userId;
     doctorProfileInput.fullName = this.doctorProfileDto.fullName;
