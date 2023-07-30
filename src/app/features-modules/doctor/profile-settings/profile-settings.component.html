@@ -13,15 +13,18 @@
 
           <div class="mt-16 flex justify-between">
             <div>
-              <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">{{profileInfo?.fullName}}
+              <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">
+                {{profileInfo?.fullName}}
               </h1>
               <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">
-                {{getTitle(profileInfo?.doctorTitle)}}</p>
+                {{getTitle(profileInfo?.doctorTitle)}}
+              </p>
             </div>
             <div>
-              <button
-                class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">View
-                Profile</button>
+              <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">
+                View
+                Profile
+              </button>
             </div>
           </div>
 
@@ -29,14 +32,14 @@
 
 
           <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-5  mx-auto"
-            [selectedIndex]="activeTab">
-            <mat-step [stepControl]="firstFormGroup" label="Basic Info" >
+                       [selectedIndex]="activeTab">
+            <mat-step [stepControl]="firstFormGroup" label="Basic Info">
               <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
-                [isLoading]='loading'></app-basic-info>
+                              [isLoading]='loading'></app-basic-info>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
               <app-education-info></app-education-info>
-              
+
             </mat-step>
             <mat-step label="Specializations">
               <app-specialization-info></app-specialization-info>

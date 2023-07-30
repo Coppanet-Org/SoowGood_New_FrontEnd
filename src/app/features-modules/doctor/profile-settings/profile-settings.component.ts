@@ -40,7 +40,8 @@ export class ProfileSettingsComponent implements OnInit {
   fileData = new FormData();
   imagePath: any;
   upload: any;
-
+  auth: any;
+  docId!: string;
   profilePic: string = '';
 
   private apiUrl = `${environment.apis.default.url}/api`;
@@ -49,22 +50,24 @@ export class ProfileSettingsComponent implements OnInit {
   
   constructor(
     private _fb: FormBuilder,
-    private doctorProfileService :DoctorProfileService,
-    
+    private doctorProfileService :DoctorProfileService,    
     private doctorProfilePicService: DocumentsAttachmentService,
     private router : Router,
-    private cdr :ChangeDetectorRef,
     private _router : Router,
     private TosterService : TosterService,    
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-
   ){}
     
     
 
   
   ngOnInit(): void {
+    //this.auth = localStorage.getItem("auth");
+    this.auth = JSON.parse(localStorage.getItem("auth") || '{}') as any;
+    this.docId = this.auth.id;
+    console.log(this.auth);
+    console.log(this.docId);
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this.router.url;
     this.getLastPathSegment(currentURL);
@@ -88,6 +91,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   getProfileData(data: any) {
     this.profileInfo = data;
+    console.log(this.profileInfo.id);
     this.getProfilePic();
   }
   handleFormData(formData:any) {
@@ -174,7 +178,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   getProfilePic() {
-    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
+    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.auth.id, "ProfilePicture").subscribe((at) => {
       let prePaths: string = "";
       var re = /wwwroot/gi;
       prePaths = at.path ? at.path : "";
@@ -184,7 +188,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   uploadPic() {
     //this.fileData = new FormData();
-    this.fileData.append("entityId", this.profileInfo.id.toString());
+    this.fileData.append("entityId", this.profileInfo.id);
     this.fileData.append("entityType", "Doctor");
     this.fileData.append("attachmentType", "ProfilePicture");
     this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
