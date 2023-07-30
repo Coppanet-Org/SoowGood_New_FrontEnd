@@ -16,6 +16,7 @@ import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
+import { DateParserFormatter } from '@abp/ng.theme.shared';
 
 
 const routerConfig: ExtraOptions = {
