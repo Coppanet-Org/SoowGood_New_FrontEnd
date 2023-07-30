@@ -1,4 +1,4 @@
-import { DoctorProfileService } from 'src/app/proxy/services';
+import { DoctorProfileService, DocumentsAttachmentService } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,6 +13,7 @@ import { environment } from '../../../../environments/environment';
 import { SubSink } from 'SubSink';
 import { HttpClient } from '@angular/common/http';
 import { DocumentsAttachmentDto } from '../../../proxy/dto-models';
+import { TosterService } from 'src/app/shared/services/toster.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -49,19 +50,18 @@ export class ProfileSettingsComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private doctorProfileService :DoctorProfileService,
+    
+    private doctorProfilePicService: DocumentsAttachmentService,
     private router : Router,
     private cdr :ChangeDetectorRef,
     private _router : Router,
-    private TosterService : TosterService,
-
-  ){}
-    private doctorProfileService: DoctorProfileService,
-    private doctorProfilePicService: DocumentsAttachmentService,
-    private router: Router,
-    private toastr: ToasterService,
+    private TosterService : TosterService,    
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-  ) { }
+
+  ){}
+    
+    
 
   
   ngOnInit(): void {
@@ -199,7 +199,7 @@ export class ProfileSettingsComponent implements OnInit {
           //this.form.reset();
           //this.fileData = new FormData();
           //this.fileNames = this.fileNames;
-          this.toastr.success(result['Message'], result['Status']);
+          // this.toastr.success(result['Message'], result['Status']);
           this.cdRef.detectChanges();
         },
         (err) => {

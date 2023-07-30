@@ -49,25 +49,6 @@
               <app-hospital-info></app-hospital-info>
             </mat-step>
           </mat-stepper>
-          <mat-stepper #stepper class="mt-5  mx-auto" [selectedIndex]="activeTab">
-            <mat-step [stepControl]="firstFormGroup" label="Basic Info">
-              <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)" [isLoading]='loading'></app-basic-info>
-
-            </mat-step>
-
-            <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
-
-            </mat-step>
-            <mat-step label="Specializations">
-              <div>
-                <button mat-button matStepper Previous>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-              </div>
-            </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Hospital">
-
-            </mat-step>
-          </mat-stepper>
           <form>
             <hr class="gap">
             <button (click)="fileInput.click()">attachement</button>
@@ -89,6 +70,7 @@
             <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white" (click)="uploadPic()">Upload</button>
 
           </form>
+
 
         </div>
       </div>
