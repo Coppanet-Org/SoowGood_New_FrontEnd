@@ -4,7 +4,7 @@ export interface AggregateRoot<TKey> extends BasicAggregateRoot<TKey> {
   concurrencyStamp?: string;
 }
 
-export interface BasicAggregateRoot<TKey> extends Entity<TKey> {
+export interface BasicAggregateRoot<TKey> extends Entity {
 }
 
 export interface Entity {
