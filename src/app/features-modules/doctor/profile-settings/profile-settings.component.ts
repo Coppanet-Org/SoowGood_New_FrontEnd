@@ -8,6 +8,7 @@ import { DoctorTitle } from 'src/app/proxy/enums';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
+import { MatIcon } from '@angular/material/icon';
 import { ToasterService } from '@abp/ng.theme.shared';
 import { environment } from '../../../../environments/environment';
 import { SubSink } from 'SubSink';
@@ -41,7 +42,7 @@ export class ProfileSettingsComponent implements OnInit {
   imagePath: any;
   upload: any;
   auth: any;
-
+  url: any;
   profilePic: string = '';
 
   private apiUrl = `${environment.apis.default.url}/api`;
@@ -52,7 +53,6 @@ export class ProfileSettingsComponent implements OnInit {
     private _fb: FormBuilder,
     private doctorProfileService: DoctorProfileService,
     private doctorProfilePicService: DocumentsAttachmentService,
-    private router: Router,
     private _router: Router,
     private TosterService: TosterService,
     private cdRef: ChangeDetectorRef,
@@ -63,7 +63,7 @@ export class ProfileSettingsComponent implements OnInit {
     //this.auth = localStorage.getItem("auth");
 
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
-    const currentURL = this.router.url;
+    const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
   }
 
@@ -90,15 +90,12 @@ export class ProfileSettingsComponent implements OnInit {
     const updatedProfile: DoctorProfileInputDto = {
       ...formData,
     };
-
-
     let changedProperties: string[] = [];
     for (const key in formData) {
       if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
         changedProperties.push(key);
       }
     }
-
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
       this.loading = false;
@@ -119,19 +116,39 @@ export class ProfileSettingsComponent implements OnInit {
               successMessage = `${changedProperties[0]} Successfully Updated! `;
             }
           }
-
           this.TosterService.customToast(successMessage, 'success');
-          changedProperties = []
-          successMessage = ''
-
-
+          changedProperties = [];
+          successMessage = '';
         },
         (error) => {
           this.loading = false;
           this.TosterService.customToast(error.message, 'error');
+        });
+    }
+    if (this.fileList.length > 0) {
+      this.fileData.append("entityId", this.profileInfo.id.toString());
+      this.fileData.append("entityType", "Doctor");
+      this.fileData.append("attachmentType", "ProfilePicture");
+      this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
+      if (this.fileList.length > 0) {
+        for (let item of this.fileList) {
+          let fileToUpload = item;
+          this.fileData.append(item.name, fileToUpload);
         }
-      );
+        // save attachment
+        this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+          (result: any) => {
+            //this.form.reset();
+            //this.fileData = new FormData();
+            //this.fileNames = this.fileNames;
+            this.TosterService.customToast('Picture Changed Successfully', 'success');
 
+          },
+          (err) => {
+            console.log(err);
+          });
+        this.cdRef.detectChanges();
+      }
     }
   }
 
@@ -167,6 +184,8 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
 
+  //Profile Picture Related Functions
+
   getProfilePic() {
     this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
       if (at) {
@@ -174,36 +193,37 @@ export class ProfileSettingsComponent implements OnInit {
         var re = /wwwroot/gi;
         prePaths = at.path ? at.path : "";
         this.profilePic = prePaths.replace(re, "");
+        this.url = this.picUrl + this.profilePic;
       }
     });
   }
 
-  uploadPic() {
-    //this.fileData = new FormData();
-    this.fileData.append("entityId", this.profileInfo.id.toString());
-    this.fileData.append("entityType", "Doctor");
-    this.fileData.append("attachmentType", "ProfilePicture");
-    this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
-    if (this.fileList.length > 0) {
-      for (let item of this.fileList) {
-        let fileToUpload = item;
-        this.fileData.append(item.name, fileToUpload);
-      }
-      // save attachment
-      this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
-        (result: any) => {
-          //this.form.reset();
-          //this.fileData = new FormData();
-          //this.fileNames = this.fileNames;
-          this.TosterService.customToast('Picture Changed Successfully', 'success');
+  //uploadPic() {
+  //  //this.fileData = new FormData();
+  //  this.fileData.append("entityId", this.profileInfo.id.toString());
+  //  this.fileData.append("entityType", "Doctor");
+  //  this.fileData.append("attachmentType", "ProfilePicture");
+  //  this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
+  //  if (this.fileList.length > 0) {
+  //    for (let item of this.fileList) {
+  //      let fileToUpload = item;
+  //      this.fileData.append(item.name, fileToUpload);
+  //    }
+  //    // save attachment
+  //    this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+  //      (result: any) => {
+  //        //this.form.reset();
+  //        //this.fileData = new FormData();
+  //        //this.fileNames = this.fileNames;
+  //        this.TosterService.customToast('Picture Changed Successfully', 'success');
 
-        },
-        (err) => {
-          console.log(err);
-        });
-      this.cdRef.detectChanges();
-    }
-  }
+  //      },
+  //      (err) => {
+  //        console.log(err);
+  //      });
+  //    this.cdRef.detectChanges();
+  //  }
+  //}
 
   onFileChanged(event: any) {
     for (var i = 0; i <= event.target.files.length - 1; i++) {

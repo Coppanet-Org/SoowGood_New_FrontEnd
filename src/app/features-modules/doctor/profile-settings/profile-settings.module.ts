@@ -8,6 +8,11 @@ import { BasicInfoComponent } from '../component/basic-info/basic-info.component
 import { EducationInfoComponent } from '../component/education-info/education-info.component';
 import { HospitalInfoComponent } from '../component/hospital-info/hospital-info.component';
 import { SpecializationInfoComponent } from '../component/specialization-info/specialization-info.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DegreeDialogComponentnt } from '../component/degree-dialog/degree-dialog.component';
+import { DegreeCardComponent } from '../component/degree-card/degree-card.component';
+import { SpecializationDialogComponent } from '../component/specialization-dialog/specialization-dialog.component';
+
 
 const routes: Route[] = [
   {
@@ -48,13 +53,17 @@ const routes: Route[] = [
     BasicInfoComponent,
     EducationInfoComponent,
     HospitalInfoComponent,
-    SpecializationInfoComponent
+    SpecializationInfoComponent,
+    DegreeDialogComponentnt,
+    DegreeCardComponent,
+    SpecializationDialogComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule
   ],
   providers: [DatePipe], 
 })

@@ -133,7 +133,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": userType === "Patient" ? true : false,
+      "isActive": userType === true,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -151,7 +151,7 @@ export class SignupComponent implements OnInit {
             this.doctorProfileDto.fullName = res.name;
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
-            this.doctorProfileDto.isActive = res.isActive;
+            this.doctorProfileDto.isActive = false;
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
@@ -164,7 +164,7 @@ export class SignupComponent implements OnInit {
                       bmdcRegNo: doctorDto.bmdcRegNo,
                       isActive: doctorDto.isActive,
                       userId: doctorDto.userId,
-                      id: doctorDto.id
+                      id: doctorDto.id,
                     }
                     this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                   })
@@ -193,8 +193,6 @@ export class SignupComponent implements OnInit {
 
 
   handleFormData(formData: FormGroup) {
-
-
     const doctorProfileInput: DoctorProfileInputDto = {
       degrees: [],
       doctorSpecialization: [],

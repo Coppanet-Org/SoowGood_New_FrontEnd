@@ -1,4 +1,4 @@
-<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
+<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container ">
   <div class="font-medium text-gray-900 text-left text-[28px] h-32 bg-white">
     <img src="../../../../../assets/doctor/dr-cover.jpg" class="w-full object-cover h-full" alt="">
   </div>
@@ -6,36 +6,35 @@
     <div>
       <div class="bg-white relative shadow rounded-lg w-full mx-auto">
         <div class="pl-10 pr-10">
-          <div class="flex justify-left" (click)="fileInput.click()">
-            <input style="display: none" #attachments type="file" (change)="onFileChanged($event)" #fileInput accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
-            <img src="{{picUrl+profilePic}}" alt=""
-                 class="object-cover rounded-lg mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110">
-
+          <div class="flex justify-left">
+            <img [src]="url ? url : '../../../../../assets/doctor/dr.jpeg'" alt=""
+                 class="object-cover rounded-lg mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" (click)="fileInput.click()">
+            <!--<mat-icon class="icon" fontIcon="edit"></mat-icon>-->
+            <input style="display: none" #attachments type="file" (change)="onFileChanged($event)" #fileInput accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" multiple>
           </div>
-          
           <div class="mt-16 flex justify-between">
             <div>
               <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">
                 {{profileInfo?.fullName}}
               </h1>
-              <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">
+              <p class="text-left text-sm text-gray-400 mt-2 font-medium dashbord-heading-subtext">
                 {{getTitle(profileInfo?.doctorTitle)}}
               </p>
             </div>
             <div>
-              <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white" (click)="uploadPic()">Upload Profic Pic</button>
+              <!--<button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white" (click)="uploadPic()">
+                Upload
+              </button>-->
+            </div>
+            <div>
               <button class="btn-secondary hover:border-none hover:bg-secondary bg-primary text-white hover:text-white">
                 View
                 Profile
               </button>
-
             </div>
           </div>
 
-          <hr>
-
-
-          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-5  mx-auto"
+          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7  mx-auto"
                        [selectedIndex]="activeTab">
             <mat-step [stepControl]="firstFormGroup" label="Basic Info">
               <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
@@ -43,41 +42,14 @@
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
               <app-education-info></app-education-info>
-
             </mat-step>
             <mat-step label="Specializations">
               <app-specialization-info></app-specialization-info>
-              <div>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button matStepper Previous>Back</button>
-              </div>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Hospital">
               <app-hospital-info></app-hospital-info>
             </mat-step>
           </mat-stepper>
-          <form>
-            <!--<hr class="gap">
-    <button (click)="fileInput.click()">attachement</button>
-    <input style="display: none" #attachments type="file" (change)="onFileChanged($event)" #fileInput accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
-    <hr class="gap">-->
-            <!--<table>
-              <tbody>
-                <tr *ngFor="let fileName of fileNames; let i=index">
-                  <td style="width:5%">
-                    <a href="javascript:void(0)" (click)="removeSelectedFile(i)" style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close" aria-hidden="true"></i></a>
-                  </td>
-                  <td style="width:2%">&nbsp;</td>
-                  <td style="width:93%">
-                    {{ fileName }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>-->
-
-
-          </form>
-
 
         </div>
       </div>

@@ -2,20 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private _authenticated: boolean= false;
+  private _authenticated: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
-  setAuthInfoInLocalStorage( data:any): void {
+  setAuthInfoInLocalStorage(data: any): void {
     localStorage.removeItem('auth');
     localStorage.setItem('auth', JSON.stringify(data));
-}
+  }
 
-signOut(): Observable<any>
-{
+  signOut(): Observable<any> {
     // Remove the access token from the local storage
     // localStorage.removeItem('accessToken');
     localStorage.clear();
@@ -25,11 +24,11 @@ signOut(): Observable<any>
 
     // Return the observable
     return of(true);
-}
+  }
 
-authInfo(): any {
-  const authData = localStorage.getItem('auth');
-  console.log('authData:', authData); // Check the value in the console
-  return authData ? JSON.parse(authData) : null;
-}
+  authInfo(): any {
+    const authData = localStorage.getItem('auth');
+    console.log('authData:', authData); // Check the value in the console
+    return authData ? JSON.parse(authData) : null;
+  }
 }

@@ -18,6 +18,7 @@ export class TosterService {
 
     return {
       duration: 3000,
+    
       style: {
         padding: '10px 16px',
         color: textColor,
