@@ -1,6 +1,5 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { DocumentsAttachmentDto } from '../dto-models/models';
 import type { FileDeleteInputDto } from '../input-dto/models';
 import type { IActionResult } from '../microsoft/asp-net-core/mvc/models';
 
@@ -51,15 +50,6 @@ export class CommonService {
       method: 'GET',
       url: '/api/Common/GetDocument',
       params: { entityType, entityId, attachmentType },
-    },
-    { apiName: this.apiName,...config });
-  
-
-  updateUpload = (input: DocumentsAttachmentDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DocumentsAttachmentDto>({
-      method: 'PUT',
-      url: '/api/Common/UpdateUpload',
-      body: input,
     },
     { apiName: this.apiName,...config });
 
