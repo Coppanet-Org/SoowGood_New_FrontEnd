@@ -164,7 +164,7 @@ export class SignupComponent implements OnInit {
                       bmdcRegNo: doctorDto.bmdcRegNo,
                       isActive:doctorDto.isActive,
                       userId: doctorDto.userId,
-                      id: doctorDto.id
+                      id: doctorDto.id,
                     }
                     this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                   })
@@ -193,8 +193,6 @@ export class SignupComponent implements OnInit {
 
 
   handleFormData(formData: FormGroup) {
-
-
     const doctorProfileInput: DoctorProfileInputDto = {
       degrees: [],
       doctorSpecialization: [],

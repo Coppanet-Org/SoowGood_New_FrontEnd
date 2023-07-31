@@ -1,4 +1,4 @@
-<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
+<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container ">
   <div class="font-medium text-gray-900 text-left text-[28px] h-32 bg-white">
     <img src="../../../../../assets/doctor/dr-cover.jpg" class="w-full object-cover h-full" alt="">
   </div>
@@ -15,7 +15,7 @@
             <div>
               <h1 class="font-bold text-left text-3xl text-gray-900 dashbord-heading-text">{{profileInfo?.fullName}}
               </h1>
-              <p class="text-left text-sm text-gray-400 font-medium dashbord-heading-subtext">
+              <p class="text-left text-sm text-gray-400 mt-2 font-medium dashbord-heading-subtext">
                 {{getTitle(profileInfo?.doctorTitle)}}</p>
             </div>
             <div>
@@ -25,10 +25,10 @@
             </div>
           </div>
 
-          <hr>
+      
 
 
-          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-5  mx-auto"
+          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7  mx-auto"
             [selectedIndex]="activeTab">
             <mat-step [stepControl]="firstFormGroup" label="Basic Info" >
               <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
@@ -36,14 +36,9 @@
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
               <app-education-info></app-education-info>
-              
             </mat-step>
             <mat-step label="Specializations">
               <app-specialization-info></app-specialization-info>
-              <div>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button matStepper Previous>Back</button>
-              </div>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Hospital">
               <app-hospital-info></app-hospital-info>

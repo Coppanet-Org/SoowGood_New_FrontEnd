@@ -49,7 +49,6 @@ export class ProfileSettingsComponent implements OnInit  {
   getTitle(title:string){
    let doctortitle = this.doctorTitleList.find((e)=>e.id == title)
   return doctortitle?.name
-   
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -111,10 +110,6 @@ export class ProfileSettingsComponent implements OnInit  {
    
     }
   }
-  
-  
-  
-  
   getLastPathSegment(url: string): void {
     const urlParts = url.split('/');
      let pathName= urlParts[urlParts.length - 1];
