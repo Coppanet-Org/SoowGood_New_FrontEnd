@@ -28,7 +28,10 @@
     @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply border-none hover:bg-secondary bg-primary text-white hover:text-white py-2.5 px-5 mr-2 h-fit text-sm font-normal focus:outline-none  rounded-md border border-gray-200;
+    @apply flex items-center justify-center text-center relative font-bold text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-gray-800 px-8 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75;
+  }
+  .btn-secondary-light {
+    @apply bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
   }
   .signup-form {
     @apply flex items-center w-full h-screen bg-slate-100;

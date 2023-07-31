@@ -1,0 +1,125 @@
+import { TosterService } from 'src/app/shared/services/toster.service';
+import { DoctorDegreeService } from './../../../../proxy/services/doctor-degree.service';
+import { DoctorDegreeDto } from 'src/app/proxy/dto-models';
+import { DegreeService } from './../../../../proxy/services/degree.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-degree-dialog',
+  templateUrl: './degree-dialog.component.html',
+  styleUrls: ['./degree-dialog.component.scss'],
+})
+export class DegreeDialogComponentnt implements OnInit {
+  isLoading: boolean = false;
+  degreeList: DoctorDegreeDto[] = [];
+  durationList: any = [
+    { id: 1, name: '1 year' },
+    { id: 2, name: '2 year' },
+    { id: 3, name: '3 year' },
+    { id: 4, name: '4 year' },
+    { id: 5, name: '5 year' },
+  ];
+  form!: FormGroup;
+  doctorId: any;
+  constructor(
+    private degreeService: DegreeService,
+    private fb: FormBuilder,
+    private doctorDegreeService: DoctorDegreeService,
+    private normalAuth: AuthService,
+    public dialogRef: MatDialogRef<DegreeDialogComponentnt>,
+    private tosterService: TosterService,
+    @Inject(MAT_DIALOG_DATA) public editData: DoctorDegreeDto | undefined
+  ) {}
+
+  ngOnInit(): void {
+    this.loadForm();
+    this.degreeService.getList().subscribe((res) => {
+      this.degreeList = res;
+    });
+    this.doctorId = this.normalAuth.authInfo().id;
+    if (this.editData) {
+      this.form.patchValue(this.editData);
+    }
+  }
+
+  loadForm() {
+    this.form = this.fb.group({
+      zipCode: ['1216'],
+      degreeId: ['', Validators.required],
+      duration: ['', Validators.required],
+      durationType: ['', Validators.required],
+      passingYear: ['', Validators.required],
+      instituteName: ['', Validators.required],
+      instituteCity: ['', Validators.required],
+      instituteCountry: ['', Validators.required],
+    });
+  }
+  sendDataToParent() {
+    let degreeId = this.form.get('degreeId')?.value;
+    let duration = this.form.get('duration')?.value;
+    const newDegreeData = {
+      ...this.form.value,
+      degreeId: Number(degreeId),
+      duration: Number(duration),
+      doctorId: this.doctorId,
+    };
+
+    if (!this.form.valid && !this.form.touched) {
+      this.tosterService.customToast(
+        'Please fill all the required fields!',
+        'warning'
+      );
+      return;
+    }
+
+    if (!this.editData) {
+      this.doctorDegreeService.create(newDegreeData).subscribe((res) => {
+        if (res) {
+          this.tosterService.customToast('Successfully added!', 'success');
+          this.dialogRef.close(true);
+        }
+      });
+    } else {
+      let changedProperties: string[] = [];
+      let exData: any = this.editData;
+      for (const key in newDegreeData) {
+        if (
+          newDegreeData.hasOwnProperty(key) &&
+          newDegreeData[key] !== exData[key]
+        ) {
+          changedProperties.push(key);
+        }
+      }
+
+      if (changedProperties.length < 1) {
+        this.dialogRef.close(false);
+        return;
+      } else {
+        this.doctorDegreeService
+          .update({ ...newDegreeData, id: this.editData.id })
+          .subscribe((res) => {
+            if (res) {
+              this.tosterService.customToast(
+                'Successfully updated!',
+                'success'
+              );
+              this.dialogRef.close(true);
+            } else {
+              this.tosterService.customToast(
+                'Something went wrong! Please contact your administrator.',
+                'error'
+              );
+              this.dialogRef.close(false);
+            }
+          });
+      }
+    }
+  }
+}

@@ -2,137 +2,18 @@
     <div class=" w-full  bg-white">
 
         <div class="relative overflow-x-auto  sm:rounded-lg ">
-            <div class="py-2 px-5 border-[1px] rounded-md flex justify-between items-center">
-              <h1 class="dashbord-heading-text text-[20px]"> <i class="fa-solid fa-building-columns mr-1"></i> Education Qualifications</h1>
-              <button class="btn-secondary"> Add Degree </button>
+            <div class="py-2 pl-5 pr-1 border-[1px] rounded-md flex gap-4 items-center">
+                <h1 class="dashbord-heading-text text-[20px]"> <i class="fa-solid fa-building-columns mr-1"></i>
+                    Education Qualifications</h1>
+                <button class="btn-secondary-light" (click)="openDialog()"> <i class="fa-solid fa-plus  mr-1"></i> Add
+                    Degree </button>
             </div>
 
-     <div class="py-3">
-        <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        </a>
-     </div>
-
-            <!-- <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px] mt-4">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Institute name
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Degree
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Passing year
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
-                        </td>
-                    </tr>
-                    <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Microsoft Surface Pro
-                        </th>
-                        <td class="px-6 py-4">
-                            White
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop PC
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Magic Mouse 2
-                        </th>
-                        <td class="px-6 py-4">
-                            Black
-                        </td>
-                        <td class="px-6 py-4">
-                            Accessories
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
-                        </td>
-                    </tr>
-
-
-                </tbody>
-            </table> -->
+            <div class="flex flex-wrap w-full justify-between row-gap-1 ">
+                <div class="py-3 w-[49%]" *ngFor="let item of educationList">
+                    <app-degree-card [degreeData]="item" (editDegree)="handleDegreeEdit($event)"></app-degree-card>
+                </div>
+            </div>
         </div>
-        
-
-
-        <!-- <form>
-            <div class="-mx-3 flex flex-wrap">
-                <div class="w-full px-3 sm:w-1/2">
-                    <div class="mb-5">
-                        <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                            Degree Name
-                        </label>
-                        <input formControlName="degreeName" type="text" name="name" id="name" placeholder="Full Name"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                    </div>
-                </div>
-                <div class="w-full px-3 sm:w-1/2">
-                    <div class="mb-5">
-                        <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                            Passing Year
-                        </label>
-                        <input formControlName="passingYear" type="text" name="name" id="name" placeholder="Full Name"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                    </div>
-                </div>
-                <div class="w-full px-3 sm:w-1/2">
-                    <div class="mb-5">
-                        <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                           Institute Name
-                        </label>
-                        <input formControlName="instituteName" type="text" name="name" id="name" placeholder="Full Name"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="flex items-center justify-end w-fit mt-6 ">
-                <button class="form_btn px-10" (click)="sendDataToParent()">
-                    <div *ngIf="isLoading == false" class="flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                        </svg>
-                        <span>Update Info</span>
-
-                    </div>
-                    <span *ngIf="isLoading == true" class="loading loading-dots loading-md"></span>
-                </button>
-            </div>
-        </form> -->
     </div>
 </div>

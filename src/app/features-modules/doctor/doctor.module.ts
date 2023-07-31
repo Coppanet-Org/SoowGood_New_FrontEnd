@@ -68,7 +68,7 @@ const routes: Route[] = [
     DoctorComponent,
     DashboardMenuComponent,
     RightSidebarComponent,
-    DashboardMenuItemComponent
+    DashboardMenuItemComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
