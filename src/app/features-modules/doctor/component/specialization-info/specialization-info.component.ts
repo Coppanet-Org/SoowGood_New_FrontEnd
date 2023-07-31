@@ -22,35 +22,42 @@ import { SpecializationDialogComponent } from '../specialization-dialog/speciali
 })
 export class SpecializationInfoComponent implements OnInit {
   allSpecializations!: DoctorSpecializationDto[];
+  specialityName: any = '';
+  specializationName: any = '';
+  specialityId: any = '';
   constructor(
     public dialog: MatDialog,
     private doctorSpecializationService: DoctorSpecializationService,
     private doctorSpeciality: SpecialityService,
-    private SpecializationService: SpecializationService,
-    private normalAuth: AuthService
+    private specializationService: SpecializationService,
+    private normalAuth: AuthService,
+    private doctorProfileService: DoctorProfileService
   ) {}
 
   ngOnInit(): void {
-//     let authId = this.normalAuth.authInfo().id;
-//     // this.doctorId = authId;
-// console.log(authId);
-
-//     if (authId) {
-//       this.doctorSpeciality.get(authId).subscribe((res) => {
-//         if (res) {
-//           console.log(res);
-          
-//           // this.SpecializationService.getListBySpecialtyId(res.specialityId).subscribe((list) => (this.specializationList = list));
-//         }
-//       });
-//     }
+    let authId = this.normalAuth.authInfo().id;
+    if (authId) {
+      this.doctorProfileService.get(authId).subscribe((res) => {
+        if (res.specialityId) {
+          this.specialityId = res.specialityId;
+          this.doctorSpeciality
+            .get(res.specialityId)
+            .subscribe((res) => (this.specialityName = res.specialityName));
+        }
+        this.getSpecializations(res.specialityId);
+      });
+    }
 
     this.doctorSpecializationService
       .getList()
       .subscribe((res) => (this.allSpecializations = res));
   }
 
-  getSpecializations(): void {}
+  getSpecializations(id: any): void {
+    this.specializationService
+      .getBySpecialityId(id)
+      .subscribe((res) => (this.specializationName = res.specializationName));
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(SpecializationDialogComponent, {
       width: '40vw',
@@ -58,4 +65,18 @@ export class SpecializationInfoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {});
   }
+  handleSpecializationEdit(row: any) {
+    this.dialog
+      .open(SpecializationDialogComponent, {
+        data: row,
+        width: "40vw",
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result === true) {
+          // this.getDegreeDataList(this.doctorId);
+        }
+      });
+  }
+
 }
