@@ -133,7 +133,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": userType === true,
+      "isActive": true,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""

@@ -125,31 +125,31 @@ export class ProfileSettingsComponent implements OnInit {
           this.TosterService.customToast(error.message, 'error');
         });
     }
-    if (this.fileList.length > 0) {
-      this.fileData.append("entityId", this.profileInfo.id.toString());
-      this.fileData.append("entityType", "Doctor");
-      this.fileData.append("attachmentType", "ProfilePicture");
-      this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
-      if (this.fileList.length > 0) {
-        for (let item of this.fileList) {
-          let fileToUpload = item;
-          this.fileData.append(item.name, fileToUpload);
-        }
-        // save attachment
-        this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
-          (result: any) => {
-            //this.form.reset();
-            //this.fileData = new FormData();
-            //this.fileNames = this.fileNames;
-            this.TosterService.customToast('Picture Changed Successfully', 'success');
+    //if (this.fileList.length > 0) {
+    //  this.fileData.append("entityId", this.profileInfo.id.toString());
+    //  this.fileData.append("entityType", "Doctor");
+    //  this.fileData.append("attachmentType", "ProfilePicture");
+    //  this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
+    //  if (this.fileList.length > 0) {
+    //    for (let item of this.fileList) {
+    //      let fileToUpload = item;
+    //      this.fileData.append(item.name, fileToUpload);
+    //    }
+    //    // save attachment
+    //    this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+    //      (result: any) => {
+    //        //this.form.reset();
+    //        //this.fileData = new FormData();
+    //        //this.fileNames = this.fileNames;
+    //        this.TosterService.customToast('Picture Changed Successfully', 'success');
 
-          },
-          (err) => {
-            console.log(err);
-          });
-        this.cdRef.detectChanges();
-      }
-    }
+    //      },
+    //      (err) => {
+    //        console.log(err);
+    //      });
+    //    this.cdRef.detectChanges();
+    //  }
+    //}
   }
 
   getLastPathSegment(url: string): void {
@@ -198,32 +198,32 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
 
-  //uploadPic() {
-  //  //this.fileData = new FormData();
-  //  this.fileData.append("entityId", this.profileInfo.id.toString());
-  //  this.fileData.append("entityType", "Doctor");
-  //  this.fileData.append("attachmentType", "ProfilePicture");
-  //  this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
-  //  if (this.fileList.length > 0) {
-  //    for (let item of this.fileList) {
-  //      let fileToUpload = item;
-  //      this.fileData.append(item.name, fileToUpload);
-  //    }
-  //    // save attachment
-  //    this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
-  //      (result: any) => {
-  //        //this.form.reset();
-  //        //this.fileData = new FormData();
-  //        //this.fileNames = this.fileNames;
-  //        this.TosterService.customToast('Picture Changed Successfully', 'success');
+  uploadPic() {
+    //this.fileData = new FormData();
+    this.fileData.append("entityId", this.profileInfo.id.toString());
+    this.fileData.append("entityType", "Doctor");
+    this.fileData.append("attachmentType", "ProfilePicture");
+    this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
+    if (this.fileList.length > 0) {
+      for (let item of this.fileList) {
+        let fileToUpload = item;
+        this.fileData.append(item.name, fileToUpload);
+      }
+      // save attachment
+      this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+        (result: any) => {
+          //this.form.reset();
+          //this.fileData = new FormData();
+          //this.fileNames = this.fileNames;
+          this.TosterService.customToast('Picture Changed Successfully', 'success');
 
-  //      },
-  //      (err) => {
-  //        console.log(err);
-  //      });
-  //    this.cdRef.detectChanges();
-  //  }
-  //}
+        },
+        (err) => {
+          console.log(err);
+        });
+      this.cdRef.detectChanges();
+    }
+  }
 
   onFileChanged(event: any) {
     for (var i = 0; i <= event.target.files.length - 1; i++) {
