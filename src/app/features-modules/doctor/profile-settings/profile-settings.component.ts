@@ -90,8 +90,6 @@ export class ProfileSettingsComponent implements OnInit {
     const updatedProfile: DoctorProfileInputDto = {
       ...formData,
     };
-
-
     let changedProperties: string[] = [];
     for (const key in formData) {
       if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
