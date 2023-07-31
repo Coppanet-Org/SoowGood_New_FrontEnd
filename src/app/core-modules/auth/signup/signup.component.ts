@@ -133,7 +133,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": userType === "Patient" ? true : false,
+      "isActive": userType === true,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -151,7 +151,7 @@ export class SignupComponent implements OnInit {
             this.doctorProfileDto.fullName = res.name;
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
-            this.doctorProfileDto.isActive = res.isActive;
+            this.doctorProfileDto.isActive = false;
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)

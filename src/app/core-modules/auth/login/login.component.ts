@@ -2,10 +2,9 @@ import { PermissionService } from '@abp/ng.core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserAccountsService } from '../../../proxy/services';
+import { DoctorProfileService, UserAccountsService } from '../../../proxy/services';
 import { SubSink } from 'SubSink';
-import { LoginDto, LoginResponseDto } from '../../../proxy/dto-models';
-//import { TosterService } from 'src/app/shared/services/toster.service';
+import { DoctorProfileDto, LoginDto, LoginResponseDto } from '../../../proxy/dto-models';
 import { ToasterService } from '@abp/ng.theme.shared';
 
 @Component({
@@ -27,26 +26,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: UserAccountsService,
+    private doctorProfileService: DoctorProfileService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private _router: Router,
     private toasterService: ToasterService,
     private permissionService: PermissionService
-  ) {
-    //this.isLoading$ = this.authService.isLoading$;
-    //if (this.authService.currentUserValue) {
-    //  this.router.navigate(['/']);
-    //}
-  }
+  ) {}
 
   ngOnInit(): void {
-    //if (isDevMode()) {
-    //  //this.defaultAuth = { email: 'admin@abp.io', password: '1q2w3E*' };
-    //  this.defaultAuth = { email: '', password: '' };
-    //}
-
     this.initForm();
-    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -85,23 +74,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginDto.email = "";
     this.loginDto.password = password;
     this.loginDto.rememberMe = false;
-    
-    //this.oAuthService.oidc = false;
     try {
-      //this.authService.isLoadingSubject.next(true);
       this.authService
         .loginByUserDto(this.loginDto)
         .subscribe((loginResponse: LoginResponseDto) => {
-          if (loginResponse.success) {
-            //this.router.navigate([this.returnUrl]);
-            this._router.navigate([loginResponse.roleName], {
-              state: { data: loginResponse } // Pass the 'res' object as 'data' in the state object
-            })
-              .then(r => r)
-            this.toasterService.success(loginResponse.message ? loginResponse.message : ""), {
-              position: 'bottom-center'
-            }
-          } else {
+          if (loginResponse.success) {            
+            this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
+              .subscribe((doctorDto: DoctorProfileDto) => {
+                let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
+                this._router.navigate([userType.toLowerCase()], {
+                  state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
+                }).then(r => r)
+                this.toasterService.success(loginResponse.message ? loginResponse.message : ""), {
+                  position: 'bottom-center'
+                }
+              });
+          }
+          else {
             this.hasError = true;
           }
         });
