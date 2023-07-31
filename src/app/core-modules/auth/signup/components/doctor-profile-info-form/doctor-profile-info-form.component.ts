@@ -55,7 +55,9 @@ export class DoctorProfileInfoFormComponent implements OnInit {
       identityNumber: ['', Validators.required],
     });
   }
-sendDataToParent() {
-  this.formDataEvent.emit(this.form.value);
-}
+
+  sendDataToParent() {
+    this.formDataEvent.emit(this.form.value);
+    //console.log(this.form.value);
+  }
 }
