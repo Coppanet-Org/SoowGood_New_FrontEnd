@@ -15,6 +15,8 @@ export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
 export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
   doctorId?: number;
   degreeId?: number;
+  duration?: number;
+  durationType?: string;
   passingYear?: number;
   instituteName?: string;
   instituteCity?: string;
@@ -53,4 +55,8 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
   doctorId?: number;
   specialityId?: number;
   specializationId?: number;
+}
+
+export interface FileDeleteInputDto {
+  filePath?: string;
 }

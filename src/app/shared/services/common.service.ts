@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { EnumExtension } from '../common/enum-extension';
 import { ListItem } from '../model/common-model';
@@ -22,4 +23,5 @@ export class CommonService {
 
     return enumItemList;
   }
+
 }

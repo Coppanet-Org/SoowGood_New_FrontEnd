@@ -41,6 +41,9 @@ module.exports = {
       colors: {
         'primary': '#01204e',
         'secondary':"#30bced",
+        'secondary-light':"#eefaff",
+        'secondary-dark':"#006c93",
+        'secondary-border': "#01204e40",
         'label' :'rgba(0, 0, 0, 0.6)',
         'skyblue' : "#30bced",
 

@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
 import { DoctorProfileService, SpecialityService } from 'src/app/proxy/services';
 import { ListItem } from 'src/app/shared/model/common-model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -22,16 +22,17 @@ export class BasicInfoComponent implements OnInit {
   doctorId:any
   @Output() formDataEvent = new EventEmitter<FormGroup>();
   @Output() profileData =new EventEmitter()
+  receivedData: any;
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality : SpecialityService,
-    private _route : ActivatedRoute,
     private doctorProfileService: DoctorProfileService,
-    private cdr: ChangeDetectorRef,
+    private NormalAuth: AuthService,
     private datePipe: DatePipe
     
     ) {}
   ngOnInit(): void {
+ 
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
     this.maritalOptions = CommonService.getEnumList(MaritalStatus);
@@ -39,22 +40,21 @@ export class BasicInfoComponent implements OnInit {
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
     });
-    this._route.queryParamMap.subscribe((params) => {
-      params.keys.forEach((key) => {
-        const doctorId = params.get(key);
-        this.doctorId = doctorId
-        this.fetchProfileInfo(doctorId)
-      });
-    });
+    let authId = this.NormalAuth.authInfo().id
+    this.doctorId = authId
+    this.fetchProfileInfo(authId)
     }
     fetchProfileInfo(doctorId: any): void {
+      if (!doctorId) {
+        return
+      }
       this.doctorProfileService.get(doctorId).subscribe(
         (profileInfo) => {
-          console.log('Profile Information:', profileInfo);
           profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
           profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
           this.form?.patchValue(profileInfo);
           this.profileData.emit(profileInfo);
+          this.form.get('specialityId')?.patchValue(profileInfo.specialityId)
         },
         (error) => {
           console.error('Error fetching profile information:', error);
@@ -92,6 +92,5 @@ export class BasicInfoComponent implements OnInit {
   }
   sendDataToParent() {
     this.formDataEvent.emit({...this.form.value,id:this.doctorId});
-    this.cdr.detectChanges();
   }
 }
