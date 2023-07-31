@@ -40,42 +40,38 @@ export class ProfileSettingsComponent implements OnInit {
   fileData = new FormData();
   imagePath: any;
   upload: any;
+  auth: any;
 
   profilePic: string = '';
 
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
 
-  
+
   constructor(
     private _fb: FormBuilder,
-    private doctorProfileService :DoctorProfileService,
-    
+    private doctorProfileService: DoctorProfileService,
     private doctorProfilePicService: DocumentsAttachmentService,
-    private router : Router,
-    private cdr :ChangeDetectorRef,
-    private _router : Router,
-    private TosterService : TosterService,    
+    private router: Router,
+    private _router: Router,
+    private TosterService: TosterService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
+  ) { }
 
-  ){}
-    
-    
-
-  
   ngOnInit(): void {
+    //this.auth = localStorage.getItem("auth");
+
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this.router.url;
     this.getLastPathSegment(currentURL);
   }
 
-
   // this function need to optimize in future
-  getTitle(title:string){
-   let doctortitle = this.doctorTitleList.find((e)=>e.id == title)
-  return doctortitle?.name
-   
+  getTitle(title: string) {
+    let doctortitle = this.doctorTitleList.find((e) => e.id == title)
+    return doctortitle?.name
+
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -85,24 +81,24 @@ export class ProfileSettingsComponent implements OnInit {
   });
   isLinear = false;
 
-
   getProfileData(data: any) {
     this.profileInfo = data;
     this.getProfilePic();
   }
-  handleFormData(formData:any) {
+
+  handleFormData(formData: any) {
     const updatedProfile: DoctorProfileInputDto = {
       ...formData,
     };
 
-  
+
     let changedProperties: string[] = [];
     for (const key in formData) {
       if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
         changedProperties.push(key);
       }
     }
-  
+
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
       this.loading = false;
@@ -123,43 +119,41 @@ export class ProfileSettingsComponent implements OnInit {
               successMessage = `${changedProperties[0]} Successfully Updated! `;
             }
           }
-  
+
           this.TosterService.customToast(successMessage, 'success');
           changedProperties = []
-          successMessage=''
-         
-          
+          successMessage = ''
+
+
         },
         (error) => {
           this.loading = false;
           this.TosterService.customToast(error.message, 'error');
         }
       );
-   
+
     }
   }
-  
-  
-  
-  
+
   getLastPathSegment(url: string): void {
     const urlParts = url.split('/');
     let pathName = urlParts[urlParts.length - 1];
 
-     if (pathName == 'basic-info') {
-       this.activeTab = '0'
-      }
-      if (pathName == 'education') {
-       this.activeTab = '1'
-      }
-      if (pathName == 'specializations') {
-        this.activeTab = '2'
-       }
-      if (pathName == 'hospital') {
-        this.activeTab = '3'
-       }
+    if (pathName == 'basic-info') {
+      this.activeTab = '0'
+    }
+    if (pathName == 'education') {
+      this.activeTab = '1'
+    }
+    if (pathName == 'specializations') {
+      this.activeTab = '2'
+    }
+    if (pathName == 'hospital') {
+      this.activeTab = '3'
+    }
   }
-  onchangeStep(e:any){
+
+  onchangeStep(e: any) {
     if (e.selectedIndex == 0) {
       this._router.navigate(['doctor/profile-settings/basic-info'])
     }
@@ -168,17 +162,19 @@ export class ProfileSettingsComponent implements OnInit {
     }
     if (e.selectedIndex == 2) {
       this._router.navigate(['doctor/profile-settings/specialization'])
-    }if (e.selectedIndex == 3) {
+    } if (e.selectedIndex == 3) {
       this._router.navigate(['doctor/profile-settings/hospital'])
     }
   }
 
   getProfilePic() {
     this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
-      let prePaths: string = "";
-      var re = /wwwroot/gi;
-      prePaths = at.path ? at.path : "";
-      this.profilePic = prePaths.replace(re, "");
+      if (at) {
+        let prePaths: string = "";
+        var re = /wwwroot/gi;
+        prePaths = at.path ? at.path : "";
+        this.profilePic = prePaths.replace(re, "");
+      }
     });
   }
 
@@ -199,13 +195,13 @@ export class ProfileSettingsComponent implements OnInit {
           //this.form.reset();
           //this.fileData = new FormData();
           //this.fileNames = this.fileNames;
-          // this.toastr.success(result['Message'], result['Status']);
-          this.cdRef.detectChanges();
+          this.TosterService.customToast('Picture Changed Successfully', 'success');
+
         },
         (err) => {
           console.log(err);
-        }
-      )
+        });
+      this.cdRef.detectChanges();
     }
   }
 

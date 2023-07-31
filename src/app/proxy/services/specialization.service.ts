@@ -31,6 +31,14 @@ export class SpecializationService {
       url: '/api/app/specialization',
     },
     { apiName: this.apiName,...config });
+  
+
+  getListBySpecialtyId = (specialityId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SpecializationDto[]>({
+      method: 'GET',
+      url: `/api/app/specialization/by-specialty-id/${specialityId}`,
+    },
+    { apiName: this.apiName,...config });
 
   constructor(private restService: RestService) {}
 }
