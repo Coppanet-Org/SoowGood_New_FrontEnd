@@ -6,6 +6,7 @@ import { DoctorProfileService, UserAccountsService } from '../../../proxy/servic
 import { SubSink } from 'SubSink';
 import { DoctorProfileDto, LoginDto, LoginResponseDto } from '../../../proxy/dto-models';
 import { ToasterService } from '@abp/ng.theme.shared';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private _router: Router,
     private toasterService: ToasterService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private NormalAuth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +83,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (loginResponse.success) {            
             this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
               .subscribe((doctorDto: DoctorProfileDto) => {
+                let saveLocalStorage = {
+                  identityNumber: doctorDto.identityNumber,
+                  bmdcRegNo: doctorDto.bmdcRegNo,
+                  isActive: doctorDto.isActive,
+                  userId: doctorDto.userId,
+                  id: doctorDto.id,
+                }
+                this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                 let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object

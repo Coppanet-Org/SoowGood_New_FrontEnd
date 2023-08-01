@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-menu.component.scss'],
 })
 export class DashboardMenuComponent implements OnInit {
+  isActive: boolean = false;
+  
   doctorMenuList:any = [
     {
       menuName: 'Dashboard',
@@ -35,6 +37,10 @@ export class DashboardMenuComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //var auth = JSON.parse(localStorage.getItem("auth") || '{}') as any;
+    //this.isActive = auth.isActive;
+    //console.log(this.isActive);
+  }
 }
 
