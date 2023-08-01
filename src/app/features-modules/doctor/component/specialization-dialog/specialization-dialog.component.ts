@@ -41,6 +41,12 @@ export class SpecializationDialogComponent implements OnInit {
     if (authId) {
       this.doctorProfileService.get(authId).subscribe((res) => {
         this.form.patchValue(res);
+        if (this.editData) {
+            this.specializationService
+              .getBySpecialityId(this.editData.specialityId)
+              .subscribe((res) => this.form.get("specializationId")?.patchValue(res.specializationName));
+          
+        }
         if (res.specialityId) {
           this.specialityId = res.specialityId;
           this.specializationService
@@ -49,14 +55,7 @@ export class SpecializationDialogComponent implements OnInit {
         }
       });
     }
-    if (this.editData) {
-      console.log(this.editData);
-      
-        this.specializationService
-          .getBySpecialityId(this.editData.specialityId)
-          .subscribe((res) => this.form.get("specializationId")?.patchValue(res.specializationName));
-      
-    }
+    
   }
 
   loadForm() {

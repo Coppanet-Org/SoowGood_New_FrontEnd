@@ -6,7 +6,11 @@
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
     "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\features-modules"
+    "\\src\\app\\core-modules\\auth\\signup\\components",
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\profile-settings"
   ],
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }

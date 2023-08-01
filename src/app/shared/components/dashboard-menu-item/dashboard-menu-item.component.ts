@@ -5,11 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './dashboard-menu-item.component.html',
   styleUrls: ['./dashboard-menu-item.component.scss']
 })
-export class DashboardMenuItemComponent implements OnInit {
+export class DashboardMenuItemComponent {
 @Input() menuItemDetails:any
 
-ngOnInit(){
-  console.log(this.menuItemDetails);
-  
-}
 }
