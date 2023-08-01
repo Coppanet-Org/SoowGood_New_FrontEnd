@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+
 
 @Component({
   selector: 'app-dashboard-menu',
@@ -6,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-menu.component.scss'],
 })
 export class DashboardMenuComponent implements OnInit {
-  isActive: boolean = false;
   
   doctorMenuList:any = [
     {
@@ -35,12 +36,14 @@ export class DashboardMenuComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor(
+    private NormalAuth: AuthService) {}
 
   ngOnInit(): void {
-    //var auth = JSON.parse(localStorage.getItem("auth") || '{}') as any;
-    //this.isActive = auth.isActive;
-    //console.log(this.isActive);
+  }
+
+  logOut() {
+    this.NormalAuth.signOut();
   }
 }
 
