@@ -5,8 +5,13 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\features-modules"
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\services",
+    "\\src\\app\\proxy\\volo",
+    "\\src\\app\\proxy\\volo\\abp",
+    "\\src\\app\\proxy\\volo\\abp\\domain",
+    "\\src\\app\\proxy\\volo\\abp\\domain\\entities"
   ],
+  "SelectedNode": "\\src\\styles.scss",
   "PreviewInSolutionExplorer": false
 }
