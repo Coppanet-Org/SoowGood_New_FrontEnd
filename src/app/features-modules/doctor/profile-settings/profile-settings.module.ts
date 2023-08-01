@@ -12,6 +12,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DegreeDialogComponentnt } from '../component/degree-dialog/degree-dialog.component';
 import { DegreeCardComponent } from '../component/degree-card/degree-card.component';
 import { SpecializationDialogComponent } from '../component/specialization-dialog/specialization-dialog.component';
+import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
 
 
 const routes: Route[] = [
@@ -56,7 +57,8 @@ const routes: Route[] = [
     SpecializationInfoComponent,
     DegreeDialogComponentnt,
     DegreeCardComponent,
-    SpecializationDialogComponent
+    SpecializationDialogComponent,
+    PictureDialogComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
