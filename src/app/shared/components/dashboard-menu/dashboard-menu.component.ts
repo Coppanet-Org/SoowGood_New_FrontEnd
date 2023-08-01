@@ -20,8 +20,8 @@ export class DashboardMenuComponent implements OnInit {
       route: 'patients',
     },
     {
-      menuName: 'Schedule',
-      route: 'schedule',
+      menuName: 'Hospital & Schedule',
+      route: 'hospital-schedule',
     },
     {
       menuName: 'Billing',

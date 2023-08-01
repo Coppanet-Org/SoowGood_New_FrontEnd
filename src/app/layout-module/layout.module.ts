@@ -9,6 +9,10 @@ import { HeaderComponent } from './header-footer/header/header.component';
 import { FooterComponent } from './header-footer/footer/footer.component';
 import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
 
+
+
+
+
 const routes: Route[] = [
   {
     path: '',
@@ -75,8 +79,9 @@ const routes: Route[] = [
     PublicLayoutComponent,
     HeaderComponent,
     FooterComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class LayoutModule {}
+

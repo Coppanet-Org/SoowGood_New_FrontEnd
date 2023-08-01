@@ -1,7 +1,10 @@
 import { DoctorSpecializationService } from './../../../../proxy/services/doctor-specialization.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { DoctorProfileService } from './../../../../proxy/services/doctor-profile.service';
@@ -21,13 +24,13 @@ export class SpecializationDialogComponent implements OnInit {
   specialityId: any;
   constructor(
     private fb: FormBuilder,
-    // private normalAuth: AuthService,
     public dialogRef: MatDialogRef<SpecializationDialogComponent>,
     private tosterService: TosterService,
     private specializationService: SpecializationService,
     private doctorSpecializationService: DoctorSpecializationService,
     private doctorProfileService: DoctorProfileService,
     private normalAuth: AuthService,
+
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ) {}
 
@@ -38,6 +41,12 @@ export class SpecializationDialogComponent implements OnInit {
     if (authId) {
       this.doctorProfileService.get(authId).subscribe((res) => {
         this.form.patchValue(res);
+        if (this.editData) {
+            this.specializationService
+              .getBySpecialityId(this.editData.specialityId)
+              .subscribe((res) => this.form.get("specializationId")?.patchValue(res.specializationName));
+          
+        }
         if (res.specialityId) {
           this.specialityId = res.specialityId;
           this.specializationService
@@ -46,6 +55,7 @@ export class SpecializationDialogComponent implements OnInit {
         }
       });
     }
+    
   }
 
   loadForm() {
@@ -56,8 +66,6 @@ export class SpecializationDialogComponent implements OnInit {
   }
 
   saveSpecialization(): void {
-    // "doctorId": 0,
-    // "specialityId": 0,
     if (!this.form.valid && !this.form.touched) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
@@ -81,72 +89,40 @@ export class SpecializationDialogComponent implements OnInit {
             this.dialogRef.close(true);
           }
         });
-        
-    } 
-    return
-    
+    } else {
+      let changedProperties: string[] = [];
+      let exData: any = this.editData;
+      for (const key in newSpecialization) {
+        if (
+          newSpecialization.hasOwnProperty(key) &&
+          newSpecialization[key] !== exData[key]
+        ) {
+          changedProperties.push(key);
+        }
+      }
 
+      if (changedProperties.length < 1) {
+        this.dialogRef.close(false);
+        return;
+      } else {
+        this.doctorSpecializationService
+          .update({ ...newSpecialization, id: this.editData.id })
+          .subscribe((res) => {
+            if (res) {
+              this.tosterService.customToast(
+                'Successfully updated!',
+                'success'
+              );
+              this.dialogRef.close(true);
+            } else {
+              this.tosterService.customToast(
+                'Something went wrong! Please contact your administrator.',
+                'error'
+              );
+              this.dialogRef.close(false);
+            }
+          });
+      }
+    }
   }
-
-  // sendDataToParent() {
-  //   let degreeId = this.form.get('degreeId')?.value;
-  //   let duration = this.form.get('duration')?.value;
-  //   const newDegreeData = {
-  //     ...this.form.value,
-  //     degreeId: Number(degreeId),
-  //     duration: Number(duration),
-  //     doctorId: this.doctorId,
-  //   };
-
-  //   if (!this.form.valid && !this.form.touched) {
-  //     this.tosterService.customToast(
-  //       'Please fill all the required fields!',
-  //       'warning'
-  //     );
-  //     return;
-  //   }
-
-  //   if (!this.editData) {
-  //     this.doctorDegreeService.create(newDegreeData).subscribe((res) => {
-  //       if (res) {
-  //         this.tosterService.customToast('Successfully added!', 'success');
-  //         this.dialogRef.close(true);
-  //       }
-  //     });
-  //   } else {
-  //     let changedProperties: string[] = [];
-  //     let exData: any = this.editData;
-  //     for (const key in newDegreeData) {
-  //       if (
-  //         newDegreeData.hasOwnProperty(key) &&
-  //         newDegreeData[key] !== exData[key]
-  //       ) {
-  //         changedProperties.push(key);
-  //       }
-  //     }
-
-  //     if (changedProperties.length < 1) {
-  //       this.dialogRef.close(false);
-  //       return;
-  //     } else {
-  //       this.doctorDegreeService
-  //         .update({ ...newDegreeData, id: this.editData.id })
-  //         .subscribe((res) => {
-  //           if (res) {
-  //             this.tosterService.customToast(
-  //               'Successfully updated!',
-  //               'success'
-  //             );
-  //             this.dialogRef.close(true);
-  //           } else {
-  //             this.tosterService.customToast(
-  //               'Something went wrong! Please contact your administrator.',
-  //               'error'
-  //             );
-  //             this.dialogRef.close(false);
-  //           }
-  //         });
-  //     }
-  //   }
-  // }
 }
