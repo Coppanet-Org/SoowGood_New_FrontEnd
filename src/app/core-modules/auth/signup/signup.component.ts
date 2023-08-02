@@ -205,6 +205,8 @@ export class SignupComponent implements OnInit {
     doctorProfileInput.email = this.doctorProfileDto.email;
     doctorProfileInput.mobileNo = this.doctorProfileDto.mobileNo;
     doctorProfileInput.isActive = this.doctorProfileDto.isActive;
+    doctorProfileInput.profileStep = 1;
+    doctorProfileInput.createFrom = "Web";
     let userType = this.formGroup?.value.userTypeName + '/profile-settings/basic-info'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
@@ -217,9 +219,6 @@ export class SignupComponent implements OnInit {
       }
     });
   }
-
-
-
 }
 
 
