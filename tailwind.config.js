@@ -35,7 +35,9 @@ module.exports = {
       },
 
       boxShadow: {
-        'soft': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
+        'soft': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+        'high': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        
       },
 
       colors: {
