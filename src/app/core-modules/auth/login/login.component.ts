@@ -95,6 +95,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   isActive: doctorDto.isActive,
                   userId: doctorDto.userId,
                   id: doctorDto.id,
+                  profileStep:doctorDto.profileSteps
                 }
                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                 let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
