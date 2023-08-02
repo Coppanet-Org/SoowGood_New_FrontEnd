@@ -165,6 +165,8 @@ export class SignupComponent implements OnInit {
                       isActive: doctorDto.isActive,
                       userId: doctorDto.userId,
                       id: doctorDto.id,
+                      profileStep: doctorDto.profileStep,
+                      createFrom: doctorDto.createFrom
                     }
                     this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                   })

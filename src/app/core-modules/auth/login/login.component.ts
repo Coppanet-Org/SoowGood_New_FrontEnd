@@ -18,14 +18,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   defaultAuth: any = {
     mobileNo: '', password: '',
   }
- 
+
   errorMessage: string = '';
   loginForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
   hasError: boolean = false;
   returnUrl!: string;
   subs = new SubSink();
-  isLoading: any= false
+  isLoading: any = false
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private permissionService: PermissionService,
     private ToasterService : TosterService,
+    
     private NormalAuth: AuthService
   ) {}
 
@@ -86,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService
         .loginByUserDto(this.loginDto)
         .subscribe((loginResponse: LoginResponseDto) => {
-          if (loginResponse.success) {            
+          if (loginResponse.success) {
             this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
               .subscribe((doctorDto: DoctorProfileDto) => {
                 let saveLocalStorage = {
@@ -95,17 +96,20 @@ export class LoginComponent implements OnInit, OnDestroy {
                   isActive: doctorDto.isActive,
                   userId: doctorDto.userId,
                   id: doctorDto.id,
+                  profileStep: doctorDto.profileStep,
+                  createFrom: doctorDto.createFrom
                 }
                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                 let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
-                }).then(r => 
-                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success'))
+                }).then(r =>
+                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success'));
               })
           }
           else {
             this.hasError = true;
+            this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'error');
           }
         });
     } catch (error: any) {
