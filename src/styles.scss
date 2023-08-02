@@ -48,7 +48,7 @@
     @apply w-2/5  h-full;
   }
   .form_input{
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+    @apply w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-secondary focus:shadow-md;
   }
   .dashbord-heading-text{
     @apply text-primary font-semibold text-[18px] font-Roboto

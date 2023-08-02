@@ -1,3 +1,4 @@
+import { TosterService } from './../../../shared/services/toster.service';
 import { PermissionService } from '@abp/ng.core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,15 +16,15 @@ import { ToasterService } from '@abp/ng.theme.shared';
 export class LoginComponent implements OnInit, OnDestroy {
   defaultAuth: any = {
     mobileNo: '', password: '',
-  };
-
+  }
+ 
   errorMessage: string = '';
   loginForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
   hasError: boolean = false;
   returnUrl!: string;
   subs = new SubSink();
-
+  isLoading: any= false
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private _router: Router,
     private toasterService: ToasterService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private ToasterService : TosterService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+    if (!this.loginForm.valid && !this.loginForm.touched) {
+      this.ToasterService.customToast("Please filled all required field", 'warning')
+      return
+    }
     this.errorMessage = '';
     this.hasError = false;
     const username = this.formControl['mobileNo'].value;
@@ -84,11 +90,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
-                }).then(r => r)
-                this.toasterService.success(loginResponse.message ? loginResponse.message : ""), {
-                  position: 'bottom-center'
-                }
-              });
+                }).then(r => 
+                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success'))
+              })
           }
           else {
             this.hasError = true;
