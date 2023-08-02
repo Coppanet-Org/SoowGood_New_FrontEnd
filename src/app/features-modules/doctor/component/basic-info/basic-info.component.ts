@@ -54,8 +54,6 @@ export class BasicInfoComponent implements OnInit {
           profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
           this.form?.patchValue(profileInfo);
           this.profileData.emit(profileInfo);
-          console.log(profileInfo);
-          
           this.form.get('specialityId')?.patchValue(profileInfo.specialityId)
         },
         (error) => {

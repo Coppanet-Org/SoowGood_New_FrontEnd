@@ -6,7 +6,6 @@ import { RightSidebarComponent } from './component/right-sidebar/right-sidebar.c
 import { DashboardMenuComponent } from 'src/app/shared/components/dashboard-menu/dashboard-menu.component';
 import { DashboardMenuItemComponent } from 'src/app/shared/components/dashboard-menu-item/dashboard-menu-item.component';
 
-
 const routes: Route[] = [
   {
     path: '',
@@ -39,10 +38,10 @@ const routes: Route[] = [
           ),
       },
       {
-        path: 'schedule',
+        path: 'hospital-schedule',
         loadChildren: () =>
-          import('./appointments/appointments.module').then(
-            (m) => m.AppointmentsModule
+          import('./hospital-schedule/hospital-schedule.module').then(
+            (m) => m.HospitalScheduleModule
           ),
       },
       {
@@ -68,7 +67,7 @@ const routes: Route[] = [
     DoctorComponent,
     DashboardMenuComponent,
     RightSidebarComponent,
-    DashboardMenuItemComponent
+    DashboardMenuItemComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })

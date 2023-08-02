@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router  } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { DoctorTitle } from 'src/app/proxy/enums';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   completeProfileInfoModal: boolean = false
   receivedFormData!: FormGroup;
-  titleList:ListItem[]=[];
+  titleList: ListItem[] = [];
 
 
 
@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
     private doctorProfileService: DoctorProfileService,
     private toasterService: ToasterService,
     private _router: Router,
-    private NormalAuth : AuthService
+    private NormalAuth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -68,10 +68,10 @@ export class SignupComponent implements OnInit {
       userTypeName: ''
     });
     this.userInfoForm = this.fb.group({
-      fullName: ["",Validators.required],
-      doctorTitle: ["",Validators.required],
-      email: ["",Validators.required],
-      password: ["",Validators.required],
+      fullName: ["", Validators.required],
+      doctorTitle: ["", Validators.required],
+      email: ["", Validators.required],
+      password: ["", Validators.required],
     })
   }
   sendOtp() {
@@ -133,7 +133,7 @@ export class SignupComponent implements OnInit {
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": userType==="Patient"?true:false,
+      "isActive": true,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -146,12 +146,12 @@ export class SignupComponent implements OnInit {
         if (res.success) {
           this.isLoading = false
           if (userType === 'Doctor') {
-            this.doctorProfileDto.doctorTitle=title;
+            this.doctorProfileDto.doctorTitle = title;
             this.doctorProfileDto.userId = res.userId;
             this.doctorProfileDto.fullName = res.name;
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
-            this.doctorProfileDto.isActive = res.isActive;
+            this.doctorProfileDto.isActive = false;
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
@@ -162,9 +162,9 @@ export class SignupComponent implements OnInit {
                     let saveLocalStorage = {
                       identityNumber: doctorDto.identityNumber,
                       bmdcRegNo: doctorDto.bmdcRegNo,
-                      isActive:doctorDto.isActive,
+                      isActive: doctorDto.isActive,
                       userId: doctorDto.userId,
-                      id: doctorDto.id
+                      id: doctorDto.id,
                     }
                     this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                   })
@@ -193,13 +193,11 @@ export class SignupComponent implements OnInit {
 
 
   handleFormData(formData: FormGroup) {
-
-
     const doctorProfileInput: DoctorProfileInputDto = {
       degrees: [],
       doctorSpecialization: [],
       ...formData,
-      id:this.docId
+      id: this.docId
     };
     doctorProfileInput.doctorTitle = this.doctorProfileDto.doctorTitle;
     doctorProfileInput.userId = this.doctorProfileDto.userId;
@@ -210,14 +208,14 @@ export class SignupComponent implements OnInit {
     let userType = this.formGroup?.value.userTypeName + '/profile-settings/basic-info'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
-        this._router.navigate([userType.toLowerCase()] ,{
+        this._router.navigate([userType.toLowerCase()], {
           state: { data: res } // Pass the 'res' object as 'data' in the state object
         }).then(r => r)
-                     this.toasterService.success("Registration Successful"),{
-               position: 'bottom-center'
-             }
+        this.toasterService.success("Registration Successful"), {
+          position: 'bottom-center'
+        }
       }
-    })
+    });
   }
 
 

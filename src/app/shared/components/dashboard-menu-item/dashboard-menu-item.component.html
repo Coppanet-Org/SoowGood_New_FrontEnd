@@ -1,6 +1,6 @@
 
-    <li *ngFor="let item of menuItemDetails" class="py-2 border-b-[1px]" [routerLink]="item.route">
-        <a class="text-[16px] font-semibold">
+    <li *ngFor="let item of menuList" class="border-b-[1px]" [routerLink]="item.route">
+        <a class="text-[16px] font-semibold py-4 ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -9,4 +9,5 @@
             {{item.menuName}}
         </a>
     </li>
+
 
