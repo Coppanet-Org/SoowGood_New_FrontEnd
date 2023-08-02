@@ -15,6 +15,9 @@ import { SubSink } from 'SubSink';
 import { HttpClient } from '@angular/common/http';
 import { DocumentsAttachmentDto } from '../../../proxy/dto-models';
 import { TosterService } from 'src/app/shared/services/toster.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
 
 @Component({
   selector: 'app-profile-settings',
@@ -32,9 +35,7 @@ export class ProfileSettingsComponent implements OnInit {
   doctorTitleList: ListItem[] = []
   title: any
   activeTab: string = '';
-
   subs = new SubSink();
-
   fileList: File[] = [];
   fileNames: any[] = [];
   //formg!: FormGroup;
@@ -47,6 +48,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
+  doctorId: any;
 
 
   constructor(
@@ -57,16 +59,28 @@ export class ProfileSettingsComponent implements OnInit {
     private TosterService: TosterService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
+    private normalAuth :AuthService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
+    let authId = this.normalAuth.authInfo().id
+   this.doctorId = authId
 
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
   }
 
+
+  getProfileInfo(id:any):void {
+    if (id) {
+      this.doctorProfileService.get(id).subscribe((res)=>{
+        this.profileInfo = res
+      })
+    }
+  }
   // this function need to optimize in future
   getTitle(title: string) {
     let doctortitle = this.doctorTitleList.find((e) => e.id == title)
@@ -91,6 +105,7 @@ export class ProfileSettingsComponent implements OnInit {
       ...formData,
     };
     let changedProperties: string[] = [];
+
     for (const key in formData) {
       if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
         changedProperties.push(key);
@@ -117,8 +132,8 @@ export class ProfileSettingsComponent implements OnInit {
             }
           }
           this.TosterService.customToast(successMessage, 'success');
-          changedProperties = [];
-          successMessage = '';
+          this.getProfileInfo(this.doctorId)
+
         },
         (error) => {
           this.loading = false;
@@ -198,75 +213,21 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
 
-  uploadPic() {
-    //this.fileData = new FormData();
-    this.fileData.append("entityId", this.profileInfo.id.toString());
-    this.fileData.append("entityType", "Doctor");
-    this.fileData.append("attachmentType", "ProfilePicture");
-    this.fileData.append("directoryName", "DoctorProfilePicture\\" + this.profileInfo.id.toString());
-    if (this.fileList.length > 0) {
-      for (let item of this.fileList) {
-        let fileToUpload = item;
-        this.fileData.append(item.name, fileToUpload);
-      }
-      // save attachment
-      this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
-        (result: any) => {
-          //this.form.reset();
-          //this.fileData = new FormData();
-          //this.fileNames = this.fileNames;
-          this.TosterService.customToast('Picture Changed Successfully', 'success');
 
-        },
-        (err) => {
-          console.log(err);
-        });
-      this.cdRef.detectChanges();
-    }
+  openDialog():void {
+    const dialogRef = this.dialog.open(PictureDialogComponent,{
+      width: "30vw"
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+     if (result == true) {
+      this.getProfilePic()
+     }
+    });
+  
   }
-
-  onFileChanged(event: any) {
-    for (var i = 0; i <= event.target.files.length - 1; i++) {
-      var selectedFile = event.target.files[i];
-      this.fileList.push(selectedFile);
-      this.fileNames.push(selectedFile.name)
-    }
-    if (this.fileList.length > 0) {
-      this.checkFileValidation(event);
-    }
-    this.attachment.nativeElement.value = '';
-  }
-
-  removeSelectedFile(index: any) {
-    // delete file name from fileNames list
-    this.fileNames.splice(index, 1);
-    // delete file from FileList
-    this.fileList.splice(index, 1);
-  }
-
-  checkFileValidation(event: any) {
-    let count = event.target.files.length;
-    if (count > 0) {
-      var allowedFiles = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'text/plain'];
-      const files: File[] = event.target.files;
-      this.fileList = Array.from(files);
-      for (let i = 0; i < count; i++) {
-        if (files[i].size > 5242880) {
-          this.fileNames.splice(i, 1);
-          this.fileList.splice(i, 1);
-          console.log("Maximum 5MB Accepted.");
-          //this.toastr.warning('Maximum 5MB Accepted.', 'Warning');
-        }
-        if (!(allowedFiles.indexOf(files[i].type.toLowerCase()) >= 0)) {
-          this.fileNames.splice(i, 1);
-          this.fileList.splice(i, 1);
-          //this.toastr.warning('Only png, jpeg, jpg, plain text, pdf are Accepted.');
-          console.log("Only png, jpeg, jpg, plain text, pdf are Accepted.", 'Warning');
-        }
-      }
-      this.cdRef.detectChanges();
-    }
-  }
-
+ 
+   
+  
 }
 
