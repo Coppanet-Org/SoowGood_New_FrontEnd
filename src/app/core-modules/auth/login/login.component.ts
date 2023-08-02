@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router,
     private toasterService: ToasterService,
     private permissionService: PermissionService,
-    private ToasterService : TosterService
-    private permissionService: PermissionService,
+    private ToasterService : TosterService,
     private NormalAuth: AuthService
   ) {}
 
