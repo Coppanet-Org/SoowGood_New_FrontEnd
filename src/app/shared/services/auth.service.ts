@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+//import { OAuthService } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +9,10 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
   private _authenticated: boolean = false;
 
-  constructor() {}
+  constructor(
+    //private oAuthService: OAuthService,
+    private _router: Router,
+  ) { }
 
   setAuthInfoInLocalStorage(data: any): void {
     localStorage.removeItem('auth');
@@ -18,10 +23,10 @@ export class AuthService {
     // Remove the access token from the local storage
     // localStorage.removeItem('accessToken');
     localStorage.clear();
-
     // Set the authenticated flag to false
     this._authenticated = false;
-
+    //this.oAuthService.logOut();
+    this._router.navigate(['/']);
     // Return the observable
     return of(true);
   }

@@ -3,14 +3,13 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\core-modules\\auth\\signup\\components",
     "\\src\\app\\features-modules",
     "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\profile-settings"
+    "\\src\\app\\features-modules\\doctor\\component",
+    "\\src\\app\\features-modules\\doctor\\component\\specialization-info",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\components\\dashboard-header"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }
