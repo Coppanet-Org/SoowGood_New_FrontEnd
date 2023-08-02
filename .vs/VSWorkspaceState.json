@@ -3,15 +3,13 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\proxy",
-    "\\src\\app\\proxy\\services",
-    "\\src\\app\\proxy\\volo",
-    "\\src\\app\\proxy\\volo\\abp",
-    "\\src\\app\\proxy\\volo\\abp\\domain",
-    "\\src\\app\\proxy\\volo\\abp\\domain\\entities"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\component",
+    "\\src\\app\\features-modules\\doctor\\component\\specialization-info",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\components\\dashboard-header"
   ],
-  "SelectedNode": "\\src\\styles.scss",
   "PreviewInSolutionExplorer": false
 }
