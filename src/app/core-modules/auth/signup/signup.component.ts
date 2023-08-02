@@ -152,6 +152,8 @@ export class SignupComponent implements OnInit {
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
             this.doctorProfileDto.isActive = false;
+            this.doctorProfileDto.profileStep = 1;
+            this.doctorProfileDto.createFrom = "Web";
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
