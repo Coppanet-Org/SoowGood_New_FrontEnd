@@ -15,6 +15,7 @@ import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
+import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
 
 
 const routerConfig: ExtraOptions = {
@@ -26,7 +27,11 @@ const routerConfig: ExtraOptions = {
   declarations: [
     AppComponent, 
     EmptyPageComponent, 
-    SignupComponent, PatientComponent,DoctorProfileInfoFormComponent],
+    SignupComponent,
+    PatientComponent,
+    DoctorProfileInfoFormComponent,
+    DegreeSpecilizationInfoFormComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,

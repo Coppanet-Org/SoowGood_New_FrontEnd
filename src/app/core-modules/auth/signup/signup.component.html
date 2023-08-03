@@ -1,172 +1,296 @@
 <div class="signup-form">
-    <div class="signup-form__left">
-        <img src="../../../../assets/auth/Group 11185.png" alt="auth">
+  <div class="signup-form__left">
+    <img src="../../../../assets/auth/Group 11185.png" alt="auth">
 
-    </div>
-    <div class="signup-form__right drop-shadow-soft relative">
-        <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
-        <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-            [style]="otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
-            <h1 class="text-4xl font-medium">Signup</h1>
-            <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-            <form action="" class="mt-6" [formGroup]="formGroup">
-                <div class="grid-wrapper grid-col-auto">
-                    <label for="radio-card-1" class="radio-card">
-                        <input type="radio" id="radio-card-1" formControlName="userTypeName"
-                            [(ngModel)]="selectedUserType" value="Doctor" />
-                        <div class="card-content-wrapper">
-                            <span class="check-icon"></span>
-                            <div class="card-content">
-                                <img src="../../../../assets/auth/doctor.png" alt="doctor">
-                                <h4>I am a Doctor</h4>
-                            </div>
-                        </div>
-                    </label>
-                    <label for="radio-card-2" class="radio-card">
-                        <input type="radio" id="radio-card-2" formControlName="userTypeName"
-                            [(ngModel)]="selectedUserType" value="Patient" />
-                        <div class="card-content-wrapper ">
-                            <span class="check-icon"></span>
-                            <div class="card-content">
-                                <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
-                                <h4>I am a Patient</h4>
-                            </div>
-                        </div>
-                    </label>
-
-                </div>
-                <div class="flex flex-col space-y-5 mt-10">
-                    <label for="mobile">
-                        <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-                        <input type="tel" formControlName="mobile" id="phone" class="form_input"
-                            placeholder="018-000-00000" required>
-                    </label>
-                    <button class="form_btn" (click)="sendOtp()">
-                        <div *ngIf="!isLoading" class="flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                            </svg>
-                            <span>Signup</span>
-                        </div>
-                        <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
-                    </button>
-                    <p class="text-center">Already have an account? <a routerLink="/login"
-                            class="text-primary font-medium inline-flex space-x-1 items-center"><span>Login now
-                            </span><span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg></span></a></p>
-                </div>
-            </form>
-        </div>
-
-        <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
-            [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
-            <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
-                <img src="../../../../assets/auth/v-code.jpg" alt="">
+  </div>
+  <div class="signup-form__right drop-shadow-soft relative">
+    <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
+    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
+         [style]="otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
+      <h1 class="text-4xl font-medium">Signup</h1>
+      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
+      <form action="" class="mt-6" [formGroup]="formGroup">
+        <div class="grid-wrapper grid-col-auto">
+          <label for="radio-card-1" class="radio-card">
+            <input type="radio" id="radio-card-1" formControlName="userTypeName"
+                   [(ngModel)]="selectedUserType" value="Doctor" />
+            <div class="card-content-wrapper">
+              <span class="check-icon"></span>
+              <div class="card-content">
+                <img src="../../../../assets/auth/doctor.png" alt="doctor">
+                <h4>I am a Doctor</h4>
+              </div>
             </div>
-            <h1 class="mt-4 text-[28px] font-semibold"> Verify Your Phone <br> Number</h1>
-            <p>We have already sent a verification code<br>to
-                <b>{{mobile}}</b>
-            </p>
-            <div class="mt-12">
-                <ng-otp-input inputClass="verify-focus" (onInputChange)="onOtpChange($event)"
-                    [config]="{length:4}"></ng-otp-input>
+          </label>
+          <label for="radio-card-2" class="radio-card">
+            <input type="radio" id="radio-card-2" formControlName="userTypeName"
+                   [(ngModel)]="selectedUserType" value="Patient" />
+            <div class="card-content-wrapper ">
+              <span class="check-icon"></span>
+              <div class="card-content">
+                <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
+                <h4>I am a Patient</h4>
+              </div>
             </div>
-            <button class="form_btn mt-4" (click)="verify() ">
-                Continue
-            </button>
+          </label>
+
         </div>
-
-        <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-            [style]="userInfoModal==true && completeProfileInfoModal==false ? '' : 'display:none'">
-            <h1 class="text-3xl font-semibold">Signup</h1>
-            <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-            <form  class="mt-5" [formGroup]="userInfoForm">
-
-                <div class="flex flex-col space-y-5 mt-6">
-                    <div class="w-full px-3 sm:w-full">
-                        <div>
-                            <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                Full Name
-                            </label>
-                            <input  formControlName="fullName"  type="text" name="name" id="name" placeholder="Full Name"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                    </div>
-                    <div class="w-full px-3 sm:w-full">
-                        <div>
-                            <label for="name" class="mb-2 block  font-medium text-[14px] text-primary">
-                                Your Title
-                            </label>
-                            <select formControlName="doctorTitle" name="select" id="select"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                    
-                            <!-- Default Select Option -->
-                            <option value="" class="font-semibold text-slate-300">Select Title</option>
-                    
-                            <!-- Loop through titleList to create options -->
-                            <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="w-full px-3 sm:w-full">
-                        <div>
-                            <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                               Email
-                            </label>
-                            <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                    </div>
-
-                    <div class="w-full px-3 sm:w-full">
-                        <div>
-                            <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                Password
-                            </label>
-                            <input formControlName="password" type="password" name="name" id="name"
-                                placeholder="Password123@*"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                    </div>
-
-                    <div class="w-full px-3 sm:w-full">
-                        <div >
-                            <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                Confirm Password
-                            </label>
-                            <input formControlName="password" type="password" name="name" id="name"
-                            placeholder="Password123@*"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                    </div>
-
-
-                    <button class="form_btn mt-4" (click)="sendUserInfo()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                        </svg>
-                        <span>Signup</span>
-                    </button>
-
-                </div>
-            </form>
+        <div class="flex flex-col space-y-5 mt-10">
+          <label for="mobile">
+            <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
+            <input type="tel" formControlName="mobile" id="phone" class="form_input"
+                   placeholder="018-000-00000" required>
+          </label>
+          <button class="form_btn" (click)="sendOtp()">
+            <div *ngIf="!isLoading" class="flex">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+              <span>Signup</span>
+            </div>
+            <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
+          </button>
+          <p class="text-center">
+            Already have an account? <a routerLink="/login"
+                                        class="text-primary font-medium inline-flex space-x-1 items-center">
+              <span>
+                Login now
+              </span><span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </span>
+            </a>
+          </p>
         </div>
-
-
-        <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
-            [style]="completeProfileInfoModal==true ? '' : 'display:none'">
-            <app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>
-        </div>
-
+      </form>
     </div>
+
+    <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
+         [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
+      <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
+        <img src="../../../../assets/auth/v-code.jpg" alt="">
+      </div>
+      <h1 class="mt-4 text-[28px] font-semibold"> Verify Your Phone <br> Number</h1>
+      <p>
+        We have already sent a verification code<br>to
+        <b>{{mobile}}</b>
+      </p>
+      <div class="mt-12">
+        <ng-otp-input inputClass="verify-focus" (onInputChange)="onOtpChange($event)"
+                      [config]="{length:4}"></ng-otp-input>
+      </div>
+      <button class="form_btn mt-4" (click)="verify() ">
+        Continue
+      </button>
+    </div>
+
+    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
+         [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
+      <h1 class="text-3xl font-semibold">Signup</h1>
+      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
+      <form class="mt-5" [formGroup]="userInfoForm">
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Your Title
+              </label>
+              <select formControlName="doctorTitle" name="select" id="select"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <!-- Default Select Option -->
+                <option value="0" class="font-semibold text-slate-300">Select Title</option>
+                <!-- Loop through titleList to create options -->
+                <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Full Name
+              </label>
+              <input formControlName="fullName" type="text" name="name" id="name" placeholder="Full Name"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-full">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Email
+              </label>
+              <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Gender
+              </label>
+              <select formControlName="gender" name="select" id="select"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Date of Birth
+              </label>
+              <input required formControlName="dateOfBirth" type="date" name="date" id="date"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                BMDC Reg Number
+              </label>
+              <input formControlName="bmdcRegNo" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                BMDC Exp. Date
+              </label>
+              <input formControlName="bmdcRegExpiryDate" type="date" name="date" id="date"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Address
+              </label>
+              <input formControlName="address" type="text" name="area" id="area" placeholder="Enter area"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                City
+              </label>
+              <input formControlName="city" type="text" name="state" id="state" placeholder="Enter state"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Zip Code
+              </label>
+              <input formControlName="zipCode" type="text" name="post-code" id="post-code" placeholder="Post Code"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Country
+              </label>
+              <input formControlName="country" type="text" name="city" id="city" placeholder="Enter city"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Identity Number
+              </label>
+              <input formControlName="identityNumber" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Specialties
+              </label>
+              <select formControlName="specialityId" name="select" id="select"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-slate-300">{{item.specialityName}}</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Password
+              </label>
+              <input formControlName="password" type="password" name="name" id="name"
+                     placeholder="Password123@*"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Confirm Password
+              </label>
+              <input formControlName="password" type="password" name="name" id="name"
+                     placeholder="Password123@*"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+        <button class="form_btn mt-4" (click)="sendUserInfo()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          <span>Signup</span>
+        </button>
+      </form>
+    </div>
+
+
+    <div class="max-w-lg min-w-[55%] mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
+         [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
+      <!--<app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>-->
+      <app-degree-specilization-info-form></app-degree-specilization-info-form>
+    </div>
+
+  </div>
 
 
 </div>

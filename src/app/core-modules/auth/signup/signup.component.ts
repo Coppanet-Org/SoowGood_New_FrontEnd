@@ -8,9 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
-import { DoctorTitle } from 'src/app/proxy/enums';
+import { Gender, MaritalStatus, DoctorTitle } from 'src/app/proxy/enums';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
-import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
+import { DoctorProfileService, OtpService, UserAccountsService, SpecialityService } from 'src/app/proxy/services';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -39,9 +39,13 @@ export class SignupComponent implements OnInit {
   userInfoModal: boolean = false;
   doctorProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
-  completeProfileInfoModal: boolean = false
+  completeDegreeSpecilizationInfoModal: boolean = false
   receivedFormData!: FormGroup;
   titleList: ListItem[] = [];
+
+  genderList: ListItem[] = [];
+  maritalOptions: ListItem[] = [];
+  specialties: any = [];
 
 
 
@@ -53,11 +57,18 @@ export class SignupComponent implements OnInit {
     private doctorProfileService: DoctorProfileService,
     private toasterService: ToasterService,
     private _router: Router,
-    private NormalAuth: AuthService
+    private NormalAuth: AuthService,
+    private doctorSpeciality: SpecialityService,
   ) { }
 
   ngOnInit(): void {
     this.loadForm();
+    this.genderList = CommonService.getEnumList(Gender);
+    //this.maritalOptions = CommonService.getEnumList(MaritalStatus);
+    //this.titleList = CommonService.getEnumList(DoctorTitle);
+    this.doctorSpeciality.getList().subscribe((res) => {
+      this.specialties = res;
+    });
     this.titleList = CommonService.getEnumList(DoctorTitle);
   }
 
@@ -69,9 +80,22 @@ export class SignupComponent implements OnInit {
     });
     this.userInfoForm = this.fb.group({
       fullName: ["", Validators.required],
-      doctorTitle: ["", Validators.required],
+      doctorTitle: ["0", Validators.required],
       email: ["", Validators.required],
       password: ["", Validators.required],
+
+      gender: ["0", Validators.required],
+      dateOfBirth: ['', Validators.required],
+      //maritalStatus: ["0", Validators.required],
+      city: [null],
+      country: [''],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      bmdcRegNo: ['', Validators.required],
+      bmdcRegExpiryDate: ['', Validators.required],
+      specialityId: ["0", Validators.required],
+      identityNumber: ['', Validators.required],
+
     })
   }
   sendOtp() {
@@ -124,6 +148,16 @@ export class SignupComponent implements OnInit {
     let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
     let title = this.userInfoForm.value.doctorTitle;
+    let gender = this.userInfoForm.value.gender;
+    let dateOfBirth = this.userInfoForm.value.dateOfBirth;
+    let address = this.userInfoForm.value.address;
+    let city = this.userInfoForm.value.city;
+    let zipCode = this.userInfoForm.value.zipCode;
+    let country = this.userInfoForm.value.country;
+    let bmdcRegNo = this.userInfoForm.value.bmdcRegNo;
+    let bmdcRegExpiryDate = this.userInfoForm.value.bmdcRegExpiryDate;
+    let specialityId = this.userInfoForm.value.specialityId;
+    let identityNumber = this.userInfoForm.value.identityNumber;
     let userInfo = {
       "tenantId": "",
       "userName": this.mobile,
@@ -146,22 +180,49 @@ export class SignupComponent implements OnInit {
         if (res.success) {
           this.isLoading = false
           if (userType === 'Doctor') {
+
             this.doctorProfileDto.doctorTitle = title;
             this.doctorProfileDto.userId = res.userId;
             this.doctorProfileDto.fullName = res.name;
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
+            this.doctorProfileDto.gender = gender;
+            this.doctorProfileDto.dateOfBirth = dateOfBirth;
+            this.doctorProfileDto.address = address;
+            this.doctorProfileDto.city = city;
+            this.doctorProfileDto.zipCode = zipCode;
+            this.doctorProfileDto.country = country;
+            this.doctorProfileDto.bmdcRegNo = bmdcRegNo;
+            this.doctorProfileDto.bmdcRegExpiryDate = bmdcRegExpiryDate;
+            this.doctorProfileDto.specialityId = specialityId;
+            this.doctorProfileDto.identityNumber = identityNumber;
             this.doctorProfileDto.isActive = false;
-            //this.doctorProfileDto.profileStep = 1;
-            //this.doctorProfileDto.createFrom = "Web";
+            this.doctorProfileDto.profileStep = 1;
+            this.doctorProfileDto.createFrom = "Web";
+            userType = userType + '/profile-settings/basic-info'
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
                   .subscribe((doctorDto: DoctorProfileInputDto) => {
                     this.newCreatedProfileDto = doctorDto;
-                    this.completeProfileInfoModal = true
+                    this.completeDegreeSpecilizationInfoModal = true
                     this.docId = doctorDto.id
-                    
+                    let saveLocalStorage = {
+                      identityNumber: doctorDto.identityNumber,
+                      bmdcRegNo: doctorDto.bmdcRegNo,
+                      isActive: doctorDto.isActive,
+                      userId: doctorDto.userId,
+                      id: doctorDto.id,
+                      profileStep: doctorDto.profileStep,
+                      createFrom: doctorDto.createFrom
+                    }
+                    this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                    //this._router.navigate([userType.toLowerCase()], {
+                    //  state: { data: res } // Pass the 'res' object as 'data' in the state object
+                    //}).then(r => r)
+                    this.toasterService.success("Registration Successful"), {
+                      position: 'bottom-center'
+                    }
                   })
               })
           }
@@ -187,11 +248,13 @@ export class SignupComponent implements OnInit {
   }
 
 
+
   handleFormData(formData: FormGroup) {
     const doctorProfileInput: DoctorProfileInputDto = {
       degrees: [],
       doctorSpecialization: [],
-      ...formData,
+      //...formData,
+
       id: this.docId
     };
     doctorProfileInput.doctorTitle = this.doctorProfileDto.doctorTitle;

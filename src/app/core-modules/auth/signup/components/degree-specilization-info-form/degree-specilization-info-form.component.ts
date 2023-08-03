@@ -1,22 +1,18 @@
-import { TosterService } from 'src/app/shared/services/toster.service';
-import { DoctorDegreeService } from './../../../../proxy/services/doctor-degree.service';
-import { DoctorDegreeDto } from 'src/app/proxy/dto-models';
-import { DegreeService } from './../../../../proxy/services/degree.service';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DegreeService, DoctorDegreeService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { DegreeDto, DoctorDegreeDto } from 'src/app/proxy/dto-models';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TosterService } from '../../../../../shared/services/toster.service';
 
 @Component({
-  selector: 'app-degree-dialog',
-  templateUrl: './degree-dialog.component.html',
-  styleUrls: ['./degree-dialog.component.scss'],
+  selector: 'app-degree-specilization-info-form',
+  templateUrl: './degree-specilization-info-form.component.html',
+  styleUrls: ['./degree-specilization-info-form.component.scss']
 })
-export class DegreeDialogComponentnt implements OnInit {
+export class DegreeSpecilizationInfoFormComponent implements OnInit {
   isLoading: boolean = false;
   degreeList: DoctorDegreeDto[] = [];
   durationList: any = [
@@ -28,16 +24,15 @@ export class DegreeDialogComponentnt implements OnInit {
   ];
   form!: FormGroup;
   doctorId: any;
+  public editData: DoctorDegreeDto | undefined
   constructor(
     private degreeService: DegreeService,
     private fb: FormBuilder,
     private doctorDegreeService: DoctorDegreeService,
     private normalAuth: AuthService,
-    public dialogRef: MatDialogRef<DegreeDialogComponentnt>,
     private tosterService: TosterService,
-    @Inject(MAT_DIALOG_DATA)
-    public editData: DoctorDegreeDto | undefined
-  ) {}
+    
+  ) { }
 
   ngOnInit(): void {
     this.loadForm();
@@ -55,7 +50,7 @@ export class DegreeDialogComponentnt implements OnInit {
       zipCode: ['1216'],
       degreeId: ['', Validators.required],
       duration: ['', Validators.required],
-      durationType: ['', Validators.required],
+      //durationType: ['', Validators.required],
       passingYear: ['', Validators.required],
       instituteName: ['', Validators.required],
       instituteCity: ['', Validators.required],
@@ -84,7 +79,7 @@ export class DegreeDialogComponentnt implements OnInit {
       this.doctorDegreeService.create(newDegreeData).subscribe((res) => {
         if (res) {
           this.tosterService.customToast('Successfully added!', 'success');
-          this.dialogRef.close(true);
+          //this.dialogRef.close(true);
         }
       });
     } else {
@@ -100,7 +95,7 @@ export class DegreeDialogComponentnt implements OnInit {
       }
 
       if (changedProperties.length < 1) {
-        this.dialogRef.close(false);
+        //this.dialogRef.close(false);
         return;
       } else {
         this.doctorDegreeService
@@ -111,13 +106,13 @@ export class DegreeDialogComponentnt implements OnInit {
                 'Successfully updated!',
                 'success'
               );
-              this.dialogRef.close(true);
+              //this.dialogRef.close(true);
             } else {
               this.tosterService.customToast(
                 'Something went wrong! Please contact your administrator.',
                 'error'
               );
-              this.dialogRef.close(false);
+              //this.dialogRef.close(false);
             }
           });
       }
