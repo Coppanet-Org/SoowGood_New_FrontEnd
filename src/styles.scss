@@ -28,7 +28,10 @@
     @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply py-2 px-5 mr-2 h-fit text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-primary   ;
+    @apply hover:text-primary border-transparent hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75;
+  }
+  .btn-secondary-light {
+    @apply bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
   }
   .signup-form {
     @apply flex items-center w-full h-screen bg-slate-100;
@@ -45,7 +48,7 @@
     @apply w-2/5  h-full;
   }
   .form_input{
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+    @apply w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-secondary focus:shadow-md;
   }
   .dashbord-heading-text{
     @apply text-primary font-semibold text-[18px] font-Roboto
@@ -58,5 +61,11 @@
   }
   .mat_label{
     @apply text-[14px] font-medium font-Roboto text-label
+  }
+  .th{
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400
+  }
+  .td{
+    @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200
   }
 }

@@ -121,6 +121,8 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   isActive?: boolean;
   userId?: string;
   isOnline?: boolean;
+  profileStep?: number;
+  createFrom?: string;
 }
 
 export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
@@ -181,7 +183,6 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   path?: string;
   entityType?: EntityType;
   entityTypeName?: string;
-  importerId?: number;
   entityId?: number;
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;

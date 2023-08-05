@@ -1,0 +1,66 @@
+<div class="flex items-center justify-left my-7">
+    <div class=" w-full  bg-white">
+
+        <div class="relative overflow-x-auto  sm:rounded-lg ">
+            <div class="py-2 pl-5 pr-1 border-[1px] rounded-md flex gap-4 items-center">
+                <h1 class="dashbord-heading-text text-[18px] font-medium"> <i class="fa-solid fa-building-columns mr-1"></i>
+                    Skill & Specializations</h1>
+                <button class="btn-secondary-light" (click)="openDialog()"> <i class="fa-solid fa-plus  mr-1"></i> Add
+                    Specialization </button>
+            </div>
+
+            <div class="w-full mt-3">
+
+                <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
+                    <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Specialty
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Specialization
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                    *ngFor="let item of allSpecializations;">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <label for="checkbox-table-search-3" class="sr-only">{{1}}</label>
+                                        </div>
+                                    </td>
+
+                                    <td class="px-6 py-4">
+                                        {{specialityName}}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{specializationName}}
+                                    </td>
+
+                                    <td class="px-6 py-4">
+                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                            (click)="handleSpecializationEdit(item)">Edit Specialization</a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>

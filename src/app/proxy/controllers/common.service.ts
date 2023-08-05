@@ -10,6 +10,15 @@ export class CommonService {
   apiName = 'Default';
   
 
+  deleteDoc = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'DELETE',
+      url: '/api/Common/DeleteDoc',
+      params: { id },
+    },
+    { apiName: this.apiName,...config });
+  
+
   deleteFileAllotmentByInput = (input: FileDeleteInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, IActionResult>({
       method: 'POST',
@@ -28,10 +37,19 @@ export class CommonService {
     { apiName: this.apiName,...config });
   
 
-  fileUploadComplain = (config?: Partial<Rest.Config>) =>
+  fileUploadDocuments = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, IActionResult>({
       method: 'POST',
-      url: '/api/Common/UploadDocuments',
+      url: '/api/Common/Documents',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDocument = (entityType: string, entityId: number, attachmentType: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/Common/GetDocument',
+      params: { entityType, entityId, attachmentType },
     },
     { apiName: this.apiName,...config });
 

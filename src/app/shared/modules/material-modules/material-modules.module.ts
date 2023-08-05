@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
-import {MatTabsModule} from '@angular/material/tabs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
 const MatModules:any = [
-  MatTabsModule
+  MatStepperModule,
+  FormsModule,
+  ReactiveFormsModule,
 ]
 
 

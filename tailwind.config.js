@@ -35,12 +35,17 @@ module.exports = {
       },
 
       boxShadow: {
-        'soft': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
+        'soft': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+        'high': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        
       },
 
       colors: {
         'primary': '#01204e',
         'secondary':"#30bced",
+        'secondary-light':"#eefaff",
+        'secondary-dark':"#006c93",
+        'secondary-border': "#01204e40",
         'label' :'rgba(0, 0, 0, 0.6)',
         'skyblue' : "#30bced",
 

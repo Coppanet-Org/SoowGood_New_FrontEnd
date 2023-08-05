@@ -4,11 +4,16 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DoctorProfileDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DoctorTitle } from 'src/app/proxy/enums';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { DoctorProfileService, OtpService, UserAccountsService } from 'src/app/proxy/services';
+import { ListItem } from 'src/app/shared/model/common-model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
 
 @Component({
@@ -36,22 +41,24 @@ export class SignupComponent implements OnInit {
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   completeProfileInfoModal: boolean = false
   receivedFormData!: FormGroup;
+  titleList: ListItem[] = [];
 
 
 
   constructor(
 
     private fb: FormBuilder,
-    // private cdRef: ChangeDetectorRef,
     private otpService: OtpService,
     private userAccountService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
     private toasterService: ToasterService,
-    private _router: Router
+    private _router: Router,
+    private NormalAuth: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadForm();
+    this.titleList = CommonService.getEnumList(DoctorTitle);
   }
 
   loadForm() {
@@ -61,10 +68,10 @@ export class SignupComponent implements OnInit {
       userTypeName: ''
     });
     this.userInfoForm = this.fb.group({
-      name: "",
-      email: "",
-      password: "",
-
+      fullName: ["", Validators.required],
+      doctorTitle: ["", Validators.required],
+      email: ["", Validators.required],
+      password: ["", Validators.required],
     })
   }
   sendOtp() {
@@ -116,16 +123,17 @@ export class SignupComponent implements OnInit {
     this.isLoading = true;
     let userType = this.formGroup?.value.userTypeName
     let password = this.userInfoForm.value.password;
+    let title = this.userInfoForm.value.doctorTitle;
     let userInfo = {
       "tenantId": "",
       "userName": this.mobile,
-      "name": this.userInfoForm?.value.name,
+      "name": this.userInfoForm?.value.fullName,
       "surname": "",
       "email": this.userInfoForm.value.email,
       "emailConfirmed": true,
       "phoneNumber": this.mobile,
       "phoneNumberConfirmed": true,
-      "isActive": userType==="Patient"?true:false,
+      "isActive": true,
       "lockoutEnabled": false,
       "lockoutEnd": "2023-07-16T07:38:44.382Z",
       "concurrencyStamp": ""
@@ -138,23 +146,32 @@ export class SignupComponent implements OnInit {
         if (res.success) {
           this.isLoading = false
           if (userType === 'Doctor') {
+            this.doctorProfileDto.doctorTitle = title;
             this.doctorProfileDto.userId = res.userId;
             this.doctorProfileDto.fullName = res.name;
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
-            this.doctorProfileDto.isActive = res.isActive;
-
+            this.doctorProfileDto.isActive = false;
+            //this.doctorProfileDto.profileStep = 1;
+            //this.doctorProfileDto.createFrom = "Web";
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
                   .subscribe((doctorDto: DoctorProfileInputDto) => {
                     this.newCreatedProfileDto = doctorDto;
-
                     this.completeProfileInfoModal = true
-                    this.docId = doctorDto.id;
-
+                    this.docId = doctorDto.id
+                    let saveLocalStorage = {
+                      identityNumber: doctorDto.identityNumber,
+                      bmdcRegNo: doctorDto.bmdcRegNo,
+                      isActive: doctorDto.isActive,
+                      userId: doctorDto.userId,
+                      id: doctorDto.id,
+                      profileStep: doctorDto.profileStep,
+                      createFrom: doctorDto.createFrom
+                    }
+                    this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                   })
-
               })
           }
           else if (userType === 'Agent') {
@@ -180,34 +197,32 @@ export class SignupComponent implements OnInit {
 
 
   handleFormData(formData: FormGroup) {
-
-
     const doctorProfileInput: DoctorProfileInputDto = {
-      degrees: [], 
+      degrees: [],
       doctorSpecialization: [],
-      ...formData
+      ...formData,
+      id: this.docId
     };
+    doctorProfileInput.doctorTitle = this.doctorProfileDto.doctorTitle;
     doctorProfileInput.userId = this.doctorProfileDto.userId;
     doctorProfileInput.fullName = this.doctorProfileDto.fullName;
     doctorProfileInput.email = this.doctorProfileDto.email;
     doctorProfileInput.mobileNo = this.doctorProfileDto.mobileNo;
     doctorProfileInput.isActive = this.doctorProfileDto.isActive;
-    let userType = this.formGroup?.value.userTypeName + '/profile-settings'
+    doctorProfileInput.profileStep = 1;
+    doctorProfileInput.createFrom = "Web";
+    let userType = this.formGroup?.value.userTypeName + '/profile-settings/basic-info'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
-
-        console.log(doctorProfileInput);
-
-        this._router.navigate([userType.toLowerCase()], { queryParams: { id: res.id } }).then(r => r)
+        this._router.navigate([userType.toLowerCase()], {
+          state: { data: res } // Pass the 'res' object as 'data' in the state object
+        }).then(r => r)
         this.toasterService.success("Registration Successful"), {
           position: 'bottom-center'
         }
       }
-    })
+    });
   }
-
-
-
 }
 
 
