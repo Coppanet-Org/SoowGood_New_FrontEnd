@@ -1,13 +1,12 @@
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { DoctorDegreeService } from './../../../../proxy/services/doctor-degree.service';
+import { DoctorDegreeService } from '../../../../proxy/services/doctor-degree.service';
 import { DoctorDegreeDto } from 'src/app/proxy/dto-models';
-import { DegreeService } from './../../../../proxy/services/degree.service';
+import { DegreeService } from '../../../../proxy/services/degree.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
 

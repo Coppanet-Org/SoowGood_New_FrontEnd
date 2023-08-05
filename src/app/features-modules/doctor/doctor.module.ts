@@ -5,7 +5,6 @@ import { Route, RouterModule } from '@angular/router';
 import { RightSidebarComponent } from './component/right-sidebar/right-sidebar.component';
 import { DashboardMenuComponent } from 'src/app/shared/components/dashboard-menu/dashboard-menu.component';
 import { DashboardMenuItemComponent } from 'src/app/shared/components/dashboard-menu-item/dashboard-menu-item.component';
-
 const routes: Route[] = [
   {
     path: '',

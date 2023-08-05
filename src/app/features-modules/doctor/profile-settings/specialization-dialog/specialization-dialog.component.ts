@@ -1,4 +1,4 @@
-import { DoctorSpecializationService } from './../../../../proxy/services/doctor-specialization.service';
+import { DoctorSpecializationService } from '../../../../proxy/services/doctor-specialization.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -7,7 +7,7 @@ import {
 } from '@angular/material/dialog';
 
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { DoctorProfileService } from './../../../../proxy/services/doctor-profile.service';
+import { DoctorProfileService } from '../../../../proxy/services/doctor-profile.service';
 import { SpecializationService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({

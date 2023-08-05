@@ -2,17 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ProfileSettingsComponent } from './profile-settings.component';
 import { Route, RouterModule } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatStepperModule} from '@angular/material/stepper';
-import { BasicInfoComponent } from '../component/basic-info/basic-info.component';
-import { EducationInfoComponent } from '../component/education-info/education-info.component';
-import { HospitalInfoComponent } from '../component/hospital-info/hospital-info.component';
-import { SpecializationInfoComponent } from '../component/specialization-info/specialization-info.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import { DegreeDialogComponentnt } from '../component/degree-dialog/degree-dialog.component';
-import { DegreeCardComponent } from '../component/degree-card/degree-card.component';
-import { SpecializationDialogComponent } from '../component/specialization-dialog/specialization-dialog.component';
+import { BasicInfoComponent } from './basic-info/basic-info.component';
+import { EducationInfoComponent } from './education-info/education-info.component';
+import { SpecializationInfoComponent } from './specialization-info/specialization-info.component';
+import { DegreeDialogComponentnt } from './degree-dialog/degree-dialog.component';
+import { DegreeCardComponent } from './degree-card/degree-card.component';
+import { SpecializationDialogComponent } from './specialization-dialog/specialization-dialog.component';
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
+import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 
 
 const routes: Route[] = [
@@ -39,10 +36,6 @@ const routes: Route[] = [
         path: 'specialization',
         component: SpecializationInfoComponent
       },
-      {
-        path: 'hospital',
-        component: HospitalInfoComponent
-      },
     ],
   },
   
@@ -53,7 +46,6 @@ const routes: Route[] = [
     ProfileSettingsComponent,
     BasicInfoComponent,
     EducationInfoComponent,
-    HospitalInfoComponent,
     SpecializationInfoComponent,
     DegreeDialogComponentnt,
     DegreeCardComponent,
@@ -62,11 +54,9 @@ const routes: Route[] = [
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
-    FormsModule,
-    ReactiveFormsModule,
-    MatStepperModule,
-    MatDialogModule
+    MaterialModulesModule
   ],
+
   providers: [DatePipe], 
 })
 export class ProfileSettingsModule { }
