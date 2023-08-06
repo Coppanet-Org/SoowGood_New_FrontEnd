@@ -5,12 +5,12 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\login",
-    "\\src\\app\\proxy",
-    "\\src\\app\\proxy\\volo",
-    "\\src\\app\\proxy\\volo\\abp",
-    "\\src\\app\\proxy\\volo\\abp\\identity"
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\core-modules\\auth\\signup\\components",
+    "\\src\\app\\core-modules\\auth\\signup\\components\\degree-specilization-info-form",
+    "\\src\\app\\features-modules",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\components\\degree-specilization-info-form\\degree-specilization-info-form.component.ts",
   "PreviewInSolutionExplorer": false
 }
