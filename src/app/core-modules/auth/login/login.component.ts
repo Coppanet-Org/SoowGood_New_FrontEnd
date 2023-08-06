@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router,
     private toasterService: ToasterService,
     private permissionService: PermissionService,
-    private ToasterService : TosterService,
-    
+    private ToasterService: TosterService,
+
     private NormalAuth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -75,6 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.ToasterService.customToast("Please filled all required field", 'warning')
       return
     }
+    let userType = '';
     this.errorMessage = '';
     this.hasError = false;
     const username = this.formControl['mobileNo'].value;
@@ -96,16 +97,22 @@ export class LoginComponent implements OnInit, OnDestroy {
                   isActive: doctorDto.isActive,
                   userId: doctorDto.userId,
                   id: doctorDto.id,
+                  specialityId:doctorDto.specialityId,
                   profileStep: doctorDto.profileStep,
                   createFrom: doctorDto.createFrom
                 }
                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
-                let userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
+                if (doctorDto.profileStep == 1) {
+                  userType = '/signup';
+                }
+                else {
+                  userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
+                }
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
                 }).then(r =>
                   this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success'));
-              })
+              });
           }
           else {
             this.hasError = true;

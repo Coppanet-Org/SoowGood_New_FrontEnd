@@ -1,6 +1,6 @@
 
 import { ToasterService } from '@abp/ng.theme.shared';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -46,7 +46,7 @@ export class SignupComponent implements OnInit {
   genderList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
   specialties: any = [];
-
+  profileStep: any;
 
 
   constructor(
@@ -57,11 +57,27 @@ export class SignupComponent implements OnInit {
     private doctorProfileService: DoctorProfileService,
     private toasterService: ToasterService,
     private _router: Router,
-    private NormalAuth: AuthService,
+    private normalAuth: AuthService,
     private doctorSpeciality: SpecialityService,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+
+    let authInfo = this.normalAuth.authInfo();
+    if (authInfo != null) {
+      this.profileStep = this.normalAuth.authInfo().profileStep;
+      if (this.profileStep == 1) {
+        this.otpModal = false;
+        this.userInfoModal = false;
+        this.completeDegreeSpecilizationInfoModal = true;
+      }
+      else {
+        //this.otpModal = true;
+        //this.userInfoModal = true;
+        //this.completeDegreeSpecilizationInfoModal = false;
+      }
+    }
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
     //this.maritalOptions = CommonService.getEnumList(MaritalStatus);
@@ -143,6 +159,7 @@ export class SignupComponent implements OnInit {
       console.log("Pin should be 4 character");
     }
   }
+
   sendUserInfo() {
     this.isLoading = true;
     let userType = this.formGroup?.value.userTypeName
@@ -216,13 +233,14 @@ export class SignupComponent implements OnInit {
                       profileStep: doctorDto.profileStep,
                       createFrom: doctorDto.createFrom
                     }
-                    this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                    this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                     //this._router.navigate([userType.toLowerCase()], {
                     //  state: { data: res } // Pass the 'res' object as 'data' in the state object
                     //}).then(r => r)
-                    this.toasterService.success("Registration Successful"), {
+                    this.toasterService.success("Basic Inforamation Saved Successfully"), {
                       position: 'bottom-center'
                     }
+                    this.cdRef.detectChanges();
                   })
               })
           }
@@ -247,7 +265,11 @@ export class SignupComponent implements OnInit {
       );
   }
 
-
+  handleComponent(event: boolean) {
+    if (event) {
+      this.cdRef.detectChanges();
+    }
+  }
 
   handleFormData(formData: FormGroup) {
     const doctorProfileInput: DoctorProfileInputDto = {
@@ -277,7 +299,7 @@ export class SignupComponent implements OnInit {
           profileStep: res.profileStep,
           createFrom: res.createFrom
         }
-        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+        this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
         this._router.navigate([userType.toLowerCase()], {
           state: { data: res } // Pass the 'res' object as 'data' in the state object
         }).then(r => r)

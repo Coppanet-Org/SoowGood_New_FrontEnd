@@ -19,6 +19,14 @@ export class DoctorDegreeService {
     { apiName: this.apiName,...config });
   
 
+  delete = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'DELETE',
+      url: `/api/app/doctor-degree/${id}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorDegreeDto>({
       method: 'GET',
@@ -39,6 +47,14 @@ export class DoctorDegreeService {
     this.restService.request<any, DoctorDegreeDto[]>({
       method: 'GET',
       url: '/api/app/doctor-degree',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorDegreeDto[]>({
+      method: 'GET',
+      url: `/api/app/doctor-degree/by-doctor-id/${doctorId}`,
     },
     { apiName: this.apiName,...config });
   
