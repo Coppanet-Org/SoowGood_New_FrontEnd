@@ -1,4 +1,3 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocale } from '@abp/ng.core/locale';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +14,8 @@ import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -36,15 +36,15 @@ const routerConfig: ExtraOptions = {
       registerLocaleFn: registerLocale(),
     }),
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
+    MaterialModulesModule,
     RouterModule.forRoot(appRoutes, routerConfig),
     HotToastModule.forRoot({
-      position: 'bottom-right',
-    }),
+      position: 'bottom-center',
+    })
 
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports:[MatDialogModule]
 })
 export class AppModule {}

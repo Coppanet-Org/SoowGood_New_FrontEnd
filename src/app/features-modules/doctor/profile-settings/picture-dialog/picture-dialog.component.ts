@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { SubSink } from 'SubSink';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DegreeDialogComponentnt } from '../../component/degree-dialog/degree-dialog.component';
+import { DegreeDialogComponentnt } from '../degree-dialog/degree-dialog.component';
 
 @Component({
   selector: 'app-picture-dialog',

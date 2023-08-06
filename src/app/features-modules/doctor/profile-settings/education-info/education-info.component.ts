@@ -1,4 +1,4 @@
-import { DegreeService } from './../../../../proxy/services/degree.service';
+import { DegreeService } from '../../../../proxy/services/degree.service';
 import { DegreeDialogComponentnt } from '../degree-dialog/degree-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';

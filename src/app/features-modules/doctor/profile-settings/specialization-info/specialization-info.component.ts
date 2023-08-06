@@ -1,8 +1,8 @@
-import { DoctorProfileService } from './../../../../proxy/services/doctor-profile.service';
+import { DoctorProfileService } from '../../../../proxy/services/doctor-profile.service';
 import {
   DoctorChamberDto,
   DoctorSpecializationDto,
-} from './../../../../proxy/dto-models/models';
+} from '../../../../proxy/dto-models/models';
 import { Component, Input, OnInit } from '@angular/core';
 import { SpecializationDto } from 'src/app/proxy/dto-models';
 import {

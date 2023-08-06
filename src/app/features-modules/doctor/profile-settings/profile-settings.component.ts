@@ -1,4 +1,7 @@
-import { DoctorProfileService, DocumentsAttachmentService } from 'src/app/proxy/services';
+import {
+  DoctorProfileService,
+  DocumentsAttachmentService,
+} from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,12 +31,12 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
   animationDirection = 'right';
-  selectedIndex: any
+  selectedIndex: any;
   userId: any;
   loading: boolean = false;
-  profileInfo: any
-  doctorTitleList: ListItem[] = []
-  title: any
+  profileInfo: any;
+  doctorTitleList: ListItem[] = [];
+  title: any;
   activeTab: string = '';
   subs = new SubSink();
   fileList: File[] = [];
@@ -50,7 +53,6 @@ export class ProfileSettingsComponent implements OnInit {
   public picUrl = `${environment.apis.default.url}/`;
   doctorId: any;
 
-
   constructor(
     private _fb: FormBuilder,
     private doctorProfileService: DoctorProfileService,
@@ -59,33 +61,31 @@ export class ProfileSettingsComponent implements OnInit {
     private TosterService: TosterService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-    private normalAuth :AuthService,
-    public dialog: MatDialog,
-  ) { }
+    private normalAuth: AuthService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
-    let authId = this.normalAuth.authInfo().id
-   this.doctorId = authId
+    let authId = this.normalAuth.authInfo().id;
+    this.doctorId = authId;
 
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
   }
 
-
-  getProfileInfo(id:any):void {
+  getProfileInfo(id: any): void {
     if (id) {
-      this.doctorProfileService.get(id).subscribe((res)=>{
-        this.profileInfo = res
-      })
+      this.doctorProfileService.get(id).subscribe((res) => {
+        this.profileInfo = res;
+      });
     }
   }
   // this function need to optimize in future
   getTitle(title: string) {
-    let doctortitle = this.doctorTitleList.find((e) => e.id == title)
-    return doctortitle?.name
-
+    let doctortitle = this.doctorTitleList.find((e) => e.id == title);
+    return doctortitle?.name;
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -107,7 +107,10 @@ export class ProfileSettingsComponent implements OnInit {
     let changedProperties: string[] = [];
 
     for (const key in formData) {
-      if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
+      if (
+        formData.hasOwnProperty(key) &&
+        formData[key] !== this.profileInfo[key]
+      ) {
         changedProperties.push(key);
       }
     }
@@ -132,13 +135,13 @@ export class ProfileSettingsComponent implements OnInit {
             }
           }
           this.TosterService.customToast(successMessage, 'success');
-          this.getProfileInfo(this.doctorId)
-
+          this.getProfileInfo(this.doctorId);
         },
         (error) => {
           this.loading = false;
           this.TosterService.customToast(error.message, 'error');
-        });
+        }
+      );
     }
     //if (this.fileList.length > 0) {
     //  this.fileData.append("entityId", this.profileInfo.id.toString());
@@ -172,62 +175,63 @@ export class ProfileSettingsComponent implements OnInit {
     let pathName = urlParts[urlParts.length - 1];
 
     if (pathName == 'basic-info') {
-      this.activeTab = '0'
+      this.activeTab = '0';
     }
     if (pathName == 'education') {
-      this.activeTab = '1'
+      this.activeTab = '1';
     }
     if (pathName == 'specializations') {
-      this.activeTab = '2'
+      this.activeTab = '2';
     }
     if (pathName == 'hospital') {
-      this.activeTab = '3'
+      this.activeTab = '3';
     }
   }
 
   onchangeStep(e: any) {
     if (e.selectedIndex == 0) {
-      this._router.navigate(['doctor/profile-settings/basic-info'])
+      this._router.navigate(['doctor/profile-settings/basic-info']);
     }
     if (e.selectedIndex == 1) {
-      this._router.navigate(['doctor/profile-settings/education'])
+      this._router.navigate(['doctor/profile-settings/education']);
     }
     if (e.selectedIndex == 2) {
-      this._router.navigate(['doctor/profile-settings/specialization'])
-    } if (e.selectedIndex == 3) {
-      this._router.navigate(['doctor/profile-settings/hospital'])
+      this._router.navigate(['doctor/profile-settings/specialization']);
+    }
+    if (e.selectedIndex == 3) {
+      this._router.navigate(['doctor/profile-settings/hospital']);
     }
   }
 
   //Profile Picture Related Functions
 
   getProfilePic() {
-    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
-      if (at) {
-        let prePaths: string = "";
-        var re = /wwwroot/gi;
-        prePaths = at.path ? at.path : "";
-        this.profilePic = prePaths.replace(re, "");
-        this.url = this.picUrl + this.profilePic;
+    this.subs.sink = this.doctorProfilePicService
+      .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
+        'Doctor',
+        this.profileInfo.id,
+        'ProfilePicture'
+      )
+      .subscribe((at) => {
+        if (at) {
+          let prePaths: string = '';
+          var re = /wwwroot/gi;
+          prePaths = at.path ? at.path : '';
+          this.profilePic = prePaths.replace(re, '');
+          this.url = this.picUrl + this.profilePic;
+        }
+      });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PictureDialogComponent, {
+      width: '30vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.getProfilePic();
       }
     });
   }
-
-
-  openDialog():void {
-    const dialogRef = this.dialog.open(PictureDialogComponent,{
-      width: "30vw"
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-     if (result == true) {
-      this.getProfilePic()
-     }
-    });
-  
-  }
- 
-   
-  
 }
-
