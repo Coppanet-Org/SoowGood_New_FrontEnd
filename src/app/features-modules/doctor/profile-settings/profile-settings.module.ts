@@ -10,7 +10,7 @@ import { DegreeCardComponent } from './degree-card/degree-card.component';
 import { SpecializationDialogComponent } from './specialization-dialog/specialization-dialog.component';
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
-
+import { DocumentsComponent } from './documents/documents.component';
 
 const routes: Route[] = [
   {
@@ -36,6 +36,10 @@ const routes: Route[] = [
         path: 'specialization',
         component: SpecializationInfoComponent
       },
+      {
+        path: 'documents',
+        component: DocumentsComponent
+      },
     ],
   },
   
@@ -50,7 +54,8 @@ const routes: Route[] = [
     DegreeDialogComponentnt,
     DegreeCardComponent,
     SpecializationDialogComponent,
-    PictureDialogComponent
+    PictureDialogComponent,
+    DocumentsComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),

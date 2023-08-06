@@ -5,10 +5,10 @@
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="gender" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                        Gender
                     </label>
-                    <select formControlName="gender"  name="select" id="select"
+                    <select formControlName="gender"  name="gender" id="gender"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
                     </select>
@@ -16,10 +16,10 @@
             </div>
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="maritalStatus" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                        Material Status
                     </label>
-                    <select formControlName="maritalStatus"  name="select" id="select"
+                    <select formControlName="maritalStatus"  name="maritalStatus" id="maritalStatus"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         <option *ngFor="let item of maritalOptions " value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
 
@@ -33,10 +33,10 @@
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="dateOfBirth" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         Date of Birth
                     </label>
-                    <input required formControlName="dateOfBirth"  type="date" name="date" id="date"
+                    <input required formControlName="dateOfBirth"  type="date" name="dateOfBirth" id="dateOfBirth"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
@@ -44,10 +44,10 @@
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="identityNumber" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         Identity Number
                     </label>
-                    <input  formControlName="identityNumber" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                    <input  formControlName="identityNumber" type="text" name="identityNumber" id="identityNumber" placeholder="Enter your phone number"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
@@ -55,20 +55,20 @@
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="bmdcRegNo" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         BMDC Reg Number
                     </label>
-                    <input formControlName="bmdcRegNo" type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                    <input formControlName="bmdcRegNo" type="text" name="bmdcRegNo" id="bmdcRegNo" placeholder="Enter your phone number"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="bmdcRegExpiryDate" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         BMDC Exp. Date
                     </label>
-                    <input formControlName="bmdcRegExpiryDate" type="date" name="date" id="date"
+                    <input formControlName="bmdcRegExpiryDate" type="date" name="bmdcRegExpiryDate" id="bmdcRegExpiryDate"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
@@ -76,47 +76,47 @@
 
             <div class="w-full px-3 sm:w-full">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="address" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         Address
                      </label>
-                    <input formControlName="address" type="text" name="area" id="area" placeholder="Enter area"
+                    <input formControlName="address" type="text" name="address" id="address" placeholder="Enter address"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="country" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         Country
                      </label>
-                    <input formControlName="country" type="text" name="city" id="city" placeholder="Enter city"
+                    <input formControlName="country" type="text" name="country" id="country" placeholder="Enter country"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="city" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         City
                      </label>
-                    <input formControlName="city" type="text" name="state" id="state" placeholder="Enter state"
+                    <input formControlName="city" type="text" name="city" id="city" placeholder="Enter city"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="zipCode" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                         Zip Code
                      </label>
-                    <input formControlName="zipCode" type="text" name="post-code" id="post-code" placeholder="Post Code"
+                    <input formControlName="zipCode" type="text" name="zipCode" id="zipCode" placeholder="zipCode"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
             </div>
 
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
-                    <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    <label for="specialityId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                        Specialties
                     </label>
-                    <select formControlName="specialityId" name="select" id="select"
+                    <select formControlName="specialityId" name="specialityId" id="specialityId"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-slate-300">{{item.specialityName}}</option>
 

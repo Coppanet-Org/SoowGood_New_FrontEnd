@@ -58,6 +58,28 @@ export class SpecializationInfoComponent implements OnInit {
       .getBySpecialityId(id)
       .subscribe((res) => (this.specializationName = res.specializationName));
   }
+
+  // getProfilePic() {
+  //   this.subs.sink = this.doctorProfilePicService
+  //     .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
+  //       'Doctor',
+  //       this.profileInfo.id,
+  //       'ProfilePicture'
+  //     )
+  //     .subscribe((at) => {
+  //       if (at) {
+  //         let prePaths: string = '';
+  //         var re = /wwwroot/gi;
+  //         prePaths = at.path ? at.path : '';
+  //         this.profilePic = prePaths.replace(re, '');
+  //         this.url = this.picUrl + this.profilePic;
+  //       }
+  //     });
+  // }
+
+
+  
+
   openDialog(): void {
     const dialogRef = this.dialog.open(SpecializationDialogComponent, {
       width: '40vw',

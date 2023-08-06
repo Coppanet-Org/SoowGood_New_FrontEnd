@@ -10,9 +10,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorTitle } from 'src/app/proxy/enums';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { Router } from '@angular/router';
-import { MatStepper } from '@angular/material/stepper';
-import { MatIcon } from '@angular/material/icon';
-import { ToasterService } from '@abp/ng.theme.shared';
+
 import { environment } from '../../../../environments/environment';
 import { SubSink } from 'SubSink';
 import { HttpClient } from '@angular/common/http';
@@ -84,6 +82,8 @@ export class ProfileSettingsComponent implements OnInit {
   }
   // this function need to optimize in future
   getTitle(title: string) {
+    console.log("hello");
+    
     let doctortitle = this.doctorTitleList.find((e) => e.id == title);
     return doctortitle?.name;
   }
@@ -183,7 +183,7 @@ export class ProfileSettingsComponent implements OnInit {
     if (pathName == 'specializations') {
       this.activeTab = '2';
     }
-    if (pathName == 'hospital') {
+    if (pathName == 'documents') {
       this.activeTab = '3';
     }
   }
@@ -199,7 +199,7 @@ export class ProfileSettingsComponent implements OnInit {
       this._router.navigate(['doctor/profile-settings/specialization']);
     }
     if (e.selectedIndex == 3) {
-      this._router.navigate(['doctor/profile-settings/hospital']);
+      this._router.navigate(['doctor/profile-settings/documents']);
     }
   }
 
