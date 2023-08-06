@@ -152,6 +152,8 @@ export class SignupComponent implements OnInit {
             this.doctorProfileDto.email = res.email;
             this.doctorProfileDto.mobileNo = res.phoneNumber;
             this.doctorProfileDto.isActive = false;
+            //this.doctorProfileDto.profileStep = 1;
+            //this.doctorProfileDto.createFrom = "Web";
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
@@ -159,16 +161,7 @@ export class SignupComponent implements OnInit {
                     this.newCreatedProfileDto = doctorDto;
                     this.completeProfileInfoModal = true
                     this.docId = doctorDto.id
-                    let saveLocalStorage = {
-                      identityNumber: doctorDto.identityNumber,
-                      bmdcRegNo: doctorDto.bmdcRegNo,
-                      isActive: doctorDto.isActive,
-                      userId: doctorDto.userId,
-                      id: doctorDto.id,
-                      profileStep: doctorDto.profileStep,
-                      createFrom: doctorDto.createFrom
-                    }
-                    this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                    
                   })
               })
           }
@@ -212,6 +205,16 @@ export class SignupComponent implements OnInit {
     let userType = this.formGroup?.value.userTypeName + '/profile-settings/basic-info'
     this.doctorProfileService.update(doctorProfileInput).subscribe((res) => {
       if (res) {
+        let saveLocalStorage = {
+          identityNumber: res.identityNumber,
+          bmdcRegNo: res.bmdcRegNo,
+          isActive: res.isActive,
+          userId: res.userId,
+          id: res.id,
+          profileStep: res.profileStep,
+          createFrom: res.createFrom
+        }
+        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
         this._router.navigate([userType.toLowerCase()], {
           state: { data: res } // Pass the 'res' object as 'data' in the state object
         }).then(r => r)
