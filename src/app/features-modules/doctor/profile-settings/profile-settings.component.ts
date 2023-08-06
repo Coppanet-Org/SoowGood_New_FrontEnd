@@ -59,14 +59,14 @@ export class ProfileSettingsComponent implements OnInit {
     private TosterService: TosterService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-    private normalAuth :AuthService,
+    private normalAuth: AuthService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
     let authId = this.normalAuth.authInfo().id
-   this.doctorId = authId
+    this.doctorId = authId
 
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
@@ -74,9 +74,9 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
 
-  getProfileInfo(id:any):void {
+  getProfileInfo(id: any): void {
     if (id) {
-      this.doctorProfileService.get(id).subscribe((res)=>{
+      this.doctorProfileService.get(id).subscribe((res) => {
         this.profileInfo = res
       })
     }
@@ -214,20 +214,20 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
 
-  openDialog():void {
-    const dialogRef = this.dialog.open(PictureDialogComponent,{
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PictureDialogComponent, {
       width: "30vw"
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
-     if (result == true) {
-      this.getProfilePic()
-     }
+      if (result == true) {
+        this.getProfilePic()
+      }
     });
-  
+
   }
- 
-   
-  
+
+
+
 }
 
