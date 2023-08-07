@@ -32,7 +32,9 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
   doctorDegreeList: DoctorDegreeDto[] = [];
   doctorDegrees: DoctorDegreeDto[] = [];
   doctorSpecializationList: DoctorSpecializationDto[] = [];
+  doctorSpecializations: DoctorSpecializationDto[] = [];
   degreeName: any;
+  apecializationName: any;
   detectChnage: boolean = false;
   durationList: any = [
     { id: 1, name: '1 year' },
@@ -117,13 +119,8 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
   }
 
   sendDataToParent() {
-    let degreeName = '' as any;
     let degreeId = this.form.get('degreeId')?.value;
-    //this.subs.sink = this.degreeService.get(degreeId).subscribe(n => {
-    //  degreeName = n.degreeName;
-    //});
-    let duration = this.form.get('duration')?.value;
-    
+    let duration = this.form.get('duration')?.value;    
    
     let uniqueId = this.GenerateId();
     const newDegreeData = {
@@ -162,11 +159,28 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     });
   }
 
+  //getSpecialityName(specilatityId: any) {
+    
+  //  this.subs.sink = this.spe.get(t).subscribe(n => {
+  //    this.apecializationName = n.specializationName;
+  //  });
+  //}
+
+  getSpName(event: any) {
+    let t = event.target.value;
+    this.subs.sink = this.specializationService.get(t).subscribe(n => {
+      this.apecializationName = n.specializationName;
+    });
+  }
+
   addSpecialization() {
     let spId = this.spForm.get('specializationId')?.value;
+    let uniId = this.GenerateId();
     const spData = {
       ...this.spForm.value,
+      id: uniId,
       specializationId: Number(spId),
+      specializationName: this.apecializationName,
       doctorId: this.doctorId,
       specialityId: this.specialityId
     };
@@ -178,13 +192,14 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
       );
       return;
     }
-    this.doctorSpecializationService.create(spData).subscribe((res) => {
-      if (res) {
-        this.tosterService.customToast('Successfully added!', 'success');
-        this.detectChnage = true;
-        this.formDataEvent.emit(true);
-      }
-    });
+    this.doctorSpecializations.push(spData);
+    //this.doctorSpecializationService.create(spData).subscribe((res) => {
+    //  if (res) {
+    //    this.tosterService.customToast('Successfully added!', 'success');
+    //    this.detectChnage = true;
+    //    this.formDataEvent.emit(true);
+    //  }
+    //});
   }
 
   deleteItem(id: any) {
@@ -200,6 +215,16 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
   remove(id: any): void {
     let objectIndex = 0;
     objectIndex = this.doctorDegrees.findIndex(
+      (obj) => obj.id?.toString() === id
+    );
+    if (objectIndex > -1) {
+      this.doctorDegrees.splice(objectIndex, 1);
+    }
+  }
+
+  removeSp(id: any): void {
+    let objectIndex = 0;
+    objectIndex = this.doctorSpecializations.findIndex(
       (obj) => obj.id?.toString() === id
     );
     if (objectIndex > -1) {

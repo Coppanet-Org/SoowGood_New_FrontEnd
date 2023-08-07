@@ -145,7 +145,7 @@
             Specialization
           </label>
           <select formControlName="specializationId" name="specializationId" id="specializationId"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)="getSpName($event)">
             <!-- Default Select Option  (click)="addSpecialization()"-->
             <option value="0" class="font-semibold text-slate-300">Select Degree</option>
             <!-- Loop through titleList to create options -->
@@ -208,7 +208,7 @@
               </td>
               <td class="px-6 py-4">
                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                   (click)="deleteSp(item.id)">Delete</a>
+                   (click)="removeSp(item.id)">Delete</a>
               </td>
             </tr>
 
