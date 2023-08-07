@@ -1,12 +1,13 @@
 
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DegreeService, DoctorDegreeService, DoctorSpecializationService, SpecializationService } from 'src/app/proxy/services';
+import { DegreeService, DoctorDegreeService, DoctorSpecializationService, SpecialityService, SpecializationService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DegreeDto, DoctorDegreeDto, DoctorSpecializationDto, SpecializationDto } from 'src/app/proxy/dto-models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TosterService } from '../../../../../shared/services/toster.service';
 import { SubSink } from 'SubSink';
+import { retry } from 'rxjs';
 
 @Component({
   selector: 'app-degree-specilization-info-form',
@@ -34,7 +35,8 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
   doctorSpecializationList: DoctorSpecializationDto[] = [];
   doctorSpecializations: DoctorSpecializationDto[] = [];
   degreeName: any;
-  apecializationName: any;
+  specializationName: any;
+  specialityName: any;
   detectChnage: boolean = false;
   durationList: any = [
     { id: 1, name: '1 year' },
@@ -56,6 +58,7 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     private fb: FormBuilder,
     private doctorDegreeService: DoctorDegreeService,
     private specializationService: SpecializationService,
+    private specialityService: SpecialityService,
     private doctorSpecializationService: DoctorSpecializationService,
     private normalAuth: AuthService,
     private tosterService: TosterService,
@@ -120,8 +123,8 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
 
   sendDataToParent() {
     let degreeId = this.form.get('degreeId')?.value;
-    let duration = this.form.get('duration')?.value;    
-   
+    let duration = this.form.get('duration')?.value;
+
     let uniqueId = this.GenerateId();
     const newDegreeData = {
       ...this.form.value,
@@ -159,30 +162,33 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     });
   }
 
-  //getSpecialityName(specilatityId: any) {
-    
-  //  this.subs.sink = this.spe.get(t).subscribe(n => {
-  //    this.apecializationName = n.specializationName;
-  //  });
-  //}
+  getSpecialityName(specilatityId: any): string {
+
+    this.subs.sink = this.specialityService.get(specilatityId).subscribe(n => {
+      this.specialityName = n.specialityName;
+    });
+    return this.specialityName;
+  }
 
   getSpName(event: any) {
     let t = event.target.value;
     this.subs.sink = this.specializationService.get(t).subscribe(n => {
-      this.apecializationName = n.specializationName;
+      this.specializationName = n.specializationName;
     });
   }
 
   addSpecialization() {
     let spId = this.spForm.get('specializationId')?.value;
+    let specialityName = this.getSpecialityName(this.specialityId);
     let uniId = this.GenerateId();
     const spData = {
       ...this.spForm.value,
       id: uniId,
       specializationId: Number(spId),
-      specializationName: this.apecializationName,
+      specializationName: this.specializationName,
       doctorId: this.doctorId,
-      specialityId: this.specialityId
+      specialityId: this.specialityId,
+      specialityName: specialityName
     };
 
     if (!this.spForm.valid && !this.form.touched) {
@@ -240,6 +246,24 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
         this.formDataEvent.emit(true);
         this.tosterService.customToast('Data deleted successfully.', 'success');
       });
+  }
+
+  save() {
+    if (this.doctorDegrees.length === 0 && this.doctorSpecializations.length === 0) {
+      return;
+    }
+    else {
+      this.doctorDegrees.forEach(d => {
+
+        this.doctorDegreeService.create(d).subscribe((res) => {
+          if (res) {
+            this.tosterService.customToast('Successfully added!', 'success');
+            this.detectChnage = true;
+            this.formDataEvent.emit(true);
+          }
+        });
+      })
+    }
   }
 
   GenerateId(): string {
