@@ -9,7 +9,7 @@
             Degree
           </label>
           <select formControlName="degreeId" name="degreeId" id="degreeId"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)=getDegreeName($event)>
             <!-- Default Select Option -->
             <option value="0" class="font-semibold text-slate-300">Select Degree</option>
             <!-- Loop through titleList to create options -->
@@ -106,7 +106,7 @@
           <tbody>
 
             <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                *ngFor="let item of doctorDegreeList; index as i">
+                *ngFor="let item of doctorDegrees; index as i">
               <td class="w-4 p-4">
                 {{i+1}}
                 <!--<div class="flex items-center">
@@ -125,7 +125,7 @@
               </td>
               <td class="px-6 py-4">
                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                   (click)="deleteItem(item.id)">Delete</a>
+                   (click)="remove(item.id)">Delete</a>
               </td>
             </tr>
 
