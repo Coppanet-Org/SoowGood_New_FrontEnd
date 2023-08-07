@@ -120,7 +120,7 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     this.doctorDegreeService.create(newDegreeData).subscribe((res) => {
       if (res) {
         this.tosterService.customToast('Successfully added!', 'success');
-        this.detectChnage = true;
+        this.detectChnage = true;        
         this.formDataEvent.emit(true);
       }
     });

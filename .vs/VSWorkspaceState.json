@@ -11,6 +11,6 @@
     "\\src\\app\\features-modules",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\components\\degree-specilization-info-form\\degree-specilization-info-form.component.ts",
+  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
   "PreviewInSolutionExplorer": false
 }
