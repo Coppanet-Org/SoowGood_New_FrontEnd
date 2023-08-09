@@ -1,0 +1,10 @@
+<div class="py-2 pl-5 mt-7 pr-1 border-[1px] rounded-md flex gap-4 items-center">
+    <h1 class="dashbord-heading-text text-[18px] font-medium">
+      <i [class]="iconClass" class="text-primary mr-1 text-[18px]"></i>
+      {{ headingText }}
+    </h1>
+    <button class="btn-secondary-light" (click)="openDialog.emit()">
+      <i class="fa-solid fa-plus mr-1"></i>
+      {{ buttonText }}
+    </button>
+  </div>
