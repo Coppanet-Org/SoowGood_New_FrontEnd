@@ -6,7 +6,7 @@
 
 @layer components {
   .container {
-    @apply xs:max-w-full sm:w-full md:w-[80%] mr-auto ml-auto;
+    @apply xs:max-w-full sm:w-full md:w-[70%] mr-auto ml-auto;
   }
   .container-items {
     @apply flex items-center justify-between w-full h-20;
@@ -28,7 +28,7 @@
     @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply hover:text-primary border-transparent hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-lg shadow-lg hover:shadow-none hover:opacity-75;
+    @apply hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
   }
   .btn-secondary-light {
     @apply bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;

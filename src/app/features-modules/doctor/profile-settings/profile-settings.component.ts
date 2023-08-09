@@ -82,8 +82,6 @@ export class ProfileSettingsComponent implements OnInit {
   }
   // this function need to optimize in future
   getTitle(title: string) {
-    console.log("hello");
-    
     let doctortitle = this.doctorTitleList.find((e) => e.id == title);
     return doctortitle?.name;
   }
@@ -180,7 +178,7 @@ export class ProfileSettingsComponent implements OnInit {
     if (pathName == 'education') {
       this.activeTab = '1';
     }
-    if (pathName == 'specializations') {
+    if (pathName == 'specialization') {
       this.activeTab = '2';
     }
     if (pathName == 'documents') {

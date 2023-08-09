@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="grid space-y-2 w-full px-3 sm:w-full">
+        <div *ngIf="!editData" class="grid space-y-2 w-full px-3 sm:w-full">
             <label class="text-sm font-bold text-gray-500 tracking-wide">Attach Your Speciality Documents</label>
             <div class="flex items-center justify-center w-full">
                 <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">

@@ -20,7 +20,7 @@ export class BasicInfoComponent implements OnInit {
   specialties:any=[];
   @Input() isLoading: boolean = false
   doctorId:any
-  @Output() formDataEvent = new EventEmitter<FormGroup>();
+  @Output() formDataEvent =new EventEmitter()
   @Output() profileData =new EventEmitter()
   receivedData: any;
   constructor(

@@ -24,10 +24,10 @@ export class HospitalDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadForm();
     let authInfo = this.normalAuth.authInfo();
     if (authInfo && authInfo.id) {
       this.doctorId = authInfo.id;
-      this.loadForm();
     }
   }
 
