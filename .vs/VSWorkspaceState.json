@@ -3,14 +3,13 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\core-modules\\auth\\signup\\components",
+    "\\src\\app\\core-modules\\auth\\signup\\components\\degree-specilization-info-form",
     "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\component",
-    "\\src\\app\\features-modules\\doctor\\component\\specialization-dialog",
-    "\\src\\app\\proxy",
-    "\\src\\app\\proxy\\volo",
-    "\\src\\app\\proxy\\volo\\abp",
-    "\\src\\app\\proxy\\volo\\abp\\identity"
+    "\\src\\environments"
   ],
   "PreviewInSolutionExplorer": false
 }

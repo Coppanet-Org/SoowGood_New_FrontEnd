@@ -145,7 +145,7 @@
             Specialization
           </label>
           <select formControlName="specializationId" name="specializationId" id="specializationId"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)="getSpName($event)">
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
             <!-- Default Select Option  (click)="addSpecialization()"-->
             <option value="0" class="font-semibold text-slate-300">Select Degree</option>
             <!-- Loop through titleList to create options -->
@@ -153,6 +153,20 @@
           </select>
         </div>
       </div>
+      <!--<div class="w-full px-3 sm:w-1/2">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Add Document
+          </label>
+          <select formControlName="specializationId" name="specializationId" id="specializationId"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)="getSpName($event)">-->
+            <!-- Default Select Option  (click)="addSpecialization()"-->
+            <!--<option value="0" class="font-semibold text-slate-300">Select Degree</option>-->
+            <!-- Loop through titleList to create options -->
+            <!--<option *ngFor="let item of specializationList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.specializationName}}</option>
+          </select>
+        </div>
+      </div>-->
       <div class="w-full px-3 sm:w-1/2">
         <div class="mb-5">
           <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
@@ -168,7 +182,6 @@
 
 
   <div class="w-full mt-3">
-
     <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
       <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
@@ -183,23 +196,20 @@
               <th scope="col" class="px-6 py-3">
                 Specialization
               </th>
-              
               <th scope="col" class="px-6 py-3">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
-
             <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                *ngFor="let item of doctorSpecializationList; index as i">
+                *ngFor="let item of doctorSpecializations; index as i">
               <td class="w-4 p-4">
                 {{i+1}}
                 <!--<div class="flex items-center">
                   <label class="sr-only">{{i+1}}</label>
                 </div>-->
               </td>
-
               <td class="px-6 py-4">
                 {{item.specialityName}}
               </td>
@@ -211,12 +221,17 @@
                    (click)="removeSp(item.id)">Delete</a>
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
-
     </div>
-
+  </div>
+  <div class="-mx-3 flex flex-wrap">
+    <div class="flex items-center justify-end w-full">
+      <button (click)="save()"
+              class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
+        Continue
+      </button>
+    </div>
   </div>
 </div>
