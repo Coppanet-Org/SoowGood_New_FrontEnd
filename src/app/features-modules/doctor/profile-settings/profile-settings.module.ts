@@ -11,6 +11,7 @@ import { SpecializationDialogComponent } from './specialization-dialog/specializ
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { DocumentsComponent } from './documents/documents.component';
+import { InputModule } from 'src/app/shared/modules/input/input.module';
 
 const routes: Route[] = [
   {
@@ -55,11 +56,13 @@ const routes: Route[] = [
     DegreeCardComponent,
     SpecializationDialogComponent,
     PictureDialogComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
-    MaterialModulesModule
+    MaterialModulesModule,
+    InputModule
   ],
 
   providers: [DatePipe], 

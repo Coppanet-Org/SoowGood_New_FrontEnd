@@ -1,0 +1,16 @@
+<div class="w-full px-3" >
+    <div class="mb-5">
+        <label [for]="inputId" class="mb-2 block font-medium text-[14px] text-[#07074D]">
+            {{ label }}
+        </label>
+        <ng-container *ngIf="isSelectInput; else textInput">
+            <select [id]="inputId" class="form_input" [value]="value" (input)="updateValue($event)">
+                <option *ngFor="let item of options" [value]="item.id">{{ item.name }}</option>
+            </select>
+        </ng-container>
+        <ng-template #textInput>
+            <input required [id]="inputId" [type]="type" [readonly]="readonly" class="form_input" [value]="value" (input)="updateValue($event)">
+        </ng-template>
+    </div>
+</div>
+

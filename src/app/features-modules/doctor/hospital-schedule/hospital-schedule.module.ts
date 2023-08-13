@@ -10,6 +10,7 @@ import { SectionHeaderComponent } from 'src/app/shared/components/section-header
 import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.component';
 import { DialogHeaderComponent } from 'src/app/shared/components/dialog-header/dialog-header.component';
 import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
+import { InputModule } from 'src/app/shared/modules/input/input.module';
 
 const routes: Route[] = [
   {
@@ -26,13 +27,14 @@ const routes: Route[] = [
     SectionHeaderComponent,
     ScheduleDialogComponent,
     DialogHeaderComponent,
-    ScheduleFormComponent
+    ScheduleFormComponent,
   ],
 
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModulesModule
+    MaterialModulesModule,
+    InputModule
   ],
 })
 export class HospitalScheduleModule {}
