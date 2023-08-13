@@ -109,9 +109,9 @@ export class ScheduleFormComponent implements OnInit {
   submit() {
     const obj = {
       doctorProfileId: this.doctorId,
-      scheduleType: this.form.value.appointmentType,
-      consultancyType:this.form.value.consultancyType,
-      doctorChamberId: this.form.value.hospital,
+      scheduleType: Number(this.form.value.appointmentType),
+      consultancyType:Number(this.form.value.consultancyType),
+      doctorChamberId: Number(this.form.value.hospital),
       isActive: true,
       offDayFrom: '2023-08-13T08:27:02.691Z',
       offDayTo: '2023-08-13T08:27:02.691Z',
