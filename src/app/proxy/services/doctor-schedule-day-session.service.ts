@@ -9,35 +9,35 @@ export class DoctorScheduleDaySessionService {
   apiName = 'Default';
   
 
-  create = (input: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
+  createSession = (input: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, ResponseDto>({
       method: 'POST',
-      url: '/api/app/doctor-schedule-day-session',
+      url: '/api/app/doctor-schedule-day-session/session',
       body: input,
     },
     { apiName: this.apiName,...config });
   
 
-  get = (id: number, config?: Partial<Rest.Config>) =>
+  getSession = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorScheduleDaySessionDto>({
       method: 'GET',
-      url: `/api/app/doctor-schedule-day-session/${id}`,
+      url: `/api/app/doctor-schedule-day-session/${id}/session`,
     },
     { apiName: this.apiName,...config });
   
 
-  getList = (config?: Partial<Rest.Config>) =>
+  getSessionList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorScheduleDaySessionDto[]>({
       method: 'GET',
-      url: '/api/app/doctor-schedule-day-session',
+      url: '/api/app/doctor-schedule-day-session/session-list',
     },
     { apiName: this.apiName,...config });
   
 
-  update = (input: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
+  updateSession = (input: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, ResponseDto>({
       method: 'PUT',
-      url: '/api/app/doctor-schedule-day-session',
+      url: '/api/app/doctor-schedule-day-session/session',
       body: input,
     },
     { apiName: this.apiName,...config });
