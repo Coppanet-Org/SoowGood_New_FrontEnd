@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { DoctorScheduleDto, DoctorScheduleInputDto } from '../dto-models/models';
+import type { DoctorScheduleDaySessionInputDto, DoctorScheduleDto, DoctorScheduleInputDto, ResponseDto } from '../dto-models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +10,19 @@ export class DoctorScheduleService {
   
 
   create = (input: DoctorScheduleInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DoctorScheduleDto>({
+    this.restService.request<any, ResponseDto>({
       method: 'POST',
       url: '/api/app/doctor-schedule',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  createSession = (inputDto: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'POST',
+      url: '/api/app/doctor-schedule/session',
+      body: inputDto,
     },
     { apiName: this.apiName,...config });
   
@@ -35,10 +44,19 @@ export class DoctorScheduleService {
   
 
   update = (input: DoctorScheduleInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DoctorScheduleDto>({
+    this.restService.request<any, ResponseDto>({
       method: 'PUT',
       url: '/api/app/doctor-schedule',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateSession = (inputDto: DoctorScheduleDaySessionInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'PUT',
+      url: '/api/app/doctor-schedule/session',
+      body: inputDto,
     },
     { apiName: this.apiName,...config });
 

@@ -38,7 +38,7 @@ export interface DegreeDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   chamberName?: string;
   address?: string;
   city?: string;
@@ -47,7 +47,7 @@ export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   degreeId?: number;
   degreeName?: string;
@@ -125,51 +125,55 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   createFrom?: string;
 }
 
+export interface DoctorScheduleDaySessionDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  doctorScheduleName?: string;
+  scheduleDayofWeek?: string;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+}
+
+export interface DoctorScheduleDaySessionInputDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  scheduleDayofWeek?: string;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+}
+
 export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   scheduleType?: ScheduleType;
   scheduleTypeName?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
-  chamberId?: number;
+  doctorChamberId?: number;
   chamber?: string;
-  startTime?: string;
-  endTime?: string;
-  noOfPatients?: number;
   isActive?: boolean;
-  doctorScheduledDayOffs: DoctorScheduledDayOffDto[];
+  offDayFrom?: string;
+  offDayTo?: string;
+  doctorScheduleDaySessions: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
 }
 
 export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   scheduleType?: ScheduleType;
   consultancyType?: ConsultancyType;
-  chamberId?: number;
-  startTime?: string;
-  endTime?: string;
-  noOfPatients?: number;
+  doctorChamberId?: number;
   isActive?: boolean;
-  doctorScheduledDayOffs: DoctorScheduledDayOffInputDto[];
+  offDayFrom?: string;
+  offDayTo?: string;
+  doctorScheduleDaySessions: DoctorScheduleDaySessionInputDto[];
   doctorFeesSetup: DoctorFeesSetupInputDto[];
 }
 
-export interface DoctorScheduledDayOffDto extends FullAuditedEntityDto<number> {
-  doctorScheduleId?: number;
-  doctorScheduleName?: string;
-  offDay?: string;
-  isActive?: boolean;
-}
-
-export interface DoctorScheduledDayOffInputDto extends FullAuditedEntityDto<number> {
-  doctorScheduleId?: number;
-  offDay?: string;
-  isActive?: boolean;
-}
-
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   specialityId?: number;
   specialityName?: string;
@@ -208,6 +212,13 @@ export interface OtpDto extends FullAuditedEntityDto<number> {
   mobileNo?: string;
   otpStatus?: OtpStatus;
   maxAttempt?: number;
+}
+
+export interface ResponseDto {
+  id?: number;
+  value?: string;
+  success?: boolean;
+  message?: string;
 }
 
 export interface SpecialityDto extends FullAuditedEntityDto<number> {

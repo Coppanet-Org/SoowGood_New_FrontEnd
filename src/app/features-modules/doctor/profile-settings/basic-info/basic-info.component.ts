@@ -6,7 +6,7 @@ import { DoctorProfileService, SpecialityService } from 'src/app/proxy/services'
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-
+import {inputConfigs} from "../../../../shared/utils/basic-info"
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',
@@ -20,9 +20,10 @@ export class BasicInfoComponent implements OnInit {
   specialties:any=[];
   @Input() isLoading: boolean = false
   doctorId:any
-  @Output() formDataEvent = new EventEmitter<FormGroup>();
+  @Output() formDataEvent =new EventEmitter()
   @Output() profileData =new EventEmitter()
   receivedData: any;
+  inputConfigs:any = inputConfigs
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality : SpecialityService,
@@ -31,6 +32,8 @@ export class BasicInfoComponent implements OnInit {
     private datePipe: DatePipe
     
     ) {}
+
+
   ngOnInit(): void {
  
     this.loadForm();
@@ -43,6 +46,9 @@ export class BasicInfoComponent implements OnInit {
     let authId = this.NormalAuth.authInfo().id
     this.doctorId = authId
     this.fetchProfileInfo(authId)
+
+
+    
     }
     fetchProfileInfo(doctorId: any): void {
       if (!doctorId) {
@@ -69,6 +75,11 @@ export class BasicInfoComponent implements OnInit {
       return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
     }
 
+
+
+
+
+
   loadForm() {
     this.form = this.fb.group({
       firstName: [''],
@@ -94,3 +105,6 @@ export class BasicInfoComponent implements OnInit {
     this.formDataEvent.emit({...this.form.value,id:this.doctorId});
   }
 }
+
+
+

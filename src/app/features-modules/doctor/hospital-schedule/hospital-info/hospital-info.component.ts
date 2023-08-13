@@ -26,8 +26,12 @@ export class HospitalInfoComponent implements OnInit {
     }
   }
   getChamberList(doctorId:any):void{
+    console.log(doctorId);
+    
    this.doctorChamberService.getDoctorChamberListByDoctorId(doctorId).subscribe((res)=>{
     this.chamberList = res
+    console.log(res);
+    
    })
   }
   openDialog(): void {

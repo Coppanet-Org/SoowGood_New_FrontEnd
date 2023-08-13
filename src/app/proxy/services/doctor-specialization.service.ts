@@ -19,6 +19,14 @@ export class DoctorSpecializationService {
     { apiName: this.apiName,...config });
   
 
+  delete = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'DELETE',
+      url: `/api/app/doctor-specialization/${id}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorSpecializationDto>({
       method: 'GET',
@@ -64,6 +72,15 @@ export class DoctorSpecializationService {
     this.restService.request<any, DoctorSpecializationDto[]>({
       method: 'GET',
       url: '/api/app/doctor-specialization',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListByDoctorIdSpId = (doctorId: number, specialityId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorSpecializationDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-specialization/by-doctor-id-sp-id',
+      params: { doctorId, specialityId },
     },
     { apiName: this.apiName,...config });
   

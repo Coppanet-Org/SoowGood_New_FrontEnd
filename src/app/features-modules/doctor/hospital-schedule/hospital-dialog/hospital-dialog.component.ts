@@ -24,16 +24,17 @@ export class HospitalDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+ 
     let authInfo = this.normalAuth.authInfo();
     if (authInfo && authInfo.id) {
+      this.loadForm(authInfo.id);
       this.doctorId = authInfo.id;
-      this.loadForm();
     }
   }
 
-  loadForm() {
+  loadForm(id:any) {
     this.form = this.fb.group({
-      doctorId: [this.doctorId, Validators.required],
+      doctorId: [id, Validators.required],
       chamberName: ['', Validators.required],
       address: ['', Validators.required],
       zipCode: ['', Validators.required],
@@ -43,6 +44,8 @@ export class HospitalDialogComponent implements OnInit {
   }
   submit() {
     if (!this.form.valid || !this.form.touched) {
+      console.log(this.form.value);
+      
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'
