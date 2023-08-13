@@ -1,7 +1,5 @@
-import {
-  DayWithSessions,
-  DoctorScheduleDto,
-} from './../../../../proxy/dto-models/models';
+import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
+import {DoctorScheduleDto,} from './../../../../proxy/dto-models/models';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -56,6 +54,7 @@ export class ScheduleFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private DoctorChamberService: DoctorChamberService,
+    private DoctorScheduleService: DoctorScheduleService,
     private normalAuth: AuthService,
     private tosterService: TosterService,
     public dialog: MatDialog
@@ -99,10 +98,10 @@ export class ScheduleFormComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      doctorId: [this.doctorId, Validators.required],
-      appointmentType: ['', Validators.required],
-      consultancyType: ['', Validators.required],
-      hospital: ['', Validators.required],
+      // doctorId: [this.doctorId, Validators.required],
+      appointmentType: [2, Validators.required],
+      consultancyType: [2, Validators.required],
+      hospital: [2, Validators.required],
     });
   }
 
@@ -111,7 +110,19 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form.value);
+   
+   const obj = {
+    doctorScheduleDaySessions : this.allSelectedSession,
+    doctorProfileId : this.doctorId,
+    doctorChamberId : 2,
+    doctorFeesSetup:null,
+
+    ...this.form.value
+   }
+
+   console.log(obj);
+    this.DoctorScheduleService.create(obj).subscribe((res)=> console.log(res)
+    )
   }
 
   getDaySessions(day: string) {
