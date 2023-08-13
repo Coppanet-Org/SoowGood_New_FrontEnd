@@ -47,10 +47,10 @@ export class ScheduleDialogComponent implements OnInit {
 
     this.sId= this.sId + 1
     return this.fb.group({
-      day: [this.editData?.selectedDay,Validators.required],
+      scheduleDayofWeek: [this.editData?.selectedDay,Validators.required],
       startTime: ['',Validators.required],
       endTime: ['',Validators.required],
-      numberOfPatients: ['',Validators.required],
+      noOfPatients: ['',Validators.required],
       id : [this.uuidv4()]
     });
   }
@@ -68,7 +68,7 @@ export class ScheduleDialogComponent implements OnInit {
     }
     console.log(this.form.value);
     
-    this.dialogRef.close(this.form.value);
+    this.dialogRef.close({...this.form.value});
   }
 
 

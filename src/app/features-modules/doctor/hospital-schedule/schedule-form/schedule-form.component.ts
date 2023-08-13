@@ -1,5 +1,5 @@
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import {DoctorScheduleDto,} from './../../../../proxy/dto-models/models';
+import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -41,15 +41,12 @@ export class ScheduleFormComponent implements OnInit {
     'Sunday',
   ];
 
-  
   selectedDays: string[] = [];
   consultancyType: any = [];
   appointmentType: any = [];
   allSelectedSession: any = [];
 
-  inputConfigs:any= [];
-
-
+  inputConfigs: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -70,30 +67,30 @@ export class ScheduleFormComponent implements OnInit {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
     this.inputConfigs = [
       {
-        label: "Select Hospital",
-        inputId: "Hospital",
-        defaultOption: "Select Hospital",
+        label: 'Select Hospital',
+        inputId: 'Hospital',
+        defaultOption: 'Select Hospital',
         options: this.hospitalOptions,
-        formControlName: "hospital",
+        formControlName: 'hospital',
         isSelect: true,
       },
       {
-        label: "Select appointment type",
-        inputId: "appointmentType",
-        defaultOption: "Select appointment type",
+        label: 'Select appointment type',
+        inputId: 'appointmentType',
+        defaultOption: 'Select appointment type',
         options: this.appointmentType,
-        formControlName: "appointmentType",
+        formControlName: 'appointmentType',
         isSelect: true,
       },
       {
-        label: "Select Consultancy Type",
-        inputId: "consultancyType",
-        defaultOption: "Select Consultancy Type",
+        label: 'Select Consultancy Type',
+        inputId: 'consultancyType',
+        defaultOption: 'Select Consultancy Type',
         options: this.consultancyType,
-        formControlName: "consultancyType",
+        formControlName: 'consultancyType',
         isSelect: true,
       },
-    ]
+    ];
   }
 
   loadForm() {
@@ -110,19 +107,28 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   submit() {
-   
-   const obj = {
-    doctorScheduleDaySessions : this.allSelectedSession,
-    doctorProfileId : this.doctorId,
-    doctorChamberId : 2,
-    doctorFeesSetup:null,
+    const obj = {
+      doctorProfileId: this.doctorId,
+      scheduleType: this.form.value.appointmentType,
+      consultancyType:this.form.value.consultancyType,
+      doctorChamberId: this.form.value.hospital,
+      isActive: true,
+      offDayFrom: '2023-08-13T08:27:02.691Z',
+      offDayTo: '2023-08-13T08:27:02.691Z',
+      doctorScheduleDaySessions: this.allSelectedSession.map((e: any) => {
+        return {
+          scheduleDayofWeek: e.scheduleDayofWeek,
+          startTime: e.startTime,
+          endTime: e.endTime,
+          noOfPatients: e.noOfPatients,
+          isActive: true,
+        };
+      }),
+      doctorFeesSetup: [],
+    };
 
-    ...this.form.value
-   }
-
-   console.log(obj);
-    this.DoctorScheduleService.create(obj).subscribe((res)=> console.log(res)
-    )
+    console.log(obj);
+    this.DoctorScheduleService.create(obj).subscribe((res) => console.log(res));
   }
 
   getDaySessions(day: string) {
