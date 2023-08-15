@@ -24,6 +24,13 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type!: string;
 
 
+constructor(){
+  console.log(this.options);
+  
+}
+
+
+
   value: any;
   onChange: any = () => {};
   onTouched: any = () => {};

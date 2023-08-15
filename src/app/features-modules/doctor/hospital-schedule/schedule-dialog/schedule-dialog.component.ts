@@ -1,3 +1,4 @@
+import { TosterService } from './../../../../shared/services/toster.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -14,6 +15,7 @@ export class ScheduleDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ScheduleDialogComponent>,
+    private TosterService : TosterService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ) {}
 
@@ -44,7 +46,6 @@ export class ScheduleDialogComponent implements OnInit {
  }
 
   createAppointmentGroup() {
-
     this.sId= this.sId + 1
     return this.fb.group({
       scheduleDayofWeek: [this.editData?.selectedDay,Validators.required],
@@ -64,10 +65,10 @@ export class ScheduleDialogComponent implements OnInit {
 
   submit() {
     if (!this.form.valid) {
+      this.TosterService.customToast('Please field all required field', 'warning');
       return
     }
-    console.log(this.form.value);
-    
+    this.TosterService.customToast('Session added', 'success');
     this.dialogRef.close({...this.form.value});
   }
 

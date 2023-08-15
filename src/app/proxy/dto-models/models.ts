@@ -154,9 +154,13 @@ export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
   doctorChamberId?: number;
   chamber?: string;
   isActive?: boolean;
+  status?: string;
   offDayFrom?: string;
+  dayTextFrom?: string;
   offDayTo?: string;
-  doctorScheduleDaySessions: DoctorScheduleDaySessionDto[];
+  dayTextTo?: string;
+  remarks?: string;
+  doctorScheduleDaySession: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
 }
 
@@ -168,7 +172,7 @@ export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
   isActive?: boolean;
   offDayFrom?: string;
   offDayTo?: string;
-  doctorScheduleDaySessions: DoctorScheduleDaySessionInputDto[];
+  doctorScheduleDaySession: DoctorScheduleDaySessionInputDto[];
   doctorFeesSetup: DoctorFeesSetupInputDto[];
 }
 

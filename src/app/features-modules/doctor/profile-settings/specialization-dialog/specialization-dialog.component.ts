@@ -105,7 +105,7 @@ export class SpecializationDialogComponent implements OnInit {
 
     const newSpecialization = {
       ...formValue,
-      doctorId: this.doctorId,
+      doctorProfileId: this.doctorId,
       specialityId: this.specialityId,
     };
     if (!this.editData) {
@@ -113,7 +113,7 @@ export class SpecializationDialogComponent implements OnInit {
         .create(newSpecialization)
         .subscribe((res) => {
           if (res) {
-            console.log(res);
+            this.dialogRef.close(true);
             return
             this.uploadDocuments();
           }

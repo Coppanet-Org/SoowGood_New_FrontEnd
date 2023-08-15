@@ -67,7 +67,7 @@ export class DegreeDialogComponentnt implements OnInit {
       ...this.form.value,
       degreeId: Number(degreeId),
       duration: Number(duration),
-      doctorId: this.doctorId,
+      doctorProfileId: this.doctorId,
     };
 
     if (!this.form.valid && !this.form.touched) {

@@ -27,6 +27,14 @@ export class DoctorScheduleService {
     { apiName: this.apiName,...config });
   
 
+  deleteSession = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'DELETE',
+      url: `/api/app/doctor-schedule/${id}/session`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorScheduleDto>({
       method: 'GET',
@@ -39,6 +47,14 @@ export class DoctorScheduleService {
     this.restService.request<any, DoctorScheduleDto[]>({
       method: 'GET',
       url: '/api/app/doctor-schedule',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListByDoctorIdList = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorScheduleDto[]>({
+      method: 'GET',
+      url: `/api/app/doctor-schedule/by-doctor-id-list/${doctorId}`,
     },
     { apiName: this.apiName,...config });
   
