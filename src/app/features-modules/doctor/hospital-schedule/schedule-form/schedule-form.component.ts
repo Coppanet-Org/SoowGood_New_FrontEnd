@@ -20,7 +20,7 @@ import { DoctorChamberService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ScheduleDialogComponent } from '../schedule-dialog/schedule-dialog.component';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { AppointmentType, ConsultancyType } from 'src/app/proxy/enums';
+import { AppointmentType, ConsultancyType, ScheduleType } from 'src/app/proxy/enums';
 import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
 import { map } from 'rxjs';
 import { scheduleData } from 'src/app/shared/utils/basic-info';
@@ -52,7 +52,7 @@ export class ScheduleFormComponent implements OnInit {
 
   selectedDays: string[] = [];
   consultancyType: any = [];
-  appointmentType: any = [];
+  scheduleType: any = [];
   allSelectedSession: any = [];
 
   inputConfigs: any = [];
@@ -74,7 +74,7 @@ export class ScheduleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultancyType = CommonService.getEnumList(ConsultancyType);
-    this.appointmentType = CommonService.getEnumList(AppointmentType);
+    this.scheduleType = CommonService.getEnumList(ScheduleType);
     this.loadForm();
     let authInfo = this.normalAuth.authInfo();
     if (authInfo && authInfo.id) {
@@ -90,9 +90,11 @@ export class ScheduleFormComponent implements OnInit {
         )
         .subscribe((hospitalList) => {
           this.inputConfigs = scheduleData(
-            hospitalList,
-            this.appointmentType,
-            this.consultancyType
+            this.consultancyType,
+            this.scheduleType,
+            hospitalList
+            
+            
           );
         });
     }
