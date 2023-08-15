@@ -17,6 +17,7 @@ export class ScheduleInfoComponent implements OnInit {
   doctorId: any;
   openFormComponent!: boolean;
   scheduleValue!: DoctorScheduleDto;
+  editFormComponent: any;
 
   constructor(
     public dialog: MatDialog,
@@ -45,16 +46,24 @@ export class ScheduleInfoComponent implements OnInit {
     this.HospitalStateService.getHospitalScheduleFormEvent().subscribe(
       (res: boolean) => (this.openFormComponent = res)
     );
+    this.HospitalStateService.getIndividualScheduleInfoForEdit().subscribe(
+      (res: any) => (this.editFormComponent = res.edit)
+    );
+
   }
 
   openForm(): void {
-    this.HospitalStateService.setHospitalScheduleFormEvent(
-      !this.openFormComponent
-    );
+    if (this.editFormComponent) {
+      this.HospitalStateService.setHospitalScheduleFormEvent(true);
+      this.HospitalStateService.setIndividualScheduleInfoForEdit({edit:false})
+      return
+    }
+    this.HospitalStateService.setHospitalScheduleFormEvent(!this.openFormComponent);
   }
 
   onViewDetails(id: any): void {
     this.HospitalStateService.setHospitalScheduleFormEvent(true);
+    this.HospitalStateService.setIndividualScheduleInfoForEdit({edit:true,id:id})
     this.DoctorScheduleService.get(id).subscribe((res) =>
       this.HospitalStateService.setIndividualScheduleInfo(res)
     );

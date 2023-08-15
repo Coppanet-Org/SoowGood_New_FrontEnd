@@ -3,12 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-info"
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\volo",
+    "\\src\\app\\proxy\\volo\\abp",
+    "\\src\\app\\proxy\\volo\\abp\\domain",
+    "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
+    "\\src\\app\\proxy\\volo\\abp\\identity"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\hospital-schedule\\hospital-schedule.component.html",
   "PreviewInSolutionExplorer": false
 }

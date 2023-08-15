@@ -56,6 +56,8 @@ export class ScheduleFormComponent implements OnInit {
   allSelectedSession: any = [];
 
   inputConfigs: any = [];
+  editData!:any;
+  editScheduleId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -65,12 +67,7 @@ export class ScheduleFormComponent implements OnInit {
     private normalAuth: AuthService,
     private TosterService: TosterService,
     public dialog: MatDialog
-  ) {
-    this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
-      this.form.patchValue(res);      
-      this.allSelectedSession = res.doctorScheduleDaySession;
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.consultancyType = CommonService.getEnumList(ConsultancyType);
@@ -90,24 +87,31 @@ export class ScheduleFormComponent implements OnInit {
         )
         .subscribe((hospitalList) => {
           this.inputConfigs = scheduleData(
-            this.consultancyType,
+            hospitalList,
             this.scheduleType,
-            hospitalList
-            
-            
+            this.consultancyType
           );
         });
     }
+    this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
+      this.form.patchValue(res);      
+      this.allSelectedSession = res.doctorScheduleDaySession;
+    });
     //refactor and optimize further 
     this.HospitalStateService.getHospitalScheduleFormEvent().subscribe(
         (res) => {
-          if (res == true) {
             this.form.reset();
             this.allSelectedSession = [];
-          }
         }
       );
-
+  this.HospitalStateService.getIndividualScheduleInfoForEdit().subscribe((res) => {
+      if (res.edit && res.id) {
+        this.editData= true
+        this.editScheduleId = res.id
+      }else{
+        this.editData= false
+      }
+    });
   }
 
   loadForm() {
@@ -151,6 +155,8 @@ export class ScheduleFormComponent implements OnInit {
     };
 
 
+    if (!this.editScheduleId) {
+
     this.DoctorScheduleService.create(obj).subscribe((res) => {
       if (res.success == true) {
         this.TosterService.customToast(String(res.message), 'success');
@@ -164,8 +170,13 @@ export class ScheduleFormComponent implements OnInit {
         this.TosterService.customToast(String(res.message), 'warning');
       }
     });
+  }else{
+    this.DoctorScheduleService.update({...obj,id:this.editScheduleId}).subscribe((res) => 
+    this.rerenderDoctorSchedule.emit(true)
+    )
   }
 
+  }
   getDaySessions(day: string) {
     return this.allSelectedSession.filter(
       (s: any) => s.scheduleDayofWeek === day
