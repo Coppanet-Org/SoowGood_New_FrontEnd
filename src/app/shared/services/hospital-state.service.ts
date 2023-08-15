@@ -8,6 +8,7 @@ export class HospitalStateService {
 
   private sharedDataSubject = new Subject<any>();
   private individualScheduleInfo = new Subject<any>();
+  private individualScheduleInfoForEdit = new Subject<any>();
   private hospitalScheduleFormEvent = new BehaviorSubject<any>(false);
 
   sendData(data: any) {
@@ -27,5 +28,12 @@ export class HospitalStateService {
   }
   getIndividualScheduleInfo(){
     return this.individualScheduleInfo.asObservable();
+  }
+
+  getIndividualScheduleInfoForEdit(){
+    return this.individualScheduleInfoForEdit.asObservable();
+  }
+  setIndividualScheduleInfoForEdit(data:{}){
+    this.individualScheduleInfoForEdit.next(data);
   }
 }
