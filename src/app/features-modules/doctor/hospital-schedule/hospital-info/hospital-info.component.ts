@@ -1,3 +1,4 @@
+import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
 import { DoctorChamberService } from './../../../../proxy/services/doctor-chamber.service';
 import { Component, OnInit } from '@angular/core';
 import { HospitalDialogComponent } from '../hospital-dialog/hospital-dialog.component';
@@ -15,7 +16,8 @@ export class HospitalInfoComponent implements OnInit {
   chamberList:DoctorChamberDto[]=[];
   constructor(public dialog: MatDialog,
     private normalAuth: AuthService,
-    private doctorChamberService: DoctorChamberService
+    private doctorChamberService: DoctorChamberService,
+    private HospitalStateService:HospitalStateService
     ) {}
 
   ngOnInit(): void {
@@ -26,12 +28,9 @@ export class HospitalInfoComponent implements OnInit {
     }
   }
   getChamberList(doctorId:any):void{
-    console.log(doctorId);
-    
    this.doctorChamberService.getDoctorChamberListByDoctorId(doctorId).subscribe((res)=>{
     this.chamberList = res
-    console.log(res);
-    
+    this.HospitalStateService.sendData(res)
    })
   }
   openDialog(): void {

@@ -1,3 +1,4 @@
+import { HospitalStateService } from './../../services/hospital-state.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
@@ -9,5 +10,11 @@ export class SectionHeaderComponent {
   @Input() headingText: any;
   @Input() buttonText: any;
   @Input() iconClass: any;
-  @Output() openDialog: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openForm: EventEmitter<void> = new EventEmitter<void>();
+  buttonStatus!: boolean;
+
+
+  constructor(private HospitalStateService : HospitalStateService){
+    this.HospitalStateService.getHospitalScheduleFormEvent().subscribe((res:boolean) => this.buttonStatus = res)
+  }
 }

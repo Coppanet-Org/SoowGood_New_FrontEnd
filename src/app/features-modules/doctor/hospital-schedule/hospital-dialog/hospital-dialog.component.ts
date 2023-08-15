@@ -34,7 +34,7 @@ export class HospitalDialogComponent implements OnInit {
 
   loadForm(id:any) {
     this.form = this.fb.group({
-      doctorId: [id, Validators.required],
+      doctorProfileId: [id, Validators.required],
       chamberName: ['', Validators.required],
       address: ['', Validators.required],
       zipCode: ['', Validators.required],
@@ -44,7 +44,6 @@ export class HospitalDialogComponent implements OnInit {
   }
   submit() {
     if (!this.form.valid || !this.form.touched) {
-      console.log(this.form.value);
       
       this.tosterService.customToast(
         'Please fill all the required fields!',
