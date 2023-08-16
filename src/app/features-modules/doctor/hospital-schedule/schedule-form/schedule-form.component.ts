@@ -74,9 +74,10 @@ export class ScheduleFormComponent implements OnInit {
         )
         .subscribe((hospitalList) => {
           this.inputConfigs = scheduleData(
-            hospitalList,
+            this.consultancyType,            
             this.scheduleType,
-            this.consultancyType
+            hospitalList,
+            
           );
         });
     }

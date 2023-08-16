@@ -112,9 +112,9 @@ export const inputConfigs = [
   // ... add more input configurations for other fields
 ];
 
-export const scheduleData = (consType: any, apType: any,hospital:any) => {
-  console.log(apType,hospital,consType);
-  
+export const scheduleData = (consType: any, shedType: any, hospital: any) => {
+  console.log(consType,shedType, hospital);
+
   return [
     {
       label: 'Select Consultancy Type',
@@ -128,7 +128,7 @@ export const scheduleData = (consType: any, apType: any,hospital:any) => {
       label: 'Select appointment type',
       inputId: 'scheduleType',
       defaultOption: 'Select appointment type',
-      options: apType,
+      options: shedType,
       formControlName: 'scheduleType',
       isSelect: true,
     },
@@ -139,6 +139,6 @@ export const scheduleData = (consType: any, apType: any,hospital:any) => {
       options: hospital,
       formControlName: 'doctorChamberId',
       isSelect: true,
-    },    
+    },
   ];
 };
