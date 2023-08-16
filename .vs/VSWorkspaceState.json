@@ -3,12 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\proxy",
-    "\\src\\app\\proxy\\volo",
-    "\\src\\app\\proxy\\volo\\abp",
-    "\\src\\app\\proxy\\volo\\abp\\domain",
-    "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
-    "\\src\\app\\proxy\\volo\\abp\\identity"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-dialog",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-dialog",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\utils"
   ],
+  "SelectedNode": "\\src\\app\\shared\\utils\\input-info.ts",
   "PreviewInSolutionExplorer": false
 }
