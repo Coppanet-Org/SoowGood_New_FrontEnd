@@ -7,14 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DegreeDto, DoctorDegreeDto, DoctorSpecializationDto, SpecializationDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Gender, MaritalStatus, DoctorTitle } from 'src/app/proxy/enums';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
-import { DoctorProfileService, OtpService, UserAccountsService, SpecialityService } from 'src/app/proxy/services';
+import { DoctorProfileService, OtpService, UserAccountsService, SpecialityService, DoctorDegreeService, SpecializationService, DoctorSpecializationService, DegreeService } from 'src/app/proxy/services';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
+import { TosterService } from '../../../shared/services/toster.service';
 
 @Component({
   selector: 'app-signup-component',
@@ -40,6 +41,7 @@ export class SignupComponent implements OnInit {
   doctorProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   completeDegreeSpecilizationInfoModal: boolean = false
+  completeUploadDocumen: boolean = false
   receivedFormData!: FormGroup;
   titleList: ListItem[] = [];
 
@@ -48,6 +50,34 @@ export class SignupComponent implements OnInit {
   specialties: any = [];
   profileStep: any;
 
+  doctorName: any;
+
+  //education & specialization
+
+  degreeList: DegreeDto[] = [];
+  specializationList: SpecializationDto[] = [];
+  doctorDegreeList: DoctorDegreeDto[] = [];
+  doctorDegrees: DoctorDegreeDto[] = [];
+  doctorSpecializationList: DoctorSpecializationDto[] = [];
+  doctorSpecializations: DoctorSpecializationDto[] = [];
+  degreeName: any;
+  degreeMendatoryMassage: any;
+  spMendatoryMassage: any;
+  specializationName: any;
+  specialityName: any;
+
+  detectChnage: boolean = false;
+  durationList: any = [
+    { id: 1, name: '1 year' },
+    { id: 2, name: '2 year' },
+    { id: 3, name: '3 year' },
+    { id: 4, name: '4 year' },
+    { id: 5, name: '5 year' },
+  ];
+  formDegree!: FormGroup;
+  formSpecialization!: FormGroup;
+  doctorId: any;
+  specialityId: any;
 
   constructor(
 
@@ -59,6 +89,16 @@ export class SignupComponent implements OnInit {
     private _router: Router,
     private normalAuth: AuthService,
     private doctorSpeciality: SpecialityService,
+
+
+    private degreeService: DegreeService,
+
+    private tosterService: TosterService,
+    private doctorDegreeService: DoctorDegreeService,
+    private specializationService: SpecializationService,
+    private specialityService: SpecialityService,
+    private doctorSpecializationService: DoctorSpecializationService,
+
     private cdRef: ChangeDetectorRef,
   ) { }
 
@@ -66,22 +106,70 @@ export class SignupComponent implements OnInit {
 
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
+      this.doctorId = this.normalAuth.authInfo().id;
+      this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
         this.completeDegreeSpecilizationInfoModal = true;
-      }
-      else {
-        //this.otpModal = true;
-        //this.userInfoModal = true;
-        //this.completeDegreeSpecilizationInfoModal = false;
+        this.doctorName = this.normalAuth.authInfo().doctorName;
+        this.degreeService.getList().subscribe((res) => {
+          this.degreeList = res;
+        });
+        this.specialityService.get(this.specialityId).subscribe(n => {
+          this.specialityName = n.specialityName;
+          if (this.specialityId > 2 && this.specialityId > 4) {
+            this.degreeMendatoryMassage = "You must provide your degree info as " + this.specialityName + " specialist.";
+          }
+          else if (this.specialityId == 2) {
+            this.degreeList = this.degreeList.filter(d => d.id == 1);
+          }
+          else if (this.specialityId == 4) {
+            this.degreeList = this.degreeList.filter(d => d.id == 2);
+          }
+        });
+        this.specializationService.getListBySpecialtyId(this.specialityId).subscribe((res) => {
+          this.specializationList = res;
+          if (this.specialityId == 2) {
+            this.specializationList = this.specializationList.filter(s => s.specialityId == 2);
+            let specId = this.specializationList.find(sp => sp.specialityId == 2);
+            let uniId = this.GenerateId();
+            let specialzDataForMbbs = {
+              id: +uniId,
+              specializationId: specId?.id,
+              specializationName: specId?.specializationName,
+              doctorId: this.doctorId,
+              specialityId: this.specialityId,
+              specialityName: this.specialityName
+            };
+            this.doctorSpecializations.push(specialzDataForMbbs);
+          }
+          else if (this.specialityId == 4) {
+            this.specializationList = this.specializationList.filter(s => s.specialityId == 4);
+            let specId = this.specializationList.find(sp => sp.specialityId == 4);
+            let uniId = this.GenerateId();
+            let specialzDataBDS = {
+              id: +uniId,
+              specializationId: specId?.id,
+              specializationName: specId?.specializationName,
+              doctorId: this.doctorId,
+              specialityId: this.specialityId,
+              specialityName: this.specialityName
+            };
+            this.doctorSpecializations.push(specialzDataBDS);
+          }
+          else {
+            this.spMendatoryMassage = "You must select specializaion for " + this.specialityName + ". Max. 3";
+          }
+
+        });
+
       }
     }
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
-    //this.maritalOptions = CommonService.getEnumList(MaritalStatus);
-    //this.titleList = CommonService.getEnumList(DoctorTitle);
+
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
     });
@@ -113,7 +201,32 @@ export class SignupComponent implements OnInit {
       identityNumber: ['', Validators.required],
 
     })
+    this.formDegree = this.fb.group({
+      zipCode: ['1216'],
+      degreeId: ['0', Validators.required],
+      duration: ['0', Validators.required],
+      passingYear: ['', Validators.required],
+      instituteName: ['', Validators.required],
+      instituteCity: ['', Validators.required],
+      instituteCountry: ['', Validators.required],
+    });
+    if (this.specialityId === 2) {
+      this.formSpecialization = this.fb.group({
+        specializationId: [1, Validators.required],
+      });
+    }
+    else if (this.specialityId === 4) {
+      this.formSpecialization = this.fb.group({
+        specializationId: [2, Validators.required],
+      });
+    }
+    else {
+      this.formSpecialization = this.fb.group({
+        specializationId: [0, Validators.required],
+      });
+    }
   }
+
   sendOtp() {
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile
@@ -150,6 +263,7 @@ export class SignupComponent implements OnInit {
 
 
   }
+
   onOtpChange(pin: any) {
     if (pin.length == 4) {
       this.otp = pin;
@@ -226,6 +340,7 @@ export class SignupComponent implements OnInit {
                     this.docId = doctorDto.id
                     let saveLocalStorage = {
                       identityNumber: doctorDto.identityNumber,
+                      doctorName: doctorDto.fullName,
                       bmdcRegNo: doctorDto.bmdcRegNo,
                       isActive: doctorDto.isActive,
                       userId: doctorDto.userId,
@@ -237,19 +352,14 @@ export class SignupComponent implements OnInit {
                     //this._router.navigate([userType.toLowerCase()], {
                     //  state: { data: res } // Pass the 'res' object as 'data' in the state object
                     //}).then(r => r)
-                    this.toasterService.success("Basic Inforamation Saved Successfully"), {
-                      position: 'bottom-center'
-                    }
+                    this.toasterService.success("Basic Inforamation Saved Successfully"),
+                      { position: 'bottom-center' }
                     this.cdRef.detectChanges();
                   })
               })
           }
-          else if (userType === 'Agent') {
-
-          }
-          else if (userType === 'Patient') {
-
-          }
+          else if (userType === 'Agent') { }
+          else if (userType === 'Patient') { }
 
         } else {
           res.message?.map((e: string) =>
@@ -309,6 +419,142 @@ export class SignupComponent implements OnInit {
       }
     });
   }
+
+  //Education And Specialization
+
+
+  getDegreeName(event: any) {
+    let t = event.target.value;
+    this.subs.sink = this.degreeService.get(t).subscribe(n => {
+      this.degreeName = n.degreeName;
+    });
+  }
+
+  getSpName(event: any): void {
+    let t = event.target.value;
+    this.subs.sink = this.specializationService.get(t).subscribe(n => {
+      this.specializationName = n.specializationName;
+    });
+  }
+
+  addDegree() {
+    let degreeId = this.formDegree.get('degreeId')?.value;
+    let duration = this.formDegree.get('duration')?.value;
+
+    let uniqueId = this.GenerateId();
+    const newDegreeData = {
+      ...this.formDegree.value,
+      id: uniqueId,
+      degreeId: Number(degreeId),
+      degreeName: this.degreeName,
+      duration: Number(duration),
+      doctorId: this.doctorId,
+    };
+
+    if (!this.formDegree.valid && !this.formDegree.touched) {
+      this.tosterService.customToast(
+        'Please fill all the required fields!',
+        'warning'
+      );
+      return;
+    }
+    this.doctorDegrees.push(newDegreeData);
+  }
+
+  addSpecialization() {
+    let spId = this.formSpecialization.get('specializationId')?.value;
+    let specialityName = this.specialityName;
+
+    let uniId = this.GenerateId();
+    const spData = {
+      ...this.formSpecialization.value,
+      id: uniId,
+      specializationId: Number(spId),
+      specializationName: this.specializationName,
+      doctorId: this.doctorId,
+      specialityId: this.specialityId,
+      specialityName: specialityName
+    };
+
+    if (!this.formSpecialization.valid && !this.formSpecialization.touched) {
+      this.tosterService.customToast(
+        'Please fill all the required fields!',
+        'warning'
+      );
+      return;
+    }
+    this.doctorSpecializations.push(spData);
+
+  }
+
+  remove(id: any): void {
+    let objectIndex = 0;
+    objectIndex = this.doctorDegrees.findIndex(
+      (obj) => obj.id?.toString() === id
+    );
+    if (objectIndex > -1) {
+      this.doctorDegrees.splice(objectIndex, 1);
+    }
+  }
+
+  removeSp(id: any): void {
+    let objectIndex = 0;
+    objectIndex = this.doctorSpecializations.findIndex(
+      (obj) => obj.id?.toString() === id
+    );
+    if (objectIndex > -1) {
+      this.doctorSpecializations.splice(objectIndex, 1);
+    }
+  }
+
+  saveDegreeSpecialization() {
+    let x = 0;
+    let y = +(this.doctorDegrees.length + this.doctorSpecializations.length);
+    if (this.doctorDegrees.length === 0 || this.doctorSpecializations.length === 0) {
+      this.toasterService.warn("You have to add your medical degees and speciaalizations");
+      return;
+    }
+    else if (this.doctorSpecializations.length > 3) {
+      this.toasterService.warn("You are exeeding Specialization Limit.");
+      return;
+    }
+    else {
+
+      this.doctorDegrees.forEach(d => {
+        let ddDto: DoctorDegreeDto = {} as DoctorDegreeDto;
+        ddDto.degreeId = d.degreeId;
+        ddDto.doctorProfileId = this.doctorId;
+        ddDto.duration = d.duration;
+        ddDto.passingYear = d.passingYear;
+        ddDto.instituteName = d.instituteName;
+        ddDto.instituteCity = d.instituteCity;
+        ddDto.instituteCountry = d.instituteCountry;
+        this.subs.sink = this.doctorDegreeService.create(ddDto).subscribe((res) => {
+          if (res) {
+            x++;
+          }
+        });
+      });
+
+      this.doctorSpecializations.forEach(s => {
+        let spDto: DoctorSpecializationDto = {} as DoctorSpecializationDto;
+        spDto.doctorProfileId = this.doctorId;;
+        spDto.specialityId = s.specialityId;
+        spDto.specializationId = s.specializationId;
+        this.subs.sink = this.doctorSpecializationService.create(spDto).subscribe((res) => {
+          if (res) {
+            x++;
+          }
+        });
+      });
+      if (x == y) { }
+    }
+  }
+
+  GenerateId(): string {
+    return '_' + Math.random().toString().substring(2, 9);
+  }
+
 }
 
 
