@@ -1,14 +1,32 @@
 import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
 import { TosterService } from './../../../../shared/services/toster.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { DoctorChamberService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ScheduleDialogComponent } from '../schedule-dialog/schedule-dialog.component';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { ConsultancyType, ScheduleType } from 'src/app/proxy/enums';
+import {
+  AppointmentType,
+  ConsultancyType,
+  ScheduleType,
+} from 'src/app/proxy/enums';
+import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
 import { map } from 'rxjs';
 import { scheduleData } from 'src/app/shared/utils/input-info';
 
@@ -36,15 +54,16 @@ export class ScheduleFormComponent implements OnInit {
     'Saturday',
     'Sunday',
   ];
-
+  hideField!: boolean;
   selectedDays: string[] = [];
   consultancyType: any = [];
   scheduleType: any = [];
   allSelectedSession: any = [];
-
+  isDisable:boolean = false
   inputConfigs: any = [];
   editData!: any;
   editScheduleId!: number;
+  hospitalList: any;
 
   constructor(
     private fb: FormBuilder,
@@ -53,10 +72,12 @@ export class ScheduleFormComponent implements OnInit {
     private HospitalStateService: HospitalStateService,
     private normalAuth: AuthService,
     private TosterService: TosterService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+
     this.consultancyType = CommonService.getEnumList(ConsultancyType);
     this.scheduleType = CommonService.getEnumList(ScheduleType);
     this.loadForm();
@@ -64,56 +85,67 @@ export class ScheduleFormComponent implements OnInit {
     if (authInfo && authInfo.id) {
       this.doctorId = authInfo.id;
       this.HospitalStateService.getData()
-        .pipe(
-          map((list) => {
-            return list.map((item: any) => ({
-              name: item.chamberName,
-              id: item.id,
-            }));
-          })
-        )
-        .subscribe((hospitalList) => {
-          this.inputConfigs = scheduleData(
-            this.consultancyType,            
-            this.scheduleType,
-            hospitalList,
-            
-          );
-        });
+      .pipe(
+        map((list) => {
+          return list.map((item: any) => ({
+            name: item.chamberName,
+            id: item.id,
+          }));
+        })
+      )
+      .subscribe((hospitalList) => {
+        this.hospitalList = hospitalList
+        this.getInputFieldData()
+      });
     }
     this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
       this.form.patchValue(res);
       this.allSelectedSession = res.doctorScheduleDaySession;
     });
-    //refactor and optimize further 
+    //refactor and optimize further
     this.HospitalStateService.getHospitalScheduleFormEvent().subscribe(
       (res) => {
         this.form.reset();
         this.allSelectedSession = [];
       }
     );
-    this.HospitalStateService.getIndividualScheduleInfoForEdit().subscribe((res) => {
-      if (res.edit && res.id) {
-        this.editData = true;
-        this.editScheduleId = res.id;
+    this.HospitalStateService.getIndividualScheduleInfoForEdit().subscribe(
+      (res) => {
+        if (res.edit && res.id) {
+          this.editData = true;
+          this.editScheduleId = res.id;
+        } else {
+          this.editData = false;
+        }
+      }
+    );
+   
+    this.form.get('doctorChamberId')?.valueChanges.subscribe((value) => {
+      if (value == 2) {
+        this.isDisable = true
       } else {
-        this.editData = false
+        this.isDisable = false
       }
     });
   }
 
+getInputFieldData(){
+  this.inputConfigs = scheduleData(
+      this.hospitalList,
+      this.scheduleType,
+      this.consultancyType
+    );
+}
   loadForm() {
     this.form = this.fb.group({
       scheduleType: [0, Validators.required],
-      consultancyType: [0, Validators.required],
+      consultancyType: [0],
       doctorChamberId: [0, Validators.required],
     });
   }
-
   toggleDaySelection(day: string) {
     this.openDialog(day);
   }
-
   submit() {
     if (!this.form.valid) {
       this.TosterService.customToast(
@@ -132,7 +164,7 @@ export class ScheduleFormComponent implements OnInit {
       offDayTo: '2023-08-13T08:27:02.691Z',
       doctorScheduleDaySession: this.allSelectedSession.map((e: any) => {
         return {
-          id: (typeof e.id === 'string' || e.id instanceof String) ? 0:e.id,
+          id: typeof e.id === 'string' || e.id instanceof String ? 0 : e.id,
           scheduleDayofWeek: e.scheduleDayofWeek,
           startTime: e.startTime,
           endTime: e.endTime,
@@ -143,9 +175,7 @@ export class ScheduleFormComponent implements OnInit {
       doctorFeesSetup: [],
     };
 
-
     if (!this.editScheduleId) {
-
       this.DoctorScheduleService.create(obj).subscribe((res) => {
         if (res.success == true) {
           this.TosterService.customToast(String(res.message), 'success');
@@ -160,18 +190,17 @@ export class ScheduleFormComponent implements OnInit {
         }
       });
     } else {
-      this.DoctorScheduleService.update({ ...obj, id: this.editScheduleId }).subscribe((res) =>
-        this.rerenderDoctorSchedule.emit(true)
-      )
+      this.DoctorScheduleService.update({
+        ...obj,
+        id: this.editScheduleId,
+      }).subscribe((res) => this.rerenderDoctorSchedule.emit(true));
     }
-
   }
   getDaySessions(day: string) {
     return this.allSelectedSession.filter(
       (s: any) => s.scheduleDayofWeek === day
     );
   }
-
   openDialog(day: string) {
     const dialogRef = this.dialog.open(ScheduleDialogComponent, {
       data: { selectedDay: day, title: 'Select Your Session Time' }, // Pass any data you need to the dialog
@@ -184,12 +213,20 @@ export class ScheduleFormComponent implements OnInit {
     });
   }
 
+  //should be refactor
   onSessionRemove(id: any) {
     this.DoctorScheduleService.deleteSession(id).subscribe(
       (res) =>
-      (this.allSelectedSession = this.allSelectedSession.filter(
-        (f: any) => f.id !== id
-      ))
+        (this.allSelectedSession = this.allSelectedSession.filter(
+          (f: any) => f.id !== id
+        ))
     );
+  }
+
+  onSelectionChanged(e: any) {
+   
+    if (e.field == "doctorChamberId" && e.value == 2) {
+      this.form.controls['consultancyType'].disabled
+    }
   }
 }

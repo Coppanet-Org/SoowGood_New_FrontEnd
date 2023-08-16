@@ -26,7 +26,7 @@ export class FeeDialogComponent implements OnInit {
     private normalAuth: AuthService,
     private tosterService: TosterService,
     private DoctorScheduleService: DoctorScheduleService,
-private DoctorFeeSetupService : DoctorFeeSetupService,
+    private DoctorFeeSetupService: DoctorFeeSetupService,
     private HospitalStateService: HospitalStateService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ) {}
@@ -38,16 +38,23 @@ private DoctorFeeSetupService : DoctorFeeSetupService,
       this.doctorId = authInfo.id;
     }
     let appointmentType = CommonService.getEnumList(AppointmentType);
-
-    this.DoctorScheduleService.getScheduleListByDoctorId(this.doctorId).subscribe((res) => {
+    this.DoctorScheduleService.getScheduleListByDoctorId(
+      this.doctorId
+    ).subscribe((res) => {
       if (res && appointmentType) {
-      let list = res.map((e)=> {return { name: e.scheduleName, id:e.id}})
-
+        let list = res.map((e) => {
+          return { name: e.scheduleName, id: e.id };
+        });
         this.feesData = feesInputData(appointmentType, list);
       } else {
         return;
       }
     });
+    if (this.editData) {
+      this.DoctorFeeSetupService.get(this.editData).subscribe((res) =>
+        this.form.patchValue(res)
+      );
+    }
   }
 
   loadForm(id: any) {
@@ -76,30 +83,27 @@ private DoctorFeeSetupService : DoctorFeeSetupService,
       return;
     }
 
-    
-    this.DoctorFeeSetupService.create(this.form.value).subscribe((res) => {
-      if (res) {
-        this.tosterService.customToast('Successfully created!', 'success');
+    if (!this.editData) {
+      this.DoctorFeeSetupService.create(this.form.value).subscribe((res) => {
+        if (res) {
+          this.tosterService.customToast('Successfully created!', 'success');
+          this.dialogRef.close(true);
+        } else {
+          this.tosterService.customToast(
+            'Something went wrong! Please contact your administrator.',
+            'error'
+          );
+          this.dialogRef.close(false);
+        }
+      });
+    } else {
+      this.DoctorFeeSetupService.update({
+        ...this.form.value,
+        id: this.editData,
+      }).subscribe((res) => {
+        this.tosterService.customToast('Successfully Updated!', 'success');
         this.dialogRef.close(true);
-      } else {
-        this.tosterService.customToast(
-          'Something went wrong! Please contact your administrator.',
-          'error'
-        );
-        this.dialogRef.close(false);
-      }
-    });
+      });
+    }
   }
 }
-// "doctorScheduleId": 0,
-// "appointmentType": 1,
-// "currentFee": 0,
-// "previousFee": 0,
-// "feeAppliedFrom": "2023-08-15T10:29:33.669Z",
-// "followUpPeriod": 0,
-// "reportShowPeriod": 0,
-// "discount": 0,
-// "discountAppliedFrom": "2023-08-15T10:29:33.669Z",
-// "discountPeriod": 0,
-// "totalFee": 0,
-// "isActive": true

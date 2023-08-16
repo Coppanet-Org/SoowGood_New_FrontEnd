@@ -115,6 +115,14 @@ export const inputConfigs = [
 export const scheduleData = (consType: any, apType: any, hospital: any) => {
   return [
     {
+      label: 'Select Hospital',
+      inputId: 'doctorChamberId',
+      defaultOption: 'Select Hospital',
+      options: hospital,
+      formControlName: 'doctorChamberId',
+      isSelect: true,
+    },
+    {
       label: 'Select Consultancy Type',
       inputId: 'consultancyType',
       defaultOption: 'Select Consultancy Type',
@@ -129,15 +137,8 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       options: apType,
       formControlName: 'scheduleType',
       isSelect: true,
-    },
-    {
-      label: 'Select Hospital',
-      inputId: 'doctorChamberId',
-      defaultOption: 'Select Hospital',
-      options: hospital,
-      formControlName: 'doctorChamberId',
-      isSelect: true,
-    },
+    }
+    
   ];
 };
 

@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -21,12 +21,22 @@ export class InputComponent implements ControlValueAccessor {
   @Input() options!: any[];
   @Input() isSelectInput: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() disabled: boolean = false;
   @Input() type!: string;
   @Input() placeholder!: string;
+  
+  
+  @Output() selectionChange = new EventEmitter<any>();
 
+  onSelectionChange(field:any ,value: any) {
+    const selectedValue = {
+      field,
+      value
+    }
+   this.selectionChange.emit(selectedValue);
+  }
   constructor() {
-    console.log(this.type);
-    
+  
   }
 
   value: any;

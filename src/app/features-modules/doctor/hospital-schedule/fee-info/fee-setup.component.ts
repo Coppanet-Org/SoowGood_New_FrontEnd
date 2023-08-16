@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FeeDialogComponent } from '../fee-dialog/fee-dialog.component';
 import { DoctorFeesSetupDto } from 'src/app/proxy/dto-models';
+import { ConfirmDialogComponent } from 'src/app/shared/modules/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-fee-setup',
@@ -29,6 +30,8 @@ export class FeeSetupComponent implements OnInit {
   getFeeList(doctorId: any): void {
     this.DoctorFeeSetupService.getListByDoctorIdList(doctorId).subscribe(
       (res) => {
+        console.log(res);
+        
         this.feeList = res;
       }
     );
@@ -53,6 +56,19 @@ export class FeeSetupComponent implements OnInit {
       .subscribe((result) => {
         if (result === true) {
           this.getFeeList(this.doctorId);
+        }
+      });
+  }
+  handleFeeDelete(row: any) {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: row,
+        width: "25vw",
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result === true) {
+          // this.getFeeList(this.doctorId);
         }
       });
   }
