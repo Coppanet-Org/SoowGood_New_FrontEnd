@@ -112,9 +112,7 @@ export const inputConfigs = [
   // ... add more input configurations for other fields
 ];
 
-export const scheduleData = (consType: any, shedType: any, hospital: any) => {
-  console.log(consType,shedType, hospital);
-
+export const scheduleData = (consType: any, apType: any, hospital: any) => {
   return [
     {
       label: 'Select Consultancy Type',
@@ -128,7 +126,7 @@ export const scheduleData = (consType: any, shedType: any, hospital: any) => {
       label: 'Select appointment type',
       inputId: 'scheduleType',
       defaultOption: 'Select appointment type',
-      options: shedType,
+      options: apType,
       formControlName: 'scheduleType',
       isSelect: true,
     },
@@ -139,6 +137,93 @@ export const scheduleData = (consType: any, shedType: any, hospital: any) => {
       options: hospital,
       formControlName: 'doctorChamberId',
       isSelect: true,
+    },
+  ];
+};
+
+export const feesInputData = (aptype: any, dsList: any) => {
+  return [
+    {
+      label: 'Appointment Type',
+      inputId: 'appointmentType',
+      placeholder: 'Appointment Type',
+      formControlName: 'appointmentType',
+      isSelect: true,
+      required: true,
+      options: aptype,
+    },
+    {
+      label: 'Doctor Schedule',
+      inputId: 'doctorScheduleId',
+      placeholder: 'Doctor Schedule',
+      formControlName: 'doctorScheduleId',
+      isSelect: true,
+      required: true,
+      options: dsList,
+    },
+    {
+      label: 'Current Fee',
+      inputId: 'currentFee',
+      placeholder: 'Current Fee',
+      formControlName: 'currentFee',
+      type: 'number',
+      required: true,
+    },
+    {
+      label: 'Previous Fee',
+      inputId: 'previousFee',
+      placeholder: 'Previous Fee',
+      formControlName: 'previousFee',
+      type: 'number',
+    },
+    {
+      label: 'Fee Applied From',
+      inputId: 'feeAppliedFrom',
+      placeholder: 'Fee Applied From',
+      formControlName: 'feeAppliedFrom',
+      type: 'date',
+    },
+    {
+      label: 'FollowUp Period',
+      inputId: 'followUpPeriod',
+      placeholder: 'FollowUp Period',
+      formControlName: 'followUpPeriod',
+      type: 'number',
+    },
+    {
+      label: 'Report Show Period',
+      inputId: 'reportShowPeriod',
+      placeholder: 'Report Show Period',
+      formControlName: 'reportShowPeriod',
+      type: 'number',
+    },
+    {
+      label: 'Discount',
+      inputId: 'discount',
+      placeholder: 'Discount',
+      formControlName: 'discount',
+      type: 'number',
+    },
+    {
+      label: 'Discount Applied From',
+      inputId: 'discountAppliedFrom',
+      placeholder: 'Discount Applied From',
+      formControlName: 'discountAppliedFrom',
+      type: 'date',
+    },
+    {
+      label: 'Discount Period',
+      inputId: 'discountPeriod',
+      placeholder: 'Discount Period',
+      formControlName: 'discountPeriod',
+      type: 'number',
+    },
+    {
+      label: 'Total Fee',
+      inputId: 'totalFee',
+      placeholder: 'Total Fee',
+      formControlName: 'totalFee',
+      type: 'number',
     },
   ];
 };
