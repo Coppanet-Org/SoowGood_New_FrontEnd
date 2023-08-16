@@ -22,14 +22,12 @@ export class InputComponent implements ControlValueAccessor {
   @Input() isSelectInput: boolean = false;
   @Input() readonly: boolean = false;
   @Input() type!: string;
+  @Input() placeholder!: string;
 
-
-constructor(){
-  console.log(this.options);
-  
-}
-
-
+  constructor() {
+    console.log(this.type);
+    
+  }
 
   value: any;
   onChange: any = () => {};

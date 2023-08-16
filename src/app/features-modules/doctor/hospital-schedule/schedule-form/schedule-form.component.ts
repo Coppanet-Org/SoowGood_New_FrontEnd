@@ -23,7 +23,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { AppointmentType, ConsultancyType, ScheduleType } from 'src/app/proxy/enums';
 import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
 import { map } from 'rxjs';
-import { scheduleData } from 'src/app/shared/utils/basic-info';
+import { scheduleData } from 'src/app/shared/utils/input-info';
 
 @Component({
   selector: 'app-schedule-form',

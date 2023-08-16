@@ -6,7 +6,7 @@ import { DoctorProfileService, SpecialityService } from 'src/app/proxy/services'
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-import {inputConfigs} from "../../../../shared/utils/basic-info"
+import {inputConfigs} from "../../../../shared/utils/input-info"
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',

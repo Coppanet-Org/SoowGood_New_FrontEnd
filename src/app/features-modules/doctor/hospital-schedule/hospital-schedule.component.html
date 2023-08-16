@@ -11,16 +11,15 @@
 
         <div class="w-full mt-6">
 
-          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7" [selectedIndex]="1">
+          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7" [selectedIndex]="2">
             <mat-step [stepControl]="firstFormGroup" label="Add New Hospital">
               <app-hospital-info></app-hospital-info>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Create Schedule">
               <app-schedule-info></app-schedule-info>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Complete">
-              <!-- <app-education-info></app-education-info> -->
-              hello
+            <mat-step [stepControl]="secondFormGroup" label="Fee Manage">
+             <app-fee-setup></app-fee-setup>
             </mat-step>
           </mat-stepper>
         </div>

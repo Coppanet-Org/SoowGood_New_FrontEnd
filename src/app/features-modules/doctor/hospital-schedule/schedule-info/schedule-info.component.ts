@@ -39,6 +39,10 @@ export class ScheduleInfoComponent implements OnInit {
   getScheduleList(id: number): void {
     this.DoctorScheduleService.getListByDoctorIdList(id).subscribe((res) => {
       this.scheduleList = res;
+      let list = res.map((e)=> {return { name : e.scheduleTypeName, id :e.id}})
+      console.log(list);
+      
+      this.HospitalStateService.setDoctorScheduleList(list)
     });
   }
 

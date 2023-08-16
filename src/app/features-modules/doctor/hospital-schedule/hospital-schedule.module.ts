@@ -11,6 +11,8 @@ import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.compo
 import { DialogHeaderComponent } from 'src/app/shared/components/dialog-header/dialog-header.component';
 import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
+import { FeeSetupComponent } from './fee-info/fee-setup.component';
+import { FeeDialogComponent } from './fee-dialog/fee-dialog.component';
 
 const routes: Route[] = [
   {
@@ -28,6 +30,8 @@ const routes: Route[] = [
     ScheduleDialogComponent,
     DialogHeaderComponent,
     ScheduleFormComponent,
+    FeeSetupComponent,
+    FeeDialogComponent,
   ],
 
   imports: [

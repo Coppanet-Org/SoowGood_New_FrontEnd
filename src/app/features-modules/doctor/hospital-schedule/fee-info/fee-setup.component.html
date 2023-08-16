@@ -1,0 +1,49 @@
+<app-section-header  (openForm)="openDialog()"  [headingText]="'Manage Your Fees'" [iconClass]="'fa-solid fa-calendar-days'"[buttonText]="'Add Fees Option'"></app-section-header>
+
+
+
+<div class="flex flex-col mt-3">
+  <div class="-m-1.5 overflow-x-auto">
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th scope="col" class="th">CurrentFee </th>
+              <th scope="col" class="th">PreviousFee</th>
+              <th scope="col" class="th">Discount</th>
+              <th scope="col" class="th">Discount Period</th>
+              <th scope="col" class="th">Report Show</th>
+              <th scope="col" class="th">Total Fee</th>
+              <th scope="col" class="th">Status</th>
+              <th scope="col" class=" text-righ th">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+
+            <tr *ngFor="let item of feeList; let i = index">
+              <td class="td">{{item.currentFee}}</td>
+              <td class="td">{{item.previousFee}}</td>
+              <td class="td">{{item.discount}}</td>
+              <td class="td">{{item.discountPeriod}}</td>
+              <td class="td">{{item.reportShowPeriod}}</td>
+              <td class="td">{{item.totalFee}}</td>
+              <td class="td ">
+                <span
+                  [class]="item.isActive ? 'bg-green-100 text-green-800 py-1 rounded-lg px-4' : 'bg-red-50 text-red-800 py-1 rounded-lg px-4' ">
+                  {{item.isActive ? 'Active': "Deactive"}}
+                </span>
+              </td>
+              <td class="td">
+                <a class="text-primary bg-secondary-light border border-secondary-light p-2 mr-2 cursor-pointer rounded-sm"
+                 (click)="handleFeeEdit(item.id)">Edit</a>
+                <a class="bg-red-50 p-2 text-red-800 rounded-sm cursor-pointer">Delete</a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 export * from './degree.service';
 export * from './doctor-chamber.service';
 export * from './doctor-degree.service';
+export * from './doctor-fee-setup.service';
 export * from './doctor-profile.service';
 export * from './doctor-schedule-day-session.service';
 export * from './doctor-schedule.service';
