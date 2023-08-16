@@ -7,8 +7,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { feesInputData } from 'src/app/shared/utils/input-info';
-import { ScheduleType } from 'src/app/proxy/enums';
+import { AppointmentType, ScheduleType } from 'src/app/proxy/enums';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { DoctorScheduleService } from 'src/app/proxy/services';
 @Component({
   selector: 'app-fee-dialog',
   templateUrl: './fee-dialog.component.html',
@@ -24,7 +25,8 @@ export class FeeDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<FeeDialogComponent>,
     private normalAuth: AuthService,
     private tosterService: TosterService,
-    private DoctorFeeSetupService: DoctorFeeSetupService,
+    private DoctorScheduleService: DoctorScheduleService,
+private DoctorFeeSetupService : DoctorFeeSetupService,
     private HospitalStateService: HospitalStateService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ) {}
@@ -35,11 +37,13 @@ export class FeeDialogComponent implements OnInit {
       this.loadForm(authInfo.id);
       this.doctorId = authInfo.id;
     }
-    let scheduleType = CommonService.getEnumList(ScheduleType);
+    let appointmentType = CommonService.getEnumList(AppointmentType);
 
-    this.HospitalStateService.getDoctorScheduleList().subscribe((res) => {
-      if (res && scheduleType) {
-        this.feesData = feesInputData(scheduleType, res);
+    this.DoctorScheduleService.getScheduleListByDoctorId(this.doctorId).subscribe((res) => {
+      if (res && appointmentType) {
+      let list = res.map((e)=> {return { name: e.scheduleName, id:e.id}})
+
+        this.feesData = feesInputData(appointmentType, list);
       } else {
         return;
       }
