@@ -36,6 +36,8 @@ export class DoctorProfileInfoFormComponent implements OnInit {
     this.titleList = CommonService.getEnumList(DoctorTitle);
     this.doctorSpeciality.getList().subscribe((res) => {
       this.specialties = res;
+      console.log(res);
+      
     });
   }
   loadForm() {

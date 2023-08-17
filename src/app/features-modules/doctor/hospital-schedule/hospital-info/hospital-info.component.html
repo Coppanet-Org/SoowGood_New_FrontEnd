@@ -1,10 +1,5 @@
 
-<div class="py-2 pl-5 mt-7 pr-1 border-[1px] rounded-md flex gap-4 items-center">
-    <h1 class="dashbord-heading-text text-[18px] font-medium"> <i class="fa-solid fa-building-columns mr-1"></i>
-       Add Your Hospital/Chamber</h1>
-    <button class="btn-secondary-light" (click)="openDialog()"> <i class="fa-solid fa-plus  mr-1"></i> Add
-        Hospital </button>
-</div>
+<app-section-header (openForm)="openDialog()" [headingText]="'Add Your Hospital/Chamber'" [iconClass]="'fa-solid fa-hospital'" [buttonText]="'Add Hospital'"></app-section-header>
 
 <div class="flex flex-col mt-3">
     <div class="-m-1.5 overflow-x-auto">

@@ -1,0 +1,25 @@
+<div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
+    <h1 class="dashbord-heading-text"> <i class="fa-solid fa-plus"></i> {{editData ? "Update" : "Add"}} Fees Options
+    </h1>
+    <button class="btn-secondary-light" (click)="dialogRef.close(true)">Close</button>
+</div>
+
+
+
+
+
+<div class="px-10 py-6">
+    <form [formGroup]="form">
+        <div class="-mx-3 flex flex-wrap" *ngIf="feesData.length > 0;  else noData">
+            <ng-container class="w-full" *ngFor="let config of feesData">
+                <app-input [label]="config.label" [inputId]="config.inputId" [isSelectInput]="config.isSelect"
+                    [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
+                    [formControlName]="config.formControlName" [placeholder]="config.placeholder" [type]="config.type" class="sm:w-1/3"></app-input>
+            </ng-container>
+        </div>
+        <ng-template #noData>
+            <h1>lOADING...</h1>
+          </ng-template>
+        <button class="btn-secondary" (click)="submit()"> Submit</button>
+    </form>
+</div>

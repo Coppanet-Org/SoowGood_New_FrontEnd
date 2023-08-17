@@ -1,4 +1,4 @@
-<div class="w-full bg-primary absolute top-0">
+<div class="w-full  fixed z-50 top-0 bg-primary/95 supports-backdrop-blur:bg-primary/60">
     <div class="container">
         <div *ngIf="layout == 'admin'">
             Admin Nav
@@ -8,8 +8,8 @@
                 <img class="w-full" src="../../../../assets//SoowGood-Logo.png" alt="logo">
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" routerLink="/login" class="btn-primary">Login</button>
-                <button type="button" routerLink="/signup" onclick="my_modal_3.showModal()" class="btn-secondary bg-white text-primary ">Signup</button>
+                <button type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
+                <button type="button" routerLink="/signup" onclick="my_modal_3.showModal()" class="btn-secondary  py-2">Signup</button>
 
                 <div class="dropdown dropdown-end">
                     <label tabindex="0" class="btn btn-ghost btn-circle avatar">
@@ -31,12 +31,6 @@
             </div>
         </div>
 
-        <dialog id="my_modal_3" class="modal">
-            <form method="dialog" class="modal-box">
-                <button for="my-modal-3" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                <h3 class="font-bold text-lg">Hello!</h3>
-                <p class="py-4">Press ESC key or click on ✕ button to close</p>
-            </form>
-        </dialog>
+
     </div>
 </div>

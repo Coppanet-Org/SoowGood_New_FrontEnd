@@ -67,6 +67,7 @@ const routes: Route[] = [
     DashboardMenuComponent,
     RightSidebarComponent,
     DashboardMenuItemComponent,
+    
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
