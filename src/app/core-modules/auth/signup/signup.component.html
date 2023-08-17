@@ -89,7 +89,7 @@
       </button>
     </div>
 
-    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
+    <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
@@ -284,7 +284,7 @@
     </div>
 
 
-    <div class="max-w-lg signup-child-component-min-w mx-auto   bg-white p-8 rounded-xl shadow shadow-slate-300"
+    <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
       <!--<app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>-->
       <!--<app-degree-specilization-info-form></app-degree-specilization-info-form>-->
@@ -435,7 +435,7 @@
                 <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Your Name
                 </label>
-                <input for="name" disabled type="text" value="{{doctorName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <input for="name" readonly type="text" value="{{doctorName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
               </div>
             </div>
             <div class="w-full px-3 sm:w-1/3">
@@ -443,7 +443,7 @@
                 <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Speciality
                 </label>
-                <input for="speciality" type="text" disabled value="{{specialityName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <input for="speciality" type="text" readonly value="{{specialityName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
               </div>
             </div>
@@ -525,5 +525,9 @@
 
   </div>
 
+  <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
+         [style]="completeDocumentUpload==true ? '' : 'display:none'">
+    hello
+  </div>
 
 </div>
