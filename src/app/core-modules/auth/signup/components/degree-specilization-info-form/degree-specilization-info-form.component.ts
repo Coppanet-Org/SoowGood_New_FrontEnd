@@ -1,13 +1,11 @@
 
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DegreeService, DoctorDegreeService, DoctorSpecializationService, SpecialityService, SpecializationService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DegreeDto, DoctorDegreeDto, DoctorSpecializationDto, SpecializationDto } from 'src/app/proxy/dto-models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TosterService } from '../../../../../shared/services/toster.service';
 import { SubSink } from 'SubSink';
-import { retry } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 
 @Component({
@@ -15,33 +13,20 @@ import { environment } from '../../../../../../environments/environment';
   templateUrl: './degree-specilization-info-form.component.html',
   styleUrls: ['./degree-specilization-info-form.component.scss']
 })
-
-//  export class DoctorDegreeBlock {  
-//  degreeId?: number;
-//  degreeName?: string;
-//  duration?: number;
-//  durationType?: string;
-//  passingYear?: number;
-//  instituteName?: string;
-//  instituteCity?: string;
-//  zipCode?: string;
-//  instituteCountry?: string;
-//}
 export class DegreeSpecilizationInfoFormComponent implements OnInit {
 
-  @ViewChild('attachments') attachment: any;
-  fileList: File[] = [];
-  fileNames: any[] = [];
-  //formg!: FormGroup;
-  fileData = new FormData();
-  imagePath: any;
-  upload: any;
-  auth: any;
-  url: any;
-  profilePic: string = '';
+  //@ViewChild('attachments') attachment: any;
+  //fileList: File[] = [];
+  //fileNames: any[] = [];
+  //fileData = new FormData();
+  //imagePath: any;
+  //upload: any;
+  //auth: any;
+  //url: any;
+  //profilePic: string = '';
 
-  private apiUrl = `${environment.apis.default.url}/api`;
-  public fileUrl = `${environment.apis.default.url}/`;
+  //private apiUrl = `${environment.apis.default.url}/api`;
+  //public fileUrl = `${environment.apis.default.url}/`;
 
 
 
@@ -63,8 +48,8 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     { id: 4, name: '4 year' },
     { id: 5, name: '5 year' },
   ];
-  form!: FormGroup;
-  spForm!: FormGroup;
+  formDegree!: FormGroup;
+  formSpecialization!: FormGroup;
   doctorId: any;
   specialityId: any;
   subs = new SubSink();
@@ -84,7 +69,6 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.loadDegrees();
     this.loadForm();
     this.degreeService.getList().subscribe((res) => {
       this.degreeList = res;
@@ -94,85 +78,25 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     this.subs.sink = this.specialityService.get(this.specialityId).subscribe(n => {
       this.specialityName = n.specialityName;
     });
-    //this.loadDegrees();
     this.specializationService.getListBySpecialtyId(this.specialityId).subscribe((res) => {
-      this.specializationList = res;// .push(res);
+      this.specializationList = res;
     });
-    //this.loadSps();
-    //this.cdRef.detectChanges();
   }
 
   loadForm() {
-    this.form = this.fb.group({
+    this.formDegree = this.fb.group({
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
-      //durationType: ['', Validators.required],
       passingYear: ['', Validators.required],
       instituteName: ['', Validators.required],
       instituteCity: ['', Validators.required],
       instituteCountry: ['', Validators.required],
     });
 
-    this.spForm = this.fb.group({
+    this.formSpecialization = this.fb.group({
       specializationId: ['0', Validators.required],
     });
-  }
-
-  //loadDegrees() {
-  //  if (this.doctorId > 0) {
-  //    this.doctorDegreeService.getListByDoctorId(this.doctorId).subscribe((res) => {
-  //      this.doctorDegreeList = res;
-  //      this.cdRef.detectChanges();
-  //    });
-  //  }
-  //}
-
-  //loadSps() {
-  //  if (this.doctorId > 0) {
-  //    this.doctorSpecializationService.getListByDoctorIdSpId(this.doctorId, this.specialityId).subscribe((res) => {
-  //      this.doctorSpecializationList = res;
-  //      this.cdRef.detectChanges();
-  //    });
-  //  }
-  //}
-
-  addDegrees() {
-    let v = this.form.value;
-  }
-
-  sendDataToParent() {
-    let degreeId = this.form.get('degreeId')?.value;
-    let duration = this.form.get('duration')?.value;
-
-    let uniqueId = this.GenerateId();
-    const newDegreeData = {
-      ...this.form.value,
-      id: uniqueId,
-      degreeId: Number(degreeId),
-      degreeName: this.degreeName,
-      duration: Number(duration),
-      doctorId: this.doctorId,
-    };
-
-    if (!this.form.valid && !this.form.touched) {
-      this.tosterService.customToast(
-        'Please fill all the required fields!',
-        'warning'
-      );
-      return;
-    }
-    this.doctorDegrees.push(newDegreeData);
-    //this.doctorDegreeService.create(newDegreeData).subscribe((res) => {
-    //  if (res) {
-    //    this.tosterService.customToast('Successfully added!', 'success');
-    //    this.detectChnage = true;
-    //    this.formDataEvent.emit(true);
-    //  }
-    //});
-
-    // this.cdRef.detectChanges();
-    //this.loadDegrees();
   }
 
   getDegreeName(event: any) {
@@ -182,27 +106,46 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
     });
   }
 
-  //getSpecialityName(specilatityId: any): string {
-
-  //  this.subs.sink = this.specialityService.get(specilatityId).subscribe(n => {
-  //    this.specialityName = n.specialityName;
-  //  });
-  //  return this.specialityName;
-  //}
-
-  getSpName(event: any) {
+  getSpName(event: any): void {
     let t = event.target.value;
     this.subs.sink = this.specializationService.get(t).subscribe(n => {
       this.specializationName = n.specializationName;
     });
   }
 
+  addDegree() {
+    let degreeId = this.formDegree.get('degreeId')?.value;
+    let duration = this.formDegree.get('duration')?.value;
+
+    let uniqueId = this.GenerateId();
+    const newDegreeData = {
+      ...this.formDegree.value,
+      id: uniqueId,
+      degreeId: Number(degreeId),
+      degreeName: this.degreeName,
+      duration: Number(duration),
+      doctorId: this.doctorId,
+    };
+
+    if (!this.formDegree.valid && !this.formDegree.touched) {
+      this.tosterService.customToast(
+        'Please fill all the required fields!',
+        'warning'
+      );
+      return;
+    }
+    this.doctorDegrees.push(newDegreeData);
+    
+
+    
+  }
+  
   addSpecialization() {
-    let spId = this.spForm.get('specializationId')?.value;
-    let specialityName = this.specialityName; //this.getSpecialityName(this.specialityId);
+    let spId = this.formSpecialization.get('specializationId')?.value;
+    let specialityName = this.specialityName;
     let uniId = this.GenerateId();
     const spData = {
-      ...this.spForm.value,
+      ...this.formSpecialization.value,
       id: uniId,
       specializationId: Number(spId),
       specializationName: this.specializationName,
@@ -211,7 +154,7 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
       specialityName: specialityName
     };
 
-    if (!this.spForm.valid && !this.form.touched) {
+    if (!this.formSpecialization.valid && !this.formSpecialization.touched) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'
@@ -219,24 +162,9 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
       return;
     }
     this.doctorSpecializations.push(spData);
-    //this.doctorSpecializationService.create(spData).subscribe((res) => {
-    //  if (res) {
-    //    this.tosterService.customToast('Successfully added!', 'success');
-    //    this.detectChnage = true;
-    //    this.formDataEvent.emit(true);
-    //  }
-    //});
+    
   }
-
-  deleteItem(id: any) {
-    this.subs.sink = this.doctorDegreeService.delete(id).subscribe(
-      (reponseData) => {
-        //this.load();
-        //this.cdRef.detectChanges();
-        this.tosterService.customToast('Data deleted successfully.', 'success');
-      });
-  }
-
+  
   remove(id: any): void {
     let objectIndex = 0;
     objectIndex = this.doctorDegrees.findIndex(
@@ -253,18 +181,11 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
       (obj) => obj.id?.toString() === id
     );
     if (objectIndex > -1) {
-      this.doctorDegrees.splice(objectIndex, 1);
+      this.doctorSpecializations.splice(objectIndex, 1);
     }
   }
 
-  deleteSp(id: any) {
-    this.subs.sink = this.doctorSpecializationService.delete(id).subscribe(
-      (reponseData) => {
-        //this.load();
-        //this.cdRef.detectChanges();
-        this.tosterService.customToast('Data deleted successfully.', 'success');
-      });
-  }
+  
 
   save() {
     let x = 0;
@@ -277,7 +198,7 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
       this.doctorDegrees.forEach(d => {
         let ddDto: DoctorDegreeDto = {} as DoctorDegreeDto;
         ddDto.degreeId = d.degreeId;
-        ddDto.doctorProfileId = this.doctorId;//d.doctorProfileId;
+        ddDto.doctorProfileId = this.doctorId;
         ddDto.duration = d.duration;
         ddDto.passingYear = d.passingYear;
         ddDto.instituteName = d.instituteName;
@@ -301,9 +222,7 @@ export class DegreeSpecilizationInfoFormComponent implements OnInit {
           }
         });
       });
-      if (x == y) {
-
-      }
+      if (x == y) {}
     }
   }
 

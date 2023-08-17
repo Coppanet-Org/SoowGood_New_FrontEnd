@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               .subscribe((doctorDto: DoctorProfileDto) => {
                 let saveLocalStorage = {
                   identityNumber: doctorDto.identityNumber,
+                  doctorName: doctorDto.fullName,
                   bmdcRegNo: doctorDto.bmdcRegNo,
                   isActive: doctorDto.isActive,
                   userId: doctorDto.userId,
