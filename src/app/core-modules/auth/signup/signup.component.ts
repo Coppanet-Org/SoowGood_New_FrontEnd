@@ -604,9 +604,10 @@ export class SignupComponent implements OnInit {
         ddDto.instituteCountry = d.instituteCountry;
         this.subs.sink = this.doctorDegreeService.create(ddDto).subscribe((res) => {
           if (res) {
-            x++;
+            x = x+1;
           }
         });
+
       });
 
       this.doctorSpecializations.forEach(s => {
@@ -616,11 +617,12 @@ export class SignupComponent implements OnInit {
         spDto.specializationId = s.specializationId;
         this.subs.sink = this.doctorSpecializationService.create(spDto).subscribe((res) => {
           if (res) {
-            x++;
+            x=x+1;
           }
         });
       });
       if (x == y) {
+        this.completeDegreeSpecilizationInfoModal = false;
         this.completeDocumentUpload = true
         this.toasterService.success("Degree and Specializtion info updated Successfully"),
           { position: 'bottom-center' }
