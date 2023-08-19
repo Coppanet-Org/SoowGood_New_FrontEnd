@@ -3,14 +3,15 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\core-modules\\auth\\signup\\components",
+    "\\src\\app\\core-modules\\auth\\signup\\components\\degree-specilization-info-form",
     "\\src\\app\\proxy",
     "\\src\\app\\proxy\\volo",
     "\\src\\app\\proxy\\volo\\abp",
-    "\\src\\app\\proxy\\volo\\abp\\domain",
-    "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
-    "\\src\\app\\proxy\\volo\\abp\\domain\\entities\\auditing",
     "\\src\\app\\proxy\\volo\\abp\\identity"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\picture-dialog\\picture-dialog.component.html",
   "PreviewInSolutionExplorer": false
 }
