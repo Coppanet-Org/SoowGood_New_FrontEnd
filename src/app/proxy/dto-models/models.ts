@@ -72,7 +72,7 @@ export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
   reportShowPeriod?: number;
   discount?: number;
   discountAppliedFrom?: string;
-  descountPeriod?: number;
+  discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
 }
@@ -87,7 +87,7 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
   reportShowPeriod?: number;
   discount?: number;
   discountAppliedFrom?: string;
-  descountPeriod?: number;
+  discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
 }
@@ -162,6 +162,7 @@ export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
   remarks?: string;
   doctorScheduleDaySession: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
+  scheduleName?: string;
 }
 
 export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
