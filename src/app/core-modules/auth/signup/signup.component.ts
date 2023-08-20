@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DegreeDto, DoctorDegreeDto, DoctorSpecializationDto, SpecializationDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { DegreeDto, DoctorDegreeDto, DoctorProfileDto, DoctorSpecializationDto, SpecializationDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Gender, MaritalStatus, DoctorTitle } from 'src/app/proxy/enums';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { DoctorProfileService, OtpService, UserAccountsService, SpecialityService, DoctorDegreeService, SpecializationService, DoctorSpecializationService, DegreeService } from 'src/app/proxy/services';
@@ -471,10 +471,12 @@ export class SignupComponent implements OnInit {
       if (res) {
         let saveLocalStorage = {
           identityNumber: res.identityNumber,
+          doctorName: res.fullName,
           bmdcRegNo: res.bmdcRegNo,
           isActive: res.isActive,
           userId: res.userId,
           id: res.id,
+          specialityId: res.specialityId,
           profileStep: res.profileStep,
           createFrom: res.createFrom
         }
@@ -602,9 +604,9 @@ export class SignupComponent implements OnInit {
         ddDto.instituteName = d.instituteName;
         ddDto.instituteCity = d.instituteCity;
         ddDto.instituteCountry = d.instituteCountry;
-        this.subs.sink = this.doctorDegreeService.create(ddDto).subscribe((res) => {
-          if (res) {
-            x = x+1;
+        this.subs.sink = this.doctorDegreeService.create(ddDto).subscribe((res: DoctorDegreeDto) => {
+          if (res.id) {
+            x = x + 1;
           }
         });
 
@@ -615,19 +617,42 @@ export class SignupComponent implements OnInit {
         spDto.doctorProfileId = this.doctorId;;
         spDto.specialityId = s.specialityId;
         spDto.specializationId = s.specializationId;
-        this.subs.sink = this.doctorSpecializationService.create(spDto).subscribe((res) => {
-          if (res) {
-            x=x+1;
+        this.subs.sink = this.doctorSpecializationService.create(spDto).subscribe((res: DoctorSpecializationDto) => {
+          if (res.id) {
+            x = x + 1;
           }
         });
       });
-      if (x == y) {
-        this.completeDegreeSpecilizationInfoModal = false;
-        this.completeDocumentUpload = true
-        this.toasterService.success("Degree and Specializtion info updated Successfully"),
-          { position: 'bottom-center' }
-        this.cdRef.detectChanges();
-      }
+
+
+      /*if (x == y) {*/
+
+      this.subs.sink = this.doctorProfileService.updateProfileStepByDoctorIdAndStep(this.doctorId, 2).subscribe((res: DoctorProfileDto) => {
+        if (res) {
+          this.completeDegreeSpecilizationInfoModal = false;
+          this.completeDocumentUpload = true
+          let saveLocalStorage = {
+            identityNumber: res.identityNumber,
+            doctorName: res.fullName,
+            bmdcRegNo: res.bmdcRegNo,
+            isActive: res.isActive,
+            userId: res.userId,
+            id: res.id,
+            specialityId: res.specialityId,
+            profileStep: res.profileStep,
+            createFrom: res.createFrom
+          }
+          this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+          if (this.normalAuth) {
+            this.loadAuth();
+          }
+          this.toasterService.success("Degree and Specializtion info updated Successfully"),
+            { position: 'bottom-center' }
+          this.cdRef.detectChanges();
+        }
+      })
+
+      //}
     }
   }
 
