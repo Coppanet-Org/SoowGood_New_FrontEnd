@@ -11,6 +11,6 @@
     "\\src\\app\\features-modules\\doctor\\profile-settings",
     "\\src\\app\\features-modules\\doctor\\profile-settings\\picture-dialog"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\picture-dialog\\picture-dialog.component.ts",
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }
