@@ -30,13 +30,23 @@ export class SignupComponent implements OnInit {
   //subs = new SubSink();
   fileList: File[] = [];
   fileNames: any[] = [];
-  //formg!: FormGroup;
+
+  idFileList: File[] = [];
+  idFileNames: any[] = [];
+
+  spFileList: File[] = [];
+  spFileNames: any[] = [];
+
   fileData = new FormData();
+  idFileData = new FormData();
+  spFileData = new FormData();
   imagePath: any;
   upload: any;
   auth: any;
-  url: any;
+  profPicUrl: any;
+  profNidUrl: any;
   profilePic: string = '';
+  profileNid: string = '';
 
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
@@ -776,6 +786,53 @@ export class SignupComponent implements OnInit {
         });
     }
     this.getProfilePic();
+
+  }
+
+  uploadNID() {
+
+    this.idFileData.append("entityId", this.doctorId.toString());
+    this.idFileData.append("entityType", "Doctor");
+    this.idFileData.append("attachmentType", "DoctIdentityDoc");
+    this.idFileData.append("directoryName", "IdentityDoc\\" + this.doctorId.toString());
+    if (this.idFileList.length > 0) {
+      for (let item of this.idFileList) {
+        let fileToUpload = item;
+        this.idFileData.append(item.name, fileToUpload);
+      }
+      // save attachment
+      this.http.post(`${this.apiUrl}/Common/Documents`, this.idFileData).subscribe(
+        (result: any) => {
+          this.tosterService.customToast('NID/Passport Changed Successfully', 'success');
+        },
+        (err) => {
+          console.log(err);
+        });
+    }
+    this.getNID();
+
+  }
+
+  uploadSpDoc() {
+
+    this.spFileData.append("entityId", this.doctorId.toString());
+    this.spFileData.append("entityType", "Doctor");
+    this.spFileData.append("attachmentType", "DoctorSpecialityDoc");
+    this.spFileData.append("directoryName", "DoctorSpecialityDoc\\" + this.doctorId.toString());
+    if (this.spFileList.length > 0) {
+      for (let item of this.spFileList) {
+        let fileToUpload = item;
+        this.spFileData.append(item.name, fileToUpload);
+      }
+      // save attachment
+      this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
+        (result: any) => {
+          this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+        },
+        (err) => {
+          console.log(err);
+        });
+    }
   }
 
   onFileChanged(event: any) {
@@ -790,6 +847,30 @@ export class SignupComponent implements OnInit {
     this.attachment.nativeElement.value = '';
   }
 
+  onIdFileChanged(event: any) {
+    for (var i = 0; i <= event.target.files.length - 1; i++) {
+      var selectedFile = event.target.files[i];
+      this.idFileList.push(selectedFile);
+      this.idFileNames.push(selectedFile.name)
+    }
+    if (this.idFileList.length > 0) {
+      this.checkIdFileValidation(event);
+    }
+    this.attachment.nativeElement.value = '';
+  }
+
+  onSpFileChanged(event: any) {
+    for (var i = 0; i <= event.target.files.length - 1; i++) {
+      var selectedFile = event.target.files[i];
+      this.spFileList.push(selectedFile);
+      this.spFileNames.push(selectedFile.name)
+    }
+    if (this.spFileList.length > 0) {
+      this.checkSpFileValidation(event);
+    }
+    this.attachment.nativeElement.value = '';
+  }
+
   removeSelectedFile(index: any) {
     // delete file name from fileNames list
     this.fileNames.splice(index, 1);
@@ -797,10 +878,24 @@ export class SignupComponent implements OnInit {
     this.fileList.splice(index, 1);
   }
 
+  removeIdSelectedFile(index: any) {
+    // delete file name from fileNames list
+    this.idFileNames.splice(index, 1);
+    // delete file from FileList
+    this.idFileList.splice(index, 1);
+  }
+
+  removeSpSelectedFile(index: any) {
+    // delete file name from fileNames list
+    this.spFileNames.splice(index, 1);
+    // delete file from FileList
+    this.spFileList.splice(index, 1);
+  }
+
   checkFileValidation(event: any) {
     let count = event.target.files.length;
     if (count > 0) {
-      var allowedFiles = ['image/png', 'image/jpeg', 'image/jpg'];
+      var allowedFiles = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
       const files: File[] = event.target.files;
       this.fileList = Array.from(files);
       for (let i = 0; i < count; i++) {
@@ -822,6 +917,56 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  checkIdFileValidation(event: any) {
+    let count = event.target.files.length;
+    if (count > 0) {
+      var allowedFiles = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+      const files: File[] = event.target.files;
+      this.idFileList = Array.from(files);
+      for (let i = 0; i < count; i++) {
+        if (files[i].size > 5242880) {
+          this.idFileNames.splice(i, 1);
+          this.idFileList.splice(i, 1);
+
+          this.tosterService.customToast('Maximum 5MB Accepted', 'warning');
+          //this.toastr.warning('Maximum 5MB Accepted.', 'Warning');
+        }
+        if (!(allowedFiles.indexOf(files[i].type.toLowerCase()) >= 0)) {
+          this.idFileNames.splice(i, 1);
+          this.idFileList.splice(i, 1);
+          this.tosterService.customToast("Only jpeg & jpg are Accepted.", 'warning');
+
+        }
+      }
+
+    }
+  }
+
+  checkSpFileValidation(event: any) {
+    let count = event.target.files.length;
+    if (count > 0) {
+      var allowedFiles = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+      const files: File[] = event.target.files;
+      this.spFileList = Array.from(files);
+      for (let i = 0; i < count; i++) {
+        if (files[i].size > 5242880) {
+          this.spFileNames.splice(i, 1);
+          this.spFileList.splice(i, 1);
+
+          this.tosterService.customToast('Maximum 5MB Accepted', 'warning');
+          //this.toastr.warning('Maximum 5MB Accepted.', 'Warning');
+        }
+        if (!(allowedFiles.indexOf(files[i].type.toLowerCase()) >= 0)) {
+          this.spFileNames.splice(i, 1);
+          this.spFileList.splice(i, 1);
+          this.tosterService.customToast("Only jpeg & jpg are Accepted.", 'warning');
+
+        }
+      }
+
+    }
+  }
+
   getProfilePic() {
     this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.doctorId, "ProfilePicture").subscribe((at:any) => {
       if (at) {
@@ -829,7 +974,19 @@ export class SignupComponent implements OnInit {
         var re = /wwwroot/gi;
         prePaths = at.path ? at.path : "";
         this.profilePic = prePaths.replace(re, "");
-        this.url = this.picUrl + this.profilePic;
+        this.profPicUrl = this.picUrl + this.profilePic;
+      }
+    });
+  }
+
+  getNID() {
+    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.doctorId, "DoctIdentityDoc").subscribe((at: any) => {
+      if (at) {
+        let prePaths: string = "";
+        var re = /wwwroot/gi;
+        prePaths = at.path ? at.path : "";
+        this.profileNid = prePaths.replace(re, "");
+        this.profNidUrl = this.picUrl + this.profileNid;
       }
     });
   }
