@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { DegreeDto, DoctorDegreeDto, DoctorProfileDto, DoctorSpecializationDto, SpecializationDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Gender, MaritalStatus, DoctorTitle } from 'src/app/proxy/enums';
-import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
+import { DoctorDegreeInputDto, DoctorProfileInputDto, DoctorSpecializationInputDto } from 'src/app/proxy/input-dto';
 import { DoctorProfileService, OtpService, UserAccountsService, SpecialityService, DoctorDegreeService, SpecializationService, DoctorSpecializationService, DegreeService } from 'src/app/proxy/services';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -39,6 +39,7 @@ export class SignupComponent implements OnInit {
   otpModal: boolean = false;
   userInfoModal: boolean = false;
   doctorProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
+  forStepUpdateDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   completeDegreeSpecilizationInfoModal: boolean = false
   completeDocumentUpload: boolean = false
@@ -58,9 +59,9 @@ export class SignupComponent implements OnInit {
   degreeList: DegreeDto[] = [];
   specializationList: SpecializationDto[] = [];
   doctorDegreeList: DoctorDegreeDto[] = [];
-  doctorDegrees: DoctorDegreeDto[] = [];
+  doctorDegrees: DoctorDegreeInputDto[] = [];
   doctorSpecializationList: DoctorSpecializationDto[] = [];
-  doctorSpecializations: DoctorSpecializationDto[] = [];
+  doctorSpecializations: DoctorSpecializationInputDto[] = [];
   degreeName: any;
   degreeMendatoryMassage: any;
   spMendatoryMassage: any;
@@ -595,6 +596,31 @@ export class SignupComponent implements OnInit {
     }
     else {
 
+      this.subs.sink = this.doctorProfileService.get(this.docId).subscribe((doctorDto: DoctorProfileInputDto) => {
+        if (doctorDto) {
+          this.forStepUpdateDto.id = this.doctorId;
+
+          this.forStepUpdateDto.userId = doctorDto.userId;
+          this.forStepUpdateDto.fullName = doctorDto.fullName;
+          this.forStepUpdateDto.email = doctorDto.email;
+          this.forStepUpdateDto.mobileNo = doctorDto.mobileNo;
+          this.forStepUpdateDto.gender = doctorDto.gender;
+          this.forStepUpdateDto.dateOfBirth = doctorDto.dateOfBirth;
+          this.forStepUpdateDto.address = doctorDto.address;
+          this.forStepUpdateDto.city = doctorDto.city;
+          this.forStepUpdateDto.zipCode = doctorDto.zipCode;
+          this.forStepUpdateDto.country = doctorDto.country;
+          this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
+          this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
+          this.forStepUpdateDto.specialityId = doctorDto.specialityId;
+          this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
+          this.forStepUpdateDto.isActive = false;
+          this.forStepUpdateDto.profileStep = 2;
+          this.forStepUpdateDto.createFrom = "Web";
+          //this.forStepUpdateDto.degrees.push(this.doctorDegrees);
+        }
+      })
+
       this.doctorDegrees.forEach(d => {
         let ddDto: DoctorDegreeDto = {} as DoctorDegreeDto;
         ddDto.degreeId = d.degreeId;
@@ -624,10 +650,39 @@ export class SignupComponent implements OnInit {
         });
       });
 
+      //const forStepUpdateDto: DoctorProfileInputDto = {
+      //  degrees: [],
+      //  doctorSpecialization: [],
+      //  //...formData,
 
+      //  id: this.docId
+      //};
+      //this.forStepUpdateDto.id = this.doctorProfileDto.id;
+      this.forStepUpdateDto.id = this.doctorId;
+
+      this.forStepUpdateDto.userId = this.doctorProfileDto.userId;
+      this.forStepUpdateDto.fullName = this.doctorProfileDto.fullName;
+      this.forStepUpdateDto.email = this.doctorProfileDto.email;
+      this.forStepUpdateDto.mobileNo = this.doctorProfileDto.mobileNo;
+      this.forStepUpdateDto.gender = this.doctorProfileDto.gender;
+      this.forStepUpdateDto.dateOfBirth = this.doctorProfileDto.dateOfBirth;
+      this.forStepUpdateDto.address = this.doctorProfileDto.address;
+      this.forStepUpdateDto.city = this.doctorProfileDto.city;
+      this.forStepUpdateDto.zipCode = this.doctorProfileDto.zipCode;
+      this.forStepUpdateDto.country = this.doctorProfileDto.country;
+      this.forStepUpdateDto.bmdcRegNo = this.doctorProfileDto.bmdcRegNo;
+      this.forStepUpdateDto.bmdcRegExpiryDate = this.doctorProfileDto.bmdcRegExpiryDate;
+      this.forStepUpdateDto.specialityId = this.doctorProfileDto.specialityId;
+      this.forStepUpdateDto.identityNumber = this.doctorProfileDto.identityNumber;
+      this.forStepUpdateDto.isActive = false;
+      this.forStepUpdateDto.profileStep = 2;
+      this.forStepUpdateDto.createFrom = "Web";
+
+
+      this.forStepUpdateDto.profileStep = 2;
       /*if (x == y) {*/
 
-      this.subs.sink = this.doctorProfileService.updateProfileStepByDoctorIdAndStep(this.doctorId, 2).subscribe((res: DoctorProfileDto) => {
+      this.subs.sink = this.doctorProfileService.update(this.doctorProfileDto).subscribe((res: DoctorProfileDto) => {
         if (res) {
           this.completeDegreeSpecilizationInfoModal = false;
           this.completeDocumentUpload = true
