@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   createFrom: doctorDto.createFrom
                 }
                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
-                if (doctorDto.profileStep == 1) {
+                if (doctorDto.profileStep == 1 || doctorDto.profileStep == 2) {
                   userType = '/signup';
                 }
                 else {
