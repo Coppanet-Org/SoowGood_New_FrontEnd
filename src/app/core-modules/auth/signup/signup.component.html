@@ -525,46 +525,170 @@
 
     <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="completeDocumentUpload==true ? '' : 'display:none'">
-      <div class="relative w-[128px]  h-[128px] bg-white transition">
-        <img [src]="url ? url : '../../../../../assets/doctor/dr.jpeg'" alt=""
-             class="object-cover rounded-lg mx-auto  w-32 h-32 shadow-md border-4 border-white">
-        <input #attachments type="file" #fileInput style="display: none"
-               accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
-        <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
-          <i class="fa-solid fa-camera text-primary" (click)="fileInput.click()"></i>
+      <h1 class="dashboard-heading-text text-3xl font-bold">Upload Documents</h1>
+      <h2 *ngIf="degreeMendatoryMassage"></h2>
+      <div class=" w-full  bg-white mt-6">
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Upload Profile Picture
+              </label>
+              <div class="relative w-[300px]  h-[300px] bg-white transition">
+                <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                <input #attachments type="file" #fileInput1 style="display: none"
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                  <i class="fa-solid fa-camera text-primary" (click)="fileInput1.click()"></i>
+                </div>
+              </div>
+              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+                <tbody>
+                  <tr *ngFor="let fileName of fileNames; let i=index">
+                    <td style="width:5%">
+                      <a href="javascript:void(0)" (click)="removeSelectedFile(i)" style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+                    </td>
+                    <td style="width:2%">&nbsp;</td>
+                    <td style="width:93%">
+                      {{ fileName }}
+                    </td>
+                    <td>
+                      <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadPic()">Upload</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Upload Your NID/Passport
+              </label>
+              <div class="relative w-[300px]  h-[300px] bg-white transition">
+                <img [src]="profNidUrl ? profNidUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                <input #idAttachments type="file" #fileInput2 style="display: none"
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                  <i class="fa-solid fa-camera text-primary" (click)="fileInput2.click()"></i>
+                </div>
+              </div>
+              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+                <tbody>
+                  <tr *ngFor="let idFileName of idFileNames; let i=index">
+                    <td style="width:5%">
+                      <a href="javascript:void(0)" (click)="removeIdSelectedFile(i)" style="background-color:rgb(196, 32, 32);">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                    <td style="width:2%">&nbsp;</td>
+                    <td style="width:93%">
+                      {{ idFileName }}
+                    </td>
+                    <td>
+                      <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadNID()">Upload</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/1">
+            <div class="mb-5">
+              <label class="mb-2 block  font-medium text-[14px] text-[#07074D]">Upload documents for your specializatoin verification</label>
+              <input #spAttachments type="file" #fileInput3 style="display: none"
+                     accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)" multiple>
+              <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="fileInput3.click()">Browse Files</button>
+            </div>
+          </div>
+          <div class="w-full px-3 sm:w-1/1">
+            <div class="mb-5">
+              <label class="mb-2 block  font-medium text-[14px] text-[#07074D]">File List for Specializations</label>
+              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th>Sl.</th>
+                    <th>File Name</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      *ngFor="let spFileName of spFileNames; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>
+                      {{ spFileName }}
+                    </td>
+                    <td>
+                      <a href="javascript:void(0)" (click)="removeSelectedFile(i)" style="background-color:rgb(196, 32, 32);">
+                        <i class="fa fa-remove" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>              
+                </tbody>
+              </table>
+              <div class="mt-5">
+                <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadSpDoc()">Attach</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="w-full px-3 sm:w-1/1">
+              <div class="mb-5">
+                <div class="mt-5">
+                  <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="finalContinue()">Continue</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <table>
+      <!--<table>
+        <thead>
+          <tr>
+            <th>Upload Profile Picture</th>
+            <th>Upload NID/Passport</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr *ngFor="let fileName of fileNames; let i=index">
-            <td style="width:5%">
-              <a href="javascript:void(0)" (click)="removeSelectedFile(i)" style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close" aria-hidden="true"></i></a>
-            </td>
-            <td style="width:2%">&nbsp;</td>
-            <td style="width:93%">
-              {{ fileName }}
+          <tr>
+            <td>
+
             </td>
             <td>
-              <button (click)="uploadPic()">Upload</button>
+
+            </td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+            <td>
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      Upload documents for you Specializations.
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
           </tr>
         </tbody>
-      </table>
-      <!--<div class="relative w-[128px]  h-[128px] bg-white transition ">
-      <img [src]="'../../../../../assets/doctor/dr.jpeg'" alt=""
-           class="object-cover rounded-lg mx-auto  w-32 h-32 shadow-md border-4 border-white ">-->
-      <!--<mat-icon class="icon" fontIcon="edit"> (click)="openDialog()url ? url :"</mat-icon>-->
-      <!--<input style="display: none" #attachments type="file" #fileInput
-               accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" multiple>
-        <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
-          <i class="fa-solid fa-camera text-primary"></i>
-        </div>
-      </div>-->
-
+      </table>-->
     </div>
-
   </div>
-
-
-
 </div>
