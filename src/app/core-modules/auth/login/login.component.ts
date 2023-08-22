@@ -14,6 +14,8 @@ import {
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { PermissionService } from '@abp/ng.core';
+import { ToasterService } from '@abp/ng.theme.shared';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private doctorProfileService: DoctorProfileService,
     private fb: FormBuilder,
     private _router: Router,
-    private toasterService: ToasterService,
+    //private toasterService: ToasterService,
     private permissionService: PermissionService,
     private ToasterService: TosterService,
 
