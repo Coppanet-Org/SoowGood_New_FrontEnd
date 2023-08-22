@@ -195,6 +195,7 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   entityId?: number;
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;
+  relatedEntityid?: number;
 }
 
 export interface LoginDto {
