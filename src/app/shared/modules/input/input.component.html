@@ -4,7 +4,7 @@
             {{ label }}
         </label>
         <ng-container *ngIf="isSelectInput; else textInput">
-            <select [disabled]="disabled"  [id]="inputId" class="form_input" [value]="value" (input)="updateValue($event)" (change)="onSelectionChange(inputId,value)">
+            <select [disabled]="disabled"  [id]="inputId" class="form_input" [value]="value" (input)="updateValue($event)" >
                 <option value="">--Select--</option>
                 <option *ngFor="let item of options" [value]="item.id">{{ item.name }}</option>
             </select>

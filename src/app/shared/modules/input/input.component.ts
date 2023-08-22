@@ -26,18 +26,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() placeholder!: string;
   
   
-  @Output() selectionChange = new EventEmitter<any>();
-
-  onSelectionChange(field:any ,value: any) {
-    const selectedValue = {
-      field,
-      value
-    }
-   this.selectionChange.emit(selectedValue);
-  }
-  constructor() {
-  
-  }
+  constructor() {}
 
   value: any;
   onChange: any = () => {};

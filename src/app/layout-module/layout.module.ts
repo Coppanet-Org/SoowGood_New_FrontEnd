@@ -8,10 +8,8 @@ import { Route, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header-footer/header/header.component';
 import { FooterComponent } from './header-footer/footer/footer.component';
 import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
-
-
-
-
+import { AgentComponent } from '../features-modules/agent/agent.component';
+import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 
 const routes: Route[] = [
   {
@@ -30,45 +28,55 @@ const routes: Route[] = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    children:[
-    
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/admin/admin.module'
-            ).then((m) => m.AdminModule),
-        },
-      
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/admin/admin.module').then(
+            (m) => m.AdminModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'agent',
+    component: AgentLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/agent/agent.module').then(
+            (m) => m.AgentModule
+          ),
+      },
+    ],
   },
   {
     path: 'doctor',
     component: DoctorLayoutComponent,
-    children:[
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/doctor/doctor.module'
-            ).then((m) => m.DoctorModule)
-        },
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/doctor/doctor.module').then(
+            (m) => m.DoctorModule
+          ),
+      },
+    ],
   },
   {
     path: 'patient',
     component: PatientLayoutComponent,
-    children:[
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/patient/patient.module'
-            ).then((m) => m.PatientModule)
-        },
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/patient/patient.module').then(
+            (m) => m.PatientModule
+          ),
+      },
+    ],
   },
-
 ];
 
 @NgModule({
@@ -77,6 +85,7 @@ const routes: Route[] = [
     DoctorLayoutComponent,
     PatientLayoutComponent,
     PublicLayoutComponent,
+    AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
     DashboardHeaderComponent,
@@ -84,4 +93,3 @@ const routes: Route[] = [
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class LayoutModule {}
-

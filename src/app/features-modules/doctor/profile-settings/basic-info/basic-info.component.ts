@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../../shared/services/loader.service';
 import { DatePipe } from '@angular/common';
 import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -29,7 +30,8 @@ export class BasicInfoComponent implements OnInit {
     private doctorSpeciality : SpecialityService,
     private doctorProfileService: DoctorProfileService,
     private NormalAuth: AuthService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private LoaderService :LoaderService
     
     ) {}
 
@@ -51,9 +53,12 @@ export class BasicInfoComponent implements OnInit {
     
     }
     fetchProfileInfo(doctorId: any): void {
+      this.LoaderService.sendLoaderState(true)
       if (!doctorId) {
+        this.LoaderService.sendLoaderState(false)
         return
       }
+      this.LoaderService.sendLoaderState(true)
       this.doctorProfileService.get(doctorId).subscribe(
         (profileInfo) => {
           profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
@@ -61,8 +66,10 @@ export class BasicInfoComponent implements OnInit {
           this.form?.patchValue(profileInfo);
           this.profileData.emit(profileInfo);
           this.form.get('specialityId')?.patchValue(profileInfo.specialityId)
+          this.LoaderService.sendLoaderState(false)
         },
         (error) => {
+          this.LoaderService.sendLoaderState(false)
           console.error('Error fetching profile information:', error);
         }
       );

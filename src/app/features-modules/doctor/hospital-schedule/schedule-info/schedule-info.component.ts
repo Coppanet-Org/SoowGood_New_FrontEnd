@@ -18,13 +18,15 @@ export class ScheduleInfoComponent implements OnInit {
   openFormComponent!: boolean;
   scheduleValue!: DoctorScheduleDto;
   editFormComponent: any;
+  clickView: any;
 
   constructor(
     public dialog: MatDialog,
     // private HospitalStateService :HospitalStateService
     private DoctorScheduleService: DoctorScheduleService,
     private NormalAuth: AuthService,
-    private HospitalStateService: HospitalStateService
+    private HospitalStateService: HospitalStateService,
+    
   ) {}
 
   ngOnInit(): void {
@@ -40,8 +42,7 @@ export class ScheduleInfoComponent implements OnInit {
     this.DoctorScheduleService.getListByDoctorIdList(id).subscribe((res) => {
       this.scheduleList = res;
       let list = res.map((e)=> {return { name : e.scheduleTypeName, id :e.id}})
-      console.log(list);
-      
+
       this.HospitalStateService.setDoctorScheduleList(list)
     });
   }
@@ -65,10 +66,11 @@ export class ScheduleInfoComponent implements OnInit {
     this.HospitalStateService.setHospitalScheduleFormEvent(!this.openFormComponent);
   }
 
-  onViewDetails(id: any): void {
+  onViewDetails(item: any): void {
+    this.clickView= item.id
     this.HospitalStateService.setHospitalScheduleFormEvent(true);
-    this.HospitalStateService.setIndividualScheduleInfoForEdit({edit:true,id:id})
-    this.DoctorScheduleService.get(id).subscribe((res) =>
+    this.HospitalStateService.setIndividualScheduleInfoForEdit({edit:true,id:item.id})
+    this.DoctorScheduleService.get(item.id).subscribe((res) =>
       this.HospitalStateService.setIndividualScheduleInfo(res)
     );
   }

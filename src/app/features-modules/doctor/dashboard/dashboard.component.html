@@ -5,7 +5,7 @@
     <span class="font-semibold">Your account is under review. Please submit your profile information! <a >Goto Profile Settings</a> </span>
   </div> -->
 
-    <div
+  <!-- <div
       class="top bg-primary w-full border-[1px] pl-10 rounded-lg mb-[20px] h-[200px] flex  justify-between overflow-hidden">
       <div class="left w-[40%] flex flex-col justify-center">
         <h1 class=" text-[28px] dashbord-heading-text text-white">Welcome Doctor</h1>
@@ -15,65 +15,31 @@
       <div class="right w-[22%] ">
         <img src="../../../assets/doctor/residency-removebg-preview.png" class="w-full" alt="doctor">
       </div>
-    </div>
-    <div class="top-bar flex justify-between">
-      <div class="w-full min-w-[60%] max-w-[60%]">
-        <div class="top-box min-w-[100%] flex justify-between max-w-[100%] gap-5">
-          <div class="stats shadow w-full rounded-lg border-[1px]">
+    </div> -->
+  <div class="top-bar flex justify-between">
+    <div class="w-full min-w-[60%] max-w-[60%]">
+      <div class="top-box min-w-[100%] mt-2 flex justify-between max-w-[100%] gap-5 ">
+        <app-dashboard-statisticscard></app-dashboard-statisticscard>
+        <app-dashboard-statisticscard></app-dashboard-statisticscard>
+        <app-dashboard-statisticscard></app-dashboard-statisticscard>
+      </div>
 
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <img src="../../../assets/doctor/appointment.png" class="inline-block w-8 h-8 stroke-current" alt="">
-              </div>
-              <div class="stat-title">Today Appointments</div>
-              <div class="stat-value">31+</div>
-              <div class="stat-desc">Jan 1st - Feb 1st</div>
-            </div>
 
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
-                  </path>
-                </svg>
-              </div>
-              <div class="stat-title">New Users</div>
-              <div class="stat-value">4,200</div>
-              <div class="stat-desc">↗︎ 400 (22%)</div>
-            </div>
-
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                </svg>
-              </div>
-              <div class="stat-title"> New Registers</div>
-              <div class="stat-value">1,200</div>
-              <div class="stat-desc">↘︎ 90 (14%)</div>
-            </div>
-
-          </div>
-        </div>
-        <div class="bottom-box border-[1px] mt-5 h-[400px] bg-white rounded-lg p-5 box-border ">
-          <div class=" flex justify-between border-b-[1px] pb-2 items-center  ">
-            <h2 class="dashbord-heading-text  h-fit">
-              Today's Appointments
-            </h2>
-            <button class="btn-secondary-light h-fit" >View all</button>
-          </div>
+      <div class="bottom-box border-[1px] mt-5 h-[400px] bg-white rounded-lg p-5 box-border ">
+        <div class=" flex justify-between border-b-[1px] pb-2 items-center  ">
+          <h2 class="dashbord-heading-text  h-fit">
+            Today's Appointments
+          </h2>
+          <button class="btn-secondary-light h-fit">View all</button>
         </div>
       </div>
-      <div
-        class="dashboard_today_appointment min-w-[38%] max-w-[38%] bg-white border-[1px] h-[500px] rounded-lg p-5 box-border">
-        <h2 class="dashbord-heading-text border-b-[1px] pb-3">
-          Recent Notifications
-        </h2>
-      </div>
     </div>
-    <div class="bottom-bar">bottom</div>
+    <div
+      class="dashboard_today_appointment min-w-[38%] max-w-[38%] bg-white border-[1px] h-[500px] rounded-lg p-5 box-border">
+      <h2 class="dashbord-heading-text border-b-[1px] pb-3">
+        Recent Notifications
+      </h2>
+    </div>
   </div>
+  <div class="bottom-bar">bottom</div>
+</div>
