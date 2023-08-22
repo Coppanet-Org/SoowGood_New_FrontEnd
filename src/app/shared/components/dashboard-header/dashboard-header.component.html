@@ -1,5 +1,63 @@
-<div class="w-full bg-primary h-[70px] flex px-10  box-border ">
-    <div class="logo max-w-full max-h-[70px] min-h-[60px] py-3 flex justify-center ">
-        <img [routerLink]="'/'" src="../../../../assets/SoowGood-Logo.png" class="max-w-[200px] cursor-pointer" alt="">
+<div class="w-full backdrop-blur-md bg-primary h-[70px] flex px-10  box-border  justify-between items-center">
+
+        <div class="logo max-w-full max-h-[70px] min-h-[60px] py-3 flex justify-center ">
+            <img [routerLink]="'/'" src="../../../../assets/SoowGood-Logo.png" class="max-w-[200px] cursor-pointer"
+                alt="">
+        </div>
+        
+        
+        
+        <div class="flex items-center">
+            
+            <div class="mr-10 py-2 h-fit px-4  rounded-md bg-white/20 flex items-center">
+                <input class="outline-none bg-transparent w-[300px] text-white/80 placeholder:text-white/50" placeholder="Search patient/doctor..." />
+                <span class="bg-transparent">
+                    <i class="fa-solid fa-magnifying-glass text-white"></i>
+                </span>
+            </div>
+
+        <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                <div class="w-8 h-8 rounded-full border-2 flex justify-center items-center">
+                    <i class="fa-solid fa-gear text-[18px] p-1 text-white"></i>
+                </div>
+            </label>
+            <ul tabindex="0"
+                class="menu menu-sm dropdown-content border mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
+                <li class="py-1"><a>Settings one</a></li>
+                <li class="py-1"><a>Settings one</a></li>
+            </ul>
+        </div>
+        <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                <div class="w-8 h-8 rounded-full border-2 flex justify-center items-center">
+                    <i class="fa-regular fa-bell text-[18px] p-1 text-white"></i>
+                </div>
+            </label>
+            <ul tabindex="0"
+                class="menu menu-sm dropdown-content border mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
+
+                <li class="py-1"><a>Notification one</a></li>
+                <li class="py-1"><a>Notification one</a></li>
+            </ul>
+        </div>
+        <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
+                <div class="w-8 rounded-full">
+                    <img src="../../../../assets/person.png" />
+                </div>
+            </label>
+            <ul tabindex="0"
+                class="menu menu-sm border dropdown-content mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
+                <li class="py-1">
+                    <a class="justify-between">
+                        Profile
+                        <span class="badge">New</span>
+                    </a>
+                </li>
+                <li class="py-1"><a>Settings</a></li>
+                <li class="py-1"><a>Logout</a></li>
+            </ul>
+        </div>
     </div>
 </div>

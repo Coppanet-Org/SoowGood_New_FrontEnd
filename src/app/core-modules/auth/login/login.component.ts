@@ -1,23 +1,32 @@
 import { TosterService } from './../../../shared/services/toster.service';
-import { PermissionService } from '@abp/ng.core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DoctorProfileService, UserAccountsService } from '../../../proxy/services';
+import { Router } from '@angular/router';
+import {
+  DoctorProfileService,
+  UserAccountsService,
+} from '../../../proxy/services';
 import { SubSink } from 'SubSink';
-import { DoctorProfileDto, LoginDto, LoginResponseDto } from '../../../proxy/dto-models';
-import { ToasterService } from '@abp/ng.theme.shared';
+import {
+  DoctorProfileDto,
+  LoginDto,
+  LoginResponseDto,
+} from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { PermissionService } from '@abp/ng.core';
+import { ToasterService } from '@abp/ng.theme.shared';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   defaultAuth: any = {
-    mobileNo: '', password: '',
-  }
+    mobileNo: '',
+    password: '',
+  };
 
   errorMessage: string = '';
   loginForm!: FormGroup;
@@ -25,14 +34,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean = false;
   returnUrl!: string;
   subs = new SubSink();
-  isLoading: any = false
+  isLoading: any = false;
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private _router: Router,
-    private toasterService: ToasterService,
+    //private toasterService: ToasterService,
     private permissionService: PermissionService,
     private ToasterService: TosterService,
 
@@ -43,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
-  // convenience getter for easy access to form fields
   get formControl() {
     return this.loginForm.controls;
   }
@@ -54,7 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.defaultAuth.mobileNo,
         Validators.compose([
           Validators.required,
-          //Validators.email,
           Validators.minLength(11),
           Validators.maxLength(11),
         ]),
@@ -69,11 +75,24 @@ export class LoginComponent implements OnInit, OnDestroy {
       ],
     });
   }
+  private handleLoginError(error: any) {
+    this.hasError = true;
+    if (error.message === "'tokenEndpoint' should not be null") {
+      this.errorMessage = 'Identity server is not running';
+    }
+    return throwError(error);
+  }
 
-  submit(): void {
+  private handleProfileError(error: any) {
+    return throwError(error);
+  }
+  onSubmit(): void {
     if (!this.loginForm.valid && !this.loginForm.touched) {
-      this.ToasterService.customToast("Please filled all required field", 'warning')
-      return
+      this.ToasterService.customToast(
+        'Please filled all required field',
+        'warning'
+      );
+      return;
     }
     let userType = '';
     this.errorMessage = '';
@@ -81,9 +100,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     const username = this.formControl['mobileNo'].value;
     const password = this.formControl['password'].value;
     this.loginDto.userName = username;
-    this.loginDto.email = "";
+    this.loginDto.email = '';
     this.loginDto.password = password;
     this.loginDto.rememberMe = false;
+    let loginResponseData: LoginResponseDto;
+
     try {
       this.authService
         .loginByUserDto(this.loginDto)
@@ -122,12 +143,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
     } catch (error: any) {
       this.hasError = true;
-      if (error.message === '\'tokenEndpoint\' should not be null') {
+      if (error.message === "'tokenEndpoint' should not be null") {
         this.errorMessage = 'Identity server is not running';
       }
     }
   }
-
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
