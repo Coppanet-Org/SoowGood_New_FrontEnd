@@ -21,7 +21,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
-            <tr *ngFor="let item of scheduleList; let i = index">
+            <tr *ngFor="let item of scheduleList; let i = index" [class]="item.id == clickView ? 'bg-secondary-light' : ''">
               <td class="td">{{i+1}}</td>
               <td class="td">{{item.chamber}}</td>
               <td class="td">{{item.scheduleTypeName}}</td>
@@ -34,8 +34,8 @@
               </td>
               <td class="td ">{{item.remarks}}</td>
               <td class="td">
-                <a class="text-primary bg-secondary-light border border-secondary-light p-2 mr-2 cursor-pointer rounded-sm"
-                  (click)="onViewDetails(item.id)">View Details</a>
+                <a [class]="item.id == clickView ? 'text-white bg-primary rounded-sm' : 'text-primary bg-secondary-light rounded-sm'" class="  border border-secondary-light p-2 mr-2 cursor-pointer"
+                  (click)="onViewDetails(item)">View Details</a>
                 <a class="bg-red-50 p-2 text-red-800 rounded-sm cursor-pointer">Delete</a>
               </td>
             </tr>

@@ -6,10 +6,38 @@ import { Component } from '@angular/core';
   styleUrls: ['./doctor.component.scss']
 })
 export class DoctorComponent {
-
-
-
-
+  menuList:any = [
+    {
+      menuName: 'Dashboard',
+      route: 'dashboard',
+      icon: "fa-brands fa-microsoft"
+    },
+    {
+      menuName: 'Appointments',
+      route: 'appointments',
+      icon: "fa-solid fa-calendar-check"
+    },
+    {
+      menuName: 'Patients',
+      route: 'patients',
+      icon: "fa-solid fa-bed-pulse"
+    },
+    {
+      menuName: 'Hospital & Schedule',
+      route: 'hospital-schedule',
+      icon: "fa-solid fa-calendar-days"
+    },
+    {
+      menuName: 'Billing',
+      route: 'billing',
+      icon: "fa-solid fa-money-bill-transfer"
+    },
+    {
+      menuName: 'Profile Settings',
+      route: 'profile-settings',
+      icon: "fa-solid fa-gear"
+    }
+  ];
 
   
 }

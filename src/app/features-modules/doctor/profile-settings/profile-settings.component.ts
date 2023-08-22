@@ -1,10 +1,11 @@
+import { LoaderService } from './../../../shared/services/loader.service';
 import {
   DoctorProfileService,
   DocumentsAttachmentService,
 } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorTitle } from 'src/app/proxy/enums';
@@ -13,8 +14,6 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { SubSink } from 'SubSink';
-import { HttpClient } from '@angular/common/http';
-import { DocumentsAttachmentDto } from '../../../proxy/dto-models';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,7 +30,7 @@ export class ProfileSettingsComponent implements OnInit {
   animationDirection = 'right';
   selectedIndex: any;
   userId: any;
-  loading: boolean = false;
+  isLoading: boolean = false;
   profileInfo: any;
   doctorTitleList: ListItem[] = [];
   title: any;
@@ -39,7 +38,6 @@ export class ProfileSettingsComponent implements OnInit {
   subs = new SubSink();
   fileList: File[] = [];
   fileNames: any[] = [];
-  //formg!: FormGroup;
   fileData = new FormData();
   imagePath: any;
   upload: any;
@@ -57,26 +55,29 @@ export class ProfileSettingsComponent implements OnInit {
     private doctorProfilePicService: DocumentsAttachmentService,
     private _router: Router,
     private TosterService: TosterService,
-    private cdRef: ChangeDetectorRef,
-    private http: HttpClient,
     private normalAuth: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private LoaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
     let authId = this.normalAuth.authInfo().id;
     this.doctorId = authId;
-
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
+
   }
 
   getProfileInfo(id: any): void {
     if (id) {
+      // this.isLoading = true
+
+      this.LoaderService.sendLoaderState(true);
       this.doctorProfileService.get(id).subscribe((res) => {
         this.profileInfo = res;
+        this.LoaderService.sendLoaderState(false);
       });
     }
   }
@@ -114,13 +115,13 @@ export class ProfileSettingsComponent implements OnInit {
     }
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
-      this.loading = false;
+      this.isLoading = false;
     } else {
-      this.loading = true;
+      this.isLoading = true;
       this.doctorProfileService.update(updatedProfile).subscribe(
         (res) => {
           // res condition may apply, need to update in the future
-          this.loading = false;
+          this.isLoading = false;
           let successMessage = '';
 
           if (changedProperties.length > 0) {
@@ -136,7 +137,7 @@ export class ProfileSettingsComponent implements OnInit {
           this.getProfileInfo(this.doctorId);
         },
         (error) => {
-          this.loading = false;
+          this.isLoading = false;
           this.TosterService.customToast(error.message, 'error');
         }
       );
@@ -204,6 +205,7 @@ export class ProfileSettingsComponent implements OnInit {
   //Profile Picture Related Functions
 
   getProfilePic() {
+    this.isLoading = true;
     this.subs.sink = this.doctorProfilePicService
       .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
         'Doctor',
@@ -217,6 +219,7 @@ export class ProfileSettingsComponent implements OnInit {
           prePaths = at.path ? at.path : '';
           this.profilePic = prePaths.replace(re, '');
           this.url = this.picUrl + this.profilePic;
+          this.isLoading = false;
         }
       });
   }

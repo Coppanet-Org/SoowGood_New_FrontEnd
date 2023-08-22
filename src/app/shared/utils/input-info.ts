@@ -115,19 +115,19 @@ export const inputConfigs = [
 export const scheduleData = (consType: any, apType: any, hospital: any) => {
   return [
     {
-      label: 'Select Hospital',
-      inputId: 'doctorChamberId',
-      defaultOption: 'Select Hospital',
-      options: hospital,
-      formControlName: 'doctorChamberId',
-      isSelect: true,
-    },
-    {
       label: 'Select Consultancy Type',
       inputId: 'consultancyType',
       defaultOption: 'Select Consultancy Type',
-      options: consType,
+      options: hospital,
       formControlName: 'consultancyType',
+      isSelect: true,
+    },
+    {
+      label: 'Select Hospital',
+      inputId: 'doctorChamberId',
+      defaultOption: 'Select Hospital ',
+      options: consType,
+      formControlName: 'doctorChamberId',
       isSelect: true,
     },
     {
@@ -142,7 +142,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
   ];
 };
 
-export const feesInputData = (aptype: any, dsList: any) => {
+export const feesInputData =  (aptype: any, dsList: any) => {
   return [
     {
       label: 'Appointment Type',
@@ -177,11 +177,15 @@ export const feesInputData = (aptype: any, dsList: any) => {
       formControlName: 'previousFee',
       type: 'number',
     },
+
+
+
     {
       label: 'Fee Applied From',
       inputId: 'feeAppliedFrom',
       placeholder: 'Fee Applied From',
       formControlName: 'feeAppliedFrom',
+      isSelect: false,
       type: 'date',
     },
     {

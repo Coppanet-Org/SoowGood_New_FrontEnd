@@ -1,0 +1,7 @@
+.app-loader {
+    position: absolute; /* or 'fixed', depending on your layout */
+    z-index: 1000; /* A higher value to ensure it's on top */
+    width: 100%;
+    background: #0202024b;
+    backdrop-filter: blur(2px);
+  }

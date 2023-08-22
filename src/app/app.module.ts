@@ -9,13 +9,14 @@ import { SignupComponent } from './core-modules/auth/signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
-import { NgOtpInputModule } from  'ng-otp-input';
+import { NgOtpInputModule } from 'ng-otp-input';
 import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
+import { LoaderModule } from './shared/modules/loader/loader.module';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -24,9 +25,12 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    EmptyPageComponent, 
-    SignupComponent, PatientComponent,DoctorProfileInfoFormComponent],
+    AppComponent,
+    EmptyPageComponent,
+    SignupComponent,
+    PatientComponent,
+    DoctorProfileInfoFormComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -40,11 +44,11 @@ const routerConfig: ExtraOptions = {
     RouterModule.forRoot(appRoutes, routerConfig),
     HotToastModule.forRoot({
       position: 'bottom-center',
-    })
-
+    }),
+    LoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports:[MatDialogModule]
+  exports: [MatDialogModule],
 })
 export class AppModule {}

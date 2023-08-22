@@ -120,7 +120,7 @@ export class ScheduleFormComponent implements OnInit {
       }
     );
    
-    this.form.get('doctorChamberId')?.valueChanges.subscribe((value) => {
+    this.form.get('consultancyType')?.valueChanges.subscribe((value) => {
       if (value == 2) {
         this.isDisable = true
       } else {
@@ -193,7 +193,11 @@ getInputFieldData(){
       this.DoctorScheduleService.update({
         ...obj,
         id: this.editScheduleId,
-      }).subscribe((res) => this.rerenderDoctorSchedule.emit(true));
+      }).subscribe((res) => 
+{      this.TosterService.customToast(String(res.message), 'success')
+      this.rerenderDoctorSchedule.emit(true)}
+      
+      );
     }
   }
   getDaySessions(day: string) {
@@ -223,10 +227,5 @@ getInputFieldData(){
     );
   }
 
-  onSelectionChanged(e: any) {
-   
-    if (e.field == "doctorChamberId" && e.value == 2) {
-      this.form.controls['consultancyType'].disabled
-    }
-  }
+
 }

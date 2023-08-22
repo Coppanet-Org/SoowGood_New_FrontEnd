@@ -4,7 +4,7 @@
             <ng-container *ngFor="let config of inputConfigs">
                 <app-input [label]="config.label" [inputId]="config.inputId" [defaultOption]="config.defaultOption"
                            [options]="config.options" [formControlName]="config.formControlName" class="sm:w-1/3"
-                           [isSelectInput]="config.isSelect" (selectionChange)="onSelectionChanged($event)" [disabled]="config.inputId == 'consultancyType' && isDisable == true">
+                           [isSelectInput]="config.isSelect" [disabled]="config.inputId == 'doctorChamberId' && isDisable == true">
                 </app-input>
               </ng-container>
               

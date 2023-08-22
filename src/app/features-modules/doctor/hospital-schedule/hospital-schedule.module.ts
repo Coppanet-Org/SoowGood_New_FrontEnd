@@ -1,6 +1,6 @@
 import { HospitalInfoComponent } from './hospital-info/hospital-info.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { HospitalScheduleComponent } from './hospital-schedule.component';
@@ -41,5 +41,6 @@ const routes: Route[] = [
     MaterialModulesModule,
     InputModule,ConfirmDialogModule
   ],
+  providers: [DatePipe], 
 })
 export class HospitalScheduleModule {}

@@ -10,6 +10,8 @@ import { feesInputData } from 'src/app/shared/utils/input-info';
 import { AppointmentType, ScheduleType } from 'src/app/proxy/enums';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorScheduleService } from 'src/app/proxy/services';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-fee-dialog',
   templateUrl: './fee-dialog.component.html',
@@ -21,22 +23,24 @@ export class FeeDialogComponent implements OnInit {
   feesData: any;
   scheduleType: any;
   constructor(
+ 
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FeeDialogComponent>,
     private normalAuth: AuthService,
     private tosterService: TosterService,
     private DoctorScheduleService: DoctorScheduleService,
     private DoctorFeeSetupService: DoctorFeeSetupService,
-    private HospitalStateService: HospitalStateService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ) {}
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo && authInfo.id) {
-      this.loadForm(authInfo.id);
       this.doctorId = authInfo.id;
     }
+
+    this.loadForm(authInfo.id);
+
     let appointmentType = CommonService.getEnumList(AppointmentType);
     this.DoctorScheduleService.getScheduleListByDoctorId(
       this.doctorId
@@ -46,16 +50,18 @@ export class FeeDialogComponent implements OnInit {
           return { name: e.scheduleName, id: e.id };
         });
         this.feesData = feesInputData(appointmentType, list);
-      } else {
-        return;
+        if (this.editData.id) {
+          this.DoctorFeeSetupService.get(this.editData.id).subscribe((res) => {
+            let feeAppliedFrom = ""
+
+            this.form.patchValue({...this.editData,feeAppliedFrom :feeAppliedFrom});
+          });
+        }
       }
     });
-    if (this.editData) {
-      this.DoctorFeeSetupService.get(this.editData).subscribe((res) =>
-        this.form.patchValue(res)
-      );
-    }
   }
+
+
 
   loadForm(id: any) {
     this.form = this.fb.group({
