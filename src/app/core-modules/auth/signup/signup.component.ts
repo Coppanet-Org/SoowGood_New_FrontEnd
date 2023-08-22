@@ -842,40 +842,36 @@ export class SignupComponent implements OnInit {
   }
 
   uploadSpDoc() {
+    this.spFileData.append("entityId", this.doctorId.toString());
+    this.spFileData.append("entityType", "Doctor");
+    this.spFileData.append("attachmentType", "DoctorSpecialityDoc");
+    this.spFileData.append("directoryName", "DoctorSpecialityDoc\\" + this.doctorId.toString());
 
-    this.subs.sink = this.doctorSpecializationService.getDoctorSpecializationListByDoctorId(this.doctorId).subscribe((res: any) => {
-      if (res) {
-        let docSpList: DoctorSpecializationDto[] = res;
-        if (this.spFileCount == docSpList.length) {
-          this.spFileData.append("entityId", this.doctorId.toString());
-          this.spFileData.append("entityType", "Doctor");
-          this.spFileData.append("attachmentType", "DoctorSpecialityDoc");
+    //this.subs.sink = this.doctorSpecializationService.getDoctorSpecializationListByDoctorId(this.doctorId).subscribe((res: any) => {
+    //  if (res) {
+    //    let docSpList: DoctorSpecializationDto[] = res;
+    //if (this.spFileCount == docSpList.length) {
 
-          this.spFileData.append("directoryName", "DoctorSpecialityDoc\\" + this.doctorId.toString());
-          if (this.totalSpFileList.length > 0) {
-            for (let item of this.totalSpFileList) {
-              for (let sp of docSpList) {
-                let fileToUpload = item;
-                this.spFileData.append("relatedEntityid", sp.id ? sp.id?.toString() : '');
-                this.spFileData.append(item.name, fileToUpload);
-                break;
-              }
-            }
-            // save attachment
-            this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
-              (result: any) => {
-                this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
-              },
-              (err) => {
-                console.log(err);
-              });
-          }
-        }
-        else {
-          this.tosterService.customToast('Documents count not matched the total specializations', 'error');
-        }
+    if (this.spFileList.length > 0) {
+      for (let item of this.spFileList) {
+        let fileToUpload = item;
+        this.spFileData.append(item.name, fileToUpload);
       }
-    });
+      // save attachment
+      this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
+        (result: any) => {
+          this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+        },
+        (err) => {
+          console.log(err);
+        });
+    }
+    //}
+    //else {
+    //  this.tosterService.customToast('Documents count not matched the total specializations', 'error');
+    //}
+    //}
+    //});
   }
 
   onFileChanged(event: any) {
@@ -911,7 +907,7 @@ export class SignupComponent implements OnInit {
     if (this.spFileList.length > 0) {
       this.checkSpFileValidation(event);
     }
-    this.spFileCount = this.spFileCount + this.spFileList.length;
+    //this.spFileCount = this.spFileCount + this.spFileList.length;
     this.spAttachment.nativeElement.value = '';
   }
 
@@ -1035,16 +1031,26 @@ export class SignupComponent implements OnInit {
   }
 
   finalContinue() {
-    if (this.fileList.length == 0 && this.idFileList.length == 0 && this.spFileList.length == 0) {
+
+    if (this.fileList.length == 0 && this.idFileList.length == 0) {
       this.tosterService.customToast("Please upload all the required documents", 'error');
+      //return;
     }
+    //else {
+    //  this.subs.sink = this.doctorSpecializationService.getDoctorSpecializationListByDoctorId(this.doctorId).subscribe((res: any) => {
+    //    if (res) {
+    //      let docSpList: DoctorSpecializationDto[] = res;
+    //      if (this.totalSpFileList.length != docSpList.length) {
+    //        this.tosterService.customToast('Documents count not matched the total specializations', 'error');
+    //        //return;
+    //      }
     else {
       let userType = '';
       let message = "Congratulations...!!Profile Created Successfully..!!"
       this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
         if (doctorDto) {
           this.forStepUpdateDto.id = doctorDto.id;
-          this.forStepUpdateDto.doctorTitle=doctorDto.doctorTitle
+          this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle
           this.forStepUpdateDto.userId = doctorDto.userId;
           this.forStepUpdateDto.fullName = doctorDto.fullName;
           this.forStepUpdateDto.email = doctorDto.email;
@@ -1098,10 +1104,11 @@ export class SignupComponent implements OnInit {
         }
       });
     }
+    //  }
+    //});
   }
+
 }
-
-
 
 
 
