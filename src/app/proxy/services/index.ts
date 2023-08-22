@@ -1,3 +1,4 @@
+export * from './agent-profile.service';
 export * from './degree.service';
 export * from './doctor-chamber.service';
 export * from './doctor-degree.service';

@@ -38,6 +38,7 @@ export class SignupComponent implements OnInit {
 
   spFileList: File[] = [];
   spFileNames: any[] = [];
+  selectedSpFileName: any;
   totalSpFileList: File[] = [];
 
   fileData = new FormData();
@@ -322,16 +323,19 @@ export class SignupComponent implements OnInit {
     if (this.specialityId === 1) {
       this.formSpecialization = this.fb.group({
         specializationId: [1, Validators.required],
+        docFileName: [""]
       });
     }
     else if (this.specialityId === 2) {
       this.formSpecialization = this.fb.group({
         specializationId: [2, Validators.required],
+        docFileName: [""]
       });
     }
     else {
       this.formSpecialization = this.fb.group({
         specializationId: [0, Validators.required],
+        docFileName: [""]
       });
     }
   }
@@ -656,6 +660,7 @@ export class SignupComponent implements OnInit {
 
   addSpecialization() {
     let spId = this.formSpecialization.get('specializationId')?.value;
+    let fileName = this.formSpecialization.get('docFileName')?.value;
     let specialityName = this.specialityName;
 
     let uniId = this.GenerateId();
@@ -666,7 +671,8 @@ export class SignupComponent implements OnInit {
       specializationName: this.specializationName,
       doctorId: this.doctorId,
       specialityId: this.specialityId,
-      specialityName: specialityName
+      specialityName: specialityName,
+      documentName: this.selectedSpFileName
     };
 
     if (!this.formSpecialization.valid && !this.formSpecialization.touched) {
@@ -677,6 +683,8 @@ export class SignupComponent implements OnInit {
       return;
     }
     this.doctorSpecializations.push(spData);
+    //this.spFileList=[];
+    //this.spFileNames = [];
 
   }
 
@@ -733,10 +741,14 @@ export class SignupComponent implements OnInit {
         spDto.doctorProfileId = this.doctorId;;
         spDto.specialityId = s.specialityId;
         spDto.specializationId = s.specializationId;
+        spDto.documentName = s.documentName;
         this.doctorSpecializationInputs.push(spDto);
       });
       this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
         if (doctorDto) {
+
+
+
           this.forStepUpdateDto.id = doctorDto.id;
           this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle;
           this.forStepUpdateDto.userId = doctorDto.userId;
@@ -761,6 +773,31 @@ export class SignupComponent implements OnInit {
 
           this.subs.sink = this.doctorProfileService.update(this.forStepUpdateDto).subscribe((res: DoctorProfileDto) => {
             if (res) {
+              if (this.totalSpFileList.length > 0)
+                for (let item of this.totalSpFileList) {
+                  this.fileData.append("entityId", this.doctorId.toString());
+                  this.fileData.append("entityType", "Doctor");
+                  this.fileData.append("attachmentType", "DoctorSpecialityDoc");
+                  this.fileData.append("directoryName", "DoctorExperties\\" + this.doctorId.toString());
+                  //if (this.totalSpFileList.length > 0) {
+
+                  let fileToUpload = item;
+                  this.fileData.append(item.name, fileToUpload);
+                  //}
+                  // save attachment
+                  this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+                    (result: any) => {
+                      //this.form.reset();
+                      this.fileData = new FormData();
+                      this.spFileNames = [];
+                      this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+                      this.cdRef.detectChanges();
+                    },
+                    (err) => {
+                      console.log(err);
+                    })
+                }
+
               this.completeDegreeSpecilizationInfoModal = false;
               this.completeDocumentUpload = true
               let saveLocalStorage = {
@@ -903,6 +940,7 @@ export class SignupComponent implements OnInit {
       var selectedFile = event.target.files[i];
       this.spFileList.push(selectedFile);
       this.spFileNames.push(selectedFile.name)
+      this.selectedSpFileName = selectedFile.name;
     }
     if (this.spFileList.length > 0) {
       this.checkSpFileValidation(event);
