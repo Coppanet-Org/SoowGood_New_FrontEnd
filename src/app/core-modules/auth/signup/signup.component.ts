@@ -773,31 +773,35 @@ export class SignupComponent implements OnInit {
 
           this.subs.sink = this.doctorProfileService.update(this.forStepUpdateDto).subscribe((res: DoctorProfileDto) => {
             if (res) {
-              if (this.totalSpFileList.length > 0)
+              if (this.totalSpFileList.length > 0) {
                 for (let item of this.totalSpFileList) {
-                  this.fileData.append("entityId", this.doctorId.toString());
-                  this.fileData.append("entityType", "Doctor");
-                  this.fileData.append("attachmentType", "DoctorSpecialityDoc");
-                  this.fileData.append("directoryName", "DoctorExperties\\" + this.doctorId.toString());
+                  this.spFileData = new FormData();
+                  this.spFileData.append("entityId", this.doctorId.toString());
+                  this.spFileData.append("entityType", "Doctor");
+                  this.spFileData.append("attachmentType", "DoctorSpecialityDoc");
+                  this.spFileData.append("directoryName", "DoctorExperties\\" + this.doctorId.toString());
+                  //for (let item of this.totalSpFileList) {
+
                   //if (this.totalSpFileList.length > 0) {
 
                   let fileToUpload = item;
-                  this.fileData.append(item.name, fileToUpload);
+                  this.spFileData.append(item.name, fileToUpload);
                   //}
                   // save attachment
-                  this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+                  this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
                     (result: any) => {
                       //this.form.reset();
-                      this.fileData = new FormData();
-                      this.spFileNames = [];
+                      //this.spFileData = new FormData();
+                      //this.spFileNames = [];
                       this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
                       this.cdRef.detectChanges();
                     },
                     (err) => {
                       console.log(err);
                     })
-                }
 
+                }
+              }
               this.completeDegreeSpecilizationInfoModal = false;
               this.completeDocumentUpload = true
               let saveLocalStorage = {
