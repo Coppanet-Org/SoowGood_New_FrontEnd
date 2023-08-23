@@ -232,3 +232,76 @@ export const feesInputData =  (aptype: any, dsList: any) => {
     },
   ];
 };
+
+// export const agentBookingInpuData = [
+//   {
+//     label: 'Your Title',
+//     inputId: 'doctorTitle',
+//     defaultOption: 'Select Title',
+//     options: titleList,
+//     formControlName: 'doctorTitle',
+//     isSelect: true,
+//     type: 'select',
+//   },
+//   {
+//     label: 'Full Name',
+//     inputId: 'fullName',
+//     formControlName: 'fullName',
+//     isSelect: false,
+//     type: 'text',
+//   },
+//   {
+//     label: 'Email',
+//     inputId: 'email',
+//     formControlName: 'email',
+//     isSelect: false,
+//     readonly: true,
+//     type: 'email',
+//   },
+// ]
+
+export const agentInputData =[
+  {
+        label: 'Agent Name',
+        inputId: 'agentName',
+        formControlName: 'agentName',
+        isSelect: false,
+        type: 'text',
+      },
+      {
+        label: 'Agent Id',
+        inputId: 'agentId',
+        formControlName: 'agentId',
+        isSelect: false,
+        type: 'text',
+      },
+      {
+        label: 'Mobile',
+        inputId: 'mobile',
+        formControlName: 'mobile',
+        isSelect: false,
+        type: 'tel',
+      },
+      {
+        label: 'Agent Organization',
+        inputId: 'agentOrganization',
+        formControlName: 'agentOrganization',
+        isSelect: false,
+        type: 'text',
+      },
+      {
+        label: 'Email',
+        inputId: 'email',
+        formControlName: 'email',
+        isSelect: false,
+        readonly: true,
+        type: 'email',
+      },
+      {
+        label: 'Address',
+        inputId: 'address',
+        formControlName: 'address',
+        isSelect: false,
+        type: 'text',
+      },
+]

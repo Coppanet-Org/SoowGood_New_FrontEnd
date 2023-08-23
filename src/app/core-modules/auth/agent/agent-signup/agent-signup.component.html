@@ -1,71 +1,67 @@
 <div class="signup-form">
     <div class="signup-form__left">
-        <img src="../../../../assets/auth/Repeat Grid 3.png" alt="auth">
+        <img class="w-full h-full"  src="../../../../assets/auth/Repeat Grid 3.png" alt="auth">
     </div>
     <div class="signup-form__right drop-shadow-soft relative">
-        <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300">
-            <h1 class="text-4xl font-medium">Signup</h1>
+        <div class="max-w-lg min-w-[650px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300">
+            <h1 class="text-4xl font-medium">Agent Signup</h1>
             <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
             <form action="" class="mt-6" [formGroup]="signupForm">
 
-                <div class="flex flex-col space-y-5 mt-10">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="w-full px-3 sm:w-1/2 mb-5">
+                        <label for="agentName">
+                            <p class="font-medium text-slate-700 pb-2">Agent Name</p>
+                            <input type="text" formControlName="agentName" id="agentName" class="form_input"
+                                placeholder="Name" required>
+                        </label>
+                    </div>
 
-                    <label for="agentName">
-                        <p class="font-medium text-slate-700 pb-2">Agent Name</p>
-                        <input type="text" formControlName="agentName" id="agentName" class="form_input"
-                            placeholder="Name" required>
-                    </label>
+                    <div class="w-full px-3 sm:w-1/2 mb-5">
+                        <label for="agentOrganization">
+                            <p class="font-medium text-slate-700 pb-2">Agent Organization</p>
+                            <input type="text" formControlName="agentOrganization" id="agentOrganization"
+                                class="form_input" placeholder="Agent Organization" required>
+                        </label>
+                    </div>
 
-                    <label for="agentOrganization">
-                        <p class="font-medium text-slate-700 pb-2">Agent Organization</p>
-                        <input type="text" formControlName="agentOrganization" id="agentOrganization" class="form_input"
-                            placeholder="Agent Organization" required>
-                    </label>
+                    <div class="w-full px-3 sm:w-1/2 mb-5">
+                        <label for="email">
+                            <p class="font-medium text-slate-700 pb-2">Email</p>
+                            <input type="email" formControlName="email" id="email" class="form_input"
+                                placeholder="example@mail.com" required>
+                        </label>
+                    </div>
+                    <div class="w-full px-3 sm:w-1/2 mb-5">
+                        <label for="Contact No">
+                            <p class="font-medium text-slate-700 pb-2">Contact No</p>
+                            <input type="tel" formControlName="mobile" id="mobile" class="form_input"
+                                placeholder="00-00-00-00-00" required>
+                        </label>
+                    </div>
+                    <div class="w-full px-3 sm:w-full mb-5">
+                        <label for="Address">
+                            <p class="font-medium text-slate-700 pb-2">Address</p>
+                            <input type="text" formControlName="address" id="address" class="form_input"
+                                placeholder="Address" required>
+                        </label>
+                    </div>
 
-                    <label for="agentOrganization">
-                        <p class="font-medium text-slate-700 pb-2">Agent Organization</p>
-                        <input type="text" formControlName="agentOrganization" id="agentOrganization" class="form_input"
-                            placeholder="Agent Organization" required>
-                    </label>
 
-                    <label for="email">
-                        <p class="font-medium text-slate-700 pb-2">Email</p>
-                        <input type="email" formControlName="email" id="email" class="form_input"
-                            placeholder="example@mail.com" required>
-                    </label>
-
-                    
-                    <label for="Contact No">
-                        <p class="font-medium text-slate-700 pb-2">Contact No</p>
-                        <input type="tel" formControlName="mobile" id="mobile" class="form_input"
-                            placeholder="00-00-00-00-00" required>
-                    </label>
-
-                    <label for="Address">
-                        <p class="font-medium text-slate-700 pb-2">Address</p>
-                        <input type="text" formControlName="address" id="address" class="form_input"
-                            placeholder="Address" required>
-                    </label>
-
-                    <label for="Password">
-                        <p class="font-medium text-slate-700 pb-2"> Password</p>
-                        <input formControlName="password" type="password" name="password" id="password"
-                            placeholder="Password123@*" class="form_input" />
-                    </label>
 
                     <button class="form_btn" (click)="onSubmit()">
-                        <div *ngIf="!isLoading" class="flex">
+                        <div  class="flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
-                            <span>Login</span>
+                            <span>Signup</span>
                         </div>
                         <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
                     </button>
-                    <p class="text-center"> Don't have an account? <a routerLink="/signup"
-                            class="text-primary font-medium inline-flex space-x-1 items-center"><span>Sign up
+                    <p class="text-center w-full mt-5"> Already have an account? <a routerLink="/agent/login"
+                            class="text-primary font-medium inline-flex space-x-1 items-center"><span>Login
                             </span><span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"

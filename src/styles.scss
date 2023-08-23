@@ -8,6 +8,10 @@
   .container {
     @apply xs:max-w-full sm:w-full md:w-[70%] mr-auto ml-auto;
   }
+  .container-full{
+    @apply xs:max-w-full sm:w-full md:w-[96%] mr-auto ml-auto;
+  }
+
   .container-items {
     @apply flex items-center justify-between w-full h-20;
   }
@@ -38,17 +42,18 @@
     @apply flex items-center w-full h-screen bg-slate-100;
   }
   .signup-form__right {
-    @apply w-2/3 bg-hero-pattern h-full flex items-center bg-primary;
+    @apply w-[60%] bg-hero-pattern h-screen flex items-center bg-primary;
   }
 
+  .signup-form__left {
+    @apply w-[40%]  h-screen;
+  }
 
   .signup-form__choose {
     @apply flex justify-end items-center pr-5 relative overflow-hidden w-1/2 h-14 border-[1px] shadow-[0_5px_30px_0_rgba(31,34,120,.08)] rounded-md;
   }
 
-  .signup-form__left {
-    @apply w-2/5  h-full;
-  }
+
   .form_input{
     @apply w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-secondary focus:shadow-md;
   }
