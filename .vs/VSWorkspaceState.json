@@ -5,12 +5,7 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\login",
-    "\\src\\app\\layout-module\\layouts",
-    "\\src\\app\\layout-module\\layouts\\admin-layout",
-    "\\src\\app\\layout-module\\layouts\\doctor-layout",
-    "\\src\\app\\layout-module\\layouts\\public-layout"
+    "\\src\\app\\core-modules\\auth\\login"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\login\\login.component.ts",
   "PreviewInSolutionExplorer": false
 }
