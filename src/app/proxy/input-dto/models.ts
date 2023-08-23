@@ -3,6 +3,22 @@ import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 
+export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  agentCode?: string;
+  organizationName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  isActive?: boolean;
+  userId?: string;
+  profileStep?: number;
+  createFrom?: string;
+}
+
 export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   chamberName?: string;
@@ -57,6 +73,7 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
   doctorProfileId?: number;
   specialityId?: number;
   specializationId?: number;
+  documentName?: string;
 }
 
 export interface FileDeleteInputDto {

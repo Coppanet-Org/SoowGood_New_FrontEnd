@@ -32,6 +32,22 @@ export interface SmsResponseDto {
   smsinfo: SmsInfo[];
 }
 
+export interface AgentProfileDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  agentCode?: string;
+  organizationName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  isActive?: boolean;
+  userId?: string;
+  profileStep?: number;
+  createFrom?: string;
+}
+
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
@@ -184,6 +200,7 @@ export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
   specialityName?: string;
   specializationId?: number;
   specializationName?: string;
+  documentName?: string;
 }
 
 export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
