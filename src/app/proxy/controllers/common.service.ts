@@ -45,11 +45,11 @@ export class CommonService {
     { apiName: this.apiName,...config });
   
 
-  getDocument = (entityType: string, entityId: number, attachmentType: string, config?: Partial<Rest.Config>) =>
+  getDocument = (entityType: string, entityId: number, attachmentType: string, fileName: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
       url: '/api/Common/GetDocument',
-      params: { entityType, entityId, attachmentType },
+      params: { entityType, entityId, attachmentType, fileName },
     },
     { apiName: this.apiName,...config });
 
