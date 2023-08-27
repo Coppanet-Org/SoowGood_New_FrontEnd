@@ -635,6 +635,7 @@ export class SignupComponent implements OnInit {
   }
 
   addDegree() {
+
     let degreeId = this.formDegree.get('degreeId')?.value;
     let duration = this.formDegree.get('duration')?.value;
 
@@ -655,7 +656,23 @@ export class SignupComponent implements OnInit {
       );
       return;
     }
-    this.doctorDegrees.push(newDegreeData);
+    if (this.doctorDegrees.length > 0) {
+      this.doctorDegrees.forEach(d => {
+        let dname = this.doctorDegrees.find(n => n.degreeId == degreeId)?.degreeName;
+        if (d.degreeId == degreeId) {
+          this.tosterService.customToast(
+            dname + ' already added',
+            'warning'
+          );
+        }
+        else {
+          this.doctorDegrees.push(newDegreeData);
+        }
+      })
+    }
+    else {
+      this.doctorDegrees.push(newDegreeData);
+    }
   }
 
   addSpecialization() {
@@ -682,10 +699,24 @@ export class SignupComponent implements OnInit {
       );
       return;
     }
-    this.doctorSpecializations.push(spData);
-    //this.spFileList=[];
-    //this.spFileNames = [];
-
+    if (this.doctorSpecializations.length > 0) {
+      this.doctorSpecializations.forEach(d => {
+        let dname = this.doctorSpecializations.find(n => n.specializationId == spId)?.specializationName;
+        if (d.specializationId == spId) {
+          this.tosterService.customToast(
+            dname + ' already added',
+            'warning'
+          );
+          //return;
+        }
+        else {
+          this.doctorSpecializations.push(spData);
+        }
+      })
+    }
+    else {
+      this.doctorSpecializations.push(spData);
+    }
   }
 
   remove(id: any): void {
