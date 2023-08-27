@@ -2,7 +2,7 @@
 
 <div class="signup-form">
     <div class="signup-form__left">
-        <img src="../../../../assets/auth/Repeat Grid 3.png" alt="auth">
+        <img class="w-full h-full" src="../../../../assets/auth/Repeat Grid 3.png" alt="auth">
     </div>
     <div class="signup-form__right drop-shadow-soft relative">
         <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
@@ -28,7 +28,7 @@
 
 
                     <button class="form_btn" (click)="onSubmit()">
-                        <div *ngIf="!isLoading" class="flex">
+                        <div class="flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,7 +38,7 @@
                         </div>
                         <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
                     </button>
-                    <p class="text-center"> Don't have an account?  <a routerLink="/signup"
+                    <p class="text-center"> Don't have an account?  <a routerLink="/agent/signup"
                             class="text-primary font-medium inline-flex space-x-1 items-center"><span>Sign up
                             </span><span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -10,6 +10,7 @@ import { FooterComponent } from './header-footer/footer/footer.component';
 import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
 import { AgentComponent } from '../features-modules/agent/agent.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
+import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
 
 const routes: Route[] = [
   {
@@ -23,6 +24,33 @@ const routes: Route[] = [
             '../features-modules/public/landing-page/landing-page.module'
           ).then((m) => m.LandingPageModule),
       },
+    ],
+  },
+  {
+    path: 'search',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import(
+            '../features-modules/public/search-page/search-page.module'
+          ).then((m) => m.SearchPageModule),
+      },
+      {
+        path: 'doctors',
+        loadChildren: () =>
+          import(
+            '../features-modules/public/doctor-profile-page/doctor-profile-page.module'
+          ).then((m) => m.DoctorProfilePageModule),
+      },
+      // {
+      //   path: 'doctors/:id/booking/:id',
+      //   loadChildren: () =>
+      //     import(
+      //       '../features-modules/public/doctor-booking-page/doctor-booking-page.module'
+      //     ).then((m) => m.DoctorBookingPageModule),
+      // },
     ],
   },
   {
@@ -89,6 +117,7 @@ const routes: Route[] = [
     HeaderComponent,
     FooterComponent,
     DashboardHeaderComponent,
+    PublicLayoutTwoComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
