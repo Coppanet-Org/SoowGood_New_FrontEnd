@@ -29,7 +29,7 @@ const routerConfig: ExtraOptions = {
     EmptyPageComponent,
     SignupComponent,
     PatientComponent,
-    DoctorProfileInfoFormComponent,
+    DoctorProfileInfoFormComponent
   ],
   imports: [
     BrowserModule,

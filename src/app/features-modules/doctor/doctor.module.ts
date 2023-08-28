@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { DoctorComponent } from './doctor.component';
 import { Route, RouterModule } from '@angular/router';
 import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashboard-menu.module';
+import { isAuth } from 'src/app/auth-gurd/auth.service';
 const routes: Route[] = [
   {
     path: '',
     component: DoctorComponent,
+    canActivate: [isAuth],
     children: [
       {
         path: '',

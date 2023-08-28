@@ -121,6 +121,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           catchError((error: any) => this.handleProfileError(error))
         )
         .subscribe((doctorDto: DoctorProfileDto) => {
+
+          console.log(doctorDto);
+          
           const saveLocalStorage = {
             identityNumber: doctorDto.identityNumber,
             bmdcRegNo: doctorDto.bmdcRegNo,
@@ -129,6 +132,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             id: doctorDto.id,
             profileStep: doctorDto.profileStep,
             createFrom: doctorDto.createFrom,
+            userType: loginResponseData.roleName.toString().toLowerCase()
           };
           this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
           const userType = doctorDto.isActive
