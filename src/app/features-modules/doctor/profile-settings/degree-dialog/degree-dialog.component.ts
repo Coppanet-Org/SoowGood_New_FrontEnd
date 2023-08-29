@@ -34,7 +34,8 @@ export class DegreeDialogComponentnt implements OnInit {
     private normalAuth: AuthService,
     public dialogRef: MatDialogRef<DegreeDialogComponentnt>,
     private tosterService: TosterService,
-    @Inject(MAT_DIALOG_DATA) public editData: DoctorDegreeDto | undefined
+    @Inject(MAT_DIALOG_DATA)
+    public editData: DoctorDegreeDto | undefined
   ) {}
 
   ngOnInit(): void {

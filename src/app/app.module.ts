@@ -17,6 +17,7 @@ import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/compo
 import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
+import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -25,11 +26,12 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    EmptyPageComponent,
+    AppComponent, 
+    EmptyPageComponent, 
     SignupComponent,
     PatientComponent,
-    DoctorProfileInfoFormComponent
+    DoctorProfileInfoFormComponent,
+    DegreeSpecilizationInfoFormComponent
   ],
   imports: [
     BrowserModule,

@@ -91,4 +91,8 @@
   .td{
     @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200
   }
+
+  .signup-child-component-min-w {
+    @apply min-w-[90%];
+  }
 }
