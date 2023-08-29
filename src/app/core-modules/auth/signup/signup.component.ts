@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
   userInfoForm!: FormGroup;
   docId: any;
   mobile: string = '';
-  userTYpe: string = '';
+  userType: string = '';
   otp?: number;
   errMsg: string = '';
   isValid = true;
@@ -470,7 +470,8 @@ export class SignupComponent implements OnInit {
 
   sendUserInfo() {
     this.isLoading = true;
-    let userType = this.formGroup?.value.userTypeName
+    let userType = this.formGroup?.value.userTypeName;
+    this.userType = userType;
     let password = this.userInfoForm.value.password;
     let title = this.userInfoForm.value.doctorTitle;
     let gender = this.userInfoForm.value.gender;
@@ -524,7 +525,7 @@ export class SignupComponent implements OnInit {
             this.doctorProfileDto.isActive = false;
             this.doctorProfileDto.profileStep = 1;
             this.doctorProfileDto.createFrom = "Web";
-            userType = userType + '/profile-settings/basic-info'
+            //userType = userType + '/profile-settings/basic-info'
             this.doctorProfileService.create(this.doctorProfileDto)
               .subscribe((profRes: any) => {
                 this.subs.sink = this.doctorProfileService.getByUserId(profRes.userId)
@@ -541,7 +542,8 @@ export class SignupComponent implements OnInit {
                       id: doctorDto.id,
                       specialityId: doctorDto.specialityId,
                       profileStep: doctorDto.profileStep,
-                      createFrom: doctorDto.createFrom
+                      createFrom: doctorDto.createFrom,
+                      userType: userType
                     }
                     this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                     if (this.normalAuth) {
@@ -845,7 +847,8 @@ export class SignupComponent implements OnInit {
                 specialityId: res.specialityId,
                 profileStep: res.profileStep,
                 createFrom: res.createFrom,
-                specializations: res.doctorSpecialization
+                specializations: res.doctorSpecialization,
+                userTYpe:this.userType
               }
               this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
               if (this.normalAuth) {
@@ -1118,7 +1121,7 @@ export class SignupComponent implements OnInit {
     //        //return;
     //      }
     else {
-      let userType = '';
+      let userType = this.userType.toString().toLowerCase();
       let message = "Congratulations...!!Profile Created Successfully..!!"
       this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
         if (doctorDto) {
@@ -1158,13 +1161,14 @@ export class SignupComponent implements OnInit {
                 id: res.id,
                 specialityId: res.specialityId,
                 profileStep: res.profileStep,
-                createFrom: res.createFrom
+                createFrom: res.createFrom,
+                userType: userType//this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
               }
               this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
               if (this.normalAuth) {
                 this.loadAuth();
               }
-              userType = 'doctor/dashboard';
+              userType = userType +'/dashboard';
               this._router.navigate([userType.toLowerCase()], {
                 state: { data: res } // Pass the 'res' object as 'data' in the state object
               }).then(r =>

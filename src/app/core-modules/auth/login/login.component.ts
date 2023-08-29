@@ -40,10 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private doctorProfileService: DoctorProfileService,
     private fb: FormBuilder,
     private _router: Router,
-    //private toasterService: ToasterService,
-    private permissionService: PermissionService,
     private ToasterService: TosterService,
-
     private NormalAuth: AuthService
   ) { }
 
@@ -107,8 +104,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     try {
       this.authService
-        .loginByUserDto(this.loginDto)
-        .subscribe((loginResponse: LoginResponseDto) => {
+        .loginByUserDto(this.loginDto).subscribe((loginResponse: LoginResponseDto) => {
           if (loginResponse.success) {
             this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
               .subscribe((doctorDto: DoctorProfileDto) => {
@@ -119,21 +115,23 @@ export class LoginComponent implements OnInit, OnDestroy {
                   isActive: doctorDto.isActive,
                   userId: doctorDto.userId,
                   id: doctorDto.id,
-                  specialityId:doctorDto.specialityId,
+                  specialityId: doctorDto.specialityId,
                   profileStep: doctorDto.profileStep,
-                  createFrom: doctorDto.createFrom
+                  createFrom: doctorDto.createFrom,
+                  userType: loginResponse.roleName.toString().toLowerCase()
                 }
                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
                 if (doctorDto.profileStep == 1 || doctorDto.profileStep == 2) {
                   userType = '/signup';
                 }
                 else {
-                  userType = (doctorDto.isActive == false ? (loginResponse.roleName.toString() + '/profile-settings/basic-info') : (loginResponse.roleName.toString()));
+                  userType = (doctorDto.isActive ? (loginResponse.roleName.toString()) : (loginResponse.roleName.toString() + '/profile-settings/basic-info'));
                 }
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
-                }).then(r =>
-                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success'));
+                }).then(r => {
+                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
+                });
               });
           }
           else {
