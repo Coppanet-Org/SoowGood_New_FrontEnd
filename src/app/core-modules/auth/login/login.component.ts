@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   userType = '/signup';
                 }
                 else {
-                  userType = (doctorDto.isActive ? (loginResponse.roleName.toString()) : (loginResponse.roleName.toString() + '/profile-settings/basic-info'));
+                  userType = (doctorDto.isActive ? (loginResponse.roleName.toString() + '/dashboard') : (loginResponse.roleName.toString() + '/profile-settings/basic-info'));
                 }
                 this._router.navigate([userType.toLowerCase()], {
                   state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
