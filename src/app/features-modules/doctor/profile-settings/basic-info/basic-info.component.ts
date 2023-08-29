@@ -1,3 +1,4 @@
+import { UserinfoStateService } from './../../../../shared/services/userinfo-state.service';
 import { LoaderService } from './../../../../shared/services/loader.service';
 import { DatePipe } from '@angular/common';
 import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -31,7 +32,8 @@ export class BasicInfoComponent implements OnInit {
     private doctorProfileService: DoctorProfileService,
     private NormalAuth: AuthService,
     private datePipe: DatePipe,
-    private LoaderService :LoaderService
+    private LoaderService :LoaderService,
+    private UserinfoStateService : UserinfoStateService
     
     ) {}
 
@@ -59,6 +61,25 @@ export class BasicInfoComponent implements OnInit {
         return
       }
       this.LoaderService.sendLoaderState(true)
+
+      //future update  add
+      // this.UserinfoStateService.getData().subscribe((profileInfo)=> 
+      // {
+      //   profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
+      //   profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
+      //   this.form?.patchValue(profileInfo);
+      //   this.profileData.emit(profileInfo);
+      //   this.form.get('specialityId')?.patchValue(profileInfo.specialityId)
+      //   this.LoaderService.sendLoaderState(false)
+      // },
+      // (error) => {
+      //   this.LoaderService.sendLoaderState(false)
+      //   console.error('Error fetching profile information:', error);
+      // }
+      // )
+
+
+      //future update  remove
       this.doctorProfileService.get(doctorId).subscribe(
         (profileInfo) => {
           profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
