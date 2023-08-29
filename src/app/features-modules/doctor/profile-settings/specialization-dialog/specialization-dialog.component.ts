@@ -30,6 +30,7 @@ export class SpecializationDialogComponent implements OnInit {
   auth: any;
   url: any;
   profilePic: string = '';
+  selectedSpFileName: any;
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
   constructor(
@@ -43,7 +44,7 @@ export class SpecializationDialogComponent implements OnInit {
     private http: HttpClient,
 
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadForm();
@@ -74,7 +75,8 @@ export class SpecializationDialogComponent implements OnInit {
   loadForm() {
     this.form = this.fb.group({
       fullName: ['', Validators.required],
-      specializationId: ['', Validators.required],
+      documentName: [this.editData ? this.editData.documentName : '', Validators.required],
+      specializationId: [this.editData ? this.editData.specializationId : '', Validators.required],
     });
   }
 
@@ -107,15 +109,58 @@ export class SpecializationDialogComponent implements OnInit {
       ...formValue,
       doctorProfileId: this.doctorId,
       specialityId: this.specialityId,
+      documentName: this.selectedSpFileName,
     };
     if (!this.editData) {
       this.doctorSpecializationService
-        .create(newSpecialization)
-        .subscribe((res) => {
+        .create(newSpecialization).subscribe((res) => {
           if (res) {
+
+            if (this.fileList.length > 0) {
+              for (let item of this.fileList) {
+                this.fileData = new FormData();
+                this.fileData.append("entityId", this.doctorId.toString());
+                this.fileData.append("entityType", "Doctor");
+                this.fileData.append("attachmentType", "DoctorSpecialityDoc");
+                this.fileData.append("directoryName", "DoctorExperties\\" + this.doctorId.toString());
+                //for (let item of this.totalSpFileList) {
+
+                //if (this.totalSpFileList.length > 0) {
+
+                let fileToUpload = item;
+                this.fileData.append(item.name, fileToUpload);
+                //}
+                // save attachment
+                this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+                  (result: any) => {
+                    //this.form.reset();
+                    //this.spFileData = new FormData();
+                    //this.spFileNames = [];
+                    this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+                    //this.cdRef.detectChanges();
+                  },
+                  (err) => {
+                    console.log(err);
+                  })
+
+              }
+            }
+            this.tosterService.customToast(
+              'Successfully Saved!',
+              'success'
+            );
+
             this.dialogRef.close(true);
-            return
-            this.uploadDocuments();
+            //return
+            //this.uploadDocuments();
+          }
+          else {
+            
+            this.dialogRef.close(false);
+            this.tosterService.customToast(
+              'Something went wrong! Please contact your administrator.',
+              'error'
+            );
           }
         });
     } else {
@@ -129,15 +174,41 @@ export class SpecializationDialogComponent implements OnInit {
           changedProperties.push(key);
         }
       }
-
       if (changedProperties.length < 1) {
         this.dialogRef.close(false);
         return;
       } else {
         this.doctorSpecializationService
-          .update({ ...newSpecialization, id: this.editData.id })
-          .subscribe((res) => {
+          .update({ ...newSpecialization, id: this.editData.id }).subscribe((res) => {
             if (res) {
+              if (this.fileList.length > 0) {
+                for (let item of this.fileList) {
+                  this.fileData = new FormData();
+                  this.fileData.append("entityId", this.doctorId.toString());
+                  this.fileData.append("entityType", "Doctor");
+                  this.fileData.append("attachmentType", "DoctorSpecialityDoc");
+                  this.fileData.append("directoryName", "DoctorExperties\\" + this.doctorId.toString());
+                  //for (let item of this.totalSpFileList) {
+
+                  //if (this.totalSpFileList.length > 0) {
+
+                  let fileToUpload = item;
+                  this.fileData.append(item.name, fileToUpload);
+                  //}
+                  // save attachment
+                  this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
+                    (result: any) => {
+                      //this.form.reset();
+                      //this.spFileData = new FormData();
+                      //this.spFileNames = [];
+                      this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+                      //this.cdRef.detectChanges();
+                    },
+                    (err) => {
+                      console.log(err);
+                    })
+                }
+              }
               this.tosterService.customToast(
                 'Successfully updated!',
                 'success'
@@ -159,10 +230,7 @@ export class SpecializationDialogComponent implements OnInit {
     this.fileData.append('entityId', this.doctorId.toString());
     this.fileData.append('entityType', 'Doctor');
     this.fileData.append('attachmentType', 'DoctorSpecialityDoc');
-    this.fileData.append(
-      'directoryName',
-      'DoctorSpecialityDoc\\' + this.doctorId.toString()
-    );
+    this.fileData.append('directoryName','DoctorSpecialityDoc\\' + this.doctorId.toString());
     if (this.fileList.length > 0) {
       for (let item of this.fileList) {
         let fileToUpload = item;
@@ -183,11 +251,15 @@ export class SpecializationDialogComponent implements OnInit {
         );
     }
   }
+
   onFileChanged(event: any) {
+    this.fileList = [];
+    this.fileNames = [];
     for (var i = 0; i <= event.target.files.length - 1; i++) {
       var selectedFile = event.target.files[i];
       this.fileList.push(selectedFile);
       this.fileNames.push(selectedFile.name);
+      this.selectedSpFileName = selectedFile.name;
     }
     if (this.fileList.length > 0) {
       this.checkFileValidation(event);
