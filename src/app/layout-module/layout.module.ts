@@ -11,6 +11,7 @@ import { DashboardHeaderComponent } from '../shared/components/dashboard-header/
 import { AgentComponent } from '../features-modules/agent/agent.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
+import { isAuth } from '../auth-gurd/auth.service';
 
 const routes: Route[] = [
   {

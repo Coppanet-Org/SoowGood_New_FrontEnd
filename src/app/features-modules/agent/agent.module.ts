@@ -6,11 +6,13 @@ import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashb
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
+import { isAuth } from 'src/app/auth-gurd/auth.service';
 
 const routes: Route[] = [
   {
     path: '',
     component: AgentComponent,
+    canActivate: [isAuth],
     children: [
       {
         path: '',

@@ -1,21 +1,43 @@
-import { Injectable } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Injectable, inject } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthService {
+class AuthServiceGuard {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor() { }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const authInfo = this.authService.authInfo();
 
-  isLoggedIn() {
+    if (authInfo) {
+      const userType = authInfo.userType;
+      const targetUserType = state.url.split('/')[1];
 
-    //const token = localStorage.getItem(‘token’); // get token from local storage
-
-    //const payload = atob(token.split(‘.’)[1]); // decode payload of token
-
-    //const parsedPayload = JSON.parse(payload); // convert payload into an Object
-
-    //return parsedPayload.exp > Date.now() / 1000; // check if token is expired
-
+      if (userType === targetUserType) {
+        return true;
+      } else {
+        const loginUrl =  targetUserType == 'agent' ? `/${targetUserType}/login` : '/login'
+        this.router.navigate([ loginUrl]);
+        return false;
+      }
+    } else {
+      const loginUrl = state.url.startsWith('/agent') ? '/agent/login' : '/login';
+      this.router.navigate([loginUrl]);
+      return false;
+    }
   }
 }
+
+export const isAuth: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): boolean => {
+  return inject(AuthServiceGuard).canActivate(route, state);
+};

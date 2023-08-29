@@ -1,4 +1,4 @@
-<div class="container-full">
+<div class="container">
     <div class="py-[100px]">
         <div className="w-1/2 text-left">
             <nav aria-label="breadcrumb" class="w-max">
@@ -41,7 +41,7 @@
 <!-- bread end -->
 
      <div class="w-full border-[1px] rounded-md p-8 flex gap-8 mt-5">
-         <div class="w-[200px] h-[180px] border-4 flex-2">
+         <div class="w-[200px] h-[160px] border-4 flex-2">
             <img class="w-full h-full" src="/assets/doctor/doctor.jpg" alt="">
          </div>
          <div class="w-[80%] flex flex-col flex-3">
@@ -74,6 +74,25 @@
             <button class="btn-secondary w-[200px] mt-3"> Book Now </button>
          </div>
      </div>
+
+<div class="w-full border-[1px] rounded-md p-8 flex gap-8 mt-5">
+    <mat-tab-group mat-stretch-tabs="true" style="width: 100%;" mat-align-tabs="start">
+        <mat-tab label="Overview">
+            <app-overview></app-overview>
+        </mat-tab>
+        <mat-tab label="Hospital & Location">
+            <app-hospital-locations></app-hospital-locations>
+        </mat-tab>
+        <mat-tab label="Schedule">
+            <app-schedule></app-schedule>
+        </mat-tab>
+        <mat-tab label="Reviews">
+            <app-reviews></app-reviews>
+        </mat-tab>
+        <mat-tab label="Doctor Blogs">
+        </mat-tab>
+    </mat-tab-group>
+</div>
 
     </div>
 </div>
