@@ -33,7 +33,6 @@ export class AuthService {
 
   authInfo(): any {
     const authData = localStorage.getItem('auth');
-    console.log('authData:', authData); // Check the value in the console
     return authData ? JSON.parse(authData) : null;
   }
 }

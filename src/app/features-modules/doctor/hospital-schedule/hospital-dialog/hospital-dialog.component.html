@@ -1,0 +1,61 @@
+<div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
+    <h1 class="dashbord-heading-text"> <i class="fa-solid fa-plus"></i> {{editData ? "Update" : "Add"}} Hospital </h1>
+    <button class="btn-secondary-light" (click)="dialogRef.close(true)">Close</button>
+</div>
+<div class="px-10 py-6">
+    <form [formGroup]="form">
+        <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-full">
+                <div class="mb-5">
+                    <label for="chamberName" class="mb-2 block font-medium text-[14px] text-[#07074D]" >
+                        Hospital Name
+                    </label>
+                    <input formControlName="chamberName" type="text" name="chamberName" id="chamberName" placeholder="Hospital Name" required
+                        class="form_input" />
+
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="address" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Address
+                    </label>
+                    <input placeholder="Address" formControlName="address" type="text" name="address" id="address" class="form_input" />
+
+                </div>
+            </div>
+
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="city" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        City
+                    </label>
+                    <input placeholder="City" formControlName="city" type="text" name="city" id="city" placeholder="City"
+                        class="form_input" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="country" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Country
+                    </label>
+                    <input placeholder="Country" formControlName="country" type="text" name="country" id="country" placeholder="Country"
+                        class="form_input" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="zipCode" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                        Zip Code
+                    </label>
+                    <input placeholder="Zip Code" formControlName="zipCode" type="text" name="zipCode" id="zipCode" placeholder="zipCode"
+                        class="form_input" />
+                </div>
+            </div>
+
+        </div>
+
+        <button class="btn-secondary" (click)="submit()"> Submit</button>
+
+    </form>
+</div>

@@ -1,0 +1,49 @@
+<div class="flex items-center justify-left my-7">
+    <div class=" w-full  bg-white">
+
+        <div class="relative overflow-x-auto  sm:rounded-lg ">
+            <div class="py-2 pl-5 pr-1 border-[1px] rounded-md flex gap-4 items-center">
+                <h1 class="dashbord-heading-text text-[18px] font-medium"> <i class="fa-solid fa-building-columns mr-1"></i>
+                    Documents Upload</h1>
+
+            </div>
+
+            <div class="flex flex-wrap w-full justify-between row-gap-1 ">
+                <form class="mt-8 space-y-3">
+
+                    <div class="grid grid-cols-1 space-y-2">
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">Attach NID/Passport Document</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                                <div class="h-full w-full text-center flex flex-col justify-center items-center  ">
+                                    <!---<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>-->
+                                    <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                                    <img class="has-mask h-36 object-center" src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg" alt="freepik image">
+                                    </div>
+                                    <p class="pointer-none text-gray-500 "><span class="text-sm">Click here to select your file!</span> </p>
+                                </div>
+                                <input type="file"   #attachments #fileInput accept=".jpg,.jpeg" class="hidden" >
+                                <!-- <input type="file"   #attachments #fileInput accept=".jpg,.jpeg" class="hidden" (change)="onFileChanged($event)"> -->
+                             
+                            </label>
+                        </div>
+                    </div>
+
+
+                    
+                            <p class="text-sm text-gray-300">
+                                <span>File type: jpg and jpeg of images</span>
+                            </p>
+                    <div>
+                        <button   type="submit" class="btn-primary w-full focus-ring-primary">
+                            <!-- <button  (click)="uploadPic()" type="submit" class="btn-primary w-full focus-ring-primary"> -->
+                        Update 
+                    </button>
+                    </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>

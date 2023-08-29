@@ -1,19 +1,20 @@
-import { DoctorProfileService, DocumentsAttachmentService } from 'src/app/proxy/services';
+import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
+import { LoaderService } from './../../../shared/services/loader.service';
+import {
+  DoctorProfileService,
+  DocumentsAttachmentService,
+} from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorTitle } from 'src/app/proxy/enums';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { Router } from '@angular/router';
-import { MatStepper } from '@angular/material/stepper';
-import { MatIcon } from '@angular/material/icon';
-import { ToasterService } from '@abp/ng.theme.shared';
+
 import { environment } from '../../../../environments/environment';
 import { SubSink } from 'SubSink';
-import { HttpClient } from '@angular/common/http';
-import { DocumentsAttachmentDto } from '../../../proxy/dto-models';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,18 +28,20 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 })
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
+  @Output() getProfileInfo =new EventEmitter()
+
+
   animationDirection = 'right';
-  selectedIndex: any
+  selectedIndex: any;
   userId: any;
-  loading: boolean = false;
-  profileInfo: any
-  doctorTitleList: ListItem[] = []
-  title: any
+  isLoading: boolean = false;
+  profileInfo: any;
+  doctorTitleList: ListItem[] = [];
+  title: any;
   activeTab: string = '';
   subs = new SubSink();
   fileList: File[] = [];
   fileNames: any[] = [];
-  //formg!: FormGroup;
   fileData = new FormData();
   imagePath: any;
   upload: any;
@@ -50,42 +53,41 @@ export class ProfileSettingsComponent implements OnInit {
   public picUrl = `${environment.apis.default.url}/`;
   doctorId: any;
 
-
   constructor(
     private _fb: FormBuilder,
     private doctorProfileService: DoctorProfileService,
     private doctorProfilePicService: DocumentsAttachmentService,
     private _router: Router,
     private TosterService: TosterService,
-    private cdRef: ChangeDetectorRef,
-    private http: HttpClient,
-    private normalAuth :AuthService,
+    private normalAuth: AuthService,
     public dialog: MatDialog,
-  ) { }
+    private LoaderService: LoaderService,
+    private UserinfoStateService :UserinfoStateService
+  ) {}
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
-    let authId = this.normalAuth.authInfo().id
-   this.doctorId = authId
-
+    let authId = this.normalAuth.authInfo().id;
+    this.doctorId = authId;
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
+
   }
 
-
-  getProfileInfo(id:any):void {
-    if (id) {
-      this.doctorProfileService.get(id).subscribe((res)=>{
-        this.profileInfo = res
-      })
-    }
-  }
+  // getProfileInfo(id: any): void {
+  //   if (id) {
+  //     this.LoaderService.sendLoaderState(true);
+  //     this.doctorProfileService.get(id).subscribe((res) => {
+  //       this.profileInfo = res;
+  //       this.LoaderService.sendLoaderState(false);
+  //     });
+  //   }
+  // }
   // this function need to optimize in future
   getTitle(title: string) {
-    let doctortitle = this.doctorTitleList.find((e) => e.id == title)
-    return doctortitle?.name
-
+    let doctortitle = this.doctorTitleList.find((e) => e.id == title);
+    return doctortitle?.name;
   }
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
@@ -96,6 +98,7 @@ export class ProfileSettingsComponent implements OnInit {
   isLinear = false;
 
   getProfileData(data: any) {
+    console.log("call");
     this.profileInfo = data;
     this.getProfilePic();
   }
@@ -107,19 +110,22 @@ export class ProfileSettingsComponent implements OnInit {
     let changedProperties: string[] = [];
 
     for (const key in formData) {
-      if (formData.hasOwnProperty(key) && formData[key] !== this.profileInfo[key]) {
+      if (
+        formData.hasOwnProperty(key) &&
+        formData[key] !== this.profileInfo[key]
+      ) {
         changedProperties.push(key);
       }
     }
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
-      this.loading = false;
+      this.isLoading = false;
     } else {
-      this.loading = true;
+      this.isLoading = true;
       this.doctorProfileService.update(updatedProfile).subscribe(
         (res) => {
           // res condition may apply, need to update in the future
-          this.loading = false;
+          this.isLoading = false;
           let successMessage = '';
 
           if (changedProperties.length > 0) {
@@ -132,13 +138,14 @@ export class ProfileSettingsComponent implements OnInit {
             }
           }
           this.TosterService.customToast(successMessage, 'success');
-          this.getProfileInfo(this.doctorId)
-
+          this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
+    
         },
         (error) => {
-          this.loading = false;
+          this.isLoading = false;
           this.TosterService.customToast(error.message, 'error');
-        });
+        }
+      );
     }
     //if (this.fileList.length > 0) {
     //  this.fileData.append("entityId", this.profileInfo.id.toString());
@@ -172,62 +179,65 @@ export class ProfileSettingsComponent implements OnInit {
     let pathName = urlParts[urlParts.length - 1];
 
     if (pathName == 'basic-info') {
-      this.activeTab = '0'
+      this.activeTab = '0';
     }
     if (pathName == 'education') {
-      this.activeTab = '1'
+      this.activeTab = '1';
     }
-    if (pathName == 'specializations') {
-      this.activeTab = '2'
+    if (pathName == 'specialization') {
+      this.activeTab = '2';
     }
-    if (pathName == 'hospital') {
-      this.activeTab = '3'
+    if (pathName == 'documents') {
+      this.activeTab = '3';
     }
   }
 
   onchangeStep(e: any) {
     if (e.selectedIndex == 0) {
-      this._router.navigate(['doctor/profile-settings/basic-info'])
+      this._router.navigate(['doctor/profile-settings/basic-info']);
     }
     if (e.selectedIndex == 1) {
-      this._router.navigate(['doctor/profile-settings/education'])
+      this._router.navigate(['doctor/profile-settings/education']);
     }
     if (e.selectedIndex == 2) {
-      this._router.navigate(['doctor/profile-settings/specialization'])
-    } if (e.selectedIndex == 3) {
-      this._router.navigate(['doctor/profile-settings/hospital'])
+      this._router.navigate(['doctor/profile-settings/specialization']);
+    }
+    if (e.selectedIndex == 3) {
+      this._router.navigate(['doctor/profile-settings/documents']);
     }
   }
 
   //Profile Picture Related Functions
 
   getProfilePic() {
-    this.subs.sink = this.doctorProfilePicService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType("Doctor", this.profileInfo.id, "ProfilePicture").subscribe((at) => {
-      if (at) {
-        let prePaths: string = "";
-        var re = /wwwroot/gi;
-        prePaths = at.path ? at.path : "";
-        this.profilePic = prePaths.replace(re, "");
-        this.url = this.picUrl + this.profilePic;
+    this.isLoading = true;
+    this.subs.sink = this.doctorProfilePicService
+      .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
+        'Doctor',
+        this.profileInfo.id,
+        'ProfilePicture'
+      )
+      .subscribe((at) => {
+        if (at) {
+          let prePaths: string = '';
+          var re = /wwwroot/gi;
+          prePaths = at.path ? at.path : '';
+          this.profilePic = prePaths.replace(re, '');
+          this.url = this.picUrl + this.profilePic;
+          this.isLoading = false;
+        }
+      });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PictureDialogComponent, {
+      width: '30vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.getProfilePic();
       }
     });
   }
-
-
-  openDialog():void {
-    const dialogRef = this.dialog.open(PictureDialogComponent,{
-      width: "30vw"
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-     if (result == true) {
-      this.getProfilePic()
-     }
-    });
-  
-  }
- 
-   
-  
 }
-

@@ -32,13 +32,29 @@ export interface SmsResponseDto {
   smsinfo: SmsInfo[];
 }
 
+export interface AgentProfileDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  agentCode?: string;
+  organizationName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  isActive?: boolean;
+  userId?: string;
+  profileStep?: number;
+  createFrom?: string;
+}
+
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
 }
 
 export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   chamberName?: string;
   address?: string;
   city?: string;
@@ -47,7 +63,7 @@ export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   degreeId?: number;
   degreeName?: string;
@@ -72,7 +88,7 @@ export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
   reportShowPeriod?: number;
   discount?: number;
   discountAppliedFrom?: string;
-  descountPeriod?: number;
+  discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
 }
@@ -87,7 +103,7 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
   reportShowPeriod?: number;
   discount?: number;
   discountAppliedFrom?: string;
-  descountPeriod?: number;
+  discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
 }
@@ -125,56 +141,66 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   createFrom?: string;
 }
 
+export interface DoctorScheduleDaySessionDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  doctorScheduleName?: string;
+  scheduleDayofWeek?: string;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+}
+
+export interface DoctorScheduleDaySessionInputDto extends FullAuditedEntityDto<number> {
+  doctorScheduleId?: number;
+  scheduleDayofWeek?: string;
+  startTime?: string;
+  endTime?: string;
+  noOfPatients?: number;
+  isActive?: boolean;
+}
+
 export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   scheduleType?: ScheduleType;
   scheduleTypeName?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
-  chamberId?: number;
+  doctorChamberId?: number;
   chamber?: string;
-  startTime?: string;
-  endTime?: string;
-  noOfPatients?: number;
   isActive?: boolean;
-  doctorScheduledDayOffs: DoctorScheduledDayOffDto[];
+  status?: string;
+  offDayFrom?: string;
+  dayTextFrom?: string;
+  offDayTo?: string;
+  dayTextTo?: string;
+  remarks?: string;
+  doctorScheduleDaySession: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
+  scheduleName?: string;
 }
 
 export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   scheduleType?: ScheduleType;
   consultancyType?: ConsultancyType;
-  chamberId?: number;
-  startTime?: string;
-  endTime?: string;
-  noOfPatients?: number;
+  doctorChamberId?: number;
   isActive?: boolean;
-  doctorScheduledDayOffs: DoctorScheduledDayOffInputDto[];
+  offDayFrom?: string;
+  offDayTo?: string;
+  doctorScheduleDaySession: DoctorScheduleDaySessionInputDto[];
   doctorFeesSetup: DoctorFeesSetupInputDto[];
 }
 
-export interface DoctorScheduledDayOffDto extends FullAuditedEntityDto<number> {
-  doctorScheduleId?: number;
-  doctorScheduleName?: string;
-  offDay?: string;
-  isActive?: boolean;
-}
-
-export interface DoctorScheduledDayOffInputDto extends FullAuditedEntityDto<number> {
-  doctorScheduleId?: number;
-  offDay?: string;
-  isActive?: boolean;
-}
-
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
-  doctorId?: number;
+  doctorProfileId?: number;
   doctorName?: string;
   specialityId?: number;
   specialityName?: string;
   specializationId?: number;
   specializationName?: string;
+  documentName?: string;
 }
 
 export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
@@ -186,6 +212,7 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   entityId?: number;
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;
+  relatedEntityid?: number;
 }
 
 export interface LoginDto {
@@ -208,6 +235,13 @@ export interface OtpDto extends FullAuditedEntityDto<number> {
   mobileNo?: string;
   otpStatus?: OtpStatus;
   maxAttempt?: number;
+}
+
+export interface ResponseDto {
+  id?: number;
+  value?: string;
+  success?: boolean;
+  message?: string;
 }
 
 export interface SpecialityDto extends FullAuditedEntityDto<number> {

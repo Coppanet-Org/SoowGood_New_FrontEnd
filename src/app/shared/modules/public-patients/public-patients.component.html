@@ -1,0 +1,128 @@
+<div class="doctor-dashboard_midcontent_container w-full ">
+    <div class="flex items-center justify-left border-[1px]">
+        <div class="w-full h-full bg-white ">
+            <div class="relative overflow-x-auto  sm:rounded-lg ">
+                <div class=" bg-slate-200/20 flex gap-4 items-center justify-between border-b-[1px] px-8 py-5 ">
+                    <h1 class="dashbord-heading-text text-[22px] "> <i class="fa-solid fa-building-columns mr-1"></i>
+                        Patients</h1>
+                    <div class="flex ">
+
+                        <div
+                            class="py-2 h-fit px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
+                            <input
+                                class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
+                                placeholder="Search patient..." />
+                            <span class="bg-transparent">
+                                <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="w-full flex h-screen flex-wrap justify-evenly overflow-y-scroll no-scrollbar px-5 pb-[50px]">
+                    <div class="px-4 py-3 w-full">
+                        <table
+                            class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
+                            <thead
+                                class="text-xs rounded-lg text-gray-800 uppercase bg-black/5 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Patient's Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Mobile No.
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Doctor's Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Dr. Specialist
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Prescriptions
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        App. Time
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+                                    <td class="px-6 py-4">
+                                        Abdullah
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        01855565223
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Dr. John Doe
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Cardiologist
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Upcoming
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        sg-patient.pdf
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        12/01/23 - 4.50pm
+                                    </td>
+
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
+
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+                                    <td class="px-6 py-4">
+                                        John
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        01855565223
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Dr. John Doe
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Cardiologist
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Upcoming
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        sg-patient.pdf
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        12/01/23 - 4.50pm
+                                    </td>
+
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="'patient-details/0'">View Details</a>
+                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -5,6 +5,7 @@ import { SignupComponent } from './signup.component';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { DoctorSetPasswordFormComponent } from './components/doctor-set-password-form/doctor-set-password-form.component';
 import { DoctorProfileInfoFormComponent } from './components/doctor-profile-info-form/doctor-profile-info-form.component';
+import { DegreeSpecilizationInfoFormComponent } from './components/degree-specilization-info-form/degree-specilization-info-form.component';
 
 
 
@@ -17,7 +18,8 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     //DoctorProfileInfoFormComponent,
-    DoctorSetPasswordFormComponent
+    DoctorSetPasswordFormComponent,
+    //DegreeSpecilizationInfoFormComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
