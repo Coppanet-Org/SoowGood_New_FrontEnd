@@ -1,6 +1,4 @@
 import { UserinfoStateService } from './../../shared/services/userinfo-state.service';
-import { DoctorProfileService } from './../../proxy/services/doctor-profile.service';
-import { LoaderService } from './../../shared/services/loader.service';
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -45,8 +43,6 @@ export class DoctorComponent {
 
   constructor(
     private NormalAuth: AuthService,
-    private LoaderService: LoaderService,
-    private DoctorProfileService: DoctorProfileService,
     private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit() {
