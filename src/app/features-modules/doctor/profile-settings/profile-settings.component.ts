@@ -1,10 +1,11 @@
+import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
 import { LoaderService } from './../../../shared/services/loader.service';
 import {
   DoctorProfileService,
   DocumentsAttachmentService,
 } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -27,6 +28,9 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 })
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
+  @Output() getProfileInfo =new EventEmitter()
+
+
   animationDirection = 'right';
   selectedIndex: any;
   userId: any;
@@ -57,7 +61,8 @@ export class ProfileSettingsComponent implements OnInit {
     private TosterService: TosterService,
     private normalAuth: AuthService,
     public dialog: MatDialog,
-    private LoaderService: LoaderService
+    private LoaderService: LoaderService,
+    private UserinfoStateService :UserinfoStateService
   ) {}
 
   ngOnInit(): void {
@@ -70,17 +75,15 @@ export class ProfileSettingsComponent implements OnInit {
 
   }
 
-  getProfileInfo(id: any): void {
-    if (id) {
-      // this.isLoading = true
-
-      this.LoaderService.sendLoaderState(true);
-      this.doctorProfileService.get(id).subscribe((res) => {
-        this.profileInfo = res;
-        this.LoaderService.sendLoaderState(false);
-      });
-    }
-  }
+  // getProfileInfo(id: any): void {
+  //   if (id) {
+  //     this.LoaderService.sendLoaderState(true);
+  //     this.doctorProfileService.get(id).subscribe((res) => {
+  //       this.profileInfo = res;
+  //       this.LoaderService.sendLoaderState(false);
+  //     });
+  //   }
+  // }
   // this function need to optimize in future
   getTitle(title: string) {
     let doctortitle = this.doctorTitleList.find((e) => e.id == title);
@@ -95,6 +98,7 @@ export class ProfileSettingsComponent implements OnInit {
   isLinear = false;
 
   getProfileData(data: any) {
+    console.log("call");
     this.profileInfo = data;
     this.getProfilePic();
   }
@@ -134,7 +138,8 @@ export class ProfileSettingsComponent implements OnInit {
             }
           }
           this.TosterService.customToast(successMessage, 'success');
-          this.getProfileInfo(this.doctorId);
+          this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
+    
         },
         (error) => {
           this.isLoading = false;

@@ -7,17 +7,12 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   templateUrl: './dashboard-menu.component.html',
   styleUrls: ['./dashboard-menu.component.scss'],
 })
-export class DashboardMenuComponent implements OnInit {
-  
+export class DashboardMenuComponent {
+
 @Input()menuList : any =[]
 
   constructor(
     private NormalAuth: AuthService) {}
-
-  ngOnInit(): void {
-    console.log(this.menuList);
-    
-  }
 
   logOut() {
     this.NormalAuth.signOut();
