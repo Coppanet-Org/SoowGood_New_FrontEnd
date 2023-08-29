@@ -1,14 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UserinfoStateService } from '../../services/userinfo-state.service';
 
 @Component({
   selector: 'app-dashboard-profilecard',
   templateUrl: './dashboard-profilecard.component.html',
   styleUrls: ['./dashboard-profilecard.component.scss']
 })
-export class DashboardProfilecardComponent {
-@Input() userInfo:any = {
-  userName:"Azizul Rahman",
-  designation:"Agent | DBC Health",
-  userType:"Agent"
-}
+export class DashboardProfilecardComponent implements OnInit {
+userInfo:any 
+
+
+
+constructor(private UserinfoStateService: UserinfoStateService) {}
+  ngOnInit() {
+
+
+    this.UserinfoStateService.getData().subscribe(
+      (data) => (this.userInfo = data)
+    );
+  }
+
+
 }

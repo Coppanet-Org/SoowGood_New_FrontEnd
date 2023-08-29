@@ -41,7 +41,9 @@
           <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7  mx-auto"
             [selectedIndex]="activeTab">
             <mat-step [stepControl]="firstFormGroup" label="Basic Info">
-              <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
+              <!-- <app-basic-info (profileData)="getProfileData($event)" (formDataEvent)="handleFormData($event)"
+                [isLoading]='isLoading'></app-basic-info> -->
+                <app-basic-info (formDataEvent)="handleFormData($event)"
                 [isLoading]='isLoading'></app-basic-info>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup" label="Education" [ariaSelected]="activeTab">
@@ -52,7 +54,6 @@
             </mat-step>
             <mat-step label="Documents">
               <app-documents></app-documents>
-
             </mat-step>
           </mat-stepper>
 
