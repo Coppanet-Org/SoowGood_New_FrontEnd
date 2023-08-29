@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchPageComponent } from './search-page.component';
 import { Route, RouterModule } from '@angular/router';
+import { PublicDoctorsModule } from 'src/app/shared/modules/public-doctors/public-doctors.module';
 
 const routes: Route[] = [
   {
@@ -14,7 +15,8 @@ const routes: Route[] = [
   declarations: [SearchPageComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PublicDoctorsModule
   ],
 
 })

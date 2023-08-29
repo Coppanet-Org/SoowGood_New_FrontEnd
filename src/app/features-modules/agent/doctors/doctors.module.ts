@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DoctorsComponent } from './doctors.component';
 import { Route, RouterModule } from '@angular/router';
-import { DoctorCardModule } from 'src/app/shared/modules/doctor-card/doctor-card.module';
+import { PublicDoctorsModule } from 'src/app/shared/modules/public-doctors/public-doctors.module';
 
 
 
@@ -18,8 +18,8 @@ const routes: Route[] = [
   ],
   imports: [
     CommonModule,
-    DoctorCardModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PublicDoctorsModule
   ]
 })
 export class DoctorsModule { }
