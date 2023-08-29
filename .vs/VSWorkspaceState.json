@@ -6,14 +6,12 @@
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
     "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\core-modules\\auth\\signup\\components",
-    "\\src\\app\\core-modules\\auth\\signup\\components\\doctor-profile-info-form",
     "\\src\\app\\features-modules",
     "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\component",
-    "\\src\\app\\features-modules\\doctor\\component\\degree-dialog",
-    "\\src\\app\\features-modules\\doctor\\component\\education-info"
+    "\\src\\app\\features-modules\\doctor\\profile-settings",
+    "\\src\\app\\features-modules\\doctor\\profile-settings\\basic-info",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\components\\doctor-profile-info-form",
+  "SelectedNode": "\\src\\app\\app.component.ts",
   "PreviewInSolutionExplorer": false
 }
