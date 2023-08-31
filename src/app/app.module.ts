@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
+import { AbpOAuthModule } from "@abp/ng.oauth";
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -47,7 +48,8 @@ const routerConfig: ExtraOptions = {
     HotToastModule.forRoot({
       position: 'bottom-center',
     }),
-    LoaderModule
+    LoaderModule,
+    AbpOAuthModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
