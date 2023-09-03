@@ -79,3 +79,22 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
 export interface FileDeleteInputDto {
   filePath?: string;
 }
+
+export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  userId?: string;
+}
