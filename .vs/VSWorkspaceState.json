@@ -5,11 +5,11 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\core-modules\\auth\\agent",
+    "\\src\\app\\core-modules\\auth\\agent\\agent-login",
     "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\profile-settings",
-    "\\src\\app\\features-modules\\doctor\\profile-settings\\basic-info",
+    "\\src\\app\\features-modules\\public",
+    "\\src\\app\\features-modules\\public\\landing-page",
     "\\src\\environments"
   ],
   "PreviewInSolutionExplorer": false
