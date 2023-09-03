@@ -32,7 +32,6 @@ export class UserinfoStateService implements OnInit {
   }
 
   getProfileInfo(id: any, role:string): void {
-    console.log(id);
     if (id) {
       this.LoaderService.sendLoaderState(true);
       if (role == 'doctor') {

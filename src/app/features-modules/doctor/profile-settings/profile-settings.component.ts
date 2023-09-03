@@ -72,7 +72,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
-
+    this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
   }
 
   // getProfileInfo(id: any): void {
@@ -98,7 +98,6 @@ export class ProfileSettingsComponent implements OnInit {
   isLinear = false;
 
   getProfileData(data: any) {
-    console.log("call");
     this.profileInfo = data;
     this.getProfilePic();
   }
@@ -139,6 +138,7 @@ export class ProfileSettingsComponent implements OnInit {
           }
           this.TosterService.customToast(successMessage, 'success');
           this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
+          
     
         },
         (error) => {
