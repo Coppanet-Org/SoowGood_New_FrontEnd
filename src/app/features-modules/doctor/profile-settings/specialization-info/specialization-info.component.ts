@@ -75,7 +75,7 @@ export class SpecializationInfoComponent implements OnInit {
     );
 
     forkJoin([doctorSpecialization$, profilePic$]).subscribe(([specializations, at]) => {
-      const mergedResult = [...specializations, at];
+      // const mergedResult = [...specializations, at];
       this.allSpecializations = specializations;
 
 

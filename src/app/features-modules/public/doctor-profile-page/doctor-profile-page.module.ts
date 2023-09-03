@@ -13,7 +13,12 @@ const routes: Route[] = [
   {
     path: '',
     component: DoctorProfilePageComponent,
-
+    children:[
+      {
+        path:"schedule",
+        component: ScheduleComponent
+      }
+    ]
   },
 ]
 

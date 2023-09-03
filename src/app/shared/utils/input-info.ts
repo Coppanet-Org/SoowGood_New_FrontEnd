@@ -112,6 +112,63 @@ export const inputConfigs = [
   // ... add more input configurations for other fields
 ];
 
+
+export const patientInputData = [
+
+  {
+    label: 'Full Name',
+    inputId: 'fullName',
+    formControlName: 'fullName',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Email',
+    inputId: 'email',
+    formControlName: 'email',
+    isSelect: false,
+    readonly: true,
+    type: 'email',
+  },
+  {
+    label: 'Date of Birth',
+    inputId: 'dateOfBirth',
+    formControlName: 'dateOfBirth',
+    isSelect: false,
+    type: 'date',
+  },
+  {
+    label: 'Address',
+    inputId: 'address',
+    formControlName: 'address',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Country',
+    inputId: 'country',
+    formControlName: 'country',
+    isSelect: false,
+  },
+  {
+    label: 'City',
+    inputId: 'city',
+    formControlName: 'city',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Zip Code',
+    inputId: 'zipCode',
+    formControlName: 'zipCode',
+    isSelect: false,
+    type: 'number',
+  },
+
+  // ... add more input configurations for other fields
+];
+
+
 export const scheduleData = (consType: any, apType: any, hospital: any) => {
   return [
     {
