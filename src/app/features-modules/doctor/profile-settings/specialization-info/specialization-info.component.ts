@@ -54,7 +54,7 @@ export class SpecializationInfoComponent implements OnInit {
           this.specialityName = res.specialityName
         });
       //}
-      this.getSpecializations(this.specialityId);
+      //this.getSpecializations(this.specialityId);
       //});
       //this.subs.sink = this.doctorSpecializationService.getListByDoctorIdSpId(this.doctorId, specId)
       //  .subscribe(res => {
@@ -124,7 +124,9 @@ export class SpecializationInfoComponent implements OnInit {
   getSpecializations(id: any) {
     return this.specializationService
       .getBySpecialityId(id)
-      .subscribe((res) => (this.specializationName = res.specializationName));
+      .subscribe((res) => {
+        this.specializationName = res.specializationName
+      });
   }
 
 

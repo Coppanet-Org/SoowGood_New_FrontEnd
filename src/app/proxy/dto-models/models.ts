@@ -237,6 +237,26 @@ export interface OtpDto extends FullAuditedEntityDto<number> {
   maxAttempt?: number;
 }
 
+export interface PatientProfileDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  genderName?: string;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  userId?: string;
+}
+
 export interface ResponseDto {
   id?: number;
   value?: string;

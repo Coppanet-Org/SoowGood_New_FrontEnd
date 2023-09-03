@@ -14,7 +14,15 @@ const routes: Route[] = [
   }
 ];
 @NgModule({
-  declarations: [LandingPageComponent, BannerComponent,AvailableDoctorsComponent,BestDoctorsComponent,CategoryComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  declarations: [
+    LandingPageComponent,
+    BannerComponent,
+    AvailableDoctorsComponent,
+    BestDoctorsComponent,
+    CategoryComponent
+  ],
+  imports: [CommonModule,
+    RouterModule.forChild(routes)
+  ],
 })
 export class LandingPageModule {}
