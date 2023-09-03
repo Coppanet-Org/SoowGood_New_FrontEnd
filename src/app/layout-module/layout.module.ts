@@ -39,7 +39,7 @@ const routes: Route[] = [
           ).then((m) => m.SearchPageModule),
       },
       {
-        path: 'doctors',
+        path: 'doctors/:id',
         loadChildren: () =>
           import(
             '../features-modules/public/doctor-profile-page/doctor-profile-page.module'

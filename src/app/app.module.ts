@@ -10,7 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from 'ng-otp-input';
-import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
@@ -29,7 +28,6 @@ const routerConfig: ExtraOptions = {
     AppComponent, 
     EmptyPageComponent, 
     SignupComponent,
-    PatientComponent,
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent
   ],
