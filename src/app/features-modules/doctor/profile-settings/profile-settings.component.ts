@@ -73,6 +73,7 @@ export class ProfileSettingsComponent implements OnInit {
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
     this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
+    this.getProfilePic();
   }
 
   // getProfileInfo(id: any): void {
@@ -97,10 +98,7 @@ export class ProfileSettingsComponent implements OnInit {
   });
   isLinear = false;
 
-  getProfileData(data: any) {
-    this.profileInfo = data;
-    this.getProfilePic();
-  }
+
 
   handleFormData(formData: any) {
     const updatedProfile: DoctorProfileInputDto = {

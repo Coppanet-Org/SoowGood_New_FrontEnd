@@ -5,12 +5,11 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\agent",
-    "\\src\\app\\core-modules\\auth\\agent\\agent-login",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\public",
-    "\\src\\app\\features-modules\\public\\landing-page",
-    "\\src\\environments"
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\volo",
+    "\\src\\app\\proxy\\volo\\abp",
+    "\\src\\app\\proxy\\volo\\abp\\identity"
   ],
   "PreviewInSolutionExplorer": false
 }
