@@ -98,6 +98,7 @@ export class SignupComponent implements OnInit {
   doctorSpecializationList: DoctorSpecializationDto[] = [];
   doctorSpecializations: DoctorSpecializationDto[] = [];
   doctorSpecializationInputs: DoctorSpecializationInputDto[] = [];
+  doctorList: DoctorProfileDto[] = [];
   degreeName: any;
   degreeMendatoryMassage: any;
   spMendatoryMassage: any;
@@ -117,7 +118,7 @@ export class SignupComponent implements OnInit {
   formSpecialization!: FormGroup;
   doctorId: any;
   specialityId: any;
-
+  lastCount: any;
   constructor(
 
     private fb: FormBuilder,
@@ -284,6 +285,11 @@ export class SignupComponent implements OnInit {
       this.specialties = res;
     });
     this.titleList = CommonService.getEnumList(DoctorTitle);
+
+    this.doctorProfileService.getList().subscribe(d => {
+      this.doctorList = d;
+      this.lastCount = this.doctorList.length;
+    })
   }
 
   loadForm() {
@@ -506,7 +512,8 @@ export class SignupComponent implements OnInit {
         if (res.success) {
           this.isLoading = false
           if (userType === 'Doctor') {
-
+            let codeCnt = +(this.lastCount + 1);
+            this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
             this.doctorProfileDto.doctorTitle = title;
             this.doctorProfileDto.userId = res.userId;
             this.doctorProfileDto.fullName = res.name;
@@ -550,7 +557,7 @@ export class SignupComponent implements OnInit {
                       this.loadAuth();
                     }
                     this.toasterService.success("Basic Inforamation Saved Successfully"),
-                      { position: 'bottom-center' }
+                      /*{ position: 'bottom-center' }*/
                     this.cdRef.detectChanges();
                   })
               })
@@ -779,10 +786,8 @@ export class SignupComponent implements OnInit {
       });
       this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
         if (doctorDto) {
-
-
-
           this.forStepUpdateDto.id = doctorDto.id;
+          this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
           this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle;
           this.forStepUpdateDto.userId = doctorDto.userId;
           this.forStepUpdateDto.fullName = doctorDto.fullName;
@@ -848,14 +853,14 @@ export class SignupComponent implements OnInit {
                 profileStep: res.profileStep,
                 createFrom: res.createFrom,
                 specializations: res.doctorSpecialization,
-                userTYpe:this.userType
+                userTYpe: this.userType
               }
               this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
               if (this.normalAuth) {
                 this.loadAuth();
               }
               this.toasterService.success("Degree and Specializtion info updated Successfully"),
-                { position: 'bottom-center' }
+                //{ position: 'bottom-center' }
               this.cdRef.detectChanges();
             }
           });
@@ -1126,6 +1131,7 @@ export class SignupComponent implements OnInit {
       this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
         if (doctorDto) {
           this.forStepUpdateDto.id = doctorDto.id;
+          this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
           this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle
           this.forStepUpdateDto.userId = doctorDto.userId;
           this.forStepUpdateDto.fullName = doctorDto.fullName;
@@ -1144,8 +1150,8 @@ export class SignupComponent implements OnInit {
           this.forStepUpdateDto.isActive = doctorDto.isActive;
           this.forStepUpdateDto.profileStep = 3;
           this.forStepUpdateDto.createFrom = doctorDto.createFrom;
-          //this.forStepUpdateDto.degrees = doctorDto.degrees;// .push(this.doctorDegrees);
-          //this.forStepUpdateDto.doctorSpecialization = doctorDto.doctorSpecialization;
+          this.forStepUpdateDto.degrees = [];// .push(this.doctorDegrees);
+          this.forStepUpdateDto.doctorSpecialization = [];
 
 
           this.subs.sink = this.doctorProfileService.update(this.forStepUpdateDto).subscribe((res: DoctorProfileDto) => {
@@ -1168,13 +1174,12 @@ export class SignupComponent implements OnInit {
               if (this.normalAuth) {
                 this.loadAuth();
               }
-              userType = userType +'/dashboard';
+              userType = userType + '/dashboard';
               this._router.navigate([userType.toLowerCase()], {
                 state: { data: res } // Pass the 'res' object as 'data' in the state object
               }).then(r =>
                 this.tosterService.customToast(message, 'success'));
               //this.toasterService.success("Degree and Specializtion info updated Successfully"),
-              { position: 'bottom-center' }
               this.cdRef.detectChanges();
             }
           });
