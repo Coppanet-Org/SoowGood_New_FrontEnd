@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent {
-
+  selected:any
 }

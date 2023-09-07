@@ -11,11 +11,6 @@ export class DashboardMenuComponent {
 
 @Input()menuList : any =[]
 
-  constructor(
-    private NormalAuth: AuthService) {}
 
-  logOut() {
-    this.NormalAuth.signOut();
-  }
 }
 

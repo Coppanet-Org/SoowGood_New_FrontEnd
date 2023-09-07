@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { UserinfoStateService } from 'src/app/shared/services/userinfo-state.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.scss']
+  styleUrls: ['./patient.component.scss'],
 })
-export class PatientComponent {
+export class PatientComponent implements OnInit {
   menuList: any = [
     {
       menuName: 'Dashboard',
@@ -33,4 +35,15 @@ export class PatientComponent {
       icon: 'fa-solid fa-gear',
     },
   ];
+
+  constructor(
+    private NormalAuth: AuthService,
+    private UserinfoStateService: UserinfoStateService
+  ) {}
+  ngOnInit(): void {
+    let user = this.NormalAuth.authInfo();
+    if (user.id) {
+      this.UserinfoStateService.getProfileInfo(user.id, user.userType);
+    }
+  }
 }

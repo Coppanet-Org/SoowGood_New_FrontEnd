@@ -72,9 +72,8 @@ export class ProfileSettingsComponent implements OnInit {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
-    this.UserinfoStateService.getData().subscribe((userInfo) => {
-      this.profileInfo = userInfo
-    })
+    this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
+    this.getProfilePic();
   }
 
   // getProfileInfo(id: any): void {
@@ -102,10 +101,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   isLinear = false;
 
-  getProfileData(data: any) {
-    this.profileInfo = data;
-    this.getProfilePic();
-  }
+
 
   handleFormData(formData: any) {
     const updatedProfile: DoctorProfileInputDto = {

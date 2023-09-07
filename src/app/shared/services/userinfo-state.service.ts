@@ -1,3 +1,4 @@
+import { PatientProfileService } from 'src/app/proxy/services';
 import { AgentProfileService } from './../../proxy/services/agent-profile.service';
 import { DoctorProfileService } from './../../proxy/services/doctor-profile.service';
 import { AuthService } from './auth.service';
@@ -13,9 +14,10 @@ export class UserinfoStateService implements OnInit {
     private LoaderService : LoaderService,
     private DoctorProfileService: DoctorProfileService,
     private AgentProfileService:AgentProfileService,
+    private PatientProfileService:PatientProfileService,
     private NormalAuth : AuthService
   ) {}
-  private authenticateUserInfo = new BehaviorSubject<any>({});
+  public authenticateUserInfo = new BehaviorSubject<any>({});
   sendData(data: any) {
     this.authenticateUserInfo.next(data);
   }
@@ -42,6 +44,13 @@ export class UserinfoStateService implements OnInit {
       }
       if (role =='agent') {
         this.AgentProfileService.get(id).subscribe((res) => {
+          this.sendData(res)
+          this.LoaderService.sendLoaderState(false);
+        });
+      }
+      if (role =='patient') {
+  
+        this.PatientProfileService.get(id).subscribe((res) => {
           this.sendData(res)
           this.LoaderService.sendLoaderState(false);
         });

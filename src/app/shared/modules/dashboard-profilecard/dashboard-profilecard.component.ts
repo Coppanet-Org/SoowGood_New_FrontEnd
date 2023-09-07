@@ -4,21 +4,15 @@ import { UserinfoStateService } from '../../services/userinfo-state.service';
 @Component({
   selector: 'app-dashboard-profilecard',
   templateUrl: './dashboard-profilecard.component.html',
-  styleUrls: ['./dashboard-profilecard.component.scss']
+  styleUrls: ['./dashboard-profilecard.component.scss'],
 })
 export class DashboardProfilecardComponent implements OnInit {
-userInfo:any 
+  userInfo: any;
 
-
-
-constructor(private UserinfoStateService: UserinfoStateService) {}
+  constructor(private UserinfoStateService: UserinfoStateService) {}
   ngOnInit() {
-
-
     this.UserinfoStateService.getData().subscribe(
       (data) => (this.userInfo = data)
     );
   }
-
-
 }
