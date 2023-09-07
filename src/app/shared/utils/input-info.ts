@@ -177,7 +177,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select Consultancy Type',
       options: hospital,
       formControlName: 'consultancyType',
-      isSelect: true,
+      isSelect: true
     },
     {
       label: 'Select Hospital',
@@ -185,7 +185,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select Hospital ',
       options: consType,
       formControlName: 'doctorChamberId',
-      isSelect: true,
+      isSelect: true
     },
     {
       label: 'Select appointment type',
@@ -193,7 +193,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select appointment type',
       options: apType,
       formControlName: 'scheduleType',
-      isSelect: true,
+      isSelect: true
     }
     
   ];

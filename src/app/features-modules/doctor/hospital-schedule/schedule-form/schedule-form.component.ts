@@ -59,7 +59,8 @@ export class ScheduleFormComponent implements OnInit {
   consultancyType: any = [];
   scheduleType: any = [];
   allSelectedSession: any = [];
-  isDisable:boolean = false
+  isDisable: boolean = false;
+  isRequired: boolean = false;
   inputConfigs: any = [];
   editData!: any;
   editScheduleId!: number;
@@ -74,7 +75,7 @@ export class ScheduleFormComponent implements OnInit {
     private TosterService: TosterService,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -85,18 +86,18 @@ export class ScheduleFormComponent implements OnInit {
     if (authInfo && authInfo.id) {
       this.doctorId = authInfo.id;
       this.HospitalStateService.getData()
-      .pipe(
-        map((list) => {
-          return list.map((item: any) => ({
-            name: item.chamberName,
-            id: item.id,
-          }));
-        })
-      )
-      .subscribe((hospitalList) => {
-        this.hospitalList = hospitalList
-        this.getInputFieldData()
-      });
+        .pipe(
+          map((list) => {
+            return list.map((item: any) => ({
+              name: item.chamberName,
+              id: item.id,
+            }));
+          })
+        )
+        .subscribe((hospitalList) => {
+          this.hospitalList = hospitalList
+          this.getInputFieldData()
+        });
     }
     this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
       this.form.patchValue(res);
@@ -116,44 +117,57 @@ export class ScheduleFormComponent implements OnInit {
           this.editScheduleId = res.id;
         } else {
           this.editData = false;
+          this.editScheduleId = 0;
         }
       }
     );
-   
+
     this.form.get('consultancyType')?.valueChanges.subscribe((value) => {
-      if (value == 2) {
-        this.isDisable = true
+      if (value == 2 || value == 3) {
+        this.isDisable = true;
       } else {
-        this.isDisable = false
+        this.isDisable = false;
       }
     });
   }
 
-getInputFieldData(){
-  this.inputConfigs = scheduleData(
+  getInputFieldData() {
+    this.inputConfigs = scheduleData(
       this.hospitalList,
       this.scheduleType,
       this.consultancyType
     );
-}
+  }
+
   loadForm() {
     this.form = this.fb.group({
       scheduleType: [0, Validators.required],
       consultancyType: [0],
-      doctorChamberId: [0, Validators.required],
+      doctorChamberId: [null, Validators.required],
     });
   }
+
   toggleDaySelection(day: string) {
     this.openDialog(day);
   }
+
   submit() {
-    if (!this.form.valid) {
+
+    if (!this.form.value.scheduleType && !this.form.value.consultancyType) {
       this.TosterService.customToast(
         'Please field all required field',
         'warning'
       );
       return;
     }
+
+    //if (!this.form.valid) {
+    //  this.TosterService.customToast(
+    //    'Please field all required field',
+    //    'warning'
+    //  );
+    //  return;
+    //}
     const obj = {
       doctorProfileId: this.doctorId,
       scheduleType: Number(this.form.value.scheduleType),
@@ -193,18 +207,21 @@ getInputFieldData(){
       this.DoctorScheduleService.update({
         ...obj,
         id: this.editScheduleId,
-      }).subscribe((res) => 
-{      this.TosterService.customToast(String(res.message), 'success')
-      this.rerenderDoctorSchedule.emit(true)}
-      
+      }).subscribe((res) => {
+        this.TosterService.customToast(String(res.message), 'success')
+        this.rerenderDoctorSchedule.emit(true)
+      }
+
       );
     }
   }
+
   getDaySessions(day: string) {
     return this.allSelectedSession.filter(
       (s: any) => s.scheduleDayofWeek === day
     );
   }
+
   openDialog(day: string) {
     const dialogRef = this.dialog.open(ScheduleDialogComponent, {
       data: { selectedDay: day, title: 'Select Your Session Time' }, // Pass any data you need to the dialog
@@ -221,9 +238,9 @@ getInputFieldData(){
   onSessionRemove(id: any) {
     this.DoctorScheduleService.deleteSession(id).subscribe(
       (res) =>
-        (this.allSelectedSession = this.allSelectedSession.filter(
-          (f: any) => f.id !== id
-        ))
+      (this.allSelectedSession = this.allSelectedSession.filter(
+        (f: any) => f.id !== id
+      ))
     );
   }
 
