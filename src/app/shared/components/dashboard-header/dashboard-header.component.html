@@ -41,7 +41,7 @@
                 <li class="py-1"><a>Notification one</a></li>
             </ul>
         </div>
-        <div class="dropdown dropdown-end">
+        <div  class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
                 <div class="w-8 rounded-full">
                     <img src="../../../../assets/person.png" />
@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="py-1"><a>Settings</a></li>
-                <li class="py-1"><a>Logout</a></li>
+                <li *ngIf="isAuthLogin" class="py-1"><a (click)="signOut()" >Logout</a></li>
             </ul>
         </div>
     </div>

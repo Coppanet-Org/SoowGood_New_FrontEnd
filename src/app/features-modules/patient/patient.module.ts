@@ -1,9 +1,9 @@
-import { MaterialModulesModule } from './../../shared/modules/material-modules/material-modules.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { PatientComponent } from './patient.component';
 import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashboard-menu.module';
+import { isAuth } from 'src/app/auth-gurd/auth.service';
 
 
 
@@ -12,6 +12,7 @@ const routes: Route[] = [
   {
     path: '',
     component: PatientComponent,
+    canActivate: [isAuth],
     children: [
       {
         path: '',
@@ -51,6 +52,13 @@ const routes: Route[] = [
         loadChildren: () =>
           import('./profile-settings/profile-settings.module').then(
             (m) => m.ProfileSettingsModule
+          ),
+      },
+      {
+        path: 'patient-details/:id',
+        loadChildren: () =>
+          import('../../shared/modules/patient-details/patient-details.module').then(
+            (m) => m.PatientDetailsModule
           ),
       },
     ],
