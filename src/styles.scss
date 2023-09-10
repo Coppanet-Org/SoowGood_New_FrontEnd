@@ -95,4 +95,8 @@
   .signup-child-component-min-w {
     @apply min-w-[90%];
   }
+
+  .heading{
+    @apply font-Roboto font-semibold text-[22px] text-primary/90
+  }
 }

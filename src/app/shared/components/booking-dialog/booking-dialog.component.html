@@ -1,0 +1,239 @@
+<div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
+    <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking </h1>
+    <button class="btn-secondary-light" (click)="closeDialogs()">Close</button>
+</div>
+
+
+
+
+<div class="w-full px-12 pt-5 pb-10">
+
+
+    <mat-stepper #stepper class="mx-auto" [selectedIndex]="activeTab">
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="bookingForm">
+                <ul class="grid w-full gap-6 md:grid-cols-2">
+                    <li (click)="onStepChange(1)">
+                        <input #buttonMyself type="radio" id="hosting-small" name="hosting" value="hosting-small"
+                            class="hidden peer" required>
+                        <label for="hosting-small"
+                            class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-person text-[44px]"></i>
+                                <div>
+                                    <div class="w-full text-lg font-semibold">Book for myself</div>
+                                    <div class="w-full">If you are patient</div>
+                                </div>
+                            </div>
+                            <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </label>
+                    </li>
+                    <li (click)="onStepChange(2)">
+                        <input #buttonOthers type="radio" id="hosting-big" name="hosting" value="hosting-big"
+                            class="hidden peer">
+                        <label for="hosting-big"
+                            class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg 
+                            cursor-pointer dark:hover:text-gray-300 dark:border-gray-700
+                             dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600
+                              hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-people-robbery text-[44px]"></i>
+                                <div>
+                                    <div class="w-full text-lg font-semibold">Book for other</div>
+                                    <div class="w-full">If you are not patient</div>
+                                </div>
+                            </div>
+
+                            <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </label>
+                    </li>
+                </ul>
+            </form>
+        </mat-step>
+
+
+
+        <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
+            <div>
+                <form [formGroup]="form">
+
+                    <div class="flex gap-4">
+                        <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
+                            <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
+                        </div>
+                        <div>
+                            <h2 class="heading text-[20px]">Dr. Hasibur Rahman</h2>
+                            <p>General Medicine</p>
+                        </div>
+                    </div>
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    <div class="-mx-3 flex flex-wrap">
+                        <ng-container class="w-full" *ngFor="let config of inputConfigs">
+                            <app-input [label]="config.label" [inputId]="config.inputId"
+                                [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
+                                [options]="config.options" [formControlName]="config.formControlName"
+                                [type]="config.type" class="sm:w-1/3 h-fit"></app-input>
+                        </ng-container>
+                    </div>
+                </form>
+
+                <div class="py-3">
+                    <label class="font-Roboto text-[14px] font-semibold text-primary/90"> Available </label>
+                    <div class="flex gap-4 mt-2">
+
+
+                        <!-- <div class="flex items-center mb-4">
+                            <input hidden id="default-radio-1" type="radio" value="" name="default-radio"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="default-radio-1"
+                                class="radio-card flex py-2 px-5 border-[1px] border-secondary-dark/20 bg-secondary-light  text-secondary-dark ">
+                                <div class="card-content-wrapper ">
+                                    <span class="check-icon"></span>
+                                    <div class="card-content">
+                                        <h4>8.00am - 10.00am </h4>
+                                    </div>
+                                </div>
+                            </label>
+                        </div> -->
+
+
+
+<app-slots></app-slots>
+
+
+
+
+                    </div>
+                </div>
+                <div class="flex gap-5 mt-10 w-full">
+                    <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
+                    <button class="btn-secondary py-2" (click)="onStepChange(3 )">Next</button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step>
+            <div class="flex gap-4">
+                <div class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700">
+                    <input (click)="userExistCheck('new-user')" id="bordered-radio-1" type="radio" value=""
+                        name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1"
+                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
+                        Patient</label>
+                </div>
+                <div class="flex items-center px-4  border border-gray-200 rounded dark:border-gray-700">
+                    <input (click)="userExistCheck('exist-user')" checked id="bordered-radio-2" type="radio" value=""
+                        name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-2"
+                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already
+                        Exist</label>
+                </div>
+            </div>
+
+
+            <div class="pt-5">
+                <div *ngIf="isExistUser">
+                    <label for="">Select your patient</label>
+                    <select class="form_input mt-1" [value]="1">
+                        <option value="1">Select Patient</option>
+                        <option value="">Select Patient</option>
+                        <option value="">Select Patient</option>
+                        <option value="">Select Patient</option>
+                    </select>
+                </div>
+
+                <div class="pt-5">
+                    <div class="-mx-3 flex flex-wrap">
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                    Doctor Name
+                                </label>
+                                <input readonly placeholder="Enter name" type="text" name="fullName" id="fullName"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                    Doctor Name
+                                </label>
+                                <input readonly placeholder="Enter name" type="text" name="fullName" id="fullName"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                    Doctor Name
+                                </label>
+                                <input readonly placeholder="Enter name" type="text" name="fullName" id="fullName"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                    Doctor Name
+                                </label>
+                                <input readonly placeholder="Enter name" type="text" name="fullName" id="fullName"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="flex gap-5">
+                <button class="btn-secondary py-2 mt-6" (click)="onStepChange(0)">Back</button>
+                <button class="btn-secondary bg-primary py-2 mt-6" (click)="onStepChange(3)">Continue</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            Make Payment
+        </mat-step>
+    </mat-stepper>
+
+
+
+
+
+
+    <!-- 
+<mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7  mx-auto"
+[selectedIndex]="activeTab">
+<mat-step [stepControl]="firstFormGroup" label="Select">
+
+<form [formGroup]="form">
+    <div class="-mx-3 flex flex-wrap">
+
+
+        <ng-container class="w-full" *ngFor="let config of inputConfigs">
+            <app-input [label]="config.label" [inputId]="config.inputId" [isSelectInput]="config.isSelect"
+                [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
+                [formControlName]="config.formControlName" [type]="config.type" class="sm:w-1/3"></app-input>
+        </ng-container>
+    </div>
+    </form>
+   
+</mat-step>
+<mat-step [stepControl]="secondFormGroup" label="Payment" [ariaSelected]="activeTab">
+asda
+</mat-step>
+<mat-step label="Confirm">
+  ad
+</mat-step>
+
+</mat-stepper> -->

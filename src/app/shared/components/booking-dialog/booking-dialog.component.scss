@@ -1,0 +1,15 @@
+::ng-deep .mat-horizontal-stepper-header-container{
+    display: none!important;
+    
+} 
+
+::ng-deep .mat-horizontal-content-container {
+    padding: 0!important
+}
+
+
+/* When the radio button is checked, change the border color to red */
+input[type="radio"]:checked + .radio-card {
+    background: #006c93;
+    color: white;
+}
