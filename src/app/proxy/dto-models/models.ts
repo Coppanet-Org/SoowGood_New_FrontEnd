@@ -109,6 +109,7 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
+  doctorCode?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;
@@ -251,9 +252,12 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   zipCode?: string;
   country?: string;
   mobileNo?: string;
+  patientMobileNo?: string;
   email?: string;
+  patientEmail?: string;
   createdBy?: string;
   cratorCode?: string;
+  creatorEntityId?: number;
   userId?: string;
 }
 
