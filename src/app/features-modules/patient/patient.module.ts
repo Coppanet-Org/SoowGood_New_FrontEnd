@@ -48,6 +48,13 @@ const routes: Route[] = [
           ),
       },
       {
+        path: 'my-patient',
+        loadChildren: () =>
+          import('./my-patient/my-patient.module').then(
+            (m) => m.MyPatientModule
+          ),
+      },
+      {
         path: 'profile-settings',
         loadChildren: () =>
           import('./profile-settings/profile-settings.module').then(

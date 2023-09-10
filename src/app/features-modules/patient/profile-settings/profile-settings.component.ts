@@ -1,14 +1,12 @@
 import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
-
 import { TosterService } from './../../../shared/services/toster.service';
-import { LoaderService } from './../../../shared/services/loader.service';
 import { PatientProfileService } from './../../../proxy/services/patient-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { singleSlide, slideInFrom } from 'src/app/animation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { patientInputData } from 'src/app/shared/utils/input-info';
-import { PatientProfileInputDto } from 'src/app/proxy/input-dto';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile-settings',
@@ -29,9 +27,9 @@ export class ProfileSettingsComponent implements OnInit {
     private fb: FormBuilder,
     private PatientProfileService: PatientProfileService,
     private NormalAuth: AuthService,
-    private LoaderService: LoaderService,
     private TosterService: TosterService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private datePipe: DatePipe,
   ) {}
 
   ngOnInit(): void {
@@ -106,18 +104,14 @@ export class ProfileSettingsComponent implements OnInit {
 
   fetchProfileInfo(authId: any): void {
     if (!authId) {
-      this.LoaderService.sendLoaderState(false);
       return;
     }
-    //future update - have to remove
     this.UserinfoStateService.getData().subscribe(
       (profileInfo) => {
         profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
         this.form?.patchValue(profileInfo);
-        this.LoaderService.sendLoaderState(false);
       },
       (error) => {
-        this.LoaderService.sendLoaderState(false);
         this.TosterService.customToast(error.message, 'error');
       }
     );
@@ -127,6 +121,8 @@ export class ProfileSettingsComponent implements OnInit {
     if (!dateString) {
       return '';
     }
+    const date = new Date(dateString);
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 }
 

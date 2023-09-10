@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -29,7 +30,8 @@ const routerConfig: ExtraOptions = {
     EmptyPageComponent, 
     SignupComponent,
     DoctorProfileInfoFormComponent,
-    DegreeSpecilizationInfoFormComponent
+    DegreeSpecilizationInfoFormComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -45,10 +47,11 @@ const routerConfig: ExtraOptions = {
     HotToastModule.forRoot({
       position: 'bottom-center',
     }),
-    LoaderModule
+    LoaderModule,
+    ReactiveFormsModule,FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule],
+  exports: [MatDialogModule,ReactiveFormsModule,FormsModule],
 })
 export class AppModule {}

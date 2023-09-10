@@ -362,3 +362,35 @@ export const agentInputData =[
         type: 'text',
       },
 ]
+
+
+export const bookingFilterInputData = (apType: any, hospital: any) => {
+  return [
+    {
+      label: 'Appointment Date',
+      inputId: 'appointmentDate',
+      defaultOption: 'Select Appointment Date',
+      formControlName: 'appointmentDate',
+      isSelect: false,
+      type: 'date'
+    },
+
+    {
+      label: 'Select Hospital',
+      inputId: 'doctorChamberId',
+      defaultOption: 'Select Hospital ',
+      options: hospital,
+      formControlName: 'doctorChamberId',
+      isSelect: true,
+    },
+    {
+      label: 'Select appointment type',
+      inputId: 'scheduleType',
+      defaultOption: 'Select appointment type',
+      options: apType,
+      formControlName: 'scheduleType',
+      isSelect: true,
+    }
+    
+  ];
+};

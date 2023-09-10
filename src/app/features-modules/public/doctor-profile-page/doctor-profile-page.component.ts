@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -6,14 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './doctor-profile-page.component.html',
   styleUrls: ['./doctor-profile-page.component.scss'],
 })
-export class DoctorProfilePageComponent implements OnInit {
+export class DoctorProfilePageComponent implements OnInit{
   constructor(private router: ActivatedRoute) {}
-  active: number = 2;
+  active: number = 0;
+
   ngOnInit() {
     this.router.params.subscribe((val) => {
       if (val['para'] == 'schedule') {
-        this.active = 3;
+        this.active = 2;
       }
     });
+  
   }
+
 }

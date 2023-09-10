@@ -25,6 +25,11 @@ export class PatientComponent implements OnInit {
       icon: 'fa-solid fa-bed-pulse',
     },
     {
+      menuName: 'My Patient',
+      route: 'my-patient',
+      icon: 'fa-solid fa-bed-pulse',
+    },
+    {
       menuName: 'Billing',
       route: 'billing',
       icon: 'fa-solid fa-money-bill-transfer',
