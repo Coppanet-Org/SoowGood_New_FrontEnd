@@ -394,3 +394,44 @@ export const bookingFilterInputData = (apType: any, hospital: any) => {
     
   ];
 };
+
+export const inputForCreatePatient = [
+  {
+    label: 'Patient Name',
+    inputId: 'patientName',
+    defaultOption: 'Write patient name',
+    formControlName: 'patientName',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Age',
+    inputId: 'age',
+    formControlName: 'age',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Patient Mobile No',
+    inputId: 'patientMobileNo',
+    formControlName: 'patientMobileNo',
+    isSelect: false,
+    type: 'tel',
+  },
+  {
+    label: 'Gender',
+    inputId: 'gender',
+    formControlName: 'gender',
+    options: genderList,
+    isSelect: true,
+    type: 'select',
+  },
+  {
+    label: 'Blood Group',
+    inputId: 'bloodGroup',
+    formControlName: 'bloodGroup',
+    isSelect: false,
+    type: 'text',
+  }
+  // ... add more input configurations for other fields
+];

@@ -99,4 +99,7 @@
   .heading{
     @apply font-Roboto font-semibold text-[22px] text-primary/90
   }
+  .label{
+    @apply  block font-medium text-[14px] text-[#07074D]
+  }
 }
