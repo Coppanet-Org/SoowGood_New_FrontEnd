@@ -3,9 +3,6 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
     "\\src\\app\\proxy",
     "\\src\\app\\proxy\\volo",
     "\\src\\app\\proxy\\volo\\abp",
@@ -13,5 +10,6 @@
     "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
     "\\src\\app\\proxy\\volo\\abp\\identity"
   ],
+  "SelectedNode": "\\src\\app\\proxy\\volo\\abp\\identity\\models.ts",
   "PreviewInSolutionExplorer": false
 }

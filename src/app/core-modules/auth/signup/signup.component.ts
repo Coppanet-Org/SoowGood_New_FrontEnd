@@ -113,6 +113,7 @@ export class SignupComponent implements OnInit {
   doctorSpecializationList: DoctorSpecializationDto[] = [];
   doctorSpecializations: DoctorSpecializationDto[] = [];
   doctorSpecializationInputs: DoctorSpecializationInputDto[] = [];
+  doctorList: DoctorProfileDto[] = [];
   degreeName: any;
   degreeMendatoryMassage: any;
   spMendatoryMassage: any;
@@ -132,7 +133,7 @@ export class SignupComponent implements OnInit {
   formSpecialization!: FormGroup;
   doctorId: any;
   specialityId: any;
-
+  lastCount: any;
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -311,6 +312,11 @@ export class SignupComponent implements OnInit {
       this.specialties = res;
     });
     this.titleList = CommonService.getEnumList(DoctorTitle);
+
+    this.doctorProfileService.getList().subscribe(d => {
+      this.doctorList = d;
+      this.lastCount = this.doctorList.length;
+    })
   }
 
   loadForm() {
@@ -845,33 +851,30 @@ export class SignupComponent implements OnInit {
         spDto.documentName = s.documentName;
         this.doctorSpecializationInputs.push(spDto);
       });
-      this.subs.sink = this.doctorProfileService
-        .get(this.doctorId)
-        .subscribe((patientDto: DoctorProfileInputDto) => {
-          if (patientDto) {
-            this.forStepUpdateDto.id = patientDto.id;
-            this.forStepUpdateDto.doctorTitle = patientDto.doctorTitle;
-            this.forStepUpdateDto.userId = patientDto.userId;
-            this.forStepUpdateDto.fullName = patientDto.fullName;
-            this.forStepUpdateDto.email = patientDto.email;
-            this.forStepUpdateDto.mobileNo = patientDto.mobileNo;
-            this.forStepUpdateDto.gender = patientDto.gender;
-            this.forStepUpdateDto.dateOfBirth = patientDto.dateOfBirth;
-            this.forStepUpdateDto.address = patientDto.address;
-            this.forStepUpdateDto.city = patientDto.city;
-            this.forStepUpdateDto.zipCode = patientDto.zipCode;
-            this.forStepUpdateDto.country = patientDto.country;
-            this.forStepUpdateDto.bmdcRegNo = patientDto.bmdcRegNo;
-            this.forStepUpdateDto.bmdcRegExpiryDate =
-              patientDto.bmdcRegExpiryDate;
-            this.forStepUpdateDto.specialityId = patientDto.specialityId;
-            this.forStepUpdateDto.identityNumber = patientDto.identityNumber;
-            this.forStepUpdateDto.isActive = false;
-            this.forStepUpdateDto.profileStep = 2;
-            this.forStepUpdateDto.createFrom = 'Web';
-            this.forStepUpdateDto.degrees = this.doctorDegreeInputs; // .push(this.doctorDegrees);
-            this.forStepUpdateDto.doctorSpecialization =
-              this.doctorSpecializationInputs;
+      this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
+        if (doctorDto) {
+          this.forStepUpdateDto.id = doctorDto.id;
+          this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
+          this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle;
+          this.forStepUpdateDto.userId = doctorDto.userId;
+          this.forStepUpdateDto.fullName = doctorDto.fullName;
+          this.forStepUpdateDto.email = doctorDto.email;
+          this.forStepUpdateDto.mobileNo = doctorDto.mobileNo;
+          this.forStepUpdateDto.gender = doctorDto.gender;
+          this.forStepUpdateDto.dateOfBirth = doctorDto.dateOfBirth;
+          this.forStepUpdateDto.address = doctorDto.address;
+          this.forStepUpdateDto.city = doctorDto.city;
+          this.forStepUpdateDto.zipCode = doctorDto.zipCode;
+          this.forStepUpdateDto.country = doctorDto.country;
+          this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
+          this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
+          this.forStepUpdateDto.specialityId = doctorDto.specialityId;
+          this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
+          this.forStepUpdateDto.isActive = false;
+          this.forStepUpdateDto.profileStep = 2;
+          this.forStepUpdateDto.createFrom = "Web";
+          this.forStepUpdateDto.degrees = this.doctorDegreeInputs;// .push(this.doctorDegrees);
+          this.forStepUpdateDto.doctorSpecialization = this.doctorSpecializationInputs;
 
             this.subs.sink = this.doctorProfileService
               .update(this.forStepUpdateDto)
@@ -897,60 +900,50 @@ export class SignupComponent implements OnInit {
 
                       //if (this.totalSpFileList.length > 0) {
 
-                      let fileToUpload = item;
-                      this.spFileData.append(item.name, fileToUpload);
-                      //}
-                      // save attachment
-                      this.http
-                        .post(
-                          `${this.apiUrl}/Common/Documents`,
-                          this.spFileData
-                        )
-                        .subscribe(
-                          (result: any) => {
-                            //this.form.reset();
-                            //this.spFileData = new FormData();
-                            //this.spFileNames = [];
-                            this.tosterService.customToast(
-                              'Documents for Specializations Uploaded Successfully',
-                              'success'
-                            );
-                            this.cdRef.detectChanges();
-                          },
-                          (err) => {
-                            console.log(err);
-                          }
-                        );
-                    }
-                  }
-                  this.completeDegreeSpecilizationInfoModal = false;
-                  this.completeDocumentUpload = true;
-                  let saveLocalStorage = {
-                    identityNumber: res.identityNumber,
-                    doctorName: res.fullName,
-                    bmdcRegNo: res.bmdcRegNo,
-                    isActive: res.isActive,
-                    userId: res.userId,
-                    id: res.id,
-                    specialityId: res.specialityId,
-                    profileStep: res.profileStep,
-                    createFrom: res.createFrom,
-                    specializations: res.doctorSpecialization,
-                    userTYpe: this.userType,
-                  };
-                  this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  if (this.normalAuth) {
-                    this.loadAuth();
-                  }
-                  this.toasterService.success(
-                    'Degree and Specializtion info updated Successfully'
-                  ),
-                    { position: 'bottom-center' };
-                  this.cdRef.detectChanges();
+                  let fileToUpload = item;
+                  this.spFileData.append(item.name, fileToUpload);
+                  //}
+                  // save attachment
+                  this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
+                    (result: any) => {
+                      //this.form.reset();
+                      //this.spFileData = new FormData();
+                      //this.spFileNames = [];
+                      this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+                      this.cdRef.detectChanges();
+                    },
+                    (err) => {
+                      console.log(err);
+                    })
+
                 }
-              });
-          }
-        });
+              }
+              this.completeDegreeSpecilizationInfoModal = false;
+              this.completeDocumentUpload = true
+              let saveLocalStorage = {
+                identityNumber: res.identityNumber,
+                doctorName: res.fullName,
+                bmdcRegNo: res.bmdcRegNo,
+                isActive: res.isActive,
+                userId: res.userId,
+                id: res.id,
+                specialityId: res.specialityId,
+                profileStep: res.profileStep,
+                createFrom: res.createFrom,
+                specializations: res.doctorSpecialization,
+                userTYpe: this.userType
+              }
+              this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+              if (this.normalAuth) {
+                this.loadAuth();
+              }
+              this.toasterService.success("Degree and Specializtion info updated Successfully"),
+                //{ position: 'bottom-center' }
+              this.cdRef.detectChanges();
+            }
+          });
+        }
+      });
     }
   }
 
@@ -1268,73 +1261,64 @@ export class SignupComponent implements OnInit {
     //      }
     else {
       let userType = this.userType.toString().toLowerCase();
-      let message = 'Congratulations...!!Profile Created Successfully..!!';
-      this.subs.sink = this.doctorProfileService
-        .get(this.doctorId)
-        .subscribe((patientDto: DoctorProfileInputDto) => {
-          if (patientDto) {
-            this.forStepUpdateDto.id = patientDto.id;
-            this.forStepUpdateDto.doctorTitle = patientDto.doctorTitle;
-            this.forStepUpdateDto.userId = patientDto.userId;
-            this.forStepUpdateDto.fullName = patientDto.fullName;
-            this.forStepUpdateDto.email = patientDto.email;
-            this.forStepUpdateDto.mobileNo = patientDto.mobileNo;
-            this.forStepUpdateDto.gender = patientDto.gender;
-            this.forStepUpdateDto.dateOfBirth = patientDto.dateOfBirth;
-            this.forStepUpdateDto.address = patientDto.address;
-            this.forStepUpdateDto.city = patientDto.city;
-            this.forStepUpdateDto.zipCode = patientDto.zipCode;
-            this.forStepUpdateDto.country = patientDto.country;
-            this.forStepUpdateDto.bmdcRegNo = patientDto.bmdcRegNo;
-            this.forStepUpdateDto.bmdcRegExpiryDate =
-              patientDto.bmdcRegExpiryDate;
-            this.forStepUpdateDto.specialityId = patientDto.specialityId;
-            this.forStepUpdateDto.identityNumber = patientDto.identityNumber;
-            this.forStepUpdateDto.isActive = patientDto.isActive;
-            this.forStepUpdateDto.profileStep = 3;
-            this.forStepUpdateDto.createFrom = patientDto.createFrom;
-            //this.forStepUpdateDto.degrees = patientDto.degrees;// .push(this.doctorDegrees);
-            //this.forStepUpdateDto.doctorSpecialization = patientDto.doctorSpecialization;
+      let message = "Congratulations...!!Profile Created Successfully..!!"
+      this.subs.sink = this.doctorProfileService.get(this.doctorId).subscribe((doctorDto: DoctorProfileInputDto) => {
+        if (doctorDto) {
+          this.forStepUpdateDto.id = doctorDto.id;
+          this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
+          this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle
+          this.forStepUpdateDto.userId = doctorDto.userId;
+          this.forStepUpdateDto.fullName = doctorDto.fullName;
+          this.forStepUpdateDto.email = doctorDto.email;
+          this.forStepUpdateDto.mobileNo = doctorDto.mobileNo;
+          this.forStepUpdateDto.gender = doctorDto.gender;
+          this.forStepUpdateDto.dateOfBirth = doctorDto.dateOfBirth;
+          this.forStepUpdateDto.address = doctorDto.address;
+          this.forStepUpdateDto.city = doctorDto.city;
+          this.forStepUpdateDto.zipCode = doctorDto.zipCode;
+          this.forStepUpdateDto.country = doctorDto.country;
+          this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
+          this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
+          this.forStepUpdateDto.specialityId = doctorDto.specialityId;
+          this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
+          this.forStepUpdateDto.isActive = doctorDto.isActive;
+          this.forStepUpdateDto.profileStep = 3;
+          this.forStepUpdateDto.createFrom = doctorDto.createFrom;
+          this.forStepUpdateDto.degrees = [];// .push(this.doctorDegrees);
+          this.forStepUpdateDto.doctorSpecialization = [];
 
-            this.subs.sink = this.doctorProfileService
-              .update(this.forStepUpdateDto)
-              .subscribe((res: DoctorProfileDto) => {
-                if (res) {
-                  this.completeDegreeSpecilizationInfoModal = false;
-                  this.completeDocumentUpload = true;
-                  let saveLocalStorage = {
-                    identityNumber: res.identityNumber,
-                    doctorName: res.fullName,
-                    bmdcRegNo: res.bmdcRegNo,
-                    isActive: res.isActive,
-                    userId: res.userId,
-                    id: res.id,
-                    specialityId: res.specialityId,
-                    profileStep: res.profileStep,
-                    createFrom: res.createFrom,
-                    userType: userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
-                  };
-                  this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  if (this.normalAuth) {
-                    this.loadAuth();
-                  }
-                  userType = userType + '/dashboard';
-                  this._router
-                    .navigate([userType.toLowerCase()], {
-                      state: { data: res }, // Pass the 'res' object as 'data' in the state object
-                    })
-                    .then((r) =>
-                      this.tosterService.customToast(message, 'success')
-                    );
-                  //this.toasterService.success("Degree and Specializtion info updated Successfully"),
-                  {
-                    position: 'bottom-center';
-                  }
-                  this.cdRef.detectChanges();
-                }
-              });
-          }
-        });
+
+          this.subs.sink = this.doctorProfileService.update(this.forStepUpdateDto).subscribe((res: DoctorProfileDto) => {
+            if (res) {
+              this.completeDegreeSpecilizationInfoModal = false;
+              this.completeDocumentUpload = true
+              let saveLocalStorage = {
+                identityNumber: res.identityNumber,
+                doctorName: res.fullName,
+                bmdcRegNo: res.bmdcRegNo,
+                isActive: res.isActive,
+                userId: res.userId,
+                id: res.id,
+                specialityId: res.specialityId,
+                profileStep: res.profileStep,
+                createFrom: res.createFrom,
+                userType: userType//this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
+              }
+              this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+              if (this.normalAuth) {
+                this.loadAuth();
+              }
+              userType = userType + '/dashboard';
+              this._router.navigate([userType.toLowerCase()], {
+                state: { data: res } // Pass the 'res' object as 'data' in the state object
+              }).then(r =>
+                this.tosterService.customToast(message, 'success'));
+              //this.toasterService.success("Degree and Specializtion info updated Successfully"),
+              this.cdRef.detectChanges();
+            }
+          });
+        }
+      });
     }
     //  }
     //});

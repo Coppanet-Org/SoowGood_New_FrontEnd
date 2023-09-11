@@ -52,6 +52,14 @@ export class PatientProfileService {
     { apiName: this.apiName,...config });
   
 
+  getPatientListByUserProfileId = (profileId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/patient-profile/patient-list-by-user-profile-id/${profileId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: PatientProfileInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PatientProfileDto>({
       method: 'PUT',

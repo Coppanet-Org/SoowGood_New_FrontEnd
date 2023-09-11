@@ -28,7 +28,7 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 })
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
-  @Output() getProfileInfo =new EventEmitter()
+  @Output() getProfileInfo = new EventEmitter()
 
 
   animationDirection = 'right';
@@ -62,8 +62,8 @@ export class ProfileSettingsComponent implements OnInit {
     private normalAuth: AuthService,
     public dialog: MatDialog,
     private LoaderService: LoaderService,
-    private UserinfoStateService :UserinfoStateService
-  ) {}
+    private UserinfoStateService: UserinfoStateService
+  ) { }
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
@@ -90,12 +90,15 @@ export class ProfileSettingsComponent implements OnInit {
     let doctortitle = this.doctorTitleList.find((e) => e.id == title);
     return doctortitle?.name;
   }
+
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
   });
+
   secondFormGroup = this._fb.group({
     secondCtrl: ['', Validators.required],
   });
+
   isLinear = false;
 
 
@@ -136,8 +139,8 @@ export class ProfileSettingsComponent implements OnInit {
           }
           this.TosterService.customToast(successMessage, 'success');
           this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
-          
-    
+
+
         },
         (error) => {
           this.isLoading = false;
