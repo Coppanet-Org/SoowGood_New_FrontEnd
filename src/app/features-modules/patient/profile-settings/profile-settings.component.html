@@ -26,18 +26,20 @@
                   <p class="text-left text-sm text-gray-400 mt-2 font-medium dashbord-heading-subtext">
                     {{profileInfo.email}}
                   </p>
+                  <div class="flex gap-4 mt-4">
+                    <button class=" btn-secondary !py-1.5 px-4 shadow-none  btn font-normal bg-secondary-light/50 text-secondary-dark border-secondary-dark/20" [routerLink]="'patient-details/1'">
+                      <i class="fa-solid fa-user mr-2"></i> View Profile
+                    </button>
+                    <button class=" btn-secondary !py-1.5 px-4 shadow-none btn font-normal bg-secondary-light/50 text-secondary-dark border-secondary-dark/20" [routerLink]="'../my-patient'">
+                      <i class="fa-solid fa-plus mr-2"></i> Create Patient
+                    </button>
+                  </div>
                 </div>
-              </div>
-  
-              <div>
-                <button class="btn-secondary " [routerLink]="'patient-details/1'">
-                  View Profile
-                </button>
               </div>
             </div>
   
             <div class="flex items-center justify-left mt-10 relative"  >
-                <div class=" w-full  bg-white">
+                <div>
                     <form [formGroup]="form">
                         <div class="-mx-3 flex flex-wrap">
             
@@ -51,7 +53,7 @@
                         </div>
                         <div class="flex items-center justify-end w-fit mt-6 ">
                             <button
-                                class="btn-secondary px-10 hover:text-primary border-transparent hover:border hover:border-secondary-border group "
+                                class="btn btn-secondary px-10 hover:text-primary border-transparent hover:border hover:border-secondary-border group "
                                 (click)="submit()">
                                 <div *ngIf="isLoading == false" class="flex items-center gap-1 text-white group-hover:text-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
