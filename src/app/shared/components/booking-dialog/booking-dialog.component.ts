@@ -1,3 +1,4 @@
+import { SlotsService } from './../../services/states/slots.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 
@@ -14,11 +15,12 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   bookingFilterInputData,
+  dayFromDate,
   inputForCreatePatient,
 } from '../../utils/input-info';
 
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
-import { map, of, switchMap } from 'rxjs';
+import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -47,12 +49,9 @@ export class BookingDialogComponent implements OnInit {
   userPatientInfo: any;
   userPatientList: any = [];
   value: any;
-  ConsultancyType:any
+  ConsultancyType: any;
   doctorId: any;
-
-
-
-
+  filterData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -62,25 +61,22 @@ export class BookingDialogComponent implements OnInit {
     private TosterService: TosterService,
     private DoctorScheduleService: DoctorScheduleService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
+    private SlotsService: SlotsService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
-    this.bookingForm = this.fb.group({
-      bookMyself: [false],
-      bookOther: [false],
-      patientName: [''],
-      age: [''],
-      mobile: [''],
-    });
-
     this.inputForCreatePatient = inputForCreatePatient;
   }
 
   ngOnInit() {
-   
-console.log(this.doctorData);
-
-
-
+    let schedule = this.doctorData.doctorScheduleInfo;
+    if (schedule) {
+      let list = this.doctorData.doctorScheduleInfo.map((e: any) => {
+        return { name: e.scheduleName, id: e.scheduleName };
+      });
+      this.inputConfigs = bookingFilterInputData(list);
+    } else {
+      this.inputConfigs = bookingFilterInputData([]);
+    }
 
     this.UserinfoStateService.getData()
       .pipe(
@@ -104,39 +100,65 @@ console.log(this.doctorData);
       .subscribe((res) => {
         this.userPatientList = res;
       });
-  }
-  onStepChange(e: any) {
-    this.activeTab = e;
-  }
 
-  userExistCheck(status: string): void {
-    this.createPatientForm.get([
-      'patientName',
-      'age',
-      'gender',
-      'bloodGroup',
-      'patientMobileNo',
-    ])?.reset();
+    const selectedItem1$ = this.form
+      .get('appointmentDate')
+      ?.valueChanges.pipe(startWith(this.form.get('appointmentDate')?.value));
 
-    switch (status) {
-      case 'new-user':
-        this.isNewUser = true;
-        this.isExistUser = false;
-        return;
-      case 'exist-user':
-        this.isNewUser = false;
-        this.isExistUser = true;
-        return;
-      default:
-        break;
-    }
+    const selectedItem2$ = this.form
+      .get('doctorScheduleType')
+      ?.valueChanges.pipe(
+        startWith(this.form.get('doctorScheduleType')?.value)
+      );
+
+    const selectedItem3$ = this.form
+      .get('consultancyType')
+      ?.valueChanges.pipe(startWith(this.form.get('consultancyType')?.value));
+
+    combineLatest([selectedItem1$, selectedItem2$, selectedItem3$]).subscribe(
+      (data: any) => {
+        let finalFilter: any = [];
+        const day = dayFromDate(String(data[0]));
+        if (data[0] && data[1]) {
+          schedule.map((item: any) => {
+            if (item.scheduleName === String(data[1])) {
+              if (
+                this.isDayAvailable(item.doctorScheduleDaySession, day).length >
+                0
+              ) {
+                finalFilter = this.isDayAvailable(
+                  item.doctorScheduleDaySession,
+                  day
+                );
+              } else {
+                this.TosterService.customToast('No schedule found!', 'warning');
+              }
+            }
+          });
+        }
+        this.filterData = finalFilter;
+        this.SlotsService.sendSlotData(finalFilter);
+      }
+    );
   }
-
+  isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
+    // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));
+    return doctorScheduleDaySession.filter(
+      (session) => session.scheduleDayofWeek === day
+    );
+  }
   loadForm() {
+    //future update
+    this.bookingForm = this.fb.group({
+      bookMyself: [false],
+      bookOther: [false],
+      patientName: [''],
+      age: [''],
+      mobile: [''],
+    });
     this.form = this.fb.group({
-      scheduleType: ['', Validators.required],
-      doctorChamberId: ['', Validators.required],
-      appointmentTime: ['', Validators.required],
+      consultancyType: ['', Validators.required],
+      doctorScheduleType: ['', Validators.required],
       appointmentDate: ['', Validators.required],
     });
     this.createPatientForm = this.fb.group({
@@ -152,8 +174,31 @@ console.log(this.doctorData);
     });
   }
 
+  // change step
+  onStepChange(e: any) {
+    this.activeTab = e;
+  }
+  //user existing check
+  userExistCheck(status: string): void {
+    this.createPatientForm
+      .get(['patientName', 'age', 'gender', 'bloodGroup', 'patientMobileNo'])
+      ?.reset();
+
+    switch (status) {
+      case 'new-user':
+        this.isNewUser = true;
+        this.isExistUser = false;
+        return;
+      case 'exist-user':
+        this.isNewUser = false;
+        this.isExistUser = true;
+        return;
+      default:
+        break;
+    }
+  }
+  //create new patient under user
   createNewPatient(): void {
-    console.log(this.createPatientForm.value);
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
@@ -161,7 +206,6 @@ console.log(this.doctorData);
       );
       return;
     }
-
     try {
       this.btnLoader = true;
       this.PatientProfileService.create(this.createPatientForm.value).subscribe(
@@ -179,7 +223,6 @@ console.log(this.doctorData);
       this.TosterService.customToast('Something wrong! Please retry', 'error');
     }
   }
-
   getSinglePatientData(e: any) {
     if (e.target.value) {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
@@ -192,6 +235,5 @@ console.log(this.doctorData);
       );
     }
   }
-
   closeDialogs() {}
 }

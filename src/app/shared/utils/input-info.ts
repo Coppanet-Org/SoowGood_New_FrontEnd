@@ -364,7 +364,7 @@ export const agentInputData =[
 ]
 
 
-export const bookingFilterInputData = (apType: any, hospital: any) => {
+export const bookingFilterInputData = (hospital: any) => {
   return [
     {
       label: 'Appointment Date',
@@ -376,11 +376,11 @@ export const bookingFilterInputData = (apType: any, hospital: any) => {
     },
 
     {
-      label: 'Select Hospital',
-      inputId: 'doctorChamberId',
-      defaultOption: 'Select Hospital ',
+      label: 'Select Schedule Type',
+      inputId: 'doctorScheduleType',
+      defaultOption: 'Select Schedule Type ',
       options: hospital,
-      formControlName: 'doctorChamberId',
+      formControlName: 'doctorScheduleType',
       isSelect: true,
     },
     {
@@ -394,6 +394,9 @@ export const bookingFilterInputData = (apType: any, hospital: any) => {
     
   ];
 };
+
+
+
 
 export const inputForCreatePatient = [
   {
@@ -435,3 +438,10 @@ export const inputForCreatePatient = [
   }
   // ... add more input configurations for other fields
 ];
+
+export const dayFromDate=(date:string)=>{
+  const getdate = new Date(date);
+  const dayOfWeek = getdate.getDay();
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+return dayNames[dayOfWeek];
+}
