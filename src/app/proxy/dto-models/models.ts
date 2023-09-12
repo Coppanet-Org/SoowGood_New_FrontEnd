@@ -192,6 +192,7 @@ export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
   offDayTo?: string;
   doctorScheduleDaySession: DoctorScheduleDaySessionInputDto[];
   doctorFeesSetup: DoctorFeesSetupInputDto[];
+  scheduleName?: string;
 }
 
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
