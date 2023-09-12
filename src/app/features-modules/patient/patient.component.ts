@@ -1,6 +1,8 @@
-import { UserinfoStateService } from 'src/app/shared/services/userinfo-state.service';
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+
 
 @Component({
   selector: 'app-patient',

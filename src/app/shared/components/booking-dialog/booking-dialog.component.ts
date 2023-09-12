@@ -1,12 +1,13 @@
+import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 
 import { LoaderService } from './../../services/loader.service';
 import { PatientProfileService } from 'src/app/proxy/services';
-import { UserinfoStateService } from 'src/app/shared/services/userinfo-state.service';
+
 import {
-  AfterContentInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,8 +16,11 @@ import {
   bookingFilterInputData,
   inputForCreatePatient,
 } from '../../utils/input-info';
-import { distinctUntilChanged, map, merge, scan } from 'rxjs';
-import { fromEvent } from 'rxjs';
+
+import { UserinfoStateService } from '../../services/states/userinfo-state.service';
+import { map, of, switchMap } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-booking-dialog',
   templateUrl: './booking-dialog.component.html',
@@ -40,12 +44,25 @@ export class BookingDialogComponent implements OnInit {
   isExistUser: boolean = true;
   profileInfo: any;
   btnLoader: boolean = false;
+  userPatientInfo: any;
+  userPatientList: any = [];
+  value: any;
+  ConsultancyType:any
+  doctorId: any;
+
+
+
+
+
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
     private LoaderService: LoaderService,
-    private TosterService: TosterService
+    private TosterService: TosterService,
+    private DoctorScheduleService: DoctorScheduleService,
+    public dialogRef: MatDialogRef<BookingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.bookingForm = this.fb.group({
       bookMyself: [false],
@@ -54,36 +71,53 @@ export class BookingDialogComponent implements OnInit {
       age: [''],
       mobile: [''],
     });
-    this.inputConfigs = bookingFilterInputData(
-      [
-        {
-          id: 0,
-          name: 'udoy',
-        },
-      ],
-      [
-        {
-          id: 0,
-          name: 'udoy',
-        },
-      ]
-    );
+
     this.inputForCreatePatient = inputForCreatePatient;
   }
 
   ngOnInit() {
-    this.UserinfoStateService.getData().subscribe((e) => {
-      this.profileInfo = e;
-      if (e) {
-        this.loadForm();
-      }
-    });
+   
+console.log(this.doctorData);
+
+
+
+
+    this.UserinfoStateService.getData()
+      .pipe(
+        switchMap((e) => {
+          this.profileInfo = e;
+          this.loadForm();
+          if (e) {
+            return this.UserinfoStateService.getUserPatientData().pipe(
+              map((data) => {
+                return data.map((item: any) => ({
+                  name: item.patientName,
+                  id: item.id,
+                }));
+              })
+            );
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe((res) => {
+        this.userPatientList = res;
+      });
   }
   onStepChange(e: any) {
     this.activeTab = e;
   }
 
   userExistCheck(status: string): void {
+    this.createPatientForm.get([
+      'patientName',
+      'age',
+      'gender',
+      'bloodGroup',
+      'patientMobileNo',
+    ])?.reset();
+
     switch (status) {
       case 'new-user':
         this.isNewUser = true;
@@ -93,6 +127,8 @@ export class BookingDialogComponent implements OnInit {
         this.isNewUser = false;
         this.isExistUser = true;
         return;
+      default:
+        break;
     }
   }
 
@@ -106,8 +142,8 @@ export class BookingDialogComponent implements OnInit {
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
       patientName: ['', Validators.required],
-      age: [10, Validators.required],
-      gender: [1, Validators.required],
+      age: [, Validators.required],
+      gender: [, Validators.required],
       bloodGroup: ['', Validators.required],
       patientMobileNo: ['', Validators.required],
       patientEmail: ['' || this.profileInfo?.email, Validators.required],
@@ -118,6 +154,13 @@ export class BookingDialogComponent implements OnInit {
 
   createNewPatient(): void {
     console.log(this.createPatientForm.value);
+    if (!this.createPatientForm.valid) {
+      this.TosterService.customToast(
+        'Please field all the required fields',
+        'warning'
+      );
+      return;
+    }
 
     try {
       this.btnLoader = true;
@@ -125,13 +168,30 @@ export class BookingDialogComponent implements OnInit {
         (res) => {
           this.btnLoader = false;
           this.TosterService.customToast('Your patient is created!', 'success');
+          this.UserinfoStateService.getUserPatientInfo(
+            this.profileInfo.id,
+            'patient'
+          );
           this.onStepChange(3);
         }
       );
     } catch (error) {
       this.TosterService.customToast('Something wrong! Please retry', 'error');
     }
-    
   }
+
+  getSinglePatientData(e: any) {
+    if (e.target.value) {
+      this.UserinfoStateService.getUserPatientData().subscribe((res) =>
+        res.find((data: any) => {
+          if (data.id == e.target.value) {
+            this.createPatientForm.patchValue(data);
+          }
+          return;
+        })
+      );
+    }
+  }
+
   closeDialogs() {}
 }

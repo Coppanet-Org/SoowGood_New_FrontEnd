@@ -1,6 +1,6 @@
 import { AuthService } from './../../../../shared/services/auth.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
+import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DoctorChamberDto, DoctorScheduleDto } from 'src/app/proxy/dto-models';

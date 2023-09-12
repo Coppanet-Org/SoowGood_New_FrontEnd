@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserinfoStateService } from '../../services/userinfo-state.service';
+import { UserinfoStateService } from '../../services/states/userinfo-state.service';
+
 
 @Component({
   selector: 'app-dashboard-profilecard',

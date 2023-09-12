@@ -45,7 +45,7 @@ const routerConfig: ExtraOptions = {
     MaterialModulesModule,
     RouterModule.forRoot(appRoutes, routerConfig),
     HotToastModule.forRoot({
-      position: 'bottom-center',
+      position: 'bottom-right',
     }),
     LoaderModule,
     ReactiveFormsModule,FormsModule

@@ -70,7 +70,7 @@
                             <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
                         </div>
                         <div>
-                            <h2 class="heading text-[20px]">Dr. Hasibur Rahman</h2>
+                            <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
                             <p>General Medicine</p>
                         </div>
                     </div>
@@ -97,16 +97,9 @@
                 </div>
             </div>
         </mat-step>
+
         <mat-step>
             <div class="flex gap-4">
-                <div class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700">
-                    <input (click)="userExistCheck('new-user')" id="bordered-radio-1" type="radio" value=""
-                        name="bordered-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
-                    <label for="bordered-radio-1"
-                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
-                        Patient</label>
-                </div>
                 <div class="flex items-center px-4  border border-gray-200 rounded dark:border-gray-700">
                     <input (click)="userExistCheck('exist-user')" checked id="bordered-radio-2" type="radio" value=""
                         name="bordered-radio"
@@ -115,25 +108,34 @@
                         class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already
                         Exist</label>
                 </div>
+                <div class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700">
+                    <input (click)="userExistCheck('new-user')" id="bordered-radio-1" type="radio" value=""
+                        name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1"
+                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
+                        Patient</label>
+                </div>
+
             </div>
 
 
             <div class="pt-5">
                 <div *ngIf="isExistUser">
                     <label for="" class="label">Select your patient</label>
-                    <select class="form_input mt-1" [value]="1">
-                        <option value="1">Select Patient</option>
-                        <option value="">Select Patient</option>
-                        <option value="">Select Patient</option>
-                        <option value="">Select Patient</option>
-                    </select>
+                    <ng-container >
+                        <select  class="form_input" [value]="value" (input)="getSinglePatientData($event)">
+                            <option value="">--Select Patient--</option>
+                            <option *ngFor="let item of userPatientList" [value]="item.id">{{ item.name }}</option>
+                        </select>
+                    </ng-container>
                 </div>
 
                 <div class="pt-5">
                     <form [formGroup]="createPatientForm" class="w-full">
                         <div class="-mx-3 flex flex-wrap">
                             <ng-container class="w-full" *ngFor="let config of inputForCreatePatient; let i = index">
-                    
+
                                 <app-input [label]="config.label" [inputId]="config.inputId"
                                     [isSelectInput]="config.isSelect"
                                     [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
@@ -161,8 +163,6 @@
                     </div>
                     <span *ngIf="btnLoader == true" class="loading loading-dots loading-md"></span>
                 </button>
-
-
             </div>
         </mat-step>
         <mat-step>

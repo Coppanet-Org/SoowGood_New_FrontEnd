@@ -1,4 +1,4 @@
-import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
+import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { DoctorChamberService } from './../../../../proxy/services/doctor-chamber.service';
 import { Component, OnInit } from '@angular/core';
 import { HospitalDialogComponent } from '../hospital-dialog/hospital-dialog.component';

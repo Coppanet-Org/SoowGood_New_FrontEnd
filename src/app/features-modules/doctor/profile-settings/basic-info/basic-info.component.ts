@@ -1,4 +1,4 @@
-import { UserinfoStateService } from './../../../../shared/services/userinfo-state.service';
+
 import { LoaderService } from './../../../../shared/services/loader.service';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -12,6 +12,7 @@ import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { inputConfigs } from '../../../../shared/utils/input-info';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',

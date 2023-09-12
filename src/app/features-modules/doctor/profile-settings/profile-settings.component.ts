@@ -1,4 +1,4 @@
-import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
+
 import { LoaderService } from './../../../shared/services/loader.service';
 import {
   DoctorProfileService,
@@ -19,6 +19,7 @@ import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-profile-settings',

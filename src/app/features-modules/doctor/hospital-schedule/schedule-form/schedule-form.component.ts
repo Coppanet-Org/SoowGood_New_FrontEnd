@@ -1,4 +1,4 @@
-import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
+import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { TosterService } from './../../../../shared/services/toster.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
 import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';

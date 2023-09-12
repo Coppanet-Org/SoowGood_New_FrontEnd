@@ -1,4 +1,4 @@
-import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
+
 import { TosterService } from './../../../shared/services/toster.service';
 import { PatientProfileService } from './../../../proxy/services/patient-profile.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +7,7 @@ import { singleSlide, slideInFrom } from 'src/app/animation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { patientInputData } from 'src/app/shared/utils/input-info';
 import { DatePipe } from '@angular/common';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-profile-settings',
