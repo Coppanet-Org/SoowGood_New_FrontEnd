@@ -1,9 +1,11 @@
-import { ConsultancyType, DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
+import { AppointmentType, ConsultancyType, DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
 import { CommonService } from '../services/common.service';
 const consultancyType = CommonService.getEnumList(ConsultancyType);
+
 const genderList = CommonService.getEnumList(Gender);
 const maritalOptions = CommonService.getEnumList(MaritalStatus);
 const titleList = CommonService.getEnumList(DoctorTitle);
+const appointmentType = CommonService.getEnumList(AppointmentType);
 
 export const inputConfigs = [
   {
@@ -389,6 +391,14 @@ export const bookingFilterInputData = (hospital: any) => {
       defaultOption: 'Select Consultancy Type',
       options: consultancyType,
       formControlName: 'consultancyType',
+      isSelect: true,
+    },
+    {
+      label: 'Select Appointment Type',
+      inputId: 'appointmentType',
+      defaultOption: 'Select Appointment Type',
+      options: appointmentType,
+      formControlName: 'appointmentType',
       isSelect: true,
     }
     

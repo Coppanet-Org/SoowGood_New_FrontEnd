@@ -20,7 +20,14 @@ import {
 } from '../../utils/input-info';
 
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
-import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import {
+  combineLatest,
+  combineLatestWith,
+  map,
+  of,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -101,45 +108,104 @@ export class BookingDialogComponent implements OnInit {
         this.userPatientList = res;
       });
 
-    const selectedItem1$ = this.form
+    const selectedItem1$: any = this.form
       .get('appointmentDate')
       ?.valueChanges.pipe(startWith(this.form.get('appointmentDate')?.value));
 
-    const selectedItem2$ = this.form
+    const selectedItem2$: any = this.form
       .get('doctorScheduleType')
       ?.valueChanges.pipe(
         startWith(this.form.get('doctorScheduleType')?.value)
       );
 
-    const selectedItem3$ = this.form
+    const selectedItem3$: any = this.form
       .get('consultancyType')
       ?.valueChanges.pipe(startWith(this.form.get('consultancyType')?.value));
 
-    combineLatest([selectedItem1$, selectedItem2$, selectedItem3$]).subscribe(
-      (data: any) => {
+    const selectedItem4$: any = this.form
+      .get('appointmentType')
+      ?.valueChanges.pipe(startWith(this.form.get('appointmentType')?.value));
+
+      let selectedItemCount = 0;
+    // Combine the changes by adding them together
+    selectedItem1$
+      .pipe(combineLatestWith([selectedItem2$, selectedItem3$,selectedItem4$]))
+      .subscribe((data: any) => {
         let finalFilter: any = [];
+        let isMatchFound = false;
         const day = dayFromDate(String(data[0]));
-        if (data[0] && data[1]) {
-          schedule.map((item: any) => {
-            if (item.scheduleName === String(data[1])) {
-              if (
-                this.isDayAvailable(item.doctorScheduleDaySession, day).length >
-                0
-              ) {
-                finalFilter = this.isDayAvailable(
-                  item.doctorScheduleDaySession,
-                  day
-                );
-              } else {
-                this.TosterService.customToast('No schedule found!', 'warning');
-              }
+        if (data[0] && data[1] && data[2] ) {
+          selectedItemCount = 3
+          const scheduleMap = new Map();
+          schedule.forEach((item: any) => {
+            console.log(item);
+            
+            const key = `${item.scheduleName}_${item.consultancyType}`;
+            if (!scheduleMap.has(key)) {
+              scheduleMap.set(key, []);
             }
+            scheduleMap.get(key).push(item);
           });
+
+          const keyToSearch = `${data[1]}_${data[2]}`;
+          if (scheduleMap.has(keyToSearch)) {
+            const items = scheduleMap.get(keyToSearch);
+            items.forEach((item: any) => {
+              const availableSessions = this.isDayAvailable(
+                item.doctorScheduleDaySession,
+                day
+              );
+              if (availableSessions.length > 0) {
+                finalFilter = availableSessions;
+                isMatchFound = true;
+                return;
+              }
+            });
+          }
+        }
+        if (!isMatchFound && selectedItemCount == 3) {
+          this.TosterService.customToast('No schedule found!', 'warning');
         }
         this.filterData = finalFilter;
         this.SlotsService.sendSlotData(finalFilter);
-      }
-    );
+      });
+
+
+      selectedItem2$.pipe(combineLatestWith(selectedItem4$))
+      .subscribe((data:any) => {
+        // Find the fee based on scheduleName and appointmentType
+        console.log(data);
+        
+        const feeEntry = schedule.filter((entry:any) => {
+          return (
+            entry.scheduleName === data[0]
+          );
+        });
+    
+        if (feeEntry) {
+          let finalFee = feeEntry.map((fee:any)=> {
+              // if (fee.appointmentType = data[1]) {
+              //  return fee.currentFee
+              // }
+
+              let fees = fee.doctorFeesSetup.find((f:any)=> f.appointmentType == data[1] ? f.currentFee : "" )
+              console.log(fees);
+              
+              console.log(fees.currentFee);
+              
+            
+          })
+          // const currentFee = feeEntry.currentFee;
+          console.log('Current Fee:', finalFee);
+          // You can now use the currentFee value as needed.
+        } else {
+          console.log('Fee not found for the given schedule and appointment type.');
+          // Handle the case where no fee is found.
+        }
+      });
+
+
+
   }
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
     // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));
@@ -160,6 +226,7 @@ export class BookingDialogComponent implements OnInit {
       consultancyType: ['', Validators.required],
       doctorScheduleType: ['', Validators.required],
       appointmentDate: ['', Validators.required],
+      appointmentType:['', Validators.required]
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
@@ -206,21 +273,29 @@ export class BookingDialogComponent implements OnInit {
       );
       return;
     }
-    try {
-      this.btnLoader = true;
-      this.PatientProfileService.create(this.createPatientForm.value).subscribe(
-        (res) => {
+
+    if (this.isNewUser) {
+      try {
+        this.btnLoader = true;
+        this.PatientProfileService.create(
+          this.createPatientForm.value
+        ).subscribe((res) => {
           this.btnLoader = false;
           this.TosterService.customToast('Your patient is created!', 'success');
           this.UserinfoStateService.getUserPatientInfo(
             this.profileInfo.id,
             'patient'
           );
-          this.onStepChange(3);
-        }
-      );
-    } catch (error) {
-      this.TosterService.customToast('Something wrong! Please retry', 'error');
+          this.onStepChange(1);
+        });
+      } catch (error) {
+        this.TosterService.customToast(
+          'Something wrong! Please retry',
+          'error'
+        );
+      }
+    } else {
+      this.onStepChange(1);
     }
   }
   getSinglePatientData(e: any) {
