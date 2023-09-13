@@ -1,10 +1,12 @@
 import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
+import type { AppointmentStatus } from '../enums/appointment-status.enum';
+import type { AppointmentPaymentStatus } from '../enums/appointment-payment-status.enum';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { ScheduleType } from '../enums/schedule-type.enum';
-import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
@@ -46,6 +48,62 @@ export interface AgentProfileDto extends FullAuditedEntityDto<number> {
   userId?: string;
   profileStep?: number;
   createFrom?: string;
+}
+
+export interface AppointmentDto extends FullAuditedEntityDto<number> {
+  appointmentSerial?: string;
+  doctorScheduleId?: number;
+  doctorScheduleName?: string;
+  doctorProfileId?: number;
+  doctorName?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  consultancyType?: ConsultancyType;
+  consultancyTypeName?: string;
+  doctorChamberId?: number;
+  doctorChamberName?: string;
+  doctorScheduleDaySessionId?: number;
+  scheduleDayofWeek?: string;
+  appointmentType?: AppointmentType;
+  appointmentTypeName?: string;
+  appointmentDate?: string;
+  appointmentTime?: string;
+  doctorFeesSetupId?: number;
+  doctorFee?: number;
+  agentFee?: number;
+  platformFee?: number;
+  totalAppointmentFee?: number;
+  appointmentStatus?: AppointmentStatus;
+  appointmentStatusName?: string;
+  appointmentPaymentStatus?: AppointmentPaymentStatus;
+  appointmentPaymentStatusName?: string;
+  cancelledByEntityId?: number;
+  cancelledByRole?: string;
+}
+
+export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
+  appointmentSerial?: string;
+  doctorScheduleId?: number;
+  doctorProfileId?: number;
+  doctorName?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  consultancyType?: ConsultancyType;
+  doctorChamberId?: number;
+  doctorScheduleDaySessionId?: number;
+  scheduleDayofWeek?: string;
+  appointmentType?: AppointmentType;
+  appointmentDate?: string;
+  appointmentTime?: string;
+  doctorFeesSetupId?: number;
+  doctorFee?: number;
+  agentFee?: number;
+  platformFee?: number;
+  totalAppointmentFee?: number;
+  appointmentStatus?: AppointmentStatus;
+  appointmentPaymentStatus?: AppointmentPaymentStatus;
+  cancelledByEntityId?: number;
+  cancelledByRole?: string;
 }
 
 export interface DegreeDto extends FullAuditedEntityDto<number> {
@@ -179,6 +237,7 @@ export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
   remarks?: string;
   doctorScheduleDaySession: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
+  appointments: AppointmentDto[];
   scheduleName?: string;
 }
 
