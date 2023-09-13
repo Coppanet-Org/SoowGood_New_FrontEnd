@@ -1,3 +1,4 @@
+import { AppointmentService } from './../../../proxy/services/appointment.service';
 import { SlotsService } from './../../services/states/slots.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
@@ -59,7 +60,8 @@ export class BookingDialogComponent implements OnInit {
   ConsultancyType: any;
   doctorId: any;
   filterData: any;
-
+  currentFee: any;
+ filterDoctorId:any 
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -69,6 +71,7 @@ export class BookingDialogComponent implements OnInit {
     private DoctorScheduleService: DoctorScheduleService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
     private SlotsService: SlotsService,
+    private AppointmentService: AppointmentService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -126,20 +129,22 @@ export class BookingDialogComponent implements OnInit {
       .get('appointmentType')
       ?.valueChanges.pipe(startWith(this.form.get('appointmentType')?.value));
 
-      let selectedItemCount = 0;
+    let selectedItemCount = 0;
+ 
     // Combine the changes by adding them together
     selectedItem1$
-      .pipe(combineLatestWith([selectedItem2$, selectedItem3$,selectedItem4$]))
+      .pipe(combineLatestWith([selectedItem2$, selectedItem3$, selectedItem4$]))
       .subscribe((data: any) => {
         let finalFilter: any = [];
         let isMatchFound = false;
+      
         const day = dayFromDate(String(data[0]));
-        if (data[0] && data[1] && data[2] ) {
-          selectedItemCount = 3
+        if (data[0] && data[1] && data[2]) {
+          selectedItemCount = 3;
           const scheduleMap = new Map();
           schedule.forEach((item: any) => {
             console.log(item);
-            
+            this.filterDoctorId = item.doctorProfileId
             const key = `${item.scheduleName}_${item.consultancyType}`;
             if (!scheduleMap.has(key)) {
               scheduleMap.set(key, []);
@@ -166,47 +171,65 @@ export class BookingDialogComponent implements OnInit {
         if (!isMatchFound && selectedItemCount == 3) {
           this.TosterService.customToast('No schedule found!', 'warning');
         }
+        if (finalFilter) {
+          this.getLeftSlotForBooking(finalFilter)
+        }
         this.filterData = finalFilter;
         this.SlotsService.sendSlotData(finalFilter);
       });
 
-
-      selectedItem2$.pipe(combineLatestWith(selectedItem4$))
-      .subscribe((data:any) => {
+    selectedItem2$
+      .pipe(combineLatestWith(selectedItem4$))
+      .subscribe((data: any) => {
         // Find the fee based on scheduleName and appointmentType
         console.log(data);
-        
-        const feeEntry = schedule.filter((entry:any) => {
-          return (
-            entry.scheduleName === data[0]
-          );
-        });
-    
-        if (feeEntry) {
-          let finalFee = feeEntry.map((fee:any)=> {
-              // if (fee.appointmentType = data[1]) {
-              //  return fee.currentFee
-              // }
 
-              let fees = fee.doctorFeesSetup.find((f:any)=> f.appointmentType == data[1] ? f.currentFee : "" )
-              console.log(fees);
-              
-              console.log(fees.currentFee);
-              
-            
-          })
+        const feeEntry = schedule.filter((entry: any) => {
+          return entry.scheduleName === data[0];
+        });
+
+        if (feeEntry) {
+          let finalFee = feeEntry.map((fee: any) => {
+            // if (fee.appointmentType = data[1]) {
+            //  return fee.currentFee
+            // }
+
+            let fees = fee.doctorFeesSetup.find((f: any) =>
+              f.appointmentType == data[1] ? f.currentFee : ''
+            );
+            console.log(fees);
+
+            console.log(fees?.currentFee);
+            this.currentFee = fees?.currentFee;
+          });
           // const currentFee = feeEntry.currentFee;
           console.log('Current Fee:', finalFee);
           // You can now use the currentFee value as needed.
         } else {
-          console.log('Fee not found for the given schedule and appointment type.');
+          console.log(
+            'Fee not found for the given schedule and appointment type.'
+          );
           // Handle the case where no fee is found.
         }
       });
-
-
-
   }
+
+  getLeftSlotForBooking(filterData:any) {
+     
+    filterData.map((e:any)=>{
+      console.log(e);
+      
+    })
+
+console.log(this.filterDoctorId);
+
+    if (this.filterDoctorId) {
+      try {
+        this.AppointmentService.getList(this.filterDoctorId).subscribe((res: any) => console.log(res));
+      } catch (error) {}
+    }
+  }
+
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
     // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));
     return doctorScheduleDaySession.filter(
@@ -226,7 +249,7 @@ export class BookingDialogComponent implements OnInit {
       consultancyType: ['', Validators.required],
       doctorScheduleType: ['', Validators.required],
       appointmentDate: ['', Validators.required],
-      appointmentType:['', Validators.required]
+      appointmentType: ['', Validators.required],
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
