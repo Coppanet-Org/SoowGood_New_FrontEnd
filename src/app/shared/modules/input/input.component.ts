@@ -24,10 +24,14 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() type!: string;
   @Input() placeholder!: string;
-  
-  
-  constructor() {}
 
+  
+  constructor() {
+
+
+    
+  }
+  
   value: any;
   onChange: any = () => {};
   onTouched: any = () => {};

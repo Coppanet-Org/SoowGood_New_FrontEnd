@@ -75,23 +75,27 @@
                             <p>General Medicine</p>
                         </div>
                        </div>
-                       <!-- <div class="py-0 px-3">
+                       <div class="py-0 px-3">
                         <div class=" leading-0">
                           <div class="stat-title">Total Fee</div>
-                          <div class="stat-value text-secondary">{{currentFee ? currentFee : '00'}}.0 tk.</div>
+                          <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0 tk.</div>
                         </div>
-                      </div> -->
+                      </div>
                     </div>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <div class="-mx-3 flex flex-wrap">
-                        <ng-container class="w-full" *ngFor="let config of inputConfigs">
-                            <app-input [label]="config.label" [inputId]="config.inputId"
-                                [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
-                                [options]="config.options" [formControlName]="config.formControlName"
-                                [type]="config.type" class="sm:w-1/2 h-fit"></app-input>
+                        <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
+                            <app-input 
+                                [label]="config.label" 
+                                [inputId]="config.inputId"
+                                [isSelectInput]="config.isSelect" 
+                                [readonly]="config.readonly ? config.readonly : false"
+                                [options]="config.options" 
+                             
+                                [formControlName]="config.formControlName"
+                                [type]="config.type" 
+                                class="sm:w-1/2 h-fit"></app-input>
                         </ng-container>
-
-
                     </div>
                 </form>
 

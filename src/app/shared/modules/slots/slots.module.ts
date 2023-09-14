@@ -5,11 +5,13 @@ import { SlotItemComponent } from '../../components/slot-item/slot-item.componen
 
 
 
+
 @NgModule({
   declarations: [SlotsComponent,SlotItemComponent],
   imports: [
-    CommonModule
+    CommonModule,
   ],
+
   exports:[SlotsComponent]
 })
 export class SlotsModule { }

@@ -60,8 +60,9 @@ export class BookingDialogComponent implements OnInit {
   ConsultancyType: any;
   doctorId: any;
   filterData: any;
-  currentFee: any;
- filterDoctorId:any 
+  totalFee: any;
+  filterDoctorId: any;
+  showAppointmentTypeSelectBox: boolean = true;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -130,49 +131,48 @@ export class BookingDialogComponent implements OnInit {
       ?.valueChanges.pipe(startWith(this.form.get('appointmentType')?.value));
 
     let selectedItemCount = 0;
- 
+
     // Combine the changes by adding them together
     selectedItem1$
       .pipe(combineLatestWith([selectedItem2$, selectedItem3$, selectedItem4$]))
       .subscribe((data: any) => {
         let finalFilter: any = [];
         let isMatchFound = false;
-      
         const day = dayFromDate(String(data[0]));
-        if (data[0] && data[1] && data[2]) {
+        if (data[0] && data[1]) {
+          this.showAppointmentTypeSelectBox = false;
           selectedItemCount = 3;
           const scheduleMap = new Map();
           schedule.forEach((item: any) => {
-            console.log(item);
-            this.filterDoctorId = item.doctorProfileId
-            const key = `${item.scheduleName}_${item.consultancyType}`;
+            this.filterDoctorId = item.doctorProfileId;
+            const key = `${item.scheduleName}`;
             if (!scheduleMap.has(key)) {
               scheduleMap.set(key, []);
             }
             scheduleMap.get(key).push(item);
           });
-
-          const keyToSearch = `${data[1]}_${data[2]}`;
+          const keyToSearch = `${data[1]}`;
           if (scheduleMap.has(keyToSearch)) {
             const items = scheduleMap.get(keyToSearch);
             items.forEach((item: any) => {
-              const availableSessions = this.isDayAvailable(
-                item.doctorScheduleDaySession,
-                day
-              );
+              const availableSessions = this.isDayAvailable(item.doctorScheduleDaySession,day);
               if (availableSessions.length > 0) {
-                finalFilter = availableSessions;
+                finalFilter =  availableSessions.map((session:any) => {
+                  let left =  this.getLeftSlotForBooking(item)[session.id]
+                  return {
+                    ...session,
+                    leftPatient : left
+                  }
+                });
                 isMatchFound = true;
                 return;
               }
             });
           }
         }
+        this.showAppointmentTypeSelectBox = true;
         if (!isMatchFound && selectedItemCount == 3) {
           this.TosterService.customToast('No schedule found!', 'warning');
-        }
-        if (finalFilter) {
-          this.getLeftSlotForBooking(finalFilter)
         }
         this.filterData = finalFilter;
         this.SlotsService.sendSlotData(finalFilter);
@@ -181,53 +181,46 @@ export class BookingDialogComponent implements OnInit {
     selectedItem2$
       .pipe(combineLatestWith(selectedItem4$))
       .subscribe((data: any) => {
-        // Find the fee based on scheduleName and appointmentType
-        console.log(data);
-
         const feeEntry = schedule.filter((entry: any) => {
           return entry.scheduleName === data[0];
         });
-
         if (feeEntry) {
-          let finalFee = feeEntry.map((fee: any) => {
-            // if (fee.appointmentType = data[1]) {
-            //  return fee.currentFee
-            // }
-
+          feeEntry.map((fee: any) => {
             let fees = fee.doctorFeesSetup.find((f: any) =>
-              f.appointmentType == data[1] ? f.currentFee : ''
+              f.appointmentType == data[1] ? f.totalFee : ''
             );
-            console.log(fees);
-
-            console.log(fees?.currentFee);
-            this.currentFee = fees?.currentFee;
+            this.totalFee = fees?.totalFee;
           });
-          // const currentFee = feeEntry.currentFee;
-          console.log('Current Fee:', finalFee);
-          // You can now use the currentFee value as needed.
         } else {
           console.log(
             'Fee not found for the given schedule and appointment type.'
           );
-          // Handle the case where no fee is found.
         }
       });
   }
 
-  getLeftSlotForBooking(filterData:any) {
-     
-    filterData.map((e:any)=>{
-      console.log(e);
-      
-    })
+  getLeftSlotForBooking(item: any):any {
+    // Create a dictionary to store the booked appointments count per session
+    const bookedAppointments: any = {};
+    // Loop through the appointment objects to count booked appointments per session
+    item?.appointments.forEach((appointment: any) => {
+      const sessionId = appointment.doctorScheduleDaySessionId;
+      if (bookedAppointments[sessionId] === undefined) {
+        bookedAppointments[sessionId] = 1;
+      } else {
+        bookedAppointments[sessionId]++;
+      }
+    });
 
-console.log(this.filterDoctorId);
+    // Calculate the left number of patients for each session
+    const leftNoOfPatients: any = {};
 
-    if (this.filterDoctorId) {
-      try {
-        this.AppointmentService.getList(this.filterDoctorId).subscribe((res: any) => console.log(res));
-      } catch (error) {}
-    }
+    item?.doctorScheduleDaySession.forEach((session: any) => {
+      const sessionId = session.id;
+      const bookedCount = bookedAppointments[sessionId] || 0;
+      leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
+    });
+    return leftNoOfPatients;
   }
 
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
