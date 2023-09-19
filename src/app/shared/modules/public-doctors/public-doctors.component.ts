@@ -22,7 +22,10 @@ export class PublicDoctorsComponent implements OnInit {
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       this.DoctorProfileService.getList().subscribe(
-        (e) => (this.doctorList = e)
+        (e) => {
+          this.doctorList = e
+          this.UserinfoStateService.sendDoctorListData(e)
+        }
       );
     }
   }

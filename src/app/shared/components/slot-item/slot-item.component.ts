@@ -1,3 +1,4 @@
+import { DoctorScheduleStateService } from './../../services/states/doctor-schedule-state.service';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -7,4 +8,8 @@ import { Component, Input } from '@angular/core';
 })
 export class SlotItemComponent {
   @Input() item: any;
+  constructor(private DoctorScheduleStateService: DoctorScheduleStateService) {}
+  selectSlot(data:{}) {
+    this.DoctorScheduleStateService.sendSelectedSlot(data);
+  }
 }
