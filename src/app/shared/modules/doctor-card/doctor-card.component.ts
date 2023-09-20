@@ -1,8 +1,10 @@
+import { DoctorScheduleStateService } from './../../services/states/doctor-schedule-state.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingDialogComponent } from '../../components/booking-dialog/booking-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DoctorScheduleDto } from 'src/app/proxy/dto-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-card',
@@ -11,28 +13,35 @@ import { DoctorScheduleDto } from 'src/app/proxy/dto-models';
 })
 export class DoctorCardComponent implements OnInit {
   @Input() doctorDetails: any;
-  doctorScheduleInfo: DoctorScheduleDto[] = [];
+  doctorScheduleList: DoctorScheduleDto[] = [];
   constructor(
     public dialog: MatDialog,
-    private DoctorScheduleService: DoctorScheduleService
+    private DoctorScheduleService: DoctorScheduleService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     if (this.doctorDetails != 'undefine || null') {
       this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
         this.doctorDetails.id
-      ).subscribe((res) => (this.doctorScheduleInfo = res));
+      ).subscribe((res) => {
+        this.doctorScheduleList = res
+      });
     }
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(BookingDialogComponent, {
-      width: '40vw',
+      maxWidth:600,
+      minWidth: 450,
       data: {
         doctorDetails: this.doctorDetails,
-        doctorScheduleInfo: this.doctorScheduleInfo,
+        doctorScheduleInfo: this.doctorScheduleList,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+  goToProfile(){
+      this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
   }
 }

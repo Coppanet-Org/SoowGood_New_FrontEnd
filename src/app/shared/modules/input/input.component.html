@@ -10,8 +10,20 @@
             </select>
         </ng-container>
         <ng-template #textInput>
-            <input required [id]="inputId" [type]="type" [placeholder]="placeholder" [readonly]="readonly" class="form_input" [value]="value" (input)="updateValue($event)">
+            <input required 
+            [id]="inputId" 
+            [type]="type" 
+            [placeholder]="placeholder" 
+            [readonly]="readonly" 
+            class="form_input" 
+            [value]="value" 
+            (input)="updateValue($event)"
+           
+            >
+
         </ng-template>
+
+      
     </div>
 </div>
 
