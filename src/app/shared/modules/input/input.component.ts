@@ -29,10 +29,6 @@ export class InputComponent implements ControlValueAccessor {
   @Input() formGroup!: FormGroup;
   @Input () submit!:boolean
   constructor() {
-    this.formGroup.addControl
-
-    console.log();
-    
   }
   
 
