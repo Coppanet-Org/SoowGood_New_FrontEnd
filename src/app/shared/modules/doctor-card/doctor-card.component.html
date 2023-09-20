@@ -67,7 +67,7 @@
         </button>
         <button
             class="rounded-md block w-full hover:bg-secondary/90 bg-secondary-light select-none hover:border-secondary border-secondary/20 border-[1px] py-2 px-7 text-center align-middle font-sans font-medium  text-[14px]  text-secondary-dark hover:text-white/90  transition-all  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button" data-ripple-light="true" [routerLink]="'/search/doctors/1/schedule'">
+            type="button" data-ripple-light="true" (click)="goToProfile()" >
             Profile
         </button>
     </div>

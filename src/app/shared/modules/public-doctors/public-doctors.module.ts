@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PublicDoctorsComponent } from './public-doctors.component';
-import { DoctorCardComponent } from '../doctor-card/doctor-card.component';
-import { RouterModule } from '@angular/router';
 import { DoctorCardModule } from '../doctor-card/doctor-card.module';
 
 
@@ -14,7 +12,6 @@ import { DoctorCardModule } from '../doctor-card/doctor-card.module';
     ],
   imports: [
     CommonModule,
-    
     DoctorCardModule
   ],
 exports:[

@@ -367,6 +367,7 @@ export const agentInputData =[
 
 
 export const bookingFilterInputData = (hospital: any) => {
+  
   return [
     {
       label: 'Appointment Date',
@@ -385,14 +386,14 @@ export const bookingFilterInputData = (hospital: any) => {
       formControlName: 'doctorScheduleType',
       isSelect: true,
     },
-    {
-      label: 'Select Consultancy Type',
-      inputId: 'consultancyType',
-      defaultOption: 'Select Consultancy Type',
-      options: consultancyType,
-      formControlName: 'consultancyType',
-      isSelect: true,
-    },
+    // {
+    //   label: 'Select Consultancy Type',
+    //   inputId: 'consultancyType',
+    //   defaultOption: 'Select Consultancy Type',
+    //   options: consultancyType,
+    //   formControlName: 'consultancyType',
+    //   isSelect: true,
+    // },
     {
       label: 'Select Appointment Type',
       inputId: 'appointmentType',

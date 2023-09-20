@@ -22,6 +22,7 @@ export class UserinfoStateService implements OnInit {
   ) {}
   public authenticateUserInfo = new BehaviorSubject<any>({});
   public userPatientInfo = new BehaviorSubject<any>([]);
+  public doctorsList = new BehaviorSubject<any>([]);
 
   sendData(data: any) {
     this.authenticateUserInfo.next(data);
@@ -29,14 +30,12 @@ export class UserinfoStateService implements OnInit {
   getData() {
     return this.authenticateUserInfo.asObservable();
   }
-
   sendUserPatientData(data: any) {
     this.userPatientInfo.next(data);
   }
   getUserPatientData() {
     return this.userPatientInfo.asObservable();
   }
-
   ngOnInit() {
     let user = this.NormalAuth.authInfo();
     if (user.id) {
@@ -69,7 +68,6 @@ export class UserinfoStateService implements OnInit {
 
   }
 
-
   // get user created patient list
   getUserPatientInfo(id: any, role: string): void {    
     if (id && role == 'patient') {
@@ -78,4 +76,13 @@ export class UserinfoStateService implements OnInit {
       );
     }
   }
+
+getDoctorListData(){
+  return this.doctorsList.asObservable();
 }
+sendDoctorListData(data:any[]){
+  this.doctorsList.next(data);
+}
+
+}
+
