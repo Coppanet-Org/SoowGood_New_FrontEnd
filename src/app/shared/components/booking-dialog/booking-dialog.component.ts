@@ -76,6 +76,18 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   selectedSlotInfo: any;
   selectedFeesInfo: any;
   @ViewChildren(InputComponent) customInputs!: QueryList<InputComponent>;
+  
+  //SSLCommerz
+  sslInputDto = {
+    applicantCode: '',
+    examFee: 100,
+    serviceCharge: 0,
+    customAmount: 10,
+    isCustomAmount: false
+  }
+  hasValidCode = false;
+
+
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -115,7 +127,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
  
-    
+    console.log(this.doctorData);
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
       .subscribe((slot: any) => {
@@ -308,6 +320,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   // change step
   onStepChange(e: any) {
+    console.log(this.doctorData.doctorDetails.fullName);
+       console.log(this.doctorData.doctorDetails.doctorCode);
     if (e === 1) {
       this.activeTab = e;
     }
@@ -317,7 +331,6 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     if (e === 3) {
 
       if (this.form.valid) {
-        
         this.stepHeading = 'Confirm';
         let schedule = this.doctorData.doctorScheduleInfo;
         const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
@@ -342,8 +355,11 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         const infoForBooking = {
           doctorScheduleId,
           doctorProfileId,
+          doctorName:this.doctorData?.doctorDetails.fullName,
+          doctorCode: this.doctorData?.doctorDetails.doctorCode,
           patientProfileId: user?.id,
           patientName: user?.fullName,
+          patientCode: user?.patientCode,
           consultancyType,
           doctorChamberId,
           scheduleType,
@@ -354,15 +370,20 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           appointmentTime: '',
           doctorFeesSetupId: this.selectedFeesInfo.id,
           doctorFee: this.selectedFeesInfo.totalFee,
+          agentFee:0,
+          platformFee:0,
           totalAppointmentFee: this.selectedFeesInfo.totalFee,
           appointmentStatus: 1,
-          appointmentPaymentStatus: 1,
+          appointmentPaymentStatus: 2,
         };
   
-        if (infoForBooking && this.form.valid) {
-          this.DoctorBookingStateService.sendBookingData(infoForBooking);
+        if (infoForBooking) {
+          this.AppointmentService.create(infoForBooking).subscribe((res)=>{
+            this.DoctorBookingStateService.sendBookingData({...infoForBooking, appointmenCode:res.appointmenCode});
+             console.log(res);
+             this.activeTab = e;
+          })
         }
-        this.activeTab = e;
       }else{
         this.TosterService.customToast(
           'Please select all the required fields',

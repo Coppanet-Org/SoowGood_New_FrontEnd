@@ -1,8 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\components\\booking-dialog",
+    "\\src\\app\\shared\\components\\booking-dialog\\booking-review"
   ],
-  "SelectedNode": "\\.angular",
+  "SelectedNode": "\\src\\app\\shared\\components\\booking-dialog\\booking-review\\booking-review.component.html",
   "PreviewInSolutionExplorer": false
 }

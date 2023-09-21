@@ -5,5 +5,6 @@ import * as Enums from './enums';
 import * as InputDto from './input-dto';
 import * as Microsoft from './microsoft';
 import * as Services from './services';
+import * as SslCommerzData from './ssl-commerz-data';
 import * as Volo from './volo';
-export { Controllers, Coppanet, DtoModels, Enums, InputDto, Microsoft, Services, Volo };
+export { Controllers, Coppanet, DtoModels, Enums, InputDto, Microsoft, Services, SslCommerzData, Volo };

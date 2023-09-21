@@ -1,6 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, ResponseDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto, SslCommerzInitDto } from '../dto-models/models';
+import type { SslCommerzInputDto } from '../input-dto/models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,18 @@ export class AppointmentService {
   
 
   create = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ResponseDto>({
+    this.restService.request<any, AppointmentDto>({
       method: 'POST',
       url: '/api/app/appointment',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  geAppointmentListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'POST',
+      url: `/api/app/appointment/ge-appointment-list-by-doctor-id/${doctorId}`,
     },
     { apiName: this.apiName,...config });
   
@@ -52,8 +61,17 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  initiateTestPayment = (input: SslCommerzInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SslCommerzInitDto>({
+      method: 'POST',
+      url: '/api/app/appointment/initiate-test-payment',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ResponseDto>({
+    this.restService.request<any, AppointmentDto>({
       method: 'PUT',
       url: '/api/app/appointment',
       body: input,

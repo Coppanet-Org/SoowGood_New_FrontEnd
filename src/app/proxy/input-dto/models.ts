@@ -85,6 +85,7 @@ export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   fullName?: string;
   isSelf?: boolean;
   patientName?: string;
+  patientCode?: string;
   dateOfBirth?: string;
   age?: number;
   gender?: Gender;
@@ -101,4 +102,10 @@ export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   cratorCode?: string;
   creatorEntityId?: number;
   userId?: string;
+}
+
+export interface SslCommerzInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
 }

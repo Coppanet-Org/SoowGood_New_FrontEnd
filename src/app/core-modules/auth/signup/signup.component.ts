@@ -549,8 +549,8 @@ export class SignupComponent implements OnInit {
           if (res.success) {
             this.isLoading = false;
             if (userType === 'Doctor') {
-              let codeCnt = +(this.lastCount + 1);
-              this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
+              //let codeCnt = +(this.lastCount + 1);
+              //this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
               this.doctorProfileDto.doctorTitle = title;
               this.doctorProfileDto.userId = res.userId;
               this.doctorProfileDto.fullName = res.name;
