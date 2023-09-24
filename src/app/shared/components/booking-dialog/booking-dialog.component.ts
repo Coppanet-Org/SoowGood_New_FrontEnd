@@ -107,7 +107,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     //     // Check if the input value is empty and set an error message and the error state
     //     const formControl = this.form.get(customInput.formControlName);
     //     if (formControl && formControl.value === '') {
-  
+
     //     }
     //   }
     // });
@@ -115,7 +115,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
- 
+
     this.dataLoader = true
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
@@ -320,7 +320,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     if (e === 3) {
 
       if (this.form.valid) {
-        
+
         this.stepHeading = 'Confirm';
         let schedule = this.doctorData.doctorScheduleInfo;
         const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
@@ -333,15 +333,15 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           doctorProfileId,
           scheduleType,
         } = finalSchedule;
-  
+
         const { appointmentType, appointmentDate } = this.form.value;
         let user: any = '';
         this.UserinfoStateService.getData().subscribe(
           (userInfo) => (user = userInfo)
         );
-  
-  
-       
+
+
+
         const infoForBooking = {
           doctorScheduleId,
           doctorProfileId,
@@ -361,12 +361,12 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           appointmentStatus: 1,
           appointmentPaymentStatus: 1,
         };
-  
+
         if (infoForBooking && this.form.valid) {
           this.DoctorBookingStateService.sendBookingData(infoForBooking);
         }
         this.activeTab = e;
-      }else{
+      } else {
         this.TosterService.customToast(
           'Please select all the required fields',
           'warning'
@@ -441,5 +441,5 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       );
     }
   }
-  closeDialogs() {}
+  closeDialogs() { }
 }
