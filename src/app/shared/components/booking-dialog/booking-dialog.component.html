@@ -63,7 +63,7 @@
 
     <!-- select doctor schedule filter -->
         <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
-            <div>
+            <div *ngIf="!dataLoader; else loader">
                 <form [formGroup]="form">
                     <div class="flex justify-between">
                         <div class="flex gap-4">
@@ -88,7 +88,7 @@
                         <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
                             <app-input [label]="config.label"  [inputId]="config.inputId"
                                 [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
-                                [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form"
+                                [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form" 
                                 [type]="config.type" class="sm:w-1/2 h-fit"></app-input>
                         </ng-container>
                     </div>
@@ -107,6 +107,12 @@
                     <button class="btn-secondary py-2" (click)="onStepChange(3 )">Next</button>
                 </div>
             </div>
+
+
+            <ng-template #loader>
+                Data is loading...
+            </ng-template>
+
         </mat-step>
 
    <!-- create new patient or exist patient -->

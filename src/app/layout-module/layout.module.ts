@@ -12,6 +12,7 @@ import { AgentComponent } from '../features-modules/agent/agent.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
 import { isAuth } from '../auth-gurd/auth.service';
+import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 
 const routes: Route[] = [
   {
@@ -105,6 +106,10 @@ const routes: Route[] = [
           ),
       },
     ],
+  },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
   },
 ];
 

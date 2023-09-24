@@ -76,6 +76,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   selectedSlotInfo: any;
   selectedFeesInfo: any;
   @ViewChildren(InputComponent) customInputs!: QueryList<InputComponent>;
+  dataLoader!: boolean;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -115,7 +116,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
  
-    
+    this.dataLoader = true
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
       .subscribe((slot: any) => {
@@ -128,8 +129,10 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         return { name: e.scheduleName, id: e.scheduleName };
       });
       this.inputConfigs = bookingFilterInputData(list);
+      this.dataLoader = false
     } else {
       this.inputConfigs = bookingFilterInputData([]);
+      this.dataLoader = false
     }
 
     this.UserinfoStateService.getData()
