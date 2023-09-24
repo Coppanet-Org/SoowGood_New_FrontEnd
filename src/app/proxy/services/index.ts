@@ -13,4 +13,5 @@ export * from './otp.service';
 export * from './patient-profile.service';
 export * from './speciality.service';
 export * from './specialization.service';
+export * from './ssl-commerz.service';
 export * from './user-accounts.service';
