@@ -3,11 +3,17 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\volo",
+    "\\src\\app\\proxy\\volo\\abp",
+    "\\src\\app\\proxy\\volo\\abp\\domain",
+    "\\src\\app\\proxy\\volo\\abp\\domain\\entities",
+    "\\src\\app\\proxy\\volo\\abp\\identity",
     "\\src\\app\\shared",
     "\\src\\app\\shared\\components",
     "\\src\\app\\shared\\components\\booking-dialog",
     "\\src\\app\\shared\\components\\booking-dialog\\booking-review"
   ],
-  "SelectedNode": "\\src\\app\\shared\\components\\booking-dialog\\booking-review\\booking-review.component.html",
+  "SelectedNode": "\\src\\app\\proxy\\volo\\abp\\identity\\models.ts",
   "PreviewInSolutionExplorer": false
 }
