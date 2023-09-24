@@ -77,6 +77,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   selectedFeesInfo: any;
   @ViewChildren(InputComponent) customInputs!: QueryList<InputComponent>;
   dataLoader!: boolean;
+
+  hasValidCode = false;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -345,8 +347,11 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         const infoForBooking = {
           doctorScheduleId,
           doctorProfileId,
+          doctorName: this.doctorData?.doctorDetails.fullName,
+          doctorCode: this.doctorData?.doctorDetails.doctorCode,
           patientProfileId: user?.id,
           patientName: user?.fullName,
+          patientCode: user?.patientCode,
           consultancyType,
           doctorChamberId,
           scheduleType,
@@ -357,15 +362,21 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           appointmentTime: '',
           doctorFeesSetupId: this.selectedFeesInfo.id,
           doctorFee: this.selectedFeesInfo.totalFee,
+          agentFee: 0,
+          platformFee: 0,
           totalAppointmentFee: this.selectedFeesInfo.totalFee,
           appointmentStatus: 1,
-          appointmentPaymentStatus: 1,
+          appointmentPaymentStatus: 2,
         };
-
-        if (infoForBooking && this.form.valid) {
-          this.DoctorBookingStateService.sendBookingData(infoForBooking);
+        //  && this.form.valid
+        if (infoForBooking) {
+          //this.DoctorBookingStateService.sendBookingData(infoForBooking);
+          this.AppointmentService.create(infoForBooking).subscribe((res) => {
+            this.DoctorBookingStateService.sendBookingData({ ...infoForBooking, appointmenCode: res.appointmenCode });
+            console.log(res);
+            this.activeTab = e;
+          });
         }
-        this.activeTab = e;
       } else {
         this.TosterService.customToast(
           'Please select all the required fields',
