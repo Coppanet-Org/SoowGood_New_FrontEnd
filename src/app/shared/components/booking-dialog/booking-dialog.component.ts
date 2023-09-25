@@ -370,6 +370,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         };
         //  && this.form.valid
         if (infoForBooking) {
+
           //this.DoctorBookingStateService.sendBookingData(infoForBooking);
           this.AppointmentService.create(infoForBooking).subscribe((res) => {
             this.DoctorBookingStateService.sendBookingData({ ...infoForBooking, appointmenCode: res.appointmenCode });
