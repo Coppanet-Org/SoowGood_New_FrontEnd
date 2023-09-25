@@ -52,12 +52,15 @@ export interface AgentProfileDto extends FullAuditedEntityDto<number> {
 
 export interface AppointmentDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
+  appointmenCode?: string;
   doctorScheduleId?: number;
   doctorScheduleName?: string;
   doctorProfileId?: number;
   doctorName?: string;
+  doctorCode?: string;
   patientProfileId?: number;
   patientName?: string;
+  patientCode?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
   doctorChamberId?: number;
@@ -83,11 +86,14 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
+  appointmenCode?: string;
   doctorScheduleId?: number;
   doctorProfileId?: number;
   doctorName?: string;
+  doctorCode?: string;
   patientProfileId?: number;
   patientName?: string;
+  patientCode?: string;
   consultancyType?: ConsultancyType;
   doctorChamberId?: number;
   doctorScheduleDaySessionId?: number;
@@ -302,6 +308,7 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   fullName?: string;
   isSelf?: boolean;
   patientName?: string;
+  patientCode?: string;
   dateOfBirth?: string;
   age?: number;
   gender?: Gender;
@@ -339,6 +346,12 @@ export interface SpecializationDto extends FullAuditedEntityDto<number> {
   specialityName?: string;
   specializationName?: string;
   description?: string;
+}
+
+export interface SslCommerzInitDto {
+  status?: string;
+  failedreason?: string;
+  gatewayPageURL?: string;
 }
 
 export interface UserInfoDto extends FullAuditedEntityDto<string> {
