@@ -311,6 +311,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   // change step
   onStepChange(e: any) {
+
     if (e === 1) {
       this.activeTab = e;
     }
@@ -318,6 +319,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       this.activeTab = e;
     }
     if (e === 3) {
+
+     
 
       if (this.form.valid) {
         
@@ -360,6 +363,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           totalAppointmentFee: this.selectedFeesInfo.totalFee,
           appointmentStatus: 1,
           appointmentPaymentStatus: 1,
+          
         };
   
         if (infoForBooking && this.form.valid) {
@@ -440,6 +444,6 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         })
       );
     }
-  }
+  }                                                                                  
   closeDialogs() {}
 }
