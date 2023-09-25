@@ -7,6 +7,6 @@
     "\\src\\app\\proxy\\controllers",
     "\\src\\app\\proxy\\services"
   ],
-  "SelectedNode": "\\src\\app\\proxy\\controllers\\payment.service.ts",
+  "SelectedNode": "\\src\\app\\proxy\\controllers\\index.ts",
   "PreviewInSolutionExplorer": false
 }
