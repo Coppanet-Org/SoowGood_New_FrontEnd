@@ -1,7 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, SslCommerzInitDto } from '../dto-models/models';
-import type { SslCommerzInputDto } from '../input-dto/models';
+import type { AppointmentDto, AppointmentInputDto } from '../dto-models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -57,15 +56,6 @@ export class AppointmentService {
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: '/api/app/appointment',
-    },
-    { apiName: this.apiName,...config });
-  
-
-  initiateTestPayment = (input: SslCommerzInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, SslCommerzInitDto>({
-      method: 'POST',
-      url: '/api/app/appointment/initiate-test-payment',
-      body: input,
     },
     { apiName: this.apiName,...config });
   
