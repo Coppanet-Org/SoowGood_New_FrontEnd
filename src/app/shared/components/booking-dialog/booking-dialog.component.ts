@@ -354,7 +354,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           patientCode: user?.patientCode,
           consultancyType,
           doctorChamberId,
-          scheduleType,
+          scheduleType,  
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,
           appointmentType,
