@@ -11,6 +11,8 @@ export * from './doctor-specialization.service';
 export * from './documents-attachment.service';
 export * from './otp.service';
 export * from './patient-profile.service';
+export * from './payment-history.service';
+export * from './sms.service';
 export * from './speciality.service';
 export * from './specialization.service';
 export * from './ssl-commerz.service';

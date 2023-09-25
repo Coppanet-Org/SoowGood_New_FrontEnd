@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { SmsRequestParamDto, SmsResponseDto } from '../../../dto-models/models';
+import type { SmsRequestParamDto, SmsResponseDto } from '../dto-models/models';
 
 @Injectable({
   providedIn: 'root',
