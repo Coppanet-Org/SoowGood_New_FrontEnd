@@ -1,8 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { SslCommerzInitDto } from '../dto-models/models';
+import type { SslCommerzInitDto, TransactionValidationDto } from '../dto-models/models';
 import type { SslCommerzInputDto } from '../input-dto/models';
-import type { TransactionValidationDto } from '../ssl-commerz-data/models';
 
 @Injectable({
   providedIn: 'root',
