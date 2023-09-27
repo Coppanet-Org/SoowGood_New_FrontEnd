@@ -31,15 +31,19 @@ export class DoctorCardComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(BookingDialogComponent, {
-      maxWidth:600,
-      minWidth: 450,
-      data: {
-        doctorDetails: this.doctorDetails,
-        doctorScheduleInfo: this.doctorScheduleList,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
+      if (this.doctorScheduleList.length > 0 && this.doctorDetails) {
+        const dialogRef = this.dialog.open(BookingDialogComponent, {
+          maxWidth:600,
+          minWidth: 450,
+          data: {
+            doctorDetails: this.doctorDetails,
+            doctorScheduleInfo: this.doctorScheduleList,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {});
+      } else {
+        console.log(`${this.doctorDetails} or ${this.doctorScheduleList} not found`);
+      }
   }
   goToProfile(){
       this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
