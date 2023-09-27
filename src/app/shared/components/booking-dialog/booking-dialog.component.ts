@@ -36,6 +36,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DoctorScheduleStateService } from '../../services/states/doctor-schedule-state.service';
 import { InputComponent } from '../../modules/input/input.component';
+import { PatientProfileDto } from 'src/app/proxy/dto-models';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -79,6 +80,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   dataLoader!: boolean;
 
   hasValidCode = false;
+  createNewPatientInfo: PatientProfileDto = {};
+  alreadyExistPatient: PatientProfileDto = {};
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -103,22 +106,18 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     // const filterCriteria = ['appointmentDate', 'doctorScheduleType', 'appointmentType'];
-
     // this.customInputs.forEach((customInput: InputComponent) => {
     //   if (filterCriteria.includes(customInput.inputId)) {
     //     // Check if the input value is empty and set an error message and the error state
     //     const formControl = this.form.get(customInput.formControlName);
     //     if (formControl && formControl.value === '') {
-
     //     }
     //   }
     // });
   }
 
-
   ngOnInit() {
-
-    this.dataLoader = true
+    this.dataLoader = true;
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
       .subscribe((slot: any) => {
@@ -131,10 +130,10 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         return { name: e.scheduleName, id: e.scheduleName };
       });
       this.inputConfigs = bookingFilterInputData(list);
-      this.dataLoader = false
+      this.dataLoader = false;
     } else {
       this.inputConfigs = bookingFilterInputData([]);
-      this.dataLoader = false
+      this.dataLoader = false;
     }
 
     this.UserinfoStateService.getData()
@@ -286,8 +285,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   loadForm() {
     //future update
     this.bookingForm = this.fb.group({
-      bookMyself: [false],
-      bookOther: [false],
+      bookMyself: [''],
+      bookOther: [''],
       patientName: [''],
       age: [''],
       mobile: [''],
@@ -305,7 +304,10 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       gender: [, Validators.required],
       bloodGroup: ['', Validators.required],
       patientMobileNo: ['', Validators.required],
-      patientEmail: ['' || this.profileInfo?.email, Validators.required],
+      patientEmail: [
+        '' || this.profileInfo?.email || 'admin@gmail.com',
+        Validators.required,
+      ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
     });
@@ -313,81 +315,117 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   // change step
   onStepChange(e: any) {
-    if (e === 1) {
+    if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
-    if (e == 2) {
-      this.activeTab = e;
-    }
-    if (e === 3) {
 
-      if (this.form.valid) {
+    if (e === 3 && this.form.valid) {
+      this.stepHeading = 'Confirm';
+      const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
+      const finalSchedule = this.doctorData.doctorScheduleInfo.find(
+        (res: any) => res.id === doctorScheduleId
+      );
 
-        this.stepHeading = 'Confirm';
-        let schedule = this.doctorData.doctorScheduleInfo;
-        const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
-        let finalSchedule = schedule.find(
-          (res: any) => res.id === doctorScheduleId
-        );
-        const {
-          consultancyType,
-          doctorChamberId,
-          doctorProfileId,
-          scheduleType,
-        } = finalSchedule;
+      const {
+        consultancyType,
+        doctorChamberId,
+        doctorProfileId,
+        scheduleType,
+      } = finalSchedule;
 
-        const { appointmentType, appointmentDate } = this.form.value;
-        let user: any = '';
-        this.UserinfoStateService.getData().subscribe(
-          (userInfo) => (user = userInfo)
-        );
+      const { appointmentType, appointmentDate } = this.form.value;
 
+      let user: any = '';
+      this.UserinfoStateService.getData().subscribe(
+        (userInfo) => (user = userInfo)
+      );
 
+      const infoForBooking = {
+        doctorScheduleId,
+        doctorProfileId,
+        doctorName: this.doctorData?.doctorDetails.fullName,
+        doctorCode: this.doctorData?.doctorDetails.doctorCode,
+        patientProfileId: user?.id,
+        patientName: this.alreadyExistPatient?.patientName
+          ? this.alreadyExistPatient?.patientName
+          : this.createNewPatientInfo?.patientName
+          ? this.createNewPatientInfo?.patientName
+          : user?.fullName || 'admin',
+        patientCode: this.alreadyExistPatient?.patientCode
+          ? this.alreadyExistPatient?.patientCode
+          : this.createNewPatientInfo?.patientCode
+          ? this.createNewPatientInfo?.patientCode
+          : user?.patientCode || 'Not found',
+        patientMobileNo: this.alreadyExistPatient?.patientMobileNo
+          ? this.alreadyExistPatient?.patientMobileNo
+          : this.createNewPatientInfo?.patientMobileNo
+          ? this.createNewPatientInfo?.patientMobileNo
+          : user?.mobileNo || '0123456789',
+        patientEmail: this.alreadyExistPatient?.patientEmail
+          ? this.alreadyExistPatient?.patientEmail
+          : this.createNewPatientInfo?.patientEmail
+          ? this.createNewPatientInfo?.patientEmail
+          : user.email || 'admin@gmail.com',
+        consultancyType,
+        doctorChamberId,
+        scheduleType,
+        doctorScheduleDaySessionId: id,
+        scheduleDayofWeek,
+        appointmentType,
+        appointmentDate,
+        appointmentTime: '',
+        doctorFeesSetupId: this.selectedFeesInfo.id,
+        doctorFee: this.selectedFeesInfo.totalFee,
+        agentFee: 0,
+        platformFee: 0,
+        totalAppointmentFee: this.selectedFeesInfo.totalFee,
+        appointmentStatus: 1,
+        appointmentPaymentStatus: 2,
+      };
+console.log(infoForBooking , user);
 
-        const infoForBooking = {
-          doctorScheduleId,
-          doctorProfileId,
-          doctorName: this.doctorData?.doctorDetails.fullName,
-          doctorCode: this.doctorData?.doctorDetails.doctorCode,
-          patientProfileId: user?.id,
-          patientName: user?.fullName,
-          patientCode: user?.patientCode,
-          consultancyType,
-          doctorChamberId,
-          scheduleType,  
-          doctorScheduleDaySessionId: id,
-          scheduleDayofWeek,
-          appointmentType,
-          appointmentDate,
-          appointmentTime: '',
-          doctorFeesSetupId: this.selectedFeesInfo.id,
-          doctorFee: this.selectedFeesInfo.totalFee,
-          agentFee: 0,
-          platformFee: 0,
-          totalAppointmentFee: this.selectedFeesInfo.totalFee,
-          appointmentStatus: 1,
-          appointmentPaymentStatus: 2,
-        };
-        //  && this.form.valid
-        if (infoForBooking) {
+      if (infoForBooking && user) {
+        if (this.bookingForm.get('bookMyself')?.value == 'bookMyself') {
+          const obj = {
+            id: user?.id,
+            patientName: user.fullName,
+            patientCode: user.patientCode,
+            fullName: user.fullName,
+            patientEmail: user.email ? user.email : 'admin@gmail.com',
+            patientMobileNo: user.mobileNo,
+          };
 
-          //this.DoctorBookingStateService.sendBookingData(infoForBooking);
-          this.AppointmentService.create(infoForBooking).subscribe((res) => {
-            this.DoctorBookingStateService.sendBookingData({ ...infoForBooking, appointmenCode: res.appointmenCode });
-            console.log(res);
-            this.activeTab = e;
+          this.PatientProfileService.update(obj).subscribe((res) => {
+            this.createAppointment(infoForBooking, e);
           });
+        } else if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
+            this.createAppointment(infoForBooking, e);
+        } else {
+          this.TosterService.customToast(
+            'Select book for others/myself',
+            'warning'
+          );
+          return
         }
-      } else {
-        this.TosterService.customToast(
-          'Please select all the required fields',
-          'warning'
-        );
-        return;
       }
-      return;
+    } else if (e === 3 && !this.form.valid) {
+      this.TosterService.customToast(
+        'Please select all the required fields',
+        'warning'
+      );
     }
   }
+
+  createAppointment(infoForBooking: any, e: any) {
+    this.AppointmentService.create(infoForBooking).subscribe((res) => {
+      this.DoctorBookingStateService.sendBookingData({
+        ...infoForBooking,
+        appointmenCode: res.appointmenCode,
+      });
+      this.activeTab = e;
+    });
+  }
+
   //user existing check
   userExistCheck(status: string): void {
     this.createPatientForm
@@ -423,6 +461,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         this.PatientProfileService.create(
           this.createPatientForm.value
         ).subscribe((res) => {
+          this.createNewPatientInfo = res;
           this.btnLoader = false;
           this.TosterService.customToast('Your patient is created!', 'success');
           this.UserinfoStateService.getUserPatientInfo(
@@ -447,11 +486,29 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         res.find((data: any) => {
           if (data.id == e.target.value) {
             this.createPatientForm.patchValue(data);
+            this.alreadyExistPatient = data;
           }
           return;
         })
       );
     }
   }
-  closeDialogs() { }
+  closeDialogs() {}
 }
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
