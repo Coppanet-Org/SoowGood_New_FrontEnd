@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DoctorComponent } from './doctor.component';
 import { Route, RouterModule } from '@angular/router';
-import { RightSidebarComponent } from './component/right-sidebar/right-sidebar.component';
-import { DashboardMenuComponent } from 'src/app/shared/components/dashboard-menu/dashboard-menu.component';
-import { DashboardMenuItemComponent } from 'src/app/shared/components/dashboard-menu-item/dashboard-menu-item.component';
+import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashboard-menu.module';
+import { isAuth } from 'src/app/auth-gurd/auth.service';
 const routes: Route[] = [
   {
     path: '',
     component: DoctorComponent,
+    // canActivate: [isAuth],
     children: [
       {
         path: '',
@@ -64,11 +64,7 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     DoctorComponent,
-    DashboardMenuComponent,
-    RightSidebarComponent,
-    DashboardMenuItemComponent,
-    
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule,DashboardMenuModule, RouterModule.forChild(routes)],
 })
 export class DoctorModule {}

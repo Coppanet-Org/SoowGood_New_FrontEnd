@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -21,13 +21,17 @@ export class InputComponent implements ControlValueAccessor {
   @Input() options!: any[];
   @Input() isSelectInput: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() disabled: boolean = false;
   @Input() type!: string;
   @Input() placeholder!: string;
-
+  @Input() formControlName!: any;
+  @Input() errorMessage!: string; 
+  @Input() formGroup!: FormGroup;
+  @Input () submit!:boolean
   constructor() {
-    console.log(this.type);
-    
   }
+  
+
 
   value: any;
   onChange: any = () => {};

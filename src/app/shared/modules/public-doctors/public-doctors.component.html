@@ -1,0 +1,54 @@
+<div class="doctor-dashboard_midcontent_container w-full ">
+    <div class="flex items-center justify-left border-[1px]">
+        <div class="w-full h-full bg-white ">
+            <div class="relative overflow-x-auto  sm:rounded-lg ">
+                <div class=" bg-slate-200/20 flex gap-4 items-center justify-between border-b-[1px] px-8 py-5 ">
+                    <h1 class="dashbord-heading-text text-[22px] "> <i class="fa-solid fa-building-columns mr-1"></i>
+                        Doctors</h1>
+                    <div class="flex ">
+
+                        <div class="mr-10 py-2 h-fit px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] " >
+                            <input class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
+                                placeholder="Search patient/doctor..." />
+                            <span class="bg-transparent">
+                                <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                            </span>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <select class="form_input w-[200px]" [value]="0" id="0">
+                                <option value="0">Appointment Type</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                            </select>
+                            <select class="form_input w-[200px]" [value]="0">
+                                <option value="0">Available Now</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                            </select>
+                            <select class="form_input w-[200px]" [value]="0">
+                                <option value="0">Specialist</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                                <option value="">--select--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="w-full grid lg:grid-cols-4 gap-10 p-5 h-screen flex-wrap overflow-y-scroll no-scrollbar pb-[50px]">
+                    <div *ngFor="let doctorDetails of doctorList">
+                        <app-doctor-card [doctorDetails]="doctorDetails" class="max-w-[350px] min-w-[310px]"></app-doctor-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

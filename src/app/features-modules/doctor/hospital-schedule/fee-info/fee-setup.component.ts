@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FeeDialogComponent } from '../fee-dialog/fee-dialog.component';
 import { DoctorFeesSetupDto } from 'src/app/proxy/dto-models';
+import { ConfirmDialogComponent } from 'src/app/shared/modules/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-fee-setup',
@@ -13,6 +14,7 @@ import { DoctorFeesSetupDto } from 'src/app/proxy/dto-models';
 export class FeeSetupComponent implements OnInit {
   feeList: DoctorFeesSetupDto[] = [];
   doctorId!: number;
+
 
   constructor(
     public dialog: MatDialog,
@@ -44,6 +46,7 @@ export class FeeSetupComponent implements OnInit {
     });
   }
   handleFeeEdit(row: any) {
+
     this.dialog
       .open(FeeDialogComponent, {
         data: row,
@@ -53,6 +56,19 @@ export class FeeSetupComponent implements OnInit {
       .subscribe((result) => {
         if (result === true) {
           this.getFeeList(this.doctorId);
+        }
+      });
+  }
+  handleFeeDelete(row: any) {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: row,
+        width: "25vw",
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result === true) {
+          // this.getFeeList(this.doctorId);
         }
       });
   }

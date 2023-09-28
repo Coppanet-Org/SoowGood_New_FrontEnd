@@ -1,6 +1,6 @@
 <div class="overflow-hidden" [@slideInFrom]="animationDirection"
-  class="doctor-dashboard_midcontent_container w-ful p-4">
-  <div class="flex items-center justify-left my-2 ">
+  class="doctor-dashboard_midcontent_container w-ful">
+  <div class="flex items-center justify-left">
     <div class=" w-full  bg-white">
 
       <div class="relative overflow-x-auto  sm:rounded-lg p-8">
@@ -11,7 +11,7 @@
 
         <div class="w-full mt-6">
 
-          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7" [selectedIndex]="2">
+          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7" [selectedIndex]="activeTab">
             <mat-step [stepControl]="firstFormGroup" label="Add New Hospital">
               <app-hospital-info></app-hospital-info>
             </mat-step>

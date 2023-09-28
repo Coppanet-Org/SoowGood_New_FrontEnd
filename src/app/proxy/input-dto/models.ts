@@ -3,6 +3,22 @@ import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 
+export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  agentCode?: string;
+  organizationName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  isActive?: boolean;
+  userId?: string;
+  profileStep?: number;
+  createFrom?: string;
+}
+
 export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   chamberName?: string;
@@ -25,6 +41,7 @@ export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorProfileInputDto extends FullAuditedEntityDto<number> {
+  doctorCode?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;
@@ -57,8 +74,38 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
   doctorProfileId?: number;
   specialityId?: number;
   specializationId?: number;
+  documentName?: string;
 }
 
 export interface FileDeleteInputDto {
   filePath?: string;
+}
+
+export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  patientCode?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  patientMobileNo?: string;
+  email?: string;
+  patientEmail?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  creatorEntityId?: number;
+  userId?: string;
+}
+
+export interface SslCommerzInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
 }

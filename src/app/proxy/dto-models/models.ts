@@ -1,35 +1,94 @@
-import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { EntityDto, FullAuditedEntityDto } from '@abp/ng.core';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
+import type { AppointmentStatus } from '../enums/appointment-status.enum';
+import type { AppointmentPaymentStatus } from '../enums/appointment-payment-status.enum';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { ScheduleType } from '../enums/schedule-type.enum';
-import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
-export interface SmsInfo {
-  sms_status?: string;
-  status_message?: string;
-  sms_type?: string;
-  msisdn?: string;
-  sms_body?: string;
-  csms_id?: string;
-  reference_id?: string;
+export interface AgentProfileDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  agentCode?: string;
+  organizationName?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  email?: string;
+  isActive?: boolean;
+  userId?: string;
+  profileStep?: number;
+  createFrom?: string;
 }
 
-export interface SmsRequestParamDto {
-  msisdn?: string;
-  sms?: string;
-  csmsId?: string;
+export interface AppointmentDto extends FullAuditedEntityDto<number> {
+  appointmentSerial?: string;
+  appointmenCode?: string;
+  doctorScheduleId?: number;
+  doctorScheduleName?: string;
+  doctorProfileId?: number;
+  doctorName?: string;
+  doctorCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  consultancyType?: ConsultancyType;
+  consultancyTypeName?: string;
+  doctorChamberId?: number;
+  doctorChamberName?: string;
+  doctorScheduleDaySessionId?: number;
+  scheduleDayofWeek?: string;
+  appointmentType?: AppointmentType;
+  appointmentTypeName?: string;
+  appointmentDate?: string;
+  appointmentTime?: string;
+  doctorFeesSetupId?: number;
+  doctorFee?: number;
+  agentFee?: number;
+  platformFee?: number;
+  totalAppointmentFee?: number;
+  appointmentStatus?: AppointmentStatus;
+  appointmentStatusName?: string;
+  appointmentPaymentStatus?: AppointmentPaymentStatus;
+  appointmentPaymentStatusName?: string;
+  cancelledByEntityId?: number;
+  cancelledByRole?: string;
+  paymentTransactionId?: string;
 }
 
-export interface SmsResponseDto {
-  status?: string;
-  status_code?: string;
-  error_message?: string;
-  smsinfo: SmsInfo[];
+export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
+  appointmentSerial?: string;
+  appointmenCode?: string;
+  doctorScheduleId?: number;
+  doctorProfileId?: number;
+  doctorName?: string;
+  doctorCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  consultancyType?: ConsultancyType;
+  doctorChamberId?: number;
+  doctorScheduleDaySessionId?: number;
+  scheduleDayofWeek?: string;
+  appointmentType?: AppointmentType;
+  appointmentDate?: string;
+  appointmentTime?: string;
+  doctorFeesSetupId?: number;
+  doctorFee?: number;
+  agentFee?: number;
+  platformFee?: number;
+  totalAppointmentFee?: number;
+  appointmentStatus?: AppointmentStatus;
+  appointmentPaymentStatus?: AppointmentPaymentStatus;
+  cancelledByEntityId?: number;
+  cancelledByRole?: string;
+  paymentTransactionId?: string;
 }
 
 export interface DegreeDto extends FullAuditedEntityDto<number> {
@@ -93,6 +152,7 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
+  doctorCode?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;
@@ -162,6 +222,7 @@ export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
   remarks?: string;
   doctorScheduleDaySession: DoctorScheduleDaySessionDto[];
   doctorFeesSetup: DoctorFeesSetupDto[];
+  appointments: AppointmentDto[];
   scheduleName?: string;
 }
 
@@ -175,6 +236,7 @@ export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
   offDayTo?: string;
   doctorScheduleDaySession: DoctorScheduleDaySessionInputDto[];
   doctorFeesSetup: DoctorFeesSetupInputDto[];
+  scheduleName?: string;
 }
 
 export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
@@ -184,6 +246,7 @@ export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
   specialityName?: string;
   specializationId?: number;
   specializationName?: string;
+  documentName?: string;
 }
 
 export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
@@ -195,6 +258,7 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   entityId?: number;
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;
+  relatedEntityid?: number;
 }
 
 export interface LoginDto {
@@ -219,11 +283,141 @@ export interface OtpDto extends FullAuditedEntityDto<number> {
   maxAttempt?: number;
 }
 
+export interface PatientProfileDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  patientCode?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  genderName?: string;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  patientMobileNo?: string;
+  email?: string;
+  patientEmail?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  creatorEntityId?: number;
+  userId?: string;
+}
+
+export interface PaymentHistoryDto extends EntityDto<number> {
+  application_code?: string;
+  status?: string;
+  sessionkey?: string;
+  tran_date?: string;
+  tran_id?: string;
+  val_id?: string;
+  amount?: string;
+  store_amount?: string;
+  currency?: string;
+  bank_tran_id?: string;
+  card_type?: string;
+  card_no?: string;
+  card_issuer?: string;
+  card_brand?: string;
+  card_issuer_country?: string;
+  card_issuer_country_code?: string;
+  currency_type?: string;
+  currency_amount?: string;
+  currency_rate?: string;
+  base_fair?: string;
+  value_a?: string;
+  value_b?: string;
+  value_c?: string;
+  value_d?: string;
+  emi_instalment?: string;
+  emi_amount?: string;
+  emi_description?: string;
+  emi_issuer?: string;
+  account_details?: string;
+  risk_title?: string;
+  risk_level?: string;
+  apiConnect?: string;
+  validated_on?: string;
+  gw_version?: string;
+  failedreason?: string;
+  error?: string;
+  card_sub_brand?: string;
+  subscription_id?: string;
+}
+
+export interface PaymentHistoryInputDto {
+  id: number;
+  application_code?: string;
+  status?: string;
+  sessionkey?: string;
+  tran_date?: string;
+  tran_id?: string;
+  val_id?: string;
+  amount?: string;
+  store_amount?: string;
+  currency?: string;
+  bank_tran_id?: string;
+  card_type?: string;
+  card_no?: string;
+  card_issuer?: string;
+  card_brand?: string;
+  card_issuer_country?: string;
+  card_issuer_country_code?: string;
+  currency_type?: string;
+  currency_amount?: string;
+  currency_rate?: string;
+  base_fair?: string;
+  value_a?: string;
+  value_b?: string;
+  value_c?: string;
+  value_d?: string;
+  emi_instalment?: string;
+  emi_amount?: string;
+  emi_description?: string;
+  emi_issuer?: string;
+  account_details?: string;
+  risk_title?: string;
+  risk_level?: string;
+  apiConnect?: string;
+  validated_on?: string;
+  gw_version?: string;
+  failedreason?: string;
+  error?: string;
+  card_sub_brand?: string;
+  subscription_id?: string;
+}
+
 export interface ResponseDto {
   id?: number;
   value?: string;
   success?: boolean;
   message?: string;
+}
+
+export interface SmsInfo {
+  sms_status?: string;
+  status_message?: string;
+  sms_type?: string;
+  msisdn?: string;
+  sms_body?: string;
+  csms_id?: string;
+  reference_id?: string;
+}
+
+export interface SmsRequestParamDto {
+  msisdn?: string;
+  sms?: string;
+  csmsId?: string;
+}
+
+export interface SmsResponseDto {
+  status?: string;
+  status_code?: string;
+  error_message?: string;
+  smsinfo: SmsInfo[];
 }
 
 export interface SpecialityDto extends FullAuditedEntityDto<number> {
@@ -237,6 +431,17 @@ export interface SpecializationDto extends FullAuditedEntityDto<number> {
   specialityName?: string;
   specializationName?: string;
   description?: string;
+}
+
+export interface SslCommerzInitDto {
+  status?: string;
+  failedreason?: string;
+  gatewayPageURL?: string;
+}
+
+export interface TransactionValidationDto {
+  message?: string;
+  isValidTransaction?: boolean;
 }
 
 export interface UserInfoDto extends FullAuditedEntityDto<string> {

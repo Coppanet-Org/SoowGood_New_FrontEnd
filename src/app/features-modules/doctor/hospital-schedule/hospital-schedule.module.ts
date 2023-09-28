@@ -1,6 +1,6 @@
 import { HospitalInfoComponent } from './hospital-info/hospital-info.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { HospitalScheduleComponent } from './hospital-schedule.component';
@@ -13,6 +13,7 @@ import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { FeeSetupComponent } from './fee-info/fee-setup.component';
 import { FeeDialogComponent } from './fee-dialog/fee-dialog.component';
+import { ConfirmDialogModule } from 'src/app/shared/modules/confirm-dialog/confirm-dialog.module';
 
 const routes: Route[] = [
   {
@@ -38,7 +39,8 @@ const routes: Route[] = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModulesModule,
-    InputModule
+    InputModule,ConfirmDialogModule
   ],
+  providers: [DatePipe], 
 })
 export class HospitalScheduleModule {}

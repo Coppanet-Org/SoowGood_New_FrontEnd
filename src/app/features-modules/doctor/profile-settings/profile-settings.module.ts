@@ -12,6 +12,7 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { DocumentsComponent } from './documents/documents.component';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
+import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 
 const routes: Route[] = [
   {
@@ -62,7 +63,8 @@ const routes: Route[] = [
   imports: [
     CommonModule,RouterModule.forChild(routes),
     MaterialModulesModule,
-    InputModule
+    InputModule,
+    LoaderModule
   ],
 
   providers: [DatePipe], 

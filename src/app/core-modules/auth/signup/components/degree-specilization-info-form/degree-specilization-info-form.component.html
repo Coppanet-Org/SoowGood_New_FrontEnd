@@ -1,0 +1,217 @@
+<h1 class="dashboard-heading-text text-3xl font-bold">Enter Your Degree and Specialization Info</h1>
+<div class=" w-full  bg-white mt-6">
+  <form [formGroup]="formDegree">
+
+    <div class="-mx-3 flex flex-wrap">
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Degree
+          </label>
+          <select formControlName="degreeId" name="degreeId" id="degreeId"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)=getDegreeName($event)>
+            <!-- Default Select Option -->
+            <option value="0" class="font-semibold text-slate-300">Select Degree</option>
+            <!-- Loop through titleList to create options -->
+            <option *ngFor="let item of degreeList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.degreeName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Duration
+          </label>
+          <select formControlName="duration" name="duration" id="duration"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+            <!-- Default Select Option -->
+            <option value="0" class="font-semibold text-slate-300">Select Duration</option>
+            <!-- Loop through titleList to create options -->
+            <option *ngFor="let item of durationList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="passingYear" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Passing Year
+          </label>
+          <input formControlName="passingYear" type="number" name="passingYear" id="passingYear"
+                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+      </div>
+    </div>
+
+    <div class="-mx-3 flex flex-wrap">
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Institute Name
+          </label>
+          <input formControlName="instituteName" type="text" name="instituteName" id="instituteName" placeholder="Institute Name"
+                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Institute City
+          </label>
+          <input formControlName="instituteCity" type="text" name="name" id="instituteCity" placeholder="Institute City"
+                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Institute Country
+          </label>
+          <input formControlName="instituteCountry" type="text" name="instituteCountry" id="instituteCountry" placeholder="Institute Country"
+                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+      </div>
+      <div class="flex items-center justify-end w-full">
+        <button (click)="addDegree()"
+                class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
+          Add
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="w-full mt-3">
+
+    <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
+      <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Sl#
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Degree
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Passing Year
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Institute
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                *ngFor="let item of doctorDegrees; index as i">
+              <td class="w-4 p-4">
+                {{i+1}}
+              </td>
+
+              <td class="px-6 py-4">
+                {{item.degreeName}}
+              </td>
+              <td class="px-6 py-4">
+                {{item.passingYear}}
+              </td>
+              <td class="px-6 py-4">
+                {{item.instituteName}}
+              </td>
+              <td class="px-6 py-4">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                   (click)="remove(item.id)">Delete</a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <form [formGroup]="formSpecialization">
+    <div class="-mx-3 flex flex-wrap">
+      <div class="w-full px-3 sm:w-1/2">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Specialization
+          </label>
+          <select formControlName="specializationId" name="specializationId" id="specializationId"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)=getSpName($event)>
+            <!-- Default Select Option  (click)="addSpecialization()"-->
+            <option value="0" class="font-semibold text-slate-300">Select Specialization</option>
+            <!-- Loop through titleList to create options -->
+            <option *ngFor="let item of specializationList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.specializationName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-1/2">
+        <div class="mb-5">
+          <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+
+          </label>
+          <button (click)="addSpecialization()" class="hover:shadow-form w-full rounded-md bg-secondary py-2 px-3 text-center text-base font-medium text-white outline-none">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="w-full mt-3">
+    <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
+      <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Sl#
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Speciality
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Specialization
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                *ngFor="let item of doctorSpecializations; index as i">
+              <td class="w-4 p-4">
+                {{i+1}}
+              </td>
+              <td class="px-6 py-4">
+                {{item.specialityName}}
+              </td>
+              <td class="px-6 py-4">
+                {{item.specializationName}}
+              </td>
+              <td class="px-6 py-4">
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                   (click)="removeSp(item.id)">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="-mx-3 flex flex-wrap">
+    <div class="flex items-center justify-end w-full">
+      <button (click)="save()"
+              class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
+        Continue
+      </button>
+    </div>
+  </div>
+</div>

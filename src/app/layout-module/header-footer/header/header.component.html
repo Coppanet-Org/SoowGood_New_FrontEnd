@@ -1,17 +1,17 @@
 <div class="w-full  fixed z-50 top-0 bg-primary/95 supports-backdrop-blur:bg-primary/60">
-    <div class="container">
+    <div [class]="layout== 'admin' || layout == 'spreed' ? 'container-full' : 'container'">
         <div *ngIf="layout == 'admin'">
             Admin Nav
         </div>
-        <div class="container-items " *ngIf="layout == 'public'">
-            <div class="header-logo">
+        <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
+            <div class="header-logo" routerLink="/">
                 <img class="w-full" src="../../../../assets//SoowGood-Logo.png" alt="logo">
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
-                <button type="button" routerLink="/signup" onclick="my_modal_3.showModal()" class="btn-secondary  py-2">Signup</button>
+                <button  *ngIf="!isAuthLogin" type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
+                <button  *ngIf="!isAuthLogin" type="button" routerLink="/signup" onclick="my_modal_3.showModal()" class="btn-secondary  py-2">Signup</button>
 
-                <div class="dropdown dropdown-end">
+                <div  *ngIf="isAuthLogin" class="dropdown dropdown-end">
                     <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                         <div class="w-8 rounded-full">
                             <img src="../../../../assets/person.png" />
@@ -19,13 +19,14 @@
                     </label>
                     <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li>
-                            <a class="justify-between">
-                                Profile
+                            <a class="justify-between" [routerLink]="'/'+userType">
+                                Dashboard
                                 <span class="badge">New</span>
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li *ngIf="isAuthLogin"><a >Logout</a></li>
+                        
                     </ul>
                 </div>
             </div>

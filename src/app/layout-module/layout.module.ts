@@ -8,10 +8,11 @@ import { Route, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header-footer/header/header.component';
 import { FooterComponent } from './header-footer/footer/footer.component';
 import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
-
-
-
-
+import { AgentComponent } from '../features-modules/agent/agent.component';
+import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
+import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
+import { isAuth } from '../auth-gurd/auth.service';
+import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 
 const routes: Route[] = [
   {
@@ -28,47 +29,88 @@ const routes: Route[] = [
     ],
   },
   {
+    path: 'search',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import(
+            '../features-modules/public/search-page/search-page.module'
+          ).then((m) => m.SearchPageModule),
+      },
+      {
+        path: 'doctors/:id',
+        loadChildren: () =>
+          import(
+            '../features-modules/public/doctor-profile-page/doctor-profile-page.module'
+          ).then((m) => m.DoctorProfilePageModule),
+      },
+      // {
+      //   path: 'doctors/:id/booking/:id',
+      //   loadChildren: () =>
+      //     import(
+      //       '../features-modules/public/doctor-booking-page/doctor-booking-page.module'
+      //     ).then((m) => m.DoctorBookingPageModule),
+      // },
+    ],
+  },
+  {
     path: 'admin',
     component: AdminLayoutComponent,
-    children:[
-    
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/admin/admin.module'
-            ).then((m) => m.AdminModule),
-        },
-      
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/admin/admin.module').then(
+            (m) => m.AdminModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'agent',
+    component: AgentLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/agent/agent.module').then(
+            (m) => m.AgentModule
+          ),
+      },
+    ],
   },
   {
     path: 'doctor',
     component: DoctorLayoutComponent,
-    children:[
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/doctor/doctor.module'
-            ).then((m) => m.DoctorModule)
-        },
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/doctor/doctor.module').then(
+            (m) => m.DoctorModule
+          ),
+      },
+    ],
   },
   {
     path: 'patient',
     component: PatientLayoutComponent,
-    children:[
-        {
-          path: '',
-          loadChildren: () =>
-            import(
-              '../features-modules/patient/patient.module'
-            ).then((m) => m.PatientModule)
-        },
-    ]
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/patient/patient.module').then(
+            (m) => m.PatientModule
+          ),
+      },
+    ],
   },
-
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+  },
 ];
 
 @NgModule({
@@ -77,11 +119,12 @@ const routes: Route[] = [
     DoctorLayoutComponent,
     PatientLayoutComponent,
     PublicLayoutComponent,
+    AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
     DashboardHeaderComponent,
+    PublicLayoutTwoComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class LayoutModule {}
-

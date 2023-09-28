@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   DoctorProfileService,
+  PatientProfileService,
   UserAccountsService,
 } from '../../../proxy/services';
 import { SubSink } from 'SubSink';
@@ -11,9 +12,12 @@ import {
   DoctorProfileDto,
   LoginDto,
   LoginResponseDto,
+  PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { PermissionService } from '@abp/ng.core';
+import { ToasterService } from '@abp/ng.theme.shared';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +40,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
+    private PatientProfileService: PatientProfileService,
     private fb: FormBuilder,
     private _router: Router,
     private ToasterService: TosterService,
     private NormalAuth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -89,6 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    let userType = '';
     this.errorMessage = '';
     this.hasError = false;
     const username = this.formControl['mobileNo'].value;
@@ -101,52 +107,74 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     try {
       this.authService
-        .loginByUserDto(this.loginDto)
-        .pipe(
-          catchError((error: any) => this.handleLoginError(error)),
-          switchMap((loginResponse: LoginResponseDto) => {
-            loginResponseData = loginResponse;
-            if (!loginResponse.success) {
-              this.hasError = true;
-              this.ToasterService.customToast(
-                loginResponse.message || ' ',
-                'error'
-              );
-              return throwError(loginResponse.message || 'Login failed');
+        .loginByUserDto(this.loginDto).subscribe((loginResponse: LoginResponseDto) => {
+          
+          
+          if (loginResponse.roleName[0] == "Doctor") {
+            if (loginResponse.success) {
+              this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
+                .subscribe((doctorDto: DoctorProfileDto) => {
+                  let saveLocalStorage = {
+                    identityNumber: doctorDto.identityNumber,
+                    doctorName: doctorDto.fullName,
+                    bmdcRegNo: doctorDto.bmdcRegNo,
+                    isActive: doctorDto.isActive,
+                    userId: doctorDto.userId,
+                    id: doctorDto.id,
+                    specialityId: doctorDto.specialityId,
+                    profileStep: doctorDto.profileStep,
+                    createFrom: doctorDto.createFrom,
+                    userType: loginResponse.roleName.toString().toLowerCase()
+                  }
+                  this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                  if (doctorDto.profileStep == 1 || doctorDto.profileStep == 2) {
+                    userType = '/signup';
+                  }
+                  else {
+                    userType = (doctorDto.isActive ? (loginResponse.roleName.toString() + '/dashboard') : (loginResponse.roleName.toString() + '/profile-settings/basic-info'));
+                  }
+                  this._router.navigate([userType.toLowerCase()], {
+                    state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
+                  }).then(r => {
+                    this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
+                  });
+                });
             }
-            return this.doctorProfileService.getByUserName(
-              loginResponse.userName || ''
-            );
-          }),
-          catchError((error: any) => this.handleProfileError(error))
-        )
-        .subscribe((doctorDto: DoctorProfileDto) => {
-          const saveLocalStorage = {
-            identityNumber: doctorDto.identityNumber,
-            bmdcRegNo: doctorDto.bmdcRegNo,
-            isActive: doctorDto.isActive,
-            userId: doctorDto.userId,
-            id: doctorDto.id,
-            profileStep: doctorDto.profileStep,
-            createFrom: doctorDto.createFrom,
-          };
-          this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-          const userType = doctorDto.isActive
-            ? loginResponseData.roleName.toString().toLowerCase()
-            : (
-                loginResponseData.roleName.toString() +
-                '/profile-settings/basic-info'
-              ).toLowerCase();
-          this._router
-            .navigate([userType], {
-              state: { data: doctorDto }, 
-            })
-            .then(() =>
-              this.ToasterService.customToast(
-                loginResponseData.message || ' ',
-                'success'
-              )
-            );
+            else {
+              this.hasError = true;
+              this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'error');
+            }
+          }
+
+         if (loginResponse.roleName[0] == "Patient") {
+  
+          
+          if (loginResponse.success) {
+            this.subs.sink = this.PatientProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
+              .subscribe((patientDto: PatientProfileDto) => {
+                console.log(patientDto);
+                let saveLocalStorage = {
+                  userId: patientDto.userId,
+                  id: patientDto.id,
+                  userType: loginResponse.roleName.toString().toLowerCase()
+                }
+                this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                let userType = (loginResponse.roleName.toString() +'/dashboard')
+                
+                this._router.navigate([userType.toLowerCase()], {
+                  state: { data: patientDto } // Pass the 'res' object as 'data' in the state object
+                }).then(r => {
+                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
+                });
+              });
+          }
+          else {
+            this.hasError = true;
+            this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'error');
+          }
+         }
+
+
         });
     } catch (error: any) {
       this.hasError = true;
