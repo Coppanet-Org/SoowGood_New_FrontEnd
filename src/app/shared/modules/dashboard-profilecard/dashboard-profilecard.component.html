@@ -6,7 +6,7 @@
                     class="rounded-full w-[100px] h-[100px] object-cover border-4 border-gray-300 " />
             </figure>
             <div class="card-body items-center text-center">
-                <span class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold rounded-lg">{{userInfo.doctorTitle ? 'Doctor' : 'Agent'}}</span>
+                <span class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold rounded-lg">{{userInfo.doctorTitle ? 'Doctor' : userInfo.hasOwnProperty('patientName') ? 'Patient' : 'Agent'}}</span>
                 <h2 class="card-title">{{userInfo.fullName}}</h2>
                 <p>{{userInfo.designation}}</p>
                 <div class="card-actions mt-4  " *ngIf="userInfo.userType != 'Agent'">

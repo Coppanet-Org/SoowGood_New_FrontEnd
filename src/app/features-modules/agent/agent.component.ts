@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserinfoStateService } from 'src/app/shared/services/userinfo-state.service';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { agentMenuList } from 'src/app/shared/utils/statick-data';
 
 @Component({
