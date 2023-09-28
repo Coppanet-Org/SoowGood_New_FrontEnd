@@ -3,20 +3,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
-import {
-  DoctorProfileService,
-  UserAccountsService,
-} from '../../../proxy/services';
+import { DoctorProfileService, UserAccountsService } from '../../../proxy/services';
 import { SubSink } from 'SubSink';
-import {
-  DoctorProfileDto,
-  LoginDto,
-  LoginResponseDto,
-} from '../../../proxy/dto-models';
+import { DoctorProfileDto, LoginDto, LoginResponseDto } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { PermissionService } from '@abp/ng.core';
-import { ToasterService } from '@abp/ng.theme.shared';
+import { throwError } from 'rxjs';
 import { AppAuthService } from '../../../auth-services/app-auth.service';
 import { UserProfile } from '../../../auth-models/user.model';
 
@@ -52,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.appAuthService.currentUserValue) {
       this._router.navigate(['/landing-page']);
     }
-}
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -164,7 +155,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
 
-      
+
     } catch (error: any) {
       this.hasError = true;
       if (error.message === "'tokenEndpoint' should not be null") {
