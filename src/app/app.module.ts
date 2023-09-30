@@ -51,7 +51,7 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule,FormsModule
+    ReactiveFormsModule,FormsModule,
     AbpOAuthModule.forRoot(),
   ],
   providers: [],
