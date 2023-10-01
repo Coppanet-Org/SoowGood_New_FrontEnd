@@ -208,7 +208,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
               );
               if (availableSessions.length > 0) {
                 finalFilter = availableSessions.map((session: any) => {
-                  let left = this.getLeftSlotForBooking(item)[session.id];
+                  let left = this.getLeftSlotForBooking(item,data[0])[session.id];
                   return {
                     ...session,
                     leftPatient: left,
@@ -252,29 +252,74 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getLeftSlotForBooking(item: any): any {
-    // Create a dictionary to store the booked appointments count per session
+  // getLeftSlotForBooking(item: any): any {
+  //   // Create a dictionary to store the booked appointments count per session
+  //   const bookedAppointments: any = {};
+  //   // Loop through the appointment objects to count booked appointments per session
+  //   item?.appointments.forEach((appointment: any) => {
+  //     const sessionId = appointment.doctorScheduleDaySessionId;
+  //     if (bookedAppointments[sessionId] === undefined) {
+  //       bookedAppointments[sessionId] = 1;
+  //     } else {
+  //       bookedAppointments[sessionId]++;
+  //     }
+  //   });
+
+  //   // Calculate the left number of patients for each session
+  //   const leftNoOfPatients: any = {};
+
+  //   item?.doctorScheduleDaySession.forEach((session: any) => {
+  //     const sessionId = session.id;
+  //     const bookedCount = bookedAppointments[sessionId] || 0;
+  //     leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
+  //   });
+  //   return leftNoOfPatients;
+  // }
+
+
+  getLeftSlotForBooking(item: any, selectedDate: string) {
+    // Create a dictionary to store the booked appointments count per session and date
     const bookedAppointments: any = {};
-    // Loop through the appointment objects to count booked appointments per session
-    item?.appointments.forEach((appointment: any) => {
+  
+    // Loop through the appointment objects to count booked appointments per session and date
+    item.appointments.forEach((appointment: any) => {
       const sessionId = appointment.doctorScheduleDaySessionId;
-      if (bookedAppointments[sessionId] === undefined) {
-        bookedAppointments[sessionId] = 1;
+      const appointmentDate = appointment.appointmentDate.split('T')[0]; // Extract the date portion
+  
+      if (!bookedAppointments[sessionId]) {
+        bookedAppointments[sessionId] = {};
+      }
+  
+      if (!bookedAppointments[sessionId][appointmentDate]) {
+        bookedAppointments[sessionId][appointmentDate] = 1;
       } else {
-        bookedAppointments[sessionId]++;
+        bookedAppointments[sessionId][appointmentDate]++;
       }
     });
-
-    // Calculate the left number of patients for each session
+  
+    // Calculate the left number of patients for each session and date
     const leftNoOfPatients: any = {};
-
-    item?.doctorScheduleDaySession.forEach((session: any) => {
+  
+    item.doctorScheduleDaySession.forEach((session: any) => {
       const sessionId = session.id;
-      const bookedCount = bookedAppointments[sessionId] || 0;
+      const sessionDate = selectedDate.split('T')[0]; // Extract the date portion
+      const bookedCount = (bookedAppointments[sessionId] && bookedAppointments[sessionId][sessionDate]) || 0;
+  
       leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
     });
+  
+    // Return the available slots for the selected date
     return leftNoOfPatients;
   }
+  
+  
+  
+  
+  
+  
+
+
+
 
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
     // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));
