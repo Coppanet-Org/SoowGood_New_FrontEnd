@@ -26,6 +26,14 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  geAppointmentListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'POST',
+      url: `/api/app/appointment/ge-appointment-list-by-patient-id/${patientId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto>({
       method: 'GET',

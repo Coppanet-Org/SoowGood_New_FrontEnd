@@ -1,4 +1,3 @@
-import { DoctorScheduleStateService } from './../../services/states/doctor-schedule-state.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingDialogComponent } from '../../components/booking-dialog/booking-dialog.component';
