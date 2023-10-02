@@ -52,6 +52,15 @@ export class AgentProfileService {
     { apiName: this.apiName,...config });
   
 
+  getlByUserName = (userName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentProfileDto>({
+      method: 'GET',
+      url: '/api/app/agent-profile/l-by-user-name',
+      params: { userName },
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: AgentProfileInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentProfileDto>({
       method: 'PUT',

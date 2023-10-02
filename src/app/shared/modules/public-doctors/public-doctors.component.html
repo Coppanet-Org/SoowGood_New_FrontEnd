@@ -42,21 +42,10 @@
 
                 </div>
 
-                <div class="w-full flex h-screen flex-wrap justify-evenly overflow-y-scroll no-scrollbar pb-[50px]">
-
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-                    <app-doctor-card class="max-w-[350px] min-w-[310px]"></app-doctor-card>
-
+                <div class="w-full grid lg:grid-cols-4 gap-10 p-5 h-screen flex-wrap overflow-y-scroll no-scrollbar pb-[50px]">
+                    <div *ngFor="let doctorDetails of doctorList">
+                        <app-doctor-card [doctorDetails]="doctorDetails" class="max-w-[350px] min-w-[310px]"></app-doctor-card>
+                    </div>
                 </div>
             </div>
         </div>

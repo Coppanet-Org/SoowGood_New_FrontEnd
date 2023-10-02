@@ -4,15 +4,8 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\auth-gurd",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\agent",
-    "\\src\\app\\core-modules\\auth\\agent\\agent-login",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\public",
-    "\\src\\app\\features-modules\\public\\landing-page",
-    "\\src\\environments"
+    "\\src\\app\\auth-services"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\auth-gurd\\auth.service.spec.ts",
   "PreviewInSolutionExplorer": false
 }

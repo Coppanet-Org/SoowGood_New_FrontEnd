@@ -1,6 +1,6 @@
 import { AuthService } from './../../../../shared/services/auth.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
+import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DoctorChamberDto, DoctorScheduleDto } from 'src/app/proxy/dto-models';
@@ -40,10 +40,11 @@ export class ScheduleInfoComponent implements OnInit {
 
   getScheduleList(id: number): void {
     this.DoctorScheduleService.getListByDoctorIdList(id).subscribe((res) => {
-      this.scheduleList = res;
-      let list = res.map((e)=> {return { name : e.scheduleTypeName, id :e.id}})
-
-      this.HospitalStateService.setDoctorScheduleList(list)
+      if (res) {
+        this.scheduleList = res;
+        let list = res.map((e)=> {return { name : e.scheduleTypeName, id :e.id}})
+        this.HospitalStateService.setDoctorScheduleList(list)
+      }
     });
   }
 

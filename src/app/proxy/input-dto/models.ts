@@ -41,6 +41,7 @@ export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorProfileInputDto extends FullAuditedEntityDto<number> {
+  doctorCode?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;
@@ -78,4 +79,33 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
 
 export interface FileDeleteInputDto {
   filePath?: string;
+}
+
+export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  patientCode?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  patientMobileNo?: string;
+  email?: string;
+  patientEmail?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  creatorEntityId?: number;
+  userId?: string;
+}
+
+export interface SslCommerzInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
 }

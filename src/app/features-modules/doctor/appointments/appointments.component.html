@@ -1,6 +1,24 @@
 
-<div class="overflow-hidden" [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container p-4">
-    <p >appointments works!</p>
+<div class="overflow-hidden" [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container">
+
+    <div class="overflow-hidden doctor-dashboard_midcontent_container w-ful">
+        <div class="flex items-center justify-left">
+          <div class="w-full h-screen bg-white">
+      
+            <div class="relative overflow-x-auto  sm:rounded-lg px-8 py-6">
+              <div class=" flex gap-4 items-center justify-between">
+                <h1 class="dashbord-heading-text text-[22px] "> <i class="fa-solid fa-building-columns mr-1"></i>
+                  Appointments</h1>
+              </div>
+      
+              <div class="w-full mt-6">
+                <app-appointment-card></app-appointment-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 </div>
+
 

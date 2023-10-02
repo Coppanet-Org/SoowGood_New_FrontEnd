@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Component, Input} from '@angular/core';
 
 
 @Component({
@@ -11,11 +10,6 @@ export class DashboardMenuComponent {
 
 @Input()menuList : any =[]
 
-  constructor(
-    private NormalAuth: AuthService) {}
 
-  logOut() {
-    this.NormalAuth.signOut();
-  }
 }
 

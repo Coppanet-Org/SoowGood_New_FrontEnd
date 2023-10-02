@@ -1,7 +1,9 @@
+
 import { AgentProfileService } from './../../../proxy/services/agent-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { agentInputData } from 'src/app/shared/utils/input-info';
 
@@ -21,18 +23,21 @@ export class ProfileSettingsComponent implements OnInit {
     private fb: FormBuilder,
     private NormalAuth: AuthService,
     private AgentProfileService: AgentProfileService,
-    private TosterService: TosterService
+    private TosterService: TosterService,
+    private UserinfoStateService:UserinfoStateService
   ) {}
   ngOnInit() {
+    this.loadForm()
     let id = this.NormalAuth.authInfo().id;
     this.agentId = id;
     if (id) {
-      this.AgentProfileService.get(id).subscribe((res) =>
+      this.UserinfoStateService.getData().subscribe((res) =>
         this.form.patchValue(res)
       );
+      
     }
     this.agentInputData = agentInputData;
-    this.loadForm();
+   
   }
 
   loadForm() {

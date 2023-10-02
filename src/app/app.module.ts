@@ -10,7 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from 'ng-otp-input';
-import { PatientComponent } from './features-modules/patient/patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
@@ -18,6 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
 import { AbpOAuthModule } from "@abp/ng.oauth";
 
 const routerConfig: ExtraOptions = {
@@ -30,9 +31,10 @@ const routerConfig: ExtraOptions = {
     AppComponent, 
     EmptyPageComponent, 
     SignupComponent,
-    PatientComponent,
     DoctorProfileInfoFormComponent,
-    DegreeSpecilizationInfoFormComponent
+    DegreeSpecilizationInfoFormComponent,
+    PaymentSuccessComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -46,13 +48,14 @@ const routerConfig: ExtraOptions = {
     MaterialModulesModule,
     RouterModule.forRoot(appRoutes, routerConfig),
     HotToastModule.forRoot({
-      position: 'bottom-center',
+      position: 'bottom-right',
     }),
     LoaderModule,
+    ReactiveFormsModule,FormsModule,
     AbpOAuthModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule],
+  exports: [MatDialogModule,ReactiveFormsModule,FormsModule],
 })
 export class AppModule {}

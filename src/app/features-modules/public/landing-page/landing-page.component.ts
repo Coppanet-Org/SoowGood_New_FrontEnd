@@ -10,7 +10,54 @@ export class LandingPageComponent implements OnInit{
   section1: boolean= false;
   section2: boolean= false;
   section3: boolean= false;
+  model:any
   ngOnInit() {
+    this.model =  {
+      firstname: {
+        type: "text",
+        value: "",
+        label: "FirstName",
+        rules: {
+          required: true,
+        }
+      },
+      lastname: {
+        type: "text",
+        value: "",
+        label: "LastName",
+        rules: {
+          required: true,
+        }
+      },
+      address: {
+        type: "text",
+        value: "",
+        label: "Address",
+        rules: {
+          required: true,
+        }
+      },
+      age: {
+        type: "number",
+        value: "",
+        label: "age",
+        rules: {
+          required: true,
+        }
+      },
+      birthDay: {
+        type: "date",
+        value: "",
+        label: "Birthday",
+        rules: {
+          required: true,
+        }
+      },
+
+
+      
+    
+  }
     this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

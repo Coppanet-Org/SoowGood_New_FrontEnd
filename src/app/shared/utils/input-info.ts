@@ -1,9 +1,11 @@
-import { DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
+import { AppointmentType, ConsultancyType, DoctorTitle, Gender, MaritalStatus } from 'src/app/proxy/enums';
 import { CommonService } from '../services/common.service';
+const consultancyType = CommonService.getEnumList(ConsultancyType);
 
 const genderList = CommonService.getEnumList(Gender);
 const maritalOptions = CommonService.getEnumList(MaritalStatus);
 const titleList = CommonService.getEnumList(DoctorTitle);
+const appointmentType = CommonService.getEnumList(AppointmentType);
 
 export const inputConfigs = [
   {
@@ -112,6 +114,63 @@ export const inputConfigs = [
   // ... add more input configurations for other fields
 ];
 
+
+export const patientInputData = [
+
+  {
+    label: 'Full Name',
+    inputId: 'fullName',
+    formControlName: 'fullName',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Email',
+    inputId: 'email',
+    formControlName: 'email',
+    isSelect: false,
+    readonly: true,
+    type: 'email',
+  },
+  {
+    label: 'Date of Birth',
+    inputId: 'dateOfBirth',
+    formControlName: 'dateOfBirth',
+    isSelect: false,
+    type: 'date',
+  },
+  {
+    label: 'Address',
+    inputId: 'address',
+    formControlName: 'address',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Country',
+    inputId: 'country',
+    formControlName: 'country',
+    isSelect: false,
+  },
+  {
+    label: 'City',
+    inputId: 'city',
+    formControlName: 'city',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Zip Code',
+    inputId: 'zipCode',
+    formControlName: 'zipCode',
+    isSelect: false,
+    type: 'number',
+  },
+
+  // ... add more input configurations for other fields
+];
+
+
 export const scheduleData = (consType: any, apType: any, hospital: any) => {
   return [
     {
@@ -120,7 +179,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select Consultancy Type',
       options: hospital,
       formControlName: 'consultancyType',
-      isSelect: true,
+      isSelect: true
     },
     {
       label: 'Select Hospital',
@@ -128,7 +187,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select Hospital ',
       options: consType,
       formControlName: 'doctorChamberId',
-      isSelect: true,
+      isSelect: true
     },
     {
       label: 'Select appointment type',
@@ -136,7 +195,7 @@ export const scheduleData = (consType: any, apType: any, hospital: any) => {
       defaultOption: 'Select appointment type',
       options: apType,
       formControlName: 'scheduleType',
-      isSelect: true,
+      isSelect: true
     }
     
   ];
@@ -305,3 +364,95 @@ export const agentInputData =[
         type: 'text',
       },
 ]
+
+
+export const bookingFilterInputData = (hospital: any) => {
+  
+  return [
+    {
+      label: 'Appointment Date',
+      inputId: 'appointmentDate',
+      defaultOption: 'Select Appointment Date',
+      formControlName: 'appointmentDate',
+      isSelect: false,
+      type: 'date'
+    },
+
+    {
+      label: 'Select Schedule Type',
+      inputId: 'doctorScheduleType',
+      defaultOption: 'Select Schedule Type ',
+      options: hospital,
+      formControlName: 'doctorScheduleType',
+      isSelect: true,
+    },
+    // {
+    //   label: 'Select Consultancy Type',
+    //   inputId: 'consultancyType',
+    //   defaultOption: 'Select Consultancy Type',
+    //   options: consultancyType,
+    //   formControlName: 'consultancyType',
+    //   isSelect: true,
+    // },
+    {
+      label: 'Select Appointment Type',
+      inputId: 'appointmentType',
+      defaultOption: 'Select Appointment Type',
+      options: appointmentType,
+      formControlName: 'appointmentType',
+      isSelect: true,
+    }
+    
+  ];
+};
+
+
+
+
+export const inputForCreatePatient = [
+  {
+    label: 'Patient Name',
+    inputId: 'patientName',
+    defaultOption: 'Write patient name',
+    formControlName: 'patientName',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Age',
+    inputId: 'age',
+    formControlName: 'age',
+    isSelect: false,
+    type: 'text',
+  },
+  {
+    label: 'Patient Mobile No',
+    inputId: 'patientMobileNo',
+    formControlName: 'patientMobileNo',
+    isSelect: false,
+    type: 'tel',
+  },
+  {
+    label: 'Gender',
+    inputId: 'gender',
+    formControlName: 'gender',
+    options: genderList,
+    isSelect: true,
+    type: 'select',
+  },
+  {
+    label: 'Blood Group',
+    inputId: 'bloodGroup',
+    formControlName: 'bloodGroup',
+    isSelect: false,
+    type: 'text',
+  }
+  // ... add more input configurations for other fields
+];
+
+export const dayFromDate=(date:string)=>{
+  const getdate = new Date(date);
+  const dayOfWeek = getdate.getDay();
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+return dayNames[dayOfWeek];
+}

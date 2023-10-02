@@ -32,11 +32,11 @@ export class TosterService {
   private getBackgroundColor(type: 'success' | 'error' | 'warning'): string {
     switch (type) {
       case 'success':
-        return 'rgb(0 171 7 / 49%)'; // Green background for success
+        return 'rgb(0 171 7 / 100%)'; // Green background for success
       case 'error':
-        return 'rgb(255 0 0 / 55%) '; // Red background for error
+        return 'rgb(255 0 0 / 100%) '; // Red background for error
       case 'warning':
-        return 'rgb(255 179 68 / 65%)'; // Yellow background for warning
+        return 'rgb(255 179 68 / 100%)'; // Yellow background for warning
       default:
         return '#c2e0c6'; // Default to green for success
     }
@@ -56,6 +56,10 @@ export class TosterService {
         return '#333'; // Default to black
     }
   }
+
+
+
+  
   private getIconColor(type: 'success' | 'error' | 'warning'): any {
     switch (type) {
       case 'success':
