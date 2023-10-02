@@ -1,5 +1,5 @@
-import { DoctorScheduleStateService } from './../../services/states/doctor-schedule-state.service';
 import { Component, Input } from '@angular/core';
+import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
 
 @Component({
   selector: 'app-slot-item',

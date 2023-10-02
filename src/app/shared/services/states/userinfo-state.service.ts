@@ -22,7 +22,7 @@ export class UserinfoStateService implements OnInit {
   ) {}
   public authenticateUserInfo = new BehaviorSubject<any>({});
   public userPatientInfo = new BehaviorSubject<any>([]);
-  public doctorsList = new BehaviorSubject<any>([]);
+
 
   sendData(data: any) {
     this.authenticateUserInfo.next(data);
@@ -77,12 +77,7 @@ export class UserinfoStateService implements OnInit {
     }
   }
 
-getDoctorListData(){
-  return this.doctorsList.asObservable();
-}
-sendDoctorListData(data:any[]){
-  this.doctorsList.next(data);
-}
+
 
 }
 
