@@ -1,4 +1,3 @@
-import { DoctorBookingStateService } from './../../services/states/doctor-booking-state.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
@@ -34,9 +33,10 @@ import {
   switchMap,
 } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DoctorScheduleStateService } from '../../services/states/doctor-schedule-state.service';
 import { InputComponent } from '../../modules/input/input.component';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
+import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
+import { DoctorBookingStateService } from '../../services/states/doctors-states/doctor-booking-state.service';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -427,7 +427,6 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         appointmentStatus: 1,
         appointmentPaymentStatus: 2,
       };
-console.log(infoForBooking , user);
 
       if (infoForBooking && user) {
         if (this.bookingForm.get('bookMyself')?.value == 'bookMyself') {
@@ -435,7 +434,6 @@ console.log(infoForBooking , user);
             id: user?.id,
             patientName: user.fullName,
             patientCode: user.patientCode,
-            fullName: user.fullName,
             patientEmail: user.email ? user.email : 'admin@gmail.com',
             patientMobileNo: user.mobileNo,
           };

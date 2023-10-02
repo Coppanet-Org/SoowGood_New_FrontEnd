@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DoctorScheduleStateService } from '../../services/states/doctor-schedule-state.service';
 import { filter } from 'rxjs';
+import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
 
 @Component({
   selector: 'app-slots',
@@ -13,9 +13,6 @@ export class SlotsComponent {
     this.DoctorScheduleStateService.getDoctorAvailableSlotData().pipe(
       filter((e)=> e)
     ).subscribe(filteredData => {
-  
-      console.log(filteredData)
-      
       this.slotList = filteredData;
     });
   }

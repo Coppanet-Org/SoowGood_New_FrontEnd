@@ -1,7 +1,7 @@
 import { AppointmentService,  SslCommerzService } from 'src/app/proxy/services';
-import { DoctorBookingStateService } from './../../../services/states/doctor-booking-state.service';
 import { Component, OnInit } from '@angular/core';
 import { SslCommerzInputDto } from 'src/app/proxy/input-dto';
+import { DoctorBookingStateService } from 'src/app/shared/services/states/doctors-states/doctor-booking-state.service';
 
 @Component({
   selector: 'app-booking-review',
