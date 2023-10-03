@@ -3,9 +3,7 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\auth-gurd",
-    "\\src\\app\\auth-services"
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\auth-gurd\\auth.service.spec.ts",
   "PreviewInSolutionExplorer": false
 }
