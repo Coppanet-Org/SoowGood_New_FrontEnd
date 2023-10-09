@@ -24,12 +24,11 @@ export class PublicDoctorsComponent implements OnInit {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       if (this.DoctorStateService.doctorsList.value.length <= 0) {
         this.DoctorStateService.getAllDoctorList().subscribe(
-          (res) => {(this.doctorList = res) ,console.log("res")
-          }
+          (res) => {(this.doctorList = res) }
         );
       } else {
         this.DoctorStateService.getDoctorListData().subscribe(
-          (res) => {(this.doctorList = res) ,console.log("res")}
+          (res) => {(this.doctorList = res)}
         );
       }
     }

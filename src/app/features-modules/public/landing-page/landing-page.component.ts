@@ -53,10 +53,6 @@ export class LandingPageComponent implements OnInit{
           required: true,
         }
       },
-
-
-      
-    
   }
     this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {

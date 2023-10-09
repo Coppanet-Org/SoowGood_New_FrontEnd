@@ -1,0 +1,60 @@
+.table {
+    border-spacing: 0 15px;
+}
+
+i {
+    font-size: 1rem !important;
+}
+
+.table tr {
+    border-radius: 20px;
+}
+
+
+
+tr td{
+    border: 1px solid rgb(229, 229, 229);
+    overflow: hidden;
+}
+
+
+.p-head-bottom input{
+  border: none;
+  outline: none;
+  overflow: hidden;
+  background: transparent;
+}
+.p-head-bottom input:focus{
+    color: #30bced;
+    overflow: hidden;
+}
+::ng-deep .mat-mdc-select{
+    margin: 6px 8px;
+}
+::ng-deep .cdk-overlay-pane{
+    
+    min-width: 120px!important;
+}
+// ::ng-deep .mat-mdc-option{
+//     min-height:35px!important
+// }
+
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full{
+    background: #30bced;
+}
+
+::ng-deep  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after{
+    color: #30bced;
+}
+
+
+
+@media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }

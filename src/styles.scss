@@ -74,7 +74,7 @@
     @apply w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-secondary focus:shadow-md;
   }
   .dashbord-heading-text{
-    @apply text-primary font-semibold text-[18px] font-Roboto
+    @apply text-primary/90 font-semibold text-[18px] font-Roboto
   }
   .dashbord-heading-subtext{
     @apply text-gray-500 font-light text-[14px] font-poppins
@@ -108,6 +108,13 @@
     @apply btn-secondary-light cursor-pointer transition-all duration-[0.5s]
   }
 
+  //prescription
+  .p-head-bottom {
+    @apply flex justify-between text-[14px] border-t-[1px] border-b-[1px] py-3 mt-5 font-Roboto text-primary/90
+  }
+  .p-head-top {
+  
+  }
 }
 
 
