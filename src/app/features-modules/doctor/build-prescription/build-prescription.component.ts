@@ -1,7 +1,7 @@
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AppointmentService } from 'src/app/proxy/services';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentDto } from 'src/app/proxy/dto-models';
 import { Observable} from 'rxjs';
@@ -54,6 +54,7 @@ export class BuildPrescriptionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  
 this.today = new Date().toDateString()
 this.todayTime = new Date().toLocaleTimeString()
 
@@ -104,39 +105,55 @@ this.todayTime = new Date().toLocaleTimeString()
 
     this.prescriptionForm = this.fb.group({
       followUp:'',
+      advice:'',
       chiefComplaints: this.fb.array([
         this.createChiefComplaintFormGroup()
       ]),
+      findings: this.fb.array([
+        this.createFindingsFormGroup()
+      ]),
       medicineSchedule: this.fb.array([
+        this.createMedicineScheduleFormGroup()
+      ]),
+      diagnosis: this.fb.array([
         this.createMedicineScheduleFormGroup()
       ]),
     });
   }
 
 
-
-
 // get each array
   get chiefComplaints() {
     return this.prescriptionForm.get('chiefComplaints') as FormArray;
   }
-
+  get findings() {
+    return this.prescriptionForm.get('findings') as FormArray;
+  }
   get medicineSchedule() {
     return this.prescriptionForm.get('medicineSchedule') as FormArray;
   }
-
+  get diagnosis() {
+    return this.prescriptionForm.get('diagnosis') as FormArray;
+  }
   //each form group
   createChiefComplaintFormGroup() {
     return this.fb.group({
-      symptoms: [''],
-      durationDay: ['1'],
-      durationTime: ['day'],
+      symptoms: ['',Validators.required],
+      durationDay: ['1',Validators.required],
+      durationTime: ['day',Validators.required],
       condition: [''],
-      problems: [''],
-      comments: [''],
+      problems: ['',Validators.required],
+      comments: ['',Validators.required],
     });
   }
-
+  createFindingsFormGroup() {
+    return this.fb.group({
+      observations: [''],
+      problems: [''],
+      comments: ['']
+    });
+   
+  }
   createMedicineScheduleFormGroup() {
     return this.fb.group({
       specialCaseChecked:[false],
@@ -149,26 +166,45 @@ this.todayTime = new Date().toLocaleTimeString()
     });
    
   }
-
+  createDiagnosisFormGroup() {
+    return this.fb.group({
+      testName: [''],
+      comments: [''],
+    });
+   
+  }
 // add new row
   addChiefComplaint() {
     this.chiefComplaints.push(this.createChiefComplaintFormGroup());
   }
+  addFindings() {
+    this.findings.push(this.createFindingsFormGroup());
+  }
   addMedicineSchedule() {
     this.medicineSchedule.push(this.createMedicineScheduleFormGroup());
   }
-
-
+  addDiagnosis() {
+    this.diagnosis.push(this.createDiagnosisFormGroup());
+  }
   //remove each row
   removeChiefComplaint(index: number) {
     this.chiefComplaints.removeAt(index);
   }
+  removeFindings(index: number) {
+    this.findings.removeAt(index);
+  }
   removeMedicineSchedule(index: number) {
     this.medicineSchedule.removeAt(index);
+  }
+  removeDiagnosis(index: number) {
+    this.diagnosis.removeAt(index);
   }
 
 
   submitPrescription(){
-   console.log(this.prescriptionForm.value);
+    const formattedMedicineSchedule = this.prescriptionForm.value.medicineSchedule.map((medicine:any) => ({
+      ...medicine,
+      timingDay: Array.isArray(medicine.timingDay) ? medicine.timingDay.join(', ') : medicine.timingDay,
+    }));
   }
 }

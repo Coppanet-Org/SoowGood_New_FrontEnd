@@ -1,5 +1,5 @@
-<div class="min-w-[900px] max-w-[1200px] m-auto my-5">
-  <div class="bg-white rounded-[15px] h-full border-gray-200 border-[1px] mt-5 lg:px-12 p-8 shadow-blue">
+<div class="min-w-[900px] max-w-full m-auto">
+  <div class="bg-white  h-full border-gray-200 border-[1px] lg:px-12 p-8 shadow-blue">
     <div class="p-heade  ">
       <div class="p-head-top flex justify-between">
         <div class="p-heade-top-left">
@@ -44,22 +44,28 @@
               </tr>
             </thead>
             <tbody formArrayName="chiefComplaints">
-              <tr class="bg-gray-50" *ngFor="let complaint of chiefComplaints.controls; let i = index"
+              <tr class="bg-gray-50 " *ngFor="let complaint of chiefComplaints.controls; let i = index"
                 [formGroupName]="i">
-                <td class=" p-0 w-[22%]">
-                  <input type="text" placeholder="Select Symptoms" class="w-full p-2 h-[37px] text-[16px] text-primary font-Roboto
-                     focus:outline-secondary" formControlName="symptoms" [matAutocomplete]="auto" [formControl]="symptomsControls[i]">
+
+                <td class=" p-0 w-[22%] relative">
+                  <input  type="text" placeholder="Select Symptoms" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
+                     focus:outline-secondary" formControlName="symptoms" 
+                     [matAutocomplete]="auto" [formControl]="symptomsControls[i]"
+                     >
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                       {{option}}
                     </mat-option>
                   </mat-autocomplete>
+                  <div class="absolute" *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500">
+                        Symptoms is required!
+                  </div>
                 </td>
 
                 <td class="p-0 w-[10%]">
                   <div class="flex w-full">
                     <input formControlName="durationDay"
-                      class="w-[50px]  h-[37px] px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                      class="w-[50px]  h-[47px] px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
                       value="1">
                     <mat-select [value]="'day'" formControlName="durationTime"
                       class="text-[16px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary">
@@ -72,21 +78,22 @@
                 </td>
                 <td class="p-0 w-[22%]">
                   <input formControlName="problems"
-                    class="w-full h-[37px] px-3 py-2  text-[16px] text-primary font-Roboto focus:outline-secondary"
+                    class="w-full h-[47px] px-3 py-2  text-[16px] text-primary font-Roboto focus:outline-secondary"
                     placeholder="Problems">
                 </td>
                 <td class="p-0 w-[22%]  ">
                   <textarea formControlName="comments"
-                    class="w-full p-2 h-[37px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>
                 <td class="p-0 w-[2%]">
-                  <div class="flex justify-center items-center h-[37px] text-white">
+                  <div class="flex justify-center items-center h-[47px] text-white">
                     <button [disabled]="i === 0" type="button" (click)="removeChiefComplaint(i)">
                       <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
                     </button>
                   </div>
                 </td>
+
               </tr>
               <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
              
@@ -114,27 +121,27 @@
                 <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
               </tr>
             </thead>
-            <tbody formArrayName="chiefComplaints">
-              <tr class="bg-gray-50" *ngFor="let complaint of chiefComplaints.controls; let i = index"
+            <tbody formArrayName="findings">
+              <tr class="bg-gray-50" *ngFor="let finding of findings.controls; let i = index"
                 [formGroupName]="i">
                 <td class=" p-0 ">
-                  <input type="text" placeholder="Observation" class="w-full p-2 h-[37px] text-[16px] text-primary font-Roboto
+                  <input type="text" placeholder="Observation" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
                      focus:outline-secondary" formControlName="observations">
                 </td>
 
                 <td class="p-0 ">
                   <input formControlName="problems"
-                    class="w-full h-[37px] px-3 py-2  text-[16px] text-primary font-Roboto focus:outline-secondary"
+                    class="w-full h-[47px] px-3 py-2  text-[16px] text-primary font-Roboto focus:outline-secondary"
                     placeholder="Problems">
                 </td>
                 <td class="p-0  ">
                   <textarea formControlName="comments"
-                    class="w-full p-2 h-[37px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>
                 <td class="p-0 ">
-                  <div class="flex justify-center items-center h-[37px] text-white">
-                    <button [disabled]="i === 0" type="button" (click)="removeChiefComplaint(i)">
+                  <div class="flex justify-center items-center h-[47px] text-white">
+                    <button [disabled]="i === 0" type="button" (click)="removeFindings(i)">
                       <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
                     </button>
                   </div>
@@ -142,7 +149,7 @@
               </tr>
               <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
               
-                (click)="addChiefComplaint()"> Add More Complaints</button>
+                (click)="addFindings()"> Add More Findings</button>
             </tbody>
           </table>
         </div>
@@ -186,7 +193,7 @@
                 <td class="p-0 w-[12%]">
                   <div class="flex w-full">
                     <input formControlName="durationDay"
-                      class="w-[50px]  h-[37px] px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                      class="w-[50px]  h-[47px] bg-transparent px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
                       value="1">
                     <mat-select [value]="'day'" formControlName="durationTime"
                       class="text-[16px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary">
@@ -238,7 +245,7 @@
                     placeholder="Write comment"></textarea>
                 </td>
                 <td class="p-0 w-[2%]">
-                  <div class="flex justify-center items-center h-[37px] text-white">
+                  <div class="flex justify-center items-center h-[47px] text-white">
                     <button [disabled]="i === 0" type="button" (click)="removeChiefComplaint(i)">
                       <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
                     </button>
@@ -269,22 +276,22 @@
                       <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="chiefComplaints">
-                    <tr class="bg-gray-50" *ngFor="let complaint of chiefComplaints.controls; let i = index"
+                  <tbody formArrayName="diagnosis">
+                    <tr class="bg-gray-50" *ngFor="let diagnosis of diagnosis.controls; let i = index"
                       [formGroupName]="i">
                       <td class=" p-0 ">
-                        <input type="text" placeholder="Test name" class="w-full p-2 h-[37px] text-[16px] text-primary font-Roboto
+                        <input type="text" placeholder="Test name" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
                            focus:outline-secondary" formControlName="observations">
                       </td>
       
                       <td class="p-0  ">
                         <textarea formControlName="comments"
-                          class="w-full p-2 h-[37px] flex bg-transparent focus:outline-secondary text-[16px]"
+                          class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
                           placeholder="Write comment"></textarea>
                       </td>
                       <td class="p-0 ">
-                        <div class="flex justify-center items-center h-[37px] text-white">
-                          <button [disabled]="i === 0" type="button" (click)="removeChiefComplaint(i)">
+                        <div class="flex justify-center items-center h-[47px] text-white">
+                          <button [disabled]="i === 0" type="button" (click)="removeDiagnosis(i)">
                             <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
                           </button>
                         </div>
@@ -292,7 +299,7 @@
                     </tr>
                     <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
                     
-                      (click)="addChiefComplaint()"> Add More Complaints</button>
+                      (click)="addDiagnosis()"> Add More Diagnosis</button>
                   </tbody>
                 </table>
               </div>
@@ -317,7 +324,7 @@
             <tbody>
               <tr class="bg-gray-50">
                 <td class="p-0  ">
-                  <input type="date" formControlName="followUp"  class="w-full p-2 h-[37px] text-[16px] text-primary font-Roboto
+                  <input type="date" formControlName="followUp"  class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
                   focus:outline-secondary" >
                 </td>
               </tr>
@@ -328,7 +335,7 @@
         <div class="p-body-item mt-5">
           <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
-            Advice Up*
+            Advice*
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm ">
             <thead
@@ -340,7 +347,7 @@
             <tbody formArrayName="chiefComplaints">
               <tr class="bg-gray-50" formGroupName="advice">
                 <td class="p-0  ">
-                  <textarea formControlName="comments"
+                  <textarea formControlName="comments" formControlName="advice"
                     class="w-full p-2 h-[100px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>

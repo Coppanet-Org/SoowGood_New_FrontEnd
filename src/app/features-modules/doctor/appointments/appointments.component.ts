@@ -15,6 +15,7 @@ export class AppointmentsComponent implements OnInit {
     private NormalAuth: AuthService,
   ) {}
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     let authId = this.NormalAuth.authInfo().id;
     this.doctorId = authId;
   }
