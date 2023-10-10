@@ -390,6 +390,78 @@ export interface PaymentHistoryInputDto {
   subscription_id?: string;
 }
 
+export interface PrescriptionDrugDetailsDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  prescriptionRefferenceCode?: string;
+  drugRxId?: number;
+  drugName?: string;
+  drugDoseSchedule?: string;
+  isDrugExceptional?: boolean;
+  drugDoseScheduleDays?: string;
+  duration?: string;
+  instruction?: string;
+}
+
+export interface PrescriptionFindingsObservationsDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  prescriptionRefferenceCode?: string;
+  observation?: string;
+  comments?: string;
+}
+
+export interface PrescriptionMainComplaintDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  prescriptionRefferenceCode?: string;
+  duration?: string;
+  condition?: string;
+  problems?: string;
+  physicianRecommendedAction?: string;
+}
+
+export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
+  refferenceCode?: string;
+  appointmentId?: number;
+  appointmentSerial?: string;
+  appointmentCode?: string;
+  doctorProfileId?: number;
+  doctorName?: string;
+  doctorCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  consultancyType?: ConsultancyType;
+  consultancyTypeName?: string;
+  appointmentType?: AppointmentType;
+  appointmentTypeName?: string;
+  appointmentDate?: string;
+  prescriptionDate?: string;
+  patientLifeStyle?: string;
+  reportShowDate?: string;
+  followupDate?: string;
+  advice?: string;
+  prescriptionPatientDiseaseHistory: PrescriptionPatientDiseaseHistoryDto[];
+  prescriptionMainComplaints: PrescriptionMainComplaintDto[];
+  prescriptionFindingsObservations: PrescriptionFindingsObservationsDto[];
+  prescriptionMedicalCheckups: PrescriptionMedicalCheckupsDto[];
+  prescriptionDrugDetails: PrescriptionDrugDetailsDto[];
+}
+
+export interface PrescriptionMedicalCheckupsDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  prescriptionRefferenceCode?: string;
+  testName?: string;
+  comments?: string;
+}
+
+export interface PrescriptionPatientDiseaseHistoryDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  prescriptionRefferenceCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  commonDiseaseId?: number;
+  diseaseName?: string;
+}
+
 export interface ResponseDto {
   id?: number;
   value?: string;
