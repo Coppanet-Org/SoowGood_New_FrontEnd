@@ -15,9 +15,7 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { PermissionService } from '@abp/ng.core';
-import { ToasterService } from '@abp/ng.theme.shared';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',

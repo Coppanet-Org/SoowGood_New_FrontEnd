@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { slideInFrom } from 'src/app/animation';
 
 @Component({
@@ -7,6 +8,15 @@ import { slideInFrom } from 'src/app/animation';
   styleUrls: ['./appointments.component.scss'],
   animations: [slideInFrom('left')],
 })
-export class AppointmentsComponent {
+export class AppointmentsComponent implements OnInit {
   animationDirection = 'left';
+  doctorId: any;
+  constructor(
+    private NormalAuth: AuthService,
+  ) {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+    let authId = this.NormalAuth.authInfo().id;
+    this.doctorId = authId;
+  }
 }

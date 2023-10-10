@@ -47,6 +47,7 @@ export class DoctorComponent {
     private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit() {
+    window.scrollTo(0, 0);
     let user = this.NormalAuth.authInfo();
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
