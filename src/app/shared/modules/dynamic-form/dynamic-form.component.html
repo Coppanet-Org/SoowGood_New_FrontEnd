@@ -1,8 +1,8 @@
 <h1>Register</h1>
 <form [formGroup]="registerForm">
-    <div *ngFor="let field of fields; let i = index">
+    <div *ngFor="let field of fields; ">
         <ng-container [ngSwitch]="field.type">
-            <app-dynamic-input [id]="i" *ngSwitchCase="'text'" [formName]="formName" [field]="field"></app-dynamic-input>
+            <app-dynamic-input *ngSwitchCase="'text'" [formName]="formName" [field]="field"></app-dynamic-input>
         </ng-container>
     </div>
 </form>

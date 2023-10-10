@@ -12,6 +12,7 @@ export * from './documents-attachment.service';
 export * from './otp.service';
 export * from './patient-profile.service';
 export * from './payment-history.service';
+export * from './prescription-master.service';
 export * from './sms.service';
 export * from './speciality.service';
 export * from './specialization.service';

@@ -17,12 +17,13 @@ export class DynamicFormComponent implements OnInit {
     
   }
   getFormControlsFields() {
+    let id = 0
     const formGroupFields: any = {};
     for (const field of Object.keys(this.model)) {
       const fieldProps = this.model[field];
       const validators:any = this.addValidator(fieldProps.rules);
       formGroupFields[field] = new FormControl(fieldProps.value, validators);
-      this.fields.push({ ...fieldProps, fieldName: field });
+      this.fields.push({ ...fieldProps, fieldName: field,id : id++ });
     }
     return formGroupFields;
   }

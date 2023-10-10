@@ -57,6 +57,13 @@ const routes: Route[] = [
             (m) => m.ProfileSettingsModule
           ),
       },
+      {
+        path: 'build-prescription/:aptId',
+        loadChildren: () =>
+          import('./build-prescription/build-prescription.module').then(
+            (m) => m.BuildPrescriptionModule
+          ),
+      }
     ],
   },
 ];
