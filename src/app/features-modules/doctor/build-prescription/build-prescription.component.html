@@ -1,4 +1,7 @@
-<div class="min-w-[900px] max-w-full m-auto">
+<!-- <button (click)="generatePDF('open')">Print</button> -->
+
+
+<div class="min-w-[900px] max-w-[1200px] m-auto">
   <div class="bg-white  h-full border-gray-200 border-[1px] lg:px-12 p-8 shadow-blue">
     <div class="p-heade  ">
       <div class="p-head-top flex justify-between">
@@ -48,19 +51,14 @@
                 [formGroupName]="i">
 
                 <td class=" p-0 w-[22%] relative">
-                  <input  type="text" placeholder="Select Symptoms" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
+                  <input  type="text" placeholder="Select Symptoms" class="w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto
                      focus:outline-secondary" formControlName="symptoms" 
-                     [matAutocomplete]="auto" [formControl]="symptomsControls[i]"
+                     
                      >
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  <div class="absolute" *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500">
-                        Symptoms is required!
-                  </div>
                 </td>
+                <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[10px] z-10 text-[12px]">
+                      Symptoms is required!
+                </div>
 
                 <td class="p-0 w-[10%]">
                   <div class="flex w-full">
@@ -95,8 +93,9 @@
                 </td>
 
               </tr>
-              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
-             
+              <button  class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+                 [disabled]="chiefComplaints.invalid"
+                  [class]="chiefComplaints.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
                 (click)="addChiefComplaint()"> Add More Complaints</button>
             </tbody>
           </table>
@@ -147,8 +146,11 @@
                   </div>
                 </td>
               </tr>
-              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
-              
+              <button class="border-[1px] text-secondary border-secondary py-2 px-4 
+              rounded-md"
+              [disabled]="findings.invalid"
+              [class]="findings.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
+
                 (click)="addFindings()"> Add More Findings</button>
             </tbody>
           </table>
@@ -253,6 +255,8 @@
                 </td>
               </tr>
               <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+              [disabled]="medicineSchedule.invalid"
+              [class]="medicineSchedule.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
                 (click)="addMedicineSchedule()"> Add More Medicine</button>
             </tbody>
           </table>
@@ -298,7 +302,8 @@
                       </td>
                     </tr>
                     <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
-                    
+                    [disabled]="diagnosis.invalid"
+                    [class]="diagnosis.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
                       (click)="addDiagnosis()"> Add More Diagnosis</button>
                   </tbody>
                 </table>
