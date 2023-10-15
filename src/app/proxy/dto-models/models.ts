@@ -91,6 +91,12 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   paymentTransactionId?: string;
 }
 
+export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
+  code?: string;
+  name?: string;
+  description?: string;
+}
+
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
@@ -259,6 +265,23 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   attachmentType?: AttachmentType;
   attachmentTypeName?: string;
   relatedEntityid?: number;
+}
+
+export interface DrugRxDto extends FullAuditedEntityDto<number> {
+  tradeName?: string;
+  brandName?: string;
+  productName?: string;
+  genericName?: string;
+  dosageForm?: string;
+  strength?: string;
+  inclusionDate?: string;
+  vlidUpto?: string;
+  manufacturer?: string;
+  dar?: string;
+  cdar?: string;
+  sdar?: string;
+  gdar?: string;
+  prescribedDrugName?: string;
 }
 
 export interface LoginDto {

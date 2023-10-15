@@ -18,22 +18,6 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
-  geAppointmentListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, AppointmentDto[]>({
-      method: 'POST',
-      url: `/api/app/appointment/ge-appointment-list-by-doctor-id/${doctorId}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  geAppointmentListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, AppointmentDto[]>({
-      method: 'POST',
-      url: `/api/app/appointment/ge-appointment-list-by-patient-id/${patientId}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto>({
       method: 'GET',
@@ -47,6 +31,22 @@ export class AppointmentService {
       method: 'GET',
       url: '/api/app/appointment/app-count-by-schedule-id-session-id',
       params: { scheduleId, sessionId },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-doctor-id/${doctorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-patient-id/${patientId}`,
     },
     { apiName: this.apiName,...config });
   
