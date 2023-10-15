@@ -3,14 +3,10 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\components",
-    "\\src\\app\\shared\\modules"
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form\\schedule-form.component.ts",
+  "SelectedNode": "\\src\\environments\\environment.ts",
   "PreviewInSolutionExplorer": false
 }
