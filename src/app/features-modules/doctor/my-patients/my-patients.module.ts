@@ -11,7 +11,7 @@ const routes: Route[] = [
     component: MyPatientsComponent,
   },
   {
-    path: 'patient-details/:id',
+    path: 'patient-details/:patientProfileId',
     loadChildren: () =>
       import('../../../shared/modules/patient-details/patient-details.module').then(
         (m) => m.PatientDetailsModule

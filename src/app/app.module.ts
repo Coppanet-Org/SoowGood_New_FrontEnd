@@ -20,6 +20,7 @@ import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
 import { LoadingDirective } from './shared/directive/loading.directive';
+import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -34,7 +35,8 @@ const routerConfig: ExtraOptions = {
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
-    LoadingDirective
+    LoadingDirective,
+    OtpInputComponent
     
 
   ],

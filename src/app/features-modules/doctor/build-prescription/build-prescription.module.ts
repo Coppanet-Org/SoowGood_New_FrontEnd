@@ -9,7 +9,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
-
 const routes: Route[] = [
   {
     path: '',
@@ -30,7 +29,8 @@ const routes: Route[] = [
     MatAutocompleteModule,
     MatSelectModule,
     MatChipsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    
   ]
 })
 export class BuildPrescriptionModule { }

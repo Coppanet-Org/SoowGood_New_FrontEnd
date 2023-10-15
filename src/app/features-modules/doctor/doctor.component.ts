@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
@@ -9,6 +9,7 @@ import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-st
   styleUrls: ['./doctor.component.scss'],
 })
 export class DoctorComponent {
+
   menuList: any = [
     {
       menuName: 'Dashboard',
@@ -42,9 +43,11 @@ export class DoctorComponent {
     },
   ];
 
+
   constructor(
     private NormalAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+
   ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -52,5 +55,16 @@ export class DoctorComponent {
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
     }
+    
+    
   }
+
+
+
+
+
+
+
+
+
 }

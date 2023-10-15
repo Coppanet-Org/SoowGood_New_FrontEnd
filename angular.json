@@ -35,7 +35,11 @@
               "src/styles.scss"
             ],
             "scripts": [
-              
+              {
+                "input": "./node_modules/pdfmake/build/pdfmake.js",
+                "bundleName": "pdfmake",
+                "inject": false
+              }
             ]
           },
           "configurations": {

@@ -35,7 +35,7 @@
     @apply w-[220px];
   }
   .btn-primary {
-    @apply h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
+    @apply active:scale-90 transition-all duration-75 h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
   }
 
   .form-left {
@@ -46,13 +46,13 @@
   }
   .form_btn {
  
-    @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
+    @apply active:scale-90 transition-all duration-75 w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
+    @apply active:scale-90 transition-all duration-75 hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
   }
   .btn-secondary-light {
-    @apply bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
+    @apply active:scale-90 transition-all duration-75 bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
   }
   .signup-form {
     @apply flex items-center w-full h-screen bg-slate-100;
@@ -105,7 +105,7 @@
 
 
   .btn-secondary-anim{
-    @apply btn-secondary-light cursor-pointer transition-all duration-[0.5s]
+    @apply active:scale-90 transition-all duration-75 btn-secondary-light cursor-pointer transition-all duration-[0.5s]
   }
 
   //prescription
@@ -116,8 +116,6 @@
   
   }
 }
-
-
 
 .btn-three {
   color: #006c93;
