@@ -1,3 +1,4 @@
+import { DrugRxService } from './../../../proxy/services/drug-rx.service';
 import { PrescriptionMasterService } from './../../../proxy/services/prescription-master.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AppointmentService } from 'src/app/proxy/services';
@@ -33,7 +34,7 @@ export class BuildPrescriptionComponent implements OnInit {
   prescriptionForm!: FormGroup;
   appointmentInfo: AppointmentDto = {};
   specialCaseChecked: boolean = false;
-  options: any[] = symptoms;
+  options:any[]=[];
   filteredOptions: Observable<string[]>[] = [];
 
   symptomsControls: FormControl[] = [];
@@ -66,7 +67,8 @@ export class BuildPrescriptionComponent implements OnInit {
     private Router: Router,
     private AppointmentService: AppointmentService,
     private TosterService: TosterService,
-    private PrescriptionMasterService: PrescriptionMasterService
+    private PrescriptionMasterService: PrescriptionMasterService,
+    private DrugRxService: DrugRxService
   ) {}
 
   ngOnInit(): void {
@@ -88,11 +90,22 @@ export class BuildPrescriptionComponent implements OnInit {
       });
     }
 
+this.DrugRxService.getDrugNameList().subscribe((res) => {
+  this.options = res.map((drug) => {
+    return {
+      id: drug.id,
+      name: drug.prescribedDrugName
+    };
+  });
+});
+
+
+    
     this.loadForm();
   }
 
-  displayFn(symptom: string): string {
-    return symptom || '';
+  displayFn(symptom:any): string {
+    return symptom && symptom.name ? symptom.name : '';
   }
 
 
@@ -159,6 +172,8 @@ export class BuildPrescriptionComponent implements OnInit {
   }
 
   formatOption(option: string, searchValue: string): string {
+
+    
     if (searchValue && option.toLowerCase().includes(searchValue.toLowerCase())) {
       const regExp = new RegExp(searchValue, 'gi');
       return option.replace(regExp, (match) => `<span class="highlight">${match}</span>`);
@@ -170,7 +185,9 @@ export class BuildPrescriptionComponent implements OnInit {
 
   private _filterSymptoms(value: any): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.options
+      .filter(option => option.name.toLowerCase().includes(filterValue))
+      .map(option => option.name);
   }
 
 

@@ -8,32 +8,7 @@ import { AppointmentService } from 'src/app/proxy/services';
 export class DoctorPatientAppointmentService {
 
   private appointmentList: any[] = [];
-  // private appointmentListCache: any[] = [];
-  // private appointmentListSubject = new BehaviorSubject<any[]>(this.appointmentListCache);
-  // appointmentList$ = this.appointmentListSubject.asObservable();
   constructor(private AppointmentService : AppointmentService) { }
-
-
-
-  // getAllAppointmentList(id:number, user:string){
-  //     if (user == "patient") {
-  //       this.AppointmentService.geAppointmentListByPatientId(id).subscribe(
-  //         (e) => {
-  //           this.appointmentListSubject.next(e);
-  //           console.log(e);
-  //         }
-  //       );
-  //     } 
-  //     if (user == "doctor") {  
-  //       this.AppointmentService.geAppointmentListByDoctorId(id).subscribe(
-  //         (e) => {
-  //           this.appointmentListSubject.next(e);
-  //           console.log(e);
-  //         }
-  //       );
-  //     }
-  //   return this.appointmentListSubject.asObservable();
-  // }
 
   private cache: { [key: string]: any } = {};
 
@@ -41,12 +16,14 @@ export class DoctorPatientAppointmentService {
     const cacheKey = `${user}-${id}`;
     
     // Check if data is already in cache
+    console.log(this.cache[cacheKey]);
     if (this.cache[cacheKey]) {
+      
       return of(this.cache[cacheKey]);
     }
     
     if (user === "patient") {
-      return this.AppointmentService.geAppointmentListByPatientId(id).pipe(
+      return this.AppointmentService.getAppointmentListByPatientId(id).pipe(
         map((data) => {
           this.appointmentList = data;
           this.cache[cacheKey] = data; // Cache the data
@@ -61,7 +38,7 @@ export class DoctorPatientAppointmentService {
     }
     
     if (user === "doctor") {
-      return this.AppointmentService.geAppointmentListByDoctorId(id).pipe(
+      return this.AppointmentService.getAppointmentListByDoctorId(id).pipe(
         map((data) => {
           this.appointmentList = data;
           this.cache[cacheKey] = data; // Cache the data

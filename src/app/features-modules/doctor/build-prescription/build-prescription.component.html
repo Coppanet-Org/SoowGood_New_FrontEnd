@@ -85,8 +85,9 @@
                 <td class="p-0 w-[22%] relative">
                     <input  placeholder="Select Symptoms" formControlName="symptoms" [matAutocomplete]="auto"  [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
                     >
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option>
+                    <mat-autocomplete #auto="matAutocomplete" >
+                      <!-- <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option> -->
+                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">{{ option }}</mat-option>
 
                     </mat-autocomplete>
                   <!-- <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
