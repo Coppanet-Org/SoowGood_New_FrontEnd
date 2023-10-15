@@ -4,6 +4,8 @@ import { Route, RouterModule } from '@angular/router';
 import { PatientComponent } from './patient.component';
 import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashboard-menu.module';
 import { isAuth } from 'src/app/auth-gurd/auth.service';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { DashboardHeaderModule } from 'src/app/shared/modules/dashboard-header/dashboard-header.module';
 
 
 
@@ -74,7 +76,7 @@ const routes: Route[] = [
 @NgModule({
   declarations: [PatientComponent],
   imports: [
-    CommonModule,DashboardMenuModule,RouterModule.forChild(routes)
+   DashboardHeaderModule, CommonModule,DashboardMenuModule,RouterModule.forChild(routes)
   ]
 })
 export class PatientModule { }

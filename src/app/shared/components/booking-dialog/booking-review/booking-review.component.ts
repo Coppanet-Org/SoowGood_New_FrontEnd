@@ -2,6 +2,7 @@ import { AppointmentService,  SslCommerzService } from 'src/app/proxy/services';
 import { Component, OnInit } from '@angular/core';
 import { SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { DoctorBookingStateService } from 'src/app/shared/services/states/doctors-states/doctor-booking-state.service';
+import { TosterService } from 'src/app/shared/services/toster.service';
 
 @Component({
   selector: 'app-booking-review',
@@ -25,7 +26,7 @@ export class BookingReviewComponent implements OnInit {
   bookingInfo: any;
   constructor(
     private DoctorBookingStateService: DoctorBookingStateService,
-
+    private ToasterService :TosterService,
     private appointmentService: AppointmentService,
     private sslCommerzService: SslCommerzService
     //private sslCommerzService: PaymentService
@@ -35,7 +36,6 @@ export class BookingReviewComponent implements OnInit {
     
     this.DoctorBookingStateService.getBookingData().subscribe((res:any)=> {
       this.bookingInfo = res;
-      console.log(res);
     });
 
   }
@@ -49,9 +49,10 @@ export class BookingReviewComponent implements OnInit {
      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe((response: any) => {
        if (response && response.status === 'SUCCESS') {
          window.location = response.gatewayPageURL;
+         localStorage.removeItem('booking-info')
+         this.ToasterService.customToast("Payemnt success",'success')
        } else {
-         console.log(response);
-         //abp.message.error("Unable to initiate your payment request. Please contact our support team.", "FAILED!");
+        this.ToasterService.customToast("Unable to initiate your payment request. Please contact our support team.",'error')
        }
      });
    }

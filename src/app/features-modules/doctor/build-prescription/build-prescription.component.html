@@ -1,7 +1,7 @@
 <!-- <button (click)="generatePDF('open')">Print</button> -->
 
 
-<div class="min-w-[900px] max-w-[1200px] m-auto">
+<div class="min-w-[900px] max-w-full m-auto">
   <div class="bg-white  h-full border-gray-200 border-[1px] lg:px-12 p-8 shadow-blue">
     <div class="p-heade  ">
       <div class="p-head-top flex justify-between">
@@ -19,15 +19,33 @@
             <span>Patient Name : </span> <b> <input type="text" formControlName="patientName"> </b>
             <span>Age :</span> <b><input type="number" formControlName="age"> </b>
             <span>Weight :</span> <b> <input type="number" formControlName="weight"> </b>
-            <span>Date :</span> <b> <input [value]="today"> </b>
-            <span>Time :</span> <b> <input [value]="todayTime"> </b>
+            <span>Date : <b> <input [value]="today"> </b></span> 
+            <span>Time :<b> <input [value]="todayTime"> </b></span> 
           </div>
         </div>
       </form>
     </div>
-    
+
     <form [formGroup]="prescriptionForm">
-      
+
+
+      <!-- Compliments start -->
+      <div class="p-body">
+        <div class="p-body-item col-span-12 mt-5">
+          <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
+            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            Patient History*
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+
+
       <!-- Compliments start -->
       <div class="p-body">
         <div class="p-body-item col-span-12 mt-5">
@@ -39,26 +57,44 @@
             <thead
               class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
               <tr class="rounded-lg ">
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-circle-info mr-1.5 text-secondary"></i> Symptom</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Duration</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-regular fa-keyboard mr-1.5 text-secondary"></i> Problem</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-circle-info mr-1.5 text-secondary"></i> Symptom</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-clock mr-1.5 text-secondary"></i>Duration</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-regular fa-keyboard mr-1.5 text-secondary"></i> Problem</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
               </tr>
             </thead>
             <tbody formArrayName="chiefComplaints">
               <tr class="bg-gray-50 " *ngFor="let complaint of chiefComplaints.controls; let i = index"
                 [formGroupName]="i">
-
+<!-- 
                 <td class=" p-0 w-[22%] relative">
-                  <input  type="text" placeholder="Select Symptoms" class="w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto
-                     focus:outline-secondary" formControlName="symptoms" 
-                     
+                  <input type="text" placeholder="Select Symptoms"formControlName="symptoms"
+                  [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
                      >
+                     <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched"
+                       class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
+                       Symptoms is required!
+                     </div>
+                </td> -->
+                <td class="p-0 w-[22%] relative">
+                    <input  placeholder="Select Symptoms" formControlName="symptoms" [matAutocomplete]="auto"  [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
+                    >
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option>
+
+                    </mat-autocomplete>
+                  <!-- <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
+                    Symptoms is required!
+                  </div> -->
                 </td>
-                <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[10px] z-10 text-[12px]">
-                      Symptoms is required!
-                </div>
+
+
 
                 <td class="p-0 w-[10%]">
                   <div class="flex w-full">
@@ -80,7 +116,7 @@
                     placeholder="Problems">
                 </td>
                 <td class="p-0 w-[22%]  ">
-                  <textarea formControlName="comments"
+                  <textarea formControlName="physicianRecommendedAction"
                     class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>
@@ -93,9 +129,9 @@
                 </td>
 
               </tr>
-              <button  class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
-                 [disabled]="chiefComplaints.invalid"
-                  [class]="chiefComplaints.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
+              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+                [disabled]="chiefComplaints.invalid"
+                [class]="chiefComplaints.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
                 (click)="addChiefComplaint()"> Add More Complaints</button>
             </tbody>
           </table>
@@ -114,25 +150,21 @@
             <thead
               class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
               <tr class="rounded-lg ">
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Observations</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-regular fa-keyboard mr-1.5 text-secondary"></i> Problem</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-clock mr-1.5 text-secondary"></i>Observations</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
               </tr>
             </thead>
             <tbody formArrayName="findings">
-              <tr class="bg-gray-50" *ngFor="let finding of findings.controls; let i = index"
-                [formGroupName]="i">
+              <tr class="bg-gray-50" *ngFor="let finding of findings.controls; let i = index" [formGroupName]="i">
                 <td class=" p-0 ">
                   <input type="text" placeholder="Observation" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
-                     focus:outline-secondary" formControlName="observations">
+                     focus:outline-secondary" formControlName="observation">
                 </td>
 
-                <td class="p-0 ">
-                  <input formControlName="problems"
-                    class="w-full h-[47px] px-3 py-2  text-[16px] text-primary font-Roboto focus:outline-secondary"
-                    placeholder="Problems">
-                </td>
                 <td class="p-0  ">
                   <textarea formControlName="comments"
                     class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
@@ -147,10 +179,8 @@
                 </td>
               </tr>
               <button class="border-[1px] text-secondary border-secondary py-2 px-4 
-              rounded-md"
-              [disabled]="findings.invalid"
-              [class]="findings.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
-
+              rounded-md" [disabled]="findings.invalid"
+                [class]="findings.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
                 (click)="addFindings()"> Add More Findings</button>
             </tbody>
           </table>
@@ -162,20 +192,26 @@
       <div class="p-body">
         <div class="p-body-item col-span-12 mt-5">
           <div class="flex justify-between">
-             <h1 class="font-Roboto text-[18px] text-primary/90  font-semibold"><i class="fa-solid fa-circle-stop text-[16px]"></i> Medication & Schedule*</h1>
+            <h1 class="font-Roboto text-[18px] text-primary/90  font-semibold"><i
+                class="fa-solid fa-circle-stop text-[16px]"></i> Medication & Schedule*</h1>
           </div>
-         
+
           <table class="table text-gray-400 text-sm  border-separate">
             <thead
               class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
               <tr class="rounded-lg ">
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-circle-info mr-1.5 text-secondary"></i> Medicine Name</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Duration</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-regular fa-keyboard mr-1.5 text-secondary"></i> 
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-circle-info mr-1.5 text-secondary"></i> Medicine Name</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-clock mr-1.5 text-secondary"></i>Duration</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-regular fa-keyboard mr-1.5 text-secondary"></i>
                   Schedule/Timing
                 </th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
               </tr>
             </thead>
             <tbody formArrayName="medicineSchedule">
@@ -184,13 +220,16 @@
 
                 <td class=" p-0 w-[30%]">
                   <input type="text" placeholder="Select Medicine" class="w-full p-2 h-[84px] bg-transparent text-[16px] text-primary font-Roboto
-                     focus:outline-secondary" formControlName="medicineName" [matAutocomplete]="auto" [formControl]="symptomsControls[i]">
+                     focus:outline-secondary" formControlName="drugName" [matAutocomplete]="auto"
+                    [formControl]="symptomsControls[i]">
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">
                       {{option}}
                     </mat-option>
                   </mat-autocomplete>
                 </td>
+
+
 
                 <td class="p-0 w-[12%]">
                   <div class="flex w-full">
@@ -212,8 +251,8 @@
                     <input type="checkbox" [id]="i" class="mr-2" formControlName="specialCaseChecked">
                     <label [for]="i">Special Case</label>
                   </div>
-                    <div class="flex">
-                      <mat-select formControlName="timing" placeholder="Select timing" 
+                  <div class="flex">
+                    <mat-select formControlName="drugDoseSchedule" placeholder="Select timing"
                       class="text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary">
                       <mat-option value="1 + 1 + 1"> 1 + 1 + 1</mat-option>
                       <mat-option value="1 + 1 + 0">1 + 1 + 0</mat-option>
@@ -224,25 +263,21 @@
                       <mat-option value="1 + 0 + 1">1 + 0 + 1</mat-option>
                     </mat-select>
 
-                    <mat-select multiple formControlName="timingDay" placeholder="Select Day" 
-                    class="text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary
-                     focus:outline-secondary"
-                     *ngIf="medicine.get('specialCaseChecked')?.value"
-                     
-                     >
-                    <mat-option value="Sun"> Sun</mat-option>
-                    <mat-option value="Mon">Mon</mat-option>
-                    <mat-option value="Tue">Tue</mat-option>
-                    <mat-option value="Wed">Wed</mat-option>
-                    <mat-option value="Thu">Thu</mat-option>
-                    <mat-option value="Fri">Fri</mat-option>
-                    <mat-option value="Sat">Sat</mat-option>
-                  </mat-select>
+                    <mat-select multiple formControlName="drugDoseScheduleDays" placeholder="Select Day" class="text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary
+                     focus:outline-secondary" *ngIf="medicine.get('specialCaseChecked')?.value">
+                      <mat-option value="Sun"> Sun</mat-option>
+                      <mat-option value="Mon">Mon</mat-option>
+                      <mat-option value="Tue">Tue</mat-option>
+                      <mat-option value="Wed">Wed</mat-option>
+                      <mat-option value="Thu">Thu</mat-option>
+                      <mat-option value="Fri">Fri</mat-option>
+                      <mat-option value="Sat">Sat</mat-option>
+                    </mat-select>
 
-                    </div>
+                  </div>
                 </td>
                 <td class="p-0 w-[22%]  ">
-                  <textarea formControlName="comments"
+                  <textarea formControlName="instruction"
                     class="w-full p-2 h-[84px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>
@@ -254,124 +289,148 @@
                   </div>
                 </td>
               </tr>
-              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+              <!-- <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
               [disabled]="medicineSchedule.invalid"
               [class]="medicineSchedule.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
-                (click)="addMedicineSchedule()"> Add More Medicine</button>
+                (click)="addMedicineSchedule()"> Add More Medicine
+              </button> -->
+
+              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+                (click)="addMedicineSchedule()"> Add More Medicine
+              </button>
+
             </tbody>
           </table>
         </div>
       </div>
 
 
-       <!-- Diagnosis * start -->
+      <!-- Diagnosis * start -->
       <div class="p-body">
-              <div class="p-body-item col-span-12 mt-5">
-                <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
-                  <i class="fa-solid fa-circle-stop text-[16px]"></i>
-                  Diagnosis*
-                </div>
-                <table class="table text-gray-400 border-separate space-y-6 text-sm ">
-                  <thead
-                    class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
-                    <tr class="rounded-lg ">
-                      <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Test</th>
-                      <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
-                      <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="diagnosis">
-                    <tr class="bg-gray-50" *ngFor="let diagnosis of diagnosis.controls; let i = index"
-                      [formGroupName]="i">
-                      <td class=" p-0 ">
-                        <input type="text" placeholder="Test name" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
-                           focus:outline-secondary" formControlName="observations">
-                      </td>
-      
-                      <td class="p-0  ">
-                        <textarea formControlName="comments"
-                          class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
-                          placeholder="Write comment"></textarea>
-                      </td>
-                      <td class="p-0 ">
-                        <div class="flex justify-center items-center h-[47px] text-white">
-                          <button [disabled]="i === 0" type="button" (click)="removeDiagnosis(i)">
-                            <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
-                    [disabled]="diagnosis.invalid"
-                    [class]="diagnosis.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
-                      (click)="addDiagnosis()"> Add More Diagnosis</button>
-                  </tbody>
-                </table>
-              </div>
-      </div>
-
-
-       <!-- Follow us & Advice * start -->
-      <div class="p-body">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="p-body-item mt-5">
+        <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
-            Follow Up*
+            Diagnosis*
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm ">
             <thead
               class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
               <tr class="rounded-lg ">
-                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Doctor Advice</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-clock mr-1.5 text-secondary"></i>Test</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                    class="fa-solid fa-comment mr-1.5 text-secondary"></i> Comments</th>
+                <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"> <i
+                    class="fa-solid fa-computer-mouse mr-1.5 text-secondary"></i>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="bg-gray-50">
-                <td class="p-0  ">
-                  <input type="date" formControlName="followUp"  class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
-                  focus:outline-secondary" >
+            <tbody formArrayName="diagnosis">
+              <tr class="bg-gray-50" *ngFor="let diagnosis of diagnosis.controls; let i = index" [formGroupName]="i">
+                <td class=" p-0 ">
+                  <input type="text" placeholder="Test name" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
+                           focus:outline-secondary" formControlName="testName">
                 </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
 
-        <div class="p-body-item mt-5">
-          <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
-            <i class="fa-solid fa-circle-stop text-[16px]"></i>
-            Advice*
-          </div>
-          <table class="table text-gray-400 border-separate space-y-6 text-sm ">
-            <thead
-              class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
-              <tr class="rounded-lg ">
-                <th class="p-3 font-normal text-left"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Doctor Advice</th>
-              </tr>
-            </thead>
-            <tbody formArrayName="chiefComplaints">
-              <tr class="bg-gray-50" formGroupName="advice">
                 <td class="p-0  ">
-                  <textarea formControlName="comments" formControlName="advice"
-                    class="w-full p-2 h-[100px] flex bg-transparent focus:outline-secondary text-[16px]"
+                  <textarea formControlName="comments"
+                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
                     placeholder="Write comment"></textarea>
                 </td>
+                <td class="p-0 ">
+                  <div class="flex justify-center items-center h-[47px] text-white">
+                    <button [disabled]="i === 0" type="button" (click)="removeDiagnosis(i)">
+                      <i class="fa-solid fa-trash " [class]="i == 0 ? 'text-gray-500' : 'text-primary'"></i>
+                    </button>
+                  </div>
+                </td>
               </tr>
+              <button class="border-[1px] text-secondary border-secondary py-2 px-4 rounded-md"
+                [disabled]="diagnosis.invalid"
+                [class]="diagnosis.invalid ? 'opacity-50 selection:invalid:text-red-300' : 'opacity-1'"
+                (click)="addDiagnosis()"> Add More Diagnosis</button>
             </tbody>
           </table>
         </div>
-        
       </div>
+
+
+      <!-- Follow us & Advice * start -->
+      <div class="p-body">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-body-item mt-5">
+            <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
+              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              Follow Up*
+            </div>
+            <table class="table text-gray-400 border-separate space-y-6 text-sm ">
+              <thead
+                class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
+                <tr class="rounded-lg ">
+                  <th class="p-3 font-normal border-white border-r-secondary-light border-[1px]"><i
+                      class="fa-solid fa-clock mr-1.5 text-secondary"></i>Doctor Advice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-gray-50">
+                  <td class="p-0  ">
+                    <input type="date" formControlName="followUp" class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto
+                  focus:outline-secondary">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-body-item mt-5">
+            <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
+              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              Advice*
+            </div>
+            <table class="table text-gray-400 border-separate space-y-6 text-sm ">
+              <thead
+                class="bg-primary/90 font-Roboto text-[15px] font-normal rounded-[20px] text-gray-50 overflow-hidden">
+                <tr class="rounded-lg ">
+                  <th class="p-3 font-normal text-left"><i class="fa-solid fa-clock mr-1.5 text-secondary"></i>Doctor
+                    Advice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-gray-50">
+                  <td class="p-0  ">
+                    <textarea formControlName="advice"
+                      class="w-full p-2 h-[100px] flex bg-transparent focus:outline-secondary text-[16px]"
+                      placeholder="Write comment"></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
       </div>
 
       <button class="btn-secondary">Print View</button>
     </form>
 
     <div class="btns grid grid-cols-4 gap-4 mt-12">
-       <button class="btn-secondary rounded-[25px]" (click)="submitPrescription()" >Send Patient</button>
-       <button class="btn-secondary rounded-[25px]">Send Pharmacy</button>
-       <button class="btn-secondary rounded-[25px]">Send by Email</button>
-       <button class="btn-secondary rounded-[25px]">Download</button>
+
+
+      <button class="btn-secondary rounded-[25px]" (click)="submitPrescription()">
+        <div *ngIf="!prescriptionLoader" class="flex">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          <span>Send</span>
+        </div>
+        <span *ngIf="prescriptionLoader" class="loading loading-dots loading-md"></span>
+
+
+      </button>
+      <button class="btn-secondary rounded-[25px]">Send Pharmacy</button>
+      <button class="btn-secondary rounded-[25px]">Send by Email</button>
+      <button class="btn-secondary rounded-[25px]">Download</button>
     </div>
   </div>
 </div>
@@ -416,6 +475,3 @@
       </li>
     </ol>
   </nav> -->
-
-
-

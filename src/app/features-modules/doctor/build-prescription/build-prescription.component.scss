@@ -48,6 +48,10 @@ tr td{
 }
 
 
+// ::ng-deep .mat-mdc-option .highlight {
+//     background: yellow;
+//     color: rgb(255, 0, 0);
+//   }
 
 @media (min-width: 640px) {
     table {
@@ -58,3 +62,5 @@ tr td{
       display: none;
     }
   }
+
+

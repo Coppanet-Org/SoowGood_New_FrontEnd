@@ -208,7 +208,9 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
               );
               if (availableSessions.length > 0) {
                 finalFilter = availableSessions.map((session: any) => {
-                  let left = this.getLeftSlotForBooking(item,data[0])[session.id];
+                  let left = this.getLeftSlotForBooking(item, data[0])[
+                    session.id
+                  ];
                   return {
                     ...session,
                     leftPatient: left,
@@ -276,50 +278,43 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   //   return leftNoOfPatients;
   // }
 
-
   getLeftSlotForBooking(item: any, selectedDate: string) {
     // Create a dictionary to store the booked appointments count per session and date
     const bookedAppointments: any = {};
-  
+
     // Loop through the appointment objects to count booked appointments per session and date
     item.appointments.forEach((appointment: any) => {
       const sessionId = appointment.doctorScheduleDaySessionId;
       const appointmentDate = appointment.appointmentDate.split('T')[0]; // Extract the date portion
-  
+
       if (!bookedAppointments[sessionId]) {
         bookedAppointments[sessionId] = {};
       }
-  
+
       if (!bookedAppointments[sessionId][appointmentDate]) {
         bookedAppointments[sessionId][appointmentDate] = 1;
       } else {
         bookedAppointments[sessionId][appointmentDate]++;
       }
     });
-  
+
     // Calculate the left number of patients for each session and date
     const leftNoOfPatients: any = {};
-  
+
     item.doctorScheduleDaySession.forEach((session: any) => {
       const sessionId = session.id;
       const sessionDate = selectedDate.split('T')[0]; // Extract the date portion
-      const bookedCount = (bookedAppointments[sessionId] && bookedAppointments[sessionId][sessionDate]) || 0;
-  
+      const bookedCount =
+        (bookedAppointments[sessionId] &&
+          bookedAppointments[sessionId][sessionDate]) ||
+        0;
+
       leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
     });
-  
+
     // Return the available slots for the selected date
     return leftNoOfPatients;
   }
-  
-  
-  
-  
-  
-  
-
-
-
 
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
     // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));
@@ -441,21 +436,20 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
           this.PatientProfileService.update(obj).subscribe((res) => {
             this.createAppointment(infoForBooking, e);
           });
-        } else if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
-            this.createAppointment(infoForBooking, e);
-        } else {
-          this.TosterService.customToast(
-            'Select book for others/myself',
-            'warning'
-          );
-          return
         }
+
+        if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
+          this.createAppointment(infoForBooking, e);
+        }
+        return;
       }
     } else if (e === 3 && !this.form.valid) {
       this.TosterService.customToast(
         'Please select all the required fields',
         'warning'
       );
+    } else {
+      return;
     }
   }
 
@@ -538,20 +532,3 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   }
   closeDialogs() {}
 }
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-

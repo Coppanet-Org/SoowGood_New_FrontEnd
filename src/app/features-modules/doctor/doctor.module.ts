@@ -1,3 +1,4 @@
+import { DashboardHeaderModule } from './../../shared/modules/dashboard-header/dashboard-header.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DoctorComponent } from './doctor.component';
@@ -8,7 +9,7 @@ const routes: Route[] = [
   {
     path: '',
     component: DoctorComponent,
-    // canActivate: [isAuth],
+    canActivate: [isAuth],
     children: [
       {
         path: '',
@@ -70,8 +71,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    DoctorComponent,
+    DoctorComponent
   ],
-  imports: [CommonModule,DashboardMenuModule, RouterModule.forChild(routes)],
+  imports: [DashboardHeaderModule,CommonModule,DashboardMenuModule, RouterModule.forChild(routes)]
 })
 export class DoctorModule {}
