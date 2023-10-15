@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { PrescriptionMasterDto } from '../dto-models/models';
+import type { PrescriptionMasterDto, PrescriptionPatientDiseaseHistoryDto } from '../dto-models/models';
 import type { PrescriptionMasterInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -35,10 +35,26 @@ export class PrescriptionMasterService {
     { apiName: this.apiName,...config });
   
 
+  getPatientDiseaseList = (patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PrescriptionPatientDiseaseHistoryDto[]>({
+      method: 'GET',
+      url: `/api/app/prescription-master/patient-disease-list/${patientId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPrescriptionMasterListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PrescriptionMasterDto[]>({
       method: 'GET',
       url: `/api/app/prescription-master/prescription-master-list-by-doctor-id/${doctorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getPrescriptionMasterListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PrescriptionMasterDto[]>({
+      method: 'GET',
+      url: `/api/app/prescription-master/prescription-master-list-by-patient-id/${patientId}`,
     },
     { apiName: this.apiName,...config });
   
