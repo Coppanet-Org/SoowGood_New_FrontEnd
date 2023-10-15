@@ -17,10 +17,19 @@ export class DrugRxService {
     { apiName: this.apiName,...config });
   
 
-  getDrugNameList = (config?: Partial<Rest.Config>) =>
+  getDrugNameSearchList = (searchDrug: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DrugRxDto[]>({
       method: 'GET',
-      url: '/api/app/drug-rx/drug-name-list',
+      url: '/api/app/drug-rx/drug-name-search-list',
+      params: { searchDrug },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDrugWithLimitList = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DrugRxDto[]>({
+      method: 'GET',
+      url: '/api/app/drug-rx/drug-with-limit-list',
     },
     { apiName: this.apiName,...config });
   

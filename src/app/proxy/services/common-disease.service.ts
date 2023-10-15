@@ -17,10 +17,19 @@ export class CommonDiseaseService {
     { apiName: this.apiName,...config });
   
 
-  getDrugNameList = (config?: Partial<Rest.Config>) =>
+  getDiseaseNameSearchList = (searchDisease: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, CommonDiseaseDto[]>({
       method: 'GET',
-      url: '/api/app/common-disease/drug-name-list',
+      url: '/api/app/common-disease/disease-name-search-list',
+      params: { searchDisease },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDiseaseNameWithLimitList = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CommonDiseaseDto[]>({
+      method: 'GET',
+      url: '/api/app/common-disease/disease-name-with-limit-list',
     },
     { apiName: this.apiName,...config });
   
