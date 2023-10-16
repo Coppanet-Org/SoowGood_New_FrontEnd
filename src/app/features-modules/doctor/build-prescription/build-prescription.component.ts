@@ -86,6 +86,7 @@ export class BuildPrescriptionComponent implements OnInit {
   @ViewChild('diseaseInput') diseaseInput!: ElementRef<HTMLInputElement>;
 
   announcer = inject(LiveAnnouncer);
+  uniqueHistory!: string[];
 
   constructor(
     private fb: FormBuilder,
@@ -398,15 +399,13 @@ export class BuildPrescriptionComponent implements OnInit {
       prescriptionMedicalCheckups: diagnosis,
       followupDate: followUp,
       advice: advice,
-      prescriptionPatientDiseaseHistory: [
-        {
-          patientProfileId: 40013,
-          commonDiseaseId: 1,
-          diseaseName: 'Mild intermittent asthma, uncomplicated',
-        },
-      ],
+      // need to add history 
+      prescriptionPatientDiseaseHistory:  [...new Set(this.histories)]
     };
 
+
+ console.log(prescription);
+ 
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
       return;
@@ -602,7 +601,7 @@ export class BuildPrescriptionComponent implements OnInit {
     }
     // Clear the input value
     event.chipInput!.clear();
-    this.prescriptionForm.get('drugName')?.setValue(null);
+    // this.prescriptionForm.get('history')?.setValue(null);
   }
 
   remove(drug: string): void {
@@ -616,7 +615,6 @@ export class BuildPrescriptionComponent implements OnInit {
   selected(event: MatAutocompleteSelectedEvent): void {
     this.histories.push(event.option.viewValue);
     this.diseaseInput.nativeElement.value = '';
-    const unique = [...new Set([...this.histories, event.option.viewValue])];
-    this.prescriptionForm.get('drugName')?.setValue(unique);
+    this.prescriptionForm.get('history')?.setValue(null);
   }
 }
