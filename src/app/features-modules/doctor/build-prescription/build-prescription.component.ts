@@ -400,9 +400,11 @@ export class BuildPrescriptionComponent implements OnInit {
       followupDate: followUp,
       advice: advice,
       // need to add history 
-      prescriptionPatientDiseaseHistory: this.uniqueHistory
+      prescriptionPatientDiseaseHistory:  [...new Set(this.histories)]
     };
 
+
+ console.log(prescription);
  
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
@@ -613,7 +615,6 @@ export class BuildPrescriptionComponent implements OnInit {
   selected(event: MatAutocompleteSelectedEvent): void {
     this.histories.push(event.option.viewValue);
     this.diseaseInput.nativeElement.value = '';
-    this.uniqueHistory = [...new Set([...this.histories, event.option.viewValue])];
     this.prescriptionForm.get('history')?.setValue(null);
   }
 }
