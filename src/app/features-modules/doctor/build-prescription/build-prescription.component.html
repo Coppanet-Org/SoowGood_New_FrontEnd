@@ -19,15 +19,14 @@
             <span>Patient Name : </span> <b> <input type="text" formControlName="patientName"> </b>
             <span>Age :</span> <b><input type="number" formControlName="age"> </b>
             <span>Weight :</span> <b> <input type="number" formControlName="weight"> </b>
-            <span>Date : <b> <input [value]="today"> </b></span> 
-            <span>Time :<b> <input [value]="todayTime"> </b></span> 
+            <span>Date : <b> <input [value]="today"> </b></span>
+            <span>Time :<b> <input [value]="todayTime"> </b></span>
           </div>
         </div>
       </form>
     </div>
 
     <form [formGroup]="prescriptionForm">
-
 
       <!-- Compliments start -->
       <div class="p-body">
@@ -37,18 +36,32 @@
             Patient History*
           </div>
 
-
+          <div class="mt-3">
+            <mat-chip-grid #chipGrid>
+              <mat-chip-row  *ngFor="let history of histories" (removed)="remove(history)">
+                {{history}}
+                <button matChipRemove [attr.aria-label]="'remove ' + history">
+                  <i class="fa-solid fa-circle-minus text-white"></i>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input placeholder="Add History" #diseaseInput formControlName="history"
+              class="w-[300px] mt-1 px-3 py-2 border-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+              [matChipInputFor]="chipGrid" [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)" />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let option of (filteredDisease[0] | async); let i = index" [value]="option">{{
+                option}}</mat-option>
+            </mat-autocomplete>
+          </div>
         </div>
       </div>
 
 
 
-
-
-
       <!-- Compliments start -->
       <div class="p-body">
-        <div class="p-body-item col-span-12 mt-5">
+        <div class="p-body-item col-span-12 mt-7">
           <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
             Chief Complaints*
@@ -72,7 +85,7 @@
             <tbody formArrayName="chiefComplaints">
               <tr class="bg-gray-50 " *ngFor="let complaint of chiefComplaints.controls; let i = index"
                 [formGroupName]="i">
-<!-- 
+                <!-- 
                 <td class=" p-0 w-[22%] relative">
                   <input type="text" placeholder="Select Symptoms"formControlName="symptoms"
                   [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
@@ -83,13 +96,13 @@
                      </div>
                 </td> -->
                 <td class="p-0 w-[22%] relative">
-                    <input  placeholder="Select Symptoms" formControlName="symptoms" [matAutocomplete]="auto"  [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
-                    >
-                    <mat-autocomplete #auto="matAutocomplete" >
-                      <!-- <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option> -->
-                      <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">{{ option }}</mat-option>
+                  <input placeholder="Select Symptoms" formControlName="symptoms"
+                    [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'">
+                  <!-- <mat-autocomplete #auto="matAutocomplete" > -->
+                  <!-- <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option> -->
+                  <!-- <mat-option *ngFor="let option of filteredFruits[i] | async" [value]="option">{{ option }}</mat-option>
 
-                    </mat-autocomplete>
+                    </mat-autocomplete> -->
                   <!-- <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
                     Symptoms is required!
                   </div> -->
@@ -220,14 +233,21 @@
                 [formGroupName]="i">
 
                 <td class=" p-0 w-[30%]">
-                  <input type="text" placeholder="Select Medicine" class="w-full p-2 h-[84px] bg-transparent text-[16px] text-primary font-Roboto
-                     focus:outline-secondary" formControlName="drugName" [matAutocomplete]="auto"
-                    [formControl]="symptomsControls[i]">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <input placeholder="Select Symptoms" formControlName="drugName" [matAutocomplete]="auto"
+                    class="border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary">
+                  <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">
                       {{option}}
                     </mat-option>
+                  </mat-autocomplete> -->
+
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredMedicine[i] | async" [value]="option">{{ option
+                      }}</mat-option>
                   </mat-autocomplete>
+
+
+
                 </td>
 
 

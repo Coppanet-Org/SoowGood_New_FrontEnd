@@ -64,3 +64,17 @@ tr td{
   }
 
 
+  .example-chip-list {
+    width: 100%;
+  }
+
+
+  ::ng-deep .mdc-evolution-chip-set .mdc-evolution-chip {
+    margin-left: 18px;
+    margin-right: 0;
+    background-color: #01204e !important;
+}
+
+::ng-deep .mdc-evolution-chip__text-label{
+    color: white!important
+}

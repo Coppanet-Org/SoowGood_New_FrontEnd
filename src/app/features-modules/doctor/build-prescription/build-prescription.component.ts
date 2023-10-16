@@ -1,8 +1,15 @@
+import { CommonDiseaseService } from './../../../proxy/services/common-disease.service';
 import { DrugRxService } from './../../../proxy/services/drug-rx.service';
 import { PrescriptionMasterService } from './../../../proxy/services/prescription-master.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AppointmentService } from 'src/app/proxy/services';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -13,14 +20,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppointmentDto, PrescriptionDrugDetailsDto, PrescriptionMainComplaintDto, PrescriptionMasterDto } from 'src/app/proxy/dto-models';
-import { Observable, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs';
-import { symptoms } from 'src/app/shared/utils/patient-symptoms';
-
+import {
+  AppointmentDto,
+  PrescriptionMainComplaintDto,
+} from 'src/app/proxy/dto-models';
+import {
+  Observable,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { PrescriptionMainComplaintInputDto } from 'src/app/proxy/input-dto';
-import { CustomTableLayout } from 'pdfmake/interfaces';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -34,10 +50,12 @@ export class BuildPrescriptionComponent implements OnInit {
   prescriptionForm!: FormGroup;
   appointmentInfo: AppointmentDto = {};
   specialCaseChecked: boolean = false;
-  options:any[]=[];
-  filteredOptions: Observable<string[]>[] = [];
+  options: any[] = [];
+  filteredMedicine: Observable<string[]>[] = [];
+  filteredDisease: Observable<string[]>[] = [];
 
   symptomsControls: FormControl[] = [];
+  medicineControls: FormControl[] = [];
   today!: any;
 
   selectedSymptoms: string[] = [];
@@ -61,6 +79,14 @@ export class BuildPrescriptionComponent implements OnInit {
   ];
   todayTime!: string;
   prescriptionLoader: boolean = false;
+
+  histories: string[] = [];
+  separatorKeysCodes: number[] = [13];
+
+  @ViewChild('diseaseInput') diseaseInput!: ElementRef<HTMLInputElement>;
+
+  announcer = inject(LiveAnnouncer);
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -68,7 +94,8 @@ export class BuildPrescriptionComponent implements OnInit {
     private AppointmentService: AppointmentService,
     private TosterService: TosterService,
     private PrescriptionMasterService: PrescriptionMasterService,
-    private DrugRxService: DrugRxService
+    private DrugRxService: DrugRxService,
+    private CommonDiseaseService: CommonDiseaseService
   ) {}
 
   ngOnInit(): void {
@@ -78,8 +105,10 @@ export class BuildPrescriptionComponent implements OnInit {
     const { aptId } = this.route.snapshot.params;
     if (aptId) {
       this.AppointmentService.get(aptId).subscribe((res) => {
+        console.log(res);
+
         if (res.appointmenCode) {
-          this.appointmentInfo = res;          
+          this.appointmentInfo = res;
           this.form.get('patientName')?.patchValue(res.patientName);
           // this.form.get('age')?.patchValue(res.age);
         } else {
@@ -90,25 +119,17 @@ export class BuildPrescriptionComponent implements OnInit {
       });
     }
 
-this.DrugRxService.getDrugNameList().subscribe((res) => {
-  this.options = res.map((drug) => {
-    return {
-      id: drug.id,
-      name: drug.prescribedDrugName
-    };
-  });
-});
+    // this.DrugRxService.getDrugNameSearchList().subscribe((res) => {
+    //   this.options = res.map((drug:any) => {
+    //     return {
+    //       id: drug.id,
+    //       name: drug.prescribedDrugName
+    //     };
+    //   });
+    // });
 
-
-    
     this.loadForm();
   }
-
-  displayFn(symptom:any): string {
-    return symptom && symptom.name ? symptom.name : '';
-  }
-
-
 
   loadForm() {
     this.form = this.fb.group({
@@ -121,7 +142,6 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
       //Add other patient-related fields as needed (age, weight, date, time, etc.)
     });
 
-
     this.prescriptionForm = this.fb.group({
       followUp: [''],
       advice: [''],
@@ -129,10 +149,28 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
       findings: this.fb.array([this.createFindingsFormGroup()]),
       medicineSchedule: this.fb.array([this.createMedicineScheduleFormGroup()]),
       diagnosis: this.fb.array([this.createDiagnosisFormGroup()]),
+      history: [''],
     });
+
+    const historyControl = this.prescriptionForm.get('history');
+    if (historyControl) {
+      this.filteredDisease.push(
+        historyControl.valueChanges.pipe(
+          startWith(''),
+          debounceTime(300), // Optional: debounce time to reduce API calls
+          distinctUntilChanged(),
+          switchMap((value) => this._filter(value))
+        )
+      );
+    }
   }
 
-
+  private _filter(value: any): Observable<string[]> {
+    const filterValue = value.toLowerCase();
+    return this.CommonDiseaseService.getDiseaseNameSearchList(filterValue).pipe(
+      map((res) => res.map((e: any) => e.name))
+    );
+  }
   // get each array
   get chiefComplaints() {
     return this.prescriptionForm.get('chiefComplaints') as FormArray;
@@ -146,50 +184,82 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
   get diagnosis() {
     return this.prescriptionForm.get('diagnosis') as FormArray;
   }
+
   //each form group
+  // createChiefComplaintFormGroup() {
+  //     let compliant = this.fb.group({
+  //       symptoms: ['', Validators.required],
+  //       durationDay: ['1', Validators.required],
+  //       durationTime: ['day', Validators.required],
+  //       problems: ['', Validators.required],
+  //       physicianRecommendedAction: [''],
+  //     });
+  //     const symptomsControl = compliant.get('symptoms');
+  //     if (symptomsControl) {
+  //       this.filteredOptions.push(
+  //         symptomsControl.valueChanges.pipe(
+  //           startWith(''),
+  //           map(value => this._filterSymptoms(value))
+  //         )
+  //       );
+  //     }
+  //     return compliant;
+  // }
   createChiefComplaintFormGroup() {
-   
-      let compliant = this.fb.group({
-        symptoms: ['', Validators.required],
-        durationDay: ['1', Validators.required],
-        durationTime: ['day', Validators.required],
-        problems: ['', Validators.required],
-        physicianRecommendedAction: [''],
-      });
-    
-      const symptomsControl = compliant.get('symptoms');
-      if (symptomsControl) {
-        this.filteredOptions.push(
-          symptomsControl.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterSymptoms(value))
-          )
-        );
-      }
-    
-      return compliant;
-    
+    let compliant = this.fb.group({
+      symptoms: ['', Validators.required],
+      durationDay: ['1', Validators.required],
+      durationTime: ['day', Validators.required],
+      problems: ['', Validators.required],
+      physicianRecommendedAction: [''],
+    });
+
+    // const symptomsControl = compliant.get('symptoms');
+    // if (symptomsControl) {
+    //   this.filteredOptions.push(
+    //     symptomsControl.valueChanges.pipe(
+    //       startWith(''),
+    //       debounceTime(300), // Optional: debounce time to reduce API calls
+    //       distinctUntilChanged(),
+    //       switchMap(value => this._filterSymptoms(value))
+    //     )
+    //   );
+    // }
+
+    return compliant;
+  }
+
+  // private _filterSymptoms(value: any): string[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.options
+  //     .filter(option => option.name.toLowerCase().includes(filterValue))
+  //     .map(option => option.name);
+  // }
+
+  // private _filterSymptoms(value: any): Observable<string[]> {
+  //   const filterValue = value.toLowerCase();
+  //   return filterValue && this.DrugRxService.getDrugNameSearchList(filterValue).pipe(
+  //     map((res) => res.map((drug: any) => drug.prescribedDrugName))
+  //   );
+  // }
+
+  displayFn(symptom: any): string {
+    return symptom && symptom.name ? symptom.name : '';
   }
 
   formatOption(option: string, searchValue: string): string {
-
-    
-    if (searchValue && option.toLowerCase().includes(searchValue.toLowerCase())) {
+    if (
+      searchValue &&
+      option.toLowerCase().includes(searchValue.toLowerCase())
+    ) {
       const regExp = new RegExp(searchValue, 'gi');
-      return option.replace(regExp, (match) => `<span class="highlight">${match}</span>`);
+      return option.replace(
+        regExp,
+        (match) => `<span class="highlight">${match}</span>`
+      );
     }
     return option;
   }
-
-
-
-  private _filterSymptoms(value: any): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options
-      .filter(option => option.name.toLowerCase().includes(filterValue))
-      .map(option => option.name);
-  }
-
 
   createFindingsFormGroup() {
     return this.fb.group({
@@ -198,8 +268,8 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
     });
   }
   createMedicineScheduleFormGroup() {
-    return this.fb.group({
-      drugRxId: [2],
+    let medicine = this.fb.group({
+      drugRxId: [0],
       specialCaseChecked: [false],
       drugName: ['', Validators.required],
       durationDay: ['1', Validators.required],
@@ -208,7 +278,30 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
       drugDoseScheduleDays: [''],
       instruction: [''],
     });
+
+    const medicineControl = medicine.get('drugName');
+    if (medicineControl) {
+      this.filteredMedicine.push(
+        medicineControl.valueChanges.pipe(
+          startWith(''),
+          debounceTime(300), // Optional: debounce time to reduce API calls
+          distinctUntilChanged(),
+          switchMap((value) => this._filterDrugName(value))
+        )
+      );
+    }
+    return medicine;
   }
+
+  private _filterDrugName(value: any): Observable<string[]> {
+    const filterValue = value.toLowerCase();
+    console.log(filterValue);
+
+    return this.DrugRxService.getDrugNameSearchList(filterValue).pipe(
+      map((res) => res.map((drug: any) => drug.prescribedDrugName))
+    );
+  }
+
   createDiagnosisFormGroup() {
     return this.fb.group({
       testName: ['', Validators.required],
@@ -243,34 +336,47 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
   }
 
   submitPrescription() {
-    const { chiefComplaints, findings,diagnosis,followUp,advice } =
-      this.prescriptionForm.value;
-    const formattedMedicineSchedule :PrescriptionMainComplaintDto[] =
-      this.prescriptionForm.value.medicineSchedule.map((medicine: any) => ({
-        drugRxId : medicine.drugRxId,
-        drugName: medicine.drugName,
-        drugDoseScheduleDays: Array.isArray(medicine.drugDoseScheduleDays)
-          ? medicine.drugDoseScheduleDays.join(', ')
-          : medicine.drugDoseScheduleDays,
-        duration: medicine.durationDay + ' ' + medicine.durationTime,
-        drugDoseSchedule:medicine.drugDoseSchedule,
-        instruction: medicine.instruction
-      }));
-    let prescriptionMainComplaints: PrescriptionMainComplaintDto[] = chiefComplaints.map((e: any) => {
-      return {
-        duration: e.durationDay + ' ' + e.durationTime,
-        problems: e.problems,
-        physicianRecommendedAction: e.physicianRecommendedAction,
-      };
-    });
+    console.log(this.prescriptionForm.value);
 
-  const { id:appointmentId, appointmentSerial,appointmenCode,doctorProfileId,doctorName,patientProfileId,patientName,patientCode,consultancyType,appointmentType,
-    appointmentDate,
-    doctorCode
-  } = this.appointmentInfo
+    const { chiefComplaints, findings, diagnosis, followUp, advice } =
+      this.prescriptionForm.value;
+    const formattedMedicineSchedule: PrescriptionMainComplaintDto[] =
+      this.prescriptionForm.value.medicineSchedule.map((medicine: any) => ({
+        drugRxId: medicine?.drugRxId,
+        drugName: medicine?.drugName,
+        drugDoseScheduleDays: Array.isArray(medicine?.drugDoseScheduleDays)
+          ? medicine?.drugDoseScheduleDays.join(', ')
+          : medicine?.drugDoseScheduleDays,
+        duration: medicine?.durationDay + ' ' + medicine?.durationTime,
+        drugDoseSchedule: medicine?.drugDoseSchedule,
+        instruction: medicine?.instruction,
+      }));
+    let prescriptionMainComplaints: PrescriptionMainComplaintDto[] =
+      chiefComplaints.map((e: any) => {
+        return {
+          duration: e.durationDay + ' ' + e.durationTime,
+          problems: e.problems,
+          physicianRecommendedAction: e.physicianRecommendedAction,
+        };
+      });
+
+    const {
+      id: appointmentId,
+      appointmentSerial,
+      appointmenCode,
+      doctorProfileId,
+      doctorName,
+      patientProfileId,
+      patientName,
+      patientCode,
+      consultancyType,
+      appointmentType,
+      appointmentDate,
+      doctorCode,
+    } = this.appointmentInfo;
 
     const prescription: any = {
-      refferenceCode:"0123",
+      refferenceCode: '0123',
       appointmentId,
       appointmentSerial,
       appointmenCode,
@@ -283,7 +389,7 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
       consultancyType,
       appointmentType,
       appointmentDate,
-      prescriptionDate : this.today,
+      prescriptionDate: this.today,
       patientLifeStyle: null,
       reportShowDate: null,
       prescriptionMainComplaints,
@@ -294,33 +400,36 @@ this.DrugRxService.getDrugNameList().subscribe((res) => {
       advice: advice,
       prescriptionPatientDiseaseHistory: [
         {
-          "patientProfileId": 40013,
-          "commonDiseaseId": 1,
-          "diseaseName": "Mild intermittent asthma, uncomplicated"
-        }
+          patientProfileId: 40013,
+          commonDiseaseId: 1,
+          diseaseName: 'Mild intermittent asthma, uncomplicated',
+        },
       ],
-    
     };
 
-if (this.prescriptionForm.invalid) {
-  this.TosterService.customToast("Please fill all the fields!", 'warning')
-  return
-}
+    if (this.prescriptionForm.invalid) {
+      this.TosterService.customToast('Please fill all the fields!', 'warning');
+      return;
+    }
 
     try {
-      this.prescriptionLoader = true
-      this.PrescriptionMasterService.create(prescription).subscribe(
-        (res) => {
-          if (res) {
-           this.prescriptionLoader = false
-           this.TosterService.customToast("Prescription created successfully!", 'success')
-         }else{
-          this.TosterService.customToast("Prescription create failed!", 'error')
-         }
+      this.prescriptionLoader = true;
+      this.PrescriptionMasterService.create(prescription).subscribe((res) => {
+        if (res) {
+          this.prescriptionLoader = false;
+          this.TosterService.customToast(
+            'Prescription created successfully!',
+            'success'
+          );
+        } else {
+          this.TosterService.customToast(
+            'Prescription create failed!',
+            'error'
+          );
         }
-      );
+      });
     } catch (error) {
-      this.TosterService.customToast(String(error), 'error')
+      this.TosterService.customToast(String(error), 'error');
     }
   }
 
@@ -345,131 +454,122 @@ if (this.prescriptionForm.invalid) {
           text: `BMDC No. : 03210225423`,
           style: 'subheader',
         },
-        
-          {
-            table: {
-              widths: [130, 40, 80, 110, 110],
-     
-              body: [
-                
-                [
-                  
-                  {
-                    text: `Patient`,
-                    border: [1, 1, 1, 1], // Thin right border
-                  },
-                  {
-                    text: `Age`,
-                    border: [1, 1, 1, 1],
-                  },
-                  {
-                    text: `Weight: 1 kg`,
-                    border: [1, 1, 1, 1],
-                  },
-                  {
-                    text: `Date: ${new Date().toLocaleDateString()}`,
-                    border: [1, 1, 1, 1],
-                  },
-                  {
-                    text: `Time: ${new Date().toLocaleTimeString()}`,
-                    border: [1, 1, 1, 1], // Remove the right border for the last column
-                  },
-                ],
-              ],
-            },
-            border:[1,1,1,1],
-            margin: [0, 30, 0, 30],
-          },
 
-        
+        {
+          table: {
+            widths: [130, 40, 80, 110, 110],
+
+            body: [
+              [
+                {
+                  text: `Patient`,
+                  border: [1, 1, 1, 1], // Thin right border
+                },
+                {
+                  text: `Age`,
+                  border: [1, 1, 1, 1],
+                },
+                {
+                  text: `Weight: 1 kg`,
+                  border: [1, 1, 1, 1],
+                },
+                {
+                  text: `Date: ${new Date().toLocaleDateString()}`,
+                  border: [1, 1, 1, 1],
+                },
+                {
+                  text: `Time: ${new Date().toLocaleTimeString()}`,
+                  border: [1, 1, 1, 1], // Remove the right border for the last column
+                },
+              ],
+            ],
+          },
+          border: [1, 1, 1, 1],
+          margin: [0, 30, 0, 30],
+        },
+
         {
           table: {
             widths: [130, 370],
-            border:[0,0,0,0],
-            body: [ [
-              {
-                fontSize: 11,
-                border:[0,0,0,0],
-                // Set all border values to 0 to make them transparent
-                stack: [
-                  
-                 [ {
-                    text: 'Patient H/O',
-                    style: 'listHeader',
-                    fontSize: 12
-                  },
-                  {
-                    ul: [
+            border: [0, 0, 0, 0],
+            body: [
+              [
+                {
+                  fontSize: 11,
+                  border: [0, 0, 0, 0],
+                  // Set all border values to 0 to make them transparent
+                  stack: [
+                    [
                       {
-                        text: 'Paralysis',
-                        style: 'listItem',
-                        display: 'inline',
-                        fontSize: 11
+                        text: 'Patient H/O',
+                        style: 'listHeader',
+                        fontSize: 12,
                       },
                       {
-                        text: 'Brain',
-                        style: 'listItem',
-                        display: 'inline',
-                        fontSize: 11
-                      },
-                    ],
-                  },
-                ],[
-                  {
-                    text: 'Patient H/O',
-                    style: 'listHeader',
-                    margin:[20,0,0,0]
-                  },
-                  {
-                    ul: [
-                      {
-                        text: 'Paralysis',
-                        style: 'listItem',
-                        display: 'inline',
-                      },
-                      {
-                        text: 'Brain',
-                        style: 'listItem',
-                        display: 'inline',
+                        ul: [
+                          {
+                            text: 'Paralysis',
+                            style: 'listItem',
+                            display: 'inline',
+                            fontSize: 11,
+                          },
+                          {
+                            text: 'Brain',
+                            style: 'listItem',
+                            display: 'inline',
+                            fontSize: 11,
+                          },
+                        ],
                       },
                     ],
-                  }]
-                ],
-                
-              },
-              {
-                border: [1, 0, 0, 0], // Set all border values to 0 to make them transparent
-                stack: [
-                  {
-                    text: 'Header 1',
-                    style: 'listHeader',
-                  },
-                  {
-                    ul: [
+                    [
                       {
-                        text: 'Styled Item 1',
-                        style: 'listItem',
-                        display: 'inline',
-                      }                   
+                        text: 'Patient H/O',
+                        style: 'listHeader',
+                        margin: [20, 0, 0, 0],
+                      },
+                      {
+                        ul: [
+                          {
+                            text: 'Paralysis',
+                            style: 'listItem',
+                            display: 'inline',
+                          },
+                          {
+                            text: 'Brain',
+                            style: 'listItem',
+                            display: 'inline',
+                          },
+                        ],
+                      },
                     ],
-                  },
-                ]  
-              },
-            ],
+                  ],
+                },
+                {
+                  border: [1, 0, 0, 0], // Set all border values to 0 to make them transparent
+                  stack: [
+                    {
+                      text: 'Header 1',
+                      style: 'listHeader',
+                    },
+                    {
+                      ul: [
+                        {
+                          text: 'Styled Item 1',
+                          style: 'listItem',
+                          display: 'inline',
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
             ],
           },
         },
-
-
-
-
-
       ],
-     
-     
 
-     
-     // add table layouts
+      // add table layouts
 
       styles: {
         header: {
@@ -487,15 +587,36 @@ if (this.prescriptionForm.invalid) {
         },
         listItem: {
           margin: [5, 0],
-
         },
       },
-
     };
 
-   
-
     pdfMake.createPdf(docDefinition as any).open({}, window);
+  }
 
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.histories.push(value);
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.prescriptionForm.get('drugName')?.setValue(null);
+  }
+
+  remove(drug: string): void {
+    const index = this.histories.indexOf(drug);
+    if (index >= 0) {
+      this.histories.splice(index, 1);
+      this.announcer.announce(`Removed ${drug}`);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.histories.push(event.option.viewValue);
+    this.diseaseInput.nativeElement.value = '';
+    const unique = [...new Set([...this.histories, event.option.viewValue])];
+    this.prescriptionForm.get('drugName')?.setValue(unique);
   }
 }

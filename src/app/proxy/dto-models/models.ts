@@ -60,6 +60,7 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByEntityId?: number;
   cancelledByRole?: string;
   paymentTransactionId?: string;
+  appointmentCreatorId?: number;
 }
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
@@ -89,6 +90,7 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByEntityId?: number;
   cancelledByRole?: string;
   paymentTransactionId?: string;
+  appointmentCreatorId?: number;
 }
 
 export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {

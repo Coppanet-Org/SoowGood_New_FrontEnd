@@ -23,11 +23,14 @@ export class DoctorPatientAppointmentService {
     }
     
     if (user === "patient") {
+      console.log(id);
+      
       return this.AppointmentService.getAppointmentListByPatientId(id).pipe(
         map((data) => {
+          console.log(data);
           this.appointmentList = data;
           this.cache[cacheKey] = data; // Cache the data
-          console.log(data);
+         
           return data;
         }),
         catchError(error => {

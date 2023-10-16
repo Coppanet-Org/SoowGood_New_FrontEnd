@@ -17,7 +17,7 @@ export class CommonDiseaseService {
     { apiName: this.apiName,...config });
   
 
-  getDiseaseNameSearchList = (searchDisease: string, config?: Partial<Rest.Config>) =>
+  getDiseaseNameSearchList = (searchDisease?: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, CommonDiseaseDto[]>({
       method: 'GET',
       url: '/api/app/common-disease/disease-name-search-list',

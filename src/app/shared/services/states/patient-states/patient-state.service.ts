@@ -15,7 +15,7 @@ export class PatientStateService {
     this.appointmentList.next(data);
   }
   getPatientAllAppointmentList(id:number){
-    this.AppointmentService.geAppointmentListByPatientId(id).subscribe(
+    this.AppointmentService.getAppointmentListByPatientId(id).subscribe(
       (e) => {
         this.sendPatientAppointmentListData(e)
       }

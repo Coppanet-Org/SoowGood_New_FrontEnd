@@ -340,6 +340,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
       patientName: ['', Validators.required],
+      patientProfileId: [''],
       age: [, Validators.required],
       gender: [, Validators.required],
       bloodGroup: ['', Validators.required],
@@ -355,11 +356,17 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
 
   // change step
   onStepChange(e: any) {
+
+    console.log(this.createPatientForm.value);
+    
     if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
 
+    console.log(this.alreadyExistPatient);
     if (e === 3 && this.form.valid) {
+   
+      
       this.stepHeading = 'Confirm';
       const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
       const finalSchedule = this.doctorData.doctorScheduleInfo.find(
@@ -380,27 +387,35 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         (userInfo) => (user = userInfo)
       );
 
+    
+      
+      
+
       const infoForBooking = {
         doctorScheduleId,
         doctorProfileId,
         doctorName: this.doctorData?.doctorDetails.fullName,
         doctorCode: this.doctorData?.doctorDetails.doctorCode,
-        patientProfileId: user?.id,
+        patientProfileId: this.alreadyExistPatient?.id
+        ? this.alreadyExistPatient?.id
+        : this.createNewPatientInfo.id 
+        ? this.createNewPatientInfo?.id
+        : user?.id,
         patientName: this.alreadyExistPatient?.patientName
           ? this.alreadyExistPatient?.patientName
           : this.createNewPatientInfo?.patientName
           ? this.createNewPatientInfo?.patientName
-          : user?.fullName || 'admin',
+          : user?.patientName,
         patientCode: this.alreadyExistPatient?.patientCode
           ? this.alreadyExistPatient?.patientCode
           : this.createNewPatientInfo?.patientCode
           ? this.createNewPatientInfo?.patientCode
-          : user?.patientCode || 'Not found',
+          : user?.patientCode,
         patientMobileNo: this.alreadyExistPatient?.patientMobileNo
           ? this.alreadyExistPatient?.patientMobileNo
           : this.createNewPatientInfo?.patientMobileNo
           ? this.createNewPatientInfo?.patientMobileNo
-          : user?.mobileNo || '0123456789',
+          : user?.mobileNo,
         patientEmail: this.alreadyExistPatient?.patientEmail
           ? this.alreadyExistPatient?.patientEmail
           : this.createNewPatientInfo?.patientEmail
@@ -421,6 +436,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         totalAppointmentFee: this.selectedFeesInfo.totalFee,
         appointmentStatus: 1,
         appointmentPaymentStatus: 2,
+        appointmentCreatorId:user?.id
       };
 
       if (infoForBooking && user) {
@@ -518,12 +534,26 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     }
   }
   getSinglePatientData(e: any) {
+
     if (e.target.value) {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
         res.find((data: any) => {
           if (data.id == e.target.value) {
-            this.createPatientForm.patchValue(data);
-            this.alreadyExistPatient = data;
+            this.alreadyExistPatient= data
+            this.createPatientForm.patchValue({
+              patientProfileId:data.id,
+              age:data.age,
+              gender:data.gender,
+              bloodGroup:data.bloodGroup,
+              patientMobileNo:data.patientMobileNo,
+              patientEmail  :data.patientEmail,   
+              patientName: data.patientName,
+              createdBy    :data.createdBy,  
+              creatorEntityId :data.creatorEntityId,
+            });
+
+          //  this.createPatientForm.patchValue(data);
+
           }
           return;
         })
@@ -532,3 +562,5 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   }
   closeDialogs() {}
 }
+
+
