@@ -37,6 +37,7 @@ import { InputComponent } from '../../modules/input/input.component';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
 import { DoctorBookingStateService } from '../../services/states/doctors-states/doctor-booking-state.service';
+import { SubSink } from 'SubSink';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -82,6 +83,8 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   hasValidCode = false;
   createNewPatientInfo: PatientProfileDto = {};
   alreadyExistPatient: PatientProfileDto = {};
+
+  subs = new SubSink();
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -358,15 +361,15 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
   onStepChange(e: any) {
 
     console.log(this.createPatientForm.value);
-    
+
     if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
 
     console.log(this.alreadyExistPatient);
     if (e === 3 && this.form.valid) {
-   
-      
+
+
       this.stepHeading = 'Confirm';
       const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
       const finalSchedule = this.doctorData.doctorScheduleInfo.find(
@@ -387,40 +390,35 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         (userInfo) => (user = userInfo)
       );
 
-    
-      
-      
-
       const infoForBooking = {
         doctorScheduleId,
         doctorProfileId,
         doctorName: this.doctorData?.doctorDetails.fullName,
         doctorCode: this.doctorData?.doctorDetails.doctorCode,
         patientProfileId: this.alreadyExistPatient?.id
-        ? this.alreadyExistPatient?.id
-        : this.createNewPatientInfo.id 
-        ? this.createNewPatientInfo?.id
-        : user?.id,
+          ? this.alreadyExistPatient?.id
+          : this.createNewPatientInfo.id
+            ? this.createNewPatientInfo?.id : user?.id,
         patientName: this.alreadyExistPatient?.patientName
           ? this.alreadyExistPatient?.patientName
           : this.createNewPatientInfo?.patientName
-          ? this.createNewPatientInfo?.patientName
-          : user?.patientName,
+            ? this.createNewPatientInfo?.patientName
+            : user?.fullName,
         patientCode: this.alreadyExistPatient?.patientCode
           ? this.alreadyExistPatient?.patientCode
           : this.createNewPatientInfo?.patientCode
-          ? this.createNewPatientInfo?.patientCode
-          : user?.patientCode,
+            ? this.createNewPatientInfo?.patientCode
+            : user?.patientCode,
         patientMobileNo: this.alreadyExistPatient?.patientMobileNo
           ? this.alreadyExistPatient?.patientMobileNo
           : this.createNewPatientInfo?.patientMobileNo
-          ? this.createNewPatientInfo?.patientMobileNo
-          : user?.mobileNo,
+            ? this.createNewPatientInfo?.patientMobileNo
+            : user?.mobileNo,
         patientEmail: this.alreadyExistPatient?.patientEmail
           ? this.alreadyExistPatient?.patientEmail
           : this.createNewPatientInfo?.patientEmail
-          ? this.createNewPatientInfo?.patientEmail
-          : user.email || 'admin@gmail.com',
+            ? this.createNewPatientInfo?.patientEmail
+            : user.email || 'admin@gmail.com',
         consultancyType,
         doctorChamberId,
         scheduleType,
@@ -436,7 +434,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         totalAppointmentFee: this.selectedFeesInfo.totalFee,
         appointmentStatus: 1,
         appointmentPaymentStatus: 2,
-        appointmentCreatorId:user?.id
+        appointmentCreatorId: user?.id
       };
 
       if (infoForBooking && user) {
@@ -514,13 +512,14 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         this.PatientProfileService.create(
           this.createPatientForm.value
         ).subscribe((res) => {
-          this.createNewPatientInfo = res;
+          if (res.patientCode && res.patientMobileNo) {
+            this.PatientProfileService.getByPhoneAndCode(res.patientCode, res.patientMobileNo).subscribe(p => {
+              this.createNewPatientInfo = p;
+            });
+          }
           this.btnLoader = false;
           this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
+          this.UserinfoStateService.getUserPatientInfo(this.profileInfo.id, 'patient');
           this.onStepChange(1);
         });
       } catch (error) {
@@ -539,20 +538,20 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
         res.find((data: any) => {
           if (data.id == e.target.value) {
-            this.alreadyExistPatient= data
+            this.alreadyExistPatient = data
             this.createPatientForm.patchValue({
-              patientProfileId:data.id,
-              age:data.age,
-              gender:data.gender,
-              bloodGroup:data.bloodGroup,
-              patientMobileNo:data.patientMobileNo,
-              patientEmail  :data.patientEmail,   
+              patientProfileId: data.id,
+              age: data.age,
+              gender: data.gender,
+              bloodGroup: data.bloodGroup,
+              patientMobileNo: data.patientMobileNo,
+              patientEmail: data.patientEmail,
               patientName: data.patientName,
-              createdBy    :data.createdBy,  
-              creatorEntityId :data.creatorEntityId,
+              createdBy: data.createdBy,
+              creatorEntityId: data.creatorEntityId,
             });
 
-          //  this.createPatientForm.patchValue(data);
+            //  this.createPatientForm.patchValue(data);
 
           }
           return;
@@ -560,7 +559,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
       );
     }
   }
-  closeDialogs() {}
+  closeDialogs() { }
 }
 
 

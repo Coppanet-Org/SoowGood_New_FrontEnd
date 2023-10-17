@@ -8,9 +8,10 @@ import { fadeInAnimation, fadeInExpandOnEnterAnimation, fadeInOnEnterAnimation, 
   templateUrl: './all-appointments.component.html',
   styleUrls: ['./all-appointments.component.scss'],
   animations: [
-    fadeInOnEnterAnimation({ anchor: 'enter', duration:1000 }),
- 
-  ]})
+    fadeInOnEnterAnimation({ anchor: 'enter', duration: 1000 }),
+
+  ]
+})
 export class AllAppointmentsComponent implements OnInit {
   @Input() id!: number;
   @Input() user!: string;
@@ -23,9 +24,9 @@ export class AllAppointmentsComponent implements OnInit {
   noDataAvailable!: boolean;
   constructor(
     private DoctorPatientAppointmentService: DoctorPatientAppointmentService
-  ) {}
+  ) { }
   ngOnInit(): void {
-  
+
     if (this.id && this.user) {
       this.dataLoading = true;
       this.skelton = true;
@@ -34,11 +35,11 @@ export class AllAppointmentsComponent implements OnInit {
           (res) => {
             if (res.length === 0) {
               this.appointmentList = [];
-              this.skelton = false;  
+              this.skelton = false;
               this.noDataAvailable = true
             } else {
               this.appointmentList = res;
-              this.skelton = false;  
+              this.skelton = false;
               this.noDataAvailable = false
             }
           },

@@ -1,4 +1,3 @@
-import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -140,21 +139,15 @@ export class SignupComponent implements OnInit {
     private userAccountService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
     private patientProfileService: PatientProfileService,
-    private toasterService: ToasterService,
     private _router: Router,
     private normalAuth: AuthService,
     private doctorSpeciality: SpecialityService,
-
     private degreeService: DegreeService,
-
     private tosterService: TosterService,
-    private doctorDegreeService: DoctorDegreeService,
     private specializationService: SpecializationService,
     private specialityService: SpecialityService,
-    private doctorSpecializationService: DoctorSpecializationService,
     private http: HttpClient,
     private cdRef: ChangeDetectorRef,
-
     private doctorProfilePicService: DocumentsAttachmentService
   ) { }
 
@@ -597,10 +590,7 @@ export class SignupComponent implements OnInit {
                       if (this.normalAuth) {
                         this.loadAuth();
                       }
-                      this.toasterService.success(
-                        'Basic Inforamation Saved Successfully'
-                      ),
-                        { position: 'bottom-center' };
+                      this.tosterService.customToast('Basic Inforamation Saved Successfully', 'success');
                       this.cdRef.detectChanges();
                     });
                 });
@@ -628,15 +618,13 @@ export class SignupComponent implements OnInit {
                   if (this.normalAuth) {
                     this.loadAuth();
                   }
-                  this.toasterService.success('Successfully Registration'),
+                  this.tosterService.customToast('Successfully Registration', 'success'),
                     { position: 'bottom-center' };
                   this.cdRef.detectChanges();
                 });
             }
           } else {
-            res.message?.map((e: string) => this.toasterService.error(e), {
-              position: 'bottom-center',
-            });
+            res.message?.map((e: string) => this.tosterService.customToast(e, 'error'));
           }
         },
         (err) => {
@@ -688,10 +676,7 @@ export class SignupComponent implements OnInit {
             state: { data: res }, // Pass the 'res' object as 'data' in the state object
           })
           .then((r) => r);
-        this.toasterService.success('Registration Successful'),
-        {
-          position: 'bottom-center',
-        };
+        this.tosterService.customToast('Registration Successful', 'success');
       }
     });
   }
@@ -817,20 +802,20 @@ export class SignupComponent implements OnInit {
       this.doctorDegrees.length === 0 ||
       this.doctorSpecializations.length === 0
     ) {
-      this.toasterService.warn(
-        'You have to add your medical degees and specializations'
+      this.tosterService.customToast(
+        'You have to add your medical degees and specializations', 'warning'
       );
       return;
     } else if (this.doctorSpecializations.length > 3) {
-      this.toasterService.warn('You are exeeding Specialization Limit.');
+      this.tosterService.customToast('You are exeeding Specialization Limit.', 'warning');
       return;
     } else if (
       this.specialityId > 1 &&
       this.specialityId > 2 &&
       this.doctorDegrees.length == 1
     ) {
-      this.toasterService.warn(
-        'You have to add your degrees according to you speciality'
+      this.tosterService.customToast(
+        'You have to add your degrees according to you speciality', 'warning'
       );
       return;
     } else {
@@ -939,9 +924,8 @@ export class SignupComponent implements OnInit {
                 if (this.normalAuth) {
                   this.loadAuth();
                 }
-                this.toasterService.success("Degree and Specializtion info updated Successfully"),
-                  //{ position: 'bottom-center' }
-                  this.cdRef.detectChanges();
+                this.tosterService.customToast("Degree and Specializtion info updated Successfully", 'success');
+                this.cdRef.detectChanges();
               }
             });
         }
@@ -1315,7 +1299,7 @@ export class SignupComponent implements OnInit {
                 state: { data: res } // Pass the 'res' object as 'data' in the state object
               }).then(r =>
                 this.tosterService.customToast(message, 'success'));
-              //this.toasterService.success("Degree and Specializtion info updated Successfully"),
+              //this.tosterService.success("Degree and Specializtion info updated Successfully"),
               this.cdRef.detectChanges();
             }
           });

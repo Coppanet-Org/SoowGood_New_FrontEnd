@@ -27,6 +27,15 @@ export class PatientProfileService {
     { apiName: this.apiName,...config });
   
 
+  getByPhoneAndCode = (pCode: string, pPhone: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto>({
+      method: 'GET',
+      url: '/api/app/patient-profile/by-phone-and-code',
+      params: { pCode, pPhone },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getByUserId = (userId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PatientProfileDto>({
       method: 'GET',
