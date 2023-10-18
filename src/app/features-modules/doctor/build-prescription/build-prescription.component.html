@@ -16,12 +16,19 @@
       <form [formGroup]="form">
         <div class="p-head-bottom my-10">
           <div class="flex justify-between">
+            <span>Patient Code : </span> <b> <input type="text" formControlName="patientCode"> </b>
             <span>Patient Name : </span> <b> <input type="text" formControlName="patientName"> </b>
-            <span>Age :</span> <b><input type="number" formControlName="age"> </b>
-            <span>Weight :</span> <b> <input type="number" formControlName="weight"> </b>
+            <span>Age :</span> <b> <input type="text" formControlName="age"> </b>
+            <span>Blood Group :</span> <b> <input type="text" formControlName="bloodGroup"> </b>
             <span>Date : <b> <input [value]="today"> </b></span>
             <span>Time :<b> <input [value]="todayTime"> </b></span>
           </div>
+
+
+        </div>
+        <div class="p-head-bottom my-10">
+          <span>Additional Info : </span> <b> <textarea type="text" formControlName="patientAdditionalInfo"></textarea> </b>
+
         </div>
       </form>
     </div>
@@ -59,7 +66,20 @@
           </div>
         </div>
       </div>
+      <div class="p-body">
+        <div class="p-body-item col-span-12 mt-5">
+          <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
+            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            Patient Life Style
+          </div>
 
+          <div>
+
+            <textarea type="text" formControlName="lifeStyle"></textarea>
+
+          </div>
+        </div>
+      </div>
 
 
       <!-- Compliments start -->
@@ -103,8 +123,9 @@
                      </div>
                 </td> -->
                 <td class="p-0 w-[22%] relative">
-                  <input placeholder="Select Symptoms" formControlName="symptoms"
+                  <input placeholder="Select Symptoms" formControlName="symptom"
                          [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'">
+   
                   <!-- <mat-autocomplete #auto="matAutocomplete" > -->
                   <!-- <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option> -->
                   <!-- <mat-option *ngFor="let option of filteredFruits[i] | async" [value]="option">{{ option }}</mat-option>

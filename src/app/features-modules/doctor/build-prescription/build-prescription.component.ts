@@ -2,7 +2,7 @@ import { CommonDiseaseService } from './../../../proxy/services/common-disease.s
 import { DrugRxService } from './../../../proxy/services/drug-rx.service';
 import { PrescriptionMasterService } from './../../../proxy/services/prescription-master.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { AppointmentService } from 'src/app/proxy/services';
+import { AppointmentService, PatientProfileService } from 'src/app/proxy/services';
 import {
   Component,
   ElementRef,
@@ -97,8 +97,9 @@ export class BuildPrescriptionComponent implements OnInit {
     private TosterService: TosterService,
     private PrescriptionMasterService: PrescriptionMasterService,
     private DrugRxService: DrugRxService,
-    private CommonDiseaseService: CommonDiseaseService
-  ) {}
+    private CommonDiseaseService: CommonDiseaseService,
+    private PatientProfileService: PatientProfileService
+  ) { }
 
   ngOnInit(): void {
     this.today = new Date().toDateString();
@@ -109,10 +110,16 @@ export class BuildPrescriptionComponent implements OnInit {
       this.AppointmentService.get(aptId).subscribe((res) => {
         console.log(res);
 
-        if (res.appointmenCode) {
+        if (res.appointmentCode) {
           this.appointmentInfo = res;
-          this.form.get('patientName')?.patchValue(res.patientName);
-          // this.form.get('age')?.patchValue(res.age);
+
+          this.PatientProfileService.get(res.patientProfileId ? res.patientProfileId : 0).subscribe(patient => {
+            this.form.get('patientCode')?.patchValue(patient.patientCode);
+            this.form.get('patientName')?.patchValue(res.patientName);
+            this.form.get('age')?.patchValue(patient.age);
+            this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
+            this.form.get('patientAdditionalInfo');//?.patchValue(patient.patientAdditionalInfo);
+          });
         } else {
           this.Router.navigate(['/doctor/appointments']).then((r) => {
             this.TosterService.customToast('Documents not found!', 'error');
@@ -140,7 +147,10 @@ export class BuildPrescriptionComponent implements OnInit {
       weight: [''],
       date: [''],
       time: [''],
+      patientCode: [''],
       age: [''],
+      bloodGroup: [''],
+      patientAdditionalInfo: [''],
       //Add other patient-related fields as needed (age, weight, date, time, etc.)
     });
 
@@ -152,6 +162,7 @@ export class BuildPrescriptionComponent implements OnInit {
       medicineSchedule: this.fb.array([this.createMedicineScheduleFormGroup()]),
       diagnosis: this.fb.array([this.createDiagnosisFormGroup()]),
       history: [''],
+      lifeStyle: ['']
     });
 
     const historyControl = this.prescriptionForm.get('history');
@@ -210,7 +221,7 @@ export class BuildPrescriptionComponent implements OnInit {
 
   createChiefComplaintFormGroup() {
     let compliant = this.fb.group({
-      symptoms: ['', Validators.required],
+      symptom: ['', Validators.required],
       durationDay: ['1', Validators.required],
       durationTime: ['day', Validators.required],
       problems: ['', Validators.required],
@@ -350,7 +361,7 @@ export class BuildPrescriptionComponent implements OnInit {
   submitPrescription() {
     console.log(this.prescriptionForm.value);
 
-    const { chiefComplaints, findings, diagnosis, followUp, advice } =
+    const { chiefComplaints, findings, diagnosis, followUp, advice, patientAdditionalInfo, lifeStyle } =
       this.prescriptionForm.value;
     const formattedMedicineSchedule: PrescriptionDrugDetailsDto[] =
       this.prescriptionForm.value.medicineSchedule.map((medicine: any) => ({
@@ -366,7 +377,7 @@ export class BuildPrescriptionComponent implements OnInit {
     let prescriptionMainComplaints: PrescriptionMainComplaintDto[] =
       chiefComplaints.map((e: any) => {
         return {
-          symptoms: e.symptoms,
+          symptom: e.symptom,
           duration: e.durationDay + ' ' + e.durationTime,
           problems: e.problems,
           physicianRecommendedAction: e.physicianRecommendedAction,
@@ -376,7 +387,7 @@ export class BuildPrescriptionComponent implements OnInit {
     const {
       id: appointmentId,
       appointmentSerial,
-      appointmenCode,
+      appointmentCode,
       doctorProfileId,
       doctorName,
       patientProfileId,
@@ -389,10 +400,10 @@ export class BuildPrescriptionComponent implements OnInit {
     } = this.appointmentInfo;
 
     const prescription: any = {
-      refferenceCode: '0123',
+      //refferenceCode: '0123',
       appointmentId,
       appointmentSerial,
-      appointmenCode,
+      appointmentCode,
       doctorProfileId,
       doctorName,
       doctorCode,
@@ -402,8 +413,8 @@ export class BuildPrescriptionComponent implements OnInit {
       consultancyType,
       appointmentType,
       appointmentDate,
-      prescriptionDate: this.today,
-      patientLifeStyle: null,
+      //prescriptionDate: this.today,
+      patientLifeStyle: lifeStyle,
       reportShowDate: null,
       prescriptionMainComplaints,
       prescriptionFindingsObservations: findings,
@@ -411,13 +422,15 @@ export class BuildPrescriptionComponent implements OnInit {
       prescriptionMedicalCheckups: diagnosis,
       followupDate: followUp,
       advice: advice,
+      patientAdditionalInfo: patientAdditionalInfo,
+      //patientAdditionalInfo,
       // need to add history 
-      prescriptionPatientDiseaseHistory:  [...new Set(this.histories)]
+      prescriptionPatientDiseaseHistory: [...new Set(this.histories)]
     };
 
 
- console.log(prescription);
- 
+    console.log(prescription);
+
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
       return;

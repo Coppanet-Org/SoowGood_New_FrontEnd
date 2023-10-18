@@ -29,7 +29,7 @@ export interface AgentProfileDto extends FullAuditedEntityDto<number> {
 
 export interface AppointmentDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
-  appointmenCode?: string;
+  appointmentCode?: string;
   doctorScheduleId?: number;
   doctorScheduleName?: string;
   doctorProfileId?: number;
@@ -65,7 +65,7 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
-  appointmenCode?: string;
+  appointmentCode?: string;
   doctorScheduleId?: number;
   doctorProfileId?: number;
   doctorName?: string;
@@ -455,6 +455,9 @@ export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  patientAge?: string;
+  patientBloodGroup?: string;
+  patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
   appointmentType?: AppointmentType;

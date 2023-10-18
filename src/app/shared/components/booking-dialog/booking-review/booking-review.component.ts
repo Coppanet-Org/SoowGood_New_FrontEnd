@@ -42,7 +42,7 @@ export class BookingReviewComponent implements OnInit {
 
    payWithSslCommerz(): void {
      const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
-     sslCommerzInputDto.applicationCode = this.bookingInfo.appointmenCode;
+     sslCommerzInputDto.applicationCode = this.bookingInfo.appointmentCode;
      sslCommerzInputDto.totalAmount = String(this.bookingInfo.totalAppointmentFee);
      sslCommerzInputDto.transactionId = '';
 

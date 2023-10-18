@@ -471,7 +471,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
     this.AppointmentService.create(infoForBooking).subscribe((res) => {
       this.DoctorBookingStateService.sendBookingData({
         ...infoForBooking,
-        appointmenCode: res.appointmenCode,
+        appointmentCode: res.appointmentCode,
       });
       this.activeTab = e;
     });
