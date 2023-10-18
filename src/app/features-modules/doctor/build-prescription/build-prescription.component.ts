@@ -22,6 +22,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AppointmentDto,
+  PrescriptionDrugDetailsDto,
   PrescriptionMainComplaintDto,
 } from 'src/app/proxy/dto-models';
 import {
@@ -206,6 +207,7 @@ export class BuildPrescriptionComponent implements OnInit {
   //     }
   //     return compliant;
   // }
+
   createChiefComplaintFormGroup() {
     let compliant = this.fb.group({
       symptoms: ['', Validators.required],
@@ -268,6 +270,7 @@ export class BuildPrescriptionComponent implements OnInit {
       comments: [''],
     });
   }
+
   createMedicineScheduleFormGroup() {
     let medicine = this.fb.group({
       drugRxId: [0],
@@ -309,29 +312,37 @@ export class BuildPrescriptionComponent implements OnInit {
       comments: [''],
     });
   }
+
   // add new row
   addChiefComplaint() {
     this.chiefComplaints.push(this.createChiefComplaintFormGroup());
   }
+
   addFindings() {
     this.findings.push(this.createFindingsFormGroup());
   }
+
   addMedicineSchedule() {
     this.medicineSchedule.push(this.createMedicineScheduleFormGroup());
   }
+
   addDiagnosis() {
     this.diagnosis.push(this.createDiagnosisFormGroup());
   }
+
   //remove each row
   removeChiefComplaint(index: number) {
     this.chiefComplaints.removeAt(index);
   }
+
   removeFindings(index: number) {
     this.findings.removeAt(index);
   }
+
   removeMedicineSchedule(index: number) {
     this.medicineSchedule.removeAt(index);
   }
+
   removeDiagnosis(index: number) {
     this.diagnosis.removeAt(index);
   }
@@ -341,7 +352,7 @@ export class BuildPrescriptionComponent implements OnInit {
 
     const { chiefComplaints, findings, diagnosis, followUp, advice } =
       this.prescriptionForm.value;
-    const formattedMedicineSchedule: PrescriptionMainComplaintDto[] =
+    const formattedMedicineSchedule: PrescriptionDrugDetailsDto[] =
       this.prescriptionForm.value.medicineSchedule.map((medicine: any) => ({
         drugRxId: medicine?.drugRxId,
         drugName: medicine?.drugName,
@@ -355,6 +366,7 @@ export class BuildPrescriptionComponent implements OnInit {
     let prescriptionMainComplaints: PrescriptionMainComplaintDto[] =
       chiefComplaints.map((e: any) => {
         return {
+          symptoms: e.symptoms,
           duration: e.durationDay + ' ' + e.durationTime,
           problems: e.problems,
           physicianRecommendedAction: e.physicianRecommendedAction,

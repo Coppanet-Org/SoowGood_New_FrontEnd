@@ -437,6 +437,7 @@ export interface PrescriptionFindingsObservationsDto extends FullAuditedEntityDt
 export interface PrescriptionMainComplaintDto extends FullAuditedEntityDto<number> {
   prescriptionMasterId?: number;
   prescriptionRefferenceCode?: string;
+  symptom?: string;
   duration?: string;
   condition?: string;
   problems?: string;
