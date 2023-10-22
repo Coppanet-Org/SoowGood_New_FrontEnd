@@ -36,7 +36,7 @@ const routerConfig: ExtraOptions = {
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
     LoadingDirective,
-    OtpInputComponent
+    OtpInputComponent,
     
 
   ],
