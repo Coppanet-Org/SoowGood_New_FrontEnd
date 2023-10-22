@@ -22,6 +22,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AppointmentDto,
+  PrescriptionDrugDetailsDto,
   PrescriptionMainComplaintDto,
 } from 'src/app/proxy/dto-models';
 import {
@@ -32,13 +33,12 @@ import {
   startWith,
   switchMap,
 } from 'rxjs';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
   selector: 'app-build-prescription',
@@ -167,7 +167,7 @@ export class BuildPrescriptionComponent implements OnInit {
   }
 
   private _filter(value: any): Observable<string[]> {
-    const filterValue = value.toLowerCase();
+    const filterValue = value?.toLowerCase();
     return this.CommonDiseaseService.getDiseaseNameSearchList(filterValue).pipe(
       map((res) => res.map((e: any) => e.name))
     );
@@ -341,7 +341,7 @@ export class BuildPrescriptionComponent implements OnInit {
 
     const { chiefComplaints, findings, diagnosis, followUp, advice } =
       this.prescriptionForm.value;
-    const formattedMedicineSchedule: PrescriptionMainComplaintDto[] =
+    const formattedMedicineSchedule: PrescriptionDrugDetailsDto[] =
       this.prescriptionForm.value.medicineSchedule.map((medicine: any) => ({
         drugRxId: medicine?.drugRxId,
         drugName: medicine?.drugName,
@@ -400,11 +400,10 @@ export class BuildPrescriptionComponent implements OnInit {
       followupDate: followUp,
       advice: advice,
       // need to add history 
+      
       prescriptionPatientDiseaseHistory:  [...new Set(this.histories)]
     };
 
-
- console.log(prescription);
  
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
@@ -432,166 +431,6 @@ export class BuildPrescriptionComponent implements OnInit {
     }
   }
 
-  generatePDF(action = 'open') {
-    const docDefinition = {
-      pageSize: 'A5',
-      pageOrientation: 'landscape',
-      content: [
-        {
-          text: `Dr. doctorName`,
-          style: 'header',
-        },
-        {
-          text: 'General Medicine',
-          style: 'subheader',
-        },
-        {
-          text: 'Dhaka Medical College & Hospital, Dhaka',
-          style: 'subheader',
-        },
-        {
-          text: `BMDC No. : 03210225423`,
-          style: 'subheader',
-        },
-
-        {
-          table: {
-            widths: [130, 40, 80, 110, 110],
-
-            body: [
-              [
-                {
-                  text: `Patient`,
-                  border: [1, 1, 1, 1], // Thin right border
-                },
-                {
-                  text: `Age`,
-                  border: [1, 1, 1, 1],
-                },
-                {
-                  text: `Weight: 1 kg`,
-                  border: [1, 1, 1, 1],
-                },
-                {
-                  text: `Date: ${new Date().toLocaleDateString()}`,
-                  border: [1, 1, 1, 1],
-                },
-                {
-                  text: `Time: ${new Date().toLocaleTimeString()}`,
-                  border: [1, 1, 1, 1], // Remove the right border for the last column
-                },
-              ],
-            ],
-          },
-          border: [1, 1, 1, 1],
-          margin: [0, 30, 0, 30],
-        },
-
-        {
-          table: {
-            widths: [130, 370],
-            border: [0, 0, 0, 0],
-            body: [
-              [
-                {
-                  fontSize: 11,
-                  border: [0, 0, 0, 0],
-                  // Set all border values to 0 to make them transparent
-                  stack: [
-                    [
-                      {
-                        text: 'Patient H/O',
-                        style: 'listHeader',
-                        fontSize: 12,
-                      },
-                      {
-                        ul: [
-                          {
-                            text: 'Paralysis',
-                            style: 'listItem',
-                            display: 'inline',
-                            fontSize: 11,
-                          },
-                          {
-                            text: 'Brain',
-                            style: 'listItem',
-                            display: 'inline',
-                            fontSize: 11,
-                          },
-                        ],
-                      },
-                    ],
-                    [
-                      {
-                        text: 'Patient H/O',
-                        style: 'listHeader',
-                        margin: [20, 0, 0, 0],
-                      },
-                      {
-                        ul: [
-                          {
-                            text: 'Paralysis',
-                            style: 'listItem',
-                            display: 'inline',
-                          },
-                          {
-                            text: 'Brain',
-                            style: 'listItem',
-                            display: 'inline',
-                          },
-                        ],
-                      },
-                    ],
-                  ],
-                },
-                {
-                  border: [1, 0, 0, 0], // Set all border values to 0 to make them transparent
-                  stack: [
-                    {
-                      text: 'Header 1',
-                      style: 'listHeader',
-                    },
-                    {
-                      ul: [
-                        {
-                          text: 'Styled Item 1',
-                          style: 'listItem',
-                          display: 'inline',
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            ],
-          },
-        },
-      ],
-
-      // add table layouts
-
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true,
-          margin: [0, 0, 0, 10], // [left, top, right, bottom]
-        },
-        subheader: {
-          fontSize: 12,
-          margin: [0, 0, 0, 5],
-        },
-        sectionHeader: {
-          fontSize: 12,
-          margin: [0, 15, 0, 10],
-        },
-        listItem: {
-          margin: [5, 0],
-        },
-      },
-    };
-
-    pdfMake.createPdf(docDefinition as any).open({}, window);
-  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();

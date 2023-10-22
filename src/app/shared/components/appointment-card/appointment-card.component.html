@@ -29,13 +29,14 @@
     </button>
     
     <button
-      *ngIf="appointment.appointmentStatus == 2"
+      *ngIf="appointment.appointmentStatus == 1"
+      (click)="generatePDF('open')"
       class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border">
       <i class="fa-solid fa-prescription mr-1"></i> Prescription
     </button>
     
     <button
-      *ngIf="appointment.appointmentStatus == 1"
+      *ngIf="appointment.appointmentStatus == 2"
       class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border"
     >
       <i class="fa-solid fa-phone-volume mr-1"></i> Join Call
@@ -89,7 +90,6 @@
     </button> -->
   </div>
 </div>
-
 
 
 
