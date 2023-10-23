@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShowPrescriptionModalComponent } from './show-prescription-modal.component';
+import { LoaderModule } from '../loader/loader.module';
 
 
 
@@ -9,7 +10,8 @@ import { ShowPrescriptionModalComponent } from './show-prescription-modal.compon
     ShowPrescriptionModalComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    LoaderModule
   ],
   exports:[
     ShowPrescriptionModalComponent

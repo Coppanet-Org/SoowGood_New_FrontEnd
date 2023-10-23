@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppointmentCardComponent } from '../../components/appointment-card/appointment-card.component';
 import { SkeletonModule } from '../skeleton/skeleton.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ShowPrescriptionModalModule } from '../../components/appointment-card/show-prescription-modal/show-prescription-modal.module';
+import { ShowPrescriptionModalModule } from '../show-prescription-modal/show-prescription-modal.module';
 
 
 

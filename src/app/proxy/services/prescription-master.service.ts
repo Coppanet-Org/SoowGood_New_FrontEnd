@@ -43,10 +43,43 @@ export class PrescriptionMasterService {
     { apiName: this.apiName,...config });
   
 
+  getPrescription = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PrescriptionMasterDto>({
+      method: 'GET',
+      url: `/api/app/prescription-master/${id}/prescription`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getPrescriptionByAppointmentId = (appointmentId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PrescriptionMasterDto>({
+      method: 'GET',
+      url: `/api/app/prescription-master/prescription-by-appointment-id/${appointmentId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getPrescriptionCount = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/prescription-master/prescription-count',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPrescriptionMasterListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PrescriptionMasterDto[]>({
       method: 'GET',
       url: `/api/app/prescription-master/prescription-master-list-by-doctor-id/${doctorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getPrescriptionMasterListByDoctorIdPatientId = (doctorId: number, patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PrescriptionMasterDto[]>({
+      method: 'GET',
+      url: '/api/app/prescription-master/prescription-master-list-by-doctor-id-patient-id',
+      params: { doctorId, patientId },
     },
     { apiName: this.apiName,...config });
   

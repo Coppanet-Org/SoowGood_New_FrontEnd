@@ -30,7 +30,7 @@
     
     <button
       *ngIf="appointment.appointmentStatus == 1"
-      (click)="generatePDF('open')"
+      (click)="openPdfDialog(appointment.id)"
       class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border">
       <i class="fa-solid fa-prescription mr-1"></i> Prescription
     </button>
@@ -49,7 +49,7 @@
   <div *ngIf="user == 'doctor'">
     <div class="border-b-[1px] flex justify-between p-5 bg-primary/90 min-w-[326px]">
       <div>
-          <h2 class=" cursor-pointer text-[22px] font-Roboto font-semibold text-gray-50 mt-2 capitalize" (click)="goToPatientProfile(appointment.patientProfileId)">{{appointment.patientName}}</h2>
+          <h2 class=" cursor-pointer text-[22px] font-Roboto font-semibold text-gray-50 mt-2 capitalize" (click)="goToPatientProfile(appointment)">{{appointment.patientName}}</h2>
         </div>
       <div class="w-[60px] h-[60px] overflow-hidden rounded-full border-secondary border-[2px]">
           <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
