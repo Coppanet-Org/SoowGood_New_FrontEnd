@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
 import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
+import { AbpOAuthModule } from "@abp/ng.oauth";
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -55,7 +56,9 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule,FormsModule
+    ReactiveFormsModule, FormsModule,
+    AbpOAuthModule.forRoot(),
+
   ],
   providers: [],
   bootstrap: [AppComponent],
