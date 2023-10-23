@@ -2,7 +2,7 @@
   <div *ngIf="user == 'patient'">
     <div class="border-b-[1px] flex justify-between p-5 bg-primary/90">
       <div>
-          <h2 class="text-[22px] font-Roboto font-semibold text-gray-50 mt-2">Dr. {{appointment.doctorName}}</h2>
+          <h2 class="text-[22px] font-Roboto font-semibold text-gray-50 mt-2 capitalize">Dr. {{appointment.doctorName}}</h2>
           <p class="text-[14px] font-Roboto  text-gray-200">General Medicine</p>
       </div>
       <div class="w-[60px] h-[60px] overflow-hidden rounded-full border-secondary border-[2px]">
@@ -17,6 +17,7 @@
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Type : </b>{{appointment.appointmentTypeName}}</p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Consultancy Type : </b>{{appointment.consultancyTypeName}}</p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Serial: </b>{{appointment.appointmentSerial}}</p>
+      <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Patient Name: </b>{{appointment.patientName}}</p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Status :  </b><span class="py-.5 px-3 bg-yellow-100 text-yellow-800 rounded-lg"> {{appointment.appointmentStatus == 1 ? "Coming soon" : appointment.appointmentStatus == 2 ? "Completed" : "Cancel"}}</span></p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Reschedule : </b><a class="py-1 underline cursor-pointer"> Send Request </a></p>
   </div>
@@ -29,29 +30,27 @@
     
     <button
       *ngIf="appointment.appointmentStatus == 1"
-      class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border"
-      (click)="goToBuildPrescription(appointment.id)"
-    >
+      (click)="openPdfDialog(appointment.id)"
+      class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border">
       <i class="fa-solid fa-prescription mr-1"></i> Prescription
     </button>
     
-    <!-- <button
-      *ngIf="appointment.appointmentStatus == 1"
+    <button
+      *ngIf="appointment.appointmentStatus == 2"
       class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border"
     >
       <i class="fa-solid fa-phone-volume mr-1"></i> Join Call
-    </button> -->
+    </button>
   </div>
 </div>
 
-
+<!-- Doctor start -->
 
   <div *ngIf="user == 'doctor'">
-    <div class="border-b-[1px] flex justify-between p-5 bg-primary/90">
+    <div class="border-b-[1px] flex justify-between p-5 bg-primary/90 min-w-[326px]">
       <div>
-          <h2 class="text-[22px] font-Roboto font-semibold text-gray-50 mt-2">Dr. {{appointment.doctorName}}</h2>
-          <p class="text-[14px] font-Roboto  text-gray-200">General Medicine</p>
-      </div>
+          <h2 class=" cursor-pointer text-[22px] font-Roboto font-semibold text-gray-50 mt-2 capitalize" (click)="goToPatientProfile(appointment)">{{appointment.patientName}}</h2>
+        </div>
       <div class="w-[60px] h-[60px] overflow-hidden rounded-full border-secondary border-[2px]">
           <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
       </div>
@@ -62,8 +61,8 @@
       <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between "><b>Date : </b> {{appointment.appointmentDate | date}}  </p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Doctor Fee :</b> {{appointment.totalAppointmentFee}} tk.</p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Type : </b>{{appointment.appointmentTypeName}}</p>
-      <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Consultancy Type : </b>{{appointment.consultancyTypeName}}</p>
-      <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Serial: </b>{{appointment.appointmentSerial}}</p>
+      <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Consultancy Type : </b> <span class="badge "><i *ngIf="appointment.consultancyTypeName == 'online'" class="fa-solid fa-video"></i>{{appointment.consultancyTypeName}}</span></p>
+      <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Serial:  </b>{{appointment.appointmentSerial}}</p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Status :  </b><span class="py-.5 px-3 bg-yellow-100 text-yellow-800 rounded-lg"> {{appointment.appointmentStatus == 1 ? "Coming soon" : appointment.appointmentStatus == 2 ? "Completed" : "Cancel"}}</span></p>
       <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Reschedule : </b><a class="py-1 underline cursor-pointer"> Send Request </a></p>
   </div>
@@ -74,9 +73,10 @@
       <i class="fa-solid fa-ban mr-1"></i> Cancel
     </button>
     
+    <!-- // should be change 1 > 2   -->
     <button
       *ngIf="appointment.appointmentStatus == 1"
-      class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border"
+      class="btn-secondary-light w-1/2 active:scale-90 transition-all duration-75 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border"
       (click)="goToBuildPrescription(appointment.id)"
     >
       <i class="fa-solid fa-prescription mr-1"></i> Prescription
@@ -90,3 +90,19 @@
     </button> -->
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

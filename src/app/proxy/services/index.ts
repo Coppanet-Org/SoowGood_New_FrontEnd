@@ -1,5 +1,6 @@
 export * from './agent-profile.service';
 export * from './appointment.service';
+export * from './common-disease.service';
 export * from './degree.service';
 export * from './doctor-chamber.service';
 export * from './doctor-degree.service';
@@ -9,6 +10,7 @@ export * from './doctor-schedule-day-session.service';
 export * from './doctor-schedule.service';
 export * from './doctor-specialization.service';
 export * from './documents-attachment.service';
+export * from './drug-rx.service';
 export * from './otp.service';
 export * from './patient-profile.service';
 export * from './payment-history.service';

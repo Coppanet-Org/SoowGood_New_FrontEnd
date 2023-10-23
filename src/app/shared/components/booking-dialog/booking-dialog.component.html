@@ -14,7 +14,7 @@
     <!-- select booking option -->
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="bookingForm">
-                <ul class="grid grid-row-2 gap-4 w-full gap-6">
+                <ul class="grid grid-row-2 w-full gap-6">
                     <li (click)="onStepChange(1)">
                         <input type="radio" formControlName="bookMyself" id="bookMyself"  value="bookMyself"
                             class="hidden peer" required>
@@ -23,8 +23,8 @@
                             <div class="flex items-center gap-3">
                                 <i class="fa-solid fa-person text-[44px]"></i>
                                 <div>
-                                    <div class="w-full text-lg font-semibold">Book for myself</div>
-                                    <div class="w-full">If you are patient</div>
+                                    <div class="w-full text-lg font-semibold">Book for Self</div>
+                                    <div class="w-full">If you are patient!</div>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -45,8 +45,8 @@
                             <div class="flex items-center gap-3">
                                 <i class="fa-solid fa-people-robbery text-[44px]"></i>
                                 <div>
-                                    <div class="w-full text-lg font-semibold">Book for other</div>
-                                    <div class="w-full">If you are not patient</div>
+                                    <div class="w-full text-lg font-semibold">Book for Other</div>
+                                    <div class="w-full">If you are not patient!</div>
                                 </div>
                             </div>
 

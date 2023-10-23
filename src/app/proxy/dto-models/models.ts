@@ -29,7 +29,7 @@ export interface AgentProfileDto extends FullAuditedEntityDto<number> {
 
 export interface AppointmentDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
-  appointmenCode?: string;
+  appointmentCode?: string;
   doctorScheduleId?: number;
   doctorScheduleName?: string;
   doctorProfileId?: number;
@@ -60,11 +60,12 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByEntityId?: number;
   cancelledByRole?: string;
   paymentTransactionId?: string;
+  appointmentCreatorId?: number;
 }
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   appointmentSerial?: string;
-  appointmenCode?: string;
+  appointmentCode?: string;
   doctorScheduleId?: number;
   doctorProfileId?: number;
   doctorName?: string;
@@ -89,6 +90,13 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByEntityId?: number;
   cancelledByRole?: string;
   paymentTransactionId?: string;
+  appointmentCreatorId?: number;
+}
+
+export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
+  code?: string;
+  name?: string;
+  description?: string;
 }
 
 export interface DegreeDto extends FullAuditedEntityDto<number> {
@@ -261,6 +269,23 @@ export interface DocumentsAttachmentDto extends FullAuditedEntityDto<number> {
   relatedEntityid?: number;
 }
 
+export interface DrugRxDto extends FullAuditedEntityDto<number> {
+  tradeName?: string;
+  brandName?: string;
+  productName?: string;
+  genericName?: string;
+  dosageForm?: string;
+  strength?: string;
+  inclusionDate?: string;
+  vlidUpto?: string;
+  manufacturer?: string;
+  dar?: string;
+  cdar?: string;
+  sdar?: string;
+  gdar?: string;
+  prescribedDrugName?: string;
+}
+
 export interface LoginDto {
   userName?: string;
   email?: string;
@@ -412,6 +437,7 @@ export interface PrescriptionFindingsObservationsDto extends FullAuditedEntityDt
 export interface PrescriptionMainComplaintDto extends FullAuditedEntityDto<number> {
   prescriptionMasterId?: number;
   prescriptionRefferenceCode?: string;
+  symptom?: string;
   duration?: string;
   condition?: string;
   problems?: string;
@@ -429,6 +455,9 @@ export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  patientAge?: number;
+  patientBloodGroup?: string;
+  patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
   appointmentType?: AppointmentType;

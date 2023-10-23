@@ -4,6 +4,8 @@ import { AllAppointmentsComponent } from './all-appointments.component';
 import { RouterModule } from '@angular/router';
 import { AppointmentCardComponent } from '../../components/appointment-card/appointment-card.component';
 import { SkeletonModule } from '../skeleton/skeleton.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShowPrescriptionModalModule } from '../show-prescription-modal/show-prescription-modal.module';
 
 
 
@@ -18,7 +20,7 @@ import { SkeletonModule } from '../skeleton/skeleton.module';
     CommonModule,
     RouterModule.forChild([]),
     SkeletonModule,
-
+    ShowPrescriptionModalModule
   ],
   exports:[
     AllAppointmentsComponent

@@ -7,7 +7,7 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { Route, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header-footer/header/header.component';
 import { FooterComponent } from './header-footer/footer/footer.component';
-import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
+// import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
 import { AgentComponent } from '../features-modules/agent/agent.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
@@ -122,7 +122,7 @@ const routes: Route[] = [
     AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
-    DashboardHeaderComponent,
+    // DashboardHeaderComponent,
     PublicLayoutTwoComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],

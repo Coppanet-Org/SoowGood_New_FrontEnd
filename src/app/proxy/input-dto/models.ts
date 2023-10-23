@@ -125,6 +125,7 @@ export interface PrescriptionFindingsObservationsInputDto extends FullAuditedEnt
 
 export interface PrescriptionMainComplaintInputDto extends FullAuditedEntityDto<number> {
   prescriptionMasterId?: number;
+  symptom?: string;
   duration?: string;
   condition?: string;
   problems?: string;
@@ -142,6 +143,7 @@ export interface PrescriptionMasterInputDto extends FullAuditedEntityDto<number>
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   appointmentType?: AppointmentType;
   appointmentDate?: string;
