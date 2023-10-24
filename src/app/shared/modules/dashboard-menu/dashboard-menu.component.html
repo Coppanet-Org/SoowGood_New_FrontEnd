@@ -1,13 +1,20 @@
-<div class="main_menu w-full bg-white border-r-[1px] relative  z-10 box-border">
-    <div class="w-full bg-gray-100 main_right border-l-[1px] relative  border-box -z-10">
-        <app-dashboard-profilecard ></app-dashboard-profilecard>
+<div class="main_menu  bg-white fixed top-0  z-10 box-border">
+    <div class="logo max-w-full bg-primary max-h-[70px] min-h-[60px] w- py-3 flex justify-center ">
+        <img [routerLink]="'/'" src="../../../../assets/SoowGood-Logo.png" class="max-w-[200px] cursor-pointer"
+            alt="">
     </div>
-    <div class="menu_list box-border p-2 ">
-        <ul class="menu bg-white w-full">
-            <app-dashboard-menu-item [menuItemDetails]="menuList"></app-dashboard-menu-item>
-        </ul>
 
+    <div class="border-r-[1px] w-full">
+        <div class="w-full bg-gray-100 main_right border-l-[1px] relative  border-box -z-10">
+            <app-dashboard-profilecard ></app-dashboard-profilecard>
+        </div>
+        <div class="menu_list box-border p-2 ">
+            <ul class="menu bg-white w-full">
+                <app-dashboard-menu-item [menuItemDetails]="menuList"></app-dashboard-menu-item>
+            </ul>
+        </div>
     </div>
+ 
     <!-- <div class="menu_footer w-full p-3 bg-primary flex justify-center  absolute bottom-0 ">
         <div
             class="cursor-pointer text-white font-semibold flex gap-2 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300  " (click)="logOut()">

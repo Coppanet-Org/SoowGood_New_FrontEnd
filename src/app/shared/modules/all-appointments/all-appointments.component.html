@@ -1,0 +1,59 @@
+<div class="py-4 w-full">
+  <div class="w-full border-[1px] rounded-md  mb-5 flex justify-between py-3 px-5 items-center">
+    <span class="text-[20px] text-primary/80 font-Roboto font-semibold">
+      <i class="fa-solid fa-filter mr-2"></i> Filter your appointment :
+    </span>
+    <div class="flex gap-4 h-fit">
+      <div class="py-2 h-fit px-4  rounded-md bg-white border-gray-300/80 border flex items-center">
+        <input class="outline-none bg-transparent w-[300px] text-priamry/80 placeholder:text-primary/50"
+               placeholder="Search by doctor..." />
+        <span class="bg-transparent">
+          <i class="fa-solid fa-magnifying-glass text-primary"></i>
+        </span>
+      </div>
+
+
+      <select class="form_input" [value]="1">
+        <option value="1">Appointment Type</option>
+        <option>Select</option>
+        <option>Select</option>
+        <option>Select</option>
+      </select>
+      <select class="form_input" [value]="1">
+        <option value="1">Appointment Type</option>
+        <option>Select</option>
+        <option>Select</option>
+        <option>Select</option>
+      </select>
+      <select class="form_input" [value]="1">
+        <option value="1">Appointment Type</option>
+        <option>Select</option>
+        <option>Select</option>
+        <option>Select</option>
+      </select>
+
+    </div>
+  </div>
+
+  <div *ngIf="skelton" class="grid grid-cols-4 gap-10 flex-wrap ">
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+  </div>
+
+  <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+    <div>No records has been found!</div>
+  </div>
+
+  <div class="grid grid-cols-4 gap-10 flex-wrap">
+    <div [@enter] class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
+      <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
+    </div>
+  </div>
+
+</div>

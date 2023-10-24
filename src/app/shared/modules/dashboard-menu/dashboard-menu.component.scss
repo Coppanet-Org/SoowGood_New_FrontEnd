@@ -1,4 +1,9 @@
 .main_menu {
-    height: calc(100vh - 70px);
+    height: 100vh;
+
     position: sticky;
+    
+}
+.menu{
+    overflow: hidden;
 }

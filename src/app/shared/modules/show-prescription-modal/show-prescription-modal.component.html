@@ -1,0 +1,104 @@
+<app-loader *ngIf="prescriptionLoader"></app-loader> 
+
+
+
+<div class="relative" id="printable-section">
+      <div #printableSection *ngIf="!prescriptionLoader" class="px-12 pt-12 h-[1100px]  bg-white relative">
+            <!-- Doctor Info -->
+      <div class="flex justify-between">
+            <div class="mb-4">
+                  <h1 class="text-2xl font-semibold">Dr. {{prescriptionInfo.doctorName}}</h1>
+                  <p class="text-gray-600">General Medicine</p>
+                  <p class="text-gray-600">Chamber: 123 Main Street, City <br> Dhaka, Bangladesh </p>
+            </div>
+            <div>
+                  <img class="w-[200px]" src="/assets/SoowGood.png" alt="">
+            </div>
+      </div>
+      
+            <!-- Patient Info -->
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-4 print:grid-cols-4  gap-4 border-t-[1px] border-b-[1px]">
+                  <div>
+                        <label class="text-sm text-gray-600">Patient Name</label>
+                        <p class="font-semibold text-sm">{{prescriptionInfo.patientName}}</p>
+                  </div>
+                  <div>
+                        <label class="text-sm text-gray-600">Age</label>
+                        <p class="font-semibold text-sm">{{prescriptionInfo.patientAge}}Years</p>
+                  </div>
+                  <div>
+                        <label class="text-sm text-gray-600">Blood Group</label>
+                        <p class="font-semibold text-sm">{{prescriptionInfo.patientBloodGroup}}</p>
+                  </div>
+                  <div>
+                        <label class="text-sm text-gray-600">Date & Time</label>
+                        <p class="font-semibold text-sm">{{prescriptionInfo.appointmentDate | date}}</p>
+                  </div>
+            </div>
+      
+            <!-- Additional Information -->
+            <div class="grid grid-cols-3 print:grid-cols-3">
+                  <div class="mb-4 py-4 border-r-[1px] h-full">
+                        <div class="mt-3 ">
+                             <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Patient History</h2>
+                             <ul>
+                                <li *ngFor="let history of prescriptionInfo.prescriptionPatientDiseaseHistory" class="pl-2 text-[14px] font-poppins text-primary/90">{{history.diseaseName}}</li>
+                             </ul>
+                        </div>
+                        <div class="mt-3">
+                              <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Additional Info</h2>
+                               <p class="pl-2 text-[14px] font-poppins text-primary/90">{{prescriptionInfo.patientAdditionalInfo}}</p>
+                         </div>
+                        <div class="mt-3">
+                              <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Doctor Findings</h2>
+                              <ul>
+                                    <li *ngFor="let findings of prescriptionInfo.prescriptionFindingsObservations" class="pl-2 text-[14px] font-poppins text-primary/90">{{findings.observation}}</li>
+                              </ul>
+                         </div>
+                         <div class="mt-3">
+                              <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Observation</h2>
+                              <ul>
+                                    <li *ngFor="let complaints of prescriptionInfo.prescriptionMainComplaints" class="pl-2 text-[14px] font-poppins text-primary/90">{{complaints.symptom}}-({{complaints.duration}})</li>
+                              </ul>
+                         </div>
+                         <div class="mt-3">
+                              <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Test Recommended</h2>
+                              <ul>
+                                    <li *ngFor="let test of prescriptionInfo.prescriptionMedicalCheckups" class="pl-2 text-[14px] font-poppins text-primary/90">{{test.testName}}</li>
+                              </ul>
+                         </div>
+      
+                  </div>
+                  <div class="mb-4 col-span-2 p-4">
+                        <div class="mt-3">
+                              <img class="w-[25px] h-[25px] opacity-90" src="/assets/rx.png" alt="rx">
+                               <div class="mt-3 pl-3" *ngFor="let medicine of prescriptionInfo.prescriptionDrugDetails; let i = index">
+                                    <h1 class="font-Roboto font-semibold text-[16px] text-primary">{{i+1}}. {{medicine.drugName}}</h1>
+                                    <p class="font-Roboto pl-4 text-[14px] text-primary/80">{{medicine.drugDoseSchedule}}</p>
+                                    <p class="font-Roboto pl-4 text-[14px] text-primary/80">{{medicine.duration}}</p>
+                               </div>
+      
+                        </div>
+                        <div class="grid grid-cols-1 mt-5 md:grid-cols-2 print:grid-cols-2 gap-3">
+                              <div class="mt-3">
+                                    <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Follow up</h2>
+                                     <p>{{prescriptionInfo.followupDate | date}}</p>
+                               </div>
+                               <!-- <div class="mt-3">
+                                    <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Refer to</h2>
+                                     <p>Dr. Sadia sultana</p>
+                               </div> -->
+                               <div class="mt-3">
+                                    <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Doctor Advice</h2>
+                                     <p>{{prescriptionInfo.advice}}</p>
+                               </div>
+                        </div>
+                  </div>
+            </div>
+      
+      </div>
+      <div class="absolute bottom-0 h-[50px] w-full bg-gray-300 flex gap-10">
+       <button class="btn-primary print:hidden" (click)="pdfSavePrint('print')">Print</button>
+       <button class="btn-primary print:hidden" (click)="pdfSavePrint('save')">Save</button>
+      </div>
+</div>

@@ -1,4 +1,4 @@
-import { HospitalStateService } from './../../services/hospital-state.service';
+import { HospitalStateService } from '../../services/states/hospital-state.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({

@@ -1,4 +1,4 @@
-import { UserinfoStateService } from './../../../shared/services/userinfo-state.service';
+
 import { LoaderService } from './../../../shared/services/loader.service';
 import {
   DoctorProfileService,
@@ -19,6 +19,7 @@ import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -28,7 +29,7 @@ import { PictureDialogComponent } from './picture-dialog/picture-dialog.componen
 })
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
-  @Output() getProfileInfo =new EventEmitter()
+  @Output() getProfileInfo = new EventEmitter()
 
 
   animationDirection = 'right';
@@ -62,8 +63,8 @@ export class ProfileSettingsComponent implements OnInit {
     private normalAuth: AuthService,
     public dialog: MatDialog,
     private LoaderService: LoaderService,
-    private UserinfoStateService :UserinfoStateService
-  ) {}
+    private UserinfoStateService: UserinfoStateService
+  ) { }
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
@@ -72,7 +73,8 @@ export class ProfileSettingsComponent implements OnInit {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
-
+    this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
+    this.getProfilePic();
   }
 
   // getProfileInfo(id: any): void {
@@ -89,19 +91,18 @@ export class ProfileSettingsComponent implements OnInit {
     let doctortitle = this.doctorTitleList.find((e) => e.id == title);
     return doctortitle?.name;
   }
+
   firstFormGroup = this._fb.group({
     firstCtrl: ['', Validators.required],
   });
+
   secondFormGroup = this._fb.group({
     secondCtrl: ['', Validators.required],
   });
+
   isLinear = false;
 
-  getProfileData(data: any) {
-    console.log("call");
-    this.profileInfo = data;
-    this.getProfilePic();
-  }
+
 
   handleFormData(formData: any) {
     const updatedProfile: DoctorProfileInputDto = {
@@ -139,7 +140,8 @@ export class ProfileSettingsComponent implements OnInit {
           }
           this.TosterService.customToast(successMessage, 'success');
           this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
-    
+
+
         },
         (error) => {
           this.isLoading = false;

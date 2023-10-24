@@ -9,7 +9,20 @@ import { AgentBookingDialogComponent } from 'src/app/shared/modules/agent-bookin
 })
 export class DashboardComponent {
   constructor(public dialog: MatDialog) {}
-
+  details=[
+    {
+      title : "Total appointments",
+      data : 100
+    },
+    {
+      title : "Cancel/Reschedule",
+      data : '3'
+    },
+    {
+      title : "Total Pay",
+      data : '1000tk'
+    }
+  ]
   // handleDegreeEdit(row: any) {
   //   this.dialog
   //     .open(DegreeDialogComponentnt, {
