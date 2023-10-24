@@ -3,12 +3,10 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\auth-gurd",
-    "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
     "\\src\\app\\core-modules\\auth\\login",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\login\\login.component.ts",
+  "SelectedNode": "\\src\\environments\\environment.prod.ts",
   "PreviewInSolutionExplorer": false
 }
