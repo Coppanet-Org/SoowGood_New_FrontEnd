@@ -11,8 +11,6 @@ import { ShowPrescriptionModalComponent } from '../../show-prescription-modal/sh
 export class PatientPrescriptionsComponent {
 @Input() prescriptionListDetails!:PrescriptionMasterDto[]
 constructor( public dialog: MatDialog) {}
-
-
 openPdfDialog(id:any): void {
   this.dialog.open(ShowPrescriptionModalComponent, {
     minWidth: '820px',
@@ -20,6 +18,5 @@ openPdfDialog(id:any): void {
     height:"1000px",
     data: { prescriptionId: id }
   });
-
 }
 }

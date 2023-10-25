@@ -29,9 +29,6 @@ export class ShowPrescriptionModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
-    
-    if (this.data?.prescriptionId) {
       this.prescriptionLoader = true;
       try {
         if (this.data.prescriptionId) {
@@ -53,38 +50,9 @@ export class ShowPrescriptionModalComponent implements OnInit {
       } catch (error) {
         this.TosterService.customToast(String(error), 'error');
         this.prescriptionLoader = true;
-      }
+      
     }
   }
-
-  // pdfSavePrint(click: string) {
-  //   const printableContent = this.printableSection.nativeElement;
-  //   if (printableContent) {
-  //     html2canvas(printableContent).then((canvas) => {
-  //       const pdf = new jsPDF();
-  //       const imgData = canvas.toDataURL('image/png');
-  //       pdf.addImage(imgData, 'PNG', 0, 0, 210, 297); // The last two arguments are width and height (A4 size)
-  //       if (click == 'save') {
-  //         pdf.save('Prescription.pdf');
-  //       }
-  //       if (click == 'print') {
-  //         pdf.autoPrint();
-  //         const blob = pdf.output('blob');
-  //         const pdfUrl = URL.createObjectURL(blob);
-  //         const printWindow: Window | null = window.open(pdfUrl);
-  //         if (printWindow) {
-  //           printWindow.onload = () => {
-  //             printWindow.print();
-  //           };
-  //         } else {
-  //           console.error('Print window could not be opened.');
-  //         }
-  //       }
-  //     });
-  //   } else {
-  //     console.error('Printable section not found');
-  //   }
-  // }
 
   pdfSavePrint(click: string) {
     const printableContent = this.printableSection.nativeElement;
@@ -102,7 +70,7 @@ export class ShowPrescriptionModalComponent implements OnInit {
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
         if (click === 'save') {
-          pdf.save('Prescription.pdf');
+          pdf.save(`${this.prescriptionInfo.patientName}-Prescription.pdf`);
         }
         if (click === 'print') {
           //
@@ -121,6 +89,62 @@ export class ShowPrescriptionModalComponent implements OnInit {
       });
     } else {
       console.error('Printable section not found');
+    }
+  }
+  convertToBanglaText(drugName: string, schedule: string): string {
+    const parts = schedule.split('+');
+    const isTablet = drugName.toLowerCase().includes('tablet') || drugName.toLowerCase().includes('capsule');
+    const isInjection = drugName.toLowerCase().includes('injection');
+    const isDrops = drugName.toLowerCase().includes('drops');
+    let medicineType:string;
+    
+    if (isTablet) {
+      medicineType = 'টা';
+    } else if (isInjection) {
+      medicineType = 'নিবেন';
+    } else if (isDrops) {
+      medicineType = 'দিবেন ';
+    }
+    else {
+      medicineType = 'বার';
+    }
+  
+    const banglaText = parts.map((part, index) => {
+      const partValue = parseInt(part, 10);
+      let doseText = '';
+      if (partValue === 0) {
+        doseText = ''; // No dose
+      } else {
+        doseText = `১ ${medicineType == 'দিবেন' || 'দিবেন' ? 'বার' : medicineType} ${this.getTimeText(index)} ${isInjection ? 'নিবেন' : 'খাবেন'}`;
+      }
+      return doseText;
+    });
+    return banglaText.join(' - ');
+  }
+
+  // Helper function to get Bangla time text
+  getTimeText(index: number): string {
+    switch (index) {
+      case 0:
+        return 'সকালে';
+      case 1:
+        return 'দুপুর ';
+      case 2:
+        return 'রাতে';
+      default:
+        return 'অজানা';
+    }
+  }
+  getDurationEnglishToBangla(index: number): string {
+    switch (index) {
+      case 0:
+        return 'সকালে';
+      case 1:
+        return 'দুপুর ';
+      case 2:
+        return 'রাতে';
+      default:
+        return 'অজানা';
     }
   }
 }

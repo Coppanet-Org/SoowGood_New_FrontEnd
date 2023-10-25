@@ -1098,6 +1098,10 @@ export class SignupComponent implements OnInit {
     this.spFileNames.splice(index, 1);
     // delete file from FileList
     this.spFileList.splice(index, 1);
+
+    //this.formSpecialization.setValue(['docFileName',''])
+    this.selectedSpFileName = '';
+
   }
 
   checkFileValidation(event: any) {

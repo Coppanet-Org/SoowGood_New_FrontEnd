@@ -1,5 +1,7 @@
+import { AppointmentService } from 'src/app/proxy/services';
 import { slideInFrom } from 'src/app/animation';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-my-patients',
@@ -7,6 +9,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-patients.component.scss'],
   animations: [slideInFrom('right')],
 })
-export class MyPatientsComponent {
+export class MyPatientsComponent{
   animationDirection = 'right';
 }
