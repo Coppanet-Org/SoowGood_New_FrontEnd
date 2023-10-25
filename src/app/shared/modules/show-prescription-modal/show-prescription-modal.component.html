@@ -17,7 +17,7 @@
       </div>
       
             <!-- Patient Info -->
-            <div class="mt-5 grid grid-cols-1 md:grid-cols-4 print:grid-cols-4  gap-4 border-t-[1px] border-b-[1px]">
+            <div class="mt-5  grid grid-cols-1 md:grid-cols-4 print:grid-cols-4 gap-4 border-t-[1px] border-b-[1px]">
                   <div>
                         <label class="text-sm text-gray-600">Patient Name</label>
                         <p class="font-semibold text-sm">{{prescriptionInfo.patientName}}</p>
@@ -74,10 +74,9 @@
                               <img class="w-[25px] h-[25px] opacity-90" src="/assets/rx.png" alt="rx">
                                <div class="mt-3 pl-3" *ngFor="let medicine of prescriptionInfo.prescriptionDrugDetails; let i = index">
                                     <h1 class="font-Roboto font-semibold text-[16px] text-primary">{{i+1}}. {{medicine.drugName}}</h1>
-                                    <p class="font-Roboto pl-4 text-[14px] text-primary/80">{{medicine.drugDoseSchedule}}</p>
+                                    <p class="font-Roboto pl-4 text-[14px] text-primary/80">{{convertToBanglaText(medicine.drugName, medicine.drugDoseSchedule)}}</p>
                                     <p class="font-Roboto pl-4 text-[14px] text-primary/80">{{medicine.duration}}</p>
                                </div>
-      
                         </div>
                         <div class="grid grid-cols-1 mt-5 md:grid-cols-2 print:grid-cols-2 gap-3">
                               <div class="mt-3">

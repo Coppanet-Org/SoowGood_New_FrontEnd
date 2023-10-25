@@ -38,6 +38,9 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  patientMobileNo?: string;
+  patientEmail?: string;
+  patientLocation?: string;
   consultancyType?: ConsultancyType;
   consultancyTypeName?: string;
   doctorChamberId?: number;

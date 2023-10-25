@@ -29,11 +29,11 @@ export class AppointmentCardComponent {
   }
 
   openPdfDialog(id:any): void {
-    const dialogRef = this.dialog.open(ShowPrescriptionModalComponent, {
+    this.dialog.open(ShowPrescriptionModalComponent, {
       minWidth: '820px',
       maxWidth: '100%',
       height:"1000px",
-      data: { prescriptionId: id, appointmentId:id }
+      data: {appointmentId:id }
     });
   }
 
