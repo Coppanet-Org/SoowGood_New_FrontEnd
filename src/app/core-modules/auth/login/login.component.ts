@@ -64,21 +64,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
         Validators.compose([
           Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
         ]),
       ],
       password: [
         this.defaultAuth.password,
         Validators.compose([
           Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(100),
         ]),
       ],
     });
@@ -101,21 +98,24 @@ export class LoginComponent implements OnInit, OnDestroy {
         'Please filled all required field',
         'warning'
       );
+      this.isLoading = false;
       return;
-    }
-
-
-    let userType = '';
-    this.errorMessage = '';
-    this.hasError = false;
-    const username = this.formControl['mobileNo'].value;
-    const password = this.formControl['password'].value;
-    this.oAuthService.oidc = false;
-    this.loginDto.userName = username;
-    this.loginDto.email = '';
-    this.loginDto.password = password;
-    this.loginDto.rememberMe = false;
-    let loginResponseData: LoginResponseDto;
+    } else {
+      if (this.loginForm.invalid) {
+        this.isLoading = false;
+        return
+      }
+      this.isLoading = true;
+      let userType = '';
+      this.errorMessage = '';
+      this.hasError = false;
+      const username = this.formControl['mobileNo'].value;
+      const password = this.formControl['password'].value;
+      this.loginDto.userName = username;
+      this.loginDto.email = '';
+      this.loginDto.password = password;
+      this.loginDto.rememberMe = false;
+      let loginResponseData: LoginResponseDto;
 
     try {
       //this.authService
@@ -264,6 +264,93 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         })
 
+
+      
+      try {
+        this.authService
+          .loginByUserDto(this.loginDto)
+          .subscribe((loginResponse: LoginResponseDto) => {console.log(loginResponse);
+          
+               if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
+                    this.isLoading = false;
+                    this.subs.sink = this.doctorProfileService
+                      .getByUserName(
+                        loginResponse.userName ? loginResponse.userName : ''
+                      )
+                      .subscribe((doctorDto: DoctorProfileDto) => {
+                        let saveLocalStorage = {
+                          identityNumber: doctorDto.identityNumber,
+                          doctorName: doctorDto.fullName,
+                          bmdcRegNo: doctorDto.bmdcRegNo,
+                          isActive: doctorDto.isActive,
+                          userId: doctorDto.userId,
+                          id: doctorDto.id,
+                          specialityId: doctorDto.specialityId,
+                          profileStep: doctorDto.profileStep,
+                          createFrom: doctorDto.createFrom,
+                          userType: loginResponse.roleName.toString().toLowerCase(),
+                        };
+                        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                        if (
+                          doctorDto.profileStep == 1 ||
+                          doctorDto.profileStep == 2
+                        ) {
+                          userType = '/signup';
+                        } else {
+                          userType = doctorDto.isActive
+                            ? loginResponse.roleName.toString() + '/dashboard'
+                            : loginResponse.roleName.toString() +
+                              '/profile-settings/basic-info';
+                        }
+                        this._router
+                          .navigate([userType.toLowerCase()], {
+                            state: { data: doctorDto }, // Pass the 'res' object as 'data' in the state object
+                          })
+                          .then((r) => {
+                            this.ToasterService.customToast(
+                              loginResponse.message ? loginResponse.message : ' ',
+                              'success'
+                            );
+                          });
+                      });
+            
+                }
+                  
+             else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
+                    this.isLoading = false;
+                    this.subs.sink = this.PatientProfileService.getByUserName(
+                      loginResponse.userName ? loginResponse.userName : ''
+                    ).subscribe((patientDto: PatientProfileDto) => {
+                      let saveLocalStorage = {
+                        userId: patientDto.userId,
+                        id: patientDto.id,
+                        userType: loginResponse.roleName.toString().toLowerCase(),
+                      };
+                      this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                      let userType =
+                        loginResponse.roleName.toString() + '/dashboard';
+
+                      this._router
+                        .navigate([userType.toLowerCase()], {
+                          state: { data: patientDto }, // Pass the 'res' object as 'data' in the state object
+                        })
+                        .then((r) => {
+                          this.ToasterService.customToast(
+                            loginResponse.message ? loginResponse.message : ' ',
+                            'success'
+                          );
+                        });
+                    });
+                }
+              
+              else {
+                this.isLoading = false;
+                this.ToasterService.customToast(
+                  loginResponse.message ? loginResponse.message : ' ',
+                  'error'
+                );
+              }
+        })
 
 
 
