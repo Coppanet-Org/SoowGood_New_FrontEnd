@@ -464,7 +464,7 @@ export class SignupComponent implements OnInit {
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile;
     this.isLoading = true;
-    this.subs.sink = this.otpService
+    this.otpService
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
       .subscribe(
         (res: boolean) => {
@@ -472,6 +472,8 @@ export class SignupComponent implements OnInit {
             this.otpModal = res;
             this.isLoading = false;
           } else {
+            this.tosterService.customToast("User allready exists!!! Try different mobile number", "error");
+            this.isLoading = false;
           }
         },
         (err) => {
