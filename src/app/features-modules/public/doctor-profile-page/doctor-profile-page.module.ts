@@ -7,13 +7,20 @@ import { OverviewComponent } from './overview/overview.component';
 import { HospitalLocationsComponent } from './hospital-locations/hospital-locations.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { ReviewsComponent } from './reviews/reviews.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 const routes: Route[] = [
   {
     path: '',
     component: DoctorProfilePageComponent,
-
+    children:[
+      {
+        path:"schedule",
+        component: ScheduleComponent
+      }
+    ]
   },
 ]
 
@@ -28,7 +35,9 @@ const routes: Route[] = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class DoctorProfilePageModule { }

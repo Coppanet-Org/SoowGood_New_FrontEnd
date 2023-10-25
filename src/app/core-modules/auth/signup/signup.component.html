@@ -6,14 +6,14 @@
   <div class="signup-form__right drop-shadow-soft relative">
     <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
     <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-         [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
+      [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
       <h1 class="text-4xl font-medium">Signup</h1>
-      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
+      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
         <div class="grid-wrapper grid-col-auto">
           <label for="radio-card-1" class="radio-card">
-            <input type="radio" id="radio-card-1" formControlName="userTypeName"
-                   [(ngModel)]="selectedUserType" value="Doctor" />
+            <input type="radio" id="radio-card-1" formControlName="userTypeName" [(ngModel)]="selectedUserType"
+              value="Doctor" />
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
@@ -23,8 +23,8 @@
             </div>
           </label>
           <label for="radio-card-2" class="radio-card">
-            <input type="radio" id="radio-card-2" formControlName="userTypeName"
-                   [(ngModel)]="selectedUserType" value="Patient" />
+            <input type="radio" id="radio-card-2" formControlName="userTypeName" [(ngModel)]="selectedUserType"
+              value="Patient" />
             <div class="card-content-wrapper ">
               <span class="check-icon"></span>
               <div class="card-content">
@@ -38,15 +38,15 @@
         <div class="flex flex-col space-y-5 mt-10">
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input type="tel" formControlName="mobile" id="phone" class="form_input"
-                   placeholder="018-000-00000" required>
+            <input type="tel" formControlName="mobile" id="phone" class="form_input" placeholder="018-000-00000"
+              required>
           </label>
           <button class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2">
+                stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
               </svg>
               <span>Signup</span>
             </div>
@@ -54,14 +54,14 @@
           </button>
           <p class="text-center">
             Already have an account? <a routerLink="/login"
-                                        class="text-primary font-medium inline-flex space-x-1 items-center">
+              class="text-primary font-medium inline-flex space-x-1 items-center">
               <span>
                 Login now
               </span><span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </span>
             </a>
@@ -71,7 +71,7 @@
     </div>
 
     <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
-         [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
+      [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
       <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
         <img src="../../../../assets/auth/v-code.jpg" alt="">
       </div>
@@ -82,7 +82,7 @@
       </p>
       <div class="mt-12">
         <ng-otp-input inputClass="verify-focus" (onInputChange)="onOtpChange($event)"
-                      [config]="{length:4}"></ng-otp-input>
+          [config]="{length:4}"></ng-otp-input>
       </div>
       <button class="form_btn mt-4" (click)="verify() ">
         Continue
@@ -90,11 +90,10 @@
     </div>
 
     <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-         [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
+      [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
-      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-      <form class="mt-5" [formGroup]="userInfoForm">
-
+      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
+      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="selectedUserType == 'Doctor'">
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
@@ -102,11 +101,12 @@
                 Your Title
               </label>
               <select formControlName="doctorTitle" name="select" id="select"
-                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                 <!-- Default Select Option -->
-                <option value="0" class="font-semibold text-slate-300">Select Title</option>
+                <option value="0" class="font-semibold text-gray-500">Select Title</option>
                 <!-- Loop through titleList to create options -->
-                <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
+                <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-gray-500">
+                  {{item.name}}</option>
               </select>
             </div>
           </div>
@@ -116,11 +116,10 @@
                 Full Name
               </label>
               <input formControlName="fullName" type="text" name="name" id="name" placeholder="Full Name"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-full">
             <div class="mb-5">
@@ -128,12 +127,11 @@
                 Email
               </label>
               <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
         </div>
-
         <div class="-mx-3 flex flex-wrap">
 
           <div class="w-full px-3 sm:w-1/2">
@@ -142,8 +140,12 @@
                 Gender
               </label>
               <select formControlName="gender" name="select" id="select"
-                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-slate-300">{{item.name}}</option>
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                <option value="0" class="font-semibold text-gray-500">Select</option>
+                <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-gray-500">
+                  {{item.name}}</option>
+
               </select>
             </div>
           </div>
@@ -154,7 +156,7 @@
                 Date of Birth
               </label>
               <input required formControlName="dateOfBirth" type="date" name="date" id="date"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
@@ -164,8 +166,9 @@
               <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Reg Number
               </label>
-              <input formControlName="bmdcRegNo" type="text" name="phone" id="phone" placeholder="Enter your phone number"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input formControlName="bmdcRegNo" type="text" name="phone" id="phone"
+                placeholder="Enter your phone number"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
@@ -174,11 +177,10 @@
                 BMDC Exp. Date
               </label>
               <input formControlName="bmdcRegExpiryDate" type="date" name="date" id="date"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
@@ -186,7 +188,7 @@
                 Address
               </label>
               <input formControlName="address" type="text" name="area" id="area" placeholder="Enter area"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
@@ -195,11 +197,10 @@
                 City
               </label>
               <input formControlName="city" type="text" name="state" id="state" placeholder="Enter state"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
@@ -207,7 +208,7 @@
                 Zip Code
               </label>
               <input formControlName="zipCode" type="text" name="post-code" id="post-code" placeholder="Post Code"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
@@ -217,21 +218,21 @@
                 Country
               </label>
               <input formControlName="country" type="text" name="city" id="city" placeholder="Enter city"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
 
         </div>
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
               <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Identity Number
               </label>
-              <input formControlName="identityNumber" type="text" name="phone" id="phone" placeholder="Enter your phone number"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input formControlName="identityNumber" type="text" name="phone" id="phone"
+                placeholder="Enter your phone number"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
@@ -241,23 +242,23 @@
                 Specialties
               </label>
               <select formControlName="specialityId" name="select" id="select"
-                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-slate-300">{{item.specialityName}}</option>
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <option value="0" class="font-semibold text-gray-500">Select</option>
+                <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
+                  {{item.specialityName}}</option>
 
               </select>
             </div>
           </div>
         </div>
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
               <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Password
               </label>
-              <input formControlName="password" type="password" name="name" id="name"
-                     placeholder="Password123@*"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
@@ -266,29 +267,88 @@
               <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Confirm Password
               </label>
-              <input formControlName="password" type="password" name="name" id="name"
-                     placeholder="Password123@*"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
         <button class="form_btn mt-4" (click)="sendUserInfo()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-               stroke="currentColor" stroke-width="2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
-          <span>Continew</span>
+          <span>Continue</span>
         </button>
       </form>
+
+      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="selectedUserType == 'Patient'">
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Full Name
+              </label>
+              <input formControlName="fullName" type="text" name="name" id="name" placeholder="Full Name"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Email
+              </label>
+              <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Password
+              </label>
+              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Confirm Password
+              </label>
+              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+          </div>
+        </div>
+        <button class="form_btn mt-4" (click)="sendUserInfo()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          <span>Continue</span>
+        </button>
+      </form>
+
+
+
+
     </div>
-
-
     <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-         [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
+      [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
       <!--<app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>-->
       <!--<app-degree-specilization-info-form></app-degree-specilization-info-form>-->
-      <h1 class="dashboard-heading-text text-3xl font-bold">Provide degrees info</h1>
+      <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i class="fa-solid fa-list mr-2"></i>
+        Provide degrees info</h1>
       <h2 *ngIf="degreeMendatoryMassage">{{degreeMendatoryMassage}}</h2>
       <div class=" w-full  bg-white mt-6">
         <form [formGroup]="formDegree">
@@ -300,11 +360,13 @@
                   Degree
                 </label>
                 <select formControlName="degreeId" name="degreeId" id="degreeId"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)=getDegreeName($event)>
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  (change)=getDegreeName($event)>
                   <!-- Default Select Option -->
-                  <option value="0" class="font-semibold text-slate-300">Select Degree</option>
+                  <option value="0" class="font-semibold text-gray-500">Select Degree</option>
                   <!-- Loop through titleList to create options -->
-                  <option *ngFor="let item of degreeList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.degreeName}}</option>
+                  <option *ngFor="let item of degreeList" value="{{ item.id }}" class="font-semibold text-gray-500">
+                    {{item.degreeName}}</option>
                 </select>
               </div>
             </div>
@@ -314,11 +376,12 @@
                   Duration
                 </label>
                 <select formControlName="duration" name="duration" id="duration"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                   <!-- Default Select Option -->
-                  <option value="0" class="font-semibold text-slate-300">Select Duration</option>
+                  <option value="0" class="font-semibold text-gray-500">Select Duration</option>
                   <!-- Loop through titleList to create options -->
-                  <option *ngFor="let item of durationList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.name}}</option>
+                  <option *ngFor="let item of durationList" value="{{ item.id }}" class="font-semibold text-gray-500">
+                    {{item.name}}</option>
                 </select>
               </div>
             </div>
@@ -327,8 +390,9 @@
                 <label for="passingYear" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Passing Year
                 </label>
-                <input formControlName="passingYear" type="number" name="passingYear" id="passingYear"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input formControlName="passingYear" placeholder="Passing Year" type="number" name="passingYear"
+                  id="passingYear"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
           </div>
@@ -339,8 +403,9 @@
                 <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Name
                 </label>
-                <input formControlName="instituteName" type="text" name="instituteName" id="instituteName" placeholder="Institute Name"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input formControlName="instituteName" type="text" name="instituteName" id="instituteName"
+                  placeholder="Institute Name"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
             <div class="w-full px-3 sm:w-1/3">
@@ -348,8 +413,9 @@
                 <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute City
                 </label>
-                <input formControlName="instituteCity" type="text" name="name" id="instituteCity" placeholder="Institute City"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input formControlName="instituteCity" type="text" name="name" id="instituteCity"
+                  placeholder="Institute City"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
             <div class="w-full px-3 sm:w-1/3">
@@ -357,20 +423,19 @@
                 <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Country
                 </label>
-                <input formControlName="instituteCountry" type="text" name="instituteCountry" id="instituteCountry" placeholder="Institute Country"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input formControlName="instituteCountry" type="text" name="instituteCountry" id="instituteCountry"
+                  placeholder="Institute Country"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
-              <div class="flex items-center justify-end w-full">
-                <button (click)="addDegree()" class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
-                  Add
-                </button>
-              </div>
+
             </div>
           </div>
-
+          <button (click)="addDegree()" class="btn-secondary">
+            <i class="fa-solid fa-plus mr-1"></i> Add Degree
+          </button>
         </form>
 
-        <div class="w-full mt-3">
+        <div *ngIf="doctorDegrees.length > 0" class="w-full mt-3">
           <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
             <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
@@ -396,7 +461,7 @@
                 <tbody>
 
                   <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      *ngFor="let item of doctorDegrees; index as i">
+                    *ngFor="let item of doctorDegrees; index as i">
                     <td class="w-4 p-4">
                       {{i+1}}
                     </td>
@@ -412,7 +477,7 @@
                     </td>
                     <td class="px-6 py-4">
                       <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                         (click)="remove(item.id)">Delete</a>
+                        (click)="remove(item.id)">Delete</a>
                     </td>
                   </tr>
 
@@ -424,143 +489,153 @@
 
         </div>
       </div>
-      <br />
-      <h1 class="dashboard-heading-text text-3xl font-bold">Provide your specialization info</h1>
-      <h2 *ngIf="spMendatoryMassage">{{spMendatoryMassage}}</h2>
-      <div class=" w-full  bg-white mt-6">
-        <form [formGroup]="formSpecialization">
-          <div class="-mx-3 flex flex-wrap">
-            <div class="w-full px-3 sm:w-1/4">
-              <div class="mb-5">
-                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                  Speciality
-                </label>
-                <input for="speciality" type="text" readonly value="{{specialityName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
+
+      <div class="mt-10">
+        <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i
+            class="fa-solid fa-list mr-2"></i>Provide specialization info</h1>
+        <h2 *ngIf="spMendatoryMassage">{{spMendatoryMassage}}</h2>
+        <div class=" w-full  bg-white mt-6">
+          <form [formGroup]="formSpecialization">
+            <div class="-mx-3 flex flex-wrap">
+              <div class="w-full px-3 sm:w-1/4">
+                <div class="mb-5">
+                  <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    Speciality
+                  </label>
+                  <input for="speciality" type="text" readonly value="{{specialityName}}"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                </div>
               </div>
-            </div>
-            <div class="w-full px-3 sm:w-1/4">
-              <div class="mb-5">
-                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                  Specialization
-                </label>
-                <select formControlName="specializationId" name="specializationId" id="specializationId"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" (change)=getSpName($event)>
-                  <!-- Default Select Option  (click)="addSpecialization()"-->
-                  <option value=0 class="font-semibold text-slate-300">Select Specialization</option>
-                  <!-- Loop through titleList to create options -->
-                  <option *ngFor="let item of specializationList" value="{{ item.id }}" class="font-semibold text-slate-300">{{item.specializationName}}</option>
-                </select>
+              <div class="w-full px-3 sm:w-1/4">
+                <div class="mb-5">
+                  <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    Specialization
+                  </label>
+                  <select formControlName="specializationId" name="specializationId" id="specializationId"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    (change)=getSpName($event)>
+                    <!-- Default Select Option  (click)="addSpecialization()"-->
+                    <option value="0" class="font-semibold text-gray-500">Select</option>
+                    <!-- Loop through titleList to create options -->
+                    <option *ngFor="let item of specializationList" value="{{ item.id }}"
+                      class="font-semibold text-gray-500">{{item.specializationName}}</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="w-full px-3 sm:w-1/4">
-              <div class="mb-5">
-                <input #spAttachments type="file" #fileInput3 style="display: none"
-                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
-                <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="fileInput3.click()">Browse Files</button>
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>File Name</th>
-                        <th>Remove</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let spFileName of spFileNames; let i=index">
-                        <td>
-                          {{ spFileName }}
-                        </td>
-                        <td>
-                          <a href="javascript:void(0)" (click)="removeSpSelectedFile(i)" style="background-color:rgb(196, 32, 32);">
-                            <i class="fa fa-remove" aria-hidden="true"></i>
-                          </a>
-                        </td>                       
-                      </tr>
-                    </tbody>
-                  </table>
+       
+              <div class="w-full px-3 sm:w-1/4">
+                <div class="mb-5">
+                  <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                    Document Name
+                  </label>
+                  <input for="name" formControlName="docFileName" name="docFileName" id="docFileName" readonly
+                    type="text" value="{{selectedSpFileName}}"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/4">
+                <div class="mb-5">
+                  <input #spAttachments type="file" #fileInput3 style="display: none"
+                    accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
+                  <button
+                    class=""
+                    (click)="fileInput3.click()">Browse Files</button>
+                  <div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>File Name</th>
+                          <th>Remove</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let spFileName of spFileNames; let i=index">
+                          <!-- <td>
+                            {{ spFileName }}
+                          </td> -->
+                          <td>
+                            <a href="javascript:void(0)" (click)="removeSpSelectedFile(i)"
+                              style="background-color:rgb(196, 32, 32);">
+                              <i class="fa fa-remove" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="w-full px-3 sm:w-1/4">
-              <div class="mb-5">
-                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                  Document Name
-                </label>
-                <input for="name" formControlName="docFileName" name="docFileName" id="docFileName" readonly type="text" value="{{selectedSpFileName}}" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                
-              </div>
-              <div class="flex items-center justify-end w-full">
-                <button (click)="addSpecialization()" class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
+            <button (click)="addSpecialization()"
+            class="btn-secondary">
+            <i class="fa-solid fa-plus mr-1"></i> Add Specialization
+          </button>
+          </form>
 
-        <div class="w-full mt-3">
-          <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
-            <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" class="px-6 py-3">
-                      Sl#
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Speciality
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Specialization
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Document Name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+          <div *ngIf="doctorSpecializations.length > 0" class="w-full mt-3">
+            <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
+              <div class="flex items-center justify-between bg-white dark:bg-gray-900">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">
+                        Sl#
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Speciality
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Specialization
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Document Name
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
                       *ngFor="let item of doctorSpecializations; index as i">
-                    <td class="w-4 p-4">
-                      {{i+1}}
-                    </td>
-                    <td class="px-6 py-4">
-                      {{item.specialityName}}
-                    </td>
-                    <td class="px-6 py-4">
-                      {{item.specializationName}}
-                    </td>
-                    <td class="px-6 py-4">
-                      {{item.documentName}}
-                    </td>
-                    <td class="px-6 py-4">
-                      <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                         (click)="removeSp(item.id)">Delete</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <td class="w-4 p-4">
+                        {{i+1}}
+                      </td>
+                      <td class="px-6 py-4">
+                        {{item.specialityName}}
+                      </td>
+                      <td class="px-6 py-4">
+                        {{item.specializationName}}
+                      </td>
+                      <td class="px-6 py-4">
+                        {{item.documentName}}
+                      </td>
+                      <td class="px-6 py-4">
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          (click)="removeSp(item.id)">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <br />
-      <div class="-mx-3 flex flex-wrap">
-        <div class="flex items-center justify-end w-full">
-          <button (click)="saveDegreeSpecialization()"
-                  class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none">
-            Continue
-          </button>
-        </div>
+
+      <div class="w-full mt-5">
+        <button (click)="saveDegreeSpecialization()"
+        class="btn-secondary bg-primary">
+        Continue
+      </button>
       </div>
     </div>
 
-    <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-         [style]="completeDocumentUpload==true ? '' : 'display:none'">
+    <div class="max-w-fit signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
+      [style]="completeDocumentUpload==true ? '' : 'display:none'">
       <h1 class="dashboard-heading-text text-3xl font-bold">Upload Documents</h1>
       <h2 *ngIf="degreeMendatoryMassage"></h2>
       <div class=" w-full  bg-white mt-6">
@@ -571,12 +646,13 @@
               <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Upload Profile Picture
               </label>
-              <div class="relative w-[300px]  h-[300px] bg-white transition">
+              <div class="relative w-fit bg-white transition">
                 <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
-                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input #attachments type="file" #fileInput1 style="display: none"
-                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
-                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
+                <div
+                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput1.click()"></i>
                 </div>
               </div>
@@ -584,14 +660,18 @@
                 <tbody>
                   <tr *ngFor="let fileName of fileNames; let i=index">
                     <td style="width:5%">
-                      <a href="javascript:void(0)" (click)="removeSelectedFile(i)" style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+                      <a href="javascript:void(0)" (click)="removeSelectedFile(i)"
+                        style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close"
+                          aria-hidden="true"></i></a>
                     </td>
                     <td style="width:2%">&nbsp;</td>
                     <td style="width:93%">
                       {{ fileName }}
                     </td>
                     <td>
-                      <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadPic()">Upload</button>
+                      <button
+                        class="btn-secondary"
+                        (click)="uploadPic()">Upload</button>
                     </td>
                   </tr>
                 </tbody>
@@ -604,12 +684,13 @@
               <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Upload Your NID/Passport
               </label>
-              <div class="relative w-[300px]  h-[300px] bg-white transition">
-                <img [src]="profNidUrl ? profNidUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
-                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+              <div class="relative w-fit bg-white transition">
+                <img [src]="profNidUrl ? profNidUrl : '/assets/nid.jpg'" alt=""
+                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input #idAttachments type="file" #fileInput2 style="display: none"
-                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
-                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
+                <div
+                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput2.click()"></i>
                 </div>
               </div>
@@ -617,7 +698,8 @@
                 <tbody>
                   <tr *ngFor="let idFileName of idFileNames; let i=index">
                     <td style="width:5%">
-                      <a href="javascript:void(0)" (click)="removeIdSelectedFile(i)" style="background-color:rgb(196, 32, 32);">
+                      <a href="javascript:void(0)" (click)="removeIdSelectedFile(i)"
+                        style="background-color:rgb(196, 32, 32);">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                       </a>
                     </td>
@@ -626,7 +708,9 @@
                       {{ idFileName }}
                     </td>
                     <td>
-                      <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadNID()">Upload</button>
+                      <button
+                        class="btn-secondary"
+                        (click)="uploadNID()">Upload</button>
                     </td>
                   </tr>
                 </tbody>
@@ -678,7 +762,9 @@
           <div class="w-full px-3 sm:w-1/1">
             <div class="mb-5">
               <div class="mt-5">
-                <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="finalContinue()">Continue</button>
+                <button
+                  class="btn-secondary bg-primary/90"
+                  (click)="finalContinue()">Continue</button>
               </div>
             </div>
           </div>

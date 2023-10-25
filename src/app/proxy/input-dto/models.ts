@@ -2,6 +2,8 @@ import type { FullAuditedEntityDto } from '@abp/ng.core';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
+import type { AppointmentType } from '../enums/appointment-type.enum';
 
 export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
   fullName?: string;
@@ -41,6 +43,7 @@ export interface DoctorDegreeInputDto extends FullAuditedEntityDto<number> {
 }
 
 export interface DoctorProfileInputDto extends FullAuditedEntityDto<number> {
+  doctorCode?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;
@@ -78,4 +81,99 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
 
 export interface FileDeleteInputDto {
   filePath?: string;
+}
+
+export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  isSelf?: boolean;
+  patientName?: string;
+  patientCode?: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: Gender;
+  bloodGroup?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  mobileNo?: string;
+  patientMobileNo?: string;
+  email?: string;
+  patientEmail?: string;
+  createdBy?: string;
+  cratorCode?: string;
+  creatorEntityId?: number;
+  userId?: string;
+}
+
+export interface PrescriptionDrugDetailsInputDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  drugRxId?: number;
+  drugName?: string;
+  drugDoseSchedule?: string;
+  isDrugExceptional?: boolean;
+  drugDoseScheduleDays?: string;
+  duration?: string;
+  instruction?: string;
+}
+
+export interface PrescriptionFindingsObservationsInputDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  observation?: string;
+  comments?: string;
+}
+
+export interface PrescriptionMainComplaintInputDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  symptom?: string;
+  duration?: string;
+  condition?: string;
+  problems?: string;
+  physicianRecommendedAction?: string;
+}
+
+export interface PrescriptionMasterInputDto extends FullAuditedEntityDto<number> {
+  refferenceCode?: string;
+  appointmentId?: number;
+  appointmentSerial?: string;
+  appointmentCode?: string;
+  doctorProfileId?: number;
+  doctorName?: string;
+  doctorCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  patientAdditionalInfo?: string;
+  consultancyType?: ConsultancyType;
+  appointmentType?: AppointmentType;
+  appointmentDate?: string;
+  prescriptionDate?: string;
+  patientLifeStyle?: string;
+  reportShowDate?: string;
+  followupDate?: string;
+  advice?: string;
+  prescriptionPatientDiseaseHistory: PrescriptionPatientDiseaseHistoryInputDto[];
+  prescriptionMainComplaints: PrescriptionMainComplaintInputDto[];
+  prescriptionFindingsObservations: PrescriptionFindingsObservationsInputDto[];
+  prescriptionMedicalCheckups: PrescriptionMedicalCheckupsInputDto[];
+  prescriptionDrugDetails: PrescriptionDrugDetailsInputDto[];
+}
+
+export interface PrescriptionMedicalCheckupsInputDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  testName?: string;
+  comments?: string;
+}
+
+export interface PrescriptionPatientDiseaseHistoryInputDto extends FullAuditedEntityDto<number> {
+  prescriptionMasterId?: number;
+  patientProfileId?: number;
+  commonDiseaseId?: number;
+  diseaseName?: string;
+}
+
+export interface SslCommerzInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
 }

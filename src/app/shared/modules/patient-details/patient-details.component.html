@@ -4,7 +4,7 @@
             <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
         </div>
         <div class="font-Roboto">
-            <h1 class="text-[24px] font-medium text-primary">Mr. Anisul Islam </h1>
+            <h1 class="text-[24px] font-medium text-primary">{{patientProfileInfo?.patientName }} </h1>
             <div class="flex gap-16 font-Roboto">
                 <div>
                     <p class="text-gray-600 my-2 text-[15px"><b>ID: </b>SG25621 </p>
@@ -15,7 +15,7 @@
                     <p class="text-gray-600 my-2 text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p>
                 </div>
                 <div>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> +880 12345698</p>
+                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> {{patientProfileInfo.mobileNo}}</p>
                     <p class="text-gray-600 my-2 text-[15px"><b>Email : </b> example@mail.com</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <app-patient-medical-records></app-patient-medical-records>
                 </mat-tab>
                 <mat-tab label="Prescriptions">
-                    <app-patient-prescriptions></app-patient-prescriptions>
+                    <app-patient-prescriptions [prescriptionListDetails]="prescriptionListDetails"></app-patient-prescriptions>
                 </mat-tab>
                 <mat-tab label="Billing History">
                     <app-patient-billing-history></app-patient-billing-history>

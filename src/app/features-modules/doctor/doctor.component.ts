@@ -1,8 +1,7 @@
-import { UserinfoStateService } from './../../shared/services/userinfo-state.service';
-import { DoctorProfileService } from './../../proxy/services/doctor-profile.service';
-import { LoaderService } from './../../shared/services/loader.service';
-import { Component } from '@angular/core';
+
+import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-doctor',
@@ -10,6 +9,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./doctor.component.scss'],
 })
 export class DoctorComponent {
+
   menuList: any = [
     {
       menuName: 'Dashboard',
@@ -43,16 +43,28 @@ export class DoctorComponent {
     },
   ];
 
+
   constructor(
     private NormalAuth: AuthService,
-    private LoaderService: LoaderService,
-    private DoctorProfileService: DoctorProfileService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+
   ) {}
   ngOnInit() {
+    window.scrollTo(0, 0);
     let user = this.NormalAuth.authInfo();
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
     }
+    
+    
   }
+
+
+
+
+
+
+
+
+
 }

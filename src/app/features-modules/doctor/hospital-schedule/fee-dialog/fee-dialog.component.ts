@@ -1,5 +1,5 @@
 import { DoctorFeeSetupService } from './../../../../proxy/services/doctor-fee-setup.service';
-import { HospitalStateService } from './../../../../shared/services/hospital-state.service';
+import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
