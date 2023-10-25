@@ -18,6 +18,42 @@ export class OtpService {
     { apiName: this.apiName,...config });
   
 
+  isAgentExistByMobile = (mobile: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/otp/is-agent-exist',
+      params: { mobile },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  isDoctorExistByMobile = (mobile: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/otp/is-doctor-exist',
+      params: { mobile },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  isExistByMobile = (mobile: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/otp/is-exist',
+      params: { mobile },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  isPatientExistByMobile = (mobile: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/otp/is-patient-exist',
+      params: { mobile },
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: OtpDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, OtpDto>({
       method: 'PUT',
