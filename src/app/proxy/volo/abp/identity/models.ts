@@ -1,7 +1,7 @@
 import type { Entity } from '../domain/entities/models';
 import type { CreationAuditedEntity, FullAuditedAggregateRoot } from '../domain/entities/auditing/models';
 
-export interface IdentityClaim extends Entity {
+export interface IdentityClaim extends Entity<string> {
   tenantId?: string;
   claimType?: string;
   claimValue?: string;
