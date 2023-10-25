@@ -1,3 +1,4 @@
+import { DashboardHeaderModule } from './../../shared/modules/dashboard-header/dashboard-header.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DoctorComponent } from './doctor.component';
@@ -8,7 +9,7 @@ const routes: Route[] = [
   {
     path: '',
     component: DoctorComponent,
-    // canActivate: [isAuth],
+    canActivate: [isAuth],
     children: [
       {
         path: '',
@@ -57,14 +58,21 @@ const routes: Route[] = [
             (m) => m.ProfileSettingsModule
           ),
       },
+      {
+        path: 'build-prescription/:aptId',
+        loadChildren: () =>
+          import('./build-prescription/build-prescription.module').then(
+            (m) => m.BuildPrescriptionModule
+          ),
+      }
     ],
   },
 ];
 
 @NgModule({
   declarations: [
-    DoctorComponent,
+    DoctorComponent
   ],
-  imports: [CommonModule,DashboardMenuModule, RouterModule.forChild(routes)],
+  imports: [DashboardHeaderModule,CommonModule,DashboardMenuModule, RouterModule.forChild(routes)]
 })
 export class DoctorModule {}

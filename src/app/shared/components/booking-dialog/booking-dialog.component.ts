@@ -1,5 +1,5 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
-import { SlotsService } from './../../services/states/slots.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 
@@ -7,11 +7,14 @@ import { LoaderService } from './../../services/loader.service';
 import { PatientProfileService } from 'src/app/proxy/services';
 
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Inject,
   OnInit,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -30,13 +33,18 @@ import {
   switchMap,
 } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { InputComponent } from '../../modules/input/input.component';
+import { PatientProfileDto } from 'src/app/proxy/dto-models';
+import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
+import { DoctorBookingStateService } from '../../services/states/doctors-states/doctor-booking-state.service';
+import { SubSink } from 'SubSink';
 
 @Component({
   selector: 'app-booking-dialog',
   templateUrl: './booking-dialog.component.html',
   styleUrls: ['./booking-dialog.component.scss'],
 })
-export class BookingDialogComponent implements OnInit {
+export class BookingDialogComponent implements OnInit, AfterViewInit {
   bookingForm!: FormGroup;
   form!: FormGroup;
   createPatientForm!: FormGroup;
@@ -44,6 +52,9 @@ export class BookingDialogComponent implements OnInit {
   inputForCreatePatient: any;
   secondFormGroup!: FormGroup;
   firstFormGroup!: FormGroup;
+  thirdFormGroup!: FormGroup;
+  fourFormGroup!: FormGroup;
+  fiveFormGroup!: FormGroup;
   activeTab!: any;
   isBookMyselfClick: boolean = false;
 
@@ -63,6 +74,17 @@ export class BookingDialogComponent implements OnInit {
   totalFee: any;
   filterDoctorId: any;
   showAppointmentTypeSelectBox: boolean = true;
+  stepHeading: string = '';
+  selectedSlotInfo: any;
+  selectedFeesInfo: any;
+  @ViewChildren(InputComponent) customInputs!: QueryList<InputComponent>;
+  dataLoader!: boolean;
+
+  hasValidCode = false;
+  createNewPatientInfo: PatientProfileDto = {};
+  alreadyExistPatient: PatientProfileDto = {};
+
+  subs = new SubSink();
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -71,22 +93,50 @@ export class BookingDialogComponent implements OnInit {
     private TosterService: TosterService,
     private DoctorScheduleService: DoctorScheduleService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
-    private SlotsService: SlotsService,
+    private DoctorScheduleStateService: DoctorScheduleStateService,
     private AppointmentService: AppointmentService,
+    private AuthService: AuthService,
+    private DoctorBookingStateService: DoctorBookingStateService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
+    this.firstFormGroup = this.fb.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.secondFormGroup = this.fb.group({
+      secondCtrl: ['', Validators.required],
+    });
+  }
+  ngAfterViewInit() {
+    // const filterCriteria = ['appointmentDate', 'doctorScheduleType', 'appointmentType'];
+    // this.customInputs.forEach((customInput: InputComponent) => {
+    //   if (filterCriteria.includes(customInput.inputId)) {
+    //     // Check if the input value is empty and set an error message and the error state
+    //     const formControl = this.form.get(customInput.formControlName);
+    //     if (formControl && formControl.value === '') {
+    //     }
+    //   }
+    // });
   }
 
   ngOnInit() {
+    this.dataLoader = true;
+    this.DoctorScheduleStateService.getSelectedSlot()
+      .pipe()
+      .subscribe((slot: any) => {
+        this.selectedSlotInfo = slot;
+      });
+
     let schedule = this.doctorData.doctorScheduleInfo;
     if (schedule) {
       let list = this.doctorData.doctorScheduleInfo.map((e: any) => {
         return { name: e.scheduleName, id: e.scheduleName };
       });
       this.inputConfigs = bookingFilterInputData(list);
+      this.dataLoader = false;
     } else {
       this.inputConfigs = bookingFilterInputData([]);
+      this.dataLoader = false;
     }
 
     this.UserinfoStateService.getData()
@@ -155,14 +205,19 @@ export class BookingDialogComponent implements OnInit {
           if (scheduleMap.has(keyToSearch)) {
             const items = scheduleMap.get(keyToSearch);
             items.forEach((item: any) => {
-              const availableSessions = this.isDayAvailable(item.doctorScheduleDaySession,day);
+              const availableSessions = this.isDayAvailable(
+                item.doctorScheduleDaySession,
+                day
+              );
               if (availableSessions.length > 0) {
-                finalFilter =  availableSessions.map((session:any) => {
-                  let left =  this.getLeftSlotForBooking(item)[session.id]
+                finalFilter = availableSessions.map((session: any) => {
+                  let left = this.getLeftSlotForBooking(item, data[0])[
+                    session.id
+                  ];
                   return {
                     ...session,
-                    leftPatient : left
-                  }
+                    leftPatient: left,
+                  };
                 });
                 isMatchFound = true;
                 return;
@@ -175,7 +230,9 @@ export class BookingDialogComponent implements OnInit {
           this.TosterService.customToast('No schedule found!', 'warning');
         }
         this.filterData = finalFilter;
-        this.SlotsService.sendSlotData(finalFilter);
+        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+          finalFilter
+        );
       });
 
     selectedItem2$
@@ -190,6 +247,7 @@ export class BookingDialogComponent implements OnInit {
               f.appointmentType == data[1] ? f.totalFee : ''
             );
             this.totalFee = fees?.totalFee;
+            this.selectedFeesInfo = fees;
           });
         } else {
           console.log(
@@ -199,27 +257,65 @@ export class BookingDialogComponent implements OnInit {
       });
   }
 
-  getLeftSlotForBooking(item: any):any {
-    // Create a dictionary to store the booked appointments count per session
+  // getLeftSlotForBooking(item: any): any {
+  //   // Create a dictionary to store the booked appointments count per session
+  //   const bookedAppointments: any = {};
+  //   // Loop through the appointment objects to count booked appointments per session
+  //   item?.appointments.forEach((appointment: any) => {
+  //     const sessionId = appointment.doctorScheduleDaySessionId;
+  //     if (bookedAppointments[sessionId] === undefined) {
+  //       bookedAppointments[sessionId] = 1;
+  //     } else {
+  //       bookedAppointments[sessionId]++;
+  //     }
+  //   });
+
+  //   // Calculate the left number of patients for each session
+  //   const leftNoOfPatients: any = {};
+
+  //   item?.doctorScheduleDaySession.forEach((session: any) => {
+  //     const sessionId = session.id;
+  //     const bookedCount = bookedAppointments[sessionId] || 0;
+  //     leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
+  //   });
+  //   return leftNoOfPatients;
+  // }
+
+  getLeftSlotForBooking(item: any, selectedDate: string) {
+    // Create a dictionary to store the booked appointments count per session and date
     const bookedAppointments: any = {};
-    // Loop through the appointment objects to count booked appointments per session
-    item?.appointments.forEach((appointment: any) => {
+
+    // Loop through the appointment objects to count booked appointments per session and date
+    item.appointments.forEach((appointment: any) => {
       const sessionId = appointment.doctorScheduleDaySessionId;
-      if (bookedAppointments[sessionId] === undefined) {
-        bookedAppointments[sessionId] = 1;
+      const appointmentDate = appointment.appointmentDate.split('T')[0]; // Extract the date portion
+
+      if (!bookedAppointments[sessionId]) {
+        bookedAppointments[sessionId] = {};
+      }
+
+      if (!bookedAppointments[sessionId][appointmentDate]) {
+        bookedAppointments[sessionId][appointmentDate] = 1;
       } else {
-        bookedAppointments[sessionId]++;
+        bookedAppointments[sessionId][appointmentDate]++;
       }
     });
 
-    // Calculate the left number of patients for each session
+    // Calculate the left number of patients for each session and date
     const leftNoOfPatients: any = {};
 
-    item?.doctorScheduleDaySession.forEach((session: any) => {
+    item.doctorScheduleDaySession.forEach((session: any) => {
       const sessionId = session.id;
-      const bookedCount = bookedAppointments[sessionId] || 0;
+      const sessionDate = selectedDate.split('T')[0]; // Extract the date portion
+      const bookedCount =
+        (bookedAppointments[sessionId] &&
+          bookedAppointments[sessionId][sessionDate]) ||
+        0;
+
       leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
     });
+
+    // Return the available slots for the selected date
     return leftNoOfPatients;
   }
 
@@ -232,14 +328,14 @@ export class BookingDialogComponent implements OnInit {
   loadForm() {
     //future update
     this.bookingForm = this.fb.group({
-      bookMyself: [false],
-      bookOther: [false],
+      bookMyself: [''],
+      bookOther: [''],
       patientName: [''],
       age: [''],
       mobile: [''],
     });
     this.form = this.fb.group({
-      consultancyType: ['', Validators.required],
+      consultancyType: [''],
       doctorScheduleType: ['', Validators.required],
       appointmentDate: ['', Validators.required],
       appointmentType: ['', Validators.required],
@@ -247,11 +343,15 @@ export class BookingDialogComponent implements OnInit {
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
       patientName: ['', Validators.required],
+      patientProfileId: [''],
       age: [, Validators.required],
       gender: [, Validators.required],
       bloodGroup: ['', Validators.required],
       patientMobileNo: ['', Validators.required],
-      patientEmail: ['' || this.profileInfo?.email, Validators.required],
+      patientEmail: [
+        '' || this.profileInfo?.email || 'admin@gmail.com',
+        Validators.required,
+      ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
     });
@@ -259,8 +359,124 @@ export class BookingDialogComponent implements OnInit {
 
   // change step
   onStepChange(e: any) {
-    this.activeTab = e;
+
+    console.log(this.createPatientForm.value);
+
+    if (e >= 0 && e < 3) {
+      this.activeTab = e;
+    }
+
+    console.log(this.alreadyExistPatient);
+    if (e === 3 && this.form.valid) {
+
+
+      this.stepHeading = 'Confirm';
+      const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
+      const finalSchedule = this.doctorData.doctorScheduleInfo.find(
+        (res: any) => res.id === doctorScheduleId
+      );
+
+      const {
+        consultancyType,
+        doctorChamberId,
+        doctorProfileId,
+        scheduleType,
+      } = finalSchedule;
+
+      const { appointmentType, appointmentDate } = this.form.value;
+
+      let user: any = '';
+      this.UserinfoStateService.getData().subscribe(
+        (userInfo) => (user = userInfo)
+      );
+
+      const infoForBooking = {
+        doctorScheduleId,
+        doctorProfileId,
+        doctorName: this.doctorData?.doctorDetails.fullName,
+        doctorCode: this.doctorData?.doctorDetails.doctorCode,
+        patientProfileId: this.alreadyExistPatient?.id
+          ? this.alreadyExistPatient?.id
+          : this.createNewPatientInfo.id
+            ? this.createNewPatientInfo?.id : user?.id,
+        patientName: this.alreadyExistPatient?.patientName
+          ? this.alreadyExistPatient?.patientName
+          : this.createNewPatientInfo?.patientName
+            ? this.createNewPatientInfo?.patientName
+            : user?.fullName,
+        patientCode: this.alreadyExistPatient?.patientCode
+          ? this.alreadyExistPatient?.patientCode
+          : this.createNewPatientInfo?.patientCode
+            ? this.createNewPatientInfo?.patientCode
+            : user?.patientCode,
+        patientMobileNo: this.alreadyExistPatient?.patientMobileNo
+          ? this.alreadyExistPatient?.patientMobileNo
+          : this.createNewPatientInfo?.patientMobileNo
+            ? this.createNewPatientInfo?.patientMobileNo
+            : user?.mobileNo,
+        patientEmail: this.alreadyExistPatient?.patientEmail
+          ? this.alreadyExistPatient?.patientEmail
+          : this.createNewPatientInfo?.patientEmail
+            ? this.createNewPatientInfo?.patientEmail
+            : user.email || 'admin@gmail.com',
+        consultancyType,
+        doctorChamberId,
+        scheduleType,
+        doctorScheduleDaySessionId: id,
+        scheduleDayofWeek,
+        appointmentType,
+        appointmentDate,
+        appointmentTime: '',
+        doctorFeesSetupId: this.selectedFeesInfo.id,
+        doctorFee: this.selectedFeesInfo.totalFee,
+        agentFee: 0,
+        platformFee: 0,
+        totalAppointmentFee: this.selectedFeesInfo.totalFee,
+        appointmentStatus: 1,
+        appointmentPaymentStatus: 2,
+        appointmentCreatorId: user?.id
+      };
+
+      if (infoForBooking && user) {
+        if (this.bookingForm.get('bookMyself')?.value == 'bookMyself') {
+          const obj = {
+            id: user?.id,
+            patientName: user.fullName,
+            patientCode: user.patientCode,
+            patientEmail: user.email ? user.email : 'admin@gmail.com',
+            patientMobileNo: user.mobileNo,
+          };
+
+          this.PatientProfileService.update(obj).subscribe((res) => {
+            this.createAppointment(infoForBooking, e);
+          });
+        }
+
+        if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
+          this.createAppointment(infoForBooking, e);
+        }
+        return;
+      }
+    } else if (e === 3 && !this.form.valid) {
+      this.TosterService.customToast(
+        'Please select all the required fields',
+        'warning'
+      );
+    } else {
+      return;
+    }
   }
+
+  createAppointment(infoForBooking: any, e: any) {
+    this.AppointmentService.create(infoForBooking).subscribe((res) => {
+      this.DoctorBookingStateService.sendBookingData({
+        ...infoForBooking,
+        appointmentCode: res.appointmentCode,
+      });
+      this.activeTab = e;
+    });
+  }
+
   //user existing check
   userExistCheck(status: string): void {
     this.createPatientForm
@@ -296,12 +512,14 @@ export class BookingDialogComponent implements OnInit {
         this.PatientProfileService.create(
           this.createPatientForm.value
         ).subscribe((res) => {
+          if (res.patientCode && res.patientMobileNo) {
+            this.PatientProfileService.getByPhoneAndCode(res.patientCode, res.patientMobileNo).subscribe(p => {
+              this.createNewPatientInfo = p;
+            });
+          }
           this.btnLoader = false;
           this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
+          this.UserinfoStateService.getUserPatientInfo(this.profileInfo.id, 'patient');
           this.onStepChange(1);
         });
       } catch (error) {
@@ -315,16 +533,33 @@ export class BookingDialogComponent implements OnInit {
     }
   }
   getSinglePatientData(e: any) {
+
     if (e.target.value) {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
         res.find((data: any) => {
           if (data.id == e.target.value) {
-            this.createPatientForm.patchValue(data);
+            this.alreadyExistPatient = data
+            this.createPatientForm.patchValue({
+              patientProfileId: data.id,
+              age: data.age,
+              gender: data.gender,
+              bloodGroup: data.bloodGroup,
+              patientMobileNo: data.patientMobileNo,
+              patientEmail: data.patientEmail,
+              patientName: data.patientName,
+              createdBy: data.createdBy,
+              creatorEntityId: data.creatorEntityId,
+            });
+
+            //  this.createPatientForm.patchValue(data);
+
           }
           return;
         })
       );
     }
   }
-  closeDialogs() {}
+  closeDialogs() { }
 }
+
+

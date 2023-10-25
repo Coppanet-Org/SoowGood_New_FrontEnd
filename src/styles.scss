@@ -35,7 +35,7 @@
     @apply w-[220px];
   }
   .btn-primary {
-    @apply h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
+    @apply active:scale-90 transition-all duration-75 h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
   }
 
   .form-left {
@@ -46,13 +46,13 @@
   }
   .form_btn {
  
-    @apply w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
+    @apply active:scale-90 transition-all duration-75 w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
+    @apply active:scale-90 transition-all duration-75 hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
   }
   .btn-secondary-light {
-    @apply bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
+    @apply active:scale-90 transition-all duration-75 bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
   }
   .signup-form {
     @apply flex items-center w-full h-screen bg-slate-100;
@@ -74,7 +74,7 @@
     @apply w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-secondary focus:shadow-md;
   }
   .dashbord-heading-text{
-    @apply text-primary font-semibold text-[18px] font-Roboto
+    @apply text-primary/90 font-semibold text-[18px] font-Roboto
   }
   .dashbord-heading-subtext{
     @apply text-gray-500 font-light text-[14px] font-poppins
@@ -101,9 +101,57 @@
   }
   .label{
     @apply  block font-medium text-[14px] text-[#07074D]
-   
+  }
+
+
+  .btn-secondary-anim{
+    @apply active:scale-90 transition-all duration-75 btn-secondary-light cursor-pointer transition-all duration-[0.5s]
+  }
+
+  //prescription
+  .p-head-bottom {
+    @apply flex justify-between text-[14px] border-t-[1px] border-b-[1px] py-3 mt-5 font-Roboto text-primary/90
+  }
+  .p-head-top {
+  
   }
 }
 
-
-
+.btn-three {
+  color: #006c93;
+  transition: all 0.5s;
+  position: relative;
+  background: #eefaff
+}
+.btn-three::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.264);
+  transition: all 0.3s;
+}
+.btn-three:hover::before {
+  opacity: 0 ;
+  transform: scale(0.5,0.5);
+}
+.btn-three::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border: 1px solid rgba(255,255,255,0.5);
+  transform: scale(1.2,1.2);
+}
+.btn-three:hover::after {
+  opacity: 1;
+  transform: scale(1,1);
+}

@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 
@@ -45,12 +46,14 @@ export class PatientComponent implements OnInit {
 
   constructor(
     private NormalAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private DoctorStateService:  DoctorStateService
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
+      this.DoctorStateService.getAllDoctorList()
     }
   }
 }

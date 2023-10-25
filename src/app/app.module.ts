@@ -18,6 +18,9 @@ import { MaterialModulesModule } from './shared/modules/material-modules/materia
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
+import { LoadingDirective } from './shared/directive/loading.directive';
+import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -31,6 +34,10 @@ const routerConfig: ExtraOptions = {
     SignupComponent,
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
+    PaymentSuccessComponent,
+    LoadingDirective,
+    OtpInputComponent,
+    
 
   ],
   imports: [

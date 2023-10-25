@@ -47,11 +47,11 @@ export class TosterService {
     // For example, use white text on dark backgrounds and black text on light backgrounds.
     switch (type) {
       case 'success': 
-      return 'rgb(4 26 0)'
+      return '#f1f1f1'
       case 'warning':
-        return 'rgb(53 37 0)'; // Use black text for success and warning
+        return '#7a5600'; // Use black text for success and warning
       case 'error':
-        return 'rgb(53 0 0)'; // Use white text for error
+        return '#f1f1f1'; // Use white text for error
       default:
         return '#333'; // Default to black
     }

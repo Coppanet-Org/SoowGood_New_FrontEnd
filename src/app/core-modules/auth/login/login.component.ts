@@ -15,9 +15,7 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { PermissionService } from '@abp/ng.core';
-import { ToasterService } from '@abp/ng.theme.shared';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router,
     private ToasterService: TosterService,
     private NormalAuth: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -56,21 +54,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
         Validators.compose([
           Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
         ]),
       ],
       password: [
         this.defaultAuth.password,
         Validators.compose([
           Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(100),
         ]),
       ],
     });
@@ -92,94 +87,119 @@ export class LoginComponent implements OnInit, OnDestroy {
         'Please filled all required field',
         'warning'
       );
+      this.isLoading = false;
       return;
-    }
-    let userType = '';
-    this.errorMessage = '';
-    this.hasError = false;
-    const username = this.formControl['mobileNo'].value;
-    const password = this.formControl['password'].value;
-    this.loginDto.userName = username;
-    this.loginDto.email = '';
-    this.loginDto.password = password;
-    this.loginDto.rememberMe = false;
-    let loginResponseData: LoginResponseDto;
+    } else {
+      if (this.loginForm.invalid) {
+        this.isLoading = false;
+        return
+      }
+      this.isLoading = true;
+      let userType = '';
+      this.errorMessage = '';
+      this.hasError = false;
+      const username = this.formControl['mobileNo'].value;
+      const password = this.formControl['password'].value;
+      this.loginDto.userName = username;
+      this.loginDto.email = '';
+      this.loginDto.password = password;
+      this.loginDto.rememberMe = false;
+      let loginResponseData: LoginResponseDto;
 
-    try {
-      this.authService
-        .loginByUserDto(this.loginDto).subscribe((loginResponse: LoginResponseDto) => {
+      
+      try {
+        this.authService
+          .loginByUserDto(this.loginDto)
+          .subscribe((loginResponse: LoginResponseDto) => {console.log(loginResponse);
           
-          
-          if (loginResponse.roleName[0] == "Doctor") {
-            if (loginResponse.success) {
-              this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
-                .subscribe((doctorDto: DoctorProfileDto) => {
-                  let saveLocalStorage = {
-                    identityNumber: doctorDto.identityNumber,
-                    doctorName: doctorDto.fullName,
-                    bmdcRegNo: doctorDto.bmdcRegNo,
-                    isActive: doctorDto.isActive,
-                    userId: doctorDto.userId,
-                    id: doctorDto.id,
-                    specialityId: doctorDto.specialityId,
-                    profileStep: doctorDto.profileStep,
-                    createFrom: doctorDto.createFrom,
-                    userType: loginResponse.roleName.toString().toLowerCase()
-                  }
-                  this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
-                  if (doctorDto.profileStep == 1 || doctorDto.profileStep == 2) {
-                    userType = '/signup';
-                  }
-                  else {
-                    userType = (doctorDto.isActive ? (loginResponse.roleName.toString() + '/dashboard') : (loginResponse.roleName.toString() + '/profile-settings/basic-info'));
-                  }
-                  this._router.navigate([userType.toLowerCase()], {
-                    state: { data: doctorDto } // Pass the 'res' object as 'data' in the state object
-                  }).then(r => {
-                    this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
-                  });
-                });
-            }
-            else {
-              this.hasError = true;
-              this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'error');
-            }
-          }
-
-         if (loginResponse.roleName[0] == "Patient") {
-  
-          
-          if (loginResponse.success) {
-            this.subs.sink = this.PatientProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
-              .subscribe((patientDto: PatientProfileDto) => {
-                console.log(patientDto);
-                let saveLocalStorage = {
-                  userId: patientDto.userId,
-                  id: patientDto.id,
-                  userType: loginResponse.roleName.toString().toLowerCase()
+               if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
+                    this.isLoading = false;
+                    this.subs.sink = this.doctorProfileService
+                      .getByUserName(
+                        loginResponse.userName ? loginResponse.userName : ''
+                      )
+                      .subscribe((doctorDto: DoctorProfileDto) => {
+                        let saveLocalStorage = {
+                          identityNumber: doctorDto.identityNumber,
+                          doctorName: doctorDto.fullName,
+                          bmdcRegNo: doctorDto.bmdcRegNo,
+                          isActive: doctorDto.isActive,
+                          userId: doctorDto.userId,
+                          id: doctorDto.id,
+                          specialityId: doctorDto.specialityId,
+                          profileStep: doctorDto.profileStep,
+                          createFrom: doctorDto.createFrom,
+                          userType: loginResponse.roleName.toString().toLowerCase(),
+                        };
+                        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                        if (
+                          doctorDto.profileStep == 1 ||
+                          doctorDto.profileStep == 2
+                        ) {
+                          userType = '/signup';
+                        } else {
+                          userType = doctorDto.isActive
+                            ? loginResponse.roleName.toString() + '/dashboard'
+                            : loginResponse.roleName.toString() +
+                              '/profile-settings/basic-info';
+                        }
+                        this._router
+                          .navigate([userType.toLowerCase()], {
+                            state: { data: doctorDto }, // Pass the 'res' object as 'data' in the state object
+                          })
+                          .then((r) => {
+                            this.ToasterService.customToast(
+                              loginResponse.message ? loginResponse.message : ' ',
+                              'success'
+                            );
+                          });
+                      });
+            
                 }
-                this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
-                let userType = (loginResponse.roleName.toString() +'/dashboard')
-                
-                this._router.navigate([userType.toLowerCase()], {
-                  state: { data: patientDto } // Pass the 'res' object as 'data' in the state object
-                }).then(r => {
-                  this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
-                });
-              });
-          }
-          else {
-            this.hasError = true;
-            this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'error');
-          }
-         }
+                  
+             else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
+                    this.isLoading = false;
+                    this.subs.sink = this.PatientProfileService.getByUserName(
+                      loginResponse.userName ? loginResponse.userName : ''
+                    ).subscribe((patientDto: PatientProfileDto) => {
+                      let saveLocalStorage = {
+                        userId: patientDto.userId,
+                        id: patientDto.id,
+                        userType: loginResponse.roleName.toString().toLowerCase(),
+                      };
+                      this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                      let userType =
+                        loginResponse.roleName.toString() + '/dashboard';
+
+                      this._router
+                        .navigate([userType.toLowerCase()], {
+                          state: { data: patientDto }, // Pass the 'res' object as 'data' in the state object
+                        })
+                        .then((r) => {
+                          this.ToasterService.customToast(
+                            loginResponse.message ? loginResponse.message : ' ',
+                            'success'
+                          );
+                        });
+                    });
+                }
+              
+              else {
+                this.isLoading = false;
+                this.ToasterService.customToast(
+                  loginResponse.message ? loginResponse.message : ' ',
+                  'error'
+                );
+              }
+        })
 
 
-        });
-    } catch (error: any) {
-      this.hasError = true;
-      if (error.message === "'tokenEndpoint' should not be null") {
-        this.errorMessage = 'Identity server is not running';
+
+      } catch (error: any) {
+        this.hasError = true;
+        if (error.message === "'tokenEndpoint' should not be null") {
+          this.errorMessage = 'Identity server is not running';
+        }
       }
     }
   }

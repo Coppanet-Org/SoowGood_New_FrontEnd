@@ -1,14 +1,36 @@
-import { inputConfigs } from './../../utils/input-info';
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { inputForCreatePatient } from './../../utils/input-info';
+import { Component, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-patient',
   templateUrl: './create-patient.component.html',
   styleUrls: ['./create-patient.component.scss']
 })
-export class CreatePatientComponent {
-form!: FormGroup
-inputConfigs:any
+export class CreatePatientComponent implements OnInit {
+createPatientForm!: FormGroup
+inputConfigs:any=inputForCreatePatient
 isLoading:boolean = false
+profileInfo:any
+constructor( private fb : FormBuilder){}
+ngOnInit(): void {
+  this.loadForm()
+}
+loadForm() {
+  this.createPatientForm = this.fb.group({
+    isSelf: [false, Validators.required],
+    patientName: ['', Validators.required],
+    age: ['', Validators.required],
+    gender: ['', Validators.required],
+    bloodGroup: ['', Validators.required],
+    patientMobileNo: ['', Validators.required],
+    patientEmail: [
+      '' || this.profileInfo?.email || 'admin@gmail.com',
+      Validators.required,
+    ],
+    createdBy: ["" || this.profileInfo.fullName, Validators.required],
+    creatorEntityId: ["" ||this.profileInfo.id, Validators.required],
+  });
+}
+
 }

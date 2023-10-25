@@ -1,6 +1,7 @@
 <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
-    <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking </h1>
-    <button class="btn-secondary-light" (click)="closeDialogs()">Close</button>
+    <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking {{stepHeading}}
+    </h1>
+    <button class="btn-secondary-light" (click)="this.dialogRef.close(false)">Close</button>
 </div>
 
 
@@ -10,19 +11,20 @@
 
 
     <mat-stepper #stepper class="mx-auto" [selectedIndex]="activeTab">
+    <!-- select booking option -->
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="bookingForm">
-                <ul class="grid w-full gap-6 md:grid-cols-2">
+                <ul class="grid grid-row-2 w-full gap-6">
                     <li (click)="onStepChange(1)">
-                        <input #buttonMyself type="radio" id="hosting-small" name="hosting" value="hosting-small"
+                        <input type="radio" formControlName="bookMyself" id="bookMyself"  value="bookMyself"
                             class="hidden peer" required>
-                        <label for="hosting-small"
+                        <label for="bookMyself"
                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                             <div class="flex items-center gap-3">
                                 <i class="fa-solid fa-person text-[44px]"></i>
                                 <div>
-                                    <div class="w-full text-lg font-semibold">Book for myself</div>
-                                    <div class="w-full">If you are patient</div>
+                                    <div class="w-full text-lg font-semibold">Book for Self</div>
+                                    <div class="w-full">If you are patient!</div>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -33,9 +35,9 @@
                         </label>
                     </li>
                     <li (click)="onStepChange(2)">
-                        <input #buttonOthers type="radio" id="hosting-big" name="hosting" value="hosting-big"
+                        <input type="radio" formControlName="bookOther" id="bookOther" value="bookOther"
                             class="hidden peer">
-                        <label for="hosting-big"
+                        <label for="bookOther"
                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg 
                             cursor-pointer dark:hover:text-gray-300 dark:border-gray-700
                              dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600
@@ -43,8 +45,8 @@
                             <div class="flex items-center gap-3">
                                 <i class="fa-solid fa-people-robbery text-[44px]"></i>
                                 <div>
-                                    <div class="w-full text-lg font-semibold">Book for other</div>
-                                    <div class="w-full">If you are not patient</div>
+                                    <div class="w-full text-lg font-semibold">Book for Other</div>
+                                    <div class="w-full">If you are not patient!</div>
                                 </div>
                             </div>
 
@@ -59,42 +61,36 @@
             </form>
         </mat-step>
 
-
-
+    <!-- select doctor schedule filter -->
         <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
-            <div>
+            <div *ngIf="!dataLoader; else loader">
                 <form [formGroup]="form">
-
                     <div class="flex justify-between">
-                       <div class="flex gap-4">
-                        <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
-                            <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
+                        <div class="flex gap-4">
+                            <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
+                                <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
+                            </div>
+                            <div>
+                                <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
+                                <p>General Medicine</p>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
-                            <p>General Medicine</p>
+                        <div class="py-0 px-3">
+                            <div class=" leading-0">
+                                <div class="stat-title">Total Fee</div>
+                                <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0 tk.
+                                </div>
+                            </div>
                         </div>
-                       </div>
-                       <div class="py-0 px-3">
-                        <div class=" leading-0">
-                          <div class="stat-title">Total Fee</div>
-                          <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0 tk.</div>
-                        </div>
-                      </div>
                     </div>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <div class="-mx-3 flex flex-wrap">
                         <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
-                            <app-input 
-                                [label]="config.label" 
-                                [inputId]="config.inputId"
-                                [isSelectInput]="config.isSelect" 
-                                [readonly]="config.readonly ? config.readonly : false"
-                                [options]="config.options" 
-                             
-                                [formControlName]="config.formControlName"
-                                [type]="config.type" 
-                                class="sm:w-1/2 h-fit"></app-input>
+                            <app-input [label]="config.label" [inputId]="config.inputId"
+                                [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
+                                [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form" 
+                                [type]="config.type" class="sm:w-1/2 h-fit">
+                            </app-input>
                         </ng-container>
                     </div>
                 </form>
@@ -112,9 +108,16 @@
                     <button class="btn-secondary py-2" (click)="onStepChange(3 )">Next</button>
                 </div>
             </div>
+
+
+            <ng-template #loader>
+                Data is loading...
+            </ng-template>
+
         </mat-step>
 
-        <mat-step>
+   <!-- create new patient or exist patient -->
+        <mat-step [stepControl]="thirdFormGroup">
             <div class="flex gap-4">
                 <div class="flex items-center px-4  border border-gray-200 rounded dark:border-gray-700">
                     <input (click)="userExistCheck('exist-user')" checked id="bordered-radio-2" type="radio" value=""
@@ -132,15 +135,14 @@
                         class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
                         Patient</label>
                 </div>
-
             </div>
 
 
             <div class="pt-5">
                 <div *ngIf="isExistUser">
                     <label for="" class="label">Select your patient</label>
-                    <ng-container >
-                        <select  class="form_input" [value]="value" (input)="getSinglePatientData($event)">
+                    <ng-container>
+                        <select class="form_input" [value]="value" (input)="getSinglePatientData($event)">
                             <option value="">--Select Patient--</option>
                             <option *ngFor="let item of userPatientList" [value]="item.id">{{ item.name }}</option>
                         </select>
@@ -181,8 +183,12 @@
                 </button>
             </div>
         </mat-step>
-        <mat-step>
-            Make Payment
+
+        <mat-step [stepControl]="fourFormGroup">
+          <app-booking-review></app-booking-review>
+        </mat-step>
+        <mat-step [stepControl]="fiveFormGroup">
+          <app-booking-payment></app-booking-payment>
         </mat-step>
     </mat-stepper>
 

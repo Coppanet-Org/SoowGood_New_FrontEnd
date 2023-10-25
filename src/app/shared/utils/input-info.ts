@@ -367,6 +367,7 @@ export const agentInputData =[
 
 
 export const bookingFilterInputData = (hospital: any) => {
+  
   return [
     {
       label: 'Appointment Date',

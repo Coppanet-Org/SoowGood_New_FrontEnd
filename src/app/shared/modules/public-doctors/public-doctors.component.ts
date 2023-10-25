@@ -1,3 +1,4 @@
+import { DoctorStateService } from './../../services/states/doctors-states/doctor-state.service';
 import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
@@ -14,16 +15,22 @@ export class PublicDoctorsComponent implements OnInit {
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private NormalAuth: AuthService,
-    private DoctorProfileService: DoctorProfileService
+    private DoctorStateService: DoctorStateService
   ) {}
 
   ngOnInit(): void {
     let id = this.NormalAuth.authInfo().id;
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-      this.DoctorProfileService.getList().subscribe(
-        (e) => (this.doctorList = e)
-      );
+      if (this.DoctorStateService.doctorsList.value.length <= 0) {
+        this.DoctorStateService.getAllDoctorList().subscribe(
+          (res) => {(this.doctorList = res) }
+        );
+      } else {
+        this.DoctorStateService.getDoctorListData().subscribe(
+          (res) => {(this.doctorList = res)}
+        );
+      }
     }
   }
 }

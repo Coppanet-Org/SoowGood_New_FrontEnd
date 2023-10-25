@@ -3,12 +3,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppointmentsComponent } from './appointments.component';
 import { Route, RouterModule } from '@angular/router';
-import { AppointmentCardModule } from 'src/app/shared/modules/appointment-card/appointment-card.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AllAppointmentsModule } from 'src/app/shared/modules/all-appointments/all-appointments.module';
+import { PrescriptionsComponent } from 'src/app/shared/modules/prescriptions/prescriptions.component';
 const routes: Route[] = [
   {
     path: '',
     component: AppointmentsComponent,
+  },
+  {
+    path: 'prescriptions/:id',
+    component: PrescriptionsComponent,
   }
 ]
 
@@ -17,7 +22,7 @@ const routes: Route[] = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    AppointmentCardModule,
+    AllAppointmentsModule,
     MatTabsModule
   ]
 })

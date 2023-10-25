@@ -1,5 +1,5 @@
 
-<div class="overflow-hidden doctor-dashboard_midcontent_container w-ful">
+<div class=" doctor-dashboard_midcontent_container w-ful">
     <div class="flex items-center justify-left">
       <div class="w-full h-screen bg-white">
   
@@ -13,7 +13,8 @@
 
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" >
                 <mat-tab label="Appointments">
-                    <app-appointment-card></app-appointment-card>
+                    <!-- <app-appointment-card [id]="patientId" [user]="'patient'"></app-appointment-card> -->
+                    <app-all-appointments [id]="patientId" [user]="'patient'"></app-all-appointments>
                 </mat-tab>
 
                 <mat-tab label="Medical History">

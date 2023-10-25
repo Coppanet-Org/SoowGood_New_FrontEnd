@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, ResponseDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto } from '../dto-models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class AppointmentService {
   
 
   create = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ResponseDto>({
+    this.restService.request<any, AppointmentDto>({
       method: 'POST',
       url: '/api/app/appointment',
       body: input,
@@ -35,6 +35,22 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getAppointmentListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-doctor-id/${doctorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-patient-id/${patientId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getLeftBookingCountBySessionIdAndScheduleId = (sessionId: number, scheduleId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
@@ -52,8 +68,16 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getPatientListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/patient-list-by-doctor-id/${doctorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ResponseDto>({
+    this.restService.request<any, AppointmentDto>({
       method: 'PUT',
       url: '/api/app/appointment',
       body: input,

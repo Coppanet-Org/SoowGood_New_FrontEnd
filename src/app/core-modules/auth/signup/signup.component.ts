@@ -1,4 +1,3 @@
-import { ToasterService } from '@abp/ng.theme.shared';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -140,23 +139,17 @@ export class SignupComponent implements OnInit {
     private userAccountService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
     private patientProfileService: PatientProfileService,
-    private toasterService: ToasterService,
     private _router: Router,
     private normalAuth: AuthService,
     private doctorSpeciality: SpecialityService,
-
     private degreeService: DegreeService,
-
     private tosterService: TosterService,
-    private doctorDegreeService: DoctorDegreeService,
     private specializationService: SpecializationService,
     private specialityService: SpecialityService,
-    private doctorSpecializationService: DoctorSpecializationService,
     private http: HttpClient,
     private cdRef: ChangeDetectorRef,
-
     private doctorProfilePicService: DocumentsAttachmentService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
@@ -549,6 +542,8 @@ export class SignupComponent implements OnInit {
           if (res.success) {
             this.isLoading = false;
             if (userType === 'Doctor') {
+              //let codeCnt = +(this.lastCount + 1);
+              //this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
               this.doctorProfileDto.doctorTitle = title;
               this.doctorProfileDto.userId = res.userId;
               this.doctorProfileDto.fullName = res.name;
@@ -595,16 +590,13 @@ export class SignupComponent implements OnInit {
                       if (this.normalAuth) {
                         this.loadAuth();
                       }
-                      this.toasterService.success(
-                        'Basic Inforamation Saved Successfully'
-                      ),
-                        { position: 'bottom-center' };
+                      this.tosterService.customToast('Basic Inforamation Saved Successfully', 'success');
                       this.cdRef.detectChanges();
                     });
                 });
             } else if (userType === 'Patient') {
               this.patientProfileService
-                .create({...this.userInfoForm.value, mobileNo:this.mobile, userId: res.userId})
+                .create({ ...this.userInfoForm.value, mobileNo: this.mobile, userId: res.userId })
                 .subscribe((patientDto: PatientProfileDto) => {
                   //this.newCreatedProfileDto = patientDto;
                   //this.completeDegreeSpecilizationInfoModal = true
@@ -626,15 +618,13 @@ export class SignupComponent implements OnInit {
                   if (this.normalAuth) {
                     this.loadAuth();
                   }
-                  this.toasterService.success('Successfully Registration'),
+                  this.tosterService.customToast('Successfully Registration', 'success'),
                     { position: 'bottom-center' };
                   this.cdRef.detectChanges();
                 });
             }
           } else {
-            res.message?.map((e: string) => this.toasterService.error(e), {
-              position: 'bottom-center',
-            });
+            res.message?.map((e: string) => this.tosterService.customToast(e, 'error'));
           }
         },
         (err) => {
@@ -686,10 +676,7 @@ export class SignupComponent implements OnInit {
             state: { data: res }, // Pass the 'res' object as 'data' in the state object
           })
           .then((r) => r);
-        this.toasterService.success('Registration Successful'),
-          {
-            position: 'bottom-center',
-          };
+        this.tosterService.customToast('Registration Successful', 'success');
       }
     });
   }
@@ -815,20 +802,20 @@ export class SignupComponent implements OnInit {
       this.doctorDegrees.length === 0 ||
       this.doctorSpecializations.length === 0
     ) {
-      this.toasterService.warn(
-        'You have to add your medical degees and specializations'
+      this.tosterService.customToast(
+        'You have to add your medical degees and specializations', 'warning'
       );
       return;
     } else if (this.doctorSpecializations.length > 3) {
-      this.toasterService.warn('You are exeeding Specialization Limit.');
+      this.tosterService.customToast('You are exeeding Specialization Limit.', 'warning');
       return;
     } else if (
       this.specialityId > 1 &&
       this.specialityId > 2 &&
       this.doctorDegrees.length == 1
     ) {
-      this.toasterService.warn(
-        'You have to add your degrees according to you speciality'
+      this.tosterService.customToast(
+        'You have to add your degrees according to you speciality', 'warning'
       );
       return;
     } else {
@@ -876,72 +863,71 @@ export class SignupComponent implements OnInit {
           this.forStepUpdateDto.degrees = this.doctorDegreeInputs;// .push(this.doctorDegrees);
           this.forStepUpdateDto.doctorSpecialization = this.doctorSpecializationInputs;
 
-            this.subs.sink = this.doctorProfileService
-              .update(this.forStepUpdateDto)
-              .subscribe((res: DoctorProfileDto) => {
-                if (res) {
-                  if (this.totalSpFileList.length > 0) {
-                    for (let item of this.totalSpFileList) {
-                      this.spFileData = new FormData();
-                      this.spFileData.append(
-                        'entityId',
-                        this.doctorId.toString()
-                      );
-                      this.spFileData.append('entityType', 'Doctor');
-                      this.spFileData.append(
-                        'attachmentType',
-                        'DoctorSpecialityDoc'
-                      );
-                      this.spFileData.append(
-                        'directoryName',
-                        'DoctorExperties\\' + this.doctorId.toString()
-                      );
-                      //for (let item of this.totalSpFileList) {
+          this.subs.sink = this.doctorProfileService
+            .update(this.forStepUpdateDto)
+            .subscribe((res: DoctorProfileDto) => {
+              if (res) {
+                if (this.totalSpFileList.length > 0) {
+                  for (let item of this.totalSpFileList) {
+                    this.spFileData = new FormData();
+                    this.spFileData.append(
+                      'entityId',
+                      this.doctorId.toString()
+                    );
+                    this.spFileData.append('entityType', 'Doctor');
+                    this.spFileData.append(
+                      'attachmentType',
+                      'DoctorSpecialityDoc'
+                    );
+                    this.spFileData.append(
+                      'directoryName',
+                      'DoctorExperties\\' + this.doctorId.toString()
+                    );
+                    //for (let item of this.totalSpFileList) {
 
-                      //if (this.totalSpFileList.length > 0) {
+                    //if (this.totalSpFileList.length > 0) {
 
-                  let fileToUpload = item;
-                  this.spFileData.append(item.name, fileToUpload);
-                  //}
-                  // save attachment
-                  this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
-                    (result: any) => {
-                      //this.form.reset();
-                      //this.spFileData = new FormData();
-                      //this.spFileNames = [];
-                      this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
-                      this.cdRef.detectChanges();
-                    },
-                    (err) => {
-                      console.log(err);
-                    })
+                    let fileToUpload = item;
+                    this.spFileData.append(item.name, fileToUpload);
+                    //}
+                    // save attachment
+                    this.http.post(`${this.apiUrl}/Common/Documents`, this.spFileData).subscribe(
+                      (result: any) => {
+                        //this.form.reset();
+                        //this.spFileData = new FormData();
+                        //this.spFileNames = [];
+                        this.tosterService.customToast('Documents for Specializations Uploaded Successfully', 'success');
+                        this.cdRef.detectChanges();
+                      },
+                      (err) => {
+                        console.log(err);
+                      })
 
+                  }
                 }
+                this.completeDegreeSpecilizationInfoModal = false;
+                this.completeDocumentUpload = true
+                let saveLocalStorage = {
+                  identityNumber: res.identityNumber,
+                  doctorName: res.fullName,
+                  bmdcRegNo: res.bmdcRegNo,
+                  isActive: res.isActive,
+                  userId: res.userId,
+                  id: res.id,
+                  specialityId: res.specialityId,
+                  profileStep: res.profileStep,
+                  createFrom: res.createFrom,
+                  specializations: res.doctorSpecialization,
+                  userTYpe: this.userType
+                }
+                this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
+                if (this.normalAuth) {
+                  this.loadAuth();
+                }
+                this.tosterService.customToast("Degree and Specializtion info updated Successfully", 'success');
+                this.cdRef.detectChanges();
               }
-              this.completeDegreeSpecilizationInfoModal = false;
-              this.completeDocumentUpload = true
-              let saveLocalStorage = {
-                identityNumber: res.identityNumber,
-                doctorName: res.fullName,
-                bmdcRegNo: res.bmdcRegNo,
-                isActive: res.isActive,
-                userId: res.userId,
-                id: res.id,
-                specialityId: res.specialityId,
-                profileStep: res.profileStep,
-                createFrom: res.createFrom,
-                specializations: res.doctorSpecialization,
-                userTYpe: this.userType
-              }
-              this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage)
-              if (this.normalAuth) {
-                this.loadAuth();
-              }
-              this.toasterService.success("Degree and Specializtion info updated Successfully"),
-                //{ position: 'bottom-center' }
-              this.cdRef.detectChanges();
-            }
-          });
+            });
         }
       });
     }
@@ -1112,6 +1098,10 @@ export class SignupComponent implements OnInit {
     this.spFileNames.splice(index, 1);
     // delete file from FileList
     this.spFileList.splice(index, 1);
+
+    //this.formSpecialization.setValue(['docFileName',''])
+    this.selectedSpFileName = '';
+
   }
 
   checkFileValidation(event: any) {
@@ -1313,7 +1303,7 @@ export class SignupComponent implements OnInit {
                 state: { data: res } // Pass the 'res' object as 'data' in the state object
               }).then(r =>
                 this.tosterService.customToast(message, 'success'));
-              //this.toasterService.success("Degree and Specializtion info updated Successfully"),
+              //this.tosterService.success("Degree and Specializtion info updated Successfully"),
               this.cdRef.detectChanges();
             }
           });
