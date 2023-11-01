@@ -83,6 +83,26 @@ export class AppointmentService {
       body: input,
     },
     { apiName: this.apiName,...config });
+  
+
+  testBuildTokenWithUIDBy_appIdAnd_appCertificateAnd_channelNameAnd_uid = (_appId: string, _appCertificate: string, _channelName: string, _uid: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
+      url: `/api/app/appointment/test-build-token-with-uID/${_appId}`,
+      params: { _appCertificate, _channelName, _uid },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  testBuildTokenWithUserAccountBy_appIdAnd_appCertificateAnd_channelNameAnd_account = (_appId: string, _appCertificate: string, _channelName: string, _account: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
+      url: `/api/app/appointment/test-build-token-with-user-account/${_appId}`,
+      params: { _appCertificate, _channelName, _account },
+    },
+    { apiName: this.apiName,...config });
 
   constructor(private restService: RestService) {}
 }
