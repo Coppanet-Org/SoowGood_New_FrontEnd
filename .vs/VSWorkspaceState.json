@@ -3,11 +3,8 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\modules",
-    "\\src\\app\\shared\\modules\\show-prescription-modal",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\src\\environments\\environment.prod.ts",
   "PreviewInSolutionExplorer": false
 }
