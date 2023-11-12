@@ -496,7 +496,7 @@ export class SignupComponent implements OnInit {
         Validators.pattern(/^[A-Za-z]+$/)
       ]],
       country: ['Bangladesh', Validators.required],
-      address: ['', Validators.required],
+      address: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
       zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
