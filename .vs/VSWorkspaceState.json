@@ -3,8 +3,11 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\environments"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form"
   ],
-  "SelectedNode": "\\src\\environments\\environment.prod.ts",
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form\\schedule-form.component.ts",
   "PreviewInSolutionExplorer": false
 }
