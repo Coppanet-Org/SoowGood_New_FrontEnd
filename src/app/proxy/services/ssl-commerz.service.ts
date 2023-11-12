@@ -53,6 +53,15 @@ export class SslCommerzService {
     { apiName: this.apiName,...config });
   
 
+  updateAppointmentPaymentStatus = (appCode: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'PUT',
+      url: '/api/app/ssl-commerz/appointment-payment-status',
+      params: { appCode },
+    },
+    { apiName: this.apiName,...config });
+  
+
   updatePaymentHistoryBySslCommerzResponseDic = (sslCommerzResponseDic: Record<string, string>, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'PUT',
