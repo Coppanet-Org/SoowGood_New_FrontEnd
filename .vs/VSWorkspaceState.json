@@ -3,11 +3,7 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\components",
-    "\\src\\app\\shared\\modules",
-    "\\src\\app\\shared\\modules\\dashboard-header",
-    "\\src\\app\\shared\\services"
+    "\\src\\environments"
   ],
   "SelectedNode": "\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
   "PreviewInSolutionExplorer": false
