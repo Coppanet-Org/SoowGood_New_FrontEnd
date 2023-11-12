@@ -7,7 +7,7 @@ import { DoctorSetPasswordFormComponent } from './components/doctor-set-password
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const routes: Route[] = [
   {
@@ -26,9 +26,10 @@ const routes: Route[] = [
     CommonModule,RouterModule.forChild(routes),
     NgOtpInputModule,
     MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule
+    MatDatepickerModule
   ],
 
   providers: [DatePipe],

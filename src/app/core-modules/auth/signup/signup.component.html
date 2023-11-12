@@ -44,7 +44,7 @@
 
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input matInput autocomplete="off" type="number" formControlName="mobile" id="phone" class="form_input"
+            <input  inputmode="numeric" matInput autocomplete="off" type="tel"  formControlName="mobile" id="phone" class="form_input"
               placeholder="018-000-00000" required>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
@@ -360,8 +360,25 @@
                 placeholder="Password123@*"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
            
-                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
-                  Please enter a strong password.
+
+                <mat-error *ngIf="userInfoForm.get('password')?.hasError('required')">
+                  Password is required.
+                </mat-error>
+              
+                <mat-error *ngIf="userInfoForm.get('password')?.hasError('startsWithUppercase')">
+                  Password must start with an uppercase letter.
+                </mat-error>
+              
+                <mat-error *ngIf="userInfoForm.get('password')?.hasError('isAtLeast6Characters')">
+                  Password must be at least 6 characters long.
+                </mat-error>
+              
+                <mat-error *ngIf="userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
+                  Password must include a special character.
+                </mat-error>
+              
+                <mat-error *ngIf="userInfoForm.get('password')?.hasError('includesNumber')">
+                  Password must include a number.
                 </mat-error>
               </div>
           </div>

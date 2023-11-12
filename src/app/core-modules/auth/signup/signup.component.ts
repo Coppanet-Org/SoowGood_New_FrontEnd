@@ -63,25 +63,7 @@ function customNameValidator(
   return null;
 }
 
-export function bmdcExpireDateValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const currentDate = new Date();
-    const selectedDate = new Date(control.value);
 
-    if (!selectedDate || isNaN(selectedDate.getTime())) {
-      // Handle invalid date format or empty date
-      return { invalidDate: true };
-    }
-
-    if (selectedDate < currentDate) {
-      // Expire date is in the past
-      return { expiredDate: true };
-    }
-
-    // Valid date
-    return null;
-  };
-}
 
 export function passwordMatchValidator(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
@@ -102,6 +84,60 @@ export function passwordMatchValidator(controlName: string, matchingControlName:
     }
   };
 }
+function yearValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+
+    if (value && value.length === 10) {
+      const year = value.substring(6);
+      if (year.length === 4 && !isNaN(Number(year))) {
+        return null; // Valid 4-digit year
+      }
+    }
+
+    return { invalidYear: true };
+  };
+}
+
+export class CustomValidators {
+  // Validate that the password starts with an uppercase letter
+  static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string;
+    if (value && !/^[A-Z]/.test(value)) {
+      return { startsWithUppercase: true };
+    }
+    return null;
+  }
+
+  // Validate that the password is at least 6 characters long
+  static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string;
+    if (value && value.length < 6) {
+      return { isAtLeast6Characters: true };
+    }
+    return null;
+  }
+
+  // Validate that the password includes a special character
+  static includesSpecialCharacter(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string;
+    if (value && !/.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-=/|]/.test(value)) {
+      return { includesSpecialCharacter: true };
+    }
+    return null;
+  }
+
+  // Validate that the password includes a number
+  static includesNumber(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string;
+    if (value && !/.*[0-9]/.test(value)) {
+      return { includesNumber: true };
+    }
+    return null;
+  }
+}
+
+
 
 @Component({
   selector: 'app-signup-component',
@@ -388,7 +424,7 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{10}$/),
+          Validators.pattern(/^(?:88)?[0-9]{11}$/),
           Validators.minLength(11),
           Validators.maxLength(11),
         ],
@@ -413,7 +449,16 @@ export class SignupComponent implements OnInit {
           Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/),
         ],
       ],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          CustomValidators.startsWithUppercase, // Starts with an uppercase letter
+          CustomValidators.isAtLeast6Characters, // Is at least 6 characters long
+          CustomValidators.includesSpecialCharacter, // Includes a special character
+          CustomValidators.includesNumber, // Includes a number
+        ],
+      ],
       confirmPassword:['', Validators.required],
 
       gender: ['0', Validators.required],
@@ -427,7 +472,7 @@ export class SignupComponent implements OnInit {
       address: ['', Validators.required],
       zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      bmdcRegExpiryDate: ['', [Validators.required, bmdcExpireDateValidator()]],
+      bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
       specialityId: ['0', Validators.required],
       identityNumber: [
         '',
@@ -460,6 +505,9 @@ export class SignupComponent implements OnInit {
       });
     }
   }
+
+
+
 
   loadAuth() {
     let authInfo = this.normalAuth.authInfo();
@@ -614,6 +662,8 @@ export class SignupComponent implements OnInit {
   sendUserInfo() {
 
 
+    console.log(this.userInfoForm.value, this.formGroup.value);
+    
     this.formSubmitted = true;
     this.isLoading = true;
     let userType = this.formGroup?.value.userTypeName;
