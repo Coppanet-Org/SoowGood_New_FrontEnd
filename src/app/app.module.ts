@@ -21,6 +21,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
 import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
+import { SignupModule } from './core-modules/auth/signup/signup.module';
+import { LoginModule } from './core-modules/auth/login/login.module';
+
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -31,19 +34,18 @@ const routerConfig: ExtraOptions = {
   declarations: [
     AppComponent, 
     EmptyPageComponent, 
-    SignupComponent,
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
     LoadingDirective,
-    OtpInputComponent,
-    
-
+    OtpInputComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgOtpInputModule,
+    SignupModule,
+    LoginModule,
     CoreModule.forRoot({
       environment,
       registerLocaleFn: registerLocale(),
