@@ -32,8 +32,8 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    EmptyPageComponent, 
+    AppComponent,
+    EmptyPageComponent,
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
@@ -57,10 +57,10 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule,FormsModule
+    ReactiveFormsModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule,ReactiveFormsModule,FormsModule],
+  exports: [MatDialogModule, ReactiveFormsModule, FormsModule],
 })
-export class AppModule {}
+export class AppModule { }
