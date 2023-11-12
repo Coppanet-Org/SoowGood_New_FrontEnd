@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AppointmentsComponent } from './appointments.component';
 import { Route, RouterModule } from '@angular/router';
 import { AllAppointmentsModule } from 'src/app/shared/modules/all-appointments/all-appointments.module';
-import { AllAppointmentsComponent } from 'src/app/shared/modules/all-appointments/all-appointments.component';
+
 
 
 const routes: Route[] = [
