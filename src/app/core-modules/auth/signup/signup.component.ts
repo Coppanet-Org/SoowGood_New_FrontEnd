@@ -140,6 +140,28 @@ export class CustomValidators {
     }
     return null;
   }
+  static matchValidator(control: AbstractControl):any {
+    const password: string = control.get("password")?.value; // get password from our password form control
+    const confirmPassword: string = control.get("confirmPassword")?.value; // get password from our confirmPassword form control
+    
+    // if the confirmPassword value is null or empty, don't return an error.
+    if (!confirmPassword?.length) {
+      return null;
+    }
+
+    // if the confirmPassword length is < 8, set the minLength error.
+    if (confirmPassword.length < 6) {
+      control.get('confirmPassword')?.setErrors({ minLength: true });
+    } else {
+      // compare the passwords and see if they match.
+      if (password !== confirmPassword) {
+        control.get("confirmPassword")?.setErrors({ mismatch: true });
+      } else {
+        // if passwords match, don't return an error.
+        return null;
+      }
+    }
+  }
 }
 
 
@@ -483,7 +505,7 @@ export class SignupComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
       ],
-    }, { validator: passwordMatchValidator('password', 'confirmPassword') });
+    }, { validator: CustomValidators.matchValidator});
     this.formDegree = this.fb.group({
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
