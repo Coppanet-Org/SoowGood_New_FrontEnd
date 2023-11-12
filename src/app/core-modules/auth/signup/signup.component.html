@@ -104,7 +104,7 @@
       </button>
     </div>
 
-    <div class="min-w-[90%] lg:min-w-[70%] mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
+    <div class="max-w-[90%] lg:max-w-[70%] mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
       [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
@@ -360,26 +360,28 @@
                 placeholder="Password123@*"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
            
+                <div class="flex flex-col">
+                  
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
+                    Password is required.
+                  </mat-error>
 
-                <mat-error *ngIf="userInfoForm.get('password')?.hasError('required')">
-                  Password is required.
-                </mat-error>
-              
-                <mat-error *ngIf="userInfoForm.get('password')?.hasError('startsWithUppercase')">
-                  Password must start with an uppercase letter.
-                </mat-error>
-              
-                <mat-error *ngIf="userInfoForm.get('password')?.hasError('isAtLeast6Characters')">
-                  Password must be at least 6 characters long.
-                </mat-error>
-              
-                <mat-error *ngIf="userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
-                  Password must include a special character.
-                </mat-error>
-              
-                <mat-error *ngIf="userInfoForm.get('password')?.hasError('includesNumber')">
-                  Password must include a number.
-                </mat-error>
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('startsWithUppercase')">
+                    Password must start with an uppercase letter.
+                  </mat-error>
+
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('isAtLeast6Characters')">
+                    Password must be at least 6 characters long.
+                  </mat-error>
+
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
+                    Password must include a special character.
+                  </mat-error>
+
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesNumber')">
+                    Password must include a number.
+                  </mat-error>
+                </div>
               </div>
           </div>
 

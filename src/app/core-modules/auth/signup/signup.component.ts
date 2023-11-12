@@ -100,15 +100,20 @@ function yearValidator(): ValidatorFn {
 }
 
 export class CustomValidators {
+
   // Validate that the password starts with an uppercase letter
   static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
+    console.log("startsWithUppercase");
     const value = control.value as string;
     if (value && !/^[A-Z]/.test(value)) {
+   
       return { startsWithUppercase: true };
     }
     return null;
   }
 
+  
+  
   // Validate that the password is at least 6 characters long
   static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
     const value = control.value as string;
