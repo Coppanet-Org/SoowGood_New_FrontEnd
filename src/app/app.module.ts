@@ -44,8 +44,8 @@ const routerConfig: ExtraOptions = {
     BrowserModule,
     HttpClientModule,
     NgOtpInputModule,
-    SignupModule,
-    LoginModule,
+    // SignupModule,
+    // LoginModule,
     CoreModule.forRoot({
       environment,
       registerLocaleFn: registerLocale(),
