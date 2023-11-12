@@ -472,7 +472,7 @@ export class SignupComponent implements OnInit {
             this.otpModal = res;
             this.isLoading = false;
           } else {
-            this.tosterService.customToast("User allready exists!!! Try different mobile number", "error");
+            this.tosterService.customToast("User allready exists!!! This number already used for Doctor or Patient or Agent. Try another number.", "error");
             this.isLoading = false;
           }
         },
