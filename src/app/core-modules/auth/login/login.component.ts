@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     //this.isLoading$ = this.appAuthService.isLoading$;
     if (this.appAuthService.currentUserValue) {
-      this._router.navigate(['/landing-page']);
+      this._router.navigate(['/']);
     }
   }
 

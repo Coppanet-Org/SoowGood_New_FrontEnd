@@ -23,7 +23,7 @@ import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
-
+import { AbpOAuthModule } from "@abp/ng.oauth";
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -57,7 +57,8 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule, FormsModule
+    ReactiveFormsModule, FormsModule,
+    AbpOAuthModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

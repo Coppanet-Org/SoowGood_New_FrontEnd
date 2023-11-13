@@ -12,20 +12,23 @@ import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-st
 export class HeaderComponent implements OnInit {
   @Input() layout: string = '';
   isAuthLogin!: boolean;
-  userType: string='';
+  userType: string = '';
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
     private UserinfoStateService: UserinfoStateService
-  ) {}
+  ) { }
   ngOnInit(): void {
-    let id = this.NormalAuth.authInfo().id;
-    if (id) {
-      this.isAuthLogin = true;
-    } else {
-      this.isAuthLogin = false;
+    if (this.NormalAuth.authInfo() != null) {
+      let id = this.NormalAuth.authInfo().id ? this.NormalAuth.authInfo().id : 0;
+
+      if (id) {
+        this.isAuthLogin = true;
+      } else {
+        this.isAuthLogin = false;
+      }
+      this.userType = this.NormalAuth.authInfo().userType;
     }
-    this.userType = this.NormalAuth.authInfo().userType;
   }
   signOut(): void {
     // this.NormalAuth.signOut();
