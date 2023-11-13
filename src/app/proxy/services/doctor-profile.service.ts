@@ -59,6 +59,15 @@ export class DoctorProfileService {
       body: input,
     },
     { apiName: this.apiName,...config });
+  
+
+  updateProfileStep = (profileId: number, step: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: `/api/app/doctor-profile/profile-step/${profileId}`,
+      params: { step },
+    },
+    { apiName: this.apiName,...config });
 
   constructor(private restService: RestService) {}
 }

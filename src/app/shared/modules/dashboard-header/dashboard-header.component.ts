@@ -23,7 +23,7 @@ export class DashboardHeaderComponent {
   }
   signOut(): void {
     // this.NormalAuth.signOut();
-    this.NormalAuth.signOut()
+   this.NormalAuth.signOut()
   }
 
   // headerElement: any;

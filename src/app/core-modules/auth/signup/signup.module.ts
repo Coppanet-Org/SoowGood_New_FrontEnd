@@ -4,10 +4,10 @@ import { Route, RouterModule } from '@angular/router';
 import { SignupComponent } from './signup.component';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { DoctorSetPasswordFormComponent } from './components/doctor-set-password-form/doctor-set-password-form.component';
-import { DoctorProfileInfoFormComponent } from './components/doctor-profile-info-form/doctor-profile-info-form.component';
-import { DegreeSpecilizationInfoFormComponent } from './components/degree-specilization-info-form/degree-specilization-info-form.component';
-
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const routes: Route[] = [
   {
@@ -17,14 +17,21 @@ const routes: Route[] = [
 ]
 @NgModule({
   declarations: [
+    SignupComponent,
     //DoctorProfileInfoFormComponent,
     DoctorSetPasswordFormComponent,
     //DegreeSpecilizationInfoFormComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
-    NgOtpInputModule
+    NgOtpInputModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDatepickerModule
   ],
+
   providers: [DatePipe],
 })
 export class SignupModule { }

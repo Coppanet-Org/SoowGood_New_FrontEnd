@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     mobileNo: '',
     password: '',
   };
-
+  formSubmitted:boolean = false
   errorMessage: string = '';
   loginForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
@@ -67,11 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
-        this.defaultAuth.mobileNo,
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
+        this.defaultAuth.mobileNo],
       password: [
         this.defaultAuth.password,
         Validators.compose([
@@ -218,6 +214,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   //}
 
   onSubmit(): void {
+    this.formSubmitted = true
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
         'Please filled all required field',
@@ -231,6 +228,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         return
       }
+      this.formSubmitted = false
       this.isLoading = true;
       let userType = '';
       this.errorMessage = '';

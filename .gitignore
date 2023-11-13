@@ -42,3 +42,8 @@ testem.log
 Thumbs.db
 /.vs/SoowGood_New_FrontEnd/FileContentIndex
 /.vs/slnx.sqlite
+/.vs/soowgood_v2/config/applicationhost.config
+/.vs/soowgood_v2/FileContentIndex/5da3d9f8-1f24-481e-b480-53e26039ad43.vsidx
+/.vs/soowgood_v2/FileContentIndex/b94adbca-3e5b-4af6-a84a-271485aa8b96.vsidx
+/.vs/soowgood_v2/v17/.wsuo
+/.vscode/settings.json
