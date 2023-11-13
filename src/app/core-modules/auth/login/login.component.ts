@@ -112,7 +112,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.log(loginResponse);
 
             if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
-              this.isLoading = false;
               this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : '')
                 .subscribe((doctorDto: DoctorProfileDto) => {
                   let saveLocalStorage = {
@@ -150,11 +149,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                       );
                     });
                 });
+              this.isLoading = false;
 
             }
 
             else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
-              this.isLoading = false;
               this.subs.sink = this.PatientProfileService.getByUserName(
                 loginResponse.userName ? loginResponse.userName : ''
               )
@@ -178,14 +177,15 @@ export class LoginComponent implements OnInit, OnDestroy {
                     );
                   });
               });
+              this.isLoading = false;
             }
 
             else {
-              this.isLoading = false;
               this.ToasterService.customToast(
                 loginResponse.message ? loginResponse.message : ' ',
                 'error'
               );
+              this.isLoading = false;
             }
           })
 
