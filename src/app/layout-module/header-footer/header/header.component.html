@@ -25,7 +25,7 @@
                     </a>
                   </li>
                   <li><a>Settings</a></li>
-                  <li *ngIf="isAuthLogin"><a>Logout</a></li>
+                  <li *ngIf="isAuthLogin"><a (click)="signOut()">Logout</a></li>
 
                 </ul>
               </div>

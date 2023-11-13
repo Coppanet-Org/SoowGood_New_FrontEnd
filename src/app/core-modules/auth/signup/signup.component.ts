@@ -267,6 +267,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
+      this.userType = this.normalAuth.authInfo().userType;
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       if (this.specialityId == 1 || this.specialityId == 2) {
@@ -343,7 +344,7 @@ export class SignupComponent implements OnInit {
           });
       }
 
-      if (this.profileStep == 2) {
+      else if (this.profileStep == 2) {
         this.otpModal = false;
         this.userInfoModal = false;
         this.completeDocumentUpload = true;
@@ -412,6 +413,9 @@ export class SignupComponent implements OnInit {
 
         //  });
         //});
+      }
+      else {
+        this._router.navigate(['/']);
       }
     }
     this.loadForm();
@@ -516,15 +520,13 @@ export class SignupComponent implements OnInit {
     }
   }
 
-
-
-
   loadAuth() {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
+      this.userType = this.normalAuth.authInfo().userType;
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
@@ -538,13 +540,16 @@ export class SignupComponent implements OnInit {
           .subscribe((n) => {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
+              this.sp1or2 = true;
               this.degreeMendatoryMassage =
                 'You must provide your degree info as ' +
                 this.specialityName +
                 ' specialist.';
             } else if (this.specialityId == 1) {
+              this.sp1or2 = true;
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
-            } else if (this.specialityId == 1) {
+            } else if (this.specialityId == 2) {
+              this.sp1or2 = true;
               this.degreeList = this.degreeList.filter((d) => d.id == 2);
             }
             this.subs.sink = this.specializationService
@@ -552,6 +557,7 @@ export class SignupComponent implements OnInit {
               .subscribe((res) => {
                 this.specializationList = res;
                 if (this.specialityId == 1) {
+                  this.sp1or2 = true;
                   this.specializationList = this.specializationList.filter(
                     (s) => s.specialityId == 1
                   );
@@ -569,6 +575,7 @@ export class SignupComponent implements OnInit {
                   };
                   this.doctorSpecializations.push(specialzDataForMbbs);
                 } else if (this.specialityId == 2) {
+                  this.sp1or2 = true;
                   this.specializationList = this.specializationList.filter(
                     (s) => s.specialityId == 2
                   );
@@ -586,6 +593,7 @@ export class SignupComponent implements OnInit {
                   };
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
+                  this.sp1or2 = false;
                   this.spMendatoryMassage =
                     'You must select specializaion for ' +
                     this.specialityName +
@@ -603,11 +611,13 @@ export class SignupComponent implements OnInit {
           .subscribe((n) => {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
+              this.sp1or2 = true;
               this.documentMassage =
                 '(You must upload document as you are a ' +
                 this.specialityName +
                 ' specialist.)';
             } else {
+              this.sp1or2 = false;
               this.documentMassage =
                 '(Just upload a document which can prove that, you a Doctor.)';
             }
@@ -781,7 +791,7 @@ export class SignupComponent implements OnInit {
                 .subscribe((patientDto: PatientProfileDto) => {
                   //this.newCreatedProfileDto = patientDto;
                   //this.completeDegreeSpecilizationInfoModal = true
-                  console.log(patientDto);
+                  //console.log(patientDto);
 
                   let saveLocalStorage = {
                     patientName: patientDto.fullName,
@@ -985,6 +995,8 @@ export class SignupComponent implements OnInit {
 
   saveDegreeSpecialization() {
     this.isLoading = true;
+    //let userType = this.formGroup?.value.userTypeName;
+    //this.userType = userType;
     let x = 0;
     let y = +(this.doctorDegrees.length + this.doctorSpecializations.length);
     if (
@@ -1124,7 +1136,7 @@ export class SignupComponent implements OnInit {
                     profileStep: res.profileStep,
                     createFrom: res.createFrom,
                     specializations: res.doctorSpecialization,
-                    userTYpe: this.userType,
+                    userType: this.userType,
                   };
                   this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
                   if (this.normalAuth) {
@@ -1464,7 +1476,7 @@ export class SignupComponent implements OnInit {
     //        //return;
     //      }
     else {
-      let userType = this.userType.toString().toLowerCase();
+      //let userType = '';//this.userType;// this.formGroup?.value.userTypeName;// this.userType.toString().toLowerCase();
       let message = 'Congratulations...!!Profile Created Successfully..!!';
       this.subs.sink = this.doctorProfileService
         .get(this.doctorId)
@@ -1510,15 +1522,15 @@ export class SignupComponent implements OnInit {
                     specialityId: res.specialityId,
                     profileStep: res.profileStep,
                     createFrom: res.createFrom,
-                    userType: userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
+                    userType: this.userType//.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
                   };
                   this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
                   if (this.normalAuth) {
                     this.loadAuth();
                   }
-                  userType = userType + '/dashboard'; //'/profile-settings/basic-info';//'/dashboard';
-                  this._router
-                    .navigate([userType.toLowerCase()], {
+                  //let navUrl = this.userType.toLowerCase() + '/dashboard';//'/dashboard'; //'/profile-settings/basic-info';//'/dashboard';
+                  let navUrl = this.userType.toLowerCase() + '/profile-settings/basic-info';//'/dashboard';
+                  this._router.navigate([navUrl], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
                     })
                     .then((r) =>

@@ -1,8 +1,10 @@
 
 
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+//import { AuthService } from '../../services/auth.service';
+//import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +33,7 @@ export class HeaderComponent implements OnInit {
     }
   }
   signOut(): void {
-    // this.NormalAuth.signOut();
-    this.MainAuth.signOut();
+     this.NormalAuth.signOut();
+    //this.MainAuth.signOut();
   }
 }
