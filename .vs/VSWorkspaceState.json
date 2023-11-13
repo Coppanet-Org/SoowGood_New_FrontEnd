@@ -3,15 +3,10 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\profile-settings",
-    "\\src\\app\\features-modules\\doctor\\profile-settings\\basic-info",
-    "\\src\\environments"
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\components\\dialog-header"
   ],
-  "SelectedNode": "\\src\\app\\app.component.ts",
+  "SelectedNode": "\\src\\app\\shared\\components\\dialog-header\\dialog-header.component.ts",
   "PreviewInSolutionExplorer": false
 }
