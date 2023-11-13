@@ -5,6 +5,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  MaxLengthValidator,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -106,14 +107,14 @@ export class CustomValidators {
     console.log("startsWithUppercase");
     const value = control.value as string;
     if (value && !/^[A-Z]/.test(value)) {
-   
+
       return { startsWithUppercase: true };
     }
     return null;
   }
 
-  
-  
+
+
   // Validate that the password is at least 6 characters long
   static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
     const value = control.value as string;
@@ -190,7 +191,7 @@ export class SignupComponent implements OnInit {
   showError = true;
   subs = new SubSink();
   isQueryParam: boolean = false;
-  isLoading = false;
+  isLoading: any = false;
   selectedUserType: string = '';
   otpModal: boolean = false;
   userInfoModal: boolean = false;
@@ -227,6 +228,7 @@ export class SignupComponent implements OnInit {
   documentMassage: any;
   specializationName: any;
   specialityName: any;
+  sp1or2: any = false;
 
   detectChnage: boolean = false;
   durationList: any = [
@@ -260,13 +262,16 @@ export class SignupComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private doctorProfilePicService: DocumentsAttachmentService,
     private TosterService: TosterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
+      if (this.specialityId == 1 || this.specialityId == 2) {
+        this.sp1or2 = true;
+      }
       this.profileStep = this.normalAuth.authInfo().profileStep;
       if (this.profileStep == 1) {
         this.otpModal = false;
@@ -464,7 +469,7 @@ export class SignupComponent implements OnInit {
           CustomValidators.includesNumber, // Includes a number
         ],
       ],
-      confirmPassword:['', Validators.required],
+      confirmPassword: ['', Validators.required],
 
       gender: ['0', Validators.required],
       dateOfBirth: ['', Validators.required],
@@ -488,7 +493,7 @@ export class SignupComponent implements OnInit {
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
-      passingYear: ['', Validators.required], 
+      passingYear: ['', Validators.required],
       instituteName: ['', Validators.required],
       instituteCity: ['', Validators.required],
       instituteCountry: ['', Validators.required],
@@ -669,8 +674,8 @@ export class SignupComponent implements OnInit {
   sendUserInfo() {
 
 
-    console.log(this.userInfoForm.value, this.formGroup.value);
-    
+    //console.log(this.userInfoForm.value, this.formGroup.value);
+
     this.formSubmitted = true;
     this.isLoading = true;
     let userType = this.formGroup?.value.userTypeName;
@@ -703,14 +708,13 @@ export class SignupComponent implements OnInit {
     };
 
 
-    console.log(this.userInfoForm.value.password);
-    
+    //console.log(this.userInfoForm.value.password);
+
     this.userAccountService
       .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
       .subscribe(
         (res: UserSignUpResultDto) => {
           if (res.success) {
-            this.isLoading = false;
             if (userType === 'Doctor') {
               //let codeCnt = +(this.lastCount + 1);
               //this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
@@ -803,10 +807,12 @@ export class SignupComponent implements OnInit {
                   this.cdRef.detectChanges();
                 });
             }
+            this.isLoading = false;
           } else {
             res.message?.map((e: string) =>
               this.tosterService.customToast(e, 'error')
             );
+            this.isLoading = false;
           }
         },
         (err) => {
@@ -978,6 +984,7 @@ export class SignupComponent implements OnInit {
   }
 
   saveDegreeSpecialization() {
+    this.isLoading = true;
     let x = 0;
     let y = +(this.doctorDegrees.length + this.doctorSpecializations.length);
     if (
@@ -1129,6 +1136,7 @@ export class SignupComponent implements OnInit {
                   );
                   this.cdRef.detectChanges();
                 }
+                this.isLoading = false;
               });
           }
         });
@@ -1161,13 +1169,15 @@ export class SignupComponent implements OnInit {
               'Picture Changed Successfully',
               'success'
             );
+            this.getProfilePic();
           },
           (err) => {
             console.log(err);
           }
+
         );
     }
-    this.getProfilePic();
+
   }
 
   uploadNID() {
@@ -1192,13 +1202,14 @@ export class SignupComponent implements OnInit {
               'NID/Passport Changed Successfully',
               'success'
             );
+            this.getNID();
           },
           (err) => {
             console.log(err);
           }
         );
     }
-    this.getNID();
+
   }
 
   uploadSpDoc() {
@@ -1435,11 +1446,13 @@ export class SignupComponent implements OnInit {
   }
 
   finalContinue() {
+    this.isLoading = true;
     if (this.fileList.length == 0 && this.idFileList.length == 0) {
       this.tosterService.customToast(
         'Please upload all the required documents',
         'error'
       );
+      this.isLoading = false;
       //return;
     }
     //else {
@@ -1503,7 +1516,7 @@ export class SignupComponent implements OnInit {
                   if (this.normalAuth) {
                     this.loadAuth();
                   }
-                  userType = userType + '/dashboard';
+                  userType = userType + '/dashboard'; //'/profile-settings/basic-info';//'/dashboard';
                   this._router
                     .navigate([userType.toLowerCase()], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
@@ -1514,6 +1527,7 @@ export class SignupComponent implements OnInit {
                   //this.tosterService.success("Degree and Specializtion info updated Successfully"),
                   this.cdRef.detectChanges();
                 }
+                this.isLoading = false;
               });
           }
         });

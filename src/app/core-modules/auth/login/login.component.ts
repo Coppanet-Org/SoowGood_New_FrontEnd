@@ -253,7 +253,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.authService
                 .loginByUserDto(this.loginDto).subscribe((loginResponse: LoginResponseDto) => {
                   if (loginResponse.success && loginResponse.roleName[0] == "Doctor") {
-                    this.isLoading = false;
                     this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
                       .subscribe((doctorDto: DoctorProfileDto) => {
                         let saveLocalStorage = {
@@ -281,12 +280,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                           this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
                         });
                       });
-
-
-                  }
-
-                  else if (loginResponse.success && loginResponse.roleName[0] == "Patient") {
                     this.isLoading = false;
+                  }
+                  else if (loginResponse.success && loginResponse.roleName[0] == "Patient") {
                     this.subs.sink = this.PatientProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : "")
                       .subscribe((patientDto: PatientProfileDto) => {
                         console.log(patientDto);
@@ -304,26 +300,26 @@ export class LoginComponent implements OnInit, OnDestroy {
                           this.ToasterService.customToast(loginResponse.message ? loginResponse.message : " ", 'success')
                         });
                       });
-                  }
-
-                  else {
                     this.isLoading = false;
+                  }
+                  else {
                     this.hasError = true;
                     this.ToasterService.customToast(
                       loginResponse.message ? loginResponse.message : ' ',
                       'error'
                     );
+                    this.isLoading = false;
                   }
                 });
             }
           });
       }
       catch (error: any) {
-        this.isLoading = false;
         this.hasError = true;
         if (error.message === "'tokenEndpoint' should not be null") {
           this.errorMessage = 'Identity server is not running';
         }
+        this.isLoading = false;
       }
     }
   }
