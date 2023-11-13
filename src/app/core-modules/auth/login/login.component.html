@@ -13,8 +13,9 @@
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
             <input type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
-            required [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
-            inputmode="numeric">
+              required
+              [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
+              inputmode="numeric">
             <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
@@ -24,10 +25,19 @@
           </label>
           <label for="Password">
             <p class="font-medium text-slate-700 pb-2"> Password</p>
-            <input formControlName="password" type="password" name="password" id="password" placeholder="Password123@*"
-              class="form_input" [ngClass]="{ 'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }" />
+            <div class="form_input flex justify-between"
+            [ngClass]="{ 'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
+              <input formControlName="password" [type]="passwordFieldType" name="password" id="password" class="outline-none border-none"
+                placeholder="Password123@*"  />
+              <button (click)="passwordVisibility()" class="cursor-pointer">
+                <i [class]="passwordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </button>
+            </div>
           </label>
-          <p [ngClass]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'text-red-500 !mt-0 text-sm' : 'hidden' ">{{loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? "Password is required!" : ""}}</p>
+          <p
+            [ngClass]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'text-red-500 !mt-0 text-sm' : 'hidden' ">
+            {{loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? "Password is required!" : ""}}
+          </p>
 
 
           <button class="form_btn" (click)="onSubmit()">
@@ -58,4 +68,3 @@
 
 
 </div>
-

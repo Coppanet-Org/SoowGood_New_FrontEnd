@@ -16,6 +16,7 @@ import {
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { throwError } from 'rxjs';
+import { togglePasswordVisibility } from 'src/app/shared/utils/auth-helper';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl!: string;
   subs = new SubSink();
   isLoading: any = false;
+  passwordFieldType = 'password'
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -77,6 +79,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   private handleProfileError(error: any) {
     return throwError(error);
   }
+
+  passwordVisibility(){
+    this.passwordFieldType = togglePasswordVisibility(this.passwordFieldType)
+  }
+
   onSubmit(): void {
     this.formSubmitted = true
     if (!this.loginForm.valid && !this.loginForm.touched) {

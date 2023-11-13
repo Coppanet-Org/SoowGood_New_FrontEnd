@@ -43,6 +43,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { togglePasswordVisibility } from 'src/app/shared/utils/auth-helper';
 
 function customNameValidator(
   control: AbstractControl
@@ -265,6 +266,9 @@ export class SignupComponent implements OnInit {
   lastCount: any;
   formSubmitted: boolean = false;
   countryList = countries;
+  passwordFieldType = 'password'
+
+
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -533,8 +537,10 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  passwordVisibility(){
+    this.passwordFieldType = togglePasswordVisibility(this.passwordFieldType)
 
-
+  }
 
   loadAuth() {
     let authInfo = this.normalAuth.authInfo();
