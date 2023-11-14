@@ -495,13 +495,13 @@ export class SignupComponent implements OnInit {
       ],
     }, { validator: passwordMatchValidator('password', 'confirmPassword') });
     this.formDegree = this.fb.group({
-      zipCode: ['1216'],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
       passingYear: ['', Validators.required],
       instituteName: ['', Validators.required],
       instituteCity: ['', Validators.required],
-      instituteCountry: ['', Validators.required],
+      instituteCountry: ['Bangladesh', Validators.required],
     });
     if (this.specialityId === 1) {
       this.formSpecialization = this.fb.group({

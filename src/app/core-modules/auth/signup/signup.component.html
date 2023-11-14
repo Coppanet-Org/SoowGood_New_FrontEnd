@@ -564,9 +564,17 @@
                 <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Country
                 </label>
-                <input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
-                       id="instituteCountry" placeholder="Institute Country"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <select formControlName="instituteCountry" id="instituteCountry" placeholder="Institute Country"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                  <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
+                    {{item}}
+                  </option>
+
+                </select>
+                <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
+                id="instituteCountry" placeholder="Institute Country"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
               </div>
 
             </div>
