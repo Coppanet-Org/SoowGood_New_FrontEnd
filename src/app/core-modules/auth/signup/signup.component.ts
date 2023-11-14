@@ -414,6 +414,7 @@ export class SignupComponent implements OnInit {
         //  });
         //});
       }
+
       else {
         this._router.navigate(['/']);
       }
@@ -527,6 +528,9 @@ export class SignupComponent implements OnInit {
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
       this.userType = this.normalAuth.authInfo().userType;
+      if (this.specialityId == 1 || this.specialityId == 2) {
+        this.sp1or2 = true;
+      }
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
@@ -540,16 +544,13 @@ export class SignupComponent implements OnInit {
           .subscribe((n) => {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
-              this.sp1or2 = true;
               this.degreeMendatoryMassage =
                 'You must provide your degree info as ' +
                 this.specialityName +
                 ' specialist.';
             } else if (this.specialityId == 1) {
-              this.sp1or2 = true;
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
             } else if (this.specialityId == 2) {
-              this.sp1or2 = true;
               this.degreeList = this.degreeList.filter((d) => d.id == 2);
             }
             this.subs.sink = this.specializationService
@@ -557,7 +558,6 @@ export class SignupComponent implements OnInit {
               .subscribe((res) => {
                 this.specializationList = res;
                 if (this.specialityId == 1) {
-                  this.sp1or2 = true;
                   this.specializationList = this.specializationList.filter(
                     (s) => s.specialityId == 1
                   );
@@ -575,7 +575,6 @@ export class SignupComponent implements OnInit {
                   };
                   this.doctorSpecializations.push(specialzDataForMbbs);
                 } else if (this.specialityId == 2) {
-                  this.sp1or2 = true;
                   this.specializationList = this.specializationList.filter(
                     (s) => s.specialityId == 2
                   );
@@ -593,7 +592,6 @@ export class SignupComponent implements OnInit {
                   };
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
-                  this.sp1or2 = false;
                   this.spMendatoryMassage =
                     'You must select specializaion for ' +
                     this.specialityName +
