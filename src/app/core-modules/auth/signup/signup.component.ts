@@ -44,6 +44,7 @@ import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CustomValidators, customNameValidator, yearValidator } from 'src/app/shared/utils/auth-helper';
+import { Subject } from 'rxjs';
 
 
 function customPassingYearValidator(control:any) {
@@ -159,7 +160,7 @@ export class SignupComponent implements OnInit {
   countryList = countries;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
-
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -180,166 +181,202 @@ export class SignupComponent implements OnInit {
     private TosterService: TosterService
   ) {}
 
+  // ngOnInit(): void {
+  //   let authInfo = this.normalAuth.authInfo();
+  //   if (authInfo != null) {
+  //     this.doctorId = this.normalAuth.authInfo().id;
+  //     this.specialityId = this.normalAuth.authInfo().specialityId;
+  //     this.profileStep = this.normalAuth.authInfo().profileStep;
+  //     if (this.profileStep == 1) {
+  //       this.otpModal = false;
+  //       this.userInfoModal = false;
+  //       this.completeDegreeSpecilizationInfoModal = true;
+  //       this.doctorName = this.normalAuth.authInfo().doctorName;
+  //       this.degreeService.getList().subscribe((res) => {
+  //         this.degreeList = res;
+  //       });
+  //       this.subs.sink = this.specialityService
+  //         .get(this.specialityId)
+  //         .subscribe((n) => {
+  //           this.specialityName = n.specialityName;
+  //           if (this.specialityId > 1 && this.specialityId > 2) {
+  //             this.degreeMendatoryMassage =
+  //               'You must provide your degree info as ' +
+  //               this.specialityName +
+  //               ' specialist.';
+  //           } else if (this.specialityId == 1) {
+  //             this.degreeList = this.degreeList.filter((d) => d.id == 1);
+  //           } else if (this.specialityId == 1) {
+  //             this.degreeList = this.degreeList.filter((d) => d.id == 2);
+  //           }
+  //           this.subs.sink = this.specializationService
+  //             .getListBySpecialtyId(this.specialityId)
+  //             .subscribe((res) => {
+  //               this.specializationList = res;
+  //               if (this.specialityId == 1) {
+  //                 this.specializationList = this.specializationList.filter(
+  //                   (s) => s.specialityId == 1
+  //                 );
+  //                 let specId = this.specializationList.find(
+  //                   (sp) => sp.specialityId == 1
+  //                 );
+  //                 let uniId = this.GenerateId();
+  //                 let specialzDataForMbbs = {
+  //                   id: +uniId,
+  //                   specializationId: specId?.id,
+  //                   specializationName: specId?.specializationName,
+  //                   doctorId: this.doctorId,
+  //                   specialityId: this.specialityId,
+  //                   specialityName: this.specialityName,
+  //                 };
+  //                 this.doctorSpecializations.push(specialzDataForMbbs);
+  //               } else if (this.specialityId == 2) {
+  //                 this.specializationList = this.specializationList.filter(
+  //                   (s) => s.specialityId == 2
+  //                 );
+  //                 let specId = this.specializationList.find(
+  //                   (sp) => sp.specialityId == 2
+  //                 );
+  //                 let uniId = this.GenerateId();
+  //                 let specialzDataBDS = {
+  //                   id: +uniId,
+  //                   specializationId: specId?.id,
+  //                   specializationName: specId?.specializationName,
+  //                   doctorId: this.doctorId,
+  //                   specialityId: this.specialityId,
+  //                   specialityName: this.specialityName,
+  //                 };
+  //                 this.doctorSpecializations.push(specialzDataBDS);
+  //               } else {
+  //                 this.spMendatoryMassage =
+  //                   'You must select specializaion for ' +
+  //                   this.specialityName +
+  //                   '. Max. 3';
+  //               }
+  //             });
+  //         });
+  //     }
+
+  //     if (this.profileStep == 2) {
+  //       this.otpModal = false;
+  //       this.userInfoModal = false;
+  //       this.completeDocumentUpload = true;
+  //       this.subs.sink = this.specialityService
+  //         .get(this.specialityId)
+  //         .subscribe((n) => {
+  //           this.specialityName = n.specialityName;
+  //           if (this.specialityId > 1 && this.specialityId > 2) {
+  //             this.documentMassage =
+  //               '(You must upload document as you are a ' +
+  //               this.specialityName +
+  //               ' specialist.)';
+  //           } else {
+  //             this.documentMassage =
+  //               '(Just upload a document which can prove that, you a Doctor.)';
+  //           }
+  //         });
+  //     }
+  //   }
+  //   this.loadForm();
+  //   this.genderList = CommonService.getEnumList(Gender);
+
+  //   this.doctorSpeciality.getList().subscribe((res) => {
+  //     this.specialties = res;
+  //   });
+  //   this.titleList = CommonService.getEnumList(DoctorTitle);
+
+  //   this.doctorProfileService.getList().subscribe((d) => {
+  //     this.doctorList = d;
+  //     this.lastCount = this.doctorList.length;
+  //   });
+  // }
+
+
   ngOnInit(): void {
-    let authInfo = this.normalAuth.authInfo();
-    if (authInfo != null) {
-      this.doctorId = this.normalAuth.authInfo().id;
-      this.specialityId = this.normalAuth.authInfo().specialityId;
-      this.profileStep = this.normalAuth.authInfo().profileStep;
-      if (this.profileStep == 1) {
-        this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDegreeSpecilizationInfoModal = true;
-        this.doctorName = this.normalAuth.authInfo().doctorName;
-        this.degreeService.getList().subscribe((res) => {
-          this.degreeList = res;
-        });
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
-              this.degreeMendatoryMassage =
-                'You must provide your degree info as ' +
-                this.specialityName +
-                ' specialist.';
-            } else if (this.specialityId == 1) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 1);
-            } else if (this.specialityId == 1) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 2);
-            }
-            this.subs.sink = this.specializationService
-              .getListBySpecialtyId(this.specialityId)
-              .subscribe((res) => {
-                this.specializationList = res;
-                if (this.specialityId == 1) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 1
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 1
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataForMbbs = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataForMbbs);
-                } else if (this.specialityId == 2) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 2
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 2
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataBDS = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataBDS);
-                } else {
-                  this.spMendatoryMassage =
-                    'You must select specializaion for ' +
-                    this.specialityName +
-                    '. Max. 3';
-                }
-              });
-          });
-      }
-
-      if (this.profileStep == 2) {
-        this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDocumentUpload = true;
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
-              this.documentMassage =
-                '(You must upload document as you are a ' +
-                this.specialityName +
-                ' specialist.)';
-            } else {
-              this.documentMassage =
-                '(Just upload a document which can prove that, you a Doctor.)';
-            }
-          });
-        //this.doctorName = this.normalAuth.authInfo().doctorName;
-        //this.degreeService.getList().subscribe((res) => {
-        //  this.degreeList = res;
-        //});
-        //this.subs.sink = this.specialityService.get(this.specialityId).subscribe(n => {
-        //  this.specialityName = n.specialityName;
-        //  if (this.specialityId > 1 && this.specialityId > 2) {
-        //    this.degreeMendatoryMassage = "You must provide your degree info as " + this.specialityName + " specialist.";
-        //  }
-        //  else if (this.specialityId == 1) {
-        //    this.degreeList = this.degreeList.filter(d => d.id == 1);
-        //  }
-        //  else if (this.specialityId == 1) {
-        //    this.degreeList = this.degreeList.filter(d => d.id == 2);
-        //  }
-        //  this.subs.sink = this.specializationService.getListBySpecialtyId(this.specialityId).subscribe((res) => {
-        //    this.specializationList = res;
-        //    if (this.specialityId == 1) {
-        //      this.specializationList = this.specializationList.filter(s => s.specialityId == 1);
-        //      let specId = this.specializationList.find(sp => sp.specialityId == 1);
-        //      let uniId = this.GenerateId();
-        //      let specialzDataForMbbs = {
-        //        id: +uniId,
-        //        specializationId: specId?.id,
-        //        specializationName: specId?.specializationName,
-        //        doctorId: this.doctorId,
-        //        specialityId: this.specialityId,
-        //        specialityName: this.specialityName
-        //      };
-        //      this.doctorSpecializations.push(specialzDataForMbbs);
-        //    }
-        //    else if (this.specialityId == 2) {
-        //      this.specializationList = this.specializationList.filter(s => s.specialityId == 2);
-        //      let specId = this.specializationList.find(sp => sp.specialityId == 2);
-        //      let uniId = this.GenerateId();
-        //      let specialzDataBDS = {
-        //        id: +uniId,
-        //        specializationId: specId?.id,
-        //        specializationName: specId?.specializationName,
-        //        doctorId: this.doctorId,
-        //        specialityId: this.specialityId,
-        //        specialityName: this.specialityName
-        //      };
-        //      this.doctorSpecializations.push(specialzDataBDS);
-        //    }
-        //    else {
-        //      this.spMendatoryMassage = "You must select specializaion for " + this.specialityName + ". Max. 3";
-        //    }
-
-        //  });
-        //});
-      }
+    this.loadForm(); 
+    const authInfo = this.normalAuth.authInfo();
+    if (authInfo == null) {
+      return;
     }
-    this.loadForm();
+  
+    this.doctorId = authInfo.id;
+    this.specialityId = authInfo.specialityId;
+    this.profileStep = authInfo.profileStep;
+  
+    if (this.profileStep === 1) {
+      this.handleProfileStep1();
+    } else if (this.profileStep === 2) {
+      this.handleProfileStep2();
+    }
+  
     this.genderList = CommonService.getEnumList(Gender);
-
-    this.doctorSpeciality.getList().subscribe((res) => {
-      this.specialties = res;
-    });
+    this.doctorSpeciality.getList().subscribe((res) => (this.specialties = res));
     this.titleList = CommonService.getEnumList(DoctorTitle);
-
     this.doctorProfileService.getList().subscribe((d) => {
       this.doctorList = d;
       this.lastCount = this.doctorList.length;
     });
   }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.subs.unsubscribe();
+  }
+  
+  private handleProfileStep1(): void {
+    this.otpModal = false;
+    this.userInfoModal = false;
+    this.completeDegreeSpecilizationInfoModal = true;
+    this.doctorName = this.normalAuth.authInfo().doctorName;
+  
+    this.subs.sink = this.degreeService.getList().subscribe((res) => {
+      this.degreeList = res;
+    });
+  
+    this.subs.sink = this.specialityService.get(this.specialityId).subscribe((n) => {
+      this.specialityName = n.specialityName;
+      this.handleSpecializationList();
+    });
+  }
+  
+  private handleSpecializationList(): void {
+    this.subs.sink = this.specializationService.getListBySpecialtyId(this.specialityId).subscribe((res) => {
+      this.specializationList = res;
+  
+      if (this.specialityId === 1 || this.specialityId === 2) {
+        const specId = this.specializationList.find((sp) => sp.specialityId === this.specialityId);
+  
+        const uniId = this.GenerateId();
+        const specializationData = {
+          id: +uniId,
+          specializationId: specId?.id,
+          specializationName: specId?.specializationName,
+          doctorId: this.doctorId,
+          specialityId: this.specialityId,
+          specialityName: this.specialityName,
+        };
+  
+        this.doctorSpecializations.push(specializationData);
+      } else {
+        this.spMendatoryMassage = `You must select specialization for ${this.specialityName}. Max. 3`;
+      }
+    });
+  }
+  
+  private handleProfileStep2(): void {
+    this.otpModal = false;
+    this.userInfoModal = false;
+    this.completeDocumentUpload = true;
+  
+    this.subs.sink = this.specialityService.get(this.specialityId).subscribe((n) => {
+      this.specialityName = n.specialityName;
+      this.documentMassage = this.specialityId > 2
+        ? `You must upload document as you are a ${this.specialityName} specialist.`
+        : 'Just upload a document which can prove that you are a Doctor.';
+    });
+  }
+
 
   loadForm() {
     this.formGroup = this.fb.group({
@@ -360,7 +397,6 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Z]+[0-9]*$/), // Enforce letters and numbers at the end
           customNameValidator,
         ],
       ],

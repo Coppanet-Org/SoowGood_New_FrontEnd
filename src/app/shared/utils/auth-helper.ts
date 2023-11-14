@@ -38,7 +38,7 @@ export function yearValidator(): ValidatorFn {
     };
   }
 
- export function customNameValidator(
+  export function customNameValidator(
     control: AbstractControl
   ): ValidationErrors | null {
     const value = control.value;
@@ -47,8 +47,8 @@ export function yearValidator(): ValidatorFn {
       return null; // If the field is empty, consider it valid
     }
   
-    // Regular expression to validate only letters and numbers at the end
-    const regex = /^[a-zA-Z]+[0-9]*$/;
+    // Regular expression to validate only letters, numbers, and spaces between words
+    const regex = /^[a-zA-Z]+(?: [a-zA-Z]+)*[0-9]*$/;
   
     if (!regex.test(value) || value.length < 3) {
       return { invalidName: true };

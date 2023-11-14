@@ -70,15 +70,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       password: [
         this.defaultAuth.password,
-        Validators.compose([
+        // Validators.compose([
           
-            Validators.required,
-            CustomValidators.startsWithUppercase, 
-            CustomValidators.isAtLeast6Characters, 
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber, 
+        //     Validators.required,
+        //     CustomValidators.startsWithUppercase, 
+        //     CustomValidators.isAtLeast6Characters, 
+        //     CustomValidators.includesSpecialCharacter,
+        //     CustomValidators.includesNumber, 
           
-        ]),
+        // ]),
       ],
     });
   }
