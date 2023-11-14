@@ -16,7 +16,7 @@ import {
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { throwError } from 'rxjs';
-import { togglePasswordVisibility } from 'src/app/shared/utils/auth-helper';
+import { CustomValidators } from 'src/app/shared/utils/auth-helper';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl!: string;
   subs = new SubSink();
   isLoading: any = false;
-  passwordFieldType = 'password'
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -56,32 +57,41 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
-        this.defaultAuth.mobileNo],
+        this.defaultAuth.mobileNo,
+        // [
+        //   Validators.required,
+        //   Validators.pattern(/^(?:88)?[0-9]{11}$/),
+        //   Validators.minLength(11),
+        //   Validators.maxLength(11),
+        // ],
+      ],
+
       password: [
         this.defaultAuth.password,
         Validators.compose([
-          Validators.required,
+          
+            Validators.required,
+            CustomValidators.startsWithUppercase, 
+            CustomValidators.isAtLeast6Characters, 
+            CustomValidators.includesSpecialCharacter,
+            CustomValidators.includesNumber, 
+          
         ]),
       ],
     });
   }
-  private handleLoginError(error: any) {
-    this.hasError = true;
-    if (error.message === "'tokenEndpoint' should not be null") {
-      this.errorMessage = 'Identity server is not running';
+
+
+
+
+  passwordVisibility(field:string){
+    if (field === 'password') {
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType = this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
-    return throwError(error);
-  }
-
-  private handleProfileError(error: any) {
-    return throwError(error);
-  }
-
-  passwordVisibility(){
-    this.passwordFieldType = togglePasswordVisibility(this.passwordFieldType)
   }
 
   onSubmit(): void {
@@ -116,8 +126,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authService
           .loginByUserDto(this.loginDto)
           .subscribe((loginResponse: LoginResponseDto) => {
-            console.log(loginResponse);
-
             if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
               this.isLoading = false;
               this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : '')
@@ -189,6 +197,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             else {
               this.isLoading = false;
+              // this.loginForm.get('mobileNo')?.setErrors({ customError: loginResponse.message });
+              // this.loginForm.get('password')?.setErrors({ customError: loginResponse.message });
               this.ToasterService.customToast(
                 loginResponse.message ? loginResponse.message : ' ',
                 'error'

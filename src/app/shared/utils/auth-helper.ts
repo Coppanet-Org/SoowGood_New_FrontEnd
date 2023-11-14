@@ -1,4 +1,123 @@
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
-export const togglePasswordVisibility =(passwordFieldType:string) =>{
-  return passwordFieldType === 'password' ? 'text' : 'password';
-}
+
+
+
+export function passwordMatchValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+  
+      if (matchingControl.errors && !matchingControl.errors['passwordMismatch']) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+  
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ passwordMismatch: true });
+        console.log('Password mismatch error set');
+      } else {
+        matchingControl.setErrors(null);
+        console.log('Password mismatch error cleared');
+      }
+    };
+  }
+
+export function yearValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+  
+      if (value && value.length === 10) {
+        const year = value.substring(6);
+        if (year.length === 4 && !isNaN(Number(year))) {
+          return null; // Valid 4-digit year
+        }
+      }
+  
+      return { invalidYear: true };
+    };
+  }
+
+ export function customNameValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const value = control.value;
+  
+    if (!value) {
+      return null; // If the field is empty, consider it valid
+    }
+  
+    // Regular expression to validate only letters and numbers at the end
+    const regex = /^[a-zA-Z]+[0-9]*$/;
+  
+    if (!regex.test(value) || value.length < 3) {
+      return { invalidName: true };
+    }
+  
+    return null;
+  }
+
+export class CustomValidators {
+
+    // Validate that the password starts with an uppercase letter
+    static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
+      console.log("startsWithUppercase");
+      const value = control.value as string;
+      if (value && !/^[A-Z]/.test(value)) {
+     
+        return { startsWithUppercase: true };
+      }
+      return null;
+    }
+  
+    
+    
+    // Validate that the password is at least 6 characters long
+    static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
+      const value = control.value as string;
+      if (value && value.length < 6) {
+        return { isAtLeast6Characters: true };
+      }
+      return null;
+    }
+  
+    // Validate that the password includes a special character
+    static includesSpecialCharacter(control: AbstractControl): ValidationErrors | null {
+      const value = control.value as string;
+      if (value && !/.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-=/|]/.test(value)) {
+        return { includesSpecialCharacter: true };
+      }
+      return null;
+    }
+  
+    // Validate that the password includes a number
+    static includesNumber(control: AbstractControl): ValidationErrors | null {
+      const value = control.value as string;
+      if (value && !/.*[0-9]/.test(value)) {
+        return { includesNumber: true };
+      }
+      return null;
+    }
+    static matchValidator(control: AbstractControl):any {
+      const password: string = control.get("password")?.value; // get password from our password form control
+      const confirmPassword: string = control.get("confirmPassword")?.value; // get password from our confirmPassword form control
+      
+      // if the confirmPassword value is null or empty, don't return an error.
+      if (!confirmPassword?.length) {
+        return null;
+      }
+  
+      // if the confirmPassword length is < 8, set the minLength error.
+      if (confirmPassword.length < 6) {
+        control.get('confirmPassword')?.setErrors({ minLength: true });
+      } else {
+        // compare the passwords and see if they match.
+        if (password !== confirmPassword) {
+          control.get("confirmPassword")?.setErrors({ mismatch: true });
+        } else {
+          // if passwords match, don't return an error.
+          return null;
+        }
+      }
+    }
+  }

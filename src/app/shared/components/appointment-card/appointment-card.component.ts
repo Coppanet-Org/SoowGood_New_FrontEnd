@@ -43,6 +43,12 @@ export class AppointmentCardComponent {
   }
 
   goToJoinCall(apt: any, user: string) {
+
+    // const url = `https://agora-video-call-eight.vercel.app/?username=${'username'}&aptCode=${apt}&c=${user}`;
+    // // window.location.href = url;
+    // window.open(url, '_blank');
+// return
+
     if (apt) {
       const currentDate = new Date();
       const appointmentDate = new Date(apt.appointmentDate);
@@ -107,7 +113,7 @@ export class AppointmentCardComponent {
             currentDate.getMinutes()
           );
 
-          console.log(timeDiff);
+
           if (timeDiff < 15 && timeDiff > -30) {
             
             console.log('Appointment will start soon!');
@@ -119,8 +125,9 @@ export class AppointmentCardComponent {
             } else {
               username = apt.patientName;
             }
-            const url = `https://agora-video-call-eight.vercel.app/?username=${username}&aptCode=${aptCode}&c=${client}`;
-            window.location.href = url;
+           const url = `https://agora-video-call-eight.vercel.app/?username=${username}&aptCode=${aptCode}&c=${client}`;
+            // window.location.href = url;
+            window.open(url, '_blank');
           } else if (timeDiff > 15) {
             this.openDialog('Appointment time is not here yet!')
             console.log('Appointment time is not here yet!');
