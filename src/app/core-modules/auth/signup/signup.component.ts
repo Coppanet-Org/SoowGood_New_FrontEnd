@@ -1529,7 +1529,7 @@ export class SignupComponent implements OnInit {
                     this.loadAuth();
                   }
                   //let navUrl = this.userType.toLowerCase() + '/dashboard';//'/dashboard'; //'/profile-settings/basic-info';//'/dashboard';
-                  let navUrl = this.userType.toLowerCase() + '/profile-settings/basic-info';//'/dashboard';
+                  let navUrl = this.userType.toLowerCase() + '/dashboard';
                   this._router.navigate([navUrl], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
                     })

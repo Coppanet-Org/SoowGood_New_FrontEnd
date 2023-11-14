@@ -5,6 +5,8 @@ import { Component, Input, OnInit } from '@angular/core';
 //import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -18,7 +20,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private _router: Router,
   ) { }
   ngOnInit(): void {
     if (this.NormalAuth.authInfo() != null) {
@@ -33,7 +36,8 @@ export class HeaderComponent implements OnInit {
     }
   }
   signOut(): void {
-     this.NormalAuth.signOut();
+    this.NormalAuth.signOut();
+    this._router.navigate(['/']);
     //this.MainAuth.signOut();
   }
 }
