@@ -472,6 +472,35 @@ export class SignupComponent implements OnInit {
     }
   }
 
+
+  // Future todo : add resend code feature
+
+  // resendCodeEnabled: boolean = true;
+  // countdown: number = 120;
+  // minutes: number=0;
+  // seconds: number=0;
+
+
+  // initiateResendCode() {
+  //   this.resendCodeEnabled = false;
+  //   this.startCountdown();
+  // }
+  // startCountdown() {
+  //   const countdownInterval = setInterval(() => {
+  //     this.countdown--;
+  //     this.calculateTime();
+  //     if (this.countdown <= 0) {
+  //       this.resendCodeEnabled = true;
+  //       this.countdown = 120;
+  //       clearInterval(countdownInterval); 
+  //     }
+  //   }, 1000); 
+  // }
+  // calculateTime() {
+  //   this.minutes = Math.floor(this.countdown / 60);
+  //   this.seconds = this.countdown % 60;
+  // }
+
   passwordVisibility(field: string) {
     if (field === 'password') {
       this.passwordFieldType =
@@ -587,6 +616,7 @@ export class SignupComponent implements OnInit {
     ) {
       return;
     }
+    // this.initiateResendCode()
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile;
     this.isLoading = true;
@@ -607,6 +637,12 @@ export class SignupComponent implements OnInit {
         }
       );
   }
+
+
+  back(){
+    this.otpModal = false
+  }
+
 
   verify() {
     let otp = this.otp;
