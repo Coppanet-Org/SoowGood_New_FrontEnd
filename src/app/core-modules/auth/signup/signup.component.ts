@@ -44,6 +44,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { max } from 'rxjs';
 
 function customNameValidator(
   control: AbstractControl
@@ -158,6 +159,8 @@ export class SignupComponent implements OnInit {
   fileList: File[] = [];
   fileNames: any[] = [];
 
+
+
   idFileList: File[] = [];
   idFileNames: any[] = [];
 
@@ -229,7 +232,8 @@ export class SignupComponent implements OnInit {
   specializationName: any;
   specialityName: any;
   sp1or2: any = false;
-
+  x: any = true;
+  y: any = true;
   detectChnage: boolean = false;
   durationList: any = [
     { id: 1, name: '1 year' },
@@ -288,9 +292,10 @@ export class SignupComponent implements OnInit {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
               this.degreeMendatoryMassage =
-                'You must provide your degree info as ' +
+                this.degreeMendatoryMassage =
+                'You have selected ' +
                 this.specialityName +
-                ' specialist.';
+                ' as your specialist. You must include your degrees according to your speciality.';
             } else if (this.specialityId == 1) {
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
             } else if (this.specialityId == 1) {
@@ -336,9 +341,9 @@ export class SignupComponent implements OnInit {
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
                   this.spMendatoryMassage =
-                    'You must select specializaion for ' +
+                    'You Can select Maximum 3 specializations as you are a' +
                     this.specialityName +
-                    '. Max. 3';
+                    ' specialist. You must upload documents to prove your specializations.';
                 }
               });
           });
@@ -545,9 +550,9 @@ export class SignupComponent implements OnInit {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
               this.degreeMendatoryMassage =
-                'You must provide your degree info as ' +
-                this.specialityName +
-                ' specialist.';
+                'You have selected ' + 
+                this.specialityName + 
+              ' as your specialist. You must include your degrees according to your speciality.';
             } else if (this.specialityId == 1) {
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
             } else if (this.specialityId == 2) {
@@ -593,9 +598,9 @@ export class SignupComponent implements OnInit {
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
                   this.spMendatoryMassage =
-                    'You must select specializaion for ' +
+                    'You Can select Maximum 3 specializations as you are a' +
                     this.specialityName +
-                    '. Max. 3';
+                    ' specialist. You must upload documents to prove your specializations.)';
                 }
               });
           });
@@ -617,7 +622,7 @@ export class SignupComponent implements OnInit {
             } else {
               this.sp1or2 = false;
               this.documentMassage =
-                '(Just upload a document which can prove that, you a Doctor.)';
+                '(Just upload a document which can prove that, you are a Doctor.)';
             }
           });
       }
@@ -1274,6 +1279,7 @@ export class SignupComponent implements OnInit {
       this.checkFileValidation(event);
     }
     this.attachment.nativeElement.value = '';
+    //this.x = true;
   }
 
   onIdFileChanged(event: any) {
@@ -1434,6 +1440,8 @@ export class SignupComponent implements OnInit {
           this.profilePic = prePaths.replace(re, '');
           this.profPicUrl = this.picUrl + this.profilePic;
         }
+        this.x = false;
+        //this.fileList = [];
       });
   }
 
@@ -1452,6 +1460,7 @@ export class SignupComponent implements OnInit {
           this.profileNid = prePaths.replace(re, '');
           this.profNidUrl = this.picUrl + this.profileNid;
         }
+        this.y = false;
       });
   }
 
