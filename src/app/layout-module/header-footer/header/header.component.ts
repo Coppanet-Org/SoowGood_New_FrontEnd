@@ -37,7 +37,8 @@ export class HeaderComponent implements OnInit {
   }
   signOut(): void {
     this.NormalAuth.signOut();
-    this._router.navigate(['/']);
+    this.isAuthLogin = false;
+    //this._router.navigate(['/']);
     //this.MainAuth.signOut();
   }
 }

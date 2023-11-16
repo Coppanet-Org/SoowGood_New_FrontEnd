@@ -270,10 +270,10 @@ export class SignupComponent implements OnInit {
       this.userType = this.normalAuth.authInfo().userType;
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
+      this.profileStep = this.normalAuth.authInfo().profileStep;
       if (this.specialityId == 1 || this.specialityId == 2) {
         this.sp1or2 = true;
       }
-      this.profileStep = this.normalAuth.authInfo().profileStep;
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
@@ -524,10 +524,10 @@ export class SignupComponent implements OnInit {
   loadAuth() {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
+      this.userType = this.normalAuth.authInfo().userType;
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
-      this.userType = this.normalAuth.authInfo().userType;
       if (this.specialityId == 1 || this.specialityId == 2) {
         this.sp1or2 = true;
       }
