@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class DoctorScheduleStateService {
   private doctorSlotList = new BehaviorSubject<any>([]);
   private doctorScheduleList = new BehaviorSubject<any>([]);
-  private selectedSlot = new BehaviorSubject<any>({});
+  private selectedSlot = new Subject();
 
   constructor() {}
   // doctor available slots after filter

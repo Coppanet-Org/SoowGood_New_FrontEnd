@@ -7,6 +7,8 @@ import { SkeletonModule } from '../skeleton/skeleton.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShowPrescriptionModalModule } from '../show-prescription-modal/show-prescription-modal.module';
 import { AppointmentDialogComponent } from '../../components/appointment-dialog/appointment-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -22,6 +24,7 @@ import { AppointmentDialogComponent } from '../../components/appointment-dialog/
     RouterModule.forChild([]),
     SkeletonModule,
     ShowPrescriptionModalModule
+
   ],
   exports:[
     AllAppointmentsComponent

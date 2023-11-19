@@ -286,6 +286,16 @@ export class SignupComponent implements OnInit {
   // updated start
   ngOnInit(): void {
     this.loadForm();
+    
+    this.genderList = CommonService.getEnumList(Gender);
+    this.doctorSpeciality
+      .getList()
+      .subscribe((res) => (this.specialties = res));
+    this.titleList = CommonService.getEnumList(DoctorTitle);
+    this.doctorProfileService.getList().subscribe((d) => {
+      this.doctorList = d;
+      this.lastCount = this.doctorList.length;
+    });
     const authInfo = this.normalAuth.authInfo();
     if (authInfo == null) {
       return;
@@ -301,15 +311,6 @@ export class SignupComponent implements OnInit {
       this.handleProfileStep2();
     }
 
-    this.genderList = CommonService.getEnumList(Gender);
-    this.doctorSpeciality
-      .getList()
-      .subscribe((res) => (this.specialties = res));
-    this.titleList = CommonService.getEnumList(DoctorTitle);
-    this.doctorProfileService.getList().subscribe((d) => {
-      this.doctorList = d;
-      this.lastCount = this.doctorList.length;
-    });
   }
   ngOnDestroy(): void {
     this.destroy$.next();

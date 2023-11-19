@@ -1,3 +1,4 @@
+import { TosterService } from 'src/app/shared/services/toster.service';
 import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingDialogComponent } from '../../components/booking-dialog/booking-dialog.component';
@@ -13,36 +14,47 @@ import { Router } from '@angular/router';
 export class DoctorCardComponent implements OnInit {
   @Input() doctorDetails: any;
   doctorScheduleList: DoctorScheduleDto[] = [];
+  isLoading: boolean = false;
   constructor(
     public dialog: MatDialog,
     private DoctorScheduleService: DoctorScheduleService,
-    private router: Router
+    private router: Router,
+    private TosterService : TosterService
   ) {}
 
   ngOnInit(): void {
+    // if (this.doctorDetails != 'undefine || null') {
+    //   this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
+    //     this.doctorDetails.id
+    //   ).subscribe((res) => {
+    //     this.doctorScheduleList = res
+    //   });
+    // }
+  }
+
+  openDialog(): void {
+   this.isLoading = true
     if (this.doctorDetails != 'undefine || null') {
       this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
         this.doctorDetails.id
       ).subscribe((res) => {
-        this.doctorScheduleList = res
-      });
-    }
-  }
-
-  openDialog(): void {
-      if (this.doctorScheduleList.length > 0 && this.doctorDetails) {
+        this.isLoading = false
+      if (res?.length > 0 && this.doctorDetails) {
         const dialogRef = this.dialog.open(BookingDialogComponent, {
           maxWidth:600,
           minWidth: 450,
           data: {
             doctorDetails: this.doctorDetails,
-            doctorScheduleInfo: this.doctorScheduleList,
+            doctorScheduleInfo: res,
           },
         });
         dialogRef.afterClosed().subscribe((result) => {});
       } else {
-        console.log(`${this.doctorDetails} or ${this.doctorScheduleList} not found`);
+        this.TosterService.customToast(`No Details/Schedule found`,"warning")
       }
+      });
+    }
+
   }
   goToProfile(){
       this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
