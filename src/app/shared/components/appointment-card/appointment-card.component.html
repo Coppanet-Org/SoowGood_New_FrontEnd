@@ -12,14 +12,20 @@
 
   <div class="px-6 ">
     <!-- <p class="text-[22px] font-Roboto font-semibold text-primary/80 flex justify-between"> {{appointment.scheduleDayofWeek}} {{ appointment.appointmentDate | date: 'hh:mm a' }}</p> -->
-    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between "><b>Date : </b> {{appointment.appointmentDate | date}}  </p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Doctor Fee :</b> {{appointment.totalAppointmentFee}} tk.</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Type : </b>{{appointment.appointmentTypeName}}</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Consultancy Type : </b>{{appointment.consultancyTypeName}}</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Appointment Serial: </b>{{appointment.appointmentSerial}}</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Patient Name: </b>{{appointment.patientName}}</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Status :  </b><span class="py-.5 px-3 bg-yellow-100 text-yellow-800 rounded-lg"> {{appointment.appointmentStatus == 1 ? "Coming soon" : appointment.appointmentStatus == 4 ? "Completed" : "Cancel"}}</span></p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between "><b>Reschedule : </b><a class="py-1 underline cursor-pointer"> Send Request </a></p>
+    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Code : </b> {{appointment.appointmentCode}}  </p>
+    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date & Time : </b> {{appointment.appointmentDate | date}} - {{appointment.appointmentTime}}</p>
+    <!--<p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date : </b> {{appointment.appointmentTime | date}}  </p>-->
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Doctor Fee :</b> {{appointment.totalAppointmentFee}} tk.</p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Appointment Type : </b>{{appointment.appointmentTypeName}}</p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Consultancy Type : </b> <span class="badge "><i *ngIf="appointment.consultancyTypeName == 'online'" class="fa-solid fa-video"></i>{{appointment.consultancyTypeName}}</span></p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Appointment Serial:  </b>{{appointment.appointmentSerial}}</p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between">
+      <b>Status :  </b>
+      <span [class]="appointment.appointmentStatus == 4 ? 'bg-green-100 text-green-950 py-.5 px-3 rounded-lg'  : 'bg-yellow-100 py-.5 px-3  text-yellow-800 rounded-lg' ">
+        {{appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus == 4 ? "Completed" : appointment.appointmentStatus == 5 ? "Cancelled" : "Progress"}}
+      </span>
+    </p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Reschedule : </b><a class="py-1 underline cursor-pointer"> Send Request </a></p>
   </div>
   <div class="flex w-full justify-between gap-4 p-4">
     <button class="btn-secondary-light hover:text-white hover:bg-secondary bg-primary/90 text-white w-1/2 mr-0">
@@ -32,7 +38,7 @@
       <i class="fa-solid fa-prescription mr-1"></i> Prescription
     </button>
 
-    <button *ngIf="appointment.appointmentStatus == 1"
+    <button *ngIf="appointment.appointmentStatus == 2"
             (click)="goToJoinCall(appointment,'patient')"
             class="btn-secondary-light w-1/2 mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border">
       <i class="fa-solid fa-phone-volume mr-1"></i> Join Call
@@ -55,12 +61,19 @@
 
   <div class="px-6 ">
     <!-- <p class="text-[22px] font-Roboto font-semibold text-primary/80 flex justify-between"> {{appointment.scheduleDayofWeek}} {{ appointment.appointmentDate | date: 'hh:mm a' }}</p> -->
-    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date : </b> {{appointment.appointmentDate | date}}  </p>
+    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Code : </b> {{appointment.appointmentCode}}  </p>
+    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date & Time : </b> {{appointment.appointmentDate | date}} - {{appointment.appointmentTime }}</p>
+    <!--<p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date : </b> {{appointment.appointmentTime | date}}  </p>-->
     <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Doctor Fee :</b> {{appointment.totalAppointmentFee}} tk.</p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Appointment Type : </b>{{appointment.appointmentTypeName}}</p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Consultancy Type : </b> <span class="badge "><i *ngIf="appointment.consultancyTypeName == 'online'" class="fa-solid fa-video"></i>{{appointment.consultancyTypeName}}</span></p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Appointment Serial:  </b>{{appointment.appointmentSerial}}</p>
-    <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Status :  </b><span [class]="appointment.appointmentStatus == 4 ? 'bg-green-100 text-green-950 py-.5 px-3 rounded-lg'  : 'bg-yellow-100 py-.5 px-3  text-yellow-800 rounded-lg' "> {{appointment.appointmentStatus == 1 ? "Coming soon" : appointment.appointmentStatus == 4 ? "Completed" : "Progress"}}</span></p>
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between">
+      <b>Status :  </b>
+      <span [class]="appointment.appointmentStatus == 4 ? 'bg-green-100 text-green-950 py-.5 px-3 rounded-lg'  : 'bg-yellow-100 py-.5 px-3  text-yellow-800 rounded-lg' ">
+        {{appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus == 4 ? "Completed" : appointment.appointmentStatus == 5 ? "Cancelled" : "Progress"}}
+      </span>
+    </p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between"><b>Reschedule : </b><a class="py-1 underline cursor-pointer"> Send Request </a></p>
   </div>
   <div class="grid grid-cols-2 flex-wrap w-full justify-between gap-4 p-4">
@@ -70,7 +83,7 @@
     </button>
 
 
-    <button *ngIf="appointment.appointmentStatus == 1"
+    <button *ngIf="appointment.appointmentStatus == 2"
             (click)="goToJoinCall(appointment,'doctor')"
             class="btn-secondary-light  w-full   mr-0 hover:text-white hover:bg-secondary border-secondary-dark/30 border">
       <i class="fa-solid fa-phone-volume mr-1"></i> Join Call

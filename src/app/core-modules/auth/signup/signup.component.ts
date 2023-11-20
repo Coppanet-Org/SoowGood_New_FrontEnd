@@ -45,6 +45,7 @@ import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { max } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 function customNameValidator(
   control: AbstractControl
@@ -56,7 +57,8 @@ function customNameValidator(
   }
 
   // Regular expression to validate only letters and numbers at the end
-  const regex = /^[a-zA-Z]+[0-9]*$/;
+  ///^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/;// 
+  const regex = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,4}$/;///^[a-zA-Z]{3,}+[0-9]*$/;
 
   if (!regex.test(value) || value.length < 3) {
     return { invalidName: true };
@@ -105,9 +107,9 @@ export class CustomValidators {
 
   // Validate that the password starts with an uppercase letter
   static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
-    console.log("startsWithUppercase");
+    //console.log("startsWithUppercase");
     const value = control.value as string;
-    if (value && !/^[A-Z]/.test(value)) {
+    if (value && !/^[A-Za-z]/.test(value)) {
 
       return { startsWithUppercase: true };
     }
@@ -150,6 +152,7 @@ export class CustomValidators {
   selector: 'app-signup-component',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  providers: [DatePipe]
 })
 export class SignupComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
@@ -249,6 +252,8 @@ export class SignupComponent implements OnInit {
   lastCount: any;
   formSubmitted: boolean = false;
   countryList = countries;
+  todayDate:any = new Date();
+  //document.getElementById("myDate").min = new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate();
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -265,10 +270,14 @@ export class SignupComponent implements OnInit {
     private http: HttpClient,
     private cdRef: ChangeDetectorRef,
     private doctorProfilePicService: DocumentsAttachmentService,
-    private TosterService: TosterService
-  ) { }
+    private TosterService: TosterService,
+    private datePipe:DatePipe
+  ) {
+    this.todayDate = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+  }
 
   ngOnInit(): void {
+
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
       this.userType = this.normalAuth.authInfo().userType;
@@ -439,6 +448,7 @@ export class SignupComponent implements OnInit {
   }
 
   loadForm() {
+    //document.getElementById("myDate").min = new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate();
     this.formGroup = this.fb.group({
       mobile: [
         '',
@@ -457,7 +467,7 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Z]+[0-9]*$/), // Enforce letters and numbers at the end
+          //Validators.pattern(/^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/),//(/^[A-Za-z]+\s+[A-Za-z]+$/), // Enforce letters and numbers at the end
           customNameValidator,
         ],
       ],
@@ -491,7 +501,7 @@ export class SignupComponent implements OnInit {
       country: ['Bangladesh', Validators.required],
       address: ['', Validators.required],
       zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{4,9}$/)]],
       bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
       specialityId: ['0', Validators.required],
       identityNumber: [

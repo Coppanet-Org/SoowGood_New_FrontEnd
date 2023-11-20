@@ -141,11 +141,11 @@
               <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('required')">
                 Please enter your full name.
               </mat-error>
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('pattern')">
+              <!--<mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('pattern')">
                 Full name should contain only letters and numbers at the end.
-              </mat-error>
+              </mat-error>-->
               <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('invalidName')">
-                Full name should be at least 3 characters long and follow the specified pattern.
+                Full name should be with only alphabet and at least 3 characters long.
               </mat-error>
             </div>
           </div>
@@ -196,7 +196,7 @@
                 Date of Birth
               </label> -->
               <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="date" onkeydown="return false"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    [max]="todayDate"  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <mat-error *ngIf="formSubmitted && userInfoForm.get('dateOfBirth')?.hasError('required')">
                 Please enter your birth date.
               </mat-error>
@@ -210,14 +210,14 @@
               <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Reg Number
               </label> -->
-              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number"
+              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number" type="number"
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('required')">
                 Please enter your BMDC number.
               </mat-error>
               <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('pattern')">
-                BMDC number should be a 9-digit number.
+                BMDC number should be a 4-9 digit number.
               </mat-error>
             </div>
           </div>
@@ -227,7 +227,7 @@
                 BMDC Exp. Date
               </label> -->
               <input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" id="date" onkeydown="return false"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    [min]="todayDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('required')">
                 Please enter the BMDC expire date.
@@ -279,7 +279,7 @@
               <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Zip Code
               </label> -->
-              <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code" placeholder="Zip Code"
+              <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code" placeholder="Zip Code" type="number"
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
@@ -368,21 +368,22 @@
                   Password is required.
                 </mat-error>
 
-                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('startsWithUppercase')">
-                  Password must start with an uppercase letter.
-                </mat-error>
-
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('isAtLeast6Characters')">
                   Password must be at least 6 characters long.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('startsWithUppercase')">
+                  Password must include an uppercase letter and a lower case letter.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesNumber')">
+                  Password must include a number.
                 </mat-error>
 
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
                   Password must include a special character.
                 </mat-error>
 
-                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesNumber')">
-                  Password must include a number.
-                </mat-error>
               </div>
             </div>
           </div>
