@@ -36,7 +36,8 @@ import { DoctorScheduleStateService } from '../../services/states/doctors-states
 import { DoctorBookingStateService } from '../../services/states/doctors-states/doctor-booking-state.service';
 import { SubSink } from 'SubSink';
 import { CommonService } from '../../services/common.service';
-import { AppointmentType } from 'src/app/proxy/enums';
+import { AppointmentType, Gender } from 'src/app/proxy/enums';
+import { customNameValidator } from '../../utils/auth-helper';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -88,6 +89,7 @@ export class BookingDialogComponent implements OnInit {
   appointmentType:any;
   formSubmitted: boolean = false;
   showEmptySlot: string="";
+  genderList:any;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -127,6 +129,7 @@ export class BookingDialogComponent implements OnInit {
     this.selectedSlotInfo = ''
     this.dataLoader = true;
     this.appointmentType = CommonService.getEnumList(AppointmentType);
+    this.genderList = CommonService.getEnumList(Gender);
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
       .subscribe((slot: any) => {
@@ -167,7 +170,9 @@ export class BookingDialogComponent implements OnInit {
       .subscribe((res) => {
         this.userPatientList = res;
       });
+     
 
+      //  filtering start
     const selectedItem1$: any = this.form
       .get('appointmentDate')
       ?.valueChanges.pipe(startWith(this.form.get('appointmentDate')?.value));
@@ -194,13 +199,12 @@ export class BookingDialogComponent implements OnInit {
         let isMatchFound = false;
         const day = dayFromDate(String(data[0]));
 
-        if (data[1] === 0) {
+        if (data[3] == 0) {
           this.showAppointmentTypeSelectBox = true;
           this.filterData = finalFilter;
           this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
             finalFilter
           );
-
           return;
         }
         if (data[0] && data[1]) {
@@ -334,12 +338,20 @@ export class BookingDialogComponent implements OnInit {
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
-      patientName: ['', Validators.required],
+      patientName: ['', [Validators.required, Validators.minLength(3), customNameValidator]],
       patientProfileId: [''],
-      age: [, Validators.required],
-      gender: [, Validators.required],
-      bloodGroup: ['', Validators.required],
-      patientMobileNo: ['', Validators.required],
+      age: ['', [
+        Validators.required,
+        Validators.pattern(/^[1-9][0-9]{0,2}$/),
+      ]],
+      gender: ['0', Validators.required],
+      bloodGroup: ['0', Validators.required],
+      patientMobileNo: ['', [
+        Validators.required,
+        Validators.pattern(/^(?:88)?[0-9]{11}$/),
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ],],
       patientEmail: [
         '' || this.profileInfo?.email || 'admin@gmail.com',
         Validators.required,
@@ -350,23 +362,24 @@ export class BookingDialogComponent implements OnInit {
   }
 
   // change step
-  onStepChange(e: any) {
+  onStepChange(e: number) {
     
     if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
 
 
-    if (e === 3 && this.form.valid && this.form.get("doctorScheduleType")?.value != 0 && this.form.get("appointmentType")?.value != 0) {
+    if (e === 3 && this.form.valid) {
       this.formSubmitted = true
-
-      if (!this.selectedSlotInfo?.doctorScheduleId) {
+      if (this.filterData.length <= 0 && !this.selectedSlotInfo?.doctorScheduleId ) {
         this.TosterService.customToast(
-          'Please select a slot',
+          'No slot found your selected options!',
           'warning'
         );
         return
       }
+
+
 
       const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
       const finalSchedule = this.doctorData.doctorScheduleInfo.find(
@@ -374,6 +387,7 @@ export class BookingDialogComponent implements OnInit {
       );
 
       if (finalSchedule && finalSchedule.consultancyType) {
+        this.formSubmitted = true
         const {
           consultancyType,
           doctorChamberId,
@@ -437,6 +451,7 @@ export class BookingDialogComponent implements OnInit {
         };
   
         if (infoForBooking && user) {
+          this.formSubmitted = true
           if (this.bookingForm.get('bookMyself')?.value == 'bookMyself') {
             const obj = {
               id: user?.id,
@@ -458,6 +473,7 @@ export class BookingDialogComponent implements OnInit {
         }
         // this.stepHeading = 'Confirm';
       } else {
+        this.formSubmitted = true
         this.TosterService.customToast(
           'Please select a slot',
           'warning'
@@ -492,10 +508,15 @@ export class BookingDialogComponent implements OnInit {
 
   //user existing check
   userExistCheck(status: string): void {
-    this.createPatientForm
-      .get(['patientName', 'age', 'gender', 'bloodGroup', 'patientMobileNo'])
-      ?.reset();
+    this.createPatientForm.get('patientName')?.reset();
+this.createPatientForm.get('age')?.reset();
+this.createPatientForm.get('gender')?.reset();
+this.createPatientForm.get('bloodGroup')?.reset();
+this.createPatientForm.get('patientMobileNo')?.reset();
 
+
+    console.log( this.createPatientForm.value);
+    
     switch (status) {
       case 'new-user':
         this.isNewUser = true;
@@ -511,6 +532,8 @@ export class BookingDialogComponent implements OnInit {
   }
   //create new patient under user
   createNewPatient(): void {
+    this.formSubmitted = true
+
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
