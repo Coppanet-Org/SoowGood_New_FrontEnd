@@ -66,13 +66,142 @@
                     <form [formGroup]="form">
                         <div class="-mx-3 flex flex-wrap">
             
-                            <ng-container class="w-full" *ngFor="let config of patientInputData">
+                            <!-- <ng-container class="w-full" *ngFor="let config of patientInputData">
                                 <app-input [label]="config.label" [inputId]="config.inputId" [isSelectInput]="config.isSelect"
                                     [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
                                     [formControlName]="config.formControlName" [type]="config.type" class="sm:w-1/3" [placeholder]="config.label"></app-input>
-                            </ng-container>
-            
-               
+                            </ng-container> -->
+                            <div class="w-full px-3 sm:w-1/4 ">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Full Name
+                                </label>
+                                <input autocomplete="off" formControlName="fullName" type="text" name="name" id="name"
+                                  placeholder="Full Name"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    
+                                <p *ngIf="formSubmitted && form.get('fullName')?.hasError('required')">
+                                  Please enter your full name.
+                                </p>
+                                <p *ngIf="formSubmitted && form.get('fullName')?.hasError('pattern')">
+                                  Full name should contain only letters and numbers at the end (optional).
+                                </p>
+                                <p *ngIf="formSubmitted && form.get('fullName')?.hasError('invalidName')">
+                                  Full name should be at least 3 characters long
+                                </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Email
+                                </label>
+                                <input autocomplete="off" formControlName="email" type="email" placeholder="example@yourmail.com"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                <p *ngIf="formSubmitted && form.get('email')?.hasError('required')">
+                                  Please enter your email.
+                                </p>
+                                <p *ngIf="formSubmitted && form.get('email')?.hasError('pattern')">
+                                  Email should be valid.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Gender
+                                </label>
+                                <select formControlName="gender" name="select" id="select"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                    
+                                  <option value="0" class="font-semibold text-gray-500">Select gender</option>
+                                  <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-gray-500">
+                                    {{item.name}}</option>
+                                </select>
+                                <p *ngIf="formSubmitted && form.get('gender')?.value === '0'">
+                                  Please select your gender.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Date of Birth
+                                </label>
+                                <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="date"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                <p *ngIf="formSubmitted && form.get('dateOfBirth')?.hasError('required')">
+                                  Please enter your birth date.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Address
+                                </label>
+                                <input autocomplete="off" formControlName="address" id="area" placeholder="Flat No - 1346, Road no - 02, block - C, Mohakhali DOHS"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                  <p *ngIf="formSubmitted && form.get('address')?.hasError('required')">
+                                    Address is required.
+                                  </p>
+                                  <p *ngIf="formSubmitted && form.get('address')?.hasError('pattern')">
+                                    Address should only contain alphanumeric characters and spaces.
+                                  </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  City
+                                </label>
+                                <input autocomplete="off" formControlName="city" id="state" placeholder="Enter city"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    
+                                <p *ngIf="formSubmitted && form.get('city')?.hasError('required')">
+                                  Please enter your city name.
+                                </p>
+                                <p *ngIf="formSubmitted && form.get('city')?.hasError('pattern')">
+                                  city name should contain only letters (no numbers or special characters).
+                                </p>
+                    
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Zip Code
+                                </label>
+                                <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code"
+                                  placeholder="Zip Code"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    
+                                <p *ngIf="formSubmitted && form.get('zipCode')?.hasError('required')">
+                                  Please enter your zip code.
+                                </p>
+                                <p *ngIf="formSubmitted && form.get('zipCode')?.hasError('pattern')">
+                                  Zip code should be a 4-digit number.
+                                </p>
+                    
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Country
+                                </label>
+                                <select formControlName="country" id="country" placeholder="Enter Country"
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                    
+                                  <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
+                                    {{item}}</option>
+                    
+                                </select>
+                                <p *ngIf="formSubmitted && form.get('country')?.hasError('required')">
+                                  Please select your country!
+                                </p>
+                              </div>
+                            </div>
                         </div>
                         <div class="flex items-center justify-end w-fit mt-6 ">
                             <button

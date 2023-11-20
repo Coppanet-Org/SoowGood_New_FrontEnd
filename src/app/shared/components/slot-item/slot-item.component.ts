@@ -12,4 +12,8 @@ export class SlotItemComponent {
   selectSlot(data:{}) {
     this.DoctorScheduleStateService.sendSelectedSlot(data);
   }
+  formatTime(time: string): string {
+    const formattedTime = new Date(`1970-01-01T${time}`);
+    return formattedTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  }
 }

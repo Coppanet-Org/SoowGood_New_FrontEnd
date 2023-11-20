@@ -13,6 +13,8 @@ import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/m
 import { DocumentsComponent } from './documents/documents.component';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Route[] = [
   {
@@ -64,7 +66,9 @@ const routes: Route[] = [
     CommonModule,RouterModule.forChild(routes),
     MaterialModulesModule,
     InputModule,
-    LoaderModule
+    LoaderModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
 
   providers: [DatePipe], 

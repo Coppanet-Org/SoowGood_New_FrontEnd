@@ -178,3 +178,8 @@ label.radio-card {
   margin-top: 5px;
   display: inline-block;
 }
+a.disabled {
+  color: #999; 
+  cursor: not-allowed; 
+  pointer-events: none; 
+}

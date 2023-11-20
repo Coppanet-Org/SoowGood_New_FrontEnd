@@ -50,7 +50,7 @@ export class BookingReviewComponent implements OnInit {
        if (response && response.status === 'SUCCESS') {
          window.location = response.gatewayPageURL;
          localStorage.removeItem('booking-info')
-         this.ToasterService.customToast("Payemnt success",'success')
+         this.ToasterService.customToast("Booking confirm success",'success')
        } else {
         this.ToasterService.customToast("Unable to initiate your payment request. Please contact our support team.",'error')
        }

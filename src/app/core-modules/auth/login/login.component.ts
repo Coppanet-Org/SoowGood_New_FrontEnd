@@ -15,8 +15,9 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { throwError } from 'rxjs';
+import { throwError, catchError } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/utils/auth-helper';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     mobileNo: '',
     password: '',
   };
-  formSubmitted:boolean = false
+  formSubmitted: boolean = false;
   errorMessage: string = '';
   loginForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router,
     private ToasterService: TosterService,
     private NormalAuth: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -60,45 +61,173 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        // [
-        //   Validators.required,
-        //   Validators.pattern(/^(?:88)?[0-9]{11}$/),
-        //   Validators.minLength(11),
-        //   Validators.maxLength(11),
-        // ],
+        [
+          Validators.required,
+          Validators.pattern(/^(?:88)?[0-9]{11}$/),
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
       ],
 
       password: [
         this.defaultAuth.password,
         Validators.compose([
-          
             Validators.required,
-            CustomValidators.startsWithUppercase, 
-            CustomValidators.isAtLeast6Characters, 
+            CustomValidators.startsWithUppercase,
+            CustomValidators.isAtLeast6Characters,
             CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber, 
-          
+            CustomValidators.includesNumber,
+
         ]),
       ],
     });
   }
 
-
-
-
-  passwordVisibility(field:string){
+  passwordVisibility(field: string) {
     if (field === 'password') {
-      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
     } else if (field === 'confirmPassword') {
-      this.confirmPasswordFieldType = this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
   }
 
+  // onSubmit(): void {
+  //   this.formSubmitted = true
+  //   if (!this.loginForm.valid && !this.loginForm.touched) {
+  //     this.ToasterService.customToast(
+  //       'Please filled all required field',
+  //       'warning'
+  //     );
+  //     this.isLoading = false;
+  //     return;
+  //   } else {
+  //     if (this.loginForm.invalid) {
+  //       this.isLoading = false;
+  //       return
+  //     }
+  //     this.formSubmitted = false
+  //     this.isLoading = true;
+  //     let userType = '';
+  //     this.errorMessage = '';
+  //     this.hasError = false;
+  //     const username = this.formControl['mobileNo'].value;
+  //     const password = this.formControl['password'].value;
+  //     this.loginDto.userName = username;
+  //     this.loginDto.email = '';
+  //     this.loginDto.password = password;
+  //     this.loginDto.rememberMe = false;
+  //     let loginResponseData: LoginResponseDto;
+
+  //     try {
+  //       this.authService
+  //         .loginByUserDto(this.loginDto)
+  //         .subscribe((loginResponse: LoginResponseDto) => {
+  //           if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
+  //             this.isLoading = false;
+  //             this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : '')
+  //               .subscribe((doctorDto: DoctorProfileDto) => {
+  //                 let saveLocalStorage = {
+  //                   identityNumber: doctorDto.identityNumber,
+  //                   doctorName: doctorDto.fullName,
+  //                   bmdcRegNo: doctorDto.bmdcRegNo,
+  //                   isActive: doctorDto.isActive,
+  //                   userId: doctorDto.userId,
+  //                   id: doctorDto.id,
+  //                   specialityId: doctorDto.specialityId,
+  //                   profileStep: doctorDto.profileStep,
+  //                   createFrom: doctorDto.createFrom,
+  //                   userType: loginResponse.roleName.toString().toLowerCase(),
+  //                 };
+  //                 this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+  //                 if (
+  //                   doctorDto.profileStep == 1 ||
+  //                   doctorDto.profileStep == 2
+  //                 ) {
+  //                   userType = '/signup';
+  //                 } else {
+  //                   userType = doctorDto.isActive
+  //                     ? loginResponse.roleName.toString() + '/dashboard'
+  //                     : loginResponse.roleName.toString() +
+  //                     '/profile-settings/basic-info';
+  //                 }
+  //                 this._router
+  //                   .navigate([userType.toLowerCase()], {
+  //                     state: { data: doctorDto }, // Pass the 'res' object as 'data' in the state object
+  //                   })
+  //                   .then((r) => {
+  //                     this.ToasterService.customToast(
+  //                       loginResponse.message ? loginResponse.message : ' ',
+  //                       'success'
+  //                     );
+  //                   });
+  //               });
+
+  //           }
+
+  //           else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
+  //             this.isLoading = false;
+  //             this.subs.sink = this.PatientProfileService.getByUserName(
+  //               loginResponse.userName ? loginResponse.userName : ''
+  //             )
+  //               .subscribe((patientDto: PatientProfileDto) => {
+  //               let saveLocalStorage = {
+  //                 userId: patientDto.userId,
+  //                 id: patientDto.id,
+  //                 userType: loginResponse.roleName.toString().toLowerCase(),
+  //               };
+  //               this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+  //               let userType = loginResponse.roleName.toString() + '/dashboard';
+
+  //               this._router
+  //                 .navigate([userType.toLowerCase()], {
+  //                   state: { data: patientDto }, // Pass the 'res' object as 'data' in the state object
+  //                 })
+  //                 .then((r) => {
+  //                   this.ToasterService.customToast(
+  //                     loginResponse.message ? loginResponse.message : ' ',
+  //                     'success'
+  //                   );
+  //                 });
+  //             });
+  //           }
+
+  //           else {
+  //             this.isLoading = false;
+  //             // this.loginForm.get('mobileNo')?.setErrors({ customError: loginResponse.message });
+  //             // this.loginForm.get('password')?.setErrors({ customError: loginResponse.message });
+
+  //             this.ToasterService.customToast(
+  //               loginResponse.message ? loginResponse.message : ' ',
+  //               'error'
+  //             );
+  //           }
+
+  //         })
+
+  //     } catch (error: any) {
+  //       this.hasError = true;
+  //       console.log(error.error,"hhh");
+
+  //       if (error.message === "'tokenEndpoint' should not be null") {
+  //         this.errorMessage = 'Identity server is not running';
+  //       }
+  //       if (error.message === "There is no entity DoctorProfile with id = !") {
+  //         this.ToasterService.customToast('User not found',
+  //           'error'
+  //         );
+  //       }
+
+  //     }
+  //   }
+  // }
   onSubmit(): void {
-    this.formSubmitted = true
+    this.formSubmitted = true;
+
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
-        'Please filled all required field',
+        'Please fill in all required fields',
         'warning'
       );
       this.isLoading = false;
@@ -106,9 +235,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       if (this.loginForm.invalid) {
         this.isLoading = false;
-        return
+        return;
       }
-      this.formSubmitted = false
+
+      this.formSubmitted = false;
       this.isLoading = true;
       let userType = '';
       this.errorMessage = '';
@@ -119,98 +249,127 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginDto.email = '';
       this.loginDto.password = password;
       this.loginDto.rememberMe = false;
-      let loginResponseData: LoginResponseDto;
-
 
       try {
         this.authService
           .loginByUserDto(this.loginDto)
           .subscribe((loginResponse: LoginResponseDto) => {
-            if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
-              this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : '')
-                .subscribe((doctorDto: DoctorProfileDto) => {
+            if (
+              loginResponse.success &&
+              loginResponse.roleName[0] == 'Doctor'
+            ) {
+              this.isLoading = false;
+              this.subs.sink = this.doctorProfileService
+                .getByUserName(
+                  loginResponse.userName ? loginResponse.userName : ''
+                )
+                .subscribe(
+                  (doctorDto: DoctorProfileDto) => {
+                    let saveLocalStorage = {
+                      identityNumber: doctorDto.identityNumber,
+                      doctorName: doctorDto.fullName,
+                      bmdcRegNo: doctorDto.bmdcRegNo,
+                      isActive: doctorDto.isActive,
+                      userId: doctorDto.userId,
+                      id: doctorDto.id,
+                      specialityId: doctorDto.specialityId,
+                      profileStep: doctorDto.profileStep,
+                      createFrom: doctorDto.createFrom,
+                      userType: loginResponse.roleName.toString().toLowerCase(),
+                    };
+                    this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                    if (
+                      doctorDto.profileStep == 1 ||
+                      doctorDto.profileStep == 2
+                    ) {
+                      userType = '/signup';
+                    } else {
+                      userType = doctorDto.isActive
+                        ? loginResponse.roleName.toString() + '/dashboard'
+                        : loginResponse.roleName.toString() +
+                          '/profile-settings/basic-info';
+                    }
+                    this._router
+                      .navigate([userType.toLowerCase()], {
+                        state: { data: doctorDto },
+                      })
+                      .then(() => {
+                        this.ToasterService.customToast(
+                          loginResponse.message ? loginResponse.message : ' ',
+                          'success'
+                        );
+                      });
+                  },
+                  (doctorError: any) => {
+                    // Handle DoctorProfile service error
+                    this.handleProfileError(doctorError, loginResponse);
+                  }
+                );
+            }
+            if (
+              loginResponse.success &&
+              loginResponse.roleName[0] == 'Patient'
+            ) {
+              this.isLoading = false;
+              this.subs.sink = this.PatientProfileService.getByUserName(
+                loginResponse.userName ? loginResponse.userName : ''
+              ).subscribe(
+                (patientDto: PatientProfileDto) => {
                   let saveLocalStorage = {
-                    identityNumber: doctorDto.identityNumber,
-                    doctorName: doctorDto.fullName,
-                    bmdcRegNo: doctorDto.bmdcRegNo,
-                    isActive: doctorDto.isActive,
-                    userId: doctorDto.userId,
-                    id: doctorDto.id,
-                    specialityId: doctorDto.specialityId,
-                    profileStep: doctorDto.profileStep,
-                    createFrom: doctorDto.createFrom,
+                    userId: patientDto.userId,
+                    id: patientDto.id,
                     userType: loginResponse.roleName.toString().toLowerCase(),
                   };
                   this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  if (
-                    doctorDto.profileStep == 1 ||
-                    doctorDto.profileStep == 2
-                  ) {
-                    userType = '/signup';
-                  } else {
-                    userType = doctorDto.isActive
-                      ? loginResponse.roleName.toString() + '/dashboard'
-                      : loginResponse.roleName.toString() +
-                      '/profile-settings/basic-info';
-                  }
+                  let userType =
+                    loginResponse.roleName.toString() + '/dashboard';
+
                   this._router
                     .navigate([userType.toLowerCase()], {
-                      state: { data: doctorDto }, // Pass the 'res' object as 'data' in the state object
+                      state: { data: patientDto },
                     })
-                    .then((r) => {
+                    .then(() => {
                       this.ToasterService.customToast(
                         loginResponse.message ? loginResponse.message : ' ',
                         'success'
                       );
                     });
-                });
-              this.isLoading = false;
-
-            }
-
-            else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
-              this.subs.sink = this.PatientProfileService.getByUserName(
-                loginResponse.userName ? loginResponse.userName : ''
-              )
-                .subscribe((patientDto: PatientProfileDto) => {
-                let saveLocalStorage = {
-                  userId: patientDto.userId,
-                  id: patientDto.id,
-                  userType: loginResponse.roleName.toString().toLowerCase(),
-                };
-                this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                let userType = loginResponse.roleName.toString() + '/dashboard';
-
-                this._router
-                  .navigate([userType.toLowerCase()], {
-                    state: { data: patientDto }, // Pass the 'res' object as 'data' in the state object
-                  })
-                  .then((r) => {
-                    this.ToasterService.customToast(
-                      loginResponse.message ? loginResponse.message : ' ',
-                      'success'
-                    );
-                  });
-              });
-              this.isLoading = false;
-            }
-
-            else {
-              this.ToasterService.customToast(
-                loginResponse.message ? loginResponse.message : ' ',
-                'error'
+                },
+                (patientError: any) => {
+                  // Handle PatientProfile service error
+                  this.handleProfileError(patientError, loginResponse);
+                }
               );
-              this.isLoading = false;
             }
-          })
-
-
-
+          });
       } catch (error: any) {
         this.hasError = true;
         if (error.message === "'tokenEndpoint' should not be null") {
           this.errorMessage = 'Identity server is not running';
         }
+      }
+    }
+  }
+
+  // Additional method to handle profile service errors
+  private handleProfileError(error: any, loginResponse: any): void {
+    // console.log(error.error.error.message);
+console.log(loginResponse);
+
+    if (loginResponse) {
+      this.ToasterService.customToast(String(loginResponse.message), 'error');
+      return
+    } else {
+      if (
+        error.error.error.message ===
+        'There is no entity DoctorProfile with id = !'
+      ) {
+        this.ToasterService.customToast('User not found', 'error');
+      } else {
+        this.ToasterService.customToast(
+          String(error.error.error.message),
+          'error'
+        );
       }
     }
   }

@@ -12,6 +12,7 @@ import { DoctorProfileDto } from 'src/app/proxy/dto-models';
 })
 export class PublicDoctorsComponent implements OnInit {
   doctorList: DoctorProfileDto[] = [];
+  dataLoading:boolean = true
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private NormalAuth: AuthService,
@@ -24,11 +25,16 @@ export class PublicDoctorsComponent implements OnInit {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       if (this.DoctorStateService.doctorsList.value.length <= 0) {
         this.DoctorStateService.getAllDoctorList().subscribe(
-          (res) => {(this.doctorList = res) }
+          (res) => {
+            (this.doctorList = res)
+            this.dataLoading = false
+          }
         );
       } else {
         this.DoctorStateService.getDoctorListData().subscribe(
-          (res) => {(this.doctorList = res)}
+          (res) => {(this.doctorList = res)
+            this.dataLoading = false
+          }
         );
       }
     }
