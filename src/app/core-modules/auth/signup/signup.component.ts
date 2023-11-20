@@ -43,17 +43,82 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { CustomValidators, customNameValidator, yearValidator } from 'src/app/shared/utils/auth-helper';
+import { max } from 'rxjs';
 
 
-function customPassingYearValidator(control:any) {
-  const value = control.value;
-  const currentYear = new Date().getFullYear();
-  if (!/^[1-9]\d{3}$/.test(value) || Number(value) > currentYear) {
-    return { invalidPassingYear: true };
+  if (!value) {
+    return null; // If the field is empty, consider it valid
   }
+
+  // Regular expression to validate only letters and numbers at the end
+  const regex = /^[a-zA-Z]+[0-9]*$/;
+
+  if (!regex.test(value) || value.length < 3) {
+    return { invalidName: true };
+  }
+
   return null;
 }
+
+
+
+export function passwordMatchValidator(controlName: string, matchingControlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
+
+    if (matchingControl.errors && !matchingControl.errors['passwordMismatch']) {
+      // return if another validator has already found an error on the matchingControl
+      return;
+    }
+
+    if (control.value !== matchingControl.value) {
+      matchingControl.setErrors({ passwordMismatch: true });
+      console.log('Password mismatch error set');
+    } else {
+      matchingControl.setErrors(null);
+      console.log('Password mismatch error cleared');
+    }
+  };
+}
+function yearValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+
+    if (value && value.length === 10) {
+      const year = value.substring(6);
+      if (year.length === 4 && !isNaN(Number(year))) {
+        return null; // Valid 4-digit year
+      }
+    }
+
+    return { invalidYear: true };
+  };
+}
+
+export class CustomValidators {
+
+  // Validate that the password starts with an uppercase letter
+  static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
+    console.log("startsWithUppercase");
+    const value = control.value as string;
+    if (value && !/^[A-Z]/.test(value)) {
+
+      return { startsWithUppercase: true };
+    }
+    return null;
+  }
+
+
+
+  // Validate that the password is at least 6 characters long
+  static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string;
+    if (value && value.length < 6) {
+      return { isAtLeast6Characters: true };
+    }
+    return null;
+  }
 
 
 
@@ -70,6 +135,8 @@ export class SignupComponent implements OnInit {
   //subs = new SubSink();
   fileList: File[] = [];
   fileNames: any[] = [];
+
+
 
   idFileList: File[] = [];
   idFileNames: any[] = [];
@@ -141,7 +208,9 @@ export class SignupComponent implements OnInit {
   documentMassage: any;
   specializationName: any;
   specialityName: any;
-
+  sp1or2: any = false;
+  x: any = true;
+  y: any = true;
   detectChnage: boolean = false;
   durationList: any = [
     { id: 1, name: '1 year' },
@@ -178,14 +247,18 @@ export class SignupComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private doctorProfilePicService: DocumentsAttachmentService,
     private TosterService: TosterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
+      this.userType = this.normalAuth.authInfo().userType;
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
+      if (this.specialityId == 1 || this.specialityId == 2) {
+        this.sp1or2 = true;
+      }
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
@@ -200,9 +273,10 @@ export class SignupComponent implements OnInit {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
               this.degreeMendatoryMassage =
-                'You must provide your degree info as ' +
+                this.degreeMendatoryMassage =
+                'You have selected ' +
                 this.specialityName +
-                ' specialist.';
+                ' as your specialist. You must include your degrees according to your speciality.';
             } else if (this.specialityId == 1) {
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
             } else if (this.specialityId == 1) {
@@ -248,9 +322,9 @@ export class SignupComponent implements OnInit {
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
                   this.spMendatoryMassage =
-                    'You must select specializaion for ' +
+                    'You Can select Maximum 3 specializations as you are a' +
                     this.specialityName +
-                    '. Max. 3';
+                    ' specialist. You must upload documents to prove your specializations.';
                 }
               });
           });
@@ -382,7 +456,7 @@ export class SignupComponent implements OnInit {
           CustomValidators.includesNumber, // Includes a number
         ],
       ],
-      confirmPassword:['', Validators.required],
+      confirmPassword: ['', Validators.required],
 
       gender: ['0', Validators.required],
       dateOfBirth: ['', Validators.required],
@@ -409,7 +483,8 @@ export class SignupComponent implements OnInit {
       passingYear: ['', [Validators.required, customPassingYearValidator]],
       instituteName: ['', [Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)]],
       instituteCity: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      instituteCountry: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      
+      instituteCountry: ['Bangladesh', Validators.required],
     });
     if (this.specialityId === 1) {
       this.formSpecialization = this.fb.group({
@@ -440,9 +515,13 @@ export class SignupComponent implements OnInit {
   loadAuth() {
     let authInfo = this.normalAuth.authInfo();
     if (authInfo != null) {
+      this.userType = this.normalAuth.authInfo().userType;
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
+      if (this.specialityId == 1 || this.specialityId == 2) {
+        this.sp1or2 = true;
+      }
       if (this.profileStep == 1) {
         this.otpModal = false;
         this.userInfoModal = false;
@@ -457,9 +536,9 @@ export class SignupComponent implements OnInit {
             this.specialityName = n.specialityName;
             if (this.specialityId > 1 && this.specialityId > 2) {
               this.degreeMendatoryMassage =
-                'You must provide your degree info as ' +
-                this.specialityName +
-                ' specialist.';
+                'You have selected ' + 
+                this.specialityName + 
+              ' as your specialist. You must include your degrees according to your speciality.';
             } else if (this.specialityId == 1) {
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
             } else if (this.specialityId == 1) {
@@ -505,9 +584,9 @@ export class SignupComponent implements OnInit {
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
                   this.spMendatoryMassage =
-                    'You must select specializaion for ' +
+                    'You Can select Maximum 3 specializations as you are a' +
                     this.specialityName +
-                    '. Max. 3';
+                    ' specialist. You must upload documents to prove your specializations.)';
                 }
               });
           });
@@ -527,7 +606,7 @@ export class SignupComponent implements OnInit {
                 ' specialist.)';
             } else {
               this.documentMassage =
-                '(Just upload a document which can prove that, you a Doctor.)';
+                '(Just upload a document which can prove that, you are a Doctor.)';
             }
           });
       }
@@ -623,7 +702,7 @@ export class SignupComponent implements OnInit {
 
 
     console.log(this.userInfoForm.value.password);
-    
+
     this.userAccountService
       .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
       .subscribe(
@@ -1081,13 +1160,14 @@ export class SignupComponent implements OnInit {
               'Picture Changed Successfully',
               'success'
             );
+            this.getProfilePic();
+            //this.fileList = [];
           },
           (err) => {
             console.log(err);
           }
         );
     }
-    this.getProfilePic();
   }
 
   uploadNID() {
@@ -1112,13 +1192,13 @@ export class SignupComponent implements OnInit {
               'NID/Passport Changed Successfully',
               'success'
             );
+            this.getNID();
           },
           (err) => {
             console.log(err);
           }
         );
     }
-    this.getNID();
   }
 
   uploadSpDoc() {
@@ -1173,6 +1253,7 @@ export class SignupComponent implements OnInit {
       this.checkFileValidation(event);
     }
     this.attachment.nativeElement.value = '';
+    //this.x = true;
   }
 
   onIdFileChanged(event: any) {
@@ -1333,6 +1414,8 @@ export class SignupComponent implements OnInit {
           this.profilePic = prePaths.replace(re, '');
           this.profPicUrl = this.picUrl + this.profilePic;
         }
+        this.x = false;
+        //this.fileList = [];
       });
   }
 
@@ -1351,6 +1434,7 @@ export class SignupComponent implements OnInit {
           this.profileNid = prePaths.replace(re, '');
           this.profNidUrl = this.picUrl + this.profileNid;
         }
+        this.y = false;
       });
   }
 
@@ -1371,7 +1455,7 @@ export class SignupComponent implements OnInit {
     //        //return;
     //      }
     else {
-      let userType = this.userType.toString().toLowerCase();
+      //let userType = this.userType.toString().toLowerCase();
       let message = 'Congratulations...!!Profile Created Successfully..!!';
       this.subs.sink = this.doctorProfileService
         .get(this.doctorId)
@@ -1417,15 +1501,16 @@ export class SignupComponent implements OnInit {
                     specialityId: res.specialityId,
                     profileStep: res.profileStep,
                     createFrom: res.createFrom,
-                    userType: userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
+                    userType: this.userType//userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
                   };
                   this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
                   if (this.normalAuth) {
                     this.loadAuth();
                   }
-                  userType = userType + '/dashboard';
+                  //userType = userType + '/dashboard';
+                  let navUrl = this.userType.toLowerCase() + '/dashboard';
                   this._router
-                    .navigate([userType.toLowerCase()], {
+                    .navigate([navUrl], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
                     })
                     .then((r) =>

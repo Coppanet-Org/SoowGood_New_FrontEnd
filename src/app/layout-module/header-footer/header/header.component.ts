@@ -30,5 +30,6 @@ export class HeaderComponent implements OnInit {
   signOut(): void {
     // this.NormalAuth.signOut();
     this.MainAuth.signOut();
+    this.isAuthLogin = false;
   }
 }

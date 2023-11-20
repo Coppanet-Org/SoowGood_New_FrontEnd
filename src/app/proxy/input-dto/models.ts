@@ -172,6 +172,13 @@ export interface PrescriptionPatientDiseaseHistoryInputDto extends FullAuditedEn
   diseaseName?: string;
 }
 
+export interface RtcTokenBuilerDto {
+  appid?: string;
+  appCertificate?: string;
+  chanelName?: string;
+  uid: number;
+}
+
 export interface SslCommerzInputDto {
   applicationCode?: string;
   transactionId?: string;

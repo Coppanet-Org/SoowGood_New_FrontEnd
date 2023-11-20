@@ -26,6 +26,16 @@ export class PaymentHistoryService {
     { apiName: this.apiName,...config });
   
 
+  getByAppointmentCode = (appCode: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'GET',
+      responseType: 'text',
+      url: '/api/app/payment-history/by-appointment-code',
+      params: { appCode },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getByTranId = (tranId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PaymentHistoryDto>({
       method: 'GET',
