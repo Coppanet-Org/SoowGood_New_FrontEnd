@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
       } else {
         this.isAuthLogin = false;
       }
-      this.userType = this.NormalAuth.authInfo().userType;
+      this.userType = this.NormalAuth.authInfo().userType.toLowerCase() +'/dashboard';
     }
   }
   signOut(): void {
