@@ -6,7 +6,7 @@
   <div class="signup-form__right drop-shadow-soft relative">
     <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
     <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
+         [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
       <h1 class="text-4xl font-medium">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
@@ -31,8 +31,7 @@
               </div>
             </div>
           </label>
-          <mat-error
-            *ngIf="formSubmitted || formGroup.get('userTypeName')?.invalid && formGroup.get('userTypeName')?.touched">
+          <mat-error *ngIf="formSubmitted || formGroup.get('userTypeName')?.invalid && formGroup.get('userTypeName')?.touched">
             {{ getErrorMessage('userTypeName') }}
           </mat-error>
 
@@ -43,7 +42,7 @@
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
             <input inputmode="numeric" matInput autocomplete="off" type="tel" formControlName="mobile" id="phone"
-              class="form_input" placeholder="018-000-00000" required>
+                   class="form_input" placeholder="018-000-00000" required>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
@@ -57,9 +56,9 @@
           <button class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
+                   stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
               </svg>
               <span>Signup</span>
             </div>
@@ -67,14 +66,14 @@
           </button>
           <p class="text-center">
             Already have an account? <a routerLink="/login"
-              class="text-primary font-medium inline-flex space-x-1 items-center">
+                                        class="text-primary font-medium inline-flex space-x-1 items-center">
               <span>
                 Login now
               </span><span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
+                     stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </span>
             </a>
@@ -84,7 +83,7 @@
     </div>
 
     <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
-      [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
+         [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
       <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
         <img src="../../../../assets/auth/v-code.jpg" alt="">
       </div>
@@ -101,7 +100,7 @@
       </a> -->
       <div class="mt-6">
         <ng-otp-input inputClass="verify-focus" (onInputChange)="onOtpChange($event)"
-          [config]="{length:4,allowNumbersOnly:true }"></ng-otp-input>
+                      [config]="{length:4,allowNumbersOnly:true }"></ng-otp-input>
       </div>
       <div class="flex gap-3 mt-6">
         <button class="btn-secondary w-1/2" (click)="back()">
@@ -114,7 +113,7 @@
     </div>
 
     <div class="max-w-[90%] min-w-[70%] max-h-[90%] overflow-y-scroll lg:max-w-[70%] mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
+         [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form class="mt-5" [formGroup]="userInfoForm" *ngIf="formGroup.get('userTypeName')?.value == 'Doctor'">
@@ -125,7 +124,7 @@
                 Your Title
               </label> -->
               <select formControlName="doctorTitle" name="select" id="doctorTitle"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                 <!-- Default Select Option -->
                 <option value="0" class="font-semibold text-gray-500">Select Title</option>
                 <!-- Loop through titleList to create options -->
@@ -139,9 +138,9 @@
                     Please select your title.
                   </mat-error>
                 </div>
-                <mat-hint
-                  *ngIf="userInfoForm.get('doctorTitle')?.invalid || userInfoForm.get('doctorTitle')?.value === '0'"
-                  class="text-xs text-red-500 font-normal" align="end">Required*
+                <mat-hint *ngIf="userInfoForm.get('doctorTitle')?.invalid || userInfoForm.get('doctorTitle')?.value === '0'"
+                          class="text-xs text-red-500 font-normal" align="end">
+                  Required*
                 </mat-hint>
               </div>
             </div>
@@ -153,8 +152,8 @@
                 Full Name
               </label> -->
               <input autocomplete="off" formControlName="fullName" type="text" name="fullName" id="fullName"
-                placeholder="Full Name"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     placeholder="Full Name"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <div>
                 <div class="flex justify-between">
@@ -169,7 +168,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('fullName')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -182,7 +181,7 @@
               </label> -->
 
               <input autocomplete="off" formControlName="email" type="email" placeholder="example@yourmail.com"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('required')">
@@ -193,7 +192,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('email')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -207,11 +206,12 @@
                 Gender
               </label> -->
               <select formControlName="gender" name="select" id="gender"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 <option value="0" class="font-semibold text-gray-500">Select gender</option>
                 <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-gray-500">
-                  {{item.name}}</option>
+                  {{item.name}}
+                </option>
               </select>
               <div>
                 <div class="flex justify-between">
@@ -220,7 +220,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('gender')?.invalid || userInfoForm.get('gender')?.value === '0'"
-                  class="text-xs text-red-500 font-normal" align="end">Required* </mat-hint>
+                          class="text-xs text-red-500 font-normal" align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -230,8 +230,8 @@
               <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Date of Birth
               </label> -->
-              <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="dateOfBirth"
-                    [max]="todayDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="dateOfBirth" onkeydown="return false"
+                     [max]="todayDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <div>
                 <div class="flex justify-between">
@@ -240,7 +240,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('dateOfBirth')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
 
             </div>
@@ -252,8 +252,9 @@
               <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Reg Number
               </label> -->
-              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" maxlength="9" minlength="6" formControlName="bmdcRegNo"
+                     placeholder="Enter your BMDC number"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <div>
                 <div class="flex justify-between">
@@ -261,11 +262,11 @@
                     Please enter your BMDC number.
                   </mat-error>
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('pattern')">
-                    BMDC number should be a 4-9-digit number.
+                    BMDC number should be a 9-digit number.
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('bmdcRegNo')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -274,11 +275,10 @@
               <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Exp. Date
               </label> -->
-              <input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date"
-                id="bmdcRegExpiryDate" [min]="todayDate"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" onkeydown="return false"
+                     [min]="todayDate" id="bmdcRegExpiryDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
-                <div class="flex justify-between">
+                <!--<div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('required')">
                     Please enter the BMDC expire date.
                   </mat-error>
@@ -288,9 +288,9 @@
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('expiredDate')">
                     BMDC expire date should be in the current year/month or a future.
                   </mat-error>
-                </div>
+                </div>-->
                 <mat-hint *ngIf="userInfoForm.get('bmdcRegExpiryDate')?.invalid"
-                  class="text-xs text-red-500 font-normal" align="end">Required*</mat-hint>
+                          class="text-xs text-red-500 font-normal" align="end">Required*</mat-hint>
               </div>
             </div>
           </div>
@@ -302,7 +302,7 @@
                 Address
               </label> -->
               <input autocomplete="off" formControlName="address" id="area" placeholder="Enter your address"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('required')">
@@ -313,7 +313,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('address')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required*</mat-hint>
+                          align="end">Required*</mat-hint>
               </div>
             </div>
           </div>
@@ -323,7 +323,7 @@
                 City
               </label> -->
               <input autocomplete="off" formControlName="city" id="state" placeholder="Enter city"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('city')?.hasError('required')">
@@ -334,7 +334,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('city')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required*</mat-hint>
+                          align="end">Required*</mat-hint>
               </div>
             </div>
           </div>
@@ -346,8 +346,8 @@
                 Zip Code
               </label> -->
               <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code"
-                placeholder="Zip Code"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     placeholder="Zip Code"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
@@ -358,7 +358,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('zipCode')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -370,10 +370,11 @@
               </label> -->
 
               <select formControlName="country" id="country" placeholder="Enter Country"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
-                  {{item}}</option>
+                  {{item}}
+                </option>
 
               </select>
               <div>
@@ -383,7 +384,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('country')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -396,9 +397,9 @@
               <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Identity Number
               </label> -->
-              <input autocomplete="off" formControlName="identityNumber" id="identityNumber"
-                placeholder="Identity Number (Passport/NID)"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="identityNumber" id="identityNumber" maxlength="17" minlength="10"
+                     placeholder="Identity Number (Passport/NID)"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('identityNumber')?.hasError('required')">
@@ -409,7 +410,7 @@
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('identityNumber')?.invalid" class="text-xs text-red-500 font-normal"
-                  align="end">Required* </mat-hint>
+                          align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -420,10 +421,11 @@
                 Specialties
               </label> -->
               <select formControlName="specialityId" name="select" id="specialityId"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                 <option value="0" class="font-semibold text-gray-500">Select specialty </option>
                 <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
-                  {{item.specialityName}}</option>
+                  {{item.specialityName}}
+                </option>
               </select>
               <div>
                 <div class="flex justify-between">
@@ -431,9 +433,8 @@
                     Please select your specialty.
                   </mat-error>
                 </div>
-                <mat-hint
-                  *ngIf="userInfoForm.get('specialityId')?.invalid || userInfoForm.get('specialityId')?.value === '0'"
-                  class="text-xs text-red-500 font-normal" align="end">Required* </mat-hint>
+                <mat-hint *ngIf="userInfoForm.get('specialityId')?.invalid || userInfoForm.get('specialityId')?.value === '0'"
+                          class="text-xs text-red-500 font-normal" align="end">Required* </mat-hint>
               </div>
             </div>
           </div>
@@ -444,14 +445,14 @@
             <div class="mb-3">
               <div class="form_input flex justify-between">
                 <input formControlName="password" [type]="passwordFieldType" name="password" id="password"
-                  autocomplete="off" class="outline-none border-none w-full" placeholder="Password123@" />
+                       autocomplete="off" class="outline-none border-none w-full" placeholder="Password" />
                 <button id="2" (click)="passwordVisibility('password')" class="cursor-pointer">
                   <i [class]="passwordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>
               </div>
 
+
               <div class="flex flex-col">
-                <span>Ex.:<strong style="color:maroon">Sgpd@123</strong></span>
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
                   Password is required.
                 </mat-error>
@@ -467,21 +468,16 @@
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesNumber')">
                   Password must include a number.
                 </mat-error>
-
-                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
-                  Password must include a special character.
-                </mat-error>
-
               </div>
               <mat-hint *ngIf="userInfoForm.get('password')?.invalid || userInfoForm.get('password')?.value === '0'"
-              class="text-xs text-red-500 font-normal" align="end" >hint: Password@123</mat-hint>
+                        class="text-xs text-red-500 font-normal" align="end">hint: Password@123</mat-hint>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <div class="form_input flex justify-between">
                 <input [type]="confirmPasswordFieldType" autocomplete="off" formControlName="confirmPassword"
-                  name="confirmPassword" class="outline-none border-none w-full" placeholder="Password123@" />
+                       name="confirmPassword" class="outline-none border-none w-full" placeholder="Password" />
                 <button id="1" (click)="passwordVisibility('confirmPassword')" class="cursor-pointer">
                   <i [class]="confirmPasswordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>
@@ -491,13 +487,12 @@
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('confirmPassword')?.hasError('required')">
                   Confirm password is required.
                 </mat-error>
-                <mat-error
-                  *ngIf=" formSubmitted && userInfoForm.get('password')?.valid && userInfoForm.get('confirmPassword')?.dirty  && userInfoForm.get('confirmPassword')?.errors">
+                <mat-error *ngIf=" formSubmitted && userInfoForm.get('password')?.valid && userInfoForm.get('confirmPassword')?.dirty  && userInfoForm.get('confirmPassword')?.errors">
                   Password not matched.
                 </mat-error>
               </div>
               <mat-hint *ngIf="userInfoForm.get('confirmPassword')?.invalid || userInfoForm.get('confirmPassword')?.value === '0'"
-              class="text-xs text-red-500 font-normal" align="end" >hint: Password@123</mat-hint>
+                        class="text-xs text-red-500 font-normal" align="end">hint: Password@123</mat-hint>
             </div>
           </div>
         </div>
@@ -524,8 +519,8 @@
                 Full Name
               </label>
               <input autocomplete="off" formControlName="fullName" type="text" name="fullName" id="fullName"
-                placeholder="Full Name"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     placeholder="Full Name"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('required')">
                 Please enter your full name.
@@ -546,8 +541,8 @@
                 Email
               </label>
               <input autocomplete="off" formControlName="email" type="email" name="name" id="name"
-                placeholder="example@yourmail.com"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     placeholder="example@yourmail.com"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('required')">
                 Please enter your email.
               </mat-error>
@@ -559,21 +554,16 @@
           </div>
         </div>
 
-
-
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <div class="form_input flex justify-between">
                 <input formControlName="password" [type]="passwordFieldType" name="password" id="password"
-                  class="outline-none border-none w-full" placeholder="Password123@" />
+                       class="outline-none border-none w-full" placeholder="Password" />
                 <button (click)="passwordVisibility('password')" class="cursor-pointer">
                   <i [class]="passwordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>
               </div>
-
-
-
 
               <div class="flex flex-col">
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
@@ -600,7 +590,7 @@
 
               <div class="form_input flex justify-between">
                 <input [type]="confirmPasswordFieldType" autocomplete="off" formControlName="confirmPassword"
-                  name="confirmPassword" class="outline-none border-none w-full" placeholder="Password123@" />
+                       name="confirmPassword" class="outline-none border-none w-full" placeholder="Password" />
                 <button (click)="passwordVisibility('confirmPassword')" class="cursor-pointer">
                   <i [class]="confirmPasswordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>
@@ -610,8 +600,7 @@
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('confirmPassword')?.hasError('required')">
                   Confirm password is required.
                 </mat-error>
-                <mat-error
-                  *ngIf=" formSubmitted && userInfoForm.get('password')?.valid && userInfoForm.get('confirmPassword')?.dirty  && userInfoForm.get('confirmPassword')?.errors">
+                <mat-error *ngIf=" formSubmitted && userInfoForm.get('password')?.valid && userInfoForm.get('confirmPassword')?.dirty  && userInfoForm.get('confirmPassword')?.errors">
                   Password not matched.
                 </mat-error>
               </div>
@@ -638,12 +627,14 @@
 
 
     <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
+         [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
       <!--<app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>-->
       <!--<app-degree-specilization-info-form></app-degree-specilization-info-form>-->
-      <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i class="fa-solid fa-list mr-2"></i>
-        Provide degrees info</h1>
-      <h2 *ngIf="degreeMendatoryMassage">{{degreeMendatoryMassage}}</h2>
+      <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
+        <i class="fa-solid fa-list mr-2"></i>
+        Provide your Medical Educational Info.
+      </h1>
+      <h2 *ngIf="degreeMendatoryMassage"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
       <div class=" w-full  bg-white mt-6">
         <form [formGroup]="formDegree">
 
@@ -654,13 +645,14 @@
                   Degree
                 </label>
                 <select formControlName="degreeId" name="degreeId" id="degreeId"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  (change)=getDegreeName($event)>
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        (change)=getDegreeName($event)>
                   <!-- Default Select Option -->
                   <option value="0" class="font-semibold text-gray-500">Select Degree</option>
                   <!-- Loop through titleList to create options -->
                   <option *ngFor="let item of degreeList" value="{{ item.id }}" class="font-semibold text-gray-500">
-                    {{item.degreeName}}</option>
+                    {{item.degreeName}}
+                  </option>
                 </select>
                 <mat-error *ngIf="formSubmitted && formDegree.get('degreeId')?.value === '0'">
                   Degree is required.
@@ -673,12 +665,13 @@
                   Duration
                 </label>
                 <select formControlName="duration" name="duration" id="duration"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                   <!-- Default Select Option -->
                   <option value="0" class="font-semibold text-gray-500">Select Duration</option>
                   <!-- Loop through titleList to create options -->
                   <option *ngFor="let item of durationList" value="{{ item.id }}" class="font-semibold text-gray-500">
-                    {{item.name}}</option>
+                    {{item.name}}
+                  </option>
                 </select>
                 <mat-error *ngIf="formSubmitted && formDegree.get('duration')?.value === '0'">
                   Duration is required.
@@ -690,15 +683,14 @@
                 <label for="passingYear" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Passing Year
                 </label>
-                <input autocomplete="off" formControlName="passingYear" placeholder="Passing Year" inputmode="numeric"
-                  name="passingYear" id="passingYear"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input autocomplete="off" formControlName="passingYear" placeholder="Passing Year" inputmode="numeric" type="number" maxlength="4" minlength="4" 
+                       name="passingYear" id="passingYear"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
                 <mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.hasError('required')">
                   Passing Year is required.
                 </mat-error>
-                <mat-error
-                  *ngIf="formSubmitted && formDegree.get('passingYear')?.touched && formDegree.get('passingYear')?.hasError('invalidPassingYear')">
+                <mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.touched && formDegree.get('passingYear')?.hasError('invalidPassingYear')">
                   Please enter a valid Passing Year that is not more than the current year.
                 </mat-error>
               </div>
@@ -712,13 +704,12 @@
                   Institute Name
                 </label>
                 <input autocomplete="off" formControlName="instituteName" type="text" name="instituteName"
-                  id="instituteName" placeholder="Institute Name"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                       id="instituteName" placeholder="Institute Name"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteName')?.hasError('required')">
                   Institute Name is required.
                 </mat-error>
-                <mat-error
-                  *ngIf="formSubmitted &&  formDegree.get('instituteName')?.touched && formDegree.get('instituteName')?.hasError('pattern')">
+                <mat-error *ngIf="formSubmitted &&  formDegree.get('instituteName')?.touched && formDegree.get('instituteName')?.hasError('pattern')">
                   Institute Name should only contain letters and spaces.
                 </mat-error>
 
@@ -730,13 +721,12 @@
                   Institute City
                 </label>
                 <input autocomplete="off" formControlName="instituteCity" type="text" name="name" id="instituteCity"
-                  placeholder="Institute City"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                       placeholder="Institute City"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteCity')?.hasError('required')">
                   City is required.
                 </mat-error>
-                <mat-error
-                  *ngIf="formSubmitted &&  formDegree.get('instituteCity')?.touched && formDegree.get('instituteCity')?.hasError('pattern')">
+                <mat-error *ngIf="formSubmitted &&  formDegree.get('instituteCity')?.touched && formDegree.get('instituteCity')?.hasError('pattern')">
                   City should only contain letters and spaces.
                 </mat-error>
 
@@ -747,15 +737,22 @@
                 <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Country
                 </label>
-                <input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
-                  id="instituteCountry" placeholder="Institute Country"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <select formControlName="instituteCountry" id="instituteCountry" placeholder="Enter Country" name="instituteCountry"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                  <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
+                    {{item}}
+                  </option>
+
+                </select>
+                <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
+                       id="instituteCountry" placeholder="Institute Country"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
 
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteCountry')?.hasError('required')">
                   Country is required.
                 </mat-error>
-                <mat-error
-                  *ngIf="formSubmitted && formDegree.get('instituteCountry')?.touched && formDegree.get('instituteCountry')?.hasError('pattern')">
+                <mat-error *ngIf="formSubmitted && formDegree.get('instituteCountry')?.touched && formDegree.get('instituteCountry')?.hasError('pattern')">
                   Country should only contain letters and spaces.
                 </mat-error>
 
@@ -794,7 +791,7 @@
                 <tbody>
 
                   <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    *ngFor="let item of doctorDegrees; index as i">
+                      *ngFor="let item of doctorDegrees; index as i">
                     <td class="w-4 p-4">
                       {{i+1}}
                     </td>
@@ -810,7 +807,7 @@
                     </td>
                     <td class="px-6 py-4">
                       <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        (click)="remove(item.id)">Delete</a>
+                         (click)="remove(item.id)">Delete</a>
                     </td>
                   </tr>
 
@@ -825,11 +822,12 @@
 
 
       <div class="mt-10">
-        <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i
-            class="fa-solid fa-list mr-2"></i>Provide specialization info</h1>
-        <h2 *ngIf="spMendatoryMassage">{{spMendatoryMassage}}</h2>
+        <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
+          <i class="fa-solid fa-list mr-2"></i>Provide specialization info
+        </h1>
+        <h2 *ngIf="spMendatoryMassage"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>
         <div class=" w-full  bg-white mt-6">
-          <form [formGroup]="formSpecialization">
+          <form *ngIf="!sp1or2" [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-3">
@@ -837,7 +835,7 @@
                     Speciality
                   </label>
                   <input autocomplete="off" for="speciality" type="text" readonly value="{{specialityName}}"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 </div>
               </div>
@@ -847,13 +845,15 @@
                     Specialization
                   </label>
                   <select formControlName="specializationId" name="specializationId" id="specializationId"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    (change)=getSpName($event)>
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                          (change)=getSpName($event)>
                     <!-- Default Select Option  (click)="addSpecialization()"-->
                     <option value="0" class="font-semibold text-gray-500">Select</option>
                     <!-- Loop through titleList to create options -->
                     <option *ngFor="let item of specializationList" value="{{ item.id }}"
-                      class="font-semibold text-gray-500">{{item.specializationName}}</option>
+                            class="font-semibold text-gray-500">
+                      {{item.specializationName}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -864,32 +864,32 @@
                     Document Name
                   </label>
                   <input autocomplete="off" for="name" formControlName="docFileName" name="docFileName" id="docFileName"
-                    readonly type="text" value="{{selectedSpFileName}}"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                         readonly type="text" value="{{selectedSpFileName}}"
+                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 </div>
               </div>
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-3">
                   <input autocomplete="off" #spAttachments type="file" #fileInput3 style="display: none"
-                    accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
-                  <button class="" (click)="fileInput3.click()">Browse Files</button>
-                  <div>
-                    <table>
+                         accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
+                  <button class="btn" (click)="fileInput3.click()">Browse</button>
+                  <div style="display: none">
+                    <table >
                       <thead>
                         <tr>
-                          <th>File Name</th>
+                          <th>File Name<</th>
                           <th>Remove</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let spFileName of spFileNames; let i=index">
-                          <!-- <td>
+                          <td>
                             {{ spFileName }}
-                          </td> -->
+                          </td>
                           <td>
                             <a href="javascript:void(0)" (click)="removeSpSelectedFile(i)"
-                              style="background-color:rgb(196, 32, 32);">
+                               style="background-color:rgb(196, 32, 32);">
                               <i class="fa fa-remove" aria-hidden="true"></i>
                             </a>
                           </td>
@@ -930,7 +930,7 @@
                   </thead>
                   <tbody>
                     <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      *ngFor="let item of doctorSpecializations; index as i">
+                        *ngFor="let item of doctorSpecializations; index as i">
                       <td class="w-4 p-4">
                         {{i+1}}
                       </td>
@@ -945,7 +945,7 @@
                       </td>
                       <td *ngIf="!sp1or2" class="px-6 py-4">
                         <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          (click)="removeSp(item.id)">Delete</a>
+                           (click)="removeSp(item.id)">Delete</a>
                       </td>
                     </tr>
                   </tbody>
@@ -957,6 +957,7 @@
       </div>
 
       <div class="w-full mt-5">
+
         <button (click)="saveDegreeSpecialization()" class="btn-secondary bg-primary">
           <div *ngIf="!isLoading" class="flex">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -972,7 +973,7 @@
     </div>
 
     <div class="max-w-fit signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="completeDocumentUpload==true ? '' : 'display:none'">
+         [style]="completeDocumentUpload==true ? '' : 'display:none'">
       <h1 class="dashboard-heading-text text-3xl font-bold">Upload Documents</h1>
       <h2 *ngIf="degreeMendatoryMassage"></h2>
       <div class=" w-full  bg-white mt-6">
@@ -985,11 +986,10 @@
               </label>
               <div class="relative w-fit bg-white transition">
                 <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
-                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #attachments type="file" #fileInput1 style="display: none"
-                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
-                <div
-                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput1.click()"></i>
                 </div>
               </div>
@@ -998,14 +998,16 @@
                   <tr *ngFor="let fileName of fileNames; let i=index">
                     <td style="width:5%">
                       <a href="javascript:void(0)" (click)="removeSelectedFile(i)"
-                        style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close"
-                          aria-hidden="true"></i></a>
+                         style="background-color:rgb(196, 32, 32);">
+                        <i class="fa fa-window-close"
+                           aria-hidden="true"></i>
+                      </a>
                     </td>
                     <td style="width:2%">&nbsp;</td>
                     <td style="width:93%">
                       {{ fileName }}
                     </td>
-                    <td>
+                    <td *ngIf="picUploadBtn">
                       <button class="btn-secondary" (click)="uploadPic()">Upload</button>
                     </td>
                   </tr>
@@ -1021,11 +1023,10 @@
               </label>
               <div class="relative w-fit bg-white transition">
                 <img [src]="profNidUrl ? profNidUrl : '/assets/nid.jpg'" alt=""
-                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #idAttachments type="file" #fileInput2 style="display: none"
-                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
-                <div
-                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput2.click()"></i>
                 </div>
               </div>
@@ -1034,7 +1035,7 @@
                   <tr *ngFor="let idFileName of idFileNames; let i=index">
                     <td style="width:5%">
                       <a href="javascript:void(0)" (click)="removeIdSelectedFile(i)"
-                        style="background-color:rgb(196, 32, 32);">
+                         style="background-color:rgb(196, 32, 32);">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                       </a>
                     </td>
@@ -1042,7 +1043,7 @@
                     <td style="width:93%">
                       {{ idFileName }}
                     </td>
-                    <td>
+                    <td *ngIf="nidUploadBtn">
                       <button class="btn-secondary" (click)="uploadNID()">Upload</button>
                     </td>
                   </tr>
