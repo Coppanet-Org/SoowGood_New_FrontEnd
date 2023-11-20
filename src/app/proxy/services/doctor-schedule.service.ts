@@ -18,6 +18,15 @@ export class DoctorScheduleService {
     { apiName: this.apiName,...config });
   
 
+  createFromMobileApp = (input: DoctorScheduleInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorScheduleDto>({
+      method: 'POST',
+      url: '/api/app/doctor-schedule/from-mobile-app',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
   deleteSession = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, ResponseDto>({
       method: 'DELETE',
@@ -70,6 +79,15 @@ export class DoctorScheduleService {
     this.restService.request<any, ResponseDto>({
       method: 'PUT',
       url: '/api/app/doctor-schedule',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateFromMobileApp = (input: DoctorScheduleInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorScheduleDto>({
+      method: 'PUT',
+      url: '/api/app/doctor-schedule/from-mobile-app',
       body: input,
     },
     { apiName: this.apiName,...config });

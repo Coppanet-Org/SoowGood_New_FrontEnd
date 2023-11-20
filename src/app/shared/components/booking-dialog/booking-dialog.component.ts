@@ -473,6 +473,7 @@ export class BookingDialogComponent implements OnInit, AfterViewInit {
         ...infoForBooking,
         appointmentCode: res.appointmentCode,
       });
+      localStorage.setItem('patientAppointmentCode', JSON.stringify(res.appointmentCode));
       this.activeTab = e;
     });
   }

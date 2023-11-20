@@ -18,6 +18,15 @@ export class DoctorFeeSetupService {
     { apiName: this.apiName,...config });
   
 
+  createFromMobileApp = (input: DoctorFeesSetupInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorFeesSetupDto>({
+      method: 'POST',
+      url: '/api/app/doctor-fee-setup/from-mobile-app',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
   get = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorFeesSetupDto>({
       method: 'GET',
@@ -46,6 +55,15 @@ export class DoctorFeeSetupService {
     this.restService.request<any, ResponseDto>({
       method: 'PUT',
       url: '/api/app/doctor-fee-setup',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateFromMobileApp = (input: DoctorFeesSetupInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorFeesSetupDto>({
+      method: 'PUT',
+      url: '/api/app/doctor-fee-setup/from-mobile-app',
       body: input,
     },
     { apiName: this.apiName,...config });

@@ -1,6 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto, ResponseDto } from '../dto-models/models';
+import type { RtcTokenBuilerDto } from '../input-dto/models';
 
 @Injectable({
   providedIn: 'root',
@@ -81,6 +82,54 @@ export class AppointmentService {
       method: 'PUT',
       url: '/api/app/appointment',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateAppointmentPaymentStatus = (appCode: string, trnId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'PUT',
+      url: `/api/app/appointment/appointment-payment-status/${trnId}`,
+      params: { appCode },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateCallConsultationAppointment = (appCode: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'PUT',
+      url: '/api/app/appointment/call-consultation-appointment',
+      params: { appCode },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  testAcTokenByInput = (input: RtcTokenBuilerDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
+      url: '/api/app/appointment/test-ac-token',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  testBuildTokenWithUIDByInput = (input: RtcTokenBuilerDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
+      url: '/api/app/appointment/test-build-token-with-uID',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  testBuildTokenWithUserAccountBy_appIdAnd_appCertificateAnd_channelNameAnd_account = (_appId: string, _appCertificate: string, _channelName: string, _account: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
+      method: 'POST',
+      responseType: 'text',
+      url: `/api/app/appointment/test-build-token-with-user-account/${_appId}`,
+      params: { _appCertificate, _channelName, _account },
     },
     { apiName: this.apiName,...config });
 

@@ -1,8 +1,12 @@
 
 
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+//import { AuthService } from '../../services/auth.service';
+//import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -12,23 +16,29 @@ import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-st
 export class HeaderComponent implements OnInit {
   @Input() layout: string = '';
   isAuthLogin!: boolean;
-  userType: string='';
+  userType: string = '';
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
-  ) {}
+    private UserinfoStateService: UserinfoStateService,
+    private _router: Router,
+  ) { }
   ngOnInit(): void {
-    let id = this.NormalAuth.authInfo().id;
-    if (id) {
-      this.isAuthLogin = true;
-    } else {
-      this.isAuthLogin = false;
+    if (this.NormalAuth.authInfo() != null) {
+      let id = this.NormalAuth.authInfo().id ? this.NormalAuth.authInfo().id : 0;
+
+      if (id) {
+        this.isAuthLogin = true;
+      } else {
+        this.isAuthLogin = false;
+      }
+      this.userType = this.NormalAuth.authInfo().userType;
     }
-    this.userType = this.NormalAuth.authInfo().userType;
   }
   signOut(): void {
-    // this.NormalAuth.signOut();
-    this.MainAuth.signOut();
+    this.NormalAuth.signOut();
+    this.isAuthLogin = false;
+    //this._router.navigate(['/']);
+    //this.MainAuth.signOut();
   }
 }
