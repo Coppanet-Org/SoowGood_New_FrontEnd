@@ -210,7 +210,7 @@
               <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Reg Number
               </label> -->
-              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number" type="number"
+              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number" 
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('required')">
@@ -279,7 +279,7 @@
               <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Zip Code
               </label> -->
-              <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code" placeholder="Zip Code" type="number"
+              <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code" placeholder="Zip Code" 
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
@@ -359,11 +359,13 @@
                 Password
               </label> -->
               <input autocomplete="off" formControlName="password" type="password" name="password" id="password"
-                     placeholder="Password123@*"
-                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                     placeholder="Password"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5
+                            px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none
+                            focus:border-[#6A64F1] focus:shadow-md" />
 
               <div class="flex flex-col">
-
+                <span>Ex.:<strong style="color:maroon">Sgpd@123</strong></span>
                 <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
                   Password is required.
                 </mat-error>
@@ -394,7 +396,7 @@
                 Confirm Password
               </label> -->
               <input autocomplete="off" formControlName="confirmPassword" type="password" name="confirmPassword" id="confirmPassword"
-                     placeholder="Password123@*"
+                     placeholder="Confirm Password"
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
               <mat-error *ngIf="formSubmitted &&  userInfoForm.hasError('passwordMismatch')">
@@ -415,6 +417,7 @@
             </svg>
             <span>Continue</span>
           </div>
+          <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>
       </form>
 
@@ -474,6 +477,7 @@
             </svg>
             <span>Continue</span>
           </div>
+          <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>
       </form>
 
@@ -788,6 +792,7 @@
             </svg>
             <span>Continue</span>
           </div>
+          <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>
       </div>
     </div>
@@ -925,6 +930,7 @@
                     </svg>
                     <span>Continue</span>
                   </div>
+                  <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
                 </button>
               </div>
             </div>

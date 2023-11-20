@@ -506,7 +506,7 @@ export class SignupComponent implements OnInit {
       specialityId: ['0', Validators.required],
       identityNumber: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{9,17}$/)],
       ],
     }, { validator: passwordMatchValidator('password', 'confirmPassword') });
     this.formDegree = this.fb.group({
