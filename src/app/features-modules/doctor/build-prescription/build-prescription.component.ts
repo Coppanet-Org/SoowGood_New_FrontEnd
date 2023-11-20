@@ -452,6 +452,8 @@ console.log(prescription);
             'Prescription created successfully!',
             'success'
           );
+          this.prescriptionForm.reset()
+          window.close();
         } else {
           this.TosterService.customToast(
             'Prescription create failed!',

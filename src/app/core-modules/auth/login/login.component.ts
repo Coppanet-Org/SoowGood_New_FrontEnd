@@ -16,9 +16,11 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { throwError } from 'rxjs';
 import { AppAuthService } from '../../../auth-services/app-auth.service';
 import { UserProfile } from '../../../auth-models/user.model';
+import { throwError, catchError } from 'rxjs';
+import { CustomValidators } from 'src/app/shared/utils/auth-helper';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +40,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl!: string;
   subs = new SubSink();
   isLoading: any = false;
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
   constructor(
     private authService: UserAccountsService,
     private appAuthService: AppAuthService,
@@ -64,24 +68,39 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
-        this.defaultAuth.mobileNo],
+        this.defaultAuth.mobileNo,
+        [
+          Validators.required,
+          Validators.pattern(/^(?:88)?[0-9]{11}$/),
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
+      ],
+
       password: [
         this.defaultAuth.password,
         Validators.compose([
-          Validators.required,
+            Validators.required,
+            CustomValidators.startsWithUppercase,
+            CustomValidators.isAtLeast6Characters,
+            CustomValidators.includesSpecialCharacter,
+            CustomValidators.includesNumber,
+
         ]),
       ],
     });
   }
-  private handleLoginError(error: any) {
-    this.hasError = true;
-    if (error.message === "'tokenEndpoint' should not be null") {
-      this.errorMessage = 'Identity server is not running';
+
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
-    return throwError(error);
   }
 
   private handleProfileError(error: any) {
@@ -214,10 +233,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   //}
 
   onSubmit(): void {
-    this.formSubmitted = true
+    this.formSubmitted = true;
+
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
-        'Please filled all required field',
+        'Please fill in all required fields',
         'warning'
       );
       this.isLoading = false;
@@ -226,9 +246,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     else {
       if (this.loginForm.invalid) {
         this.isLoading = false;
-        return
+        return;
       }
-      this.formSubmitted = false
+
+      this.formSubmitted = false;
       this.isLoading = true;
       let userType = '';
       this.errorMessage = '';
@@ -240,7 +261,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginDto.email = '';
       this.loginDto.password = password;
       this.loginDto.rememberMe = false;
-      let loginResponseData: LoginResponseDto;
 
       try {
 
