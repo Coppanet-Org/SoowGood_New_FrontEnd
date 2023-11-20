@@ -6,14 +6,14 @@
   <div class="signup-form__right drop-shadow-soft relative">
     <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
     <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
+         [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
       <h1 class="text-4xl font-medium">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
         <div class="grid-wrapper grid-col-auto">
           <label for="radio-card-1" class="radio-card">
-            <input type="radio" id="radio-card-1" formControlName="userTypeName" [(ngModel)]="selectedUserType"
-              value="Doctor" />
+            <input autocomplete="off" type="radio" id="radio-card-1" formControlName="userTypeName"
+                   [(ngModel)]="selectedUserType" value="Doctor" />
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
@@ -23,8 +23,8 @@
             </div>
           </label>
           <label for="radio-card-2" class="radio-card">
-            <input type="radio" id="radio-card-2" formControlName="userTypeName" [(ngModel)]="selectedUserType"
-              value="Patient" />
+            <input autocomplete="off" type="radio" id="radio-card-2" formControlName="userTypeName"
+                   [(ngModel)]="selectedUserType" value="Patient" />
             <div class="card-content-wrapper ">
               <span class="check-icon"></span>
               <div class="card-content">
@@ -33,20 +33,34 @@
               </div>
             </div>
           </label>
+          <mat-error *ngIf="formSubmitted || formGroup.get('userTypeName')?.invalid && formGroup.get('userTypeName')?.touched">
+            {{ getErrorMessage('userTypeName') }}
+          </mat-error>
 
         </div>
+
         <div class="flex flex-col space-y-5 mt-10">
+
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input type="tel" formControlName="mobile" id="phone" class="form_input" placeholder="018-000-00000"
-              required>
+            <input inputmode="numeric" matInput autocomplete="off" type="tel" formControlName="mobile" id="phone" class="form_input"
+                   placeholder="018-000-00000" required>
+            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
+              You must enter a valid mobile number.
+            </mat-error>
+            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('pattern')">
+              Mobile number should have exactly 11 digits and follow the Bangladeshi format.
+            </mat-error>
           </label>
+
+
+
           <button class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
+                   stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
               </svg>
               <span>Signup</span>
             </div>
@@ -54,14 +68,14 @@
           </button>
           <p class="text-center">
             Already have an account? <a routerLink="/login"
-              class="text-primary font-medium inline-flex space-x-1 items-center">
+                                        class="text-primary font-medium inline-flex space-x-1 items-center">
               <span>
                 Login now
               </span><span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
+                     stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </span>
             </a>
@@ -71,7 +85,7 @@
     </div>
 
     <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
-      [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
+         [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
       <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
         <img src="../../../../assets/auth/v-code.jpg" alt="">
       </div>
@@ -82,52 +96,75 @@
       </p>
       <div class="mt-12">
         <ng-otp-input inputClass="verify-focus" (onInputChange)="onOtpChange($event)"
-          [config]="{length:4}"></ng-otp-input>
+                      [config]="{length:4,allowNumbersOnly:true }"></ng-otp-input>
       </div>
       <button class="form_btn mt-4" (click)="verify() ">
         Continue
       </button>
     </div>
 
-    <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
+    <div class="max-w-[90%] lg:max-w-[70%] mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
+         [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form class="mt-5" [formGroup]="userInfoForm" *ngIf="selectedUserType == 'Doctor'">
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Your Title
-              </label>
+              </label> -->
               <select formControlName="doctorTitle" name="select" id="select"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                 <!-- Default Select Option -->
                 <option value="0" class="font-semibold text-gray-500">Select Title</option>
                 <!-- Loop through titleList to create options -->
-                <option *ngFor="let item of titleList" value="{{ item.id }}" class="font-semibold text-gray-500">
-                  {{item.name}}</option>
+                <option *ngFor="let item of titleList" [value]="item.id" class="font-semibold text-gray-500">
+                  {{item.name}}
+                </option>
               </select>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('doctorTitle')?.value === '0'">
+                Please select your title.
+              </mat-error>
             </div>
+
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Full Name
-              </label>
-              <input formControlName="fullName" type="text" name="name" id="name" placeholder="Full Name"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="fullName" type="text" name="name" id="name"
+                     placeholder="Full Name"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('required')">
+                Please enter your full name.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('pattern')">
+                Full name should contain only letters and numbers at the end.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('invalidName')">
+                Full name should be at least 3 characters long and follow the specified pattern.
+              </mat-error>
             </div>
           </div>
         </div>
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-full">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Email
-              </label>
-              <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="email" type="email" placeholder="example@yourmail.com"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('required')">
+                Please enter your email.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('pattern')">
+                Email should be valid.
+              </mat-error>
+
             </div>
           </div>
 
@@ -136,147 +173,243 @@
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Gender
-              </label>
+              </label> -->
               <select formControlName="gender" name="select" id="select"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-                <option value="0" class="font-semibold text-gray-500">Select</option>
+                <option value="0" class="font-semibold text-gray-500">Select gender</option>
                 <option *ngFor="let item of genderList" value="{{item.id}}" class="font-semibold text-gray-500">
-                  {{item.name}}</option>
-
+                  {{item.name}}
+                </option>
               </select>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('gender')?.value === '0'">
+                Please select your gender.
+              </mat-error>
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Date of Birth
-              </label>
-              <input required formControlName="dateOfBirth" type="date" name="date" id="date"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="date" onkeydown="return false"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('dateOfBirth')?.hasError('required')">
+                Please enter your birth date.
+              </mat-error>
+
             </div>
           </div>
         </div>
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Reg Number
-              </label>
-              <input formControlName="bmdcRegNo" type="text" name="phone" id="phone"
-                placeholder="Enter your phone number"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="bmdcRegNo" placeholder="Enter your BMDC number"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('required')">
+                Please enter your BMDC number.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('pattern')">
+                BMDC number should be a 9-digit number.
+              </mat-error>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Exp. Date
-              </label>
-              <input formControlName="bmdcRegExpiryDate" type="date" name="date" id="date"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" id="date" onkeydown="return false"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('required')">
+                Please enter the BMDC expire date.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('invalidDate')">
+                Invalid date format.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('expiredDate')">
+                BMDC expire date should be in the current year/month or a future.
+              </mat-error>
+
             </div>
           </div>
         </div>
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Address
-              </label>
-              <input formControlName="address" type="text" name="area" id="area" placeholder="Enter area"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="address" id="area" placeholder="Enter your address"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('required')">
+                Please enter your address.
+              </mat-error>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 City
-              </label>
-              <input formControlName="city" type="text" name="state" id="state" placeholder="Enter state"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" formControlName="city" id="state" placeholder="Enter city"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('city')?.hasError('required')">
+                Please enter your city name.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('city')?.hasError('pattern')">
+                city name should contain only letters (no numbers or special characters).
+              </mat-error>
+
             </div>
           </div>
         </div>
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Zip Code
-              </label>
-              <input formControlName="zipCode" type="text" name="post-code" id="post-code" placeholder="Post Code"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </label> -->
+              <input autocomplete="off" maxlength="4" minlength="4" formControlName="zipCode" id="post-code" placeholder="Zip Code"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
+                Please enter your zip code.
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('pattern')">
+                Zip code should be a 4-digit number.
+              </mat-error>
+
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Country
-              </label>
-              <input formControlName="country" type="text" name="city" id="city" placeholder="Enter city"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-            </div>
-          </div>
+              </label> -->
+              <select formControlName="country" id="country" placeholder="Enter Country"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-
-        </div>
-        <div class="-mx-3 flex flex-wrap">
-          <div class="w-full px-3 sm:w-1/2">
-            <div class="mb-5">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Identity Number
-              </label>
-              <input formControlName="identityNumber" type="text" name="phone" id="phone"
-                placeholder="Enter your phone number"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-            </div>
-          </div>
-
-          <div class="w-full px-3 sm:w-1/2">
-            <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Specialties
-              </label>
-              <select formControlName="specialityId" name="select" id="select"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                <option value="0" class="font-semibold text-gray-500">Select</option>
-                <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
-                  {{item.specialityName}}</option>
+                <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
+                  {{item}}
+                </option>
 
               </select>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('country')?.hasError('required')">
+                Please select your country!
+              </mat-error>
             </div>
           </div>
+
+
         </div>
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Password
-              </label>
-              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Identity Number
+              </label> -->
+              <input autocomplete="off" formControlName="identityNumber" type="text" name="identityNumber"
+                     id="identityNumber" placeholder="Identity Number (Passport/NID)"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('identityNumber')?.hasError('required')">
+                Please enter your Identity Number (Passport/NID).
+              </mat-error>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('identityNumber')?.hasError('pattern')">
+                Identity Number (Passport/NID) should be actual format.
+              </mat-error>
+
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Confirm Password
-              </label>
-              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Specialties
+              </label> -->
+              <select formControlName="specialityId" name="select" id="select"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                <option value="0" class="font-semibold text-gray-500">Select specialty </option>
+                <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
+                  {{item.specialityName}}
+                </option>
+              </select>
+              <mat-error *ngIf="formSubmitted && userInfoForm.get('specialityId')?.value === '0'">
+                Please select your specialty.
+              </mat-error>
             </div>
           </div>
         </div>
+
+        <div class="-mx-3 flex flex-wrap">
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <!-- <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Password
+              </label> -->
+              <input autocomplete="off" formControlName="password" type="password" name="password" id="password"
+                     placeholder="Hint:SoowGood@1234" title="Password Pattern: Starts with capital Letter.&#013;Must Contain a small letter.&#013;Must have a special character.&#013;Must contain a number"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <div class="flex flex-col">
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('required')">
+                  Password is required.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('startsWithUppercase')">
+                  Password must start with an uppercase letter.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('isAtLeast6Characters')">
+                  Password must be at least 6 characters long.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesSpecialCharacter')">
+                  Password must include a special character.
+                </mat-error>
+
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('password')?.hasError('includesNumber')">
+                  Password must include a number.
+                </mat-error>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-5">
+              <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                Confirm Password
+              </label> -->
+              <input autocomplete="off" formControlName="confirmPassword" type="password" name="confirmPassword" id="confirmPassword"
+                     placeholder="Hint:SoowGood@1234"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+              <mat-error *ngIf="formSubmitted &&  userInfoForm.hasError('passwordMismatch')">
+
+                Password doesn't match
+
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
+               stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round"
-              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
           <span>Continue</span>
         </button>
@@ -290,8 +423,9 @@
               <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Full Name
               </label>
-              <input formControlName="fullName" type="text" name="name" id="name" placeholder="Full Name"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="fullName" type="text" name="name" id="name"
+                     placeholder="Full Name"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
@@ -300,8 +434,9 @@
               <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Email
               </label>
-              <input formControlName="email" type="email" name="name" id="name" placeholder="example@yourmail.com"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="email" type="email" name="name" id="name"
+                     placeholder="example@yourmail.com"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
         </div>
@@ -311,29 +446,27 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Password
-              </label>
-              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="password" type="password" name="name" id="name"
+                     placeholder="Password123@*"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Confirm Password
-              </label>
-              <input formControlName="password" type="password" name="name" id="name" placeholder="Password123@*"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <input autocomplete="off" formControlName="confirmPassword" type="password" name="name" id="name"
+                     placeholder="Password123@*"
+                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+
             </div>
           </div>
         </div>
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
+               stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round"
-              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
           <span>Continue</span>
         </button>
@@ -344,12 +477,15 @@
 
     </div>
     <div class="max-w-lg signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
+         [style]="completeDegreeSpecilizationInfoModal==true ? '' : 'display:none'">
       <!--<app-doctor-profile-info-form (formDataEvent)="handleFormData($event)"></app-doctor-profile-info-form>-->
       <!--<app-degree-specilization-info-form></app-degree-specilization-info-form>-->
-      <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i class="fa-solid fa-list mr-2"></i>
-        Provide degrees info</h1>
-      <h2 *ngIf="degreeMendatoryMassage">{{degreeMendatoryMassage}}</h2>
+      <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
+        <i class="fa-solid fa-list mr-2"></i>
+        Provide Your Medecal Degrees and Qualifications.
+
+      </h1>
+      <h2 style="color:maroon" *ngIf="degreeMendatoryMassage"><strong>{{degreeMendatoryMassage}}</strong></h2>
       <div class=" w-full  bg-white mt-6">
         <form [formGroup]="formDegree">
 
@@ -360,13 +496,14 @@
                   Degree
                 </label>
                 <select formControlName="degreeId" name="degreeId" id="degreeId"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  (change)=getDegreeName($event)>
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        (change)=getDegreeName($event)>
                   <!-- Default Select Option -->
                   <option value="0" class="font-semibold text-gray-500">Select Degree</option>
                   <!-- Loop through titleList to create options -->
                   <option *ngFor="let item of degreeList" value="{{ item.id }}" class="font-semibold text-gray-500">
-                    {{item.degreeName}}</option>
+                    {{item.degreeName}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -376,12 +513,13 @@
                   Duration
                 </label>
                 <select formControlName="duration" name="duration" id="duration"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                   <!-- Default Select Option -->
                   <option value="0" class="font-semibold text-gray-500">Select Duration</option>
                   <!-- Loop through titleList to create options -->
                   <option *ngFor="let item of durationList" value="{{ item.id }}" class="font-semibold text-gray-500">
-                    {{item.name}}</option>
+                    {{item.name}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -390,9 +528,9 @@
                 <label for="passingYear" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Passing Year
                 </label>
-                <input formControlName="passingYear" placeholder="Passing Year" type="number" name="passingYear"
-                  id="passingYear"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input autocomplete="off" formControlName="passingYear" placeholder="Passing Year" type="number"
+                       name="passingYear" id="passingYear"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
           </div>
@@ -403,9 +541,9 @@
                 <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Name
                 </label>
-                <input formControlName="instituteName" type="text" name="instituteName" id="instituteName"
-                  placeholder="Institute Name"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input autocomplete="off" formControlName="instituteName" type="text" name="instituteName"
+                       id="instituteName" placeholder="Institute Name"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
             <div class="w-full px-3 sm:w-1/3">
@@ -413,9 +551,9 @@
                 <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute City
                 </label>
-                <input formControlName="instituteCity" type="text" name="name" id="instituteCity"
-                  placeholder="Institute City"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <input autocomplete="off" formControlName="instituteCity" type="text" name="name" id="instituteCity"
+                       placeholder="Institute City"
+                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               </div>
             </div>
             <div class="w-full px-3 sm:w-1/3">
@@ -423,9 +561,17 @@
                 <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                   Institute Country
                 </label>
-                <input formControlName="instituteCountry" type="text" name="instituteCountry" id="instituteCountry"
-                  placeholder="Institute Country"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                <select formControlName="instituteCountry" id="instituteCountry" placeholder="Institute Country"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+                  <option *ngFor="let item of countryList" value="{{item}}" class="font-semibold text-gray-500">
+                    {{item}}
+                  </option>
+
+                </select>
+                <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
+                id="instituteCountry" placeholder="Institute Country"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
               </div>
 
             </div>
@@ -461,7 +607,7 @@
                 <tbody>
 
                   <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    *ngFor="let item of doctorDegrees; index as i">
+                      *ngFor="let item of doctorDegrees; index as i">
                     <td class="w-4 p-4">
                       {{i+1}}
                     </td>
@@ -477,7 +623,7 @@
                     </td>
                     <td class="px-6 py-4">
                       <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        (click)="remove(item.id)">Delete</a>
+                         (click)="remove(item.id)">Delete</a>
                     </td>
                   </tr>
 
@@ -492,19 +638,20 @@
 
 
       <div class="mt-10">
-        <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90"><i
-            class="fa-solid fa-list mr-2"></i>Provide specialization info</h1>
-        <h2 *ngIf="spMendatoryMassage">{{spMendatoryMassage}}</h2>
+        <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
+          <i class="fa-solid fa-list mr-2"></i>Provide Your specializations/experties.
+        </h1>
+        <h2 style="color:maroon" *ngIf="spMendatoryMassage"><strong>{{spMendatoryMassage}}</strong></h2>
         <div class=" w-full  bg-white mt-6">
-          <form [formGroup]="formSpecialization">
+          <form *ngIf="!sp1or2" [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-5">
                   <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                     Speciality
                   </label>
-                  <input for="speciality" type="text" readonly value="{{specialityName}}"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  <input autocomplete="off" for="speciality" type="text" readonly value="{{specialityName}}"
+                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 </div>
               </div>
@@ -514,36 +661,37 @@
                     Specialization
                   </label>
                   <select formControlName="specializationId" name="specializationId" id="specializationId"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    (change)=getSpName($event)>
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                          (change)=getSpName($event)>
                     <!-- Default Select Option  (click)="addSpecialization()"-->
                     <option value="0" class="font-semibold text-gray-500">Select</option>
                     <!-- Loop through titleList to create options -->
                     <option *ngFor="let item of specializationList" value="{{ item.id }}"
-                      class="font-semibold text-gray-500">{{item.specializationName}}</option>
+                            class="font-semibold text-gray-500">
+                      {{item.specializationName}}
+                    </option>
                   </select>
                 </div>
               </div>
-       
+
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-5">
                   <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Document Name
+                    Selected Document
                   </label>
-                  <input for="name" formControlName="docFileName" name="docFileName" id="docFileName" readonly
-                    type="text" value="{{selectedSpFileName}}"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  <input autocomplete="off" for="name" formControlName="docFileName" name="docFileName" id="docFileName"
+                         readonly type="text" value="{{selectedSpFileName}}"
+                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
                 </div>
               </div>
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-5">
-                  <input #spAttachments type="file" #fileInput3 style="display: none"
-                    accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
-                  <button
-                    class=""
-                    (click)="fileInput3.click()">Browse Files</button>
-                  <div>
+                  <input autocomplete="off" #spAttachments type="file" #fileInput3 style="display: none"
+                         accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
+                  <label style="display:none"></label>
+                  <button class="btn" (click)="fileInput3.click()">Browse File</button>
+                  <div style="display: none">
                     <table>
                       <thead>
                         <tr>
@@ -558,7 +706,7 @@
                           </td> -->
                           <td>
                             <a href="javascript:void(0)" (click)="removeSpSelectedFile(i)"
-                              style="background-color:rgb(196, 32, 32);">
+                               style="background-color:rgb(196, 32, 32);">
                               <i class="fa fa-remove" aria-hidden="true"></i>
                             </a>
                           </td>
@@ -569,10 +717,9 @@
                 </div>
               </div>
             </div>
-            <button (click)="addSpecialization()"
-            class="btn-secondary">
-            <i class="fa-solid fa-plus mr-1"></i> Add Specialization
-          </button>
+            <button (click)="addSpecialization()" class="btn-secondary">
+              <i class="fa-solid fa-plus mr-1"></i> Add Specialization
+            </button>
           </form>
 
           <div *ngIf="doctorSpecializations.length > 0" class="w-full mt-3">
@@ -600,7 +747,7 @@
                   </thead>
                   <tbody>
                     <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      *ngFor="let item of doctorSpecializations; index as i">
+                        *ngFor="let item of doctorSpecializations; index as i">
                       <td class="w-4 p-4">
                         {{i+1}}
                       </td>
@@ -615,7 +762,7 @@
                       </td>
                       <td class="px-6 py-4">
                         <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          (click)="removeSp(item.id)">Delete</a>
+                           (click)="removeSp(item.id)">Delete</a>
                       </td>
                     </tr>
                   </tbody>
@@ -627,15 +774,14 @@
       </div>
 
       <div class="w-full mt-5">
-        <button (click)="saveDegreeSpecialization()"
-        class="btn-secondary bg-primary">
-        Continue
-      </button>
+        <button (click)="saveDegreeSpecialization()" class="btn-secondary bg-primary">
+          Continue
+        </button>
       </div>
     </div>
 
     <div class="max-w-fit signup-child-component-min-w mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300"
-      [style]="completeDocumentUpload==true ? '' : 'display:none'">
+         [style]="completeDocumentUpload==true ? '' : 'display:none'">
       <h1 class="dashboard-heading-text text-3xl font-bold">Upload Documents</h1>
       <h2 *ngIf="degreeMendatoryMassage"></h2>
       <div class=" w-full  bg-white mt-6">
@@ -648,30 +794,29 @@
               </label>
               <div class="relative w-fit bg-white transition">
                 <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
-                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
-                <input #attachments type="file" #fileInput1 style="display: none"
-                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
-                <div
-                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                <input autocomplete="off" #attachments type="file" #fileInput1 style="display: none"
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput1.click()"></i>
                 </div>
               </div>
-              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+              <table *ngIf="x" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
                 <tbody>
                   <tr *ngFor="let fileName of fileNames; let i=index">
                     <td style="width:5%">
                       <a href="javascript:void(0)" (click)="removeSelectedFile(i)"
-                        style="background-color:rgb(196, 32, 32);"><i class="fa fa-window-close"
-                          aria-hidden="true"></i></a>
+                         style="background-color:rgb(196, 32, 32);">
+                        <i class="fa fa-window-close"
+                           aria-hidden="true"></i>
+                      </a>
                     </td>
                     <td style="width:2%">&nbsp;</td>
                     <td style="width:93%">
                       {{ fileName }}
                     </td>
                     <td>
-                      <button
-                        class="btn-secondary"
-                        (click)="uploadPic()">Upload</button>
+                      <button class="btn-secondary" (click)="uploadPic()">Upload</button>
                     </td>
                   </tr>
                 </tbody>
@@ -686,20 +831,19 @@
               </label>
               <div class="relative w-fit bg-white transition">
                 <img [src]="profNidUrl ? profNidUrl : '/assets/nid.jpg'" alt=""
-                  class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
-                <input #idAttachments type="file" #fileInput2 style="display: none"
-                  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
-                <div
-                  class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
+                     class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
+                <input autocomplete="off" #idAttachments type="file" #fileInput2 style="display: none"
+                       accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
+                <div class="duration-200 transform hover:scale-110 flex justify-center items-center cursor-pointer  absolute -bottom-[8px] -right-[8px] w-[30px] h-[30px] rounded-full p-1 bg-white z-20 border-[1px]">
                   <i class="fa-solid fa-camera text-primary" (click)="fileInput2.click()"></i>
                 </div>
               </div>
-              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
+              <table *ngIf="y" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
                 <tbody>
                   <tr *ngFor="let idFileName of idFileNames; let i=index">
                     <td style="width:5%">
                       <a href="javascript:void(0)" (click)="removeIdSelectedFile(i)"
-                        style="background-color:rgb(196, 32, 32);">
+                         style="background-color:rgb(196, 32, 32);">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                       </a>
                     </td>
@@ -708,9 +852,7 @@
                       {{ idFileName }}
                     </td>
                     <td>
-                      <button
-                        class="btn-secondary"
-                        (click)="uploadNID()">Upload</button>
+                      <button class="btn-secondary" (click)="uploadNID()">Upload</button>
                     </td>
                   </tr>
                 </tbody>
@@ -722,7 +864,7 @@
           <!--<div class="w-full px-3 sm:w-1/1">
             <div class="mb-5">
               <label class="mb-2 block  font-medium text-[14px] text-[#07074D]">Upload documents for your specializatoin verification</label>
-              <input #spAttachments type="file" #fileInput3 style="display: none"
+              <input autocomplete="off" #spAttachments type="file" #fileInput3 style="display: none"
                      accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)" multiple>
               <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="fileInput3.click()">Browse Files</button>
             </div>
@@ -762,9 +904,7 @@
           <div class="w-full px-3 sm:w-1/1">
             <div class="mb-5">
               <div class="mt-5">
-                <button
-                  class="btn-secondary bg-primary/90"
-                  (click)="finalContinue()">Continue</button>
+                <button class="btn-secondary bg-primary/90" (click)="finalContinue()">Continue</button>
               </div>
             </div>
           </div>

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     mobileNo: '',
     password: '',
   };
-
+  formSubmitted:boolean = false
   errorMessage: string = '';
   loginForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
@@ -57,11 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/;
     this.loginForm = this.fb.group({
       mobileNo: [
-        this.defaultAuth.mobileNo,
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
+        this.defaultAuth.mobileNo],
       password: [
         this.defaultAuth.password,
         Validators.compose([
@@ -82,6 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     return throwError(error);
   }
   onSubmit(): void {
+    this.formSubmitted = true
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
         'Please filled all required field',
@@ -94,6 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         return
       }
+      this.formSubmitted = false
       this.isLoading = true;
       let userType = '';
       this.errorMessage = '';
@@ -114,7 +112,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.log(loginResponse);
 
             if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
-              this.isLoading = false;
               this.subs.sink = this.doctorProfileService.getByUserName(loginResponse.userName ? loginResponse.userName : '')
                 .subscribe((doctorDto: DoctorProfileDto) => {
                   let saveLocalStorage = {
@@ -152,11 +149,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                       );
                     });
                 });
+              this.isLoading = false;
 
             }
 
             else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
-              this.isLoading = false;
               this.subs.sink = this.PatientProfileService.getByUserName(
                 loginResponse.userName ? loginResponse.userName : ''
               )
@@ -180,14 +177,15 @@ export class LoginComponent implements OnInit, OnDestroy {
                     );
                   });
               });
+              this.isLoading = false;
             }
 
             else {
-              this.isLoading = false;
               this.ToasterService.customToast(
                 loginResponse.message ? loginResponse.message : ' ',
                 'error'
               );
+              this.isLoading = false;
             }
           })
 

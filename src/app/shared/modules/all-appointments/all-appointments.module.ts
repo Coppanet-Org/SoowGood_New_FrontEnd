@@ -6,6 +6,7 @@ import { AppointmentCardComponent } from '../../components/appointment-card/appo
 import { SkeletonModule } from '../skeleton/skeleton.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShowPrescriptionModalModule } from '../show-prescription-modal/show-prescription-modal.module';
+import { AppointmentDialogComponent } from '../../components/appointment-dialog/appointment-dialog.component';
 
 
 
@@ -14,7 +15,7 @@ import { ShowPrescriptionModalModule } from '../show-prescription-modal/show-pre
   declarations: [
     AllAppointmentsComponent,
     AppointmentCardComponent,
-
+    AppointmentDialogComponent
   ],
   imports: [
     CommonModule,
