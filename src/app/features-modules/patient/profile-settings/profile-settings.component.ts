@@ -1,4 +1,4 @@
-
+import { countries } from './../../../shared/utils/country';
 import { TosterService } from './../../../shared/services/toster.service';
 import { PatientProfileService } from './../../../proxy/services/patient-profile.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,6 +8,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { patientInputData } from 'src/app/shared/utils/input-info';
 import { DatePipe } from '@angular/common';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { customNameValidator } from 'src/app/shared/utils/auth-helper';
+import { Gender } from 'src/app/proxy/enums';
+import { CommonService } from 'src/app/shared/services/common.service';
+
 
 @Component({
   selector: 'app-profile-settings',
@@ -23,18 +27,21 @@ export class ProfileSettingsComponent implements OnInit {
   url!: any;
   patientId: any;
   profileInfo: any;
-
+  formSubmitted: boolean = false;
+  genderList: any;
+  countryList= countries
   constructor(
     private fb: FormBuilder,
     private PatientProfileService: PatientProfileService,
     private NormalAuth: AuthService,
     private TosterService: TosterService,
     private UserinfoStateService: UserinfoStateService,
-    private datePipe: DatePipe,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.loadForm();
+    this.genderList = CommonService.getEnumList(Gender);
     let authId = this.NormalAuth.authInfo().id;
     this.patientId = authId;
     this.fetchProfileInfo(authId);
@@ -45,18 +52,33 @@ export class ProfileSettingsComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      fullName: ['', Validators.required],
+      fullName: [
+        '',
+        [Validators.required, Validators.minLength(3), customNameValidator],
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/),
+        ],
+      ],
+      gender: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      city: [''],
-      country: [''],
-      mobileNo: [''],
-      email: [''],
-      address: ['', Validators.required],
-      zipCode: ['', Validators.required],
+      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      country: ['', Validators.required],
+      address: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
+      ],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
     });
   }
   submit() {
+    this.formSubmitted = true;
+
     this.isLoading = true;
+
     let changedProperties: string[] = [];
 
     for (const key in this.form.value) {
@@ -126,4 +148,3 @@ export class ProfileSettingsComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 }
-

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PublicDoctorsComponent } from './public-doctors.component';
 import { DoctorCardModule } from '../doctor-card/doctor-card.module';
+import { SkeletonModule } from '../skeleton/skeleton.module';
 
 
 
@@ -12,7 +13,8 @@ import { DoctorCardModule } from '../doctor-card/doctor-card.module';
     ],
   imports: [
     CommonModule,
-    DoctorCardModule
+    DoctorCardModule,
+    SkeletonModule,
   ],
 exports:[
   PublicDoctorsComponent

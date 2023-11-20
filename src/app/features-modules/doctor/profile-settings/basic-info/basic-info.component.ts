@@ -1,3 +1,5 @@
+import { countries } from './../../../../shared/utils/country';
+import { TosterService } from 'src/app/shared/services/toster.service';
 
 import { LoaderService } from './../../../../shared/services/loader.service';
 import { DatePipe } from '@angular/common';
@@ -13,6 +15,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { inputConfigs } from '../../../../shared/utils/input-info';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { customNameValidator, yearValidator } from 'src/app/shared/utils/auth-helper';
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',
@@ -23,7 +26,9 @@ export class BasicInfoComponent implements OnInit {
   genderList: ListItem[] = [];
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
+  countryList = countries
   specialties: any = [];
+  formSubmitted:boolean = false
   @Input() isLoading: boolean = false;
   doctorId: any;
   @Output() formDataEvent = new EventEmitter();
@@ -37,7 +42,8 @@ export class BasicInfoComponent implements OnInit {
     private NormalAuth: AuthService,
     private datePipe: DatePipe,
     private LoaderService: LoaderService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private TosterService: TosterService
   ) {}
 
   ngOnInit(): void {
@@ -58,25 +64,7 @@ export class BasicInfoComponent implements OnInit {
       this.LoaderService.sendLoaderState(false);
       return;
     }
-    this.LoaderService.sendLoaderState(true);
 
-    //future update  add
-    // this.UserinfoStateService.getData().subscribe((profileInfo)=>
-    // {
-    //   profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
-    //   profileInfo.bmdcRegExpiryDate = this.formatDate(profileInfo.bmdcRegExpiryDate); // Format the BMDC expiry date
-    //   this.form?.patchValue(profileInfo);
-    //   this.profileData.emit(profileInfo);
-    //   this.form.get('specialityId')?.patchValue(profileInfo.specialityId)
-    //   this.LoaderService.sendLoaderState(false)
-    // },
-    // (error) => {
-    //   this.LoaderService.sendLoaderState(false)
-    //   console.error('Error fetching profile information:', error);
-    // }
-    // )
-
-    //future update  remove
     this.UserinfoStateService.getData().subscribe(
       (profileInfo) => {
         profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
@@ -93,22 +81,6 @@ export class BasicInfoComponent implements OnInit {
         console.error('Error fetching profile information:', error);
       }
     );
-    // this.doctorProfileService.get(doctorId).subscribe(
-    //   (profileInfo) => {
-    //     profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
-    //     profileInfo.bmdcRegExpiryDate = this.formatDate(
-    //       profileInfo.bmdcRegExpiryDate
-    //     ); // Format the BMDC expiry date
-    //     this.form?.patchValue(profileInfo);
-    //     this.profileData.emit(profileInfo);
-    //     this.form.get('specialityId')?.patchValue(profileInfo.specialityId);
-    //     this.LoaderService.sendLoaderState(false);
-    //   },
-    //   (error) => {
-    //     this.LoaderService.sendLoaderState(false);
-    //     console.error('Error fetching profile information:', error);
-    //   }
-    // );
   }
   private formatDate(dateString: string | undefined): string {
     if (!dateString) {
@@ -120,26 +92,32 @@ export class BasicInfoComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      firstName: [''],
-      lastName: [''],
+      // firstName: [''],
+      // lastName: [''],
+      // maritalStatus: ['', Validators.required],
+      // mobileNo: [''],
       doctorTitle: ['', Validators.required],
+      fullName: ['', [Validators.required,Validators.minLength(3),customNameValidator,]],
+      email: ['',[Validators.required,Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
       gender: ['', Validators.required],
-      fullName: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      maritalStatus: ['', Validators.required],
-      city: [''],
-      country: [''],
-      mobileNo: [''],
-      email: [''],
-      address: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      bmdcRegNo: ['', Validators.required],
-      bmdcRegExpiryDate: ['', Validators.required],
+      city: ['', [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]],
+      country: ['', Validators.required],
+      address: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      bmdcRegExpiryDate: ['', [Validators.required]],
       specialityId: ['', Validators.required],
-      identityNumber: ['', Validators.required],
+      identityNumber: ['',[Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],],
+
     });
   }
   sendDataToParent() {
+    this.formSubmitted= true    
+    if (this.form.invalid) {
+      this.TosterService.customToast('Fill all the requirements','warning')
+      return
+    }
     this.formDataEvent.emit({ ...this.form.value, id: this.doctorId });
   }
 }
