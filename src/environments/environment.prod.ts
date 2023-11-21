@@ -1,8 +1,11 @@
 import { Environment } from '@abp/ng.core';
 
-const baseUrl = 'https://localhost:4202';
+// const baseUrl = 'https://localhost:4202';
+const baseUrl = 'https://198.38.92.117:4439/';
+
 const apiUrl = 'https://localhost:44339';
 const issuerUrl = 'https://localhost:44339';
+
 
 //const localfileUrl = 'https://devsoowgoodnew.azurewebsites.net/';
 //const PaymentUrl = 'https://payment.soowgood.com/';

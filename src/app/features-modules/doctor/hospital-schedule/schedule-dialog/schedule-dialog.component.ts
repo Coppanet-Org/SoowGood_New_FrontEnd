@@ -51,7 +51,7 @@ export class ScheduleDialogComponent implements OnInit {
       scheduleDayofWeek: [this.editData?.selectedDay,Validators.required],
       startTime: ['',Validators.required],
       endTime: ['',Validators.required],
-      noOfPatients: ['',Validators.required],
+      noOfPatients: ['0',Validators.required],
       id : [this.uuidv4()]
     });
   }

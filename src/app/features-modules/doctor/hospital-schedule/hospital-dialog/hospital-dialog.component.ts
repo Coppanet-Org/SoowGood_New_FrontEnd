@@ -4,6 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { countries } from 'src/app/shared/utils/country';
 
 @Component({
   selector: 'app-hospital-dialog',
@@ -14,6 +15,8 @@ export class HospitalDialogComponent implements OnInit {
   form!: FormGroup;
   doctorId: any;
   error!: boolean;
+  formSubmitted: boolean = false
+  countryList = countries
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<HospitalDialogComponent>,
@@ -36,15 +39,19 @@ export class HospitalDialogComponent implements OnInit {
     this.form = this.fb.group({
       doctorProfileId: [id, Validators.required],
       chamberName: ['', Validators.required],
-      address: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
+      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      country: ['Bangladesh', Validators.required],
+      address: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
+      ],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+
     });
   }
   submit() {
+    this.formSubmitted = true
     if (!this.form.valid || !this.form.touched) {
-      
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'

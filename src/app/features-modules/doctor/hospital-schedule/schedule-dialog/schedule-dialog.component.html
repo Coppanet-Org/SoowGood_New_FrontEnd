@@ -5,14 +5,14 @@
         <div class="form-row" formArrayName="appointments">
             <div *ngFor="let appointment of days.controls let i = index" class="-mx-3 flex flex-wrap form-row-item">
                 <ng-container [formGroupName]="i">
-                    <div class="w-full px-3 " [ngClass]="i==0? 'sm:w-[100%]' : 'sm:w-[100%]'">
+                    <!-- <div class="w-full px-3 " [ngClass]="i==0? 'sm:w-[100%]' : 'sm:w-[100%]'">
                         <div class="mb-5">
                             <label for="startTime{{ i }}" class="mb-2 block font-medium text-[14px] text-[#07074D]">
                                 Active status
                             </label>
                             <input type="checkbox" class="toggle" checked />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="w-full px-3 " [ngClass]="i==0? 'sm:w-[33%]' : 'sm:w-[28%]'">
                         <div class="mb-5">
                             <label for="startTime{{ i }}" class="mb-2 block font-medium text-[14px] text-[#07074D]">

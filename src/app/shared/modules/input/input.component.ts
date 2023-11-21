@@ -28,6 +28,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() errorMessage!: string; 
   @Input() formGroup!: FormGroup;
   @Input () submit!:boolean
+
   constructor() {
   }
   

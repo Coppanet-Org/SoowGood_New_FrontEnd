@@ -61,24 +61,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        [
-          Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ],
+        // [
+        //   Validators.required,
+        //   Validators.pattern(/^(?:88)?[0-9]{11}$/),
+        //   Validators.minLength(11),
+        //   Validators.maxLength(11),
+        // ],
       ],
 
       password: [
         this.defaultAuth.password,
-        Validators.compose([
-            Validators.required,
-            CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
+        // Validators.compose([
+        //     Validators.required,
+        //     CustomValidators.startsWithUppercase,
+        //     CustomValidators.isAtLeast6Characters,
+        //     CustomValidators.includesSpecialCharacter,
+        //     CustomValidators.includesNumber,
 
-        ]),
+        // ]),
       ],
     });
   }

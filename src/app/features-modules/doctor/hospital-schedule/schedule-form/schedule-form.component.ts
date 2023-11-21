@@ -65,7 +65,8 @@ export class ScheduleFormComponent implements OnInit {
   editData!: any;
   editScheduleId!: number;
   hospitalList: any;
-
+  formSubmitted:boolean = false
+  slotError:boolean = false
   constructor(
     private fb: FormBuilder,
     private DoctorChamberService: DoctorChamberService,
@@ -141,9 +142,10 @@ export class ScheduleFormComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      scheduleType: [0, Validators.required],
-      consultancyType: [0],
+      scheduleType: ['0', Validators.required],
+      consultancyType: ['0',Validators.required],
       doctorChamberId: [null, Validators.required],
+      isSlotSelected : ['',Validators.required]
     });
   }
 
@@ -152,7 +154,7 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   submit() {
-
+this.formSubmitted = true
     if (!this.form.value.scheduleType && !this.form.value.consultancyType) {
       this.TosterService.customToast(
         'Please field all required field',
@@ -160,6 +162,9 @@ export class ScheduleFormComponent implements OnInit {
       );
       return;
     }
+
+    
+
 
     //if (!this.form.valid) {
     //  this.TosterService.customToast(
@@ -228,6 +233,7 @@ export class ScheduleFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.form.get('isSlotSelected')?.setValue(true)
       result?.appointments.map(
         (e: any) => (this.allSelectedSession = [...this.allSelectedSession, e])
       );
@@ -236,11 +242,12 @@ export class ScheduleFormComponent implements OnInit {
 
   //should be refactor
   onSessionRemove(id: any) {
-    this.DoctorScheduleService.deleteSession(id).subscribe(
-      (res) =>
-      (this.allSelectedSession = this.allSelectedSession.filter(
+    this.DoctorScheduleService.deleteSession(id).subscribe((res) =>
+{      (this.allSelectedSession = this.allSelectedSession.filter(
         (f: any) => f.id !== id
-      ))
+      ))},(error)=>{
+        console.log(error.message);
+      }
     );
   }
 

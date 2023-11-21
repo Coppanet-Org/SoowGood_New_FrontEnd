@@ -428,7 +428,8 @@ export class SignupComponent implements OnInit {
         ],
         zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
         bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-        bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
+        bmdcRegExpiryDate: ['', [Validators.required]],
+        // bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
         specialityId: ['0', Validators.required],
         identityNumber: [
           '',
@@ -871,11 +872,13 @@ export class SignupComponent implements OnInit {
           createFrom: res.createFrom,
         };
         this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-        this._router
-          .navigate([userType.toLowerCase()], {
-            state: { data: res }, // Pass the 'res' object as 'data' in the state object
-          })
-          .then((r) => r);
+
+        const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+
+        this._router.navigate([navigate.toLowerCase()], {
+          state: { data: res }, // Pass the 'res' object as 'data' in the state object
+        });
+
         this.tosterService.customToast('Registration Successful', 'success');
       }
     });

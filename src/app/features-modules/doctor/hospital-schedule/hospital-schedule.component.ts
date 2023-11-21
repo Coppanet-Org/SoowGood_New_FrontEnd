@@ -10,12 +10,16 @@ import { slideInFrom } from 'src/app/animation';
 export class HospitalScheduleComponent {
   animationDirection = 'right';
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    firstCtrl: [''],
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    secondCtrl: [''],
+  });
+  thirdFormGroup = this._formBuilder.group({
+    thirdCtrl: [''],
   });
   isLinear = false;
+  isEditable = false;
   activeTab:any
   constructor(private _formBuilder: FormBuilder) {}
 
