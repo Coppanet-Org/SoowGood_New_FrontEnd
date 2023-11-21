@@ -212,7 +212,7 @@ export class ProfileSettingsComponent implements OnInit {
   //Profile Picture Related Functions
 
   getProfilePic() {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.subs.sink = this.doctorProfilePicService
       .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
         'Doctor',

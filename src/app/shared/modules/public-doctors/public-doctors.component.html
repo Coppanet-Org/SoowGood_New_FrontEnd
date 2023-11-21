@@ -41,8 +41,21 @@
                     </div>
 
                 </div>
-
-                <div class="w-full grid lg:grid-cols-4 gap-10 p-5 h-screen flex-wrap overflow-y-scroll no-scrollbar pb-[50px]">
+                <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                    <app-skeleton></app-skeleton>
+                  </div>
+                
+                  <!-- <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+                    <div>No records has been found!</div>
+                  </div> -->
+                <div *ngIf="!dataLoading" class="w-full grid lg:grid-cols-4 gap-10 p-5 h-screen flex-wrap overflow-y-scroll no-scrollbar pb-[50px]">
                     <div *ngFor="let doctorDetails of doctorList">
                         <app-doctor-card [doctorDetails]="doctorDetails" class="max-w-[350px] min-w-[310px]"></app-doctor-card>
                     </div>

@@ -1,14 +1,7 @@
 import { countries } from './../../../shared/utils/country';
 import { TosterService } from './../../../shared/services/toster.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   DegreeDto,
@@ -30,9 +23,7 @@ import {
   OtpService,
   UserAccountsService,
   SpecialityService,
-  DoctorDegreeService,
   SpecializationService,
-  DoctorSpecializationService,
   DegreeService,
   DocumentsAttachmentService,
   PatientProfileService,
@@ -43,112 +34,27 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { SubSink } from 'SubSink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { max } from 'rxjs';
-
-function customNameValidator(
-  control: AbstractControl
-): ValidationErrors | null {
+import {
+  CustomValidators,
+  customNameValidator,
+  yearValidator,
+} from 'src/app/shared/utils/auth-helper';
+import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
+function customPassingYearValidator(control: any) {
   const value = control.value;
-
-  if (!value) {
-    return null; // If the field is empty, consider it valid
+  const currentYear = new Date().getFullYear();
+  if (!/^[1-9]\d{3}$/.test(value) || Number(value) > currentYear) {
+    return { invalidPassingYear: true };
   }
-
-  // Regular expression to validate only letters and numbers at the end
-  const regex = /^[a-zA-Z]+[0-9]*$/;
-
-  if (!regex.test(value) || value.length < 3) {
-    return { invalidName: true };
-  }
-
   return null;
 }
-
-
-
-export function passwordMatchValidator(controlName: string, matchingControlName: string) {
-  return (formGroup: FormGroup) => {
-    const control = formGroup.controls[controlName];
-    const matchingControl = formGroup.controls[matchingControlName];
-
-    if (matchingControl.errors && !matchingControl.errors['passwordMismatch']) {
-      // return if another validator has already found an error on the matchingControl
-      return;
-    }
-
-    if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ passwordMismatch: true });
-      console.log('Password mismatch error set');
-    } else {
-      matchingControl.setErrors(null);
-      console.log('Password mismatch error cleared');
-    }
-  };
-}
-function yearValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const value = control.value;
-
-    if (value && value.length === 10) {
-      const year = value.substring(6);
-      if (year.length === 4 && !isNaN(Number(year))) {
-        return null; // Valid 4-digit year
-      }
-    }
-
-    return { invalidYear: true };
-  };
-}
-
-export class CustomValidators {
-
-  // Validate that the password starts with an uppercase letter
-  static startsWithUppercase(control: AbstractControl): ValidationErrors | null {
-    console.log("startsWithUppercase");
-    const value = control.value as string;
-    if (value && !/^[A-Z]/.test(value)) {
-
-      return { startsWithUppercase: true };
-    }
-    return null;
-  }
-
-
-
-  // Validate that the password is at least 6 characters long
-  static isAtLeast6Characters(control: AbstractControl): ValidationErrors | null {
-    const value = control.value as string;
-    if (value && value.length < 6) {
-      return { isAtLeast6Characters: true };
-    }
-    return null;
-  }
-
-  // Validate that the password includes a special character
-  static includesSpecialCharacter(control: AbstractControl): ValidationErrors | null {
-    const value = control.value as string;
-    if (value && !/.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-=/|]/.test(value)) {
-      return { includesSpecialCharacter: true };
-    }
-    return null;
-  }
-
-  // Validate that the password includes a number
-  static includesNumber(control: AbstractControl): ValidationErrors | null {
-    const value = control.value as string;
-    if (value && !/.*[0-9]/.test(value)) {
-      return { includesNumber: true };
-    }
-    return null;
-  }
-}
-
-
 
 @Component({
   selector: 'app-signup-component',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  providers: [DatePipe]
 })
 export class SignupComponent implements OnInit {
   @ViewChild('attachments') attachment: any;
@@ -157,8 +63,6 @@ export class SignupComponent implements OnInit {
   //subs = new SubSink();
   fileList: File[] = [];
   fileNames: any[] = [];
-
-
 
   idFileList: File[] = [];
   idFileNames: any[] = [];
@@ -197,7 +101,7 @@ export class SignupComponent implements OnInit {
   selectedUserType: string = '';
   otpModal: boolean = false;
   userInfoModal: boolean = false;
-  doctorProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
+  doctorProfileDto: any;
   forStepUpdateDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   newCreatedProfileDto: DoctorProfileInputDto = {} as DoctorProfileInputDto;
   completeDegreeSpecilizationInfoModal: boolean = false;
@@ -230,9 +134,7 @@ export class SignupComponent implements OnInit {
   documentMassage: any;
   specializationName: any;
   specialityName: any;
-  sp1or2: any = false;
-  x: any = true;
-  y: any = true;
+
   detectChnage: boolean = false;
   durationList: any = [
     { id: 1, name: '1 year' },
@@ -248,6 +150,14 @@ export class SignupComponent implements OnInit {
   lastCount: any;
   formSubmitted: boolean = false;
   countryList = countries;
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
+  private destroy$: Subject<void> = new Subject<void>();
+  sp1or2: any = false;
+  todayDate: any = new Date();
+  maxdate: any = this.todayDate.year - 18;
+  picUploadBtn: any = true;
+  nidUploadBtn: any = true;
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -264,174 +174,173 @@ export class SignupComponent implements OnInit {
     private http: HttpClient,
     private cdRef: ChangeDetectorRef,
     private doctorProfilePicService: DocumentsAttachmentService,
-    private TosterService: TosterService
-  ) { }
+    private TosterService: TosterService,
+    private datePipe: DatePipe
+  ) {
+    this.todayDate = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+    //this.maxdate = this.datePipe.transform(this.maxdate, 'yyyy-MM-dd');
+  }
 
   ngOnInit(): void {
-    let authInfo = this.normalAuth.authInfo();
-    if (authInfo != null) {
-      this.userType = this.normalAuth.authInfo().userType;
-      this.doctorId = this.normalAuth.authInfo().id;
-      this.specialityId = this.normalAuth.authInfo().specialityId;
-      this.profileStep = this.normalAuth.authInfo().profileStep;
-      if (this.specialityId == 1 || this.specialityId == 2) {
-        this.sp1or2 = true;
-      }
-      if (this.profileStep == 1) {
-        this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDegreeSpecilizationInfoModal = true;
-        this.doctorName = this.normalAuth.authInfo().doctorName;
-        this.degreeService.getList().subscribe((res) => {
-          this.degreeList = res;
-        });
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
-              this.degreeMendatoryMassage =
-                this.degreeMendatoryMassage =
-                'You have selected ' +
-                this.specialityName +
-                ' as your specialist. You must include your degrees according to your speciality.';
-            } else if (this.specialityId == 1) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 1);
-            } else if (this.specialityId == 1) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 2);
-            }
-            this.subs.sink = this.specializationService
-              .getListBySpecialtyId(this.specialityId)
-              .subscribe((res) => {
-                this.specializationList = res;
-                if (this.specialityId == 1) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 1
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 1
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataForMbbs = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataForMbbs);
-                } else if (this.specialityId == 2) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 2
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 2
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataBDS = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataBDS);
-                } else {
-                  this.spMendatoryMassage =
-                    'You Can select Maximum 3 specializations as you are a' +
-                    this.specialityName +
-                    ' specialist. You must upload documents to prove your specializations.';
-                }
-              });
-          });
-      }
-
-      if (this.profileStep == 2) {
-        this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDocumentUpload = true;
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
-              this.documentMassage =
-                '(You must upload document as you are a ' +
-                this.specialityName +
-                ' specialist.)';
-            } else {
-              this.documentMassage =
-                '(Just upload a document which can prove that, you a Doctor.)';
-            }
-          });
-        //this.doctorName = this.normalAuth.authInfo().doctorName;
-        //this.degreeService.getList().subscribe((res) => {
-        //  this.degreeList = res;
-        //});
-        //this.subs.sink = this.specialityService.get(this.specialityId).subscribe(n => {
-        //  this.specialityName = n.specialityName;
-        //  if (this.specialityId > 1 && this.specialityId > 2) {
-        //    this.degreeMendatoryMassage = "You must provide your degree info as " + this.specialityName + " specialist.";
-        //  }
-        //  else if (this.specialityId == 1) {
-        //    this.degreeList = this.degreeList.filter(d => d.id == 1);
-        //  }
-        //  else if (this.specialityId == 1) {
-        //    this.degreeList = this.degreeList.filter(d => d.id == 2);
-        //  }
-        //  this.subs.sink = this.specializationService.getListBySpecialtyId(this.specialityId).subscribe((res) => {
-        //    this.specializationList = res;
-        //    if (this.specialityId == 1) {
-        //      this.specializationList = this.specializationList.filter(s => s.specialityId == 1);
-        //      let specId = this.specializationList.find(sp => sp.specialityId == 1);
-        //      let uniId = this.GenerateId();
-        //      let specialzDataForMbbs = {
-        //        id: +uniId,
-        //        specializationId: specId?.id,
-        //        specializationName: specId?.specializationName,
-        //        doctorId: this.doctorId,
-        //        specialityId: this.specialityId,
-        //        specialityName: this.specialityName
-        //      };
-        //      this.doctorSpecializations.push(specialzDataForMbbs);
-        //    }
-        //    else if (this.specialityId == 2) {
-        //      this.specializationList = this.specializationList.filter(s => s.specialityId == 2);
-        //      let specId = this.specializationList.find(sp => sp.specialityId == 2);
-        //      let uniId = this.GenerateId();
-        //      let specialzDataBDS = {
-        //        id: +uniId,
-        //        specializationId: specId?.id,
-        //        specializationName: specId?.specializationName,
-        //        doctorId: this.doctorId,
-        //        specialityId: this.specialityId,
-        //        specialityName: this.specialityName
-        //      };
-        //      this.doctorSpecializations.push(specialzDataBDS);
-        //    }
-        //    else {
-        //      this.spMendatoryMassage = "You must select specializaion for " + this.specialityName + ". Max. 3";
-        //    }
-
-        //  });
-        //});
-      }
-    }
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
-
-    this.doctorSpeciality.getList().subscribe((res) => {
-      this.specialties = res;
-    });
+    this.doctorSpeciality.getList().subscribe((res) => (this.specialties = res));
     this.titleList = CommonService.getEnumList(DoctorTitle);
-
     this.doctorProfileService.getList().subscribe((d) => {
       this.doctorList = d;
       this.lastCount = this.doctorList.length;
     });
+    const authInfo = this.normalAuth.authInfo();
+    if (authInfo == null) {
+      return;
+    }
+    this.userType = this.normalAuth.authInfo().userType;
+    this.doctorId = authInfo.id;
+    this.specialityId = authInfo.specialityId;
+    this.profileStep = authInfo.profileStep;
+    if (this.specialityId == 1 || this.specialityId == 2) {
+      this.sp1or2 = true;
+    }
+    if (this.profileStep === 1) {
+      this.handleProfileStep1();
+    } else if (this.profileStep === 2) {
+      this.handleProfileStep2();
+    }
+    else {
+      this._router.navigate(['/']);
+    }
+
   }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.subs.unsubscribe();
+  }
+  //handle profile step 1
+
+  private handleProfileStep1(): void {
+    this.otpModal = false;
+    this.userInfoModal = false;
+    this.completeDegreeSpecilizationInfoModal = true;
+    this.doctorName = this.normalAuth.authInfo().doctorName;
+
+    this.degreeService.getList().subscribe((res) => {
+      this.degreeList = res;
+    });
+
+    this.specialityService
+      .get(this.specialityId)
+      .subscribe((n) => {
+        this.specialityName = n.specialityName;
+        if (this.specialityId > 2) {
+          this.degreeMendatoryMassage =
+            'Please provide your degree qualifications as you are a ' +
+            this.specialityName +
+            ' specialist.';
+        }
+        else if (this.specialityId == 1) {
+          this.degreeList = this.degreeList.filter((d) => d.id == 1);
+        }
+        else if (this.specialityId == 2) {
+          this.degreeList = this.degreeList.filter((d) => d.id == 2);
+        }
+        this.specializationService
+          .getListBySpecialtyId(this.specialityId)
+          .subscribe((res) => {
+            this.specializationList = res;
+            if (this.specialityId == 1) {
+              this.specializationList = this.specializationList.filter(
+                (s) => s.specialityId == 1
+              );
+              let specId = this.specializationList.find(
+                (sp) => sp.specialityId == 1
+              );
+              let uniId = this.GenerateId();
+              let specialzDataForMbbs = {
+                id: +uniId,
+                specializationId: specId?.id,
+                specializationName: specId?.specializationName,
+                doctorId: this.doctorId,
+                specialityId: this.specialityId,
+                specialityName: this.specialityName,
+              };
+              this.doctorSpecializations.push(specialzDataForMbbs);
+            } else if (this.specialityId == 2) {
+              this.specializationList = this.specializationList.filter(
+                (s) => s.specialityId == 2
+              );
+              let specId = this.specializationList.find(
+                (sp) => sp.specialityId == 2
+              );
+              let uniId = this.GenerateId();
+              let specialzDataBDS = {
+                id: +uniId,
+                specializationId: specId?.id,
+                specializationName: specId?.specializationName,
+                doctorId: this.doctorId,
+                specialityId: this.specialityId,
+                specialityName: this.specialityName,
+              };
+              this.doctorSpecializations.push(specialzDataBDS);
+            } else {
+              this.spMendatoryMassage =
+                'Please select at least one specializtion as your a  ' +
+                this.specialityName +
+                ' specialist. you select maximum 3 specialization';
+            }
+          });
+      });
+  }
+  //handle profile step 2
+  private handleSpecializationList(): void {
+    this.subs.sink = this.specializationService
+      .getListBySpecialtyId(this.specialityId)
+      .subscribe((res) => {
+        this.specializationList = res;
+
+        if (this.specialityId === 1 || this.specialityId === 2) {
+          const specId = this.specializationList.find(
+            (sp) => sp.specialityId === this.specialityId
+          );
+
+          const uniId = this.GenerateId();
+          const specializationData = {
+            id: +uniId,
+            specializationId: specId?.id,
+            specializationName: specId?.specializationName,
+            doctorId: this.doctorId,
+            specialityId: this.specialityId,
+            specialityName: this.specialityName,
+          };
+
+          this.doctorSpecializations.push(specializationData);
+        } else {
+          this.spMendatoryMassage = `You must select specialization for ${this.specialityName}. Max. 3`;
+        }
+      });
+  }
+  //handle profile step 3
+  private handleProfileStep2(): void {
+    this.otpModal = false;
+    this.userInfoModal = false;
+    this.completeDocumentUpload = true;
+    this.subs.sink = this.specialityService
+      .get(this.specialityId)
+      .subscribe((n) => {
+        this.specialityName = n.specialityName;
+        if (this.specialityId > 2) {
+          this.documentMassage =
+            '(You must upload document as you are a ' +
+            this.specialityName +
+            ' specialist.)';
+        } else {
+          this.documentMassage =
+            '(Just upload a document which can prove that, you a Doctor.)';
+        }
+      });
+  }
+
+  // updated end
 
   loadForm() {
     this.formGroup = this.fb.group({
@@ -447,61 +356,61 @@ export class SignupComponent implements OnInit {
       otp: ['', Validators.required],
       userTypeName: ['', Validators.required],
     });
-    this.userInfoForm = this.fb.group({
-      fullName: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[a-zA-Z]+[0-9]*$/), // Enforce letters and numbers at the end
-          customNameValidator,
+    this.userInfoForm = this.fb.group(
+      {
+        fullName: ['', [Validators.required, customNameValidator]],
+        doctorTitle: ['0', Validators.required],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/),
+          ],
         ],
-      ],
-      doctorTitle: ['0', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/),
+        password: [
+          '',
+          [
+            Validators.required,
+            CustomValidators.startsWithUppercase,
+            CustomValidators.isAtLeast6Characters,
+            CustomValidators.includesSpecialCharacter,
+            CustomValidators.includesNumber,
+          ],
         ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          CustomValidators.startsWithUppercase, // Starts with an uppercase letter
-          CustomValidators.isAtLeast6Characters, // Is at least 6 characters long
-          CustomValidators.includesSpecialCharacter, // Includes a special character
-          CustomValidators.includesNumber, // Includes a number
+        confirmPassword: ['', Validators.required],
+        gender: ['0', Validators.required],
+        dateOfBirth: ['', Validators.required],
+        city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+        country: ['Bangladesh', Validators.required],
+        address: [
+          '',
+          [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
         ],
-      ],
-      confirmPassword: ['', Validators.required],
-
-      gender: ['0', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      //maritalStatus: ["0", Validators.required],
-      city: ['', [
-        Validators.required,
-        Validators.pattern(/^[A-Za-z]+$/)
-      ]],
-      country: ['Bangladesh', Validators.required],
-      address: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      bmdcRegExpiryDate: ['', [Validators.required, yearValidator()]],
-      specialityId: ['0', Validators.required],
-      identityNumber: [
-        '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
-      ],
-    }, { validator: passwordMatchValidator('password', 'confirmPassword') });
+        zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+        bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{6,9}$/)]],
+        bmdcRegExpiryDate: ['', Validators.required],//[Validators.required, yearValidator()]],
+        specialityId: ['0', Validators.required],
+        identityNumber: [
+          '',
+          [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{10,17}$/)],
+        ],
+      },
+      { validator: CustomValidators.matchValidator }
+    );
     this.formDegree = this.fb.group({
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
-      passingYear: ['', Validators.required],
-      instituteName: ['', Validators.required],
-      instituteCity: ['', Validators.required],
-      instituteCountry: ['Bangladesh', Validators.required],
+      passingYear: ['', [Validators.required, customPassingYearValidator]],
+      instituteName: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
+      ],
+      instituteCity: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
+      ],
+      instituteCountry: ['Bangladesh', Validators.required]//['',[Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],],
     });
     if (this.specialityId === 1) {
       this.formSpecialization = this.fb.group({
@@ -518,6 +427,44 @@ export class SignupComponent implements OnInit {
         specializationId: [0, Validators.required],
         docFileName: [''],
       });
+    }
+  }
+
+  // Future todo : add resend code feature
+
+  // resendCodeEnabled: boolean = true;
+  // countdown: number = 120;
+  // minutes: number=0;
+  // seconds: number=0;
+
+
+  // initiateResendCode() {
+  //   this.resendCodeEnabled = false;
+  //   this.startCountdown();
+  // }
+  // startCountdown() {
+  //   const countdownInterval = setInterval(() => {
+  //     this.countdown--;
+  //     this.calculateTime();
+  //     if (this.countdown <= 0) {
+  //       this.resendCodeEnabled = true;
+  //       this.countdown = 120;
+  //       clearInterval(countdownInterval); 
+  //     }
+  //   }, 1000); 
+  // }
+  // calculateTime() {
+  //   this.minutes = Math.floor(this.countdown / 60);
+  //   this.seconds = this.countdown % 60;
+  // }
+
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
   }
 
@@ -543,16 +490,19 @@ export class SignupComponent implements OnInit {
           .get(this.specialityId)
           .subscribe((n) => {
             this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
+            if (this.specialityId > 2) {
               this.degreeMendatoryMassage =
-                'You have selected ' + 
-                this.specialityName + 
-              ' as your specialist. You must include your degrees according to your speciality.';
-            } else if (this.specialityId == 1) {
+                'Please provide your degree qualifications as you are a ' +
+                this.specialityName +
+                ' specialist.';
+            }
+            else if (this.specialityId == 1) {
               this.degreeList = this.degreeList.filter((d) => d.id == 1);
-            } else if (this.specialityId == 1) {
+            }
+            else if (this.specialityId == 2) {
               this.degreeList = this.degreeList.filter((d) => d.id == 2);
             }
+
             this.subs.sink = this.specializationService
               .getListBySpecialtyId(this.specialityId)
               .subscribe((res) => {
@@ -593,14 +543,14 @@ export class SignupComponent implements OnInit {
                   this.doctorSpecializations.push(specialzDataBDS);
                 } else {
                   this.spMendatoryMassage =
-                    'You Can select Maximum 3 specializations as you are a' +
+                    'Please select at least one specializtion as your a  ' +
                     this.specialityName +
-                    ' specialist. You must upload documents to prove your specializations.)';
+                    ' specialist. you select maximum 3 specialization';
                 }
               });
           });
       }
-      if (this.profileStep == 2) {
+      else if (this.profileStep == 2) {
         this.otpModal = false;
         this.userInfoModal = false;
         this.completeDocumentUpload = true;
@@ -608,14 +558,14 @@ export class SignupComponent implements OnInit {
           .get(this.specialityId)
           .subscribe((n) => {
             this.specialityName = n.specialityName;
-            if (this.specialityId > 1 && this.specialityId > 2) {
+            if (this.specialityId > 2) {
               this.documentMassage =
                 '(You must upload document as you are a ' +
                 this.specialityName +
                 ' specialist.)';
             } else {
               this.documentMassage =
-                '(Just upload a document which can prove that, you are a Doctor.)';
+                '(Just upload a document which can prove that, you a Doctor.)';
             }
           });
       }
@@ -630,6 +580,7 @@ export class SignupComponent implements OnInit {
     ) {
       return;
     }
+    // this.initiateResendCode()
     const formData = this.formGroup?.value;
     this.mobile = formData.mobile;
     this.isLoading = true;
@@ -649,6 +600,10 @@ export class SignupComponent implements OnInit {
           this.formSubmitted = false;
         }
       );
+  }
+
+  back() {
+    this.otpModal = false
   }
 
   verify() {
@@ -675,153 +630,160 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  sendUserInfo() {
-
-
-    //console.log(this.userInfoForm.value, this.formGroup.value);
-
+  // updated start
+  async sendUserInfo() {
     this.formSubmitted = true;
-    this.isLoading = true;
-    let userType = this.formGroup?.value.userTypeName;
-    this.userType = userType;
-    let password = this.userInfoForm.value.password;
-    let title = this.userInfoForm.value.doctorTitle;
-    let gender = this.userInfoForm.value.gender;
-    let dateOfBirth = this.userInfoForm.value.dateOfBirth;
-    let address = this.userInfoForm.value.address;
-    let city = this.userInfoForm.value.city;
-    let zipCode = this.userInfoForm.value.zipCode;
-    let country = this.userInfoForm.value.country;
-    let bmdcRegNo = this.userInfoForm.value.bmdcRegNo;
-    let bmdcRegExpiryDate = this.userInfoForm.value.bmdcRegExpiryDate;
-    let specialityId = this.userInfoForm.value.specialityId;
-    let identityNumber = this.userInfoForm.value.identityNumber;
-    let userInfo = {
-      tenantId: '',
-      userName: this.mobile,
-      name: this.userInfoForm?.value.fullName,
-      surname: '',
-      email: this.userInfoForm.value.email,
-      emailConfirmed: true,
-      phoneNumber: this.mobile,
-      phoneNumberConfirmed: true,
-      isActive: true,
-      lockoutEnabled: false,
-      lockoutEnd: '2023-07-16T07:38:44.382Z',
-      concurrencyStamp: '',
+
+    const { fullName, email, password, confirmPassword } =
+      this.userInfoForm.value;
+
+    if (
+      this.userInfoForm.invalid &&
+      this.formGroup.get('userTypeName')?.value == 'Doctor'
+    ) {
+      this.TosterService.customToast('All fields is required', 'warning');
+      return;
+    } else if (
+      this.formGroup.get('userTypeName')?.value == 'Patient' &&
+      !fullName &&
+      !email &&
+      !password &&
+      !confirmPassword
+    ) {
+      this.TosterService.customToast('All fields is required', 'warning');
+      return;
+    }
+
+    try {
+      this.isLoading = true;
+      const userType = this.formGroup?.value.userTypeName;
+      this.userType = userType;
+      const password = this.userInfoForm.value.password;
+      const userInfo = {
+        tenantId: '',
+        userName: this.mobile,
+        name: this.userInfoForm?.value.fullName,
+        surname: '',
+        email: this.userInfoForm.value.email,
+        emailConfirmed: true,
+        phoneNumber: this.mobile,
+        phoneNumberConfirmed: true,
+        isActive: true,
+        lockoutEnabled: false,
+        lockoutEnd: '2023-07-16T07:38:44.382Z',
+        concurrencyStamp: '',
+      };
+      const res: UserSignUpResultDto | undefined = await this.userAccountService
+        .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
+        .toPromise();
+      if (res?.success) {
+        if (userType === 'Doctor') {
+          this.handleDoctorProfile(res);
+        } else if (userType === 'Patient') {
+          this.handlePatientProfile(res);
+        }
+        this.isLoading = false;
+      } else {
+        res?.message?.forEach((e: string) =>
+          this.tosterService.customToast(e, 'error')
+        );
+        this.isLoading = false;
+      }
+    } catch (err) {
+      console.error('Error occurred:', err);
+      this.isLoading = false;
+    }
+  }
+
+  private handleDoctorProfile(res: UserSignUpResultDto) {
+    this.doctorProfileDto = {
+      doctorTitle: this.userInfoForm.value.doctorTitle,
+      userId: res.userId,
+      fullName: res.name,
+      email: res.email,
+      mobileNo: res.phoneNumber,
+      gender: this.userInfoForm.value.gender,
+      dateOfBirth: this.userInfoForm.value.dateOfBirth,
+      address: this.userInfoForm.value.address,
+      city: this.userInfoForm.value.city,
+      zipCode: this.userInfoForm.value.zipCode,
+      country: this.userInfoForm.value.country,
+      bmdcRegNo: this.userInfoForm.value.bmdcRegNo,
+      bmdcRegExpiryDate: this.userInfoForm.value.bmdcRegExpiryDate,
+      specialityId: this.userInfoForm.value.specialityId,
+      identityNumber: this.userInfoForm.value.identityNumber,
+      isActive: false,
+      profileStep: 1,
+      createFrom: 'Web',
     };
 
+    this.doctorProfileService
+      .create(this.doctorProfileDto)
+      .subscribe((profRes: any) => {
+        this.subs.sink = this.doctorProfileService
+          .getByUserId(profRes.userId)
+          .subscribe((doctorDto: DoctorProfileInputDto) => {
+            this.newCreatedProfileDto = doctorDto;
+            this.completeDegreeSpecilizationInfoModal = true;
+            this.docId = doctorDto.id;
 
-    console.log(this.userInfoForm.value.password);
+            const saveLocalStorage = {
+              identityNumber: doctorDto.identityNumber,
+              doctorName: doctorDto.fullName,
+              bmdcRegNo: doctorDto.bmdcRegNo,
+              isActive: doctorDto.isActive,
+              userId: doctorDto.userId,
+              id: doctorDto.id,
+              specialityId: doctorDto.specialityId,
+              profileStep: doctorDto.profileStep,
+              createFrom: doctorDto.createFrom,
+              userType: this.userType,
+            };
 
-    this.userAccountService
-      .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
-      .subscribe(
-        (res: UserSignUpResultDto) => {
-          if (res.success) {
-            this.isLoading = false;
-            if (userType === 'Doctor') {
-              //let codeCnt = +(this.lastCount + 1);
-              //this.doctorProfileDto.doctorCode = "SG-D-" + codeCnt;
-              this.doctorProfileDto.doctorTitle = title;
-              this.doctorProfileDto.userId = res.userId;
-              this.doctorProfileDto.fullName = res.name;
-              this.doctorProfileDto.email = res.email;
-              this.doctorProfileDto.mobileNo = res.phoneNumber;
-              this.doctorProfileDto.gender = gender;
-              this.doctorProfileDto.dateOfBirth = dateOfBirth;
-              this.doctorProfileDto.address = address;
-              this.doctorProfileDto.city = city;
-              this.doctorProfileDto.zipCode = zipCode;
-              this.doctorProfileDto.country = country;
-              this.doctorProfileDto.bmdcRegNo = bmdcRegNo;
-              this.doctorProfileDto.bmdcRegExpiryDate = bmdcRegExpiryDate;
-              this.doctorProfileDto.specialityId = specialityId;
-              this.doctorProfileDto.identityNumber = identityNumber;
-              this.doctorProfileDto.isActive = false;
-              this.doctorProfileDto.profileStep = 1;
-              this.doctorProfileDto.createFrom = 'Web';
-              //userType = userType + '/profile-settings/basic-info'
-              this.doctorProfileService
-                .create(this.doctorProfileDto)
-                .subscribe((profRes: any) => {
-                  this.subs.sink = this.doctorProfileService
-                    .getByUserId(profRes.userId)
-                    .subscribe((doctorDto: DoctorProfileInputDto) => {
-                      this.newCreatedProfileDto = doctorDto;
-                      this.completeDegreeSpecilizationInfoModal = true;
-                      this.docId = doctorDto.id;
-                      let saveLocalStorage = {
-                        identityNumber: doctorDto.identityNumber,
-                        doctorName: doctorDto.fullName,
-                        bmdcRegNo: doctorDto.bmdcRegNo,
-                        isActive: doctorDto.isActive,
-                        userId: doctorDto.userId,
-                        id: doctorDto.id,
-                        specialityId: doctorDto.specialityId,
-                        profileStep: doctorDto.profileStep,
-                        createFrom: doctorDto.createFrom,
-                        userType: userType,
-                      };
-                      this.normalAuth.setAuthInfoInLocalStorage(
-                        saveLocalStorage
-                      );
-                      if (this.normalAuth) {
-                        this.loadAuth();
-                      }
-                      this.tosterService.customToast(
-                        'Basic Inforamation Saved Successfully',
-                        'success'
-                      );
-                      this.cdRef.detectChanges();
-                    });
-                });
-            } else if (userType === 'Patient') {
-              this.patientProfileService
-                .create({
-                  ...this.userInfoForm.value,
-                  mobileNo: this.mobile,
-                  userId: res.userId,
-                })
-                .subscribe((patientDto: PatientProfileDto) => {
-                  //this.newCreatedProfileDto = patientDto;
-                  //this.completeDegreeSpecilizationInfoModal = true
-                  console.log(patientDto);
+            this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
 
-                  let saveLocalStorage = {
-                    patientName: patientDto.fullName,
-                    //isActive: patientDto.isActive,
-                    userId: res.userId,
-                    id: patientDto.id,
-                    userType: userType,
-                  };
-                  let navigate =
-                    this.formGroup?.value.userTypeName + '/profile-settings';
-                  this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  this._router.navigate([navigate.toLowerCase()], {
-                    state: { data: res }, // Pass the 'res' object as 'data' in the state object
-                  });
-                  if (this.normalAuth) {
-                    this.loadAuth();
-                  }
-                  this.tosterService.customToast(
-                    'Successfully Registration',
-                    'success'
-                  ),
-                    { position: 'bottom-center' };
-                  this.cdRef.detectChanges();
-                });
+            if (this.normalAuth) {
+              this.loadAuth();
             }
-          } else {
-            res.message?.map((e: string) =>
-              this.tosterService.customToast(e, 'error')
+
+            this.tosterService.customToast(
+              'Basic Information Saved Successfully',
+              'success'
             );
-          }
-        },
-        (err) => {
-          this.isLoading = false;
+            this.cdRef.detectChanges();
+          });
+      });
+  }
+
+  private handlePatientProfile(res: UserSignUpResultDto) {
+    this.patientProfileService
+      .create({
+        ...this.userInfoForm.value,
+        mobileNo: this.mobile,
+        userId: res.userId,
+      })
+      .subscribe((patientDto: PatientProfileDto) => {
+        const saveLocalStorage = {
+          patientName: patientDto.fullName,
+          userId: res.userId,
+          id: patientDto.id,
+          userType: this.userType,
+        };
+
+        const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+
+        this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+        this._router.navigate([navigate.toLowerCase()], {
+          state: { data: res }, // Pass the 'res' object as 'data' in the state object
+        });
+
+        if (this.normalAuth) {
+          this.loadAuth();
         }
-      );
+
+        this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success');
+        this.cdRef.detectChanges();
+      });
   }
 
   handleComponent(event: boolean) {
@@ -829,6 +791,7 @@ export class SignupComponent implements OnInit {
       this.cdRef.detectChanges();
     }
   }
+  // updated end
 
   handleFormData(formData: FormGroup) {
     const doctorProfileInput: DoctorProfileInputDto = {
@@ -873,7 +836,6 @@ export class SignupComponent implements OnInit {
   }
 
   //Education And Specialization
-
   getDegreeName(event: any) {
     let t = event.target.value;
     this.subs.sink = this.degreeService.get(t).subscribe((n) => {
@@ -889,6 +851,7 @@ export class SignupComponent implements OnInit {
   }
 
   addDegree() {
+    this.formSubmitted = true;
     let degreeId = this.formDegree.get('degreeId')?.value;
     let duration = this.formDegree.get('duration')?.value;
 
@@ -902,7 +865,7 @@ export class SignupComponent implements OnInit {
       doctorId: this.doctorId,
     };
 
-    if (!this.formDegree.valid && !this.formDegree.touched) {
+    if (this.formDegree.invalid) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'
@@ -987,6 +950,7 @@ export class SignupComponent implements OnInit {
   }
 
   saveDegreeSpecialization() {
+    this.isLoading = true;
     let x = 0;
     let y = +(this.doctorDegrees.length + this.doctorSpecializations.length);
     if (
@@ -1052,16 +1016,14 @@ export class SignupComponent implements OnInit {
             this.forStepUpdateDto.zipCode = doctorDto.zipCode;
             this.forStepUpdateDto.country = doctorDto.country;
             this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
-            this.forStepUpdateDto.bmdcRegExpiryDate =
-              doctorDto.bmdcRegExpiryDate;
+            this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
             this.forStepUpdateDto.specialityId = doctorDto.specialityId;
             this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
             this.forStepUpdateDto.isActive = false;
             this.forStepUpdateDto.profileStep = 2;
             this.forStepUpdateDto.createFrom = 'Web';
             this.forStepUpdateDto.degrees = this.doctorDegreeInputs; // .push(this.doctorDegrees);
-            this.forStepUpdateDto.doctorSpecialization =
-              this.doctorSpecializationInputs;
+            this.forStepUpdateDto.doctorSpecialization = this.doctorSpecializationInputs;
 
             this.subs.sink = this.doctorProfileService
               .update(this.forStepUpdateDto)
@@ -1070,37 +1032,20 @@ export class SignupComponent implements OnInit {
                   if (this.totalSpFileList.length > 0) {
                     for (let item of this.totalSpFileList) {
                       this.spFileData = new FormData();
-                      this.spFileData.append(
-                        'entityId',
-                        this.doctorId.toString()
+                      this.spFileData.append('entityId', this.doctorId.toString()
                       );
                       this.spFileData.append('entityType', 'Doctor');
-                      this.spFileData.append(
-                        'attachmentType',
-                        'DoctorSpecialityDoc'
+                      this.spFileData.append('attachmentType', 'DoctorSpecialityDoc'
                       );
-                      this.spFileData.append(
-                        'directoryName',
-                        'DoctorExperties\\' + this.doctorId.toString()
+                      this.spFileData.append('directoryName', 'DoctorExperties\\' + this.doctorId.toString()
                       );
-                      //for (let item of this.totalSpFileList) {
-
-                      //if (this.totalSpFileList.length > 0) {
 
                       let fileToUpload = item;
                       this.spFileData.append(item.name, fileToUpload);
-                      //}
-                      // save attachment
                       this.http
-                        .post(
-                          `${this.apiUrl}/Common/Documents`,
-                          this.spFileData
-                        )
+                        .post(`${this.apiUrl}/Common/Documents`, this.spFileData)
                         .subscribe(
                           (result: any) => {
-                            //this.form.reset();
-                            //this.spFileData = new FormData();
-                            //this.spFileNames = [];
                             this.tosterService.customToast(
                               'Documents for Specializations Uploaded Successfully',
                               'success'
@@ -1126,7 +1071,7 @@ export class SignupComponent implements OnInit {
                     profileStep: res.profileStep,
                     createFrom: res.createFrom,
                     specializations: res.doctorSpecialization,
-                    userTYpe: this.userType,
+                    userType: this.userType,
                   };
                   this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
                   if (this.normalAuth) {
@@ -1136,6 +1081,7 @@ export class SignupComponent implements OnInit {
                     'Degree and Specializtion info updated Successfully',
                     'success'
                   );
+                  this.isLoading = false;
                   this.cdRef.detectChanges();
                 }
               });
@@ -1171,7 +1117,6 @@ export class SignupComponent implements OnInit {
               'success'
             );
             this.getProfilePic();
-            //this.fileList = [];
           },
           (err) => {
             console.log(err);
@@ -1219,12 +1164,6 @@ export class SignupComponent implements OnInit {
       'directoryName',
       'DoctorSpecialityDoc\\' + this.doctorId.toString()
     );
-
-    //this.subs.sink = this.doctorSpecializationService.getDoctorSpecializationListByDoctorId(this.doctorId).subscribe((res: any) => {
-    //  if (res) {
-    //    let docSpList: DoctorSpecializationDto[] = res;
-    //if (this.spFileCount == docSpList.length) {
-
     if (this.spFileList.length > 0) {
       for (let item of this.spFileList) {
         let fileToUpload = item;
@@ -1245,12 +1184,6 @@ export class SignupComponent implements OnInit {
           }
         );
     }
-    //}
-    //else {
-    //  this.tosterService.customToast('Documents count not matched the total specializations', 'error');
-    //}
-    //}
-    //});
   }
 
   onFileChanged(event: any) {
@@ -1263,7 +1196,7 @@ export class SignupComponent implements OnInit {
       this.checkFileValidation(event);
     }
     this.attachment.nativeElement.value = '';
-    //this.x = true;
+    this.picUploadBtn = true;
   }
 
   onIdFileChanged(event: any) {
@@ -1276,6 +1209,7 @@ export class SignupComponent implements OnInit {
       this.checkIdFileValidation(event);
     }
     this.idAttachment.nativeElement.value = '';
+    this.nidUploadBtn = true;
   }
 
   onSpFileChanged(event: any) {
@@ -1424,9 +1358,8 @@ export class SignupComponent implements OnInit {
           this.profilePic = prePaths.replace(re, '');
           this.profPicUrl = this.picUrl + this.profilePic;
         }
-        this.x = false;
-        //this.fileList = [];
       });
+    this.picUploadBtn = false;
   }
 
   getNID() {
@@ -1444,8 +1377,8 @@ export class SignupComponent implements OnInit {
           this.profileNid = prePaths.replace(re, '');
           this.profNidUrl = this.picUrl + this.profileNid;
         }
-        this.y = false;
       });
+    this.nidUploadBtn = false;
   }
 
   finalContinue() {
@@ -1454,19 +1387,14 @@ export class SignupComponent implements OnInit {
         'Please upload all the required documents',
         'error'
       );
-      //return;
+      return;
     }
-    //else {
-    //  this.subs.sink = this.doctorSpecializationService.getDoctorSpecializationListByDoctorId(this.doctorId).subscribe((res: any) => {
-    //    if (res) {
-    //      let docSpList: DoctorSpecializationDto[] = res;
-    //      if (this.totalSpFileList.length != docSpList.length) {
-    //        this.tosterService.customToast('Documents count not matched the total specializations', 'error');
-    //        //return;
-    //      }
+
     else {
+      this.isLoading = true;
+      //this.userType = this.normalAuth.authInfo().userType;
       //let userType = this.userType.toString().toLowerCase();
-      let message = 'Congratulations...!!Profile Created Successfully..!!';
+      let message = 'Congratulations..!! Doctor Profile Created Successfully. You can login now.';
       this.subs.sink = this.doctorProfileService
         .get(this.doctorId)
         .subscribe((doctorDto: DoctorProfileInputDto) => {
@@ -1485,8 +1413,7 @@ export class SignupComponent implements OnInit {
             this.forStepUpdateDto.zipCode = doctorDto.zipCode;
             this.forStepUpdateDto.country = doctorDto.country;
             this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
-            this.forStepUpdateDto.bmdcRegExpiryDate =
-              doctorDto.bmdcRegExpiryDate;
+            this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
             this.forStepUpdateDto.specialityId = doctorDto.specialityId;
             this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
             this.forStepUpdateDto.isActive = doctorDto.isActive;
@@ -1501,32 +1428,33 @@ export class SignupComponent implements OnInit {
                 if (res) {
                   this.completeDegreeSpecilizationInfoModal = false;
                   this.completeDocumentUpload = true;
-                  let saveLocalStorage = {
-                    identityNumber: res.identityNumber,
-                    doctorName: res.fullName,
-                    bmdcRegNo: res.bmdcRegNo,
-                    isActive: res.isActive,
-                    userId: res.userId,
-                    id: res.id,
-                    specialityId: res.specialityId,
-                    profileStep: res.profileStep,
-                    createFrom: res.createFrom,
-                    userType: this.userType//userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
-                  };
-                  this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  if (this.normalAuth) {
-                    this.loadAuth();
-                  }
-                  //userType = userType + '/dashboard';
-                  let navUrl = this.userType.toLowerCase() + '/dashboard';
+                  //let saveLocalStorage = {
+                  //  identityNumber: res.identityNumber,
+                  //  doctorName: res.fullName,
+                  //  bmdcRegNo: res.bmdcRegNo,
+                  //  isActive: res.isActive,
+                  //  userId: res.userId,
+                  //  id: res.id,
+                  //  specialityId: res.specialityId,
+                  //  profileStep: res.profileStep,
+                  //  createFrom: res.createFrom,
+                  //  userType: this.userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
+                  //};
+                  //this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                  this.normalAuth.signOut();
+                  //if (this.normalAuth) {
+                  //  this.loadAuth();
+                  //}
+                  //let navUrl = this.userType.toLowerCase() + '/dashboard';
                   this._router
-                    .navigate([navUrl], {
+                    .navigate(['/login'], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
                     })
                     .then((r) =>
                       this.tosterService.customToast(message, 'success')
                     );
                   //this.tosterService.success("Degree and Specializtion info updated Successfully"),
+                  this.isLoading = false;
                   this.cdRef.detectChanges();
                 }
               });
