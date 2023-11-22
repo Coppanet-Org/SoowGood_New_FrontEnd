@@ -1,16 +1,20 @@
 import { AppointmentService,  SslCommerzService } from 'src/app/proxy/services';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { DoctorBookingStateService } from 'src/app/shared/services/states/doctors-states/doctor-booking-state.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { AppointmentType } from 'src/app/proxy/enums';
+import { ListItem } from 'src/app/shared/model/common-model';
 
 @Component({
   selector: 'app-booking-review',
   templateUrl: './booking-review.component.html',
   styleUrls: ['./booking-review.component.scss']
 })
-export class BookingReviewComponent implements OnInit {
-
+export class BookingReviewComponent  {
+   @Input() bookingInfo:any
+   @Output() gotToBack = new EventEmitter<any>();
   //SSLCommerz
   sslInputDto = {
     applicantCode: '',
@@ -22,38 +26,66 @@ export class BookingReviewComponent implements OnInit {
   hasValidCode = false;
 
   sslCInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
+  loading: boolean = false;
+  appointmentType: ListItem[];
 
-  bookingInfo: any;
+
   constructor(
-    private DoctorBookingStateService: DoctorBookingStateService,
     private ToasterService :TosterService,
-    private appointmentService: AppointmentService,
+    private AppointmentService: AppointmentService,
     private sslCommerzService: SslCommerzService
     //private sslCommerzService: PaymentService
-  ) { }
+  ) { 
 
-  ngOnInit(): void {
+    this.appointmentType = CommonService.getEnumList(AppointmentType);
+
     
-    this.DoctorBookingStateService.getBookingData().subscribe((res:any)=> {
-      this.bookingInfo = res;
-    });
+
 
   }
 
-   payWithSslCommerz(): void {
-     const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
-     sslCommerzInputDto.applicationCode = this.bookingInfo.appointmentCode;
-     sslCommerzInputDto.totalAmount = String(this.bookingInfo.totalAppointmentFee);
-     sslCommerzInputDto.transactionId = '';
+  getTitle(id:any,type:string){
 
-     this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe((response: any) => {
-       if (response && response.status === 'SUCCESS') {
-         window.location = response.gatewayPageURL;
-         localStorage.removeItem('booking-info')
-         this.ToasterService.customToast("Booking confirm success",'success')
-       } else {
-        this.ToasterService.customToast("Unable to initiate your payment request. Please contact our support team.",'error')
-       }
-     });
+    if (type == 'appointmentType') {
+      return this.appointmentType.find((res)=> res.id == id)
+    }else{
+      return
+    }
+  }
+
+
+   createAppointmentAndPayment() {
+    this.loading = true
+    this.AppointmentService.create(this.bookingInfo).subscribe((res) => {
+      this.payWithSslCommerz(res.appointmentCode)
+    });
+  }
+
+
+  payWithSslCommerz(appointmentCode:any): void {
+    if (this.bookingInfo) {
+      const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
+      sslCommerzInputDto.applicationCode = appointmentCode;
+      sslCommerzInputDto.totalAmount = String(this.bookingInfo.totalAppointmentFee);
+      sslCommerzInputDto.transactionId = '';
+      
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe((response: any) => {
+        if (response && response.status === 'SUCCESS') {
+          window.location = response.gatewayPageURL;
+          this.loading = false
+        } else {
+         this.ToasterService.customToast("Unable to initiate your payment request. Please contact our support team.",'error')
+        }
+      },(error)=>{
+        this.ToasterService.customToast(String(error.error.message),'error')
+      });
+    } else {
+      this.ToasterService.customToast("Booking info not found",'error')
+    }
    }
+
+
+
+
+
 }

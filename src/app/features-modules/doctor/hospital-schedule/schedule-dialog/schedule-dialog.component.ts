@@ -12,6 +12,7 @@ export class ScheduleDialogComponent implements OnInit {
   form!: FormGroup;
   appointments!: FormGroup;
   sId:number = 0
+  formSubmitted: boolean = false
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ScheduleDialogComponent>,
@@ -64,6 +65,7 @@ export class ScheduleDialogComponent implements OnInit {
 
 
   submit() {
+    this.formSubmitted = true
     if (!this.form.valid) {
       this.TosterService.customToast('Please field all required field', 'warning');
       return

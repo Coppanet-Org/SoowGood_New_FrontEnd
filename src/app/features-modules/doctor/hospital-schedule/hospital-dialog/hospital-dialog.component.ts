@@ -46,7 +46,6 @@ export class HospitalDialogComponent implements OnInit {
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
       ],
       zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-
     });
   }
   submit() {

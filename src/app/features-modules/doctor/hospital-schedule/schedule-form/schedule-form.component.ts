@@ -1,17 +1,16 @@
 import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { TosterService } from './../../../../shared/services/toster.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
+// import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
 import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -22,13 +21,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ScheduleDialogComponent } from '../schedule-dialog/schedule-dialog.component';
 import { CommonService } from 'src/app/shared/services/common.service';
 import {
-  AppointmentType,
+  // AppointmentType,
   ConsultancyType,
   ScheduleType,
 } from 'src/app/proxy/enums';
-import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
+// import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
 import { map } from 'rxjs';
-import { scheduleData } from 'src/app/shared/utils/input-info';
+// import { scheduleData } from 'src/app/shared/utils/input-info';
 
 @Component({
   selector: 'app-schedule-form',
@@ -97,7 +96,7 @@ export class ScheduleFormComponent implements OnInit {
         )
         .subscribe((hospitalList) => {
           this.hospitalList = hospitalList
-          this.getInputFieldData()
+          // this.getInputFieldData()
         });
     }
     this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
@@ -132,18 +131,18 @@ export class ScheduleFormComponent implements OnInit {
     });
   }
 
-  getInputFieldData() {
-    this.inputConfigs = scheduleData(
-      this.hospitalList,
-      this.scheduleType,
-      this.consultancyType
-    );
-  }
+  // getInputFieldData() {
+  //   this.inputConfigs = scheduleData(
+  //     this.hospitalList,
+  //     this.scheduleType,
+  //     this.consultancyType
+  //   );
+  // }
 
   loadForm() {
     this.form = this.fb.group({
-      scheduleType: ['0', Validators.required],
-      consultancyType: ['0',Validators.required],
+      scheduleType: ['', Validators.required],
+      consultancyType: ['',Validators.required],
       doctorChamberId: [null, Validators.required],
       isSlotSelected : ['',Validators.required]
     });
@@ -155,7 +154,7 @@ export class ScheduleFormComponent implements OnInit {
 
   submit() {
 this.formSubmitted = true
-    if (!this.form.value.scheduleType && !this.form.value.consultancyType) {
+    if (this.form.invalid) {
       this.TosterService.customToast(
         'Please field all required field',
         'warning'

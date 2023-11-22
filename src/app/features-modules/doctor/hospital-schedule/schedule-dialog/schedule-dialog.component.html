@@ -19,6 +19,9 @@
                                 Start time
                             </label>
                             <input formControlName="startTime" type="time" [id]="'startTime' + i" class="form_input" />
+                            <p *ngIf="formSubmitted && form.get('appointments.' + i + '.startTime')?.hasError('required')" class="text-red-600 text-sm">
+                                Start time is required!
+                            </p>
                         </div>
                     </div>
                     <div class="w-full px-3" [ngClass]="i==0? 'sm:w-[33%]' : 'sm:w-[28%]'">
@@ -27,16 +30,20 @@
                                 End time
                             </label>
                             <input formControlName="endTime" type="time" [id]="'endTime' + i" class="form_input" />
+                            <p *ngIf="formSubmitted && form.get('appointments.' + i + '.endTime')?.hasError('required')" class="text-red-600 text-sm">
+                                End time is required!
+                            </p>
                         </div>
                     </div>
                     <div class="w-full px-3" [ngClass]="i==0? 'sm:w-[33%]' : 'sm:w-[28%]'">
                         <div class="mb-5">
-                            <label for="numberOfPatients{{ i }}"
-                                class="mb-2 block font-medium text-[14px] text-[#07074D]">
+                            <label for="numberOfPatients{{ i }}" class="mb-2 block font-medium text-[14px] text-[#07074D]">
                                 Number of patients
                             </label>
-                            <input formControlName="noOfPatients" type="number" [id]="'noOfPatients' + i"
-                                class="form_input" />
+                            <input formControlName="noOfPatients" type="number" [id]="'noOfPatients' + i" class="form_input" />
+                            <p *ngIf="formSubmitted && form.get('appointments.' + i + '.noOfPatients')?.value == '0' " class="text-red-600 text-sm">
+                                Number of patients is required!
+                            </p>
                         </div>
                     </div>
                     <div class="flex items-center " [ngClass]="i>0? 'sm:w-[10%]' : 'hidden '">

@@ -14,6 +14,7 @@ import { DoctorChamberDto } from 'src/app/proxy/dto-models';
 export class HospitalInfoComponent implements OnInit {
   doctorId: any;
   chamberList:DoctorChamberDto[]=[];
+
   constructor(public dialog: MatDialog,
     private normalAuth: AuthService,
     private doctorChamberService: DoctorChamberService,
@@ -31,6 +32,7 @@ export class HospitalInfoComponent implements OnInit {
    this.doctorChamberService.getDoctorChamberListByDoctorId(doctorId).subscribe((res)=>{
     this.chamberList = res
     this.HospitalStateService.sendData(res)
+
    })
   }
   openDialog(): void {
@@ -39,7 +41,10 @@ export class HospitalInfoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getChamberList(this.doctorId)
+      if (result) {
+        this.getChamberList(this.doctorId)
+
+      }
     });
   }
 }

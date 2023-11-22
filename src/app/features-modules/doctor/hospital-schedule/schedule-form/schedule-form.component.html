@@ -2,19 +2,74 @@
   [class]="openFormComponent ? 'block ' :  ' hidden '">
   <form [formGroup]="form">
     <div class="-mx-3 flex flex-wrap">
-      <ng-container *ngFor="let config of inputConfigs">
+      <!-- <ng-container *ngFor="let config of inputConfigs">
         <div class="flex flex-col w-1/3 ">
           <app-input [label]="config.label" [inputId]="config.inputId" [defaultOption]="config.defaultOption"
-            [options]="config.options" [formControlName]="config.formControlName"
-            [isSelectInput]="config.isSelect"
-
+            [options]="config.options" [formControlName]="config.formControlName" [isSelectInput]="config.isSelect"
             [disabled]="config.inputId == 'doctorChamberId' && isDisable == true && isRequired == false">
           </app-input>
-          <p *ngIf="formSubmitted && form.get(config.formControlName)?.invalid" class="text-red-600 font-sm mb-6 ml-4">Please {{config.label}}</p>
+          <p *ngIf="formSubmitted && form.get(config.formControlName)?.invalid  && form.get('consultancyType')?.value != '2' "
+            class="text-red-600 font-sm mb-6 ml-4">Please {{config.label}}</p>
         </div>
-      </ng-container>
+      </ng-container> -->
+
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="consultancyType" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Consultancy Type
+          </label>
+          <select autocomplete="off" formControlName="consultancyType" id="consultancyType"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+            <option value="-0" class="text-gray-500">--Select--</option>
+            <option *ngFor="let item of consultancyType" value="{{item.id}}" class="font-semibold text-gray-500">
+              {{item.name}}</option>
+
+          </select>
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('consultancyType')?.hasError('required')">
+            Please select consultancy type!
+          </p>
+        </div>
+      </div>
 
 
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="doctorChamberId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Hospital/Chamber
+          </label>
+          <select autocomplete="off" formControlName="doctorChamberId" id="doctorChamberId"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+            <option value="-0" class="py-1 text-gray-500">--Select--</option>
+            <option *ngFor="let item of hospitalList" value="{{item.id}}" class="font-semibold text-gray-500">
+              {{item.name}}</option>
+
+          </select>
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('doctorChamberId')?.hasError('required')">
+            Please select hospital/chamber!
+          </p>
+        </div>
+      </div>
+
+      <div class="w-full px-3 sm:w-1/3">
+        <div class="mb-5">
+          <label for="scheduleType" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+            Schedule Type
+          </label>
+          <select autocomplete="off" formControlName="scheduleType" id="scheduleType"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+            <option value="-0" class="py-1 text-gray-500">--Select--</option>
+            <option *ngFor="let item of scheduleType" value="{{item.id}}" class="font-semibold text-gray-500">
+              {{item.name}}</option>
+
+          </select>
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('scheduleType')?.hasError('required')">
+            Please select schedule type!
+          </p>
+        </div>
+      </div>
 
       <div class="w-full px-3 sm:w-full">
         <div class="mb-5">
@@ -43,7 +98,8 @@
                 </div>
               </tr>
             </thead>
-            <p *ngIf="formSubmitted && form.get('isSlotSelected')?.hasError('required')" class="text-red-600 font-sm mb-6 ml-4">Please select at least one slot</p>
+            <p *ngIf="formSubmitted && form.get('isSlotSelected')?.hasError('required')"
+              class="text-red-600 font-sm mb-6 ml-4">Please select at least one slot</p>
           </table>
         </div>
       </div>

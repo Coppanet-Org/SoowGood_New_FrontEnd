@@ -338,7 +338,7 @@
         </mat-step>
 
         <mat-step [stepControl]="fourFormGroup">
-            <app-booking-review></app-booking-review>
+            <app-booking-review [bookingInfo]="bookingInfo" (gotToBack)="onStepChange($event)"></app-booking-review>
         </mat-step>
         <mat-step [stepControl]="fiveFormGroup">
             <app-booking-payment></app-booking-payment>

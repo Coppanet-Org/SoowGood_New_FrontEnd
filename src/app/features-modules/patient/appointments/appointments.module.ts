@@ -6,6 +6,8 @@ import { Route, RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AllAppointmentsModule } from 'src/app/shared/modules/all-appointments/all-appointments.module';
 import { PrescriptionsComponent } from 'src/app/shared/modules/prescriptions/prescriptions.component';
+import { MedicalHistoryComponent } from './medical-history/medical-history.component';
+
 const routes: Route[] = [
   {
     path: '',
@@ -18,12 +20,13 @@ const routes: Route[] = [
 ]
 
 @NgModule({
-  declarations: [AppointmentsComponent],
+  declarations: [AppointmentsComponent,MedicalHistoryComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     AllAppointmentsModule,
-    MatTabsModule
+    MatTabsModule,
+    
   ]
 })
 export class AppointmentsModule { }

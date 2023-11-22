@@ -51,7 +51,8 @@
   </div>
 
   <div class="grid grid-cols-4 gap-10 flex-wrap">
-    <div [@enter] class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
+    <!-- [@enter] for animation -->
+    <div class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
       <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
     </div>
   </div>
