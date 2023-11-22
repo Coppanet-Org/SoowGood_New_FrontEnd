@@ -44,10 +44,26 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getDoctorDetailsByAdmin = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'GET',
+      url: `/api/app/doctor-profile/${id}/doctor-details-by-admin`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListDoctorListByAdmin = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-by-admin',
     },
     { apiName: this.apiName,...config });
   
@@ -57,6 +73,24 @@ export class DoctorProfileService {
       method: 'PUT',
       url: '/api/app/doctor-profile',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateActiveStatusByAdminByIdAndActiveStatus = (Id: number, activeStatus: boolean, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: `/api/app/doctor-profile/active-status-by-admin/${Id}`,
+      params: { activeStatus },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateProfileStep = (profileId: number, step: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: `/api/app/doctor-profile/profile-step/${profileId}`,
+      params: { step },
     },
     { apiName: this.apiName,...config });
 

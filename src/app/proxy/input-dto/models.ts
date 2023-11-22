@@ -21,6 +21,11 @@ export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
   createFrom?: string;
 }
 
+export interface DegreeInputDto extends FullAuditedEntityDto<number> {
+  degreeName?: string;
+  description?: string;
+}
+
 export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   chamberName?: string;
@@ -170,6 +175,25 @@ export interface PrescriptionPatientDiseaseHistoryInputDto extends FullAuditedEn
   patientProfileId?: number;
   commonDiseaseId?: number;
   diseaseName?: string;
+}
+
+export interface RtcTokenBuilerDto {
+  appid?: string;
+  appCertificate?: string;
+  chanelName?: string;
+  uid: number;
+}
+
+export interface SpecialityInputDto extends FullAuditedEntityDto<number> {
+  specialityName?: string;
+  description?: string;
+  specializations: SpecializationInputDto[];
+}
+
+export interface SpecializationInputDto extends FullAuditedEntityDto<number> {
+  specialityId?: number;
+  specializationName?: string;
+  description?: string;
 }
 
 export interface SslCommerzInputDto {

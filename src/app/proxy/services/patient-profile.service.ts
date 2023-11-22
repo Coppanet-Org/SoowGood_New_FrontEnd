@@ -61,6 +61,14 @@ export class PatientProfileService {
     { apiName: this.apiName,...config });
   
 
+  getListPatientListByAdmin = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/patient-profile/patient-list-by-admin',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPatientListByUserProfileId = (profileId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PatientProfileDto[]>({
       method: 'GET',

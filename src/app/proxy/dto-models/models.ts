@@ -64,6 +64,7 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  isCousltationComplete?: boolean;
 }
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
@@ -94,6 +95,7 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  isCousltationComplete?: boolean;
 }
 
 export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
@@ -145,6 +147,8 @@ export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
   discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
+  responseSuccess?: boolean;
+  responseMessage?: string;
 }
 
 export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
@@ -194,6 +198,7 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   isOnline?: boolean;
   profileStep?: number;
   createFrom?: string;
+  profileRole?: string;
 }
 
 export interface DoctorScheduleDaySessionDto extends FullAuditedEntityDto<number> {
@@ -235,6 +240,8 @@ export interface DoctorScheduleDto extends FullAuditedEntityDto<number> {
   doctorFeesSetup: DoctorFeesSetupDto[];
   appointments: AppointmentDto[];
   scheduleName?: string;
+  responseSuccess?: boolean;
+  responseMessage?: string;
 }
 
 export interface DoctorScheduleInputDto extends FullAuditedEntityDto<number> {
@@ -333,6 +340,7 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   cratorCode?: string;
   creatorEntityId?: number;
   userId?: string;
+  profileRole?: string;
 }
 
 export interface PaymentHistoryDto extends EntityDto<number> {
@@ -492,6 +500,18 @@ export interface PrescriptionPatientDiseaseHistoryDto extends FullAuditedEntityD
   patientName?: string;
   commonDiseaseId?: number;
   diseaseName?: string;
+}
+
+export interface ResetPasswordInputDto {
+  userId?: string;
+  newPassword?: string;
+}
+
+export interface ResetPasswordResponseDto {
+  userName?: string;
+  name?: string;
+  success?: boolean;
+  message?: string;
 }
 
 export interface ResponseDto {

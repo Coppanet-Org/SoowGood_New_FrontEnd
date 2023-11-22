@@ -1,3 +1,4 @@
+
 import { TosterService } from './../../../shared/services/toster.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,9 +16,7 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { throwError, catchError } from 'rxjs';
-import { CustomValidators } from 'src/app/shared/utils/auth-helper';
-import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -32,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   formSubmitted: boolean = false;
   errorMessage: string = '';
   loginForm!: FormGroup;
+  resetPasswordForm!:FormGroup
   loginDto: LoginDto = {} as LoginDto;
   hasError: boolean = false;
   returnUrl!: string;
@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading: any = false;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
+  changePasswordShow: boolean =false
+  resetModalShow: boolean =false;
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -46,7 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private _router: Router,
     private ToasterService: TosterService,
-    private NormalAuth: AuthService
+    private NormalAuth: AuthService,
+    private UserAccountsService: UserAccountsService
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +84,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         // ]),
       ],
     });
+
+    this.resetPasswordForm = this.fb.group({
+      username:['', Validators.required],
+      newPassword:[''],
+      confirmPassword:['']
+    })
+
   }
 
   passwordVisibility(field: string) {
@@ -353,9 +363,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Additional method to handle profile service errors
   private handleProfileError(error: any, loginResponse: any): void {
-    // console.log(error.error.error.message);
-console.log(loginResponse);
-
     if (loginResponse) {
       this.ToasterService.customToast(String(loginResponse.message), 'error');
       return
@@ -373,6 +380,23 @@ console.log(loginResponse);
       }
     }
   }
+  resetModal(){
+    this.resetModalShow =!this.resetModalShow
+  }
+
+  resetPassword(){
+    try {
+       this.UserAccountsService.isUserExistsByUserName(this.resetPasswordForm.get('username')?.value).subscribe({
+        next: (res)=> {console.log(res);
+        }
+       })
+    } catch (error) {
+      
+    }
+  }
+
+
+
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
