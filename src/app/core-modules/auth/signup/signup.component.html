@@ -23,7 +23,7 @@
           </label>
           <label for="radio-card-2" class="radio-card">
             <input autocomplete="off" type="radio" id="radio-card-2" formControlName="userTypeName" value="Patient" />
-            <div class="card-content-wrapper ">
+            <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
                 <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
@@ -116,12 +116,12 @@
          [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
-      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="formGroup.get('userTypeName')?.value == 'Doctor'">
+      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="userType == 'Doctor'">
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <!-- <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                Your Title
+                Your Title formGroup.get('userTypeName')?.value
               </label> -->
               <select formControlName="doctorTitle" name="select" id="doctorTitle"
                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
@@ -173,6 +173,7 @@
             </div>
           </div>
         </div>
+
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-full">
             <div class="mb-3">
@@ -198,6 +199,7 @@
           </div>
 
         </div>
+
         <div class="-mx-3 flex flex-wrap">
 
           <div class="w-full px-3 sm:w-1/2">
@@ -246,6 +248,7 @@
             </div>
           </div>
         </div>
+
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
@@ -295,6 +298,7 @@
             </div>
           </div>
         </div>
+
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
@@ -339,6 +343,7 @@
             </div>
           </div>
         </div>
+
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
@@ -391,6 +396,7 @@
 
 
         </div>
+
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
@@ -496,11 +502,11 @@
             </div>
           </div>
         </div>
+        <!--(click)="sendUserInfo()"-->
 
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <div *ngIf="!isLoading" class="flex">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                 stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round"
                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
@@ -607,6 +613,7 @@
             </div>
           </div>
         </div>
+
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <div *ngIf="!isLoading" class="flex">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -746,8 +753,8 @@
 
                 </select>
                 <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
-                       id="instituteCountry" placeholder="Institute Country"
-                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
+                   id="instituteCountry" placeholder="Institute Country"
+                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
 
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteCountry')?.hasError('required')">
                   Country is required.
@@ -956,12 +963,21 @@
         </div>
       </div>
 
-      <div class="w-full mt-5">
-
-        <button (click)="saveDegreeSpecialization()" class="btn-secondary bg-primary">
+      <div class="flex gap-3 mt-6">
+        <button class="btn-secondary" (click)="getBackStep1Data()">
           <div *ngIf="!isLoading" class="flex">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+            <span>Back</span>
+          </div>
+          <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
+        </button>
+
+        <button class="form_btn" (click)="saveDegreeSpecialization()">
+          <div *ngIf="!isLoading" class="flex">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round"
                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
@@ -969,6 +985,7 @@
           </div>
           <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>
+
       </div>
     </div>
 

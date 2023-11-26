@@ -40,7 +40,7 @@ import {
   yearValidator,
 } from 'src/app/shared/utils/auth-helper';
 import { Subject } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 function customPassingYearValidator(control: any) {
   const value = control.value;
   const currentYear = new Date().getFullYear();
@@ -659,7 +659,7 @@ export class SignupComponent implements OnInit {
     try {
       this.isLoading = true;
       const userType = this.formGroup?.value.userTypeName;
-      this.userType = userType;
+      this.userType = this.stepBack1?this.userType: userType;
       const password = this.userInfoForm.value.password;
       const userInfo = {
         tenantId: '',
@@ -1524,10 +1524,15 @@ export class SignupComponent implements OnInit {
   }
 
   getBackStep1Data() {
-    this.stepBack1 = true;
+    
     let authInfo = this.normalAuth.authInfo();
     let profileId = authInfo.id;
     this.doctorProfileService.get(profileId).subscribe(res => {
+
+      this.completeDegreeSpecilizationInfoModal = false;
+      this.userInfoModal = true;
+      this.stepBack1 = true;
+
       this.doctorProfileDto = {
         id:res.id,
         fullName: res.fullName,
@@ -1549,18 +1554,31 @@ export class SignupComponent implements OnInit {
         createFrom: res.createFrom,
         userId: res.userId,
       };
-
+      //this.userInfoForm.controls['fullName'].setValue(this.doctorProfileDto.fullName);
+      //this.userInfoForm.controls['doctorTitle'].setValue(this.doctorProfileDto.doctorTitle);
+      //this.userInfoForm.controls['email'].setValue(this.doctorProfileDto.email);
+      //this.userInfoForm.controls['gender'].setValue(this.doctorProfileDto.gender);formatDate(date,'yyyy-MM-dd','en')
+      //this.userInfoForm.controls['dateOfBirth'].setValue(formatDate(this.doctorProfileDto.dateOfBirth,'mm/dd/yyyy','en'));
+      //this.userInfoForm.controls['city'].setValue(this.doctorProfileDto.city);
+      //this.userInfoForm.controls['country'].setValue(this.doctorProfileDto.country);
+      //this.userInfoForm.controls['zipCode'].setValue(this.doctorProfileDto.zipCode);
+      //this.userInfoForm.controls['bmdcRegNo'].setValue(this.doctorProfileDto.bmdcRegNo);
+      //this.userInfoForm.controls['bmdcRegExpiryDate'].setValue(this.doctorProfileDto.bmdcRegExpiryDate);
+      //this.userInfoForm.controls['specialityId'].setValue(this.doctorProfileDto.specialityId);
+      //this.userInfoForm.controls['identityNumber'].setValue(this.doctorProfileDto.identityNumber);
       this.userInfoForm.patchValue({
         fullName: this.doctorProfileDto.fullName,
-        doctorTitle: this.doctorProfileDto.questioning,
+        doctorTitle: this.doctorProfileDto.doctorTitle,
+        
         email:this.doctorProfileDto.email,
         gender: this.doctorProfileDto.gender,
-        dateOfBirth: this.doctorProfileDto.dateOfBirth,
+        dateOfBirth: formatDate(this.doctorProfileDto.dateOfBirth, 'yyyy-MM-dd', 'en'),//this.doctorProfileDto.dateOfBirth,
+        address:this.doctorProfileDto.address,
         city: this.doctorProfileDto.city,
         country: this.doctorProfileDto.country,
         zipCode: this.doctorProfileDto.zipCode,
         bmdcRegNo: this.doctorProfileDto.bmdcRegNo,
-        bmdcRegExpiryDate: this.doctorProfileDto.bmdcRegExpiryDate,
+        bmdcRegExpiryDate: formatDate(this.doctorProfileDto.bmdcRegExpiryDate, 'yyyy-MM-dd', 'en'), //this.doctorProfileDto.bmdcRegExpiryDate,
         specialityId: this.doctorProfileDto.specialityId,
         identityNumber: this.doctorProfileDto.identityNumber
       });
