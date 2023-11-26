@@ -3,8 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\signup",
     "\\src\\app\\shared",
     "\\src\\app\\shared\\utils"
   ],
+  "SelectedNode": "\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false
 }
