@@ -116,7 +116,7 @@
          [style]="userInfoModal==true && completeDegreeSpecilizationInfoModal==false ? '' : 'display:none'">
       <h1 class="text-3xl font-semibold">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
-      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="userType == 'Doctor'">
+      <form class="mt-5" [formGroup]="userInfoForm" *ngIf="(userType?userType:formGroup.get('userTypeName')?.value) == 'Doctor'">
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">

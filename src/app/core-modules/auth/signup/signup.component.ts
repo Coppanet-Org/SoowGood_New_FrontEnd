@@ -658,6 +658,7 @@ export class SignupComponent implements OnInit {
 
     try {
       this.isLoading = true;
+      
       const userType = this.formGroup?.value.userTypeName;
       this.userType = this.stepBack1?this.userType: userType;
       const password = this.userInfoForm.value.password;
@@ -675,20 +676,37 @@ export class SignupComponent implements OnInit {
         lockoutEnd: '2023-07-16T07:38:44.382Z',
         concurrencyStamp: '',
       };
-      const res: UserSignUpResultDto | undefined = await this.userAccountService
-        .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
-        .toPromise();
-      if (res?.success) {
-        if (userType === 'Doctor') {
-          this.handleDoctorProfile(res);
-        } else if (userType === 'Patient') {
-          this.handlePatientProfile(res);
+      if (!this.stepBack1) {
+        const res: UserSignUpResultDto | undefined = await this.userAccountService
+          .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
+          .toPromise();
+        if (res?.success) {
+          if (userType === 'Doctor') {
+            this.handleDoctorProfile(res);
+          } else if (userType === 'Patient') {
+            this.handlePatientProfile(res);
+          }
+          this.isLoading = false;
+        } else {
+          res?.message?.forEach((e: string) =>
+            this.tosterService.customToast(e, 'error')
+          );
+          this.isLoading = false;
         }
-        this.isLoading = false;
-      } else {
-        res?.message?.forEach((e: string) =>
-          this.tosterService.customToast(e, 'error')
-        );
+      }
+
+      if (this.stepBack1) {
+        const authInfo = this.normalAuth.authInfo();
+        const signupResDto: UserSignUpResultDto = {} as UserSignUpResultDto;
+        signupResDto.userId = authInfo.userId;
+        signupResDto.name = authInfo.name;
+        signupResDto.email = authInfo.email;
+        signupResDto.phoneNumber = authInfo.phoneNumber;
+        if (userType === 'Doctor') {
+          this.handleDoctorProfile(signupResDto);
+        } else if (userType === 'Patient') {
+          this.handlePatientProfile(signupResDto);
+        }
         this.isLoading = false;
       }
     } catch (err) {
