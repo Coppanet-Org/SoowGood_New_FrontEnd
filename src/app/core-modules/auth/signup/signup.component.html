@@ -641,7 +641,9 @@
         <i class="fa-solid fa-list mr-2"></i>
         Provide your Medical Educational Info.
       </h1>
-      <h2 *ngIf="degreeMendatoryMassage"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
+      
+      <!--degreeMendatoryMassage-->
+      <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
       <div class=" w-full  bg-white mt-6">
         <form [formGroup]="formDegree">
 
@@ -753,8 +755,8 @@
 
                 </select>
                 <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
-                   id="instituteCountry" placeholder="Institute Country"
-                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
+            id="instituteCountry" placeholder="Institute Country"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
 
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteCountry')?.hasError('required')">
                   Country is required.
@@ -832,7 +834,8 @@
         <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
           <i class="fa-solid fa-list mr-2"></i>Provide specialization info
         </h1>
-        <h2 *ngIf="spMendatoryMassage"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>
+        <!--spMendatoryMassage-->
+        <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>
         <div class=" w-full  bg-white mt-6">
           <form *ngIf="!sp1or2" [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
