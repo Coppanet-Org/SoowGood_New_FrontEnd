@@ -1,6 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
@@ -49,7 +48,6 @@ export class PatientComponent implements OnInit {
     private NormalAuth: AuthService,
     private UserinfoStateService: UserinfoStateService,
     private DoctorStateService:  DoctorStateService,
-    private router : Router
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();

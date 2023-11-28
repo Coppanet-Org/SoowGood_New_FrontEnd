@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DoctorPatientAppointmentService } from '../../services/states/appointment-states/doctor-patient-appointment.service';
+import { FormGroup } from '@angular/forms';
 // import { fadeInAnimation, fadeInExpandOnEnterAnimation, fadeInOnEnterAnimation, zoomInAnimation, zoomInUpOnEnterAnimation } from 'angular-animations';
 
 
@@ -22,6 +23,10 @@ export class AllAppointmentsComponent implements OnInit {
   appointmentListCache: any;
   appointmentListSubject: any;
   noDataAvailable!: boolean;
+  filterForm!:FormGroup
+  consultancyType:any=[]
+  specialityList:any=[]
+  specializationList:any=[]
   constructor(
     private DoctorPatientAppointmentService: DoctorPatientAppointmentService
   ) { }

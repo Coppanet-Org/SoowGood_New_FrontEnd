@@ -1,4 +1,4 @@
-<div [@slideInFrom]="animationDirection" class="doctor-dashboard_midcontent_container">
+<div  class="doctor-dashboard_midcontent_container">
     <!-- <div class="font-medium text-gray-900 text-left text-[28px] h-32 bg-white">
       <img src="../../../../../assets/doctor/dr-cover.jpg" class="w-full object-cover h-full" alt="">
     </div> -->
@@ -121,6 +121,19 @@
                                 <p *ngIf="formSubmitted && form.get('gender')?.value === '0'">
                                   Please select your gender.
                                 </p>
+                              </div>
+                            </div>
+                            <div class="w-full px-3 sm:w-1/4">
+                              <div class="mb-5">
+                                <label for="age" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                  Age
+                                </label>
+
+                                <input autocomplete="off" formControlName="age" inputmode="numeric" placeholder="Your age"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                              <p *ngIf="formSubmitted && form.get('age')?.hasError('required')">
+                                Please enter your age.
+                              </p>
                               </div>
                             </div>
                             <div class="w-full px-3 sm:w-1/4">
