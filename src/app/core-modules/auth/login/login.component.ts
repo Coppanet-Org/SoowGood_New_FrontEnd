@@ -15,9 +15,7 @@ import {
   PatientProfileDto,
 } from '../../../proxy/dto-models';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { throwError, catchError } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/utils/auth-helper';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   formSubmitted: boolean = false;
   errorMessage: string = '';
   loginForm!: FormGroup;
+  resetPasswordForm!: FormGroup;
   loginDto: LoginDto = {} as LoginDto;
   hasError: boolean = false;
   returnUrl!: string;
@@ -39,6 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading: any = false;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
+  changePasswordShow: boolean = false;
+  resetModalShow: boolean = false;
+  resetLoading: boolean = false;
+  loginResponse:any;
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -46,7 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private _router: Router,
     private ToasterService: TosterService,
-    private NormalAuth: AuthService
+    private NormalAuth: AuthService,
+    private UserAccountsService: UserAccountsService
   ) {}
 
   ngOnInit(): void {
@@ -61,26 +65,44 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        [
-          Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ],
+        // [
+        //   Validators.required,
+        //   Validators.pattern(/^(?:88)?[0-9]{11}$/),
+        //   Validators.minLength(11),
+        //   Validators.maxLength(11),
+        // ],
       ],
 
       password: [
         this.defaultAuth.password,
-        Validators.compose([
-            Validators.required,
-            CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
+        // Validators.compose([
+        //     Validators.required,
+        //     CustomValidators.startsWithUppercase,
+        //     CustomValidators.isAtLeast6Characters,
+        //     CustomValidators.includesSpecialCharacter,
+        //     CustomValidators.includesNumber,
 
-        ]),
+        // ]),
       ],
     });
+
+    this.resetPasswordForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        newPassword: [
+          // '',
+          // [
+          //   Validators.required,
+          //   CustomValidators.startsWithUppercase,
+          //   CustomValidators.isAtLeast6Characters,
+          //   CustomValidators.includesSpecialCharacter,
+          //   CustomValidators.includesNumber,
+          // ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: CustomValidators.matchValidator }
+    );
   }
 
   passwordVisibility(field: string) {
@@ -254,6 +276,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authService
           .loginByUserDto(this.loginDto)
           .subscribe((loginResponse: LoginResponseDto) => {
+            this.loginResponse = loginResponse
+            if (this.loginResponse.message.includes('User Name Or Password is not correct !')) {
+              this.ToasterService.customToast(String(this.loginResponse.message), 'error');
+              this.isLoading = false
+              return;
+            }
+
             if (
               loginResponse.success &&
               loginResponse.roleName[0] == 'Doctor'
@@ -302,7 +331,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                   },
                   (doctorError: any) => {
                     // Handle DoctorProfile service error
-                    this.handleProfileError(doctorError, loginResponse);
+
+                    this.handleProfileError(doctorError);
                   }
                 );
             }
@@ -337,7 +367,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 },
                 (patientError: any) => {
                   // Handle PatientProfile service error
-                  this.handleProfileError(patientError, loginResponse);
+                  this.handleProfileError(patientError);
                 }
               );
             }
@@ -352,15 +382,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   // Additional method to handle profile service errors
-  private handleProfileError(error: any, loginResponse: any): void {
-    // console.log(error.error.error.message);
-console.log(loginResponse);
-
-    if (loginResponse) {
-      this.ToasterService.customToast(String(loginResponse.message), 'error');
-      return
-    } else {
+  private handleProfileError(error: any): void {
+    console.log(error,this.loginResponse);
+  
       if (
+       
+        
         error.error.error.message ===
         'There is no entity DoctorProfile with id = !'
       ) {
@@ -371,8 +398,84 @@ console.log(loginResponse);
           'error'
         );
       }
+    
+  }
+  resetModal() {
+    this.resetModalShow = !this.resetModalShow;
+  }
+
+  resetPassword() {
+    if (this.resetPasswordForm.get('username')?.invalid) {
+      this.ToasterService.customToast(
+        'Please enter your phone number',
+        'warning'
+      );
+      return;
+    }
+    this.resetLoading = true;
+    try {
+      this.UserAccountsService.isUserExistsByUserName(
+        this.resetPasswordForm.get('username')?.value
+      ).subscribe({
+        next: (res) => {
+          if (res) {
+            this.resetLoading = false;
+            this.changePasswordShow = res;
+          } else {
+            this.ToasterService.customToast(
+              'Something went wrong! Please try again',
+              'error'
+            );
+            this.changePasswordShow = res;
+            this.resetLoading = false;
+          }
+        },
+        error: (err) => {
+          this.ToasterService.customToast(String(err.message), 'error');
+        },
+      });
+    } catch (error) {
+      this.ToasterService.customToast(String(error), 'error');
     }
   }
+
+  confirmPassword() {
+    this.formSubmitted = true
+//     if (
+// this.resetPasswordForm.invalid
+//     ) {
+//       this.ToasterService.customToast(
+//         'Please enter your new password',
+//         'warning'
+//       );
+//       return;
+//     }
+
+
+
+
+    let obj = {
+      userId: this.resetPasswordForm.get('username')?.value,
+      newPassword: this.resetPasswordForm.get('newPassword')?.value,
+    };
+
+    this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
+      next: (res) => {
+        console.log(res);
+        
+        if (res.success) {
+          this.ToasterService.customToast(String(res.message), 'success');
+          this.resetModalShow = false;
+        } else {
+          this.ToasterService.customToast(String(res.message), 'error');
+        }
+      },
+      error: (err) => {
+        this.ToasterService.customToast(String(err.message), 'error');
+      },
+    });
+  }
+
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

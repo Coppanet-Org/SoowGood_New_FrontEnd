@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { inputConfigs } from '../../../../shared/utils/input-info';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
-import { customNameValidator, yearValidator } from 'src/app/shared/utils/auth-helper';
+import { customNameValidator } from 'src/app/shared/utils/auth-helper';
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',

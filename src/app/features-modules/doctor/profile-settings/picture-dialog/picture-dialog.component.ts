@@ -83,6 +83,8 @@ export class PictureDialogComponent implements OnInit {
     }
   }
 
+  
+
   onFileChanged(event: any) {
     for (var i = 0; i <= event.target.files.length - 1; i++) {
       var selectedFile = event.target.files[i];

@@ -4,7 +4,7 @@
     class="w-full my-5 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700 m-auto">
 
     <h5 class=" text-base font-semibold text-gray-900 md:text-xl dark:text-white">
-        Dr. Azizur Rahman
+        {{bookingInfo?.doctorName}}
     </h5>
     <p class="text-sm font-normal text-gray-500 dark:text-gray-400">General Medicine</p>
     <div>
@@ -13,7 +13,7 @@
                 <tbody>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Patient name: 
+                            Patient name:
                         </th>
                         <td class="py-2">
                             {{bookingInfo?.patientName}}
@@ -32,15 +32,15 @@
                             Appointment Date :
                         </th>
                         <td class="py-2">
-                            02/25/2023
+                            {{bookingInfo?.appointmentDate | date}}
                         </td>
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Consultancy type :
+                            Appointment Type : 
                         </th>
                         <td class="py-2">
-                            Hospital visit
+                            {{getTitle(bookingInfo?.appointmentType,"appointmentType")?.name}}
                         </td>
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -48,7 +48,7 @@
                             Hospital name :
                         </th>
                         <td class="py-2">
-                            Dhaka medical college, Dhaka
+                           {{bookingInfo?.doctorChamberId}}
                         </td>
                     </tr>
                     <tr class="bg-white dark:bg-gray-800">
@@ -61,7 +61,11 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn-secondary mt-6 text-[16px] tracking-[1px] py-2 w-full" (click)="payWithSslCommerz()">Confirm</button>
+            <div class="flex gap-5">
+                <button class="btn-secondary bg-primary mt-6 text-[16px] tracking-[1px] py-2 w-full" (click)="gotToBack.emit(1)">Back</button>
+                <button class="btn-secondary mt-6 text-[16px] tracking-[1px] py-2 w-full"
+                    (click)="createAppointmentAndPayment()">{{loading ? "Loading..." : "Confirm & Pay"}}</button>
+            </div>
         </div>
 
     </div>

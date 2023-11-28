@@ -11,17 +11,51 @@
 
         <div class="w-full mt-6">
 
-          <mat-stepper (selectionChange)="onchangeStep($event)" #stepper class="mt-7" [selectedIndex]="activeTab">
-            <mat-step [stepControl]="firstFormGroup" label="Add New Place">
-              <app-hospital-info></app-hospital-info>
+          <mat-stepper  class="mt-7">
+            <mat-step [stepControl]="firstFormGroup" label="Add New Place" >
+    
+              <ng-container >
+                <app-hospital-info></app-hospital-info>
+              </ng-container>
+              <button matStepperNext class="mt-5 h-fit btn-secondary bg-secondary-light border-secondary-dark text-secondary-dark group">
+                Next <i class="fa-solid group-hover:ml-2 ml-1 transition-all duration-75 fa-arrow-right"></i>
+              </button>
+
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Create Schedule">
-              <app-schedule-info></app-schedule-info>
+          
+            <mat-step [stepControl]="secondFormGroup" label="Create Schedule" [ariaSelected]="false" [ariaDisabled]="true" >
+              <ng-container >
+                <app-schedule-info></app-schedule-info>
+              </ng-container>
+              <div class="flex gap-5 ml-auto mt-5">
+                <button matStepperPrevious class="btn-secondary group h-fit">
+                  <i class="fa-solid group-hover:pr-2 pr-1 box-border transition-all duration-75 fa-arrow-left-long"></i>Previous
+                </button>
+                <button matStepperNext class="h-fit btn-secondary bg-secondary-light border-secondary-dark text-secondary-dark group">
+                  Next <i class="fa-solid group-hover:ml-2 ml-1 transition-all duration-75 fa-arrow-right"></i>
+                </button>
+              </div>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Fee Manage">
-             <app-fee-setup></app-fee-setup>
+          
+            <mat-step [stepControl]="secondFormGroup" label="Fee Manage" [ariaSelected]="false" [ariaDisabled]="true" >
+              <form [formGroup]="firstFormGroup">
+              <ng-container>
+                <app-fee-setup></app-fee-setup>
+              </ng-container>
+              <div class="flex gap-5 ml-auto mt-5">
+                <button matStepperPrevious class="btn-secondary group h-fit">
+                  <i class="fa-solid group-hover:mr-2 mr-1 transition-all duration-75 fa-arrow-left-long"></i>Previous
+                </button>
+                <button matStepperNext class="h-fit btn-secondary bg-secondary-light border-secondary-dark text-secondary-dark group">
+                  Next <i class="fa-solid group-hover:ml-2 ml-1 transition-all duration-75 fa-arrow-right"></i>
+                </button>
+              </div>
+            </form>
             </mat-step>
           </mat-stepper>
+
+
+
         </div>
       </div>
     </div>
