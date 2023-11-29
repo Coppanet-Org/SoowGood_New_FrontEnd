@@ -1,10 +1,8 @@
 import { DoctorProfileService } from '../../../../proxy/services/doctor-profile.service';
 import {
-  DoctorChamberDto,
   DoctorSpecializationDto,
 } from '../../../../proxy/dto-models/models';
-import { Component, Input, OnInit } from '@angular/core';
-import { SpecializationDto } from 'src/app/proxy/dto-models';
+import { Component, OnInit } from '@angular/core';
 import {
   DoctorSpecializationService,
   DocumentsAttachmentService,
@@ -15,7 +13,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { SubSink } from 'SubSink';
 import { MatDialog } from '@angular/material/dialog';
 import { SpecializationDialogComponent } from '../specialization-dialog/specialization-dialog.component';
-import { Observable, combineLatest, forkJoin } from 'rxjs';
+import {forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-specialization-info',

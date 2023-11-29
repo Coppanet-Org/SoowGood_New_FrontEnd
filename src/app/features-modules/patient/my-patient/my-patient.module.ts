@@ -6,7 +6,7 @@ import { Route, RouterModule } from '@angular/router';
 
 const routes: Route[] = [
   {
-    path: '',
+    path: 'patient-details/:id',
     component: MyPatientComponent,
   }
 ]

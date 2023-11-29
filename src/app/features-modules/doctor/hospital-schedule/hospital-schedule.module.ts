@@ -14,6 +14,8 @@ import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { FeeSetupComponent } from './fee-info/fee-setup.component';
 import { FeeDialogComponent } from './fee-dialog/fee-dialog.component';
 import { ConfirmDialogModule } from 'src/app/shared/modules/confirm-dialog/confirm-dialog.module';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 const routes: Route[] = [
   {
@@ -39,7 +41,9 @@ const routes: Route[] = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModulesModule,
-    InputModule,ConfirmDialogModule
+    InputModule,ConfirmDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [DatePipe], 
 })

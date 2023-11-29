@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { AppointmentService } from 'src/app/proxy/services';
 
 @Injectable({
@@ -16,18 +16,14 @@ export class DoctorPatientAppointmentService {
     const cacheKey = `${user}-${id}`;
     
     // Check if data is already in cache
-    console.log(this.cache[cacheKey]);
     if (this.cache[cacheKey]) {
       
       return of(this.cache[cacheKey]);
     }
     
-    if (user === "patient") {
-      console.log(id);
-      
+    if (user === "patient") {      
       return this.AppointmentService.getAppointmentListByPatientId(id).pipe(
         map((data) => {
-          console.log(data);
           this.appointmentList = data;
           this.cache[cacheKey] = data; // Cache the data
          
@@ -45,11 +41,9 @@ export class DoctorPatientAppointmentService {
         map((data) => {
           this.appointmentList = data;
           this.cache[cacheKey] = data; // Cache the data
-          console.log(data);
           return data;
         }),
         catchError(error => {
-          // Handle errors here if needed
           return of(null);
         })
       );

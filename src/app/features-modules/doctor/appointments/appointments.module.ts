@@ -19,8 +19,9 @@ const routes: Route[] = [
     
   ],
   imports: [
-    CommonModule,RouterModule.forChild(routes),
-     AllAppointmentsModule,
+    CommonModule,
+    RouterModule.forChild(routes),
+    AllAppointmentsModule,
   ]
 })
 export class AppointmentsModule { }

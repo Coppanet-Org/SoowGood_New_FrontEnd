@@ -1,4 +1,3 @@
-import { singleSlide, slideInFrom   } from '../../../animation';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -6,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  animations: [slideInFrom('right'),singleSlide('top')],
-
 })
 export class DashboardComponent implements OnInit{
-  animationDirection = 'right';
   showWarning:boolean = false
   details=[
     {

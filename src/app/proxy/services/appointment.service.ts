@@ -69,6 +69,14 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getListAppointmentListByAdmin = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: '/api/app/appointment/appointment-list-by-admin',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPatientListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',

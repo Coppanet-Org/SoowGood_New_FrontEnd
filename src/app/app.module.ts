@@ -23,6 +23,8 @@ import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
+import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
+import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
 
 
 const routerConfig: ExtraOptions = {
@@ -38,7 +40,9 @@ const routerConfig: ExtraOptions = {
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
     LoadingDirective,
-    OtpInputComponent
+    OtpInputComponent,
+    PaymentFaildComponent,
+    PaymentCancelComponent
   ],
   imports: [
     BrowserModule,

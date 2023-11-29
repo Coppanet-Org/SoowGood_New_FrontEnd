@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './doctor-card.component.html',
   styleUrls: ['./doctor-card.component.scss'],
 })
-export class DoctorCardComponent implements OnInit {
+export class DoctorCardComponent {
   @Input() doctorDetails: any;
   doctorScheduleList: DoctorScheduleDto[] = [];
   isLoading: boolean = false;
@@ -22,15 +22,7 @@ export class DoctorCardComponent implements OnInit {
     private TosterService : TosterService
   ) {}
 
-  ngOnInit(): void {
-    // if (this.doctorDetails != 'undefine || null') {
-    //   this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
-    //     this.doctorDetails.id
-    //   ).subscribe((res) => {
-    //     this.doctorScheduleList = res
-    //   });
-    // }
-  }
+
 
   openDialog(): void {
    this.isLoading = true

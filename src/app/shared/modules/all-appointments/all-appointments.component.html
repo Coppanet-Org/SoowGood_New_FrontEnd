@@ -1,6 +1,6 @@
-<div class="py-4 w-full">
-  <div class="w-full border-[1px] rounded-md  mb-5 flex justify-between py-3 px-5 items-center">
-    <span class="text-[20px] text-primary/80 font-Roboto font-semibold">
+<div class="py-4 w-full relative">
+  <div class="w-full border-[1px] sticky rounded-md  mb-5 px-5 flex justify-between items-center bg-white">
+    <!-- <span class="text-[20px] text-primary/80 font-Roboto font-semibold">
       <i class="fa-solid fa-filter mr-2"></i> Filter your appointment :
     </span>
     <div class="flex gap-4 h-fit">
@@ -32,7 +32,53 @@
         <option>Select</option>
       </select>
 
-    </div>
+    </div> -->
+
+
+    
+                <div class="flex gap-8 items-center">
+                    <div
+                        class="max-w-[300px] py-3 max-h-[50px] px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
+                        <input
+                            class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
+                            placeholder="Search by doctor name" />
+                        <span class="bg-transparent">
+                            <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex justify-end ">
+                    <div class="flex gap-3 mt-5">
+                        <form >
+                            <mat-form-field>
+                                <mat-select placeholder="Consultancy Type">
+                                    <mat-option *ngFor="let item of consultancyType" value="{{item.id}}"
+                                        class="font-semibold text-gray-500">
+                                        {{item.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- <mat-form-field>
+
+                                <mat-select placeholder="Specialty" formControlName="specialty">
+                                    <mat-option *ngFor="let item of specialityList" value="{{item.id}}"
+                                        class="font-semibold text-gray-500">
+                                        {{item.specialityName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-select placeholder="Specialization" formControlName="specialization">
+                                    <mat-option *ngFor="let item of specializationList" value="{{item.id}}"
+                                        class="font-semibold text-gray-500">
+                                        {{item.specializationName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
+                            <mat-form-field  class="example-full-width" (click)="picker.open()">
+                                    <input placeholder="Appointment date" matInput [matDatepicker]="picker">
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                        </form>
+                    </div>
+                </div>
   </div>
 
   <div *ngIf="skelton" class="grid grid-cols-4 gap-10 flex-wrap ">
@@ -51,9 +97,14 @@
   </div>
 
   <div class="grid grid-cols-4 gap-10 flex-wrap">
-    <div [@enter] class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
+    <!-- [@enter] for animation -->
+    <div class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
       <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
     </div>
   </div>
-
+  <div class="flex w-full justify-center py-10">
+    <mat-paginator class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
+        [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+    </mat-paginator>
+</div>
 </div>

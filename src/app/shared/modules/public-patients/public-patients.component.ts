@@ -16,7 +16,7 @@ constructor(private Router: Router,private AppointmentService : AppointmentServi
 }
   ngOnInit(): void {
     let id = this.NormalAuth.authInfo().id;
-    console.log(id);
+
         // const { aptId } = this.route.snapshot.params;
         if (id) {
           this.patientLoader = true

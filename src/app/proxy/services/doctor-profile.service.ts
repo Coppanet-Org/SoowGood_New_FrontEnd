@@ -1,6 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { DoctorProfileDto } from '../dto-models/models';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -27,6 +28,15 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getAllDoctorsSearchList = (name: string, consultType: number, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-search-list',
+      params: { name, consultType, speciality, specialization },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getByUserId = (userId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto>({
       method: 'GET',
@@ -44,10 +54,35 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getDoctorDetailsByAdmin = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'GET',
+      url: `/api/app/doctor-profile/${id}/doctor-details-by-admin`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorDetailsList = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-details-list',
+      params: { name, consultancy, speciality, specialization },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListDoctorListByAdmin = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-by-admin',
     },
     { apiName: this.apiName,...config });
   
@@ -57,6 +92,15 @@ export class DoctorProfileService {
       method: 'PUT',
       url: '/api/app/doctor-profile',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateActiveStatusByAdminByIdAndActiveStatus = (Id: number, activeStatus: boolean, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: `/api/app/doctor-profile/active-status-by-admin/${Id}`,
+      params: { activeStatus },
     },
     { apiName: this.apiName,...config });
   
