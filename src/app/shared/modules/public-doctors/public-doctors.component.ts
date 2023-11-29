@@ -26,7 +26,17 @@ export class PublicDoctorsComponent implements OnInit {
   @Input() from!:string
   specialityList: SpecialityDto[] = [];
   subscriptions: Subscription[] = [];
-  specializationList:any;
+  specializationList: any;
+
+  //filter: FilterModel = {
+  //  offset: 0,
+  //  limit: 0,
+  //  pageNo: 1,
+  //  pageSize: 10,
+  //  sortBy: 'name',
+  //  sortOrder: 'asc',
+  //  isDesc: false,
+  //};
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private NormalAuth: AuthService,
