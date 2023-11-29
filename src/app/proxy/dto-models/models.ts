@@ -296,6 +296,16 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
   prescribedDrugName?: string;
 }
 
+export interface FilterModel {
+  offset: number;
+  limit: number;
+  pageNo: number;
+  pageSize: number;
+  sortBy?: string;
+  sortOrder?: string;
+  isDesc: boolean;
+}
+
 export interface LoginDto {
   userName?: string;
   email?: string;
