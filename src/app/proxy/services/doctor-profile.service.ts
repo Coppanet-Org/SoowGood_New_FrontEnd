@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { DoctorProfileDto } from '../dto-models/models';
+import type { DoctorProfileDto, FilterModel } from '../dto-models/models';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
@@ -62,11 +62,11 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
-  getDoctorDetailsList = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
+  getDoctorDetailsList = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, filter: FilterModel, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile/doctor-details-list',
-      params: { name, consultancy, speciality, specialization },
+      params: { name, consultancy, speciality, specialization, offset: filter.offset, limit: filter.limit, pageNo: filter.pageNo, pageSize: filter.pageSize, sortBy: filter.sortBy, sortOrder: filter.sortOrder, isDesc: filter.isDesc },
     },
     { apiName: this.apiName,...config });
   

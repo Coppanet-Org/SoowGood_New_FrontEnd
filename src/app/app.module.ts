@@ -25,7 +25,6 @@ import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
-import { PaginationComponent } from './shared/components/pagination/pagination.component';
 
 
 const routerConfig: ExtraOptions = {
@@ -44,7 +43,7 @@ const routerConfig: ExtraOptions = {
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
-    PaginationComponent
+   // PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +66,6 @@ const routerConfig: ExtraOptions = {
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule, ReactiveFormsModule, FormsModule, PaginationComponent],
+  exports: [MatDialogModule, ReactiveFormsModule, FormsModule],
 })
 export class AppModule { }
