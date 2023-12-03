@@ -1,6 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { DoctorProfileDto } from '../dto-models/models';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -27,6 +28,15 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getAllDoctorsSearchList = (name: string, consultType: number, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-search-list',
+      params: { name, consultType, speciality, specialization },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getByUserId = (userId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto>({
       method: 'GET',
@@ -48,6 +58,15 @@ export class DoctorProfileService {
     this.restService.request<any, DoctorProfileDto>({
       method: 'GET',
       url: `/api/app/doctor-profile/${id}/doctor-details-by-admin`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListWithSearchFilter = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, skipValue: number, currentLimit: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-with-search-filter',
+      params: { name, consultancy, speciality, specialization, skipValue, currentLimit },
     },
     { apiName: this.apiName,...config });
   
