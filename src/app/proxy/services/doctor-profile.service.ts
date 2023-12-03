@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { DoctorProfileDto } from '../dto-models/models';
+import type { DoctorFilterModel, DoctorProfileDto, FilterModel } from '../dto-models/models';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
@@ -62,11 +62,38 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getDoctorListFilter = (doctorFilterModel: DoctorFilterModel, skipValue: number, currentLimit: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-filter',
+      params: { consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, skipValue, currentLimit },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListSearchByName = (name: string, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-search-by-name',
+      params: { name, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getDoctorListWithSearchFilter = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, skipValue: number, currentLimit: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile/doctor-list-with-search-filter',
       params: { name, consultancy, speciality, specialization, skipValue, currentLimit },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorsCountByName = (name: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-count-by-name',
+      params: { name },
     },
     { apiName: this.apiName,...config });
   
