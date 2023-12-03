@@ -12,6 +12,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
+import { FilterModule } from '../filter/filter.module';
 @NgModule({
   declarations: [
     PublicDoctorsComponent
@@ -26,7 +27,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatPaginatorModule,
     MatDatepickerModule,
     MatInputModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+  FilterModule
   ],
 exports:[
   PublicDoctorsComponent

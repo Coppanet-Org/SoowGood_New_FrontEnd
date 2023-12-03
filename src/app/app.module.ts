@@ -25,6 +25,7 @@ import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
+import { FilterModule } from './shared/modules/filter/filter.module';
 
 
 const routerConfig: ExtraOptions = {
@@ -61,7 +62,8 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule,FormsModule
+    ReactiveFormsModule,FormsModule,
+    FilterModule
   ],
   providers: [],
   bootstrap: [AppComponent],

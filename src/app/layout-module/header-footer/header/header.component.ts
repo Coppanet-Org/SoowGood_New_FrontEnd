@@ -19,8 +19,8 @@ export class HeaderComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit(): void {
-    this.userType = this.NormalAuth.authInfo().userType
-    let id = this.NormalAuth.authInfo().id;
+    this.userType = this.NormalAuth.authInfo()?.userType
+    let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       this.isAuthLogin = true;
     } else {

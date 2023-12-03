@@ -1,37 +1,32 @@
-<div class="w-full  fixed z-50 top-0 bg-primary/95 supports-backdrop-blur:bg-primary/60">
+<div class="w-full  sticky max-h-[70px] z-50 top-0 bg-primary/95 supports-backdrop-blur:bg-primary/70">
     <div [class]="layout== 'admin' || layout == 'spreed' ? 'container-full' : 'container'">
         <div *ngIf="layout == 'admin'">
             Admin Nav
         </div>
         <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
             <div class="header-logo" routerLink="/">
-                <img class="w-full" src="../../../../assets//SoowGood-Logo.png" alt="logo">
+                <img class="w-full" src="../../../../assets/SoowGood-Logo.png" alt="logo">
             </div>
             <div class="flex items-center gap-2">
               <button *ngIf="!isAuthLogin" type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
               <button *ngIf="!isAuthLogin" type="button" routerLink="/signup" class="btn-secondary py-2">Signup</button>
-              <!--onclick="my_modal_3.showModal()*ngIf="!isAuthLogin""-->
               <div *ngIf="isAuthLogin" class="dropdown dropdown-end">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                   <div class="w-8 rounded-full">
                     <img src="../../../../assets/person.png" />
                   </div>
                 </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52">
                   <li>
-                    <a class="justify-between" [routerLink]="userType">
-                      Dashboard
-                      <span class="badge">New</span>
+                    <a class="font-Roboto text-[16px] font-semibold py-2" [routerLink]="'/'+userType">
+                      <i class="fa-solid fa-border-none mr-1"></i> Dashboard
                     </a>
                   </li>
-                  <li><a>Settings</a></li>
-                  <li *ngIf="isAuthLogin"><a (click)="signOut()">Logout</a></li>
+                  <li *ngIf="isAuthLogin"><a class="font-Roboto text-[16px] font-semibold  py-2" (click)="signOut()"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a></li>
 
                 </ul>
               </div>
             </div>
         </div>
-
-
     </div>
 </div>
