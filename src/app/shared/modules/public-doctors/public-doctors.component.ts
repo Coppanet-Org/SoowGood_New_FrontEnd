@@ -7,7 +7,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 import { AuthService } from '../../services/auth.service';
 import {
-    DataFilterModel,
+  DataFilterModel,
   DoctorProfileDto,
   FilterModel,
   SpecialityDto,
@@ -40,7 +40,8 @@ export class PublicDoctorsComponent implements OnInit {
   filter!: FormGroup;
   noDataAvailable: boolean = false
   subs = new SubSink();
-  doctorFilterDto!: DataFilterModel;
+  doctorFilterDto: DataFilterModel = {} as DataFilterModel;
+  ;
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
@@ -71,6 +72,12 @@ export class PublicDoctorsComponent implements OnInit {
           formControlName: 'search',
         },
         filterField: [
+          {
+            label: '',
+            fieldType: 'input',
+            formControlName: 'name',
+            options: [],
+          },
           {
             label: 'Consultancy Type',
             fieldType: 'select',
@@ -247,14 +254,14 @@ export class PublicDoctorsComponent implements OnInit {
 
   loadData(data: any) {
     //?.value.userTypeName;
-
+    //console.log(data);
     const {
-      name,
+      search,
       consultancy,
       speciality,
       specialization
     } = data;
-    this.doctorFilterDto.name = name;
+    this.doctorFilterDto.name = search;
     this.doctorFilterDto.consultancyType = consultancy;
     this.doctorFilterDto.specialityId = speciality;
     this.doctorFilterDto.specializationId = specialization;
@@ -270,7 +277,7 @@ export class PublicDoctorsComponent implements OnInit {
     ////this.searchComplaintDto.subDivisionId = formData.subDivisionId != undefined ? formData.subDivisionId : null;
     //this.searchComplaintDto.quarterId = formData.quarterId > 0 ? formData.quarterId : 0;
     //this.searchComplaintDto.buildingId = formData.buildingId > 0 ? formData.buildingId : 0;
-    
+
     //const searchvalue = this.filterInput?.fields.searchField.formControlName['search'];//.['searchField'].value;
     ////const name:any = searchvalue;
     this.filterModel.limit = this.filterModel.pageSize;
@@ -280,7 +287,7 @@ export class PublicDoctorsComponent implements OnInit {
       //this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
       this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
       //this.buildingService.getSortedList(this.filter)
-      this.DoctorProfileService.getDoctorsCountByName(name)
+      this.DoctorProfileService.getDoctorsCountByName(search)
     ]).subscribe(
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
