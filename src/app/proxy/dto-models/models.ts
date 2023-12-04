@@ -166,6 +166,12 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
   isActive?: boolean;
 }
 
+export interface DoctorFilterModel {
+  consultancyType?: ConsultancyType;
+  specialityId?: number;
+  specializationId?: number;
+}
+
 export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   doctorCode?: string;
   firstName?: string;
@@ -294,6 +300,12 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
   sdar?: string;
   gdar?: string;
   prescribedDrugName?: string;
+}
+
+export interface EkPayInitDto {
+  status?: string;
+  failedreason?: string;
+  gatewayPageURL?: string;
 }
 
 export interface FilterModel {

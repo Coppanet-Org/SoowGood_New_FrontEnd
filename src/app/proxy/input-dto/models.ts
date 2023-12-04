@@ -84,6 +84,12 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
   documentName?: string;
 }
 
+export interface EkPayInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
+}
+
 export interface FileDeleteInputDto {
   filePath?: string;
 }

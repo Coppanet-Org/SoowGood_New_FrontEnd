@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynamicSelectComponent } from './dynamic-select.component';
+import { PaginatorComponent } from './paginator.component';
 
-describe('DynamicSelectComponent', () => {
-  let component: DynamicSelectComponent;
-  let fixture: ComponentFixture<DynamicSelectComponent>;
+describe('PaginatorComponent', () => {
+  let component: PaginatorComponent;
+  let fixture: ComponentFixture<PaginatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DynamicSelectComponent ]
+      declarations: [ PaginatorComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DynamicSelectComponent);
+    fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

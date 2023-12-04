@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynamicRadioComponent } from './dynamic-radio.component';
+import { FilterComponent } from './filter.component';
 
-describe('DynamicRadioComponent', () => {
-  let component: DynamicRadioComponent;
-  let fixture: ComponentFixture<DynamicRadioComponent>;
+describe('FilterComponent', () => {
+  let component: FilterComponent;
+  let fixture: ComponentFixture<FilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DynamicRadioComponent ]
+      declarations: [ FilterComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DynamicRadioComponent);
+    fixture = TestBed.createComponent(FilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
