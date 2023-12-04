@@ -265,21 +265,8 @@ export class PublicDoctorsComponent implements OnInit {
     this.doctorFilterDto.consultancyType = consultancy;
     this.doctorFilterDto.specialityId = speciality;
     this.doctorFilterDto.specializationId = specialization;
-    //const formData = this.formGroup.value;
-    //this.searchComplaintDto = {};
-    //this.searchComplaintDto.startDate = formData.startDate != undefined ? formData.startDate : null;
-    //this.searchComplaintDto.startDate = this.convertTwoDigitDayAndMonth(this.searchComplaintDto.startDate);
-    //this.searchComplaintDto.endDate = formData.endDate != undefined ? formData.endDate : null;
-    //this.searchComplaintDto.endDate = this.convertTwoDigitDayAndMonth(this.searchComplaintDto.endDate);
-    //this.searchComplaintDto.statusId = formData.statusId != undefined ? formData.statusId : null;
-    ////this.searchComplaintDto.circleId = formData.circleId != undefined ? formData.circleId : null;
-    ////this.searchComplaintDto.divisionId = formData.divisionId != undefined ? formData.divisionId : null;
-    ////this.searchComplaintDto.subDivisionId = formData.subDivisionId != undefined ? formData.subDivisionId : null;
-    //this.searchComplaintDto.quarterId = formData.quarterId > 0 ? formData.quarterId : 0;
-    //this.searchComplaintDto.buildingId = formData.buildingId > 0 ? formData.buildingId : 0;
 
-    //const searchvalue = this.filterInput?.fields.searchField.formControlName['search'];//.['searchField'].value;
-    ////const name:any = searchvalue;
+
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
