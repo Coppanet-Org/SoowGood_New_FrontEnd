@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { DegreeDto, DoctorDegreeDto, DoctorSpecializationDto, SpecializationDto } from 'src/app/proxy/dto-models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TosterService } from '../../../../../shared/services/toster.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { environment } from '../../../../../../environments/environment';
 
 @Component({

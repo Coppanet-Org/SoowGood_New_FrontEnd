@@ -31,7 +31,7 @@ import {
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {

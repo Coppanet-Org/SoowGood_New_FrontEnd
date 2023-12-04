@@ -3,7 +3,7 @@ import { DoctorProfileService } from './../../../../proxy/services/doctor-profil
 import { TosterService } from './../../../../shared/services/toster.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DegreeDialogComponentnt } from '../degree-dialog/degree-dialog.component';
