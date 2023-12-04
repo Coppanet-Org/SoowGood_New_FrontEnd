@@ -8,6 +8,7 @@ import { UserinfoStateService } from '../../services/states/userinfo-state.servi
 import { AuthService } from '../../services/auth.service';
 import {
   DoctorProfileDto,
+  FilterModel,
   SpecialityDto,
   SpecializationDto,
 } from 'src/app/proxy/dto-models';
@@ -15,15 +16,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { ConsultancyType } from 'src/app/proxy/enums';
 import { ListItem } from '../../model/common-model';
-import { Observable, Subscription, startWith, map } from 'rxjs';
+import { Observable, Subscription, startWith, map, combineLatest } from 'rxjs';
 import { FilterComponent } from '../filter/filter.component';
-
+import { SubSink } from 'subsink';
 @Component({
   selector: 'app-public-doctors',
   templateUrl: './public-doctors.component.html',
   styleUrls: ['./public-doctors.component.scss'],
 })
 export class PublicDoctorsComponent implements OnInit {
+  totalCount:any = 0;
+  
   doctorList: DoctorProfileDto[] = [];
   dataLoading: boolean = true;
   // filterForm!:FormGroup
@@ -34,7 +37,17 @@ export class PublicDoctorsComponent implements OnInit {
   specializationList: any;
   filterInput!: FilterInputModel;
   filter!: FormGroup;
-  noDataAvailable:boolean = false
+  noDataAvailable: boolean = false
+  subs = new SubSink();
+  filterModel: FilterModel = {
+    offset: 0,
+    limit: 0,
+    pageNo: 1,
+    pageSize: 10,
+    sortBy: 'name',
+    sortOrder: 'asc',
+    isDesc: false,
+  };
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private NormalAuth: AuthService,
@@ -200,13 +213,31 @@ export class PublicDoctorsComponent implements OnInit {
       currentLimit,
     } =data
 
-    this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
-      next:(res:any)=>{
-       this.doctorList = res
+    this.filterModel.limit = this.filterModel.pageSize;
+    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+
+    this.subs.sink = combineLatest([
+      this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
+      //this.buildingService.getSortedList(this.filter)
+      this.DoctorProfileService.getDoctorsCountByName(name)
+    ]).subscribe(
+      ([buildingResponse, countResponse]) => {
+        this.totalCount = countResponse;
+        this.doctorList = buildingResponse;
       },
-      error:(err:Error)=>{
-        console.log(err);
-      }})
+      (error) => {
+        console.log(error);
+      }
+    );
+
+
+    //this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
+    //  next:(res:any)=>{
+    //   this.doctorList = res
+    //  },
+    //  error:(err:Error)=>{
+    //    console.log(err);
+    //  }})
     // console.log(this.filterForm.value);
   }
 }
