@@ -9,7 +9,7 @@ export class PaginatorComponent {
   pageSizeValues = [10, 25, 50, 75, 100];
 
   @Input() public collectionSize:any;
-  @Input() public pageSize = this.pageSizeValues[1];
+  @Input() public pageSize:any = this.pageSizeValues[1];
   @Input() public page = 1;
 
   @Output() public pageChange = new EventEmitter();

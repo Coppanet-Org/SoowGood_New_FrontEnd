@@ -31,7 +31,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../modules/input/input.component';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { CommonService } from '../../services/common.service';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { customNameValidator } from '../../utils/auth-helper';

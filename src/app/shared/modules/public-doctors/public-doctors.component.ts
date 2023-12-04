@@ -25,8 +25,8 @@ import { SubSink } from 'subsink';
   styleUrls: ['./public-doctors.component.scss'],
 })
 export class PublicDoctorsComponent implements OnInit {
-  totalCount:any = 0;
-  
+  totalCount: any = 0;
+
   doctorList: DoctorProfileDto[] = [];
   dataLoading: boolean = true;
   // filterForm!:FormGroup
@@ -55,7 +55,7 @@ export class PublicDoctorsComponent implements OnInit {
     private fb: FormBuilder,
     private SpecialityService: SpecialityService,
     private SpecializationService: SpecializationService,
-    private DoctorProfileService : DoctorProfileService
+    private DoctorProfileService: DoctorProfileService
   ) {
     this.filter = this.fb.group({});
   }
@@ -152,6 +152,7 @@ export class PublicDoctorsComponent implements OnInit {
         this.subscriptions.push(doctorListSubscription);
       }
     }
+    this.loadData();
   }
 
   getSpecializations(id: any) {
@@ -201,17 +202,17 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
 
-  selectedValueForFilter(data:any){
-    console.log(data);
-    
-     const {
+  selectedValueForFilter(data: any) {
+    //console.log(data);
+
+    const {
       name,
       consultancy,
       speciality,
       specialization,
       skipValue,
       currentLimit,
-    } =data
+    } = data
 
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
@@ -227,8 +228,7 @@ export class PublicDoctorsComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      }
-    );
+      });
 
 
     //this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
@@ -239,6 +239,42 @@ export class PublicDoctorsComponent implements OnInit {
     //    console.log(err);
     //  }})
     // console.log(this.filterForm.value);
+
+
+  }
+
+  loadData() {
+    //?.value.userTypeName;
+    
+    const searchvalue = this.filterInput?.fields.searchField.formControlName['search'];//.['searchField'].value;
+    const name:any = searchvalue;
+    this.filterModel.limit = this.filterModel.pageSize;
+    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+
+    this.subs.sink = combineLatest([
+      this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
+      //this.buildingService.getSortedList(this.filter)
+      this.DoctorProfileService.getDoctorsCountByName(name)
+    ]).subscribe(
+      ([buildingResponse, countResponse]) => {
+        this.totalCount = countResponse;
+        this.doctorList = buildingResponse;
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
+
+
+  pageChanged($event: any) {
+    this.filterModel.pageNo = $event;
+    this.loadData();
+  }
+
+  pageSizeChanged($event: any) {
+    this.filterModel.pageNo = 1;
+    this.filterModel.pageSize = $event;
+    this.loadData();
   }
 }
 

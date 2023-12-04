@@ -7,7 +7,7 @@ import {
   PatientProfileService,
   UserAccountsService,
 } from '../../../proxy/services';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import {
   DoctorProfileDto,
   LoginDto,

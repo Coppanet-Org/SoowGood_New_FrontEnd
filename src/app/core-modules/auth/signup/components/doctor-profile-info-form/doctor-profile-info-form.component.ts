@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Gender, MaritalStatus, DoctorTitle } from 'src/app/proxy/enums';
 import { SpecialityService } from 'src/app/proxy/services';
 import { ListItem } from 'src/app/shared/model/common-model';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 @Component({
   selector: 'app-doctor-profile-info-form',
   templateUrl: './doctor-profile-info-form.component.html',

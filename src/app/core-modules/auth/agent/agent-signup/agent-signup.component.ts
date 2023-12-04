@@ -5,7 +5,7 @@ import { AgentProfileService } from './../../../../proxy/services/agent-profile.
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
 @Component({
