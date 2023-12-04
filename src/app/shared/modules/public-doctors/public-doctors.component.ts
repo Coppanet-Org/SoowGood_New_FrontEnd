@@ -7,6 +7,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 import { AuthService } from '../../services/auth.service';
 import {
+    DataFilterModel,
   DoctorProfileDto,
   FilterModel,
   SpecialityDto,
@@ -39,6 +40,7 @@ export class PublicDoctorsComponent implements OnInit {
   filter!: FormGroup;
   noDataAvailable: boolean = false
   subs = new SubSink();
+  doctorFilterDto!: DataFilterModel;
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
@@ -152,7 +154,7 @@ export class PublicDoctorsComponent implements OnInit {
         this.subscriptions.push(doctorListSubscription);
       }
     }
-    this.loadData();
+    //this.loadData();
   }
 
   getSpecializations(id: any) {
@@ -243,16 +245,40 @@ export class PublicDoctorsComponent implements OnInit {
 
   }
 
-  loadData() {
+  loadData(data: any) {
     //?.value.userTypeName;
+
+    const {
+      name,
+      consultancy,
+      speciality,
+      specialization
+    } = data;
+    this.doctorFilterDto.name = name;
+    this.doctorFilterDto.consultancyType = consultancy;
+    this.doctorFilterDto.specialityId = speciality;
+    this.doctorFilterDto.specializationId = specialization;
+    //const formData = this.formGroup.value;
+    //this.searchComplaintDto = {};
+    //this.searchComplaintDto.startDate = formData.startDate != undefined ? formData.startDate : null;
+    //this.searchComplaintDto.startDate = this.convertTwoDigitDayAndMonth(this.searchComplaintDto.startDate);
+    //this.searchComplaintDto.endDate = formData.endDate != undefined ? formData.endDate : null;
+    //this.searchComplaintDto.endDate = this.convertTwoDigitDayAndMonth(this.searchComplaintDto.endDate);
+    //this.searchComplaintDto.statusId = formData.statusId != undefined ? formData.statusId : null;
+    ////this.searchComplaintDto.circleId = formData.circleId != undefined ? formData.circleId : null;
+    ////this.searchComplaintDto.divisionId = formData.divisionId != undefined ? formData.divisionId : null;
+    ////this.searchComplaintDto.subDivisionId = formData.subDivisionId != undefined ? formData.subDivisionId : null;
+    //this.searchComplaintDto.quarterId = formData.quarterId > 0 ? formData.quarterId : 0;
+    //this.searchComplaintDto.buildingId = formData.buildingId > 0 ? formData.buildingId : 0;
     
-    const searchvalue = this.filterInput?.fields.searchField.formControlName['search'];//.['searchField'].value;
-    const name:any = searchvalue;
+    //const searchvalue = this.filterInput?.fields.searchField.formControlName['search'];//.['searchField'].value;
+    ////const name:any = searchvalue;
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
     this.subs.sink = combineLatest([
-      this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
+      //this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
+      this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
       //this.buildingService.getSortedList(this.filter)
       this.DoctorProfileService.getDoctorsCountByName(name)
     ]).subscribe(
@@ -268,13 +294,13 @@ export class PublicDoctorsComponent implements OnInit {
 
   pageChanged($event: any) {
     this.filterModel.pageNo = $event;
-    this.loadData();
+    //this.loadData();
   }
 
   pageSizeChanged($event: any) {
     this.filterModel.pageNo = 1;
     this.filterModel.pageSize = $event;
-    this.loadData();
+    //this.loadData();
   }
 }
 

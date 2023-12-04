@@ -51,7 +51,7 @@
 
       </div> -->
 
-      <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData()" (getSpecializations)="getSpecializations($event)"></app-filter>
+      <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData($event)" (getSpecializations)="getSpecializations($event)"></app-filter>
 
       <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
         <app-skeleton></app-skeleton>
