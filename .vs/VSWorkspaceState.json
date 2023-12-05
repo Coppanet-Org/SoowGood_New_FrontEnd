@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\modules"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false
 }

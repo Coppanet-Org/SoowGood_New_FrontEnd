@@ -104,6 +104,13 @@ export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
   description?: string;
 }
 
+export interface DataFilterModel {
+  name?: string;
+  consultancyType?: ConsultancyType;
+  specialityId?: number;
+  specializationId?: number;
+}
+
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
@@ -164,12 +171,6 @@ export interface DoctorFeesSetupInputDto extends FullAuditedEntityDto<number> {
   discountPeriod?: number;
   totalFee?: number;
   isActive?: boolean;
-}
-
-export interface DoctorFilterModel {
-  consultancyType?: ConsultancyType;
-  specialityId?: number;
-  specializationId?: number;
 }
 
 export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
