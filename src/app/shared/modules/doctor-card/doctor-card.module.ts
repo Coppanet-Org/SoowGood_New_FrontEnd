@@ -21,7 +21,8 @@ import { BookingPaymentComponent } from '../../components/booking-dialog/booking
     InputModule,
     MaterialModulesModule,
     MatButtonModule,
-    SlotsModule
+    SlotsModule,
+    
   ],
   exports:[
     DoctorCardComponent

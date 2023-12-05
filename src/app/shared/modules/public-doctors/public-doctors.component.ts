@@ -117,27 +117,28 @@ export class PublicDoctorsComponent implements OnInit {
     });
 
     this.subscriptions.push(specialitySubscription);
-    let id = this.NormalAuth.authInfo().id;
+
+    if (this.DoctorStateService.doctorsList.value.length <= 0) {
+      const doctorListSubscription =
+        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
+          this.doctorList = res;
+          this.dataLoading = false;
+        });
+
+      this.subscriptions.push(doctorListSubscription);
+    } else {
+      const doctorListSubscription =
+        this.DoctorStateService.getDoctorListData().subscribe((res) => {
+          this.doctorList = res;
+          this.dataLoading = false;
+        });
+
+      this.subscriptions.push(doctorListSubscription);
+    }
+//need to be clear for why use it in here
+    let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-
-      if (this.DoctorStateService.doctorsList.value.length <= 0) {
-        const doctorListSubscription =
-          this.DoctorStateService.getAllDoctorList().subscribe((res) => {
-            this.doctorList = res;
-            this.dataLoading = false;
-          });
-
-        this.subscriptions.push(doctorListSubscription);
-      } else {
-        const doctorListSubscription =
-          this.DoctorStateService.getDoctorListData().subscribe((res) => {
-            this.doctorList = res;
-            this.dataLoading = false;
-          });
-
-        this.subscriptions.push(doctorListSubscription);
-      }
     }
   }
 

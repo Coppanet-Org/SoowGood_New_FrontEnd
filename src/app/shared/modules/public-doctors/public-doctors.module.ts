@@ -28,7 +28,7 @@ import { FilterModule } from '../filter/filter.module';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-  FilterModule
+    FilterModule,
   ],
 exports:[
   PublicDoctorsComponent

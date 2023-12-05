@@ -22,7 +22,7 @@
 
 @layer components {
   .container {
-    @apply xs:max-w-full sm:w-full md:w-[70%] mr-auto ml-auto;
+    @apply xs:max-w-full sm:w-full md:w-[70%] 2xl:w-[65%] mr-auto ml-auto;
   }
   .container-full{
     @apply xs:max-w-full sm:w-full md:w-[96%] mr-auto ml-auto;

@@ -6,6 +6,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { AvailableDoctorsComponent } from './components/available-doctors/available-doctors.component';
 import { BestDoctorsComponent } from './components/best-doctors/best-doctors.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Route[] = [
   {
@@ -22,7 +23,8 @@ const routes: Route[] = [
     CategoryComponent,
   ],
   imports: [CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule
   ],
 })
 export class LandingPageModule {}
