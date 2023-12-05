@@ -89,6 +89,15 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getDoctorsCountByFilters = (doctorFilterModel: DataFilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-count-by-filters',
+      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getDoctorsCountByName = (name: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',

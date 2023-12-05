@@ -30,7 +30,7 @@ export class PublicDoctorsComponent implements OnInit {
 
   doctorList: DoctorProfileDto[] = [];
   dataLoading: boolean = true;
-  // filterForm!:FormGroup
+  //filterForm!:FormGroup
   consultancyType!: ListItem[];
   @Input() from!: string;
   specialityList!: any;
@@ -41,7 +41,7 @@ export class PublicDoctorsComponent implements OnInit {
   noDataAvailable: boolean = false
   subs = new SubSink();
   doctorFilterDto: DataFilterModel = {} as DataFilterModel;
-  ;
+  
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
@@ -65,19 +65,19 @@ export class PublicDoctorsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.loadForm();
+    
     this.filterInput = {
       fields: {
         searchField: {
           formControlName: 'search',
         },
         filterField: [
-          {
-            label: '',
-            fieldType: 'input',
-            formControlName: 'name',
-            options: [],
-          },
+          //{
+          //  label: '',
+          //  fieldType: 'input',
+          //  formControlName: 'name',
+          //  options: [],
+          //},
           {
             label: 'Consultancy Type',
             fieldType: 'select',
@@ -99,6 +99,8 @@ export class PublicDoctorsComponent implements OnInit {
         ],
       },
     };
+
+    //this.loadForm();
     const specialitySubscription = this.SpecialityService.getList().subscribe({
       next: (res: any) => {
         this.specialityList = res;
@@ -164,6 +166,15 @@ export class PublicDoctorsComponent implements OnInit {
     //this.loadData();
   }
 
+  //loadForm() {
+  //  this.filter = this.fb.group({
+  //    search: [''],
+  //    consultancy: [0],
+  //    speciality: [0],
+  //    specialization:[0]
+  //  })
+  //}
+
   getSpecializations(id: any) {
     if (!id) {
       return
@@ -211,57 +222,55 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
 
-  selectedValueForFilter(data: any) {
-    //console.log(data);
+  //selectedValueForFilter(data: any) {
+  //  //console.log(data);
 
-    const {
-      name,
-      consultancy,
-      speciality,
-      specialization,
-      skipValue,
-      currentLimit,
-    } = data
+  //  const {
+  //    name,
+  //    consultancy,
+  //    speciality,
+  //    specialization,
+  //    skipValue,
+  //    currentLimit,
+  //  } = data
 
-    this.filterModel.limit = this.filterModel.pageSize;
-    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+  //  this.filterModel.limit = this.filterModel.pageSize;
+  //  this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
-    this.subs.sink = combineLatest([
-      this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
-      //this.buildingService.getSortedList(this.filter)
-      this.DoctorProfileService.getDoctorsCountByName(name)
-    ]).subscribe(
-      ([buildingResponse, countResponse]) => {
-        this.totalCount = countResponse;
-        this.doctorList = buildingResponse;
-      },
-      (error) => {
-        console.log(error);
-      });
-
-
-    //this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
-    //  next:(res:any)=>{
-    //   this.doctorList = res
-    //  },
-    //  error:(err:Error)=>{
-    //    console.log(err);
-    //  }})
-    // console.log(this.filterForm.value);
+  //  this.subs.sink = combineLatest([
+  //    this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
+  //    //this.buildingService.getSortedList(this.filter)
+  //    this.DoctorProfileService.getDoctorsCountByName(name)
+  //  ]).subscribe(
+  //    ([buildingResponse, countResponse]) => {
+  //      this.totalCount = countResponse;
+  //      this.doctorList = buildingResponse;
+  //    },
+  //    (error) => {
+  //      console.log(error);
+  //    });
 
 
-  }
+  //  //this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
+  //  //  next:(res:any)=>{
+  //  //   this.doctorList = res
+  //  //  },
+  //  //  error:(err:Error)=>{
+  //  //    console.log(err);
+  //  //  }})
+  //  // console.log(this.filterForm.value);
+
+
+  //}
 
   loadData(data: any) {
-    //?.value.userTypeName;
-    //console.log(data);
+
     const {
-      search,
       consultancy,
       speciality,
       specialization
     } = data;
-    this.doctorFilterDto.name = search;
+
     this.doctorFilterDto.consultancyType = consultancy;
     this.doctorFilterDto.specialityId = speciality;
     this.doctorFilterDto.specializationId = specialization;
@@ -271,10 +280,8 @@ export class PublicDoctorsComponent implements OnInit {
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
     this.subs.sink = combineLatest([
-      //this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
       this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
-      //this.buildingService.getSortedList(this.filter)
-      this.DoctorProfileService.getDoctorsCountByName(search)
+      this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
     ]).subscribe(
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
@@ -283,17 +290,42 @@ export class PublicDoctorsComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+    //this.doctorFilterDto = {};
+  }
+
+
+  searchData(data: any) {
+
+    this.doctorFilterDto.name = data;
+
+    this.filterModel.limit = this.filterModel.pageSize;
+    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+
+    this.subs.sink = combineLatest([
+      this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
+      this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
+    ]).subscribe(
+      ([buildingResponse, countResponse]) => {
+        this.totalCount = countResponse;
+        this.doctorList = buildingResponse;
+      },
+      (error) => {
+        console.log(error);
+      });
+    //this.doctorFilterDto = {};
   }
 
 
   pageChanged($event: any) {
     this.filterModel.pageNo = $event;
+    this.doctorList;
     //this.loadData();
   }
 
   pageSizeChanged($event: any) {
     this.filterModel.pageNo = 1;
     this.filterModel.pageSize = $event;
+    this.doctorList;
     //this.loadData();
   }
 }
