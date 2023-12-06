@@ -25,7 +25,7 @@ import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
-import { FilterModule } from './shared/modules/filter/filter.module';
+import { PaginatorComponent } from './shared/modules/paginator/paginator.component';
 
 
 const routerConfig: ExtraOptions = {
@@ -35,15 +35,17 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    EmptyPageComponent, 
+    AppComponent,
+    EmptyPageComponent,
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
     LoadingDirective,
     OtpInputComponent,
     PaymentFaildComponent,
-    PaymentCancelComponent
+    PaymentCancelComponent,
+    //PaginatorComponent
+   // PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -62,11 +64,12 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    ReactiveFormsModule,FormsModule,
-    FilterModule
+    ReactiveFormsModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule,ReactiveFormsModule,FormsModule],
+  exports: [MatDialogModule, ReactiveFormsModule, FormsModule
+    //, PaginatorComponent
+  ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -7,7 +7,7 @@ import { AgentProfileDto, LoginResponseDto } from 'src/app/proxy/dto-models';
 import { UserAccountsService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-agent-login',

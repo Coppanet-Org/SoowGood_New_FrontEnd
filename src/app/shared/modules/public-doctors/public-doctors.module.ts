@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PublicDoctorsComponent } from './public-doctors.component';
 import { DoctorCardModule } from '../doctor-card/doctor-card.module';
 import { SkeletonModule } from '../skeleton/skeleton.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -13,9 +13,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import { FilterModule } from '../filter/filter.module';
+import { PaginatorComponent } from '../paginator/paginator.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
-    PublicDoctorsComponent
+    PublicDoctorsComponent,
+    PaginatorComponent
     ],
   imports: [
     CommonModule,
@@ -29,9 +32,13 @@ import { FilterModule } from '../filter/filter.module';
     MatInputModule,
     MatNativeDateModule,
     FilterModule,
+    NgbModule,
+    FormsModule
+    
   ],
 exports:[
-  PublicDoctorsComponent
+  PublicDoctorsComponent,
+  PaginatorComponent
 ]
 })
 export class PublicDoctorsModule { }

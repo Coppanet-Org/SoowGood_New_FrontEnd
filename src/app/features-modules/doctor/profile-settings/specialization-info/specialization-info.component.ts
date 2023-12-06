@@ -10,7 +10,7 @@ import {
   SpecializationService,
 } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { MatDialog } from '@angular/material/dialog';
 import { SpecializationDialogComponent } from '../specialization-dialog/specialization-dialog.component';
 import {forkJoin } from 'rxjs';
