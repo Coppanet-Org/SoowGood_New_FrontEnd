@@ -16,13 +16,10 @@ class RouterGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const authInfo = this.authService.authInfo();
-console.log(authInfo);
-
     if (authInfo) {
       this.router.navigate(['']);
       return false
     } else {
-      
       return true;
     }
   }
