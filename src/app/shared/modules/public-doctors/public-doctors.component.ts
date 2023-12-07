@@ -141,20 +141,41 @@ export class PublicDoctorsComponent implements OnInit {
     });
 
     this.subscriptions.push(specialitySubscription);
-
+    this.filterModel.limit = this.filterModel.pageSize;
+    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+    if (this.filterModel.offset < 0) {
+      this.filterModel.offset = 0;
+    }
     if (this.DoctorStateService.doctorsList.value.length <= 0) {
       const doctorListSubscription =
-        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
-          this.doctorList = res;
+
+      this.subs.sink = combineLatest([
+        this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
+        this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+          this.doctorList = buildingResponse;
           this.dataLoading = false;
+        },
+        (error) => {
+          console.log(error);
         });
 
       this.subscriptions.push(doctorListSubscription);
     } else {
       const doctorListSubscription =
-        this.DoctorStateService.getDoctorListData().subscribe((res) => {
-          this.doctorList = res;
+        this.subs.sink = combineLatest([
+        this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
+        this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+          this.doctorList = buildingResponse;
           this.dataLoading = false;
+        },
+        (error) => {
+          console.log(error);
         });
 
       this.subscriptions.push(doctorListSubscription);
@@ -163,18 +184,8 @@ export class PublicDoctorsComponent implements OnInit {
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-    }
-    //this.loadData();
+    }   
   }
-
-  //loadForm() {
-  //  this.filter = this.fb.group({
-  //    search: [''],
-  //    consultancy: [0],
-  //    speciality: [0],
-  //    specialization:[0]
-  //  })
-  //}
 
   getSpecializations(id: any) {
     if (!id) {
@@ -279,7 +290,9 @@ export class PublicDoctorsComponent implements OnInit {
 
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
-
+    if (this.filterModel.offset < 0) {
+      this.filterModel.offset = 0;
+    }
     this.subs.sink = combineLatest([
       this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
       this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
@@ -301,7 +314,9 @@ export class PublicDoctorsComponent implements OnInit {
 
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
-
+    if (this.filterModel.offset < 0) {
+      this.filterModel.offset = 0;
+    }
     this.subs.sink = combineLatest([
       this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
       this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
@@ -316,13 +331,32 @@ export class PublicDoctorsComponent implements OnInit {
     //this.doctorFilterDto = {};
   }
 
+  load() {
+    this.filterModel.limit = this.filterModel.pageSize;
+    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+    if (this.filterModel.offset < 0) {
+      this.filterModel.offset = 0;
+    }
+    this.subs.sink = combineLatest([
+      this.DoctorProfileService.getDoctorListFilter(this.doctorFilterDto, this.filterModel),
+      this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
+    ]).subscribe(
+      ([buildingResponse, countResponse]) => {
+        this.totalCount = countResponse;
+        this.doctorList = buildingResponse;
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
 
   pageChanged(e: any) {
     console.log(e);
     
     this.filterModel.pageNo = e;
+    console.log(this.filterModel.pageNo);
     //this.doctorList;
-    //this.loadData();
+    this.load();
   }
 
   pageSizeChanged($event: any) {
