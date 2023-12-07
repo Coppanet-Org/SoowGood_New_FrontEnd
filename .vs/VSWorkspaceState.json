@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\components",
-    "\\src\\app\\shared\\modules"
+    ""
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\shared\\modules\\paginator\\paginator.component.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -45,7 +45,7 @@ export class PublicDoctorsComponent implements OnInit {
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
-    pageNo: 1,
+    pageNo: 0,
     pageSize: 10,
     sortBy: 'name',
     sortOrder: 'asc',
@@ -317,9 +317,11 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
 
-  pageChanged($event: any) {
-    this.filterModel.pageNo = $event;
-    this.doctorList;
+  pageChanged(e: any) {
+    console.log(e);
+    
+    this.filterModel.pageNo = e;
+    //this.doctorList;
     //this.loadData();
   }
 

@@ -3,16 +3,19 @@
   <form [formGroup]="filterForm" class="flex justify-between w-full">
     <div class="flex gap-8 items-center">
       <div
-        class="max-w-[300px] py-3 max-h-[50px] px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
-        <input type="search"
+        class="max-w-[300px] py-3 max-h-[50px] pl-4 overflow-hidden  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
+  
+        <input type="search" 
         [formControlName]="filterInput.fields.searchField.formControlName"
           class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
           placeholder="Search by doctor name" />
-        <!-- <span class="bg-transparent">
-          <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-        </span> -->
+       
+          <div class="p-3 bg-secondary cursor-pointer" (click)="search()">
+
+            <i class="fa-solid fa-magnifying-glass text-white"></i>
+          </div>
       </div>
-      <div><button (click)="search()">Search</button></div>
+
     </div>
     <div class="flex justify-end ">
       <div class="flex gap-3 mt-5">

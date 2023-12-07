@@ -28,6 +28,7 @@ import { PaymentCancelComponent } from './shared/components/payment-cancel/payme
 import { PaginatorComponent } from './shared/modules/paginator/paginator.component';
 
 
+
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
   // preloadingStrategy       : PreloadAllModules  [ R&D]
