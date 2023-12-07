@@ -1,30 +1,67 @@
 
-<div class="bg-hero-pattern w-full h-screen bg-[#f2f6f6] ">
+<div class="bg-hero-pattern w-full bg-[#f2f6f6] ">
     <div class="container">
-        <div class="w-full h-screen  flex justify-center items-center">
-            <div class="flex flex-col">
-                <div class="w-full sm:w-full">
-                    <div class="banner-left-top relative text-center">
-                        <h1 class="leading-[1.2]  text-[72px] font-Roboto font-extrabold text-primary tracking-[1.2px]">
-                            Consult <span class="text-secondary ">Best Doctors</span> <br> from Your Home</h1>
-                        <p class="mt-4 font-poppins font-medium text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet.
-                            lorm10
-    
-                        </p>
-                        <!-- <img class="absolute left-40" src="../../../../../../assets/banner/down-arrow-img.png" alt="">/ -->
-                        <!-- <button class="btn-secondary mt-7 text-[16px] " routerLink="search/doctors/1">Start a Consult</button> -->
-
-                    </div>
-                    <div class="banner-left-bottom mt-16 absolute w-[800px]">
-                        <div class="search-area flex bg-white justify-between rounded-md py-3 pl-5 pr-3 shadow-xl ">
-                            <input type="text" placeholder="Search Doctor or Hospital">
-                            <input type="text" placeholder="Your location">
-                            <input type="text" placeholder="Date">
-                            <button class="btn-secondary" routerLink="/search"> Search </button>
+        <div class="w-full flex flex-col h-screen justify-center">
+            <div class="w-full  flex justify-between items-center">
+                <div class="w-[65%] flex flex-col">
+                    <div class="w-full sm:w-full space-y-12 mt-8 md:mt-0">
+                        <div class="banner-left-top relative">
+                            <h1 class="leading-[1.2] md:text-[38px] 2xl:text-[58px] font-Roboto font-extrabold text-primary tracking-[1.2px]">
+                                Consult <span class="text-secondary ">Best Doctors</span> from <br> Your Home</h1>
+                            <p class="mt-4 md:text-[14px] 2xl:text-[16px] font-poppins font-medium text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet.
+                                lorm10 Lorem ipsum.
+                            </p>
+                        </div>
+                        <div class="flex gap-4 flex-wrap max-w-[580px] 2xl:mt-12">
+                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-red-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-green-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                             <br>
+                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-blue-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-yellow-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                        </div>
+                        <div class=" w-full mx-auto bg-[#00A6E0]/10 2xl:rounded-[20px] rounded-[15px] 2xl:p-4 items-center border-[1px] box-border border-secondary-dark/30">
+                            <div class="search-area flex bg-[#00A6E0]/10 2xl:p-3 p-2 justify-between rounded-[10px]  2xl:rounded-[15px] items-centershadow-blue ">
+                               <form [formGroup]="searchForm" class="w-full flex gap-3">
+                                   <select formControlName="service" name="service" id="service" 
+                                   class="w-[35%] rounded-lg border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                   (change)=onChangeService($event)>
+                                   <!-- Default Select Option  (click)="addSpecialization()"-->
+                                   <option value="0" class="font-semibold text-gray-500">Select service</option>
+                                   <!-- Loop through titleList to create options -->
+                                   <option *ngFor="let item of serviceList" value="{{ item.name }}"
+                                     class="font-semibold text-gray-500">{{item.name}}</option>
+                                 </select>
+                                 <input  class="w-[60%] rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" type="search" formControlName="searchText"  placeholder="search by name...">
+            
+                               </form>
+                                <button class="btn-secondary ml-2" (click)="goToServicePage()"><i class="fa-solid fa-magnifying-glass mr-2"></i> Search </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="w-[35%] 2xl:mt-12 md:mt-6">
+                      <img class="md:h-[370px] 2xl:h-[540px] md:w-[380px]" src="../../../../../../assets/banner/bn01@2x-8 1.png" alt="">
+                </div>
             </div>
+
+
+            <!-- <div class=" md:mt-6 2xl:mt-10 w-full mx-auto bg-[#00A6E0]/10 rounded-[20px] p-4 items-center border-[1px] box-border border-secondary-dark/30">
+                <div class="search-area flex bg-[#00A6E0]/10 p-3 justify-between rounded-[15px] items-centershadow-blue ">
+                   <form [formGroup]="searchForm" class="w-full flex gap-3">
+                       <select formControlName="service" name="service" id="service" 
+                       class="w-[24%] rounded-lg border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                       (change)=onChangeService($event)>
+                       <option value="0" class="font-semibold text-gray-500">Select service</option>
+                       <option *ngFor="let item of serviceList" value="{{ item.name }}"
+                         class="font-semibold text-gray-500">{{item.name}}</option>
+                     </select>
+                     <input  class="w-[73%] rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" type="search" formControlName="searchText"  placeholder="search by name...">
+
+                   </form>
+                    <button class="btn-secondary ml-2" (click)="goToServicePage()"><i class="fa-solid fa-magnifying-glass mr-2"></i> Search </button>
+                </div>
+            </div> -->
+
         </div>
 
     </div>
@@ -44,46 +81,3 @@
 
 
 
-
-
-
-
-
-
-<div class="bg-hero-pattern w-full h-screen bg-[#f2f6f6] t-20">
-    <div class="container">
-        <div class="w-full h-screen  flex justify-between items-center">
-            <div class="flex flex-col">
-                <div class="banner-left w-1/2 sm:w-full">
-                    <div class="banner-left-top relative">
-                        <h1 class="leading-[1.2]  text-[72px] font-Roboto font-extrabold text-primary tracking-[1.2px]">
-                            Consult <span class="text-secondary ">Best Doctors</span> from Your Home</h1>
-                        <p class="mt-4 font-poppins font-medium text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet.
-                            lorm10
-    
-                        </p>
-                        <!-- <img class="absolute left-40" src="../../../../../../assets/banner/down-arrow-img.png" alt="">/ -->
-                        <button class="btn-secondary mt-7 text-[16px] " routerLink="search/doctors/1">Start a Consult</button>
-
-                    </div>
-                    <div class="banner-left-bottom mt-16 absolute w-[800px]">
-                        <div class="search-area flex bg-white justify-between rounded-md py-3 pl-5 pr-3 shadow-xl ">
-                            <input type="text" placeholder="Search Doctor or Hospital">
-                            <input type="text" placeholder="Your location">
-                            <input type="text" placeholder="Date">
-                            <button class="btn-secondary" routerLink="/search"> Search </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="banner-rught w-1/2 flex justify-end relative">
-                <img src="../.../../../../../../../assets/banner/banner-img.png"  class="w-[500px]" alt="banner">
-                <img class="w-fit h-fit absolute top-52 left-16"  src="../../../../../../assets/banner/banner-img1.png" alt="">
-                <img class="w-fit h-fit absolute top-14 -right-16" src="../../../../../../assets/banner/banner-img2.png" alt="">
-                <img class="w-fit h-fit absolute bottom-0 right-20" src="../../../../../../assets/banner/banner-img3.png" alt="">
-            </div>
-
-        </div>
-
-    </div>
-</div>

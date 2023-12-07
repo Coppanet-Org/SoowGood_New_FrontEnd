@@ -66,7 +66,7 @@ export class DoctorProfileService {
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile/doctor-list-filter',
-      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, appointmentStatus: doctorFilterModel.appointmentStatus, fromDate: doctorFilterModel.fromDate, toDate: doctorFilterModel.toDate, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   
@@ -93,7 +93,7 @@ export class DoctorProfileService {
     this.restService.request<any, number>({
       method: 'GET',
       url: '/api/app/doctor-profile/doctors-count-by-filters',
-      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId },
+      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, appointmentStatus: doctorFilterModel.appointmentStatus, fromDate: doctorFilterModel.fromDate, toDate: doctorFilterModel.toDate },
     },
     { apiName: this.apiName,...config });
   

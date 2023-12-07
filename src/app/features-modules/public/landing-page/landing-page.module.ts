@@ -6,6 +6,9 @@ import { BannerComponent } from './components/banner/banner.component';
 import { AvailableDoctorsComponent } from './components/available-doctors/available-doctors.component';
 import { BestDoctorsComponent } from './components/best-doctors/best-doctors.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LiveDoctorsComponent } from './components/live-doctors/live-doctors.component';
+import { LiveDoctorCardComponent } from './components/live-doctor-card/live-doctor-card.component';
 
 const routes: Route[] = [
   {
@@ -20,9 +23,12 @@ const routes: Route[] = [
     AvailableDoctorsComponent,
     BestDoctorsComponent,
     CategoryComponent,
+    LiveDoctorsComponent,
+    LiveDoctorCardComponent,
   ],
   imports: [CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule
   ],
 })
 export class LandingPageModule {}

@@ -109,6 +109,9 @@ export interface DataFilterModel {
   consultancyType?: ConsultancyType;
   specialityId?: number;
   specializationId?: number;
+  appointmentStatus?: AppointmentStatus;
+  fromDate?: string;
+  toDate?: string;
 }
 
 export interface DegreeDto extends FullAuditedEntityDto<number> {

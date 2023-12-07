@@ -45,7 +45,7 @@ export class PublicDoctorsComponent implements OnInit {
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
-    pageNo: 1,
+    pageNo: 0,
     pageSize: 10,
     sortBy: 'name',
     sortOrder: 'asc',
@@ -141,27 +141,28 @@ export class PublicDoctorsComponent implements OnInit {
     });
 
     this.subscriptions.push(specialitySubscription);
-    let id = this.NormalAuth.authInfo().id;
+
+    if (this.DoctorStateService.doctorsList.value.length <= 0) {
+      const doctorListSubscription =
+        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
+          this.doctorList = res;
+          this.dataLoading = false;
+        });
+
+      this.subscriptions.push(doctorListSubscription);
+    } else {
+      const doctorListSubscription =
+        this.DoctorStateService.getDoctorListData().subscribe((res) => {
+          this.doctorList = res;
+          this.dataLoading = false;
+        });
+
+      this.subscriptions.push(doctorListSubscription);
+    }
+//need to be clear for why use it in here
+    let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-
-      if (this.DoctorStateService.doctorsList.value.length <= 0) {
-        const doctorListSubscription =
-          this.DoctorStateService.getAllDoctorList().subscribe((res) => {
-            this.doctorList = res;
-            this.dataLoading = false;
-          });
-
-        this.subscriptions.push(doctorListSubscription);
-      } else {
-        const doctorListSubscription =
-          this.DoctorStateService.getDoctorListData().subscribe((res) => {
-            this.doctorList = res;
-            this.dataLoading = false;
-          });
-
-        this.subscriptions.push(doctorListSubscription);
-      }
     }
     //this.loadData();
   }
@@ -316,9 +317,11 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
 
-  pageChanged($event: any) {
-    this.filterModel.pageNo = $event;
-    this.doctorList;
+  pageChanged(e: any) {
+    console.log(e);
+    
+    this.filterModel.pageNo = e;
+    //this.doctorList;
     //this.loadData();
   }
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { PatientProfileService } from 'src/app/proxy/services';
@@ -96,7 +97,7 @@ export class BookingDialogComponent implements OnInit {
     private TosterService: TosterService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
     private DoctorScheduleStateService: DoctorScheduleStateService,
-
+  
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -109,6 +110,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.selectedSlotInfo = ''
     this.dataLoader = true;
     this.appointmentType = CommonService.getEnumList(AppointmentType);
