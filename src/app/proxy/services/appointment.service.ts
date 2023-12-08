@@ -1,6 +1,8 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, ResponseDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto, DataFilterModel, FilterModel, ResponseDto } from '../dto-models/models';
+import type { AppointmentStatus } from '../enums/appointment-status.enum';
+import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { RtcTokenBuilerDto } from '../input-dto/models';
 
 @Injectable({
@@ -48,6 +50,33 @@ export class AppointmentService {
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: `/api/app/appointment/appointment-list-by-patient-id/${patientId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListForDoctorWithSearchFilter = (doctorId: number, dataFilter: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-for-doctor-with-search-filter/${doctorId}`,
+      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListForPatientWithSearchFilter = (patientId: number, dataFilter: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-for-patient-with-search-filter/${patientId}`,
+      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentListWithSearchFilter = (doctorId: number, name: string, consultancy: ConsultancyType, fromDate: string, toDate: string, aptStatus: AppointmentStatus, skipValue: number, currentLimit: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-with-search-filter/${doctorId}`,
+      params: { name, consultancy, fromDate, toDate, aptStatus, skipValue, currentLimit },
     },
     { apiName: this.apiName,...config });
   

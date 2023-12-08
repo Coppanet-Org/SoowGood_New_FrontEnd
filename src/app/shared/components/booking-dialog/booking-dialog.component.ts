@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { PatientProfileService } from 'src/app/proxy/services';
@@ -31,7 +32,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../modules/input/input.component';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { CommonService } from '../../services/common.service';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { customNameValidator } from '../../utils/auth-helper';
@@ -96,7 +97,7 @@ export class BookingDialogComponent implements OnInit {
     private TosterService: TosterService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
     private DoctorScheduleStateService: DoctorScheduleStateService,
-
+  
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -109,6 +110,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.selectedSlotInfo = ''
     this.dataLoader = true;
     this.appointmentType = CommonService.getEnumList(AppointmentType);

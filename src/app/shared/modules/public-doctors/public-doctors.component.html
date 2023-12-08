@@ -1,98 +1,53 @@
 <div class="doctor-dashboard_midcontent_container w-full ">
-  <div class="flex items-center justify-left border-[1px]">
-    <div class="w-full relative h-full  ">
-
-      <div class=" bg-slate-200/20 flex sticky top-[70.35px] bg-white z-50 justify-between gap-4 items-center border-b-[1px] px-8 py-5 ">
-        <div class="flex gap-8 items-center">
-          <h1 class="w-[130px] dashbord-heading-text text-[22px] ">
-            <i class="fa-solid fa-building-columns mr-1"></i>
-            Doctors
-          </h1>
-          <div class="max-w-[300px] py-3 h-fit px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
-            <input class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
-                   placeholder="Search by doctor name" />
-            <span class="bg-transparent">
-              <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-            </span>
+    <div class="flex items-center justify-left border-[1px]">
+      <div class="w-full relative pb-10">
+        <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData($event)" (getSpecializations)="getSpecializations($event)" (searchValue)="searchData($event)"></app-filter>
+        <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+          <app-skeleton></app-skeleton>
+        </div>
+  
+        <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+          <div>No records has been found!</div>
+        </div>
+  
+        <div *ngIf="!dataLoading"
+             [ngClass]="from=='globalSearch' ? 'w-full h-screen grid lg:grid-cols-5 gap-10 p-5  flex-wrap  pb-[50px]' : 'w-full grid lg:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' ">
+          <div *ngFor="let doctorDetails of doctorList" class="h-full">
+            <app-doctor-card [doctorDetails]="doctorDetails" class="max-w-[350px] min-w-[310px]">
+            </app-doctor-card>
+            
           </div>
         </div>
-        <div class="flex justify-end max-h-[50px]">
-          <div class="flex gap-3">
-            <form [formGroup]="filterForm">
-              <mat-form-field>
-                <mat-select placeholder="Consultancy Type" formControlName="consultancyType">
-                  <mat-option *ngFor="let item of consultancyType" value="{{item.id}}"
-                              class="font-semibold text-gray-500">
-                    {{item.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-
-                <mat-select placeholder="Specialty" formControlName="specialty">
-                  <mat-option *ngFor="let item of specialityList" value="{{item.id}}"
-                              class="font-semibold text-gray-500">
-                    {{item.specialityName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-                <mat-select placeholder="Specialization" formControlName="specialization">
-                  <mat-option *ngFor="let item of specializationList" value="{{item.id}}"
-                              class="font-semibold text-gray-500">
-                    {{item.specializationName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <!-- <mat-form-field *ngIf="from != 'appointment'" class="example-full-width" (click)="picker.open()">
-                      <input placeholder="Appointment date" matInput [matDatepicker]="picker">
-                      <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field> -->
-            </form>
-          </div>
-        </div>
-
-      </div>
-
-
-
-      <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-        <app-skeleton></app-skeleton>
-      </div>
-
-      <!-- <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
-              <div>No records has been found!</div>
-            </div> -->
-
-      <div *ngIf="!dataLoading"
-           [ngClass]="from=='globalSearch' ? 'w-full grid lg:grid-cols-5 gap-10 p-5  flex-wrap  pb-[50px]' : 'w-full grid lg:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' ">
-        <div *ngFor="let doctorDetails of doctorList">
-          <app-doctor-card [doctorDetails]="doctorDetails" class="max-w-[350px] min-w-[310px]">
-          </app-doctor-card>
-        </div>
-      </div>
-
-      <div class="flex w-full justify-center py-10">
-        <mat-paginator class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
-                       [length]="totalCount"
-                       [pageSize]="filter.pageSize"
-                       [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  
+        <div class="w-full flex justify-center">
+            <mat-paginator class="bg-primary/5 w-fit py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
+            [length]="totalCount"
+            [pageSize]="filterModel.pageSize"
+            [pageIndex]="filterModel.pageNo"
+             aria-label="Select page">
+            (page)="pageChanged($event)"
         </mat-paginator>
-        <!--<app-pagination [collectionSize]="totalCount"
-                        [pageSize]="filter.pageSize"
-                        [page]="filter.pageNo"
-                        (pageChange)="pageChanged($event)"
-                        (pageSizeChange)="pageSizeChanged($event)">
-        </app-pagination>-->
-      </div>
-    </div>
-  </div>
 
-</div>
+
+           <!--<app-paginator class="w-full bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10" 
+                         [collectionSize]="totalCount"
+                         [pageSize]="filterModel.pageSize"
+                         [page]="filterModel.pageNo"
+                         (pageChange)="pageChanged($event)"
+                         (pageSizeChange)="pageSizeChanged($event)">
+          </app-paginator>--> 
+        </div>
+      
+    
+    </div>
+      
+    </div>
+  
+  </div>

@@ -9,7 +9,7 @@ const routes: Route[] = [
   {
     path: '',
     component: DoctorComponent,
-    canActivate: [isAuth],
+    // canActivate: [isAuth],
     children: [
       {
         path: '',
