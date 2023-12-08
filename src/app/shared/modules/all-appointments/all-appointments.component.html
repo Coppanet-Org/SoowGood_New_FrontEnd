@@ -30,7 +30,8 @@
                     </div>
                 </div>
   </div> -->
-  <app-filter [filterInput]="filterInput" [filterForm]="filter" [from]="'appointment'" (searchChanged)="searchChanged($event)"></app-filter>
+  <!-- <app-filter [filterInput]="filterInput" [filterForm]="filter" [from]="'appointment'" (searchChanged)="searchChanged($event)"></app-filter> -->
+  <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData($event)" (getSpecializations)="getSpecializations($event)" (searchValue)="searchData($event)"></app-filter>
 
   <div *ngIf="skelton" class="grid grid-cols-4 gap-10 flex-wrap ">
     <app-skeleton></app-skeleton>

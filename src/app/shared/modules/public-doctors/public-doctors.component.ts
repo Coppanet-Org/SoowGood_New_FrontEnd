@@ -65,7 +65,6 @@ export class PublicDoctorsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
     this.filterInput = {
       fields: {
         searchField: {
@@ -141,7 +140,10 @@ export class PublicDoctorsComponent implements OnInit {
     });
 
     this.subscriptions.push(specialitySubscription);
-
+    
+    // this.filterModel.limit = this.filterModel.pageSize;
+    // this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+    
     if (this.DoctorStateService.doctorsList.value.length <= 0) {
       const doctorListSubscription =
         this.DoctorStateService.getAllDoctorList().subscribe((res) => {
@@ -156,7 +158,6 @@ export class PublicDoctorsComponent implements OnInit {
           this.doctorList = res;
           this.dataLoading = false;
         });
-
       this.subscriptions.push(doctorListSubscription);
     }
 //need to be clear for why use it in here

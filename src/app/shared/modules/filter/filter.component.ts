@@ -37,7 +37,12 @@ export class FilterComponent implements OnInit {
     const formGroupFields: any = {};
     formGroupFields['search'] = new FormControl('');
     for (const field of this.filterInput.fields.filterField) {
-      formGroupFields[field.formControlName] = new FormControl('');
+      if (typeof field.formControlName === 'string') {
+        formGroupFields[field.formControlName] = new FormControl('');
+      }else{
+        formGroupFields[field.formControlName.endDate] = new FormControl('');
+        formGroupFields[field.formControlName.startDate] = new FormControl('');
+      }
     }
     return formGroupFields;
   }
@@ -55,6 +60,8 @@ export class FilterComponent implements OnInit {
 
 
   submit() {
+    console.log(this.filterForm.value);
+    
     this.selectedValueForFilter.emit(this.filterForm.value)
     this.filterForm.reset()
   }
