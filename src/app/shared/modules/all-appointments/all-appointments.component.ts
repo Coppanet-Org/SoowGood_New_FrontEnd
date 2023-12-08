@@ -50,7 +50,7 @@ export class AllAppointmentsComponent implements OnInit {
   constructor(
     private DoctorPatientAppointmentService: DoctorPatientAppointmentService,
     private fb: FormBuilder,
-    private AppointmentService:AppointmentService
+    private AppointmentService: AppointmentService
   ) {
     this.filterInput = {
       fields: {
@@ -68,8 +68,8 @@ export class AllAppointmentsComponent implements OnInit {
             label: 'start date',
             fieldType: 'date-range',
             formControlName: {
-              startDate : 'startDate',
-              endDate : 'endDate',
+              startDate: 'startDate',
+              endDate: 'endDate',
             }
           }
 
@@ -79,7 +79,7 @@ export class AllAppointmentsComponent implements OnInit {
     this.filter = this.fb.group({});
   }
   ngOnInit(): void {
-    
+
     if (this.id && this.user) {
       this.dataLoading = true;
       this.skelton = true;
@@ -112,27 +112,27 @@ export class AllAppointmentsComponent implements OnInit {
   }
 
   loadData(data: any) {
-console.log(data);
+    console.log(data);
 
-    const {consultancyType,startDate,endDate} = data;
-    let sDate:any = new Date(startDate).toLocaleDateString()
-    let eDate:any = new Date(endDate).toLocaleDateString()
+    const { consultancyType, startDate, endDate } = data;
+    let sDate: any = new Date(startDate).toLocaleDateString()
+    let eDate: any = new Date(endDate).toLocaleDateString()
     this.doctorFilterDto.consultancyType = consultancyType;
     this.doctorFilterDto.fromDate = sDate;
     this.doctorFilterDto.toDate = eDate;
- 
+
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
 
     this.subs.sink = combineLatest([
-      this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(this.id,this.doctorFilterDto, this.filterModel),
+      this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(this.id, this.doctorFilterDto, this.filterModel),
       // this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
     ]).subscribe(
       ([buildingResponse]) => {
         // this.totalCount = countResponse;
         console.log(buildingResponse);
-        
+
         this.appointmentList = buildingResponse;
       },
       (error) => {
@@ -141,13 +141,13 @@ console.log(data);
     //this.doctorFilterDto = {};
   }
 
-  getSpecializations(e:any){
+  getSpecializations(e: any) {
 
   }
-  searchData(e:any){
+  searchData(e: any) {
 
   }
-  searchChanged(e:string){
+  searchChanged(e: string) {
     console.log(e);
   }
 }

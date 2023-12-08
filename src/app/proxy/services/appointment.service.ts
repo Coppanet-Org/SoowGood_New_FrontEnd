@@ -38,6 +38,24 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getAppointmentCountForDoctorWithSearchFilter = (doctorId: number, dataFilter: DataFilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-count-for-doctor-with-search-filter/${doctorId}`,
+      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getAppointmentCountForPatientWithSearchFilter = (patientId: number, dataFilter: DataFilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-count-for-patient-with-search-filter/${patientId}`,
+      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getAppointmentListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
