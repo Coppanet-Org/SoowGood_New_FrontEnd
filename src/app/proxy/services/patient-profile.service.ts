@@ -57,7 +57,7 @@ export class PatientProfileService {
     this.restService.request<any, PatientProfileDto[]>({
       method: 'GET',
       url: `/api/app/patient-profile/doctor-list-by-creator-id-filter/${profileId}`,
-      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, isCurrentOnline: patientFilterModel.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   
@@ -66,7 +66,7 @@ export class PatientProfileService {
     this.restService.request<any, PatientProfileDto[]>({
       method: 'GET',
       url: '/api/app/patient-profile/doctor-list-filter',
-      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, isCurrentOnline: patientFilterModel.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   
