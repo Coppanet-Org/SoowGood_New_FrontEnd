@@ -34,6 +34,8 @@ export class AllAppointmentsComponent implements OnInit {
   specialityList: any = [];
   specializationList: any = [];
 
+  totalCount: any = 0;
+
   filter!: FormGroup;
   filterInput!: FilterInputModel
   filterModel: FilterModel = {
@@ -127,12 +129,10 @@ export class AllAppointmentsComponent implements OnInit {
 
     this.subs.sink = combineLatest([
       this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(this.id, this.doctorFilterDto, this.filterModel),
-      // this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto)
+      this.AppointmentService.getAppointmentCountForDoctorWithSearchFilter(this.id, this.doctorFilterDto)
     ]).subscribe(
-      ([buildingResponse]) => {
-        // this.totalCount = countResponse;
-        console.log(buildingResponse);
-
+      ([buildingResponse, countResponse]) => {
+        this.totalCount = countResponse;
         this.appointmentList = buildingResponse;
       },
       (error) => {
