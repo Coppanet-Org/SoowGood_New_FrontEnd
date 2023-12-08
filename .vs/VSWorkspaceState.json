@@ -1,7 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\proxy",
+    "\\src\\app\\proxy\\enums",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\components",
+    "\\src\\app\\shared\\modules\\patient-details"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\src\\app\\shared\\modules\\all-appointments\\all-appointments.component.html",
   "PreviewInSolutionExplorer": false
 }

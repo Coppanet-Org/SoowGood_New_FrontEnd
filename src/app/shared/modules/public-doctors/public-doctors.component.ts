@@ -28,6 +28,8 @@ export class PublicDoctorsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   specializationList: any;
 
+  totalCount = 0;
+
   filter: FilterModel = {
     offset: 0,
     limit: 0,

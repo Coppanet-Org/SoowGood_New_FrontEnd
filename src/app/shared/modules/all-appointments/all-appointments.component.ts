@@ -23,10 +23,10 @@ export class AllAppointmentsComponent implements OnInit {
   appointmentListCache: any;
   appointmentListSubject: any;
   noDataAvailable!: boolean;
-  filterForm!:FormGroup
-  consultancyType:any=[]
-  specialityList:any=[]
-  specializationList:any=[]
+  filterForm!: FormGroup
+  consultancyType: any = []
+  specialityList: any = []
+  specializationList: any = []
   constructor(
     private DoctorPatientAppointmentService: DoctorPatientAppointmentService
   ) { }
