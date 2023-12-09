@@ -149,10 +149,10 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
-  updateOnlineStatusByAdminByIdAndOnlineStatus = (Id: number, onlineStatus: boolean, config?: Partial<Rest.Config>) =>
+  updateDoctorsOnlineStatusByIdAndOnlineStatus = (Id: number, onlineStatus: boolean, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto>({
       method: 'PUT',
-      url: `/api/app/doctor-profile/online-status-by-admin/${Id}`,
+      url: `/api/app/doctor-profile/doctors-online-status/${Id}`,
       params: { onlineStatus },
     },
     { apiName: this.apiName,...config });
