@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LiveDoctorsComponent } from './components/live-doctors/live-doctors.component';
 import { LiveDoctorCardComponent } from './components/live-doctor-card/live-doctor-card.component';
 import { PricingComponent } from './components/pricing/pricing.component';
+import { SignupMarketingBannerComponent } from './components/signup-marketing-banner/signup-marketing-banner.component';
 
 const routes: Route[] = [
   {
@@ -27,6 +28,7 @@ const routes: Route[] = [
     LiveDoctorsComponent,
     LiveDoctorCardComponent,
     PricingComponent,
+    SignupMarketingBannerComponent,
   ],
   imports: [CommonModule,
     RouterModule.forChild(routes),
