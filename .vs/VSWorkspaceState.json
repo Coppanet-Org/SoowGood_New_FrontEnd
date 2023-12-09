@@ -1,14 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\proxy",
-    "\\src\\app\\proxy\\enums",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\components",
-    "\\src\\app\\shared\\modules\\patient-details"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\app\\shared\\modules\\all-appointments\\all-appointments.component.html",
+  "SelectedNode": "\\src\\app\\shared\\modules\\public-doctors\\public-doctors.component.html",
   "PreviewInSolutionExplorer": false
 }
