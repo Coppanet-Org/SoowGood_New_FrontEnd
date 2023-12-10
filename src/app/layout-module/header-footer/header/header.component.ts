@@ -1,7 +1,7 @@
-import { AuthService } from 'src/app/shared/services/auth.service';
+
 
 import { Component, Input, OnInit } from '@angular/core';
-
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
@@ -13,25 +13,23 @@ export class HeaderComponent implements OnInit {
   @Input() layout: string = '';
   isAuthLogin!: boolean;
   userType: string='';
-  authInfo: any;
   constructor(
     private NormalAuth: AuthService,
+    private MainAuth: AuthService,
     private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit(): void {
-    this.userType = this.NormalAuth.authInfo()?.userType
-    let id = this.NormalAuth.authInfo()?.id;
+    let id = this.NormalAuth.authInfo().id;
     if (id) {
       this.isAuthLogin = true;
     } else {
       this.isAuthLogin = false;
     }
-  
+    this.userType = this.NormalAuth.authInfo().userType;
   }
-
   signOut(): void {
-    this.NormalAuth.signOut();
-    location.reload()
+    // this.NormalAuth.signOut();
+    this.MainAuth.signOut();
+    this.isAuthLogin = false;
   }
-
 }

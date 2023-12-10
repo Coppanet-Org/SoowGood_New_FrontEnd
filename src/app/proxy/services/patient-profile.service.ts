@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { PatientProfileDto } from '../dto-models/models';
+import type { DataFilterModel, FilterModel, PatientProfileDto } from '../dto-models/models';
 import type { PatientProfileInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -49,6 +49,24 @@ export class PatientProfileService {
       method: 'GET',
       url: '/api/app/patient-profile/by-user-name',
       params: { userName },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListByCreatorIdFilter = (profileId: number, patientFilterModel: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/patient-profile/doctor-list-by-creator-id-filter/${profileId}`,
+      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, isCurrentOnline: patientFilterModel.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListFilter = (patientFilterModel: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/patient-profile/doctor-list-filter',
+      params: { name: patientFilterModel.name, consultancyType: patientFilterModel.consultancyType, specialityId: patientFilterModel.specialityId, specializationId: patientFilterModel.specializationId, appointmentStatus: patientFilterModel.appointmentStatus, fromDate: patientFilterModel.fromDate, toDate: patientFilterModel.toDate, isCurrentOnline: patientFilterModel.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   

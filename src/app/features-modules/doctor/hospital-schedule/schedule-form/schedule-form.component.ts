@@ -123,12 +123,17 @@ export class ScheduleFormComponent implements OnInit {
     );
 
     this.form.get('consultancyType')?.valueChanges.subscribe((value) => {
-      if (value == 2 || value == 3) {
+      if (value == 2 || value == 3 || value == 4) {
         this.isDisable = true;
+        this.form.get('doctorChamberId')?.setValue('0')
       } else {
         this.isDisable = false;
       }
     });
+
+
+
+
   }
 
   // getInputFieldData() {
@@ -141,10 +146,10 @@ export class ScheduleFormComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      scheduleType: ['', Validators.required],
-      consultancyType: ['',Validators.required],
-      doctorChamberId: [null, Validators.required],
-      isSlotSelected : ['',Validators.required]
+      scheduleType: [0, Validators.required],
+      consultancyType: [0,Validators.required],
+      doctorChamberId: [0, Validators.required],
+      isSlotSelected : ['']
     });
   }
 
@@ -153,72 +158,81 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   submit() {
-this.formSubmitted = true
-    if (this.form.invalid) {
-      this.TosterService.customToast(
-        'Please field all required field',
-        'warning'
-      );
+    const consultencyType = Number(this.form.value.consultancyType);
+    const doctorChamberId = Number(this.form.value.doctorChamberId);
+  
+    this.formSubmitted = true;
+  
+    const scheduleType = Number(this.form.value.scheduleType);
+  
+    if ((consultencyType === 2 || consultencyType === 3 || consultencyType === 4) && !scheduleType) {
+      this.TosterService.customToast('Please select a schedule type', 'warning');
       return;
     }
-
-    
-
-
-    //if (!this.form.valid) {
-    //  this.TosterService.customToast(
-    //    'Please field all required field',
-    //    'warning'
-    //  );
-    //  return;
-    //}
+  
+    if (consultencyType === 1  && !doctorChamberId ) {
+      this.TosterService.customToast('Please select a doctor chamber', 'warning');
+      return;
+    }
+  
+    if (this.allSelectedSession.length <= 0) {
+      this.TosterService.customToast('Please add your session', 'warning');
+      return;
+    }
+  
     const obj = {
       doctorProfileId: this.doctorId,
-      scheduleType: Number(this.form.value.scheduleType),
-      consultancyType: Number(this.form.value.consultancyType),
-      doctorChamberId: Number(this.form.value.doctorChamberId),
+      scheduleType: scheduleType,
+      consultancyType: consultencyType,
+      doctorChamberId: doctorChamberId,
       isActive: true,
       offDayFrom: '2023-08-13T08:27:02.691Z',
       offDayTo: '2023-08-13T08:27:02.691Z',
-      doctorScheduleDaySession: this.allSelectedSession.map((e: any) => {
-        return {
-          id: typeof e.id === 'string' || e.id instanceof String ? 0 : e.id,
-          scheduleDayofWeek: e.scheduleDayofWeek,
-          startTime: e.startTime,
-          endTime: e.endTime,
-          noOfPatients: e.noOfPatients,
-          isActive: true,
-        };
-      }),
+      doctorScheduleDaySession: this.allSelectedSession.map((e: any) => ({
+        id: typeof e.id === 'string' || e.id instanceof String ? 0 : e.id,
+        scheduleDayofWeek: e.scheduleDayofWeek,
+        startTime: e.startTime,
+        endTime: e.endTime,
+        noOfPatients: e.noOfPatients,
+        isActive: true,
+      })),
       doctorFeesSetup: [],
     };
-
+  
     if (!this.editScheduleId) {
-      this.DoctorScheduleService.create(obj).subscribe((res) => {
-        if (res.success == true) {
-          this.TosterService.customToast(String(res.message), 'success');
-          this.allSelectedSession = [];
-          this.form.reset();
-          this.HospitalStateService.setHospitalScheduleFormEvent(false);
-          this.rerenderDoctorSchedule.emit(true);
-        } else if (res.success == false) {
-          this.TosterService.customToast(String(res.message), 'error');
-        } else {
-          this.TosterService.customToast(String(res.message), 'warning');
-        }
-      });
+      this.scheduleCreate(obj);
     } else {
-      this.DoctorScheduleService.update({
-        ...obj,
-        id: this.editScheduleId,
-      }).subscribe((res) => {
-        this.TosterService.customToast(String(res.message), 'success')
-        this.rerenderDoctorSchedule.emit(true)
-      }
-
-      );
+      this.scheduleUpdate({ ...obj, id: this.editScheduleId });
     }
   }
+  
+  scheduleCreate(obj: any) {
+    this.DoctorScheduleService.create(obj).subscribe((res) => {
+      this.handleResponse(res);
+    });
+  }
+  
+  scheduleUpdate(obj: any) {
+    this.DoctorScheduleService.update(obj).subscribe((res) => {
+      this.handleResponse(res);
+    });
+  }
+  
+  handleResponse(res: any) {
+    if (res.success === true) {
+      this.TosterService.customToast(String(res.message), 'success');
+      this.allSelectedSession = [];
+      this.form.reset();
+      this.HospitalStateService.setHospitalScheduleFormEvent(false);
+      this.rerenderDoctorSchedule.emit(true);
+    } else if (res.success === false) {
+      this.TosterService.customToast(String(res.message), 'error');
+    } else {
+      this.TosterService.customToast(String(res.message), 'warning');
+    }
+  }
+  
+
 
   getDaySessions(day: string) {
     return this.allSelectedSession.filter(
@@ -242,10 +256,12 @@ this.formSubmitted = true
   //should be refactor
   onSessionRemove(id: any) {
     this.DoctorScheduleService.deleteSession(id).subscribe((res) =>
-{      (this.allSelectedSession = this.allSelectedSession.filter(
+    {(this.allSelectedSession = this.allSelectedSession.filter(
         (f: any) => f.id !== id
       ))},(error)=>{
-        console.log(error.message);
+        this.allSelectedSession = this.allSelectedSession.filter(
+          (f: any) => f.id !== id
+        )
       }
     );
   }

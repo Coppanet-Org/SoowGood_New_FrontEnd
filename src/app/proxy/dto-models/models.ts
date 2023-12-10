@@ -104,6 +104,17 @@ export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
   description?: string;
 }
 
+export interface DataFilterModel {
+  name?: string;
+  consultancyType?: ConsultancyType;
+  specialityId?: number;
+  specializationId?: number;
+  appointmentStatus?: AppointmentStatus;
+  fromDate?: string;
+  toDate?: string;
+  isCurrentOnline?: boolean;
+}
+
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
@@ -294,6 +305,22 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
   sdar?: string;
   gdar?: string;
   prescribedDrugName?: string;
+}
+
+export interface EkPayInitDto {
+  status?: string;
+  failedreason?: string;
+  gatewayPageURL?: string;
+}
+
+export interface FilterModel {
+  offset: number;
+  limit: number;
+  pageNo: number;
+  pageSize: number;
+  sortBy?: string;
+  sortOrder?: string;
+  isDesc: boolean;
 }
 
 export interface LoginDto {

@@ -14,7 +14,7 @@ import { ListItem } from 'src/app/shared/model/common-model';
 import { Router } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';

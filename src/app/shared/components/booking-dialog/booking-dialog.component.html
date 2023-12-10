@@ -1,352 +1,366 @@
-<div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
-    <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking {{stepHeading}}
-    </h1>
-    <button class="btn-secondary-light" (click)="closeDialogs()">Close</button>
+
+<div class="bg-white h-[300px] "*ngIf="!doctorData.isAuthUser">
+    <div class="bg-primary h-[100px] w-full flex flex-col justify-center items-center ">
+        <img src="assets/logo.svg" alt="logo">
+        <h1 class="text-white text-[24px] font-roboto">Welcome to Soowgood.</h1>
+    </div>
+   
+    <div class="p-8 flex justify-center items-center flex-col">
+
+        <p>You must be  <a class="text-blue-500 font-bold" routerLink="/login" (click)="dialogRef.close()">Login! </a> to continue!</p>
+        <p>or</p>
+        <p><a class="text-blue-500 font-bold" routerLink="/signup" (click)="dialogRef.close()">Register</a> a new account.</p>
+    </div>
+
 </div>
 
 
-
-
-<div class="w-full px-12 pt-5 pb-10">
-
-
-    <mat-stepper #stepper class="mx-auto" [selectedIndex]="activeTab">
-        <!-- select booking option -->
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="bookingForm">
-                <ul class="grid grid-row-2 w-full gap-6">
-                    <li (click)="onStepChange(1)">
-                        <input type="radio" formControlName="bookMyself" id="bookMyself" value="bookMyself"
-                            class="hidden peer" required>
-                        <label for="bookMyself"
-                            class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-person text-[44px]"></i>
-                                <div>
-                                    <div class="w-full text-lg font-semibold">Book for Self</div>
-                                    <div class="w-full">If you are patient!</div>
+<div *ngIf="doctorData.isAuthUser">
+    <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
+        <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking {{stepHeading}}
+        </h1>
+        <button class="btn-secondary-light" (click)="closeDialogs()">Close</button>
+    </div>
+    
+    
+    
+    <div class="w-full px-12 pt-5 pb-10">
+        <mat-stepper #stepper class="mx-auto" [selectedIndex]="activeTab">
+            <!-- select booking option -->
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="bookingForm">
+                    <ul class="grid grid-row-2 w-full gap-6">
+                        <li (click)="onStepChange(1)">
+                            <input type="radio" formControlName="bookMyself" id="bookMyself" value="bookMyself"
+                                class="hidden peer" required>
+                            <label for="bookMyself"
+                                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-person text-[44px]"></i>
+                                    <div>
+                                        <div class="w-full text-lg font-semibold">Book for Self</div>
+                                        <div class="w-full">If you are patient!</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </label>
-                    </li>
-                    <li (click)="onStepChange(2)">
-                        <input type="radio" formControlName="bookOther" id="bookOther" value="bookOther"
-                            class="hidden peer">
-                        <label for="bookOther"
-                            class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg 
-                            cursor-pointer dark:hover:text-gray-300 dark:border-gray-700
-                             dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600
-                              hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-people-robbery text-[44px]"></i>
-                                <div>
-                                    <div class="w-full text-lg font-semibold">Book for Other</div>
-                                    <div class="w-full">If you are not patient!</div>
+                                <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </label>
+                        </li>
+                        <li (click)="onStepChange(2)">
+                            <input type="radio" formControlName="bookOther" id="bookOther" value="bookOther"
+                                class="hidden peer">
+                            <label for="bookOther"
+                                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg 
+                                cursor-pointer dark:hover:text-gray-300 dark:border-gray-700
+                                 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600
+                                  hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-people-robbery text-[44px]"></i>
+                                    <div>
+                                        <div class="w-full text-lg font-semibold">Book for Other</div>
+                                        <div class="w-full">If you are not patient!</div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </label>
-                    </li>
-                </ul>
-            </form>
-        </mat-step>
-
-        <!-- select doctor schedule filter -->
-        <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
-            <div *ngIf="!dataLoader; else loader">
-                <form [formGroup]="form">
-                    <div class="flex justify-between">
-                        <div class="flex gap-4">
-                            <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
-                                <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
-                            </div>
-                            <div>
-                                <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
-                                <p>General Medicine</p>
-                            </div>
-                        </div>
-                        <div class="py-0 px-3">
-                            <div class=" leading-0">
-                                <div class="stat-title">Total Fee</div>
-                                <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0 tk.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                    <div class="-mx-3 flex flex-wrap">
-                        <!-- <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
-                            <app-input [label]="config.label" [inputId]="config.inputId"
-                                [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
-                                [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form" 
-                                [type]="config.type" class="sm:w-1/2 h-fit">
-                            </app-input>
-                        </ng-container> -->
-                        <div class="w-full px-3 sm:w-1/2">
-                            <div class="mb-5">
-                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                    Appointment Date
-                                </label>
-                                <input autocomplete="off" required formControlName="appointmentDate" type="date"
-                                    name="appointmentDate" id="appointmentDate"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                <p class="text-[14px] text-red-600"
-                                    *ngIf=" formSubmitted && form.get('appointmentDate')?.hasError('required')">
-                                    Please select appointment date.
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="w-full px-3 sm:w-1/2">
-                            <div class="mb-5">
-                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                    Select hospital/chamber
-                                </label>
-                                <select formControlName="doctorScheduleType" name="select" id="select"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                    <option value="0" class="font-semibold text-gray-500">Select hospital/chamber
-                                    </option>
-                                    <option *ngFor="let item of hospitalList" [value]="item.id"
-                                        class="font-semibold text-gray-500">
-                                        {{item.name}}
-                                    </option>
-                                </select>
-                                <p  class="text-[14px] text-red-600"
-                                    *ngIf="formSubmitted  &&  form.get('doctorScheduleType')?.value === '0'">
-                                    Please select a hospital/chamber
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="w-full px-3 sm:w-1/2">
-                            <div class="mb-5">
-                                <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                    Select appointment type
-                                </label>
-                                <select formControlName="appointmentType" name="appointmentType" id="appointmentType"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                    <option value="0" class="font-semibold text-gray-500">Select appointment type
-                                    </option>
-                                    <option *ngFor="let item of appointmentType" [value]="item.id"
-                                        class="font-semibold text-gray-500">
-                                        {{item.name}}
-                                    </option>
-                                </select>
-                                <p class="text-[14px] text-red-600"
-                                    *ngIf="formSubmitted && form.get('appointmentType')?.value === '0'">
-                                    Please select appointment type
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
+    
+                                <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </label>
+                        </li>
+                    </ul>
                 </form>
-
-                <div class="py-3" *ngIf="filterData?.length > 0">
-                    <label class="font-Roboto text-[16px] font-semibold text-primary/90"> Available Slots</label>
-                    <div class="mt-2">
-                        <app-slots></app-slots>
-                    </div>
-                </div>
-
-                <div class="py-3" *ngIf="filterData?.length <= 0 && showEmptySlot !== ''">
-                    <p>{{showEmptySlot}}</p>
-                </div>
-
-                <div class="flex gap-5 mt-10 w-full">
-                    <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
-                    <button class="btn-secondary py-2" (click)="onStepChange(3)">Next</button>
-                </div>
-            </div>
-
-
-            <ng-template #loader>
-                Data is loading...
-            </ng-template>
-
-        </mat-step>
-
-        <!-- create new patient or exist patient -->
-        <mat-step [stepControl]="thirdFormGroup">
-            <div class="flex gap-4">
-                <div class="flex items-center px-4  border border-gray-200 rounded dark:border-gray-700">
-                    <input (click)="userExistCheck('exist-user')" checked id="bordered-radio-2" type="radio" value=""
-                        name="bordered-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
-                    <label for="bordered-radio-2"
-                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already
-                        Exist</label>
-                </div>
-                <div class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700">
-                    <input (click)="userExistCheck('new-user')" id="bordered-radio-1" type="radio" value=""
-                        name="bordered-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
-                    <label for="bordered-radio-1"
-                        class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
-                        Patient</label>
-                </div>
-            </div>
-
-
-            <div class="pt-5">
-                <div *ngIf="isExistUser">
-                    <label for="" class="label">Select your patient</label>
-                    <ng-container>
-                        <select class="form_input" [value]="value" (input)="getSinglePatientData($event)">
-                            <option value="">--Select Patient--</option>
-                            <option *ngFor="let item of userPatientList" [value]="item.id">{{ item.name }}</option>
-                        </select>
-                    </ng-container>
-                </div>
-
-                <div class="pt-5">
-                    <form [formGroup]="createPatientForm" class="w-full">
+            </mat-step>
+    
+            <!-- select doctor schedule filter -->
+            <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
+                <div *ngIf="!dataLoader; else loader">
+                    <form [formGroup]="form">
+                        <div class="flex justify-between">
+                            <div class="flex gap-4">
+                                <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
+                                    <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
+                                </div>
+                                <div>
+                                    <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
+                                    <p>General Medicine</p>
+                                </div>
+                            </div>
+                            <div class="py-0 px-3">
+                                <div class=" leading-0">
+                                    <div class="stat-title">Total Fee</div>
+                                    <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0 tk.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                         <div class="-mx-3 flex flex-wrap">
-                            <!-- <ng-container class="w-full" *ngFor="let config of inputForCreatePatient; let i = index">
+                            <!-- <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
                                 <app-input [label]="config.label" [inputId]="config.inputId"
-                                    [isSelectInput]="config.isSelect"
-                                    [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
-                                    [formControlName]="config.formControlName" [placeholder]="config.label"
-                                    [type]="config.type" [class]="i== 0 || i==1 ? 'w-1/2' :'w-1/3'"></app-input>
+                                    [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
+                                    [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form" 
+                                    [type]="config.type" class="sm:w-1/2 h-fit">
+                                </app-input>
                             </ng-container> -->
-
-                            <div class="w-full px-3 sm:w-1/2 ">
-                                <div class="mb-5">
-                                  <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                    Full Name
-                                  </label>
-                                  <input autocomplete="off" formControlName="patientName" type="text" name="patientName" id="patientName"
-                                    placeholder="Full Name"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                      
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('required')">
-                                    Please enter patient name.
-                                  </p>
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('pattern')">
-                                    Patient name should contain only letters and numbers at the end (optional).
-                                  </p>
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('invalidName')">
-                                    Patient name should be at least 3 characters long
-                                  </p>
-                                </div>
-                              </div>
-
-                              <div class="w-full px-3 sm:w-1/2">
-                                <div class="mb-5">
-                                  <label for="age" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                   Age
-                                  </label>
-                                  <input autocomplete="off" maxlength="3" minlength="1" formControlName="age" id="age"
-                                    placeholder="Age"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                      
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('required')">
-                                    Please enter patient age.
-                                  </p>
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('pattern')">
-                                    Age should be a number.
-                                  </p>
-                                </div>
-                              </div>
-                              <div class="w-full px-3 sm:w-1/2">
-                                <div class="mb-5">
-                                  <label for="patientMobileNo" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                    Patient Mobile No
-                                  </label>
-                                  <input autocomplete="off" maxlength="11" minlength="11" formControlName="patientMobileNo" id="patientMobileNo"
-                                    placeholder="Patient Mobile No"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                      
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('required')">
-                                    You must enter a valid mobile number!
-                                  </p>
-                                  <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('pattern')">
-                                    Mobile number should have exactly 11 digits and follow the Bangladeshi format!
-                                  </p>
-                                </div>
-                              </div>
-                              <div class="w-full px-3 sm:w-1/2">
+                            <div class="w-full px-3 sm:w-1/2">
                                 <div class="mb-5">
                                     <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                        Select gender
+                                        Appointment Date
                                     </label>
-                                    <select formControlName="gender" name="gender" id="gender" 
-                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="0" class="font-semibold text-gray-500">Select gender </option>
-                                        
-                                        <option *ngFor="let item of genderList" [value]="item.id">{{ item.name }}</option>
-                                    </select>
+                                    <input autocomplete="off" required formControlName="appointmentDate" type="date"
+                                        name="appointmentDate" id="appointmentDate"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     <p class="text-[14px] text-red-600"
-                                        *ngIf="formSubmitted && createPatientForm.get('gender')?.touched && createPatientForm.get('gender')?.value === '0'">
-                                        Please select gender!
+                                        *ngIf=" formSubmitted && form.get('appointmentDate')?.hasError('required')">
+                                        Please select appointment date.
                                     </p>
+    
                                 </div>
                             </div>
                             <div class="w-full px-3 sm:w-1/2">
                                 <div class="mb-5">
-                                    <label for="bloodGroup" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                                        Select blood group
+                                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                        Select place
                                     </label>
-                                    <select formControlName="bloodGroup" name="bloodGroup" id="bloodGroup"
+                                    <select formControlName="doctorScheduleType" name="select" id="select"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="0" class="font-semibold text-gray-500">Select blood group </option>
-                                        <option value="A+" class="font-semibold text-gray-500">A+ </option>
-                                        <option value="A-" class="font-semibold text-gray-500">A- </option>
-                                        <option value="B+" class="font-semibold text-gray-500">B+ </option>
-                                        <option value="B-" class="font-semibold text-gray-500">B- </option>
-                                        <option value="o+" class="font-semibold text-gray-500">o+ </option>
-                                        <option value="o-" class="font-semibold text-gray-500">o- </option>
-                                        <option value="Ab+" class="font-semibold text-gray-500">Ab+ </option>
-                                        <option value="Ab-" class="font-semibold text-gray-500">Ab- </option>
-                                        <option value="others" class="font-semibold text-gray-500">others </option>
-
+                                        <option value="0" class="font-semibold text-gray-500">Select hospital/chamber
+                                        </option>
+                                        <option *ngFor="let item of hospitalList" [value]="item.id"
+                                            class="font-semibold text-gray-500">
+                                            {{item.name}}
+                                        </option>
                                     </select>
-                                    <p class="text-[14px] text-red-600"
-                                        *ngIf="formSubmitted && createPatientForm.get('bloodGroup')?.touched && createPatientForm.get('bloodGroup')?.value === '0'">
-                                        Please select blood group!
+                                    <p  class="text-[14px] text-red-600"
+                                        *ngIf="formSubmitted  &&  form.get('doctorScheduleType')?.value === '0'">
+                                        Please select a hospital/chamber
                                     </p>
                                 </div>
                             </div>
+    
+                            <div class="w-full px-3 sm:w-1/2">
+                                <div class="mb-5">
+                                    <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                        Select appointment type
+                                    </label>
+                                    <select formControlName="appointmentType" name="appointmentType" id="appointmentType"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                        <option value="0" class="font-semibold text-gray-500">Select appointment type
+                                        </option>
+                                        <option *ngFor="let item of appointmentType" [value]="item.id"
+                                            class="font-semibold text-gray-500">
+                                            {{item.name}}
+                                        </option>
+                                    </select>
+                                    <p class="text-[14px] text-red-600"
+                                        *ngIf="formSubmitted && form.get('appointmentType')?.value === '0'">
+                                        Please select appointment type
+                                    </p>
+                                </div>
+                            </div>
+    
                         </div>
                     </form>
-                </div>
-            </div>
-
-
-
-
-            <div class="flex gap-5">
-                <button class="btn-secondary py-2 mt-6" (click)="onStepChange(0)">Back</button>
-                <button class="btn-secondary bg-primary py-2 mt-6" (click)="createNewPatient()">
-                    <div *ngIf="btnLoader == false" class="flex items-center gap-1 text-white group-hover:text-primary">
-                        <span>Continue</span>
-
+    
+                    <div class="py-3" *ngIf="filterData?.length > 0">
+                        <label class="font-Roboto text-[16px] font-semibold text-primary/90"> Available Slots</label>
+                        <div class="mt-2">
+                            <app-slots></app-slots>
+                        </div>
                     </div>
-                    <span *ngIf="btnLoader == true" class="loading loading-dots loading-md"></span>
-                </button>
-            </div>
-        </mat-step>
-
-        <mat-step [stepControl]="fourFormGroup">
-            <app-booking-review [bookingInfo]="bookingInfo" (gotToBack)="onStepChange($event)"></app-booking-review>
-        </mat-step>
-        <mat-step [stepControl]="fiveFormGroup">
-            <app-booking-payment></app-booking-payment>
-        </mat-step>
-    </mat-stepper>
-
-
-
+    
+                    <div class="py-3" *ngIf="filterData?.length <= 0 && showEmptySlot !== ''">
+                        <p>{{showEmptySlot}}</p>
+                    </div>
+    
+                    <div class="flex gap-5 mt-10 w-full">
+                        <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
+                        <button class="btn-secondary py-2" (click)="onStepChange(3)">Next</button>
+                    </div>
+                </div>
+    
+    
+                <ng-template #loader>
+                    Data is loading...
+                </ng-template>
+    
+            </mat-step>
+    
+            <!-- create new patient or exist patient -->
+            <mat-step [stepControl]="thirdFormGroup">
+                <div class="flex gap-4">
+                    <div class="flex items-center px-4  border border-gray-200 rounded dark:border-gray-700">
+                        <input (click)="userExistCheck('exist-user')" checked id="bordered-radio-2" type="radio" value=""
+                            name="bordered-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
+                        <label for="bordered-radio-2"
+                            class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already
+                            Exist</label>
+                    </div>
+                    <div class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input (click)="userExistCheck('new-user')" id="bordered-radio-1" type="radio" value=""
+                            name="bordered-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600">
+                        <label for="bordered-radio-1"
+                            class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
+                            Patient</label>
+                    </div>
+                </div>
+    
+    
+                <div class="pt-5">
+                    <div *ngIf="isExistUser">
+                        <label for="" class="label">Select your patient</label>
+                        <ng-container>
+                            <select class="form_input" [value]="value" (input)="getSinglePatientData($event)">
+                                <option value="">--Select Patient--</option>
+                                <option *ngFor="let item of userPatientList" [value]="item.id">{{ item.name }}</option>
+                            </select>
+                        </ng-container>
+                    </div>
+    
+                    <div class="pt-5">
+                        <form [formGroup]="createPatientForm" class="w-full">
+                            <div class="-mx-3 flex flex-wrap">
+                                <!-- <ng-container class="w-full" *ngFor="let config of inputForCreatePatient; let i = index">
+                                    <app-input [label]="config.label" [inputId]="config.inputId"
+                                        [isSelectInput]="config.isSelect"
+                                        [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
+                                        [formControlName]="config.formControlName" [placeholder]="config.label"
+                                        [type]="config.type" [class]="i== 0 || i==1 ? 'w-1/2' :'w-1/3'"></app-input>
+                                </ng-container> -->
+    
+                                <div class="w-full px-3 sm:w-1/2 ">
+                                    <div class="mb-5">
+                                      <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                        Full Name
+                                      </label>
+                                      <input autocomplete="off" formControlName="patientName" type="text" name="patientName" id="patientName"
+                                        placeholder="Full Name"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                          
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('required')">
+                                        Please enter patient name.
+                                      </p>
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('pattern')">
+                                        Patient name should contain only letters and numbers at the end (optional).
+                                      </p>
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('invalidName')">
+                                        Patient name should be at least 3 characters long
+                                      </p>
+                                    </div>
+                                  </div>
+    
+                                  <div class="w-full px-3 sm:w-1/2">
+                                    <div class="mb-5">
+                                      <label for="age" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                       Age
+                                      </label>
+                                      <input autocomplete="off" maxlength="3" minlength="1" formControlName="age" id="age"
+                                        placeholder="Age"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                          
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('required')">
+                                        Please enter patient age.
+                                      </p>
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('pattern')">
+                                        Age should be a number.
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="w-full px-3 sm:w-1/2">
+                                    <div class="mb-5">
+                                      <label for="patientMobileNo" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                        Patient Mobile No
+                                      </label>
+                                      <input autocomplete="off" maxlength="11" minlength="11" formControlName="patientMobileNo" id="patientMobileNo"
+                                        placeholder="Patient Mobile No"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                          
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('required')">
+                                        You must enter a valid mobile number!
+                                      </p>
+                                      <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('pattern')">
+                                        Mobile number should have exactly 11 digits and follow the Bangladeshi format!
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="w-full px-3 sm:w-1/2">
+                                    <div class="mb-5">
+                                        <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                            Select gender
+                                        </label>
+                                        <select formControlName="gender" name="gender" id="gender" 
+                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                            <option value="0" class="font-semibold text-gray-500">Select gender </option>
+                                            
+                                            <option *ngFor="let item of genderList" [value]="item.id">{{ item.name }}</option>
+                                        </select>
+                                        <p class="text-[14px] text-red-600"
+                                            *ngIf="formSubmitted && createPatientForm.get('gender')?.touched && createPatientForm.get('gender')?.value === '0'">
+                                            Please select gender!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="w-full px-3 sm:w-1/2">
+                                    <div class="mb-5">
+                                        <label for="bloodGroup" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                            Select blood group
+                                        </label>
+                                        <select formControlName="bloodGroup" name="bloodGroup" id="bloodGroup"
+                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                            <option value="0" class="font-semibold text-gray-500">Select blood group </option>
+                                            <option value="A+" class="font-semibold text-gray-500">A+ </option>
+                                            <option value="A-" class="font-semibold text-gray-500">A- </option>
+                                            <option value="B+" class="font-semibold text-gray-500">B+ </option>
+                                            <option value="B-" class="font-semibold text-gray-500">B- </option>
+                                            <option value="o+" class="font-semibold text-gray-500">o+ </option>
+                                            <option value="o-" class="font-semibold text-gray-500">o- </option>
+                                            <option value="Ab+" class="font-semibold text-gray-500">Ab+ </option>
+                                            <option value="Ab-" class="font-semibold text-gray-500">Ab- </option>
+                                            <option value="others" class="font-semibold text-gray-500">others </option>
+    
+                                        </select>
+                                        <p class="text-[14px] text-red-600"
+                                            *ngIf="formSubmitted && createPatientForm.get('bloodGroup')?.touched && createPatientForm.get('bloodGroup')?.value === '0'">
+                                            Please select blood group!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    
+    
+    
+    
+                <div class="flex gap-5">
+                    <button class="btn-secondary py-2 mt-6" (click)="onStepChange(0)">Back</button>
+                    <button class="btn-secondary bg-primary py-2 mt-6" (click)="createNewPatient()">
+                        <div *ngIf="btnLoader == false" class="flex items-center gap-1 text-white group-hover:text-primary">
+                            <span>Continue</span>
+    
+                        </div>
+                        <span *ngIf="btnLoader == true" class="loading loading-dots loading-md"></span>
+                    </button>
+                </div>
+            </mat-step>
+    
+            <mat-step [stepControl]="fourFormGroup">
+                <app-booking-review [bookingInfo]="bookingInfo" (gotToBack)="onStepChange($event)"></app-booking-review>
+            </mat-step>
+            <mat-step [stepControl]="fiveFormGroup">
+                <app-booking-payment></app-booking-payment>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>
 
 
 

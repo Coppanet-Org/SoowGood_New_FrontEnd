@@ -21,5 +21,7 @@ export class PaymentSuccessComponent implements OnInit {
         'Appointment Confirmed, Show the appoinment list', 'success'
       );
     })
+
   }
+
 }

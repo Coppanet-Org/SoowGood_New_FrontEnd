@@ -19,6 +19,7 @@ export class FilterComponent implements OnInit {
   @Output() getSpecializations = new EventEmitter<any>();
   @Output() callBuildForm = new EventEmitter<any>();
   @Output() selectedValueForFilter = new EventEmitter<any>();
+  @Output() searchValue = new EventEmitter<any>();
 
   constructor(private DoctorProfileService : DoctorProfileService){
     
@@ -36,7 +37,12 @@ export class FilterComponent implements OnInit {
     const formGroupFields: any = {};
     formGroupFields['search'] = new FormControl('');
     for (const field of this.filterInput.fields.filterField) {
-      formGroupFields[field.formControlName] = new FormControl('');
+      if (typeof field.formControlName === 'string') {
+        formGroupFields[field.formControlName] = new FormControl('');
+      }else{
+        formGroupFields[field.formControlName.endDate] = new FormControl('');
+        formGroupFields[field.formControlName.startDate] = new FormControl('');
+      }
     }
     return formGroupFields;
   }
@@ -54,7 +60,15 @@ export class FilterComponent implements OnInit {
 
 
   submit() {
+    console.log(this.filterForm.value);
+    
     this.selectedValueForFilter.emit(this.filterForm.value)
+    this.filterForm.reset()
+  }
+
+  search() {
+    console.log(this.filterForm.get('search')?.value);
+    this.searchValue.emit(this.filterForm.get('search')?.value)
     this.filterForm.reset()
   }
 }

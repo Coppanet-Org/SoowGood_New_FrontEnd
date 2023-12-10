@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\src\\app\\shared\\modules\\public-doctors\\public-doctors.component.html",
   "PreviewInSolutionExplorer": false
 }

@@ -11,6 +11,7 @@ export * from './doctor-schedule.service';
 export * from './doctor-specialization.service';
 export * from './documents-attachment.service';
 export * from './drug-rx.service';
+export * from './ek-pay.service';
 export * from './otp.service';
 export * from './patient-profile.service';
 export * from './payment-history.service';

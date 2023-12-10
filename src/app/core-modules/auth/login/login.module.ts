@@ -5,19 +5,20 @@ import { Route, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { isAuth } from 'src/app/auth-gurd/auth.service';
 
 
 const routes: Route[] = [
   {
     path: '',
     component: LoginComponent,
+    // canActivate:[isAuth],
   },
 ]
 
 @NgModule({
   declarations: [
-    LoginComponent,
-
+    LoginComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes),

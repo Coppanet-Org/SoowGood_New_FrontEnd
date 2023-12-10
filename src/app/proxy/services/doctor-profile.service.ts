@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { DoctorProfileDto } from '../dto-models/models';
+import type { DataFilterModel, DoctorProfileDto, FilterModel } from '../dto-models/models';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
@@ -54,10 +54,36 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getCurrentlyOnlineDoctorList = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/currently-online-doctor-list',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getDoctorDetailsByAdmin = (id: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto>({
       method: 'GET',
       url: `/api/app/doctor-profile/${id}/doctor-details-by-admin`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListFilter = (doctorFilterModel: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-filter',
+      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, appointmentStatus: doctorFilterModel.appointmentStatus, fromDate: doctorFilterModel.fromDate, toDate: doctorFilterModel.toDate, isCurrentOnline: doctorFilterModel.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorListSearchByName = (name: string, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctor-list-search-by-name',
+      params: { name, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   
@@ -67,6 +93,24 @@ export class DoctorProfileService {
       method: 'GET',
       url: '/api/app/doctor-profile/doctor-list-with-search-filter',
       params: { name, consultancy, speciality, specialization, skipValue, currentLimit },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorsCountByFilters = (doctorFilterModel: DataFilterModel, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-count-by-filters',
+      params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, appointmentStatus: doctorFilterModel.appointmentStatus, fromDate: doctorFilterModel.fromDate, toDate: doctorFilterModel.toDate, isCurrentOnline: doctorFilterModel.isCurrentOnline },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getDoctorsCountByName = (name: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/doctors-count-by-name',
+      params: { name },
     },
     { apiName: this.apiName,...config });
   
@@ -101,6 +145,15 @@ export class DoctorProfileService {
       method: 'PUT',
       url: `/api/app/doctor-profile/active-status-by-admin/${Id}`,
       params: { activeStatus },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateDoctorsOnlineStatusByIdAndOnlineStatus = (Id: number, onlineStatus: boolean, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: `/api/app/doctor-profile/doctors-online-status/${Id}`,
+      params: { onlineStatus },
     },
     { apiName: this.apiName,...config });
   
