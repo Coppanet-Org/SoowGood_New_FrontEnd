@@ -1,0 +1,84 @@
+<div *ngIf="!doctorData.isAuthUser">
+    <div class="bg-primary h-[100px] w-full flex flex-col justify-center items-center ">
+        <img src="assets/logo.svg" alt="logo">
+        <h1 class="text-white text-[24px] font-roboto">Welcome to Soowgood.</h1>
+    </div>
+
+    <div class="p-8 flex justify-center items-center flex-col">
+
+        <p>You must be <a class="text-blue-500 font-bold" routerLink="/login" (click)="dialogRef.close()">Login! </a> to
+            continue!</p>
+        <p>or</p>
+        <p><a class="text-blue-500 font-bold" routerLink="/signup" (click)="dialogRef.close()">Register</a> a new
+            account.</p>
+    </div>
+</div>
+<div *ngIf="doctorData.isAuthUser">
+    <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
+        <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking
+        </h1>
+        <button class="btn-secondary-light">Close</button>
+    </div>
+
+
+
+    <div class="w-full px-12 pt-5 pb-10">
+        <mat-stepper #stepper class="mx-auto" [selectedIndex]="activeTab">
+            <!-- select booking option -->
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="bookingForm">
+                    <ul class="grid grid-row-2 w-full gap-6">
+                        <li (click)="onStepChange(3)">
+                            <input type="radio" formControlName="bookMyself" id="bookMyself" value="bookMyself"
+                                class="hidden peer" required>
+                            <label for="bookMyself"
+                                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer   peer-checked:border-secondary peer-checked:text-secondary hover:text-gray-600 hover:bg-gray-100 ">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-person text-[44px]"></i>
+                                    <div>
+                                        <div class="w-full text-lg font-semibold">Book for Self</div>
+                                        <div class="w-full">If you are patient!</div>
+                                    </div>
+                                </div>
+                                <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </label>
+                        </li>
+                        <li (click)="onStepChange(1)">
+                            <input type="radio" formControlName="bookOther" id="bookOther" value="bookOther"
+                                class="hidden peer">
+                            <label for="bookOther"
+                                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer   peer-checked:border-secondary peer-checked:text-secondary hover:text-gray-600 hover:bg-gray-100 ">
+                                
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-people-robbery text-[44px]"></i>
+                                    <div>
+                                        <div class="w-full text-lg font-semibold">Book for Other</div>
+                                        <div class="w-full">If you are not patient!</div>
+                                    </div>
+                                </div>
+
+                                <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </label>
+                        </li>
+                    </ul>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+             333
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                444
+            </mat-step>
+            <mat-step [stepControl]="fourFormGroup">
+                <app-booking-review [bookingInfo]="bookingInfo" (gotToBack)="onStepChange(0)"></app-booking-review>
+            </mat-step>
+        </mat-stepper>
+    </div>

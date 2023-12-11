@@ -114,7 +114,6 @@ export class AllAppointmentsComponent implements OnInit {
   }
 
   loadData(data: any) {
-    console.log(data);
 
     const { consultancyType, startDate, endDate } = data;
     let sDate: any = new Date(startDate).toLocaleDateString()

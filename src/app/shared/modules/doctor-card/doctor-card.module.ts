@@ -8,11 +8,11 @@ import { InputModule } from '../input/input.module';
 import { MaterialModulesModule } from '../material-modules/material-modules.module';
 import {MatButtonModule} from '@angular/material/button';
 import { SlotsModule } from '../slots/slots.module';
-import { BookingReviewComponent } from '../../components/booking-dialog/booking-review/booking-review.component';
 import { BookingPaymentComponent } from '../../components/booking-dialog/booking-payment/booking-payment.component';
+import { BookingReviewModule } from '../booking-review/booking-review.module';
 
 @NgModule({
-  declarations: [DoctorCardComponent,BookingDialogComponent,BookingReviewComponent,BookingPaymentComponent],
+  declarations: [DoctorCardComponent,BookingDialogComponent,BookingPaymentComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,7 +22,7 @@ import { BookingPaymentComponent } from '../../components/booking-dialog/booking
     MaterialModulesModule,
     MatButtonModule,
     SlotsModule,
-    
+    BookingReviewModule
   ],
   exports:[
     DoctorCardComponent
