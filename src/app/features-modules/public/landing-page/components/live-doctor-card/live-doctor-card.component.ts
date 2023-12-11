@@ -1,9 +1,10 @@
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DoctorScheduleService } from 'src/app/proxy/services';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialog/live-consult-booking-dialog.component';
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-live-doctor-card',
@@ -12,30 +13,33 @@ import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialo
 })
 export class LiveDoctorCardComponent {
   isAuthUser: number;
-
+  isLoading: boolean= false;
+  userType: string='';
+  @Input() doctorDetails:any
 
   constructor(private DoctorScheduleService:DoctorScheduleService,
     private NormalAuth: AuthService,
     public dialog: MatDialog,
-    private TosterService : TosterService
+    private TosterService : TosterService,
+
     ){
     this.isAuthUser =  this.NormalAuth.authInfo()?.id;
+    this.userType =  this.NormalAuth.authInfo()?.userType;
+
   }
 
-  onClickConsultNow(data:{name:string,id:number}){
+  onClickConsultNow(data:any){
      this.openDialog(data)
   }
 
 
-  openDialog(data:{name:string,id:number}): void {
-    // this.isLoading = true
+  openDialog(data:any): void {
+    this.isLoading = true
      if (data.id) {
        this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
         data.id
        ).subscribe((res) => {
-        //  this.isLoading = false
-        console.log(res);
-        
+       this.isLoading = false
        if (res?.length > 0 && data) {
          const dialogRef = this.dialog.open(LiveConsultBookingDialogComponent, {
            maxWidth:600,
@@ -43,7 +47,8 @@ export class LiveDoctorCardComponent {
            data: {
              doctorDetails:data,
              doctorScheduleInfo: res,
-             isAuthUser : this.isAuthUser ? true : false
+             isAuthUser : this.isAuthUser ? true : false,
+             userAccess: this.userType == 'doctor' ? false : true
            },
          });
          dialogRef.afterClosed().subscribe((result) => {});
