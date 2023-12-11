@@ -31,9 +31,8 @@ export class BookingReviewComponent {
   constructor(
     private ToasterService: TosterService,
     private AppointmentService: AppointmentService,
-    private sslCommerzService: SslCommerzService
-  ) //private sslCommerzService: PaymentService
-  {
+    private sslCommerzService: SslCommerzService //private sslCommerzService: PaymentService
+  ) {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
   }
 
@@ -47,9 +46,21 @@ export class BookingReviewComponent {
 
   createAppointmentAndPayment() {
     this.loading = true;
-    this.AppointmentService.create(this.bookingInfo).subscribe((res) => {
-      this.payWithSslCommerz(res.appointmentCode);
-    });
+    console.log(this.bookingInfo);
+    
+    try {
+      this.AppointmentService.create(this.bookingInfo).subscribe({
+        next: (res) => this.payWithSslCommerz(res.appointmentCode),
+        error: (err) => {
+          console.log(err);
+          
+          this.ToasterService.customToast(String(err.error.error.message), 'error'),
+          this.loading = false;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   payWithSslCommerz(appointmentCode: any): void {
@@ -61,22 +72,25 @@ export class BookingReviewComponent {
       );
       sslCommerzInputDto.transactionId = '';
 
-      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe(
-        (response: any) => {
-          if (response && response.status === 'SUCCESS') {
-            window.location = response.gatewayPageURL;
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
+           next:(response)=>{
+            if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
+              window.location.href = response.gatewayPageURL;
+              this.loading = false;
+            } else {
+              this.ToasterService.customToast(
+                'Unable to initiate your payment request. Please contact our support team.',
+                'error'
+              );
+            }
+           },
+           error:(err)=>{
+            this.ToasterService.customToast(String(err.error.error.message), 'error'),
             this.loading = false;
-          } else {
-            this.ToasterService.customToast(
-              'Unable to initiate your payment request. Please contact our support team.',
-              'error'
-            );
-          }
-        },
-        (error) => {
-          this.ToasterService.customToast(String(error.error.message), 'error');
-        }
-      );
+           }
+      })
+        
+      
     } else {
       this.ToasterService.customToast('Booking info not found', 'error');
     }

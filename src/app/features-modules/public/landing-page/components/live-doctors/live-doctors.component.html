@@ -19,7 +19,7 @@
             </div>
             <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mt-9">
              
-                <app-live-doctor-card *ngFor="let details of liveDoctorList"></app-live-doctor-card>
+                <app-live-doctor-card *ngFor="let details of liveDoctorList" [doctorDetails]="details"></app-live-doctor-card>
 
             </div>
         </div>

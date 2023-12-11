@@ -183,27 +183,6 @@ export class BookingDialogComponent implements OnInit {
         let finalFilter: any = [];
         let isMatchFound = false;
         const day = dayFromDate(String(data[0]));
-      
-
-
-
-
-
-
-    
-        
-
-
-        // this.filteredChamber = chamber?.map((res:any)=>{
-        //   return{
-        //     id:res.chamber,
-        //     name:res.chamber
-        //   }
-        // })
-
-
-
-
 
         if (data[3] == 0) {
           this.showAppointmentTypeSelectBox = true;
