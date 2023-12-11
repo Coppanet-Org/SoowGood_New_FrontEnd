@@ -11,6 +11,9 @@ import { LiveDoctorsComponent } from './components/live-doctors/live-doctors.com
 import { LiveDoctorCardComponent } from './components/live-doctor-card/live-doctor-card.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { SignupMarketingBannerComponent } from './components/signup-marketing-banner/signup-marketing-banner.component';
+import { LiveConsultBookingDialogComponent } from './components/live-consult-booking-dialog/live-consult-booking-dialog.component';
+import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
+import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booking-review.module';
 
 const routes: Route[] = [
   {
@@ -29,10 +32,13 @@ const routes: Route[] = [
     LiveDoctorCardComponent,
     PricingComponent,
     SignupMarketingBannerComponent,
+    LiveConsultBookingDialogComponent,
   ],
   imports: [CommonModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModulesModule,
+    BookingReviewModule
   ],
 })
 export class LandingPageModule {}
