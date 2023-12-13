@@ -65,8 +65,8 @@ export class ProfileSettingsComponent implements OnInit {
 
       gender: ['', Validators.required],
       age: ['', Validators.required],
-     
-      dateOfBirth: ['', Validators.required],
+      bloodGroup:['',Validators.required],
+      dateOfBirth: ['0', Validators.required],
       city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
       country: ['', Validators.required],
       address: [
