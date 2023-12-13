@@ -1,3 +1,4 @@
+import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { DoctorProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
 import { Component, OnInit } from '@angular/core';
@@ -37,7 +38,8 @@ export class DashboardComponent implements OnInit {
   userType: any;
 
   constructor(
-    private DoctorProfileService: DoctorProfileService,
+    // private DoctorProfileService: DoctorProfileService,
+    private DoctorStateService :DoctorStateService,
     private DoctorScheduleService: DoctorScheduleService,
     public dialog: MatDialog,
     private NormalAuth : AuthService,
@@ -49,7 +51,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.DoctorProfileService.getCurrentlyOnlineDoctorList().subscribe({
+      this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
         next: (res) => {
           this.currentOnlineDoctorList = res;
         },
