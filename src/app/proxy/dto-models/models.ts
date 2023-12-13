@@ -112,6 +112,7 @@ export interface DataFilterModel {
   appointmentStatus?: AppointmentStatus;
   fromDate?: string;
   toDate?: string;
+  isCurrentOnline?: boolean;
 }
 
 export interface DegreeDto extends FullAuditedEntityDto<number> {

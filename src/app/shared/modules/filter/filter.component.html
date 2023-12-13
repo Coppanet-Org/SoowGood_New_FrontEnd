@@ -1,5 +1,5 @@
 <div [style]="from=='appointment' ? 'top:0' :'top:70px'"
-  class="w-full border-b-[1px] sticky z-40 mb-5 px-5 flex justify-between items-center bg-white">
+  class="w-full border-b-[1px]  z-40 mb-5 px-5 flex justify-between items-center bg-white">
   <form [formGroup]="filterForm" class="flex justify-between w-full">
     <div class="flex gap-8 items-center">
       <div
@@ -30,6 +30,15 @@
             <input placeholder="Appointment date" [formControlName]="item.formControlName" matInput
               [matDatepicker]="picker">
             <mat-datepicker #picker></mat-datepicker>
+          </div>
+
+          <div *ngIf="item.fieldType == 'date-range'" (click)="picker.open()">
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" [formControlName]="item.formControlName.startDate">
+              <input matEndDate placeholder="End date" [formControlName]="item.formControlName.endDate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
           </div>
 
           <div *ngIf="item.fieldType == 'input'">

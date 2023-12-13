@@ -1,6 +1,6 @@
 
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
@@ -13,6 +13,18 @@ export class HeaderComponent implements OnInit {
   @Input() layout: string = '';
   isAuthLogin!: boolean;
   userType: string='';
+  scrolled: boolean = false;
+  logoPath:string= "assets/auth/clr-logo.png"
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.scrolled = window.scrollY >= 100;
+    if (window.scrollY >= 100) {
+      this.logoPath = "assets/SoowGood-Logo.png"
+    } else {
+      this.logoPath = "assets/auth/clr-logo.png"
+    }
+    
+  }
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,

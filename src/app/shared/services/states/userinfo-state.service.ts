@@ -38,7 +38,9 @@ export class UserinfoStateService implements OnInit {
   }
   ngOnInit() {
     let user = this.NormalAuth.authInfo();
+    console.log(user);
     if (user.id) {
+      
       this.getProfileInfo(user.id, user.userType);
     }
   }

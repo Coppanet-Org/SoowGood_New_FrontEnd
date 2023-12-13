@@ -21,19 +21,19 @@
           <select autocomplete="off" formControlName="consultancyType" id="consultancyType"
             class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-            <option value="-0" class="text-gray-500">--Select--</option>
+            <option value="0" class="text-gray-500">--Select--</option>
             <option *ngFor="let item of consultancyType" value="{{item.id}}" class="font-semibold text-gray-500">
               {{item.name}}</option>
 
           </select>
-          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('consultancyType')?.hasError('required')">
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('consultancyType')?.hasError('required') && form.get('doctorChamberId')?.value != 0 ">
             Please select consultancy type!
           </p>
         </div>
       </div>
 
 
-      <div class="w-full px-3 sm:w-1/3">
+      <div class="w-full px-3 sm:w-1/3" [ngClass]="isDisable ? 'hidden' : 'block'">
         <div class="mb-5">
           <label for="doctorChamberId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
             Hospital/Chamber
@@ -41,12 +41,12 @@
           <select autocomplete="off" formControlName="doctorChamberId" id="doctorChamberId"
             class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-            <option value="-0" class="py-1 text-gray-500">--Select--</option>
+            <option value="0" class="py-1 text-gray-500">--Select--</option>
             <option *ngFor="let item of hospitalList" value="{{item.id}}" class="font-semibold text-gray-500">
               {{item.name}}</option>
 
           </select>
-          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('doctorChamberId')?.hasError('required')">
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('doctorChamberId')?.hasError('required') && form.get('doctorChamberId')?.value != 0  ">
             Please select hospital/chamber!
           </p>
         </div>
@@ -60,12 +60,12 @@
           <select autocomplete="off" formControlName="scheduleType" id="scheduleType"
             class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-            <option value="-0" class="py-1 text-gray-500">--Select--</option>
+            <option value="0" class="py-1 text-gray-500">--Select--</option>
             <option *ngFor="let item of scheduleType" value="{{item.id}}" class="font-semibold text-gray-500">
               {{item.name}}</option>
 
           </select>
-          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('scheduleType')?.hasError('required')">
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('scheduleType')?.hasError('required') && form.get('doctorChamberId')?.value != 0 ">
             Please select schedule type!
           </p>
         </div>
@@ -92,7 +92,7 @@
                     <div
                       class="bg-primary-light w-full flex gap-3 justify-center items-center rounded-[5px] text-[14px] font-Roboto font-medium text-center text-primary py-2 px-2">
                       {{time.startTime}} - {{time.endTime}}
-                      <i class="fa-solid fa-xmark" (click)="onSessionRemove(time.id)"></i>
+                      <i class="fa-solid fa-xmark cursor-pointer" (click)="onSessionRemove(time.id)"></i>
                     </div>
                   </div>
                 </div>

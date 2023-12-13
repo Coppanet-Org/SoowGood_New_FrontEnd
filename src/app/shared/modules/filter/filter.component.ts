@@ -1,9 +1,8 @@
-import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
-import { SpecializationService } from './../../../proxy/services/specialization.service';
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+
+import {  ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FilterInputModel } from '../../utils/models/models';
-import { startWith } from 'rxjs';
+
 
 @Component({
   selector: 'app-filter',
@@ -21,11 +20,6 @@ export class FilterComponent implements OnInit {
   @Output() selectedValueForFilter = new EventEmitter<any>();
   @Output() searchValue = new EventEmitter<any>();
 
-  constructor(private DoctorProfileService : DoctorProfileService){
-    
-  }
-
-
   ngOnInit(): void {
    this.buildForm();
    this.filterForm.get('speciality')?.valueChanges.subscribe(specialtyId => {
@@ -37,7 +31,12 @@ export class FilterComponent implements OnInit {
     const formGroupFields: any = {};
     formGroupFields['search'] = new FormControl('');
     for (const field of this.filterInput.fields.filterField) {
-      formGroupFields[field.formControlName] = new FormControl('');
+      if (typeof field.formControlName === 'string') {
+        formGroupFields[field.formControlName] = new FormControl('');
+      }else{
+        formGroupFields[field.formControlName.endDate] = new FormControl('');
+        formGroupFields[field.formControlName.startDate] = new FormControl('');
+      }
     }
     return formGroupFields;
   }
@@ -56,12 +55,9 @@ export class FilterComponent implements OnInit {
 
   submit() {
     this.selectedValueForFilter.emit(this.filterForm.value)
-    this.filterForm.reset()
   }
 
   search() {
-    console.log(this.filterForm.get('search')?.value);
     this.searchValue.emit(this.filterForm.get('search')?.value)
-    this.filterForm.reset()
   }
 }
