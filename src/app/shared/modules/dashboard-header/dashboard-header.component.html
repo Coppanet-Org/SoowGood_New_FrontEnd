@@ -7,48 +7,20 @@
     </div>
     
     <div class="flex items-center">     
-        <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                <div class="w-8 h-8 rounded-full border-2 flex justify-center items-center">
-                    <i class="fa-solid fa-gear text-[18px] p-1 text-white"></i>
-                </div>
-            </label>
-            <ul tabindex="0"
-                class="menu menu-sm dropdown-content border mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
-                <li class="py-1"><a>Settings one</a></li>
-                <li class="py-1"><a>Settings one</a></li>
-            </ul>
-        </div>
-        <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                <div class="w-8 h-8 rounded-full border-2 flex justify-center items-center">
-                    <i class="fa-regular fa-bell text-[18px] p-1 text-white"></i>
-                </div>
-            </label>
-            <ul tabindex="0"
-                class="menu menu-sm dropdown-content border mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
-
-                <li class="py-1"><a>Notification one</a></li>
-                <li class="py-1"><a>Notification one</a></li>
-            </ul>
-        </div>
         <div  class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
                 <div class="w-8 rounded-full">
                     <img src="../../../../assets/person.png" />
                 </div>
             </label>
-            <ul tabindex="0"
-                class="menu menu-sm border dropdown-content mt-3 p-3 shadow-lg bg-base-100 rounded-box z-100 w-52">
-                <li class="py-1">
-                    <a class="justify-between">
-                        Profile
-                        <span class="badge">New</span>
-                    </a>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52">
+                <li>
+                  <a class="font-Roboto text-[16px] font-semibold py-2" routerLink="'/'">
+                    <i class="fa-solid fa-border-none mr-1"></i> Home Page
+                  </a>
                 </li>
-                <li class="py-1"><a>Settings</a></li>
-                <li *ngIf="isAuthLogin" class="py-1"><a (click)="signOut()" >Logout</a></li>
-            </ul>
+                <li *ngIf="isAuthLogin"><a class="font-Roboto text-[16px] font-semibold  py-2" (click)="signOut()"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a></li>
+              </ul>
         </div>
     </div>
 </div>

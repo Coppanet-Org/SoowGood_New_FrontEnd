@@ -4,6 +4,7 @@ import { DashboardMenuComponent } from './dashboard-menu.component';
 import { DashboardMenuItemComponent } from '../../components/dashboard-menu-item/dashboard-menu-item.component';
 import { Route, RouterModule } from '@angular/router';
 import { DashboardProfilecardComponent } from '../dashboard-profilecard/dashboard-profilecard.component';
+import { FormsModule } from '@angular/forms';
 const routes: Route[] = [
   {
     path: '*',
@@ -14,7 +15,8 @@ const routes: Route[] = [
   declarations: [DashboardMenuComponent,DashboardMenuItemComponent,DashboardProfilecardComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule
   ],
   exports:[DashboardMenuComponent,]
 })

@@ -1,9 +1,8 @@
-import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
-import { SpecializationService } from './../../../proxy/services/specialization.service';
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+
+import {  ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FilterInputModel } from '../../utils/models/models';
-import { startWith } from 'rxjs';
+
 
 @Component({
   selector: 'app-filter',
@@ -20,11 +19,6 @@ export class FilterComponent implements OnInit {
   @Output() callBuildForm = new EventEmitter<any>();
   @Output() selectedValueForFilter = new EventEmitter<any>();
   @Output() searchValue = new EventEmitter<any>();
-
-  constructor(private DoctorProfileService : DoctorProfileService){
-    
-  }
-
 
   ngOnInit(): void {
    this.buildForm();
@@ -60,15 +54,10 @@ export class FilterComponent implements OnInit {
 
 
   submit() {
-    console.log(this.filterForm.value);
-    
     this.selectedValueForFilter.emit(this.filterForm.value)
-    this.filterForm.reset()
   }
 
   search() {
-    console.log(this.filterForm.get('search')?.value);
     this.searchValue.emit(this.filterForm.get('search')?.value)
-    this.filterForm.reset()
   }
 }
