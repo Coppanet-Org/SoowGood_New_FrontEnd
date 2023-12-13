@@ -44,10 +44,14 @@
                     <div class="p-8 bg-white/30 w-full h-full relative rounded-md text-center">
                         <!-- <i class="fa-solid absolute -top-[50px] left-1/2 -translate-x-1/2 fa-door-open text-[36px] p-6 bg-primary/20 backdrop-blur-lg border-secondary-dark/50 border-4 text-white rounded-full"></i> -->
                        
-                        <h1 class="font-Roboto text-primary text-center text-[34px] mt-5 font-bold">Easy Login/Registration</h1>
-                        <div class="flex justify-evenly items-end gap-4 mt-5 ">
-                          <button class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]">Login</button>
-                          <button class="btn-secondary bg-primary w-1/2 text-[18px]" >Registration</button>
+                        <h1 class="font-Roboto text-primary text-center text-[34px] mt-5 font-bold" *ngIf="!authUser">Easy Login/Registration</h1>
+                        <h1 class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold" *ngIf="authUser">Manage Your Appointment</h1>
+                        <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="!authUser">
+                          <button class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]" routerLink="login">Login</button>
+                          <button class="btn-secondary bg-primary w-1/2 text-[18px]" routerLink="signup">Registration</button>
+                        </div>
+                        <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="authUser">
+                            <button [routerLink]="authUser.userType" class="btn-secondary w-full border-secondary-dark/40 text-[18px]"><i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard</button>
                         </div>
                     </div>
                   </div>

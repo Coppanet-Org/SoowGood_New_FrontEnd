@@ -14,6 +14,9 @@ import { SignupMarketingBannerComponent } from './components/signup-marketing-ba
 import { LiveConsultBookingDialogComponent } from './components/live-consult-booking-dialog/live-consult-booking-dialog.component';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booking-review.module';
+import { AppMarketingComponent } from './components/app-marketing/app-marketing.component';
+import { ClientFeedbackComponent } from './components/client-feedback/client-feedback.component';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 
 const routes: Route[] = [
   {
@@ -33,6 +36,9 @@ const routes: Route[] = [
     PricingComponent,
     SignupMarketingBannerComponent,
     LiveConsultBookingDialogComponent,
+    AppMarketingComponent,
+    ClientFeedbackComponent,
+    NewsletterComponent,
   ],
   imports: [CommonModule,
     RouterModule.forChild(routes),

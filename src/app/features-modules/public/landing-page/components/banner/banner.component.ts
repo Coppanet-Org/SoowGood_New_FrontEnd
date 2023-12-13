@@ -1,6 +1,8 @@
+import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 
 @Component({
@@ -26,11 +28,13 @@ export class BannerComponent implements OnInit {
   searchForm!:FormGroup
   service:any;
   searchText='';
+  authUser: any;
 
-  constructor(private fb: FormBuilder, private router : Router){}
+  constructor(private fb: FormBuilder, private router : Router, private NormalAuth : AuthService){}
 
   ngOnInit(): void {
     this.loadForm()
+   this.authUser = this.NormalAuth.authInfo()
     this.searchForm.get('service')?.valueChanges.subscribe(service => {
        this.service = service
     });
@@ -41,7 +45,7 @@ export class BannerComponent implements OnInit {
 
   loadForm(){
    this.searchForm = this.fb.group({
-    service :['0',Validators.required],
+    service :['0'],
     searchText :['',Validators.required]
    })
   }

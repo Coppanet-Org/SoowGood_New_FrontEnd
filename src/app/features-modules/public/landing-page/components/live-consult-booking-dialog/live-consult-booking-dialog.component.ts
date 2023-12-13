@@ -148,37 +148,29 @@ export class LiveConsultBookingDialogComponent implements OnInit {
             : this.createNewPatientInfo?.patientEmail
             ? this.createNewPatientInfo?.patientEmail
             : this.profileInfo.email || 'admin@gmail.com',
-          appointmentDate:"2023-12-11T14:35:35.546Z",
-          appointmentTime: "10",
-          doctorFee: '100',
+          // appointmentDate:"2023-12-12T14:35:35.546Z",
+          // appointmentTime: "10",
+          doctorFee: 100,
           agentFee: 0,
           platformFee: 0,
-          totalAppointmentFee: 0,
+          totalAppointmentFee: 100,
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: this.profileInfo?.id,
 ///
-          appointmentCode: "string",
-          doctorScheduleId: 0,
-          consultancyType: 1,
-          doctorChamberId: 0,
-          doctorScheduleDaySessionId: 0,
-          scheduleDayofWeek: "string",
-          appointmentType: 1,
-          doctorFeesSetupId: 0,
-          cancelledByEntityId: 0,
-          cancelledByRole: "string",
-          paymentTransactionId: "string",
-          isCousltationComplete: false
 
-
-
-
-
-
-
-
-
+          //appointmentCode: "string",
+          //doctorScheduleId: 0,
+          //consultancyType: 1,
+          //doctorChamberId: 0,
+          //doctorScheduleDaySessionId: 0,
+          //scheduleDayofWeek: "string",
+          // appointmentType: 1,
+          //doctorFeesSetupId: 0,
+          //cancelledByEntityId: 0,
+          //cancelledByRole: "string",
+          //paymentTransactionId: "string",
+          //isCousltationComplete: false
         };
 
 

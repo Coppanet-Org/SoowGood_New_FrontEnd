@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routing';
 import { RouterModule, ExtraOptions, PreloadAllModules } from '@angular/router';
 import { EmptyPageComponent } from './features-modules/public/empty-page/empty-page.component';
-import { SignupComponent } from './core-modules/auth/signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
@@ -21,11 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
 import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
-import { SignupModule } from './core-modules/auth/signup/signup.module';
-import { LoginModule } from './core-modules/auth/login/login.module';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
-import { PaginatorComponent } from './shared/modules/paginator/paginator.component';
 
 
 

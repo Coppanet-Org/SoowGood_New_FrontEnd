@@ -30,7 +30,7 @@ const routes: Route[] = [
     ],
   },
   {
-    path: 'search/:service',
+    path: 'search',
     component: PublicLayoutTwoComponent,
     children: [
       {

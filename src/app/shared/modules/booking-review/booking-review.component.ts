@@ -50,10 +50,12 @@ export class BookingReviewComponent {
     
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
-        next: (res) => this.payWithSslCommerz(res.appointmentCode),
+        next: (res) => {
+          this.payWithSslCommerz(res.appointmentCode), 
+          localStorage.setItem("patientAppointmentCode",JSON.stringify(res.appointmentCode))
+        },
         error: (err) => {
           console.log(err);
-          
           this.ToasterService.customToast(String(err.error.error.message), 'error'),
           this.loading = false;
         }
@@ -70,6 +72,7 @@ export class BookingReviewComponent {
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
       );
+      //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
 
       this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
