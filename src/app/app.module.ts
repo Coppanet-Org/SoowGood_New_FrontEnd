@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routing';
 import { RouterModule, ExtraOptions, PreloadAllModules } from '@angular/router';
 import { EmptyPageComponent } from './features-modules/public/empty-page/empty-page.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from 'ng-otp-input';
@@ -22,6 +22,7 @@ import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
+import { CacheInterceptor } from './shared/utils/CacheInterceptor';
 
 
 
@@ -63,7 +64,9 @@ const routerConfig: ExtraOptions = {
     LoaderModule,
     ReactiveFormsModule, FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent

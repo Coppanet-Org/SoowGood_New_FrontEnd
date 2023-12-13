@@ -21,17 +21,17 @@ export class DashboardComponent implements OnInit {
       data: 100,
     },
     {
-      title: 'Total patient',
-      data: 3,
+      title: 'Total Pay',
+      data: '3 tk',
     },
     {
       title: 'Loyalty Points',
-      data: '100tk',
+      data: '100',
     },
-    {
-      title: 'Total Income',
-      data: '1000tk',
-    },
+    // {
+    //   title: 'Total Income',
+    //   data: '1000tk',
+    // },
   ];
   isLoading: boolean=false;
   isAuthUser: any;
