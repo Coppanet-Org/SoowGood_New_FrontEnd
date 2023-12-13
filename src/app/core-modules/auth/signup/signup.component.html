@@ -232,9 +232,11 @@
               <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 Date of Birth
               </label> -->
-              <input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="dateOfBirth" onkeydown="return false"
-                     [max]="todayDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-
+              <!--<input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="dateOfBirth" onkeydown="return false"
+                     placeholder="Date of Birth" [max]="todayDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
+              <input placeholder="Date of Birth" formControlName="dateOfBirth" matInput (click)="picker.open()" [max]="todayDate" onkeydown="return false"
+                     [matDatepicker]="picker" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+              <mat-datepicker #picker></mat-datepicker>
               <div>
                 <div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('dateOfBirth')?.hasError('required')">
@@ -278,8 +280,13 @@
               <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
                 BMDC Exp. Date
               </label> -->
-              <input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" onkeydown="return false"
-                     [min]="todayDate" id="bmdcRegExpiryDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <!--<input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" onkeydown="return false"
+                     [min]="todayDate" id="bmdcRegExpiryDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
+
+              <input placeholder="BMDC Reg Exp. Date" formControlName="bmdcRegExpiryDate" matInput (click)="picker2.open()" [min]="todayDate" onkeydown="return false"
+                     [matDatepicker]="picker2" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+              <mat-datepicker #picker2></mat-datepicker>
+
               <div>
                 <!--<div class="flex justify-between">
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('required')">
@@ -309,15 +316,15 @@
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('required')">
+                  <!--<mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('required')">
                     Please enter your address.
                   </mat-error>
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('pattern')">
                     Address should only contain alphanumeric characters and spaces.
-                  </mat-error>
+                  </mat-error>-->
                 </div>
-                <mat-hint *ngIf="userInfoForm.get('address')?.invalid" class="text-xs text-red-500 font-normal"
-                          align="end">Required*</mat-hint>
+                <!--<mat-hint *ngIf="userInfoForm.get('address')?.invalid" class="text-xs text-red-500 font-normal"
+                          align="end">Required*</mat-hint>-->
               </div>
             </div>
           </div>
@@ -355,15 +362,15 @@
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
               <div>
                 <div class="flex justify-between">
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
+                  <!--<mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
                     Please enter your zip code.
                   </mat-error>
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('pattern')">
                     Zip code should be a 4-digit number.
-                  </mat-error>
+                  </mat-error>-->
                 </div>
-                <mat-hint *ngIf="userInfoForm.get('zipCode')?.invalid" class="text-xs text-red-500 font-normal"
-                          align="end">Required* </mat-hint>
+                <!--<mat-hint *ngIf="userInfoForm.get('zipCode')?.invalid" class="text-xs text-red-500 font-normal"
+                          align="end">Required* </mat-hint>-->
               </div>
             </div>
           </div>
@@ -446,7 +453,7 @@
           </div>
         </div>
 
-        <div class="-mx-3 flex flex-wrap">
+        <div class="-mx-3 flex flex-wrap" *ngIf="!profileStep">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <div class="form_input flex justify-between">
@@ -479,7 +486,7 @@
                         class="text-xs text-red-500 font-normal" align="end">hint: Password@123</mat-hint>
             </div>
           </div>
-          <div class="w-full px-3 sm:w-1/2">
+          <div class="w-full px-3 sm:w-1/2" *ngIf="!profileStep">
             <div class="mb-3">
               <div class="form_input flex justify-between">
                 <input [type]="confirmPasswordFieldType" autocomplete="off" formControlName="confirmPassword"
@@ -641,7 +648,7 @@
         <i class="fa-solid fa-list mr-2"></i>
         Provide your Medical Educational Info.
       </h1>
-      
+
       <!--degreeMendatoryMassage-->
       <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
       <div class=" w-full  bg-white mt-6">
@@ -696,12 +703,12 @@
                        name="passingYear" id="passingYear"
                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-                <mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.hasError('required')">
+                <!--<mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.hasError('required')">
                   Passing Year is required.
                 </mat-error>
                 <mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.touched && formDegree.get('passingYear')?.hasError('invalidPassingYear')">
                   Please enter a valid Passing Year that is not more than the current year.
-                </mat-error>
+                </mat-error>-->
               </div>
             </div>
           </div>
@@ -755,8 +762,8 @@
 
                 </select>
                 <!--<input autocomplete="off" formControlName="instituteCountry" type="text" name="instituteCountry"
-            id="instituteCountry" placeholder="Institute Country"
-            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
+                id="instituteCountry" placeholder="Institute Country"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
 
                 <mat-error *ngIf="formSubmitted && formDegree.get('instituteCountry')?.hasError('required')">
                   Country is required.
@@ -1115,7 +1122,17 @@
           </div>-->
           <div class="w-full px-3 sm:w-1/1">
             <div class="mb-3">
-              <div class="mt-5">
+              <div class="flex gap-3 mt-6">
+                <button class="btn-secondary" (click)="getBackStep2Data()">
+                  <div *ngIf="!isLoading" class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Back</span>
+                  </div>
+                  <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
+                </button>
                 <button class="btn-secondary bg-primary/90" (click)="finalContinue()">
                   <div *ngIf="!isLoading" class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

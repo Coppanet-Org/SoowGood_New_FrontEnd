@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   changePasswordShow: boolean = false;
   resetModalShow: boolean = false;
   resetLoading: boolean = false;
-  loginResponse:any;
+  loginResponse: any;
   constructor(
     private authService: UserAccountsService,
     private doctorProfileService: DoctorProfileService,
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private ToasterService: TosterService,
     private NormalAuth: AuthService,
     private UserAccountsService: UserAccountsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -282,11 +282,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.isLoading = false
               return;
             }
-
-            if (
-              loginResponse.success &&
-              loginResponse.roleName[0] == 'Doctor'
-            ) {
+            if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
               this.isLoading = false;
               this.subs.sink = this.doctorProfileService
                 .getByUserName(
@@ -312,21 +308,19 @@ export class LoginComponent implements OnInit, OnDestroy {
                       doctorDto.profileStep == 2
                     ) {
                       userType = '/signup';
+                      //this._router.navigate(['/signup']);
                     } else {
                       userType = doctorDto.isActive
                         ? loginResponse.roleName.toString() + '/dashboard'
                         : loginResponse.roleName.toString() +
-                          '/profile-settings/basic-info';
+                        '/profile-settings/basic-info';
+                      
                     }
-                    this._router
-                      .navigate([userType.toLowerCase()], {
+                    this._router.navigate([userType.toLowerCase()],
+                      {
                         state: { data: doctorDto },
-                      })
-                      .then(() => {
-                        this.ToasterService.customToast(
-                          loginResponse.message ? loginResponse.message : ' ',
-                          'success'
-                        );
+                      }).then(() => {
+                        this.ToasterService.customToast(loginResponse.message ? loginResponse.message : ' ', 'success');
                       });
                   },
                   (doctorError: any) => {
@@ -336,10 +330,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   }
                 );
             }
-            if (
-              loginResponse.success &&
-              loginResponse.roleName[0] == 'Patient'
-            ) {
+            else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
               this.isLoading = false;
               this.subs.sink = this.PatientProfileService.getByUserName(
                 loginResponse.userName ? loginResponse.userName : ''
@@ -383,22 +374,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Additional method to handle profile service errors
   private handleProfileError(error: any): void {
-    console.log(error,this.loginResponse);
-  
-      if (
-       
-        
-        error.error.error.message ===
-        'There is no entity DoctorProfile with id = !'
-      ) {
-        this.ToasterService.customToast('User not found', 'error');
-      } else {
-        this.ToasterService.customToast(
-          String(error.error.error.message),
-          'error'
-        );
-      }
-    
+    console.log(error, this.loginResponse);
+    if (
+      error.error.error.message ===
+      'There is no entity DoctorProfile with id = !'
+    ) {
+      this.ToasterService.customToast('User not found', 'error');
+    } else {
+      this.ToasterService.customToast(
+        String(error.error.error.message),
+        'error'
+      );
+    }
   }
   resetModal() {
     this.resetModalShow = !this.resetModalShow;
@@ -441,15 +428,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   confirmPassword() {
     this.formSubmitted = true
-//     if (
-// this.resetPasswordForm.invalid
-//     ) {
-//       this.ToasterService.customToast(
-//         'Please enter your new password',
-//         'warning'
-//       );
-//       return;
-//     }
+    //     if (
+    // this.resetPasswordForm.invalid
+    //     ) {
+    //       this.ToasterService.customToast(
+    //         'Please enter your new password',
+    //         'warning'
+    //       );
+    //       return;
+    //     }
 
 
 
@@ -462,7 +449,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
       next: (res) => {
         console.log(res);
-        
+
         if (res.success) {
           this.ToasterService.customToast(String(res.message), 'success');
           this.resetModalShow = false;

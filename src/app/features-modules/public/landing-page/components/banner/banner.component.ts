@@ -29,12 +29,13 @@ export class BannerComponent implements OnInit {
   service: any;
   searchText = '';
   authUser: any;
-
+  profileStep: any;
   constructor(private fb: FormBuilder, private router: Router, private NormalAuth: AuthService) { }
 
   ngOnInit(): void {
     this.loadForm()
-    this.authUser = this.NormalAuth.authInfo()
+    this.authUser = this.NormalAuth.authInfo();
+    this.profileStep = this.authUser.profileStep;
     this.searchForm.get('service')?.valueChanges.subscribe(service => {
       this.service = service
     });

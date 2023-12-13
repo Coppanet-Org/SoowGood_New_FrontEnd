@@ -31,13 +31,15 @@ export class HeaderComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit(): void {
-    let id = this.NormalAuth.authInfo().id;
+    //let id = this.NormalAuth.authInfo().id;
+    const authInfo = this.NormalAuth.authInfo();
+    let id = authInfo ? authInfo.id : null;
     if (id) {
       this.isAuthLogin = true;
     } else {
       this.isAuthLogin = false;
     }
-    this.userType = this.NormalAuth.authInfo().userType;
+    this.userType = authInfo ? authInfo.userType:"";
   }
   signOut(): void {
     // this.NormalAuth.signOut();
