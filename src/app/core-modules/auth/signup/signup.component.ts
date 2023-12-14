@@ -1611,6 +1611,8 @@ export class SignupComponent implements OnInit {
         identityNumber: this.doctorProfileDto.identityNumber
       });
       this.doctorSpecializations = [];
+      this.doctorDegrees = [];
+
     })
 
   }
@@ -1620,6 +1622,8 @@ export class SignupComponent implements OnInit {
     let profileId = authInfo.id;
     this.completeDocumentUpload = false;
     this.handleProfileStep1();
+    this.doctorSpecializations = [];
+    this.doctorDegrees = [];
     //this.doctorProfileService.get(profileId).subscribe(res => {
     //  //this.completeDocumentUpload = false;
     //  //this.completeDegreeSpecilizationInfoModal = true;
