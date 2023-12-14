@@ -1,6 +1,6 @@
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import KeenSlider from 'keen-slider'
 import { Router } from '@angular/router';
 // import "keen-slider/dist/keen-slider.min.css"
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './live-doctors.component.html',
   styleUrls: ['./live-doctors.component.scss']
 })
-export class LiveDoctorsComponent {
+export class LiveDoctorsComponent implements OnInit, AfterViewInit {
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
   slider: any = null
   slides = [
@@ -25,7 +25,20 @@ export class LiveDoctorsComponent {
   ]
 
 
+ngOnInit(): void {
 
+  this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
+    next: (res) => {
+      this.liveDoctorList = res
+    },
+    error: (err) => {
+      console.log(err);
+    },
+    complete() {
+      console.log("completed");
+    },
+  })
+}
 
 
   ngAfterViewInit() {
@@ -45,28 +58,18 @@ export class LiveDoctorsComponent {
   //   if(this.slider) this.slider.destroy()
   // }
   liveDoctorList: any
-  constructor(private DoctorStateService: DoctorStateService,private router : Router) {
+  constructor(private DoctorStateService: DoctorStateService, private router: Router) {
 
-    this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
-      next: (res) => {
-        this.liveDoctorList = res
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete() {
-        console.log("completed");
-      },
-    })
+
   }
 
 
 
-  onClickSeeMore(value:string) {
+  onClickSeeMore(value: string) {
 
 
     if (value) {
-      this.router.navigate(['/search'], { queryParams: { type:value } });
+      this.router.navigate(['/search'], { queryParams: { type: value } });
     } else {
       // Handle the case where searchText is undefined or falsy.
       // You might want to show an error message or take appropriate action.
