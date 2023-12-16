@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SubSink } from 'subsink';
-import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { AgentMasterDto, AgentSupervisorDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
 import { AgentMasterService, AgentSupervisorService } from '../../../../proxy/services';
 @Component({
@@ -18,6 +18,8 @@ export class AgentSignupComponent implements OnInit {
   signupForm!: FormGroup;
   isLoading!: boolean;
   agentProfileDto!: AgentProfileInputDto;
+  agenetMasterList!: AgentMasterDto[];
+  agentSupervisorList!: AgentSupervisorDto[];
   agentId: any;
   subs = new SubSink();
   constructor(
@@ -33,7 +35,7 @@ export class AgentSignupComponent implements OnInit {
 
   ngOnInit() {
     this.loadForm();
-    //this.AgentMasterService.getAllAgentMasterList().subscribe((res) => (this.specialties = res));
+    this.AgentMasterService.getAllAgentMasterList().subscribe((res) => (this.agenetMasterList = res));
   }
 
   loadForm() {
@@ -61,7 +63,6 @@ export class AgentSignupComponent implements OnInit {
       return 
     }
 
-
     const agentInfo = {
       tenantId: '',
       userName: this.signupForm.value.mobileNo,
@@ -80,6 +81,8 @@ export class AgentSignupComponent implements OnInit {
       lockoutEnd: '2023-07-16T07:38:44.382Z',
       concurrencyStamp: '',
     };
+
+    
 
     this.UserAccountsService.signupUserByUserDtoAndPasswordAndRole(
       agentInfo,
@@ -112,5 +115,11 @@ export class AgentSignupComponent implements OnInit {
         this.TosterService.customToast(String(res.message), 'error');
       }
     });
+  }
+
+  loadAgentSupervisors(event: any) {
+    this.AgentSupervisorService.getAgentSupervisorsByAgentMasterList(event).subscribe(res => {
+      this.agentSupervisorList = res;
+    })
   }
 }

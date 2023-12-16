@@ -35,14 +35,6 @@ export class AgentMasterService {
     { apiName: this.apiName,...config });
   
 
-  getAllAgentMasterList = (agentMasterId: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, AgentMasterDto[]>({
-      method: 'GET',
-      url: `/api/app/agent-master/agent-master-list/${agentMasterId}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentMasterDto[]>({
       method: 'GET',
