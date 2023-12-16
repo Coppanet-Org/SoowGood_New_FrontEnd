@@ -29,6 +29,15 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getAppCountByRealTimeConsultancy = (aptDate: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/appointment/app-count-by-real-time-consultancy',
+      params: { aptDate },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getAppCountByScheduleIdSessionId = (scheduleId: number, sessionId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
