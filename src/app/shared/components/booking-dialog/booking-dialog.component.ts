@@ -36,6 +36,7 @@ import { SubSink } from 'subsink';
 import { CommonService } from '../../services/common.service';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { customNameValidator } from '../../utils/auth-helper';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -97,7 +98,7 @@ export class BookingDialogComponent implements OnInit {
     private TosterService: TosterService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
     private DoctorScheduleStateService: DoctorScheduleStateService,
-  
+    private NormalAuth :AuthService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -132,8 +133,11 @@ export class BookingDialogComponent implements OnInit {
       // this.inputConfigs = bookingFilterInputData([]);
       this.dataLoader = false;
     }
-
-    this.UserinfoStateService.getData()
+    //need to be clear for why use it in here
+    let id = this.NormalAuth.authInfo()?.id;
+    if (id) {
+      this.UserinfoStateService.getUserPatientInfo(id, 'patient');
+      this.UserinfoStateService.getData()
       .pipe(
         switchMap((e) => {
           this.profileInfo = e;
@@ -155,6 +159,8 @@ export class BookingDialogComponent implements OnInit {
       .subscribe((res) => {
         this.userPatientList = res;
       });
+    }
+
      
 
       //  filtering start

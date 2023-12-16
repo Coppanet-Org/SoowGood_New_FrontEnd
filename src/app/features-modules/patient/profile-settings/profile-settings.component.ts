@@ -53,7 +53,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.form = this.fb.group({
       fullName: [
         '',
-        [Validators.required, Validators.minLength(3), customNameValidator],
+        [Validators.required, Validators.minLength(3)],
       ],
       email: [
         '',
@@ -63,12 +63,12 @@ export class ProfileSettingsComponent implements OnInit {
         ],
       ],
 
-      gender: ['', Validators.required],
+      gender: ['0', Validators.required],
       age: ['', Validators.required],
-     
+      bloodGroup:['0',Validators.required],
       dateOfBirth: ['', Validators.required],
       city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
-      country: ['', Validators.required],
+      country: ['Bangladesh', Validators.required],
       address: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
@@ -77,6 +77,10 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
   submit() {
+
+
+    console.log(this.form.value);
+    
     this.formSubmitted = true;
 
     this.isLoading = true;

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DoctorScheduleDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-doctor-card',
@@ -23,13 +24,12 @@ export class DoctorCardComponent implements OnInit {
     private router: Router,
     private TosterService : TosterService,
     private NormalAuth : AuthService,
+    private UserinfoStateService :UserinfoStateService
   ) {}
 
 ngOnInit(): void {
   this.isAuthUser =  this.NormalAuth.authInfo()?.id;
-  // if (id) {
-  //   this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-  // }
+
 }
 
   openDialog(): void {

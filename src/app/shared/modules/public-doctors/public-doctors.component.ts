@@ -20,6 +20,7 @@ import { ListItem } from '../../model/common-model';
 import { Observable, Subscription, startWith, map, combineLatest } from 'rxjs';
 import { FilterComponent } from '../filter/filter.component';
 import { SubSink } from 'subsink';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-public-doctors',
   templateUrl: './public-doctors.component.html',
@@ -41,7 +42,7 @@ export class PublicDoctorsComponent implements OnInit {
   noDataAvailable: boolean = false
   subs = new SubSink();
   doctorFilterDto: DataFilterModel = {} as DataFilterModel;
-  
+
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
@@ -58,7 +59,8 @@ export class PublicDoctorsComponent implements OnInit {
     private fb: FormBuilder,
     private SpecialityService: SpecialityService,
     private SpecializationService: SpecializationService,
-    private DoctorProfileService: DoctorProfileService
+    private DoctorProfileService: DoctorProfileService,
+    private route: ActivatedRoute
   ) {
     this.filter = this.fb.group({});
   }
@@ -140,42 +142,20 @@ export class PublicDoctorsComponent implements OnInit {
     });
 
     this.subscriptions.push(specialitySubscription);
-    
-    // this.filterModel.limit = this.filterModel.pageSize;
-    // this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
-    
-    if (this.DoctorStateService.doctorsList.value.length <= 0) {
-      const doctorListSubscription =
-        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
-          this.doctorList = res;
-          this.dataLoading = false;
-        });
 
-      this.subscriptions.push(doctorListSubscription);
-    } else {
-      const doctorListSubscription =
-        this.DoctorStateService.getDoctorListData().subscribe((res) => {
-          this.doctorList = res;
-          this.dataLoading = false;
-        });
-      this.subscriptions.push(doctorListSubscription);
-    }
-//need to be clear for why use it in here
-    let id = this.NormalAuth.authInfo()?.id;
-    if (id) {
-      this.UserinfoStateService.getUserPatientInfo(id, 'patient');
-    }
-    //this.loadData();
+    this.route.queryParams.subscribe(params => {
+      const doctorName = params['doctorname'];
+      this.searchData(doctorName)
+      if (!params) {
+        this.getDoctors()
+      }
+    });
+
+
+
+
   }
 
-  //loadForm() {
-  //  this.filter = this.fb.group({
-  //    search: [''],
-  //    consultancy: [0],
-  //    speciality: [0],
-  //    specialization:[0]
-  //  })
-  //}
 
   getSpecializations(id: any) {
     if (!id) {
@@ -223,47 +203,23 @@ export class PublicDoctorsComponent implements OnInit {
       });
   }
 
+  getDoctors() {
+    if (this.DoctorStateService.doctorsList.value.length <= 0) {
+      const doctorListSubscription =
+        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
+          this.doctorList = res;
+          this.dataLoading = false;
+        });
 
-  //selectedValueForFilter(data: any) {
-  //  //console.log(data);
-
-  //  const {
-  //    name,
-  //    consultancy,
-  //    speciality,
-  //    specialization,
-  //    skipValue,
-  //    currentLimit,
-  //  } = data
-
-  //  this.filterModel.limit = this.filterModel.pageSize;
-  //  this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
-
-  //  this.subs.sink = combineLatest([
-  //    this.DoctorProfileService.getDoctorListSearchByName(name, this.filterModel),
-  //    //this.buildingService.getSortedList(this.filter)
-  //    this.DoctorProfileService.getDoctorsCountByName(name)
-  //  ]).subscribe(
-  //    ([buildingResponse, countResponse]) => {
-  //      this.totalCount = countResponse;
-  //      this.doctorList = buildingResponse;
-  //    },
-  //    (error) => {
-  //      console.log(error);
-  //    });
-
-
-  //  //this.DoctorProfileService.getDoctorListWithSearchFilter(name,consultancy,speciality,specialization,skipValue,currentLimit).subscribe({
-  //  //  next:(res:any)=>{
-  //  //   this.doctorList = res
-  //  //  },
-  //  //  error:(err:Error)=>{
-  //  //    console.log(err);
-  //  //  }})
-  //  // console.log(this.filterForm.value);
-
-
-  //}
+      this.subscriptions.push(doctorListSubscription);
+    } else {
+      const doctorListSubscription = this.DoctorStateService.getDoctorListData().subscribe((res) => {
+        this.doctorList = res;
+        this.dataLoading = false;
+      });
+      this.subscriptions.push(doctorListSubscription);
+    }
+  }
 
   loadData(data: any) {
 
@@ -276,7 +232,6 @@ export class PublicDoctorsComponent implements OnInit {
     this.doctorFilterDto.consultancyType = consultancy;
     this.doctorFilterDto.specialityId = speciality;
     this.doctorFilterDto.specializationId = specialization;
-
 
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
@@ -310,6 +265,8 @@ export class PublicDoctorsComponent implements OnInit {
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
         this.doctorList = buildingResponse;
+        this.dataLoading = false;
+
       },
       (error) => {
         console.log(error);
@@ -320,7 +277,7 @@ export class PublicDoctorsComponent implements OnInit {
 
   pageChanged(e: any) {
     console.log(e);
-    
+
     this.filterModel.pageNo = e;
     //this.doctorList;
     //this.loadData();
