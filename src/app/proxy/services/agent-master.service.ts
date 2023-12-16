@@ -27,10 +27,10 @@ export class AgentMasterService {
     { apiName: this.apiName,...config });
   
 
-  getAgentSupervisorsByAgentMasterList = (agentMasterId: number, config?: Partial<Rest.Config>) =>
+  getAllAgentMasterList = (agentMasterId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentMasterDto[]>({
       method: 'GET',
-      url: `/api/app/agent-master/agent-supervisors-by-agent-master-list/${agentMasterId}`,
+      url: `/api/app/agent-master/agent-master-list/${agentMasterId}`,
     },
     { apiName: this.apiName,...config });
   

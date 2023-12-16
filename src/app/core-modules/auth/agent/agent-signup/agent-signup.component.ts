@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { SubSink } from 'subsink';
 import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
+import { AgentMasterService, AgentSupervisorService } from '../../../../proxy/services';
 @Component({
   selector: 'app-agent-signup',
   templateUrl: './agent-signup.component.html',
@@ -22,6 +23,8 @@ export class AgentSignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private AgentProfileService: AgentProfileService,
+    private AgentMasterService: AgentMasterService,
+    private AgentSupervisorService: AgentSupervisorService,
     private NormalAuth: AuthService,
     private UserAccountsService: UserAccountsService,
     private TosterService : TosterService,
@@ -30,13 +33,15 @@ export class AgentSignupComponent implements OnInit {
 
   ngOnInit() {
     this.loadForm();
+    //this.AgentMasterService.getList().subscribe((res) => (this.specialties = res));
   }
 
   loadForm() {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
-      agentCode: ['123456', Validators.required],
-      organizationName: ['', Validators.required],
+      //agentCode: ['123456', Validators.required],
+      organizationName: ['0', Validators.required],
+      agentSuperVisor: ['0', Validators.required],
       address: ['', Validators.required],
       city: ['Dhaka', Validators.required],
       zipCode: ['1212', Validators.required],
