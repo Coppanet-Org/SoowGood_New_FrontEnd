@@ -118,7 +118,7 @@ export class AgentSignupComponent implements OnInit {
   }
 
   loadAgentSupervisors(event: any) {
-    this.AgentSupervisorService.getAgentSupervisorsByAgentMasterList(event).subscribe(res => {
+    this.AgentSupervisorService.getAgentSupervisorsByAgentMasterList(event.target.value).subscribe(res => {
       this.agentSupervisorList = res;
     })
   }
