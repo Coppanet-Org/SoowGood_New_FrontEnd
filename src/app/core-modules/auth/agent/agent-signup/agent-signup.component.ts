@@ -33,7 +33,7 @@ export class AgentSignupComponent implements OnInit {
 
   ngOnInit() {
     this.loadForm();
-    //this.AgentMasterService.getList().subscribe((res) => (this.specialties = res));
+    //this.AgentMasterService.getAllAgentMasterList().subscribe((res) => (this.specialties = res));
   }
 
   loadForm() {

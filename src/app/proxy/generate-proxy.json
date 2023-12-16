@@ -1068,6 +1068,21 @@
               },
               "allowAnonymous": null,
               "implementFrom": "SoowGoodWeb.Services.AgentMasterService"
+            },
+            "GetAllAgentMasterListAsync": {
+              "uniqueName": "GetAllAgentMasterListAsync",
+              "name": "GetAllAgentMasterListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/agent-master/agent-master-list",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SoowGoodWeb.DtoModels.AgentMasterDto>",
+                "typeSimple": "[SoowGoodWeb.DtoModels.AgentMasterDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SoowGoodWeb.Services.AgentMasterService"
             }
           }
         },
