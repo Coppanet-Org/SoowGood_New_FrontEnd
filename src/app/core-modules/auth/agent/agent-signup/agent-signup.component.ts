@@ -47,7 +47,7 @@ export class AgentSignupComponent implements OnInit {
       address: ['', Validators.required],
       city: ['Dhaka', Validators.required],
       zipCode: ['1212', Validators.required],
-      country: ['Bd', Validators.required],
+      country: ['Bangladesh', Validators.required],
       mobileNo: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -67,11 +67,14 @@ export class AgentSignupComponent implements OnInit {
       tenantId: '',
       userName: this.signupForm.value.mobileNo,
       name: this.signupForm?.value.fullName,
+      
       surname: '',
       email: this.signupForm.value.email,
       emailConfirmed: true,
       phoneNumber: this.signupForm.value.mobileNo,
       phoneNumberConfirmed: true,
+      //agentMasterId: this.signupForm.value.organizationName,
+      //agentSupervisorId: this.signupForm.value.agentSuperVisor,
       address: this.signupForm.value.address,
       city: this.signupForm.value.city,
       zipCode: this.signupForm.value.zipCode,
@@ -80,6 +83,8 @@ export class AgentSignupComponent implements OnInit {
       lockoutEnabled: false,
       lockoutEnd: '2023-07-16T07:38:44.382Z',
       concurrencyStamp: '',
+      agentMasterId: this.signupForm.value.organizationName,
+      agentSupervisorId: this.signupForm.value.agentSuperVisor,
     };
 
     
@@ -92,6 +97,9 @@ export class AgentSignupComponent implements OnInit {
       if (res.success) {
         this.AgentProfileService.create({
           ...this.signupForm.value,
+
+          agentMasterId:this.signupForm.value?.organizationName,
+          agentSupervisorId:this.signupForm.value?.agentSuperVisor,
           userId: res.userId,
         }).subscribe((profRes: any) => {
           this.subs.sink = this.AgentProfileService.getByUserId(
