@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app"
   ],
+  "SelectedNode": "\\src\\app\\features-modules\\public\\landing-page\\components\\banner\\banner.component.ts",
   "PreviewInSolutionExplorer": false
 }
