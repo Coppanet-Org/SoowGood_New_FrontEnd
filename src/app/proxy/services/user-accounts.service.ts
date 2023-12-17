@@ -46,6 +46,15 @@ export class UserAccountsService {
     { apiName: this.apiName,...config });
   
 
+  resetPassword_AppByInputDto = (inputDto: ResetPasswordInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResetPasswordResponseDto>({
+      method: 'POST',
+      url: '/api/app/user-accounts/reset-password_App',
+      body: inputDto,
+    },
+    { apiName: this.apiName,...config });
+  
+
   signupUserByUserDtoAndPasswordAndRole = (userDto: UserInfoDto, password: string, role: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, UserSignUpResultDto>({
       method: 'POST',

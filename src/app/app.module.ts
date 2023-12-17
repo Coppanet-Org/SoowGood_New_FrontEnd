@@ -67,7 +67,6 @@ const routerConfig: ExtraOptions = {
     }),
     LoaderModule,
     MatSidenavModule,
-    ReactiveFormsModule, FormsModule
     ReactiveFormsModule, FormsModule,
     AbpOAuthModule.forRoot(),
   ],

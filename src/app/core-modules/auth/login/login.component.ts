@@ -144,6 +144,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.hasError = false;
       const username = this.formControl['mobileNo'].value;
       const password = this.formControl['password'].value;
+      this.oAuthService.oidc = false;
       this.loginDto.userName = username;
       this.loginDto.email = '';
       this.loginDto.password = password;
