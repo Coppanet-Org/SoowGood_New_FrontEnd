@@ -49,7 +49,7 @@ export class BannerComponent implements OnInit {
   loadForm() {
     this.searchForm = this.fb.group({
       service: ['0'],
-      searchText: ['', Validators.required]
+      searchText: ['']
     })
   }
   onChangeService(e: any) {
@@ -61,6 +61,7 @@ export class BannerComponent implements OnInit {
     if (searchText) {
       this.router.navigate(['/search'], { queryParams: { doctorname: searchText } });
     } else {
+      this.router.navigate(['/search'])
       // Handle the case where searchText is undefined or falsy.
       // You might want to show an error message or take appropriate action.
     }

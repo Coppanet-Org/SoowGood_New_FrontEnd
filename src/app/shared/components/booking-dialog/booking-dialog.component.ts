@@ -133,7 +133,6 @@ export class BookingDialogComponent implements OnInit {
       // this.inputConfigs = bookingFilterInputData([]);
       this.dataLoader = false;
     }
-    //need to be clear for why use it in here
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
@@ -238,6 +237,8 @@ export class BookingDialogComponent implements OnInit {
         }
         this.showAppointmentTypeSelectBox = true;
         this.filterData = finalFilter;
+        console.log(finalFilter);
+        
         this.selectedSlotInfo ={}
         this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
           finalFilter
