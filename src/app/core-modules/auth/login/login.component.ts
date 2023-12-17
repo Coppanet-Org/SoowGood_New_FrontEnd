@@ -282,6 +282,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
     }
   }
+
   resetModal() {
     this.resetModalShow = !this.resetModalShow;
   }
