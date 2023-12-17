@@ -8,10 +8,6 @@ const issuerUrl = 'https://localhost:44380';
 //const apiUrl = 'https://198.38.92.117:4437';
 //const issuerUrl = 'https://198.38.92.117';
 
-//const localfileUrl = 'https://devsoowgoodnew.azurewebsites.net/';
-//'https://localhost:44339';'https://localhost:44339';//
-//const PaymentUrl = 'https://payment.soowgood.com/';
-//const meetingUrl = 'https://meet.soowgood.com/';
 
 export const environment = {
   production: false,
@@ -31,28 +27,9 @@ export const environment = {
   apis: {
     default: {
       url: apiUrl,
-      //localfileUrl: localfileUrl,
-      //PaymentUrl: PaymentUrl,
-      //meetingUrl: meetingUrl,
       rootNamespace: 'SoowGoodWeb',
     },
   },
 } as Environment;
 
-
-//export const environment = {
-//  production: false,
-//  // hmr: false,
-//  baseUrl: "http://localhost:5001/api/",
-//  basefileUrl: "http://localhost:5001/",
-//  localfileUrl: "http://localhost:5001/",
-//  PaymentUrl: "http://localhost:58209/",
-//  meetingUrl: "http://localhost:44371/",
-
-//    // baseUrl: 'https://soowgood.com/api/',
-//    // basefileUrl: 'https://soowgood.com/',
-//    // localfileUrl:'https://devsoowgoodnew.azurewebsites.net/',
-//    // PaymentUrl:'https://payment.soowgood.com/',
-//    // meetingUrl: 'https://meet.soowgood.com/',
-//};
 
