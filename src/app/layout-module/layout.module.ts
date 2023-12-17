@@ -12,6 +12,7 @@ import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.compon
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
 
 import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
+import { isAuth } from '../auth-gurd/auth.service';
 
 const routes: Route[] = [
   {
@@ -25,6 +26,7 @@ const routes: Route[] = [
             '../features-modules/public/landing-page/landing-page.module'
           ).then((m) => m.LandingPageModule),
       },
+      
     ],
   },
   {
@@ -70,6 +72,7 @@ const routes: Route[] = [
   {
     path: 'agent',
     component: AgentLayoutComponent,
+    canActivate:[isAuth],
     children: [
       {
         path: '',
@@ -82,6 +85,7 @@ const routes: Route[] = [
   },
   {
     path: 'doctor',
+    canActivate:[isAuth],
     component: DoctorLayoutComponent,
     children: [
       {
@@ -95,6 +99,7 @@ const routes: Route[] = [
   },
   {
     path: 'patient',
+    canActivate:[isAuth],
     component: PatientLayoutComponent,
     children: [
       {

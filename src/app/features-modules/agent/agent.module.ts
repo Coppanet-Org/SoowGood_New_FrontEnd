@@ -12,7 +12,7 @@ const routes: Route[] = [
   {
     path: '',
     component: AgentComponent,
-    canActivate: [isAuth],
+    // canActivate: [isAuth],
     children: [
       {
         path: '',

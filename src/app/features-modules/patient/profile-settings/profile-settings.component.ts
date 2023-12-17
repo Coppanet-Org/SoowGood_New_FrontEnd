@@ -3,7 +3,7 @@ import { TosterService } from './../../../shared/services/toster.service';
 import { PatientProfileService } from './../../../proxy/services/patient-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { singleSlide, slideInFrom } from 'src/app/animation';
+
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { patientInputData } from 'src/app/shared/utils/input-info';
 import { DatePipe } from '@angular/common';
@@ -16,11 +16,10 @@ import { CommonService } from 'src/app/shared/services/common.service';
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
-  styleUrls: ['./profile-settings.component.scss'],
-  animations: [slideInFrom('left'), singleSlide('top')],
+  styleUrls: ['./profile-settings.component.scss']
 })
 export class ProfileSettingsComponent implements OnInit {
-  animationDirection = 'left';
+
   form!: FormGroup;
   patientInputData: any = patientInputData;
   isLoading: boolean = false;
@@ -54,7 +53,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.form = this.fb.group({
       fullName: [
         '',
-        [Validators.required, Validators.minLength(3), customNameValidator],
+        [Validators.required, Validators.minLength(3)],
       ],
       email: [
         '',
@@ -63,10 +62,13 @@ export class ProfileSettingsComponent implements OnInit {
           Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/),
         ],
       ],
-      gender: ['', Validators.required],
+
+      gender: ['0', Validators.required],
+      age: ['', Validators.required],
+      bloodGroup:['0',Validators.required],
       dateOfBirth: ['', Validators.required],
       city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
-      country: ['', Validators.required],
+      country: ['Bangladesh', Validators.required],
       address: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
@@ -75,6 +77,10 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
   submit() {
+
+
+    console.log(this.form.value);
+    
     this.formSubmitted = true;
 
     this.isLoading = true;
@@ -92,8 +98,10 @@ export class ProfileSettingsComponent implements OnInit {
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
       this.isLoading = false;
+      this.formSubmitted = true;
     } else {
       this.isLoading = true;
+      this.formSubmitted = true;
       this.PatientProfileService.update({
         ...this.form.value,
         id: this.patientId,
@@ -115,10 +123,12 @@ export class ProfileSettingsComponent implements OnInit {
           // }
           this.TosterService.customToast('Successfully update', 'success');
           this.isLoading = false;
+          this.formSubmitted = false;
           this.UserinfoStateService.getProfileInfo(this.patientId, 'patient');
         },
         (error) => {
           this.isLoading = false;
+          this.formSubmitted = false;
           this.TosterService.customToast(error.message, 'error');
         }
       );

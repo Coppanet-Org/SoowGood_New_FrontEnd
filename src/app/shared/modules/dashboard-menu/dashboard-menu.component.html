@@ -1,15 +1,17 @@
-<div class="main_menu  bg-white fixed top-0  z-10 box-border">
-    <div class="logo max-w-full bg-primary max-h-[70px] min-h-[60px] w- py-3 flex justify-center ">
+<div class="main_menu  bg-white z-50 box-border h-full ">
+    <div class=" max-w-full bg-primary max-h-[70px] sticky top-0 z-50 min-h-[60px] w- py-3 flex justify-center ">
         <img [routerLink]="'/'" src="../../../../assets/SoowGood-Logo.png" class="max-w-[200px] cursor-pointer"
             alt="">
     </div>
 
-    <div class="border-r-[1px] w-full">
-        <div class="w-full bg-gray-100 main_right border-l-[1px] relative  border-box -z-10">
+    <div class="w-full sticky top-[75px]">
+        <div class="w-full bg-gray-100 main_right  relative  border-box -z-10">
             <app-dashboard-profilecard ></app-dashboard-profilecard>
+
         </div>
-        <div class="menu_list box-border p-2 ">
+        <div class="menu_list box-border p-2">
             <ul class="menu bg-white w-full">
+                <button class="bg-secondary w-full btn-secondary mb-3" routerLink="/"><i class="fa-solid fa-arrow-left mr-2"></i> Back to Home Page</button>
                 <app-dashboard-menu-item [menuItemDetails]="menuList"></app-dashboard-menu-item>
             </ul>
         </div>

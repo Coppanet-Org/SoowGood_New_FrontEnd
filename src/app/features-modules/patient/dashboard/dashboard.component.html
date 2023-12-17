@@ -1,7 +1,7 @@
-<div  class="doctor-dashboard_midcontent_container p-4">
+<div class="doctor-dashboard_midcontent_container p-4">
     <div class="top-bar flex justify-between">
         <div class="w-full min-w-[70%] max-w-[70%]">
-            <div class="top-box min-w-[100%] mt-2 flex justify-between max-w-[100%] gap-5 ">
+            <div class="top-box mt-2 grid grid-cols-1  md:grid-cols-2 2xl:grid-cols-3 max-w-[100%] gap-5 ">
 
                 <app-dashboard-statisticscard *ngFor="let detail of details"
                     [details]="detail"></app-dashboard-statisticscard>
@@ -14,7 +14,13 @@
                     <h2 class="dashbord-heading-text  h-fit">
                         Appointments Activity
                     </h2>
-                    <button class="btn-secondary-light h-fit">View all</button>
+                    <div>
+                        <select name="" id="">
+                            <option value="">Today</option>
+                            <option value="">Passed</option>
+                        </select>
+                    </div>
+                    <button class="btn-secondary-light h-fit" routerLink="../appointments">View all</button>
                 </div>
                 <table class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
                     <thead
@@ -29,11 +35,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Doctor's Name
                             </th>
-
                             <th scope="col" class="px-6 py-3">
                                 Status
                             </th>
-
                             <th scope="col" class="px-6 py-3">
                                 App. Time
                             </th>
@@ -44,11 +48,11 @@
                     </thead>
                     <tbody>
                         <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
+
                             <td class="px-6 py-4">
                                 Abdullah
                             </td>
-                            <td   class="px-6 py-4">
+                            <td class="px-6 py-4">
                                 01855565223
                             </td>
                             <td class="px-6 py-4">
@@ -62,254 +66,80 @@
                             <td class="px-6 py-4">
                                 12/01/23 - 4.50pm
                             </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
 
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
                             <td class="px-6 py-4 flex gap-2">
                                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                             </td>
                         </tr>
                     </tbody>
-        
                 </table>
             </div>
 
-            <div class="bottom-box border-[1px] mt-5  bg-white rounded-lg  box-border ">
-                <div class=" flex justify-between border-b-[1px] px-5 py-3 items-center  ">
-                    <h2 class="dashbord-heading-text  h-fit">
-                        Appointments Activity
-                    </h2>
-                    <button class="btn-secondary-light h-fit">View all</button>
-                </div>
-                <table class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
-                    <thead
-                        class="text-xs rounded-lg text-gray-800 uppercase bg-black/5 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Patient's Name
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Mobile No.
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Doctor's Name
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Status
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                App. Time
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-        
-                            <td class="px-6 py-4">
-                                Abdullah
-                            </td>
-                            <td   class="px-6 py-4">
-                                01855565223
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. John Doe
-                            </td>
-                            <td class="px-6 py-4">
-                                Upcoming
-                            </td>
-
-                            <td class="px-6 py-4">
-                                12/01/23 - 4.50pm
-                            </td>
-        
-                            <td class="px-6 py-4 flex gap-2">
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-        
-                </table>
-            </div>
         </div>
 
         <div class="dashboard_today_appointment min-w-[28%] max-w-[28%] rounded-lg box-border">
-            <div class=" border-[1px] ">
-                <h2 class="dashbord-heading-text border-b-[1px] p-5">
+
+            <div class="mt-4  border-[1px] ">
+                <div class="flex items-center justify-between">
+                    <h2 class="dashbord-heading-text bg-secondary/10 text-secondary border-b-[1px] w-full px-5 py-2">
+                        <i class="fa-solid fa-house-signal mr-2"></i>
+                        Live Doctor
+                        <span>({{currentOnlineDoctorList.length}})</span>
+                        
+                    </h2>
+                </div>
+                <!-- component -->
+                <div class="flex items-center justify-center">
+                    <div class="max-w-full w-full shadow-lg p-3">
+
+                        <div *ngFor="let details of currentOnlineDoctorList"
+                            class=" dark:bg-gray-700 bg-gray-50 rounded-b">
+                            <div class="border-[1px] p-3 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm pt-2 leading-4  text-gray-600 dark:text-gray-300">
+                                        Cardiologist</p>
+                                    <a tabindex="0"
+                                        class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
+                                        {{details.fullName}}
+                                    </a>
+                                </div>
+                                <button (click)="onClickConsultNow(details)"
+                                    class="bg-green-700/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Consult
+                                    Now</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" border-[1px] mt-5">
+                <h2 class="dashbord-heading-text text-secondary border-b-[1px] px-5 py-2 bg-secondary/10">
+                    <i class="fa-solid fa-calendar-days mr-2"></i>
                     Upcoming Schedule
                 </h2>
                 <!-- component -->
                 <div class="flex items-center justify-center">
                     <div class="max-w-full w-full shadow-lg">
-                        <div class="p-5 dark:bg-gray-700 bg-gray-50 rounded-b after:content-[''] after:h-full after-w-[2px] after:bg-black">
+                        <div
+                            class="p-5 dark:bg-gray-700 bg-gray-50 rounded-b after:content-[''] after:h-full after-w-[2px] after:bg-black">
                             <div class="">
                                 <div class="border-b pb-4 border-gray-400 border-dashed">
                                     <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">9:00 AM</p>
                                     <a tabindex="0"
                                         class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">Appointment
                                         with <b>Dr. Roy</b></a>
-                                    <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
+                                    <p class="text-sm pt-2 leading-4  text-gray-600 dark:text-gray-300">
                                         Cardiologist</p>
                                 </div>
                                 <div class="border-b pb-4 border-gray-400 border-dashed pt-5">
-                                    <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">10:00 AM</p>
+                                    <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">10:00 AM
+                                    </p>
                                     <a tabindex="0"
                                         class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">Appointment
                                         with <b>Dr. Sabrina Zerin</b></a>
-                                    <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
+                                    <p class="text-sm pt-2 leading-4 text-gray-600 dark:text-gray-300">
                                         Gynecologist</p>
                                 </div>
                             </div>
@@ -317,78 +147,9 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4  border-[1px] ">
-                <h2 class="dashbord-heading-text border-b-[1px] p-5">
-                    Available Doctor
-                </h2>
-                <!-- component -->
-                <div class="flex items-center justify-center">
-                    <div class="max-w-full w-full shadow-lg p-5">
-                        <div class=" dark:bg-gray-700 bg-gray-50 rounded-b">
-                            <div class="">
-                                <div class="border-[1px] p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                                            Cardiologist</p>
-                                        <a tabindex="0"
-                                            class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
-                                          Dr. Sumit Shah
-                                        </a>
-                                    </div>
-                                    <button class="bg-primary/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Book Now</button>
-                                </div>
 
-                                <div class="border-[1px] p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                                            Cardiologist</p>
-                                        <a tabindex="0"
-                                            class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
-                                          Dr. Sumit Shah
-                                        </a>
-                                    </div>
-                                    <button class="bg-primary/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Book Now</button>
-                                </div>
-                                <div class="border-[1px] p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                                            Cardiologist</p>
-                                        <a tabindex="0"
-                                            class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
-                                          Dr. Sumit Shah
-                                        </a>
-                                    </div>
-                                    <button class="bg-primary/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Book Now</button>
-                                </div>
-                                <div class="border-[1px] p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                                            Cardiologist</p>
-                                        <a tabindex="0"
-                                            class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
-                                          Dr. Sumit Shah
-                                        </a>
-                                    </div>
-                                    <button class="bg-primary/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Book Now</button>
-                                </div>
-                                <div class="border-[1px] p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                                            Cardiologist</p>
-                                        <a tabindex="0"
-                                            class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
-                                          Dr. Sumit Shah
-                                        </a>
-                                    </div>
-                                    <button class="bg-primary/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"> Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        
+
     </div>
     <!-- <div class="bottom-bar">bottom</div> -->
 </div>

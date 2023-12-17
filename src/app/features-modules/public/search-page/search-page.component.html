@@ -1,48 +1,7 @@
 <div class="container-full">
-    <div class="pt-[110px] flex gap-5">
-
-        <div class="min-w-[300px] bg-white border-[1px] h-full ">
-            <h1 class="py-3 border-b-[1px] px-6 font-Roboto text-primary font-medium text-[16px]"><i
-                    class="fa-solid fa-filter"></i> Search Filter</h1>
-
-            <div class="p-4">
-                <label for="specialityId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Select Date
-                </label>
-                <input type="date" class="border-[1px] p-2 w-full">
-            </div>
-            <div class="p-4">
-                <label for="specialityId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Appointment Type
-                </label>
-                <div class="flex flex-col gap-2">
-                    <span class="text-[15px] flex items-center"><input type="radio" name="radio-2" class="radio-xs radio-primary mr-2" checked /> Video Consult</span>
-                    <span class="text-[15px] flex items-center"><input type="radio" name="radio-2" class="radio-xs radio-primary mr-2" checked /> Hospital</span>
-                    <span class="text-[15px] flex items-center"><input type="radio" name="radio-2" class="radio-xs radio-primary mr-2" checked /> Home Visit</span>
-                </div>
-            </div>
-
-
-            <div class="p-4">
-                <label for="specialityId" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Specialties
-                </label>
-                <select formControlName="specialityId" name="specialityId" id="specialityId"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                    <option class="font-semibold text-slate-300">one</option>
-                    <option class="font-semibold text-slate-300">one</option>
-                    <option class="font-semibold text-slate-300">one</option>
-                    <option class="font-semibold text-slate-300">one</option>
-                </select>
-            </div>
-
+    <div class="pt-5 flex gap-5">
+        <div class="w-[100%] mt-20">
+                <app-public-doctors [from]="'globalSearch'"></app-public-doctors>
         </div>
-
-        <div class="w-[100%]">
-                <app-public-doctors></app-public-doctors>
-        </div>
-
-
-
     </div>
 </div>
