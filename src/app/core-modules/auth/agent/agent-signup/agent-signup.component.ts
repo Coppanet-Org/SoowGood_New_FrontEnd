@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SubSink } from 'subsink';
-import { UserSignUpResultDto } from 'src/app/proxy/dto-models';
+import { AgentMasterDto, AgentSupervisorDto, UserSignUpResultDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
+import { AgentMasterService, AgentSupervisorService } from '../../../../proxy/services';
 @Component({
   selector: 'app-agent-signup',
   templateUrl: './agent-signup.component.html',
@@ -17,11 +18,15 @@ export class AgentSignupComponent implements OnInit {
   signupForm!: FormGroup;
   isLoading!: boolean;
   agentProfileDto!: AgentProfileInputDto;
+  agenetMasterList!: AgentMasterDto[];
+  agentSupervisorList!: AgentSupervisorDto[];
   agentId: any;
   subs = new SubSink();
   constructor(
     private fb: FormBuilder,
     private AgentProfileService: AgentProfileService,
+    private AgentMasterService: AgentMasterService,
+    private AgentSupervisorService: AgentSupervisorService,
     private NormalAuth: AuthService,
     private UserAccountsService: UserAccountsService,
     private TosterService : TosterService,
@@ -30,17 +35,19 @@ export class AgentSignupComponent implements OnInit {
 
   ngOnInit() {
     this.loadForm();
+    this.AgentMasterService.getAllAgentMasterList().subscribe((res) => (this.agenetMasterList = res));
   }
 
   loadForm() {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
-      agentCode: ['123456', Validators.required],
-      organizationName: ['', Validators.required],
+      //agentCode: ['123456', Validators.required],
+      organizationName: ['0', Validators.required],
+      agentSuperVisor: ['0', Validators.required],
       address: ['', Validators.required],
       city: ['Dhaka', Validators.required],
       zipCode: ['1212', Validators.required],
-      country: ['Bd', Validators.required],
+      country: ['Bangladesh', Validators.required],
       mobileNo: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -56,16 +63,18 @@ export class AgentSignupComponent implements OnInit {
       return 
     }
 
-
     const agentInfo = {
       tenantId: '',
       userName: this.signupForm.value.mobileNo,
       name: this.signupForm?.value.fullName,
+      
       surname: '',
       email: this.signupForm.value.email,
       emailConfirmed: true,
       phoneNumber: this.signupForm.value.mobileNo,
       phoneNumberConfirmed: true,
+      //agentMasterId: this.signupForm.value.organizationName,
+      //agentSupervisorId: this.signupForm.value.agentSuperVisor,
       address: this.signupForm.value.address,
       city: this.signupForm.value.city,
       zipCode: this.signupForm.value.zipCode,
@@ -74,7 +83,11 @@ export class AgentSignupComponent implements OnInit {
       lockoutEnabled: false,
       lockoutEnd: '2023-07-16T07:38:44.382Z',
       concurrencyStamp: '',
+      agentMasterId: this.signupForm.value.organizationName,
+      agentSupervisorId: this.signupForm.value.agentSuperVisor,
     };
+
+    
 
     this.UserAccountsService.signupUserByUserDtoAndPasswordAndRole(
       agentInfo,
@@ -84,6 +97,9 @@ export class AgentSignupComponent implements OnInit {
       if (res.success) {
         this.AgentProfileService.create({
           ...this.signupForm.value,
+
+          agentMasterId:this.signupForm.value?.organizationName,
+          agentSupervisorId:this.signupForm.value?.agentSuperVisor,
           userId: res.userId,
         }).subscribe((profRes: any) => {
           this.subs.sink = this.AgentProfileService.getByUserId(
@@ -107,5 +123,11 @@ export class AgentSignupComponent implements OnInit {
         this.TosterService.customToast(String(res.message), 'error');
       }
     });
+  }
+
+  loadAgentSupervisors(event: any) {
+    this.AgentSupervisorService.getAgentSupervisorsByAgentMasterList(event.target.value).subscribe(res => {
+      this.agentSupervisorList = res;
+    })
   }
 }

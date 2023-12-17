@@ -11,7 +11,32 @@ import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
+export interface AgentMasterDto extends FullAuditedEntityDto<number> {
+  agentMasterOrgName?: string;
+  agentMasterCode?: string;
+  contactPerson?: string;
+  contactPersonOfficeId?: string;
+  contactPersonIdentityNumber?: string;
+  contactPersongMobileNo?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  phoneNo?: string;
+  email?: string;
+  emergencyContact?: string;
+  agentMasterDocNumber?: string;
+  agentMasterDocExpireDate?: string;
+  isActive?: boolean;
+  userId?: string;
+  displayName?: string;
+}
+
 export interface AgentProfileDto extends FullAuditedEntityDto<number> {
+  agentMasterId?: number;
+  agentMasterName?: string;
+  agentSupervisorId?: number;
+  agentSupervisorName?: string;
   fullName?: string;
   agentCode?: string;
   organizationName?: string;
@@ -25,6 +50,30 @@ export interface AgentProfileDto extends FullAuditedEntityDto<number> {
   userId?: string;
   profileStep?: number;
   createFrom?: string;
+  agentDocNumber?: string;
+  agentDocExpireDate?: string;
+}
+
+export interface AgentSupervisorDto extends FullAuditedEntityDto<number> {
+  agentMasterId?: number;
+  agentMasterName?: string;
+  agentSupervisorOrgName?: string;
+  agentSupervisorCode?: string;
+  supervisorName?: string;
+  supervisorIdentityNumber?: string;
+  supervisorMobileNo?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  phoneNo?: string;
+  email?: string;
+  emergencyContact?: string;
+  agentSupervisorDocNumber?: string;
+  agentSupervisorDocExpireDate?: string;
+  isActive?: boolean;
+  userId?: string;
+  displayName?: string;
 }
 
 export interface AppointmentDto extends FullAuditedEntityDto<number> {
@@ -323,6 +372,17 @@ export interface FilterModel {
   isDesc: boolean;
 }
 
+export interface FinancialSetupDto extends FullAuditedEntityDto<number> {
+  platformFacilityId?: number;
+  facilityName?: string;
+  amountIn?: string;
+  amount?: number;
+  externalAmountIn?: string;
+  externalAmount?: number;
+  providerAmount?: number;
+  isActivie?: boolean;
+}
+
 export interface LoginDto {
   userName?: string;
   email?: string;
@@ -451,6 +511,11 @@ export interface PaymentHistoryInputDto {
   error?: string;
   card_sub_brand?: string;
   subscription_id?: string;
+}
+
+export interface PlatformFacilityDto extends FullAuditedEntityDto<number> {
+  serviceName?: string;
+  description?: string;
 }
 
 export interface PrescriptionDrugDetailsDto extends FullAuditedEntityDto<number> {
