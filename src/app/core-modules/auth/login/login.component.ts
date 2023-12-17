@@ -383,11 +383,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Additional method to handle profile service errors
   private handleProfileError(error: any): void {
-    console.log(error,this.loginResponse);
-  
       if (
-       
-        
         error.error.error.message ===
         'There is no entity DoctorProfile with id = !'
       ) {

@@ -21,7 +21,7 @@
     <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
         <h1 class="dashbord-heading-text"> <i class="mr-1 text-[18px] fa-solid fa-calendar"></i> Booking
         </h1>
-        <button class="btn-secondary-light">Close</button>
+        <button class="btn-secondary-light" (click)="dialogRef.close()">Close</button>
     </div>
 
 
@@ -32,15 +32,15 @@
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="bookingForm">
                     <ul class="grid grid-row-2 w-full gap-6">
-                        <li (click)="onStepChange(2)">
-                            <input type="radio" formControlName="bookMyself" id="bookMyself" value="bookMyself"
+                        <li (click)="onStepChange(2,'self')" >
+                            <input type="radio"  formControlName="bookMyself" id="bookMyself" value="bookMyself"
                                 class="hidden peer" required>
                             <label for="bookMyself"
                                 class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer   peer-checked:border-secondary peer-checked:text-secondary hover:text-gray-600 hover:bg-gray-100 ">
                                 <div class="flex items-center gap-3">
                                     <i class="fa-solid fa-person text-[44px]"></i>
                                     <div>
-                                        <div class="w-full text-lg font-semibold">Book for Self</div>
+                                        <div class="w-full text-lg font-semibold"> {{stepLoading ? "Loading..." : "Book for Self"}}</div>
                                         <div class="w-full">If you are patient!</div>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                 <div class="flex items-center gap-3">
                                     <i class="fa-solid fa-people-robbery text-[44px]"></i>
                                     <div>
-                                        <div class="w-full text-lg font-semibold">Book for Other</div>
+                                        <div class="w-full text-lg font-semibold"> Book for Other</div>
                                         <div class="w-full">If you are not patient!</div>
                                     </div>
                                 </div>

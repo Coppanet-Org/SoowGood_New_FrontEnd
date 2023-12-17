@@ -2,7 +2,7 @@ import { PatientProfileService } from './../../../../../proxy/services/patient-p
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, of, switchMap } from 'rxjs';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
 import { Gender } from 'src/app/proxy/enums';
@@ -36,6 +36,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   profileInfo: any;
   userPatientList: any[]=[];
   genderList: ListItem[]=[];
+  stepLoading: boolean= false;
   constructor(
     public dialogRef: MatDialogRef<LiveConsultBookingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined,
@@ -43,7 +44,8 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     private UserinfoStateService : UserinfoStateService,
     private TosterService : TosterService,
     private PatientProfileService : PatientProfileService,
-    private NormalAuth : AuthService
+    private NormalAuth : AuthService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -111,14 +113,13 @@ export class LiveConsultBookingDialogComponent implements OnInit {
       creatorEntityId: [this.profileInfo.id, Validators.required],
     });
   }
-  onStepChange(step: number) {
+  onStepChange(step: number,bookFor?:string) {
     if (step===0) {
       this.activeTab = step;
     }
     if (step === 2) {
-
+      this.stepLoading = true
       this.formSubmitted = true
-
         const infoForBooking = {
           doctorProfileId:this.profileInfo?.id,
           doctorName: this.doctorData?.doctorDetails.fullName,
@@ -157,45 +158,11 @@ export class LiveConsultBookingDialogComponent implements OnInit {
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: this.profileInfo?.id,
-///
-
-          //appointmentCode: "string",
-          //doctorScheduleId: 0,
-          //consultancyType: 1,
-          //doctorChamberId: 0,
-          //doctorScheduleDaySessionId: 0,
-          //scheduleDayofWeek: "string",
-          // appointmentType: 1,
-          //doctorFeesSetupId: 0,
-          //cancelledByEntityId: 0,
-          //cancelledByRole: "string",
-          //paymentTransactionId: "string",
-          //isCousltationComplete: false
         };
+        this.bookingInfo = infoForBooking
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        if (infoForBooking && this.profileInfo) {
-          this.bookingInfo = infoForBooking
+        if (this.profileInfo && bookFor === 'self' ) {
           this.formSubmitted = true
-      
             const obj = {
               id: this.profileInfo?.id,
               patientName: this.profileInfo.fullName,
@@ -204,12 +171,14 @@ export class LiveConsultBookingDialogComponent implements OnInit {
               patientMobileNo: this.profileInfo.mobileNo,
             };
   
-            this.PatientProfileService.update(obj).subscribe((res) => {
-              // this.createAppointment(infoForBooking, e);
+              this.PatientProfileService.update(obj).subscribe((res) => {
+              this.stepLoading = false
               this.activeTab = step;
 
             });
           
+        }else{
+          this.activeTab = step; 
         }
         
       }
@@ -290,15 +259,17 @@ export class LiveConsultBookingDialogComponent implements OnInit {
               res.patientMobileNo
             ).subscribe((p) => {
               this.createNewPatientInfo = p;
+              this.TosterService.customToast('Your patient is created!', 'success');
+              this.UserinfoStateService.getUserPatientInfo(
+               this.profileInfo.id,
+                'patient'
+               );
+               
+               this.onStepChange(2,'others');
+               this.btnLoader = false;
             });
           }
-          this.btnLoader = false;
-          this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
-          this.onStepChange(2);
+          
         });
       } catch (error) {
         this.TosterService.customToast(
