@@ -3,22 +3,18 @@ import { DoctorProfileService, SpecializationService } from 'src/app/proxy/servi
 import { SpecialityService } from './../../../proxy/services/speciality.service';
 
 import { DoctorStateService } from './../../services/states/doctors-states/doctor-state.service';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { UserinfoStateService } from '../../services/states/userinfo-state.service';
-import { AuthService } from '../../services/auth.service';
+import { Component, Input, OnInit } from '@angular/core';
+
 import {
   DataFilterModel,
   DoctorProfileDto,
   FilterModel,
-  SpecialityDto,
-  SpecializationDto,
 } from 'src/app/proxy/dto-models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { ConsultancyType } from 'src/app/proxy/enums';
 import { ListItem } from '../../model/common-model';
-import { Observable, Subscription, startWith, map, combineLatest } from 'rxjs';
-import { FilterComponent } from '../filter/filter.component';
+import {Subscription, combineLatest } from 'rxjs';
 import { SubSink } from 'subsink';
 import { ActivatedRoute } from '@angular/router';
 @Component({
@@ -53,8 +49,6 @@ export class PublicDoctorsComponent implements OnInit {
     isDesc: false,
   };
   constructor(
-    private UserinfoStateService: UserinfoStateService,
-    private NormalAuth: AuthService,
     private DoctorStateService: DoctorStateService,
     private fb: FormBuilder,
     private SpecialityService: SpecialityService,
@@ -150,12 +144,7 @@ export class PublicDoctorsComponent implements OnInit {
         this.getDoctors()
       }
     });
-
-
-
-
   }
-
 
   getSpecializations(id: any) {
     if (!id) {
@@ -209,6 +198,8 @@ export class PublicDoctorsComponent implements OnInit {
         this.DoctorStateService.getAllDoctorList().subscribe((res) => {
           this.doctorList = res;
           this.dataLoading = false;
+          this.noDataAvailable = true;
+
         });
 
       this.subscriptions.push(doctorListSubscription);
@@ -216,12 +207,13 @@ export class PublicDoctorsComponent implements OnInit {
       const doctorListSubscription = this.DoctorStateService.getDoctorListData().subscribe((res) => {
         this.doctorList = res;
         this.dataLoading = false;
+        this.noDataAvailable =false
       });
       this.subscriptions.push(doctorListSubscription);
     }
   }
 
-  loadData(data: any) {
+  selectedFilterData(data: any) {
 
     const {
       consultancy,
@@ -250,9 +242,8 @@ export class PublicDoctorsComponent implements OnInit {
     //this.doctorFilterDto = {};
   }
 
-
   searchData(data: any) {
-
+    this.dataLoading = true;
     this.doctorFilterDto.name = data;
 
     this.filterModel.limit = this.filterModel.pageSize;
@@ -264,9 +255,19 @@ export class PublicDoctorsComponent implements OnInit {
     ]).subscribe(
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
-        this.doctorList = buildingResponse;
-        this.dataLoading = false;
-
+   
+        // this.noDataAvailable = false;
+        if (countResponse < 1 ) {
+          console.log("yes");
+          
+          this.noDataAvailable = true;
+          this.dataLoading = false;
+          this.doctorList = buildingResponse;
+        } else {
+          this.noDataAvailable = false;
+          this.doctorList = buildingResponse;
+          this.dataLoading = false;
+        }
       },
       (error) => {
         console.log(error);
@@ -274,10 +275,7 @@ export class PublicDoctorsComponent implements OnInit {
     //this.doctorFilterDto = {};
   }
 
-
   pageChanged(e: any) {
-    console.log(e);
-
     this.filterModel.pageNo = e;
     //this.doctorList;
     //this.loadData();

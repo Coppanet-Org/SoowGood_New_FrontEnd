@@ -13,12 +13,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import { FilterModule } from '../filter/filter.module';
-import { PaginatorComponent } from '../paginator/paginator.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 @NgModule({
   declarations: [
     PublicDoctorsComponent,
-    PaginatorComponent
     ],
   imports: [
     CommonModule,
@@ -32,13 +31,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     MatNativeDateModule,
     FilterModule,
-    NgbModule,
-    FormsModule
+    MatSidenavModule
     
   ],
 exports:[
-  PublicDoctorsComponent,
-  PaginatorComponent
+  PublicDoctorsComponent
 ]
 })
 export class PublicDoctorsModule { }

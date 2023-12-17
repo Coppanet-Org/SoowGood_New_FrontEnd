@@ -17,6 +17,8 @@ import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booki
 import { AppMarketingComponent } from './components/app-marketing/app-marketing.component';
 import { ClientFeedbackComponent } from './components/client-feedback/client-feedback.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CacheInterceptor } from 'src/app/shared/utils/CacheInterceptor';
 
 const routes: Route[] = [
   {
@@ -48,6 +50,9 @@ const routes: Route[] = [
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+    providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  ],
 })
 export class LandingPageModule {}
