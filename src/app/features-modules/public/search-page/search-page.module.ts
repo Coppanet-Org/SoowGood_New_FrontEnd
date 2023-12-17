@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SearchPageComponent } from './search-page.component';
 import { Route, RouterModule } from '@angular/router';
 import { PublicDoctorsModule } from 'src/app/shared/modules/public-doctors/public-doctors.module';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 const routes: Route[] = [
   {
@@ -16,7 +17,8 @@ const routes: Route[] = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    PublicDoctorsModule
+    PublicDoctorsModule,
+    MatSidenavModule
   ],
 
 })

@@ -15,6 +15,7 @@ import { UserinfoStateService } from '../../services/states/userinfo-state.servi
 })
 export class DoctorCardComponent implements OnInit {
   @Input() doctorDetails: any;
+ 
   doctorScheduleList: DoctorScheduleDto[] = [];
   isLoading: boolean = false;
   isAuthUser:any;

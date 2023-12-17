@@ -24,6 +24,7 @@ import { PaymentFaildComponent } from './shared/components/payment-faild/payment
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
 import { CacheInterceptor } from './shared/utils/CacheInterceptor';
 
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 const routerConfig: ExtraOptions = {
@@ -62,11 +63,14 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
+    MatSidenavModule,
     ReactiveFormsModule, FormsModule
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  ],
+  // add this interceptors on static page
+
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  // ],
   bootstrap: [AppComponent],
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
