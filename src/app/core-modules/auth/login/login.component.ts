@@ -256,6 +256,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                   }
                 });
             }
+          })
+          .catch((errorResponse) => {
+            this.hasError = true;
+            this.appAuthService.isLoadingSubject.next(false);
+            this.errorMessage = errorResponse.error.error_description || errorResponse.error.error;
+            this.isLoading = false;
           });
       }
       catch (error: any) {

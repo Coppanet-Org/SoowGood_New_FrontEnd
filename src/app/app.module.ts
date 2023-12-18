@@ -2,7 +2,7 @@ import { registerLocale } from '@abp/ng.core/locale';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routing';
+import { appRoutes, AppRouting } from './app.routing';
 import { RouterModule, ExtraOptions, PreloadAllModules } from '@angular/router';
 import { EmptyPageComponent } from './features-modules/public/empty-page/empty-page.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -28,6 +28,7 @@ import { PaymentCancelComponent } from './shared/components/payment-cancel/payme
 import { CacheInterceptor } from './shared/utils/CacheInterceptor';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 const routerConfig: ExtraOptions = {
@@ -61,7 +62,8 @@ const routerConfig: ExtraOptions = {
     }),
     BrowserAnimationsModule,
     MaterialModulesModule,
-    RouterModule.forRoot(appRoutes, routerConfig),
+    //RouterModule.forRoot(appRoutes, routerConfig),
+    AppRouting,
     HotToastModule.forRoot({
       position: 'bottom-right',
     }),
@@ -72,9 +74,9 @@ const routerConfig: ExtraOptions = {
   ],
   // add this interceptors on static page
 
-  // providers: [
-  //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  // ],
+   providers: [
+     { provide: LocationStrategy, useClass: HashLocationStrategy }
+   ],
   bootstrap: [AppComponent],
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
