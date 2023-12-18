@@ -1,9 +1,8 @@
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import KeenSlider from 'keen-slider'
+import KeenSlider, { KeenSliderInstance } from "keen-slider" 
 import { Router } from '@angular/router';
-// import "keen-slider/dist/keen-slider.min.css"
 
 
 
@@ -40,15 +39,24 @@ ngOnInit(): void {
   })
 }
 
-
+currentSlide: number = 1
+dotHelper: Array<Number> = []
+// slider: KeenSliderInstance = null
   ngAfterViewInit() {
     if (this.sliderRef && this.sliderRef.nativeElement) {
       this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-        slides: {
-          perView: 4,
-          spacing: 15,
+        initial: this.currentSlide,
+        slides:{
+          perView:3,
         },
-      });
+        slideChanged: (s) => {
+          this.currentSlide = s.track.details.rel
+        },
+      })
+      this.dotHelper = [
+        ...Array(this.slider.track.details.slides.length).keys(),
+      ]
+    
     }
   }
 

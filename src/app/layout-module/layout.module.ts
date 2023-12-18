@@ -127,10 +127,10 @@ const routes: Route[] = [
     AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
-    ScrollDirective,
+    
     // DashboardHeaderComponent,
     PublicLayoutTwoComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes),ScrollDirective],
 })
 export class LayoutModule {}

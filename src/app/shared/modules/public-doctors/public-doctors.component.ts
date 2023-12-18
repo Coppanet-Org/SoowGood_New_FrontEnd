@@ -1,7 +1,6 @@
 import { FilterInputModel } from './../../utils/models/models';
 import { DoctorProfileService, SpecializationService } from 'src/app/proxy/services';
 import { SpecialityService } from './../../../proxy/services/speciality.service';
-
 import { DoctorStateService } from './../../services/states/doctors-states/doctor-state.service';
 import { Component, Input, OnInit } from '@angular/core';
 

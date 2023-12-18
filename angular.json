@@ -36,6 +36,7 @@
               "src/styles.scss"
             ],
             "scripts": [
+              "node_modules/keen-slider/keen-slider.js",
               {
                 "input": "./node_modules/pdfmake/build/pdfmake.js",
                 "bundleName": "pdfmake",
