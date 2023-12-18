@@ -5,12 +5,8 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\profile-settings",
-    "\\src\\app\\shared"
+    "\\src\\app\\core-modules\\auth\\login",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\patient\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }
