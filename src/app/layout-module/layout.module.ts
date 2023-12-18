@@ -13,6 +13,7 @@ import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-lay
 
 import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 import { isAuth } from '../auth-gurd/auth.service';
+import { ScrollDirective } from '../shared/directive/scroll/scroll.directive';
 
 const routes: Route[] = [
   {
@@ -126,9 +127,10 @@ const routes: Route[] = [
     AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
+    
     // DashboardHeaderComponent,
     PublicLayoutTwoComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes),ScrollDirective],
 })
 export class LayoutModule {}

@@ -1,6 +1,6 @@
 
 
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   userType: string='';
   scrolled: boolean = false;
   logoPath:string= "assets/auth/clr-logo.png"
+  
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrolled = window.scrollY >= 100;
@@ -46,4 +47,5 @@ export class HeaderComponent implements OnInit {
     this.MainAuth.signOut();
     this.isAuthLogin = false;
   }
+
 }

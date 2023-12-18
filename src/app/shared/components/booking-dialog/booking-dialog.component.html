@@ -343,9 +343,8 @@
                 <div class="flex gap-5">
                     <button class="btn-secondary py-2 mt-6" (click)="onStepChange(0)">Back</button>
                     <button class="btn-secondary bg-primary py-2 mt-6" (click)="createNewPatient()">
-                        <div *ngIf="btnLoader == false" class="flex items-center gap-1 text-white group-hover:text-primary">
+                        <div *ngIf="btnLoader == false" class="flex items-center gap-1 tetx-white">
                             <span>Continue</span>
-    
                         </div>
                         <span *ngIf="btnLoader == true" class="loading loading-dots loading-md"></span>
                     </button>

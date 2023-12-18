@@ -12,7 +12,7 @@ const issuerUrl = 'https://localhost:44339';
 //const meetingUrl = 'https://meet.soowgood.com/';
 
 export const environment = {
-  production: false,
+  production: true,
   application: {
     baseUrl,
     name: 'SoowGoodWeb',
