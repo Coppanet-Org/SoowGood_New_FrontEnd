@@ -49,3 +49,5 @@ Thumbs.db
 *.vsidx
 /.vs/02.SoowGood_New_FrontEnd/FileContentIndex/131f1efe-7d22-452a-8960-807974cea3b0.vsidx
 /.vs/slnx.sqlite
+*.rar
+/FrontEnd_Release_20231217.rar
