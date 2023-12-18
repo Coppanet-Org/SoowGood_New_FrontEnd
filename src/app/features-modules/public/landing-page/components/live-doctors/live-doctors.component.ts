@@ -14,14 +14,7 @@ import { Router } from '@angular/router';
 export class LiveDoctorsComponent implements OnInit, AfterViewInit {
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
   slider: any = null
-  slides = [
-    { color: '#007bff', text: 'Slider 1' },
-    { color: '#6c757d', text: 'Slider 2' },
-    { color: '#17a2b8', text: 'Slider 3' },
-    { color: '#28a745', text: 'Slider 4' },
-    { color: '#dc3545', text: 'Slider 5' },
-    { color: '#ffc107', text: 'Slider 6' }
-  ]
+
 
 
 ngOnInit(): void {

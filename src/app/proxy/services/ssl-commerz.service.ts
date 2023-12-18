@@ -1,13 +1,22 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { SslCommerzInitDto, TransactionValidationDto } from '../dto-models/models';
-import type { SslCommerzInputDto } from '../input-dto/models';
+import type { PaymentHistoryMobileInputDto, SslCommerzInputDto } from '../input-dto/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SslCommerzService {
   apiName = 'Default';
+  
+
+  initPaymentHistoryFromMobileByInput = (input: PaymentHistoryMobileInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: '/api/app/ssl-commerz/init-payment-history-from-mobile',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
   
 
   initiatePayment = (input: SslCommerzInputDto, config?: Partial<Rest.Config>) =>

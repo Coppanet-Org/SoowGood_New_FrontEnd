@@ -5,7 +5,29 @@ import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
 
+export interface AgentMasterInputDto extends FullAuditedEntityDto<number> {
+  agentMasterOrgName?: string;
+  agentMasterCode?: string;
+  contactPerson?: string;
+  contactPersonOfficeId?: string;
+  contactPersonIdentityNumber?: string;
+  contactPersongMobileNo?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  phoneNo?: string;
+  email?: string;
+  emergencyContact?: string;
+  agentMasterDocNumber?: string;
+  agentMasterDocExpireDate?: string;
+  isActive?: boolean;
+  userId?: string;
+}
+
 export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
+  agentMasterId?: number;
+  agentSupervisorId?: number;
   fullName?: string;
   agentCode?: string;
   organizationName?: string;
@@ -19,6 +41,28 @@ export interface AgentProfileInputDto extends FullAuditedEntityDto<number> {
   userId?: string;
   profileStep?: number;
   createFrom?: string;
+  agentDocNumber?: string;
+  agentDocExpireDate?: string;
+}
+
+export interface AgentSupervisorInputDto extends FullAuditedEntityDto<number> {
+  agentMasterId?: number;
+  agentSupervisorOrgName?: string;
+  agentSupervisorCode?: string;
+  supervisorName?: string;
+  supervisorIdentityNumber?: string;
+  supervisorMobileNo?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  phoneNo?: string;
+  email?: string;
+  emergencyContact?: string;
+  agentSupervisorDocNumber?: string;
+  agentSupervisorDocExpireDate?: string;
+  isActive?: boolean;
+  userId?: string;
 }
 
 export interface DegreeInputDto extends FullAuditedEntityDto<number> {
@@ -94,6 +138,16 @@ export interface FileDeleteInputDto {
   filePath?: string;
 }
 
+export interface FinancialSetupInputDto extends FullAuditedEntityDto<number> {
+  platformFacilityId?: number;
+  amountIn?: string;
+  amount?: number;
+  externalAmountIn?: string;
+  externalAmount?: number;
+  providerAmount?: number;
+  isActivie?: boolean;
+}
+
 export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   fullName?: string;
   isSelf?: boolean;
@@ -115,6 +169,20 @@ export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   cratorCode?: string;
   creatorEntityId?: number;
   userId?: string;
+}
+
+export interface PaymentHistoryMobileInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
+  sessionKey?: string;
+  status?: string;
+  failedReason?: string;
+}
+
+export interface PlatformFacilityInputDto extends FullAuditedEntityDto<number> {
+  serviceName?: string;
+  description?: string;
 }
 
 export interface PrescriptionDrugDetailsInputDto extends FullAuditedEntityDto<number> {
