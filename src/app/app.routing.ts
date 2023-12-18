@@ -1,7 +1,8 @@
-import { Route } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { EmptyPageComponent } from './features-modules/public/empty-page/empty-page.component';
 import { isAuth } from './auth-gurd/auth.service';
 import { routerGuard } from './auth-gurd/router.guard';
+import { NgModule } from '@angular/core';
 
 export const appRoutes: Route[] = [
   {
@@ -48,3 +49,8 @@ export const appRoutes: Route[] = [
     component: EmptyPageComponent,
   },
 ];
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes, {useHash:true})],
+  exports: [RouterModule],
+})
+export class AppRouting { }
