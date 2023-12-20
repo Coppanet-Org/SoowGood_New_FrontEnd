@@ -3,6 +3,7 @@ export * from './agent-profile.service';
 export * from './agent-supervisor.service';
 export * from './appointment.service';
 export * from './common-disease.service';
+export * from './dashboard.service';
 export * from './degree.service';
 export * from './doctor-chamber.service';
 export * from './doctor-degree.service';

@@ -35,22 +35,18 @@
     </div>
 </div>
 
-<div class="navigation-wrapper">
+<div class="navigation-wrapper" [ngClass]="showSlider ? 'opacity-1' : 'opacity-0'" >
     <div class="keen-slider keen-slider--vertical" #sliderRef>
-        <div class="keen-slider__slide number-slide1">
-           1  <!-- <app-live-doctor-card ></app-live-doctor-card> -->
-          </div>
-          <div class="keen-slider__slide number-slide2">
-           2 <!-- <app-live-doctor-card ></app-live-doctor-card> -->
-          </div>
-          <div class="keen-slider__slide number-slide3">
-           3 <!-- <app-live-doctor-card ></app-live-doctor-card> -->
-          </div>
-          <div class="keen-slider__slide number-slide4">
-            55<!-- <app-live-doctor-card ></app-live-doctor-card> -->
-          </div>
+      <div *ngFor="let details of liveDoctorList; let i = index">
+        <div [class]="'keen-slider__slide h-full number-slide'+(1+i)" >
+          <app-live-doctor-card class="w-full" [doctorDetails]="details"></app-live-doctor-card>
+        </div>
+
+      </div>
+       
     </div>
     <svg
+
       [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
       "

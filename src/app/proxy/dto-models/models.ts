@@ -153,6 +153,14 @@ export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
   description?: string;
 }
 
+export interface DashboardDto {
+  totalAppointment?: number;
+  totalPatient?: number;
+  totalFeeAmount?: number;
+  totalPaidAmount?: number;
+  doctorLoyaltypoints?: number;
+}
+
 export interface DataFilterModel {
   name?: string;
   consultancyType?: ConsultancyType;

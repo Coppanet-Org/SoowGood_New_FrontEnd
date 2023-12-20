@@ -114,6 +114,8 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     });
   }
   onStepChange(step: number,bookFor?:string) {
+
+    
     if (step===0) {
       this.activeTab = step;
     }
@@ -121,7 +123,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
       this.stepLoading = true
       this.formSubmitted = true
         const infoForBooking = {
-          doctorProfileId:this.profileInfo?.id,
+          doctorProfileId:this.doctorData.doctorDetails.id,
           doctorName: this.doctorData?.doctorDetails.fullName,
           doctorCode: this.doctorData?.doctorDetails.doctorCode,
           patientProfileId: this.alreadyExistPatient?.id

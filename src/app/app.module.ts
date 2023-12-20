@@ -21,6 +21,7 @@ import { PaymentSuccessComponent } from './shared/components/payment-success/pay
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
+import { UploadAppointmentDocDialogComponent } from './shared/components/upload-appointment-doc-dialog/upload-appointment-doc-dialog.component';
 
 
 
@@ -41,6 +42,7 @@ const routerConfig: ExtraOptions = {
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
+    UploadAppointmentDocDialogComponent,
     //PaginatorComponent
    // PaginationComponent
   ],
