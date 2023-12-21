@@ -113,6 +113,32 @@ const routes: Route[] = [
     ],
   },
   {
+    path: 'soowgood-point',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/soowgood-point/soowgood-point.module').then(
+            (m) => m.SoowgoodPointModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'soowgood-booth',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/soowgood-booth/soowgood-booth.module').then(
+            (m) => m.SoowgoodBoothModule
+          ),
+      },
+    ],
+  },
+  {
     path: 'payment-success',
     component: PaymentSuccessComponent,
   },
