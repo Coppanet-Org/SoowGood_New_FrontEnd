@@ -40,7 +40,7 @@ const routerConfig: ExtraOptions = {
     PaymentSuccessComponent,
     OtpInputComponent,
     PaymentFaildComponent,
-    PaymentCancelComponent,
+    PaymentCancelComponent
     //PaginatorComponent
    // PaginationComponent
   ],
@@ -81,5 +81,6 @@ const routerConfig: ExtraOptions = {
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
   ],
+  
 })
 export class AppModule { }

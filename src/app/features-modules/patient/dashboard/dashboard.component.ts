@@ -1,5 +1,6 @@
+import { DashboardService } from './../../../proxy/services/dashboard.service';
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
-import { DoctorProfileDto } from 'src/app/proxy/dto-models';
+import { AppointmentDto, DoctorProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { DoctorScheduleService } from 'src/app/proxy/services';
@@ -18,38 +19,39 @@ export class DashboardComponent implements OnInit {
   details = [
     {
       title: 'Total appointments',
-      data: 100,
+      data: 0,
     },
     {
       title: 'Total Pay',
-      data: '3 tk',
+      data: '',
     },
     {
       title: 'Loyalty Points',
-      data: '100',
+      data: '',
     },
-    // {
-    //   title: 'Total Income',
-    //   data: '1000tk',
-    // },
+
   ];
   isLoading: boolean=false;
   isAuthUser: any;
   userType: any;
-
+  appointmentList:AppointmentDto[]=[];
+  selectedValue= "Passed"
   constructor(
     // private DoctorProfileService: DoctorProfileService,
     private DoctorStateService :DoctorStateService,
     private DoctorScheduleService: DoctorScheduleService,
     public dialog: MatDialog,
     private NormalAuth : AuthService,
-    private TosterService : TosterService
+    private TosterService : TosterService,
+    private DashboardService: DashboardService
     ) {
       this.isAuthUser =  this.NormalAuth.authInfo()?.id;
       this.userType =  this.NormalAuth.authInfo()?.userType;
     }
 
   ngOnInit(): void {
+    this.getDashboardAppointment(this.selectedValue)
+    this.getDashboardStatisticData(this.isAuthUser)
     try {
       this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
         next: (res) => {
@@ -86,6 +88,32 @@ export class DashboardComponent implements OnInit {
         this.TosterService.customToast(`No Details/Schedule found`,"warning")
       }
       });
+    }
+  }
+
+  getDashboardStatisticData(id:number){
+    this.DashboardService.getDashboadDataForPatient(id).subscribe({
+      next:(res)=>{
+        this.details[0].data= Number(res.totalAppointment)
+        this.details[1].data= Number(res.totalFeeAmount)
+        this.details[2].data= Number(res.doctorLoyaltypoints)
+      }
+    })
+  }
+  getDashboardAppointment(value: string) {
+    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, value).subscribe({
+      next: (res) => {
+        this.appointmentList = res
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+  changeSelection(e: any) {
+    if (e) {
+      this.getDashboardAppointment(e.target.value)
+      return
     }
   }
 }

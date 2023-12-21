@@ -1,3 +1,4 @@
+import { DocumentsAttachmentService } from './../../../proxy/services/documents-attachment.service';
 import { PrescriptionPatientDiseaseHistoryDto } from './../../../proxy/dto-models/models';
 import { CommonDiseaseService } from './../../../proxy/services/common-disease.service';
 import { DrugRxService } from './../../../proxy/services/drug-rx.service';
@@ -39,6 +40,9 @@ import {
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { environment } from 'src/environments/environment';
+import { PreviousDocumentsDialogComponent } from './previous-documents-dialog/previous-documents-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-build-prescription',
@@ -85,9 +89,12 @@ export class BuildPrescriptionComponent implements OnInit {
 
   @ViewChild('diseaseInput') diseaseInput!: ElementRef<HTMLInputElement>;
 
+  isExpend= false
   announcer = inject(LiveAnnouncer);
   uniqueHistory!: string[];
-
+  docFile: string ="";
+  docFileUrl: any[]=[];
+  public picUrl = `${environment.apis.default.url}/`;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -97,7 +104,9 @@ export class BuildPrescriptionComponent implements OnInit {
     private PrescriptionMasterService: PrescriptionMasterService,
     private DrugRxService: DrugRxService,
     private CommonDiseaseService: CommonDiseaseService,
-    private PatientProfileService: PatientProfileService
+    private PatientProfileService: PatientProfileService,
+    private DocumentsAttachmentService :DocumentsAttachmentService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -107,11 +116,11 @@ export class BuildPrescriptionComponent implements OnInit {
     const { aptId } = this.route.snapshot.params;
     if (aptId) {
       this.AppointmentService.get(aptId).subscribe((res) => {
-        console.log(res);
+      
 
         if (res.appointmentCode) {
           this.appointmentInfo = res;
-
+          this.getDocuments(res.patientProfileId)
           this.PatientProfileService.get(
             res.patientProfileId ? res.patientProfileId : 0
           ).subscribe((patient) => {
@@ -139,6 +148,50 @@ export class BuildPrescriptionComponent implements OnInit {
     // });
 
     this.loadForm();
+  }
+
+  
+getDocuments(id:any){
+  this.DocumentsAttachmentService
+  .getAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType(
+    'Patient',
+    id,
+    'PatientPreviousDocuments'
+  )
+  .subscribe((at) => {
+    // let urls=[]
+    if (at) {
+      at.map((e)=>{
+        let prePaths: string = '';
+      var re = /wwwroot/gi;
+      prePaths = e.path ? e.path : '';
+      this.docFile = prePaths.replace(re, '');
+      // console.log(at);
+      this.docFileUrl.push(this.picUrl + this.docFile)
+      // this.isLoading = false;
+      // urls.push()
+
+      
+      })
+
+    }
+    
+  });
+}
+
+  
+  showPreviousDocuments(id:any){
+
+  
+    
+        const dialogRef = this.dialog.open(PreviousDocumentsDialogComponent,{
+          width: "60vw",
+          data: this.docFileUrl,
+          height:"100vh"
+        });
+      
+        dialogRef.afterClosed().subscribe(result => {
+        });
   }
 
   loadForm() {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { Route, RouterModule } from '@angular/router';
 import { DashboardStatisticscardModule } from 'src/app/shared/modules/dashboard-statisticscard/dashboard-statisticscard.module';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Route[] = [
@@ -17,6 +18,7 @@ const routes: Route[] = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes),
     DashboardStatisticscardModule
   ]

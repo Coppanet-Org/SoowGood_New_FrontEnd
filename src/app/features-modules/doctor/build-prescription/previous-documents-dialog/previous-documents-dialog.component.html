@@ -1,0 +1,9 @@
+<div class="navigation-wrapper">
+    <div class="keen-slider keen-slider--vertical" #sliderRef>
+        <div *ngFor="let docSrc of docData; let i = index">
+            <div [class]="'keen-slider__slide h-full number-slide'+(1+i)">
+                <img class="w-full" [src]="docSrc" alt="doc" title="Sweape to see more">
+            </div>
+        </div>
+    </div>
+</div>

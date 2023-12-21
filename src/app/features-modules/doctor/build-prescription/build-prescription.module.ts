@@ -8,6 +8,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { PreviousDocumentsDialogComponent } from './previous-documents-dialog/previous-documents-dialog.component';
 
 const routes: Route[] = [
   {
@@ -18,7 +19,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    BuildPrescriptionComponent
+    BuildPrescriptionComponent,
+    PreviousDocumentsDialogComponent
   ],
   imports: [
     CommonModule,
