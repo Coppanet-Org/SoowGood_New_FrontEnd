@@ -139,6 +139,32 @@ const routes: Route[] = [
     ],
   },
   {
+    path: 'about-us',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/about-us/about-us.module').then(
+            (m) => m.AboutUsModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'contact-us',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/contact-us/contact-us.module').then(
+            (m) => m.ContactUsModule
+          ),
+      },
+    ],
+  },
+  {
     path: 'payment-success',
     component: PaymentSuccessComponent,
   },

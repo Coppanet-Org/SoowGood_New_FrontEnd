@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SoowgoodBoothComponent } from './soowgood-booth.component';
+import { AboutUsComponent } from './about-us.component';
 import { Route, RouterModule } from '@angular/router';
 
 const router: Route[] = [
   {
     path: '',
-    component: SoowgoodBoothComponent
+    component: AboutUsComponent
   }
 ]
 
 @NgModule({
   declarations: [
-    SoowgoodBoothComponent
+    AboutUsComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(router)
   ]
 })
-export class SoowgoodBoothModule { }
+export class AboutUsModule { }
