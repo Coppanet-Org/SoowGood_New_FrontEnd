@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { SslCommerzInitDto, TransactionValidationDto } from '../dto-models/models';
+import type { PaymentHistoryDto, SslCommerzInitDto, TransactionValidationDto } from '../dto-models/models';
 import type { PaymentHistoryMobileInputDto, SslCommerzInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class SslCommerzService {
   
 
   initPaymentHistoryFromMobileByInput = (input: PaymentHistoryMobileInputDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+    this.restService.request<any, PaymentHistoryDto>({
       method: 'POST',
       url: '/api/app/ssl-commerz/init-payment-history-from-mobile',
       body: input,
@@ -62,11 +62,12 @@ export class SslCommerzService {
     { apiName: this.apiName,...config });
   
 
-  updateAppointmentPaymentStatus = (appCode: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+  updateAppointmentPaymentStatus = (appCode: string, sts: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string>({
       method: 'PUT',
+      responseType: 'text',
       url: '/api/app/ssl-commerz/appointment-payment-status',
-      params: { appCode },
+      params: { appCode, sts },
     },
     { apiName: this.apiName,...config });
   
