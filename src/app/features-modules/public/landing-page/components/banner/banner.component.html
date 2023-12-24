@@ -52,7 +52,9 @@
                 <button class="btn-secondary bg-primary w-1/2 text-[18px]" routerLink="signup">Registration</button>
               </div>
               <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="authUser">
-                <button [routerLink]="authUser.userType" class="btn-secondary w-full border-secondary-dark/40 text-[18px]"><i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard</button>
+                <button [routerLink]="authUser.userType" class="btn-secondary w-full border-secondary-dark/40 text-[18px]">
+                  <i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard
+                </button>
               </div>
             </div>
           </div>
