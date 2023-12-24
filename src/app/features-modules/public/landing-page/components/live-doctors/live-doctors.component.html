@@ -1,0 +1,46 @@
+<div class="py-[100px] w-full">
+    <div class="container h-full">
+        <div class="flex flex-col justify-center h-full">
+            <div class="flex justify-between items-end">
+                <div class="relative">
+                    <h3 class="text-[18px] text-secondary font-Roboto">Available now</h3>
+                    <div class="bubble absolute left-[23px] bottom-[42px]">
+                        <span class="bubble-outer-dot">
+                            <span class="bubble-inner-dot"></span>
+                        </span>
+                    </div>
+                    <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">Live Doctors </h1>
+
+                </div>
+                <div class="flex gap-5">
+                    <button (click)="onClickSeeMore('livedoctors')">see more</button>
+                    <button class="btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="btn-secondary"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div *ngIf="liveDoctorList.length < 1"
+                class="grid w-full grid-cols-1 justify-center items-center h-[300px]">
+                <p class="text-center leading-9">No doctors is available right now! <br> Please refresh <span> <i
+                            class="font-bold text-[20px] cursor-pointer fa-solid fa-arrows-rotate"></i> </span> or try
+                    again later.</p>
+            </div>
+            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mt-9">
+
+                <app-live-doctor-card *ngFor="let details of liveDoctorList" [doctorDetails]="details"></app-live-doctor-card>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="slider-wrapper">
+    <div class="keen-slider" #sliderRef>
+        <div class="keen-slider__track">
+            <div class="keen-slider__slide" *ngFor="let details of liveDoctorList">
+                <app-live-doctor-card [doctorDetails]="details"></app-live-doctor-card>
+
+            </div>
+        </div>
+    </div>
+</div> -->

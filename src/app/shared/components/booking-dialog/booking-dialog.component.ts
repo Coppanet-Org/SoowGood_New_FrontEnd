@@ -1,8 +1,6 @@
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
-import { DoctorScheduleService } from './../../../proxy/services/doctor-schedule.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { LoaderService } from './../../services/loader.service';
 import { PatientProfileService } from 'src/app/proxy/services';
 
 import {
@@ -23,6 +21,7 @@ import {
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 import {
  
+  Observable,
   combineLatestWith,
   map,
   of,
@@ -33,11 +32,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../modules/input/input.component';
 import { PatientProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
-import { DoctorBookingStateService } from '../../services/states/doctors-states/doctor-booking-state.service';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { CommonService } from '../../services/common.service';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { customNameValidator } from '../../utils/auth-helper';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -90,18 +89,16 @@ export class BookingDialogComponent implements OnInit {
   formSubmitted: boolean = false;
   showEmptySlot: string="";
   genderList:any;
+  bookingInfo:any;
+  filteredChamber: any=[];
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
-    private LoaderService: LoaderService,
     private TosterService: TosterService,
-    private DoctorScheduleService: DoctorScheduleService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
     private DoctorScheduleStateService: DoctorScheduleStateService,
-    private AppointmentService: AppointmentService,
-    private AuthService: AuthService,
-    private DoctorBookingStateService: DoctorBookingStateService,
+    private NormalAuth :AuthService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -112,17 +109,6 @@ export class BookingDialogComponent implements OnInit {
       secondCtrl: ['', Validators.required],
     });
   }
-  // ngAfterViewInit() {
-    // const filterCriteria = ['appointmentDate', 'doctorScheduleType', 'appointmentType'];
-    // this.customInputs.forEach((customInput: InputComponent) => {
-    //   if (filterCriteria.includes(customInput.inputId)) {
-    //     // Check if the input value is empty and set an error message and the error state
-    //     const formControl = this.form.get(customInput.formControlName);
-    //     if (formControl && formControl.value === '') {
-    //     }
-    //   }
-    // });
-  // }
 
   ngOnInit() {
 
@@ -147,8 +133,10 @@ export class BookingDialogComponent implements OnInit {
       // this.inputConfigs = bookingFilterInputData([]);
       this.dataLoader = false;
     }
-
-    this.UserinfoStateService.getData()
+    let id = this.NormalAuth.authInfo()?.id;
+    if (id) {
+      this.UserinfoStateService.getUserPatientInfo(id, 'patient');
+      this.UserinfoStateService.getData()
       .pipe(
         switchMap((e) => {
           this.profileInfo = e;
@@ -170,6 +158,8 @@ export class BookingDialogComponent implements OnInit {
       .subscribe((res) => {
         this.userPatientList = res;
       });
+    }
+
      
 
       //  filtering start
@@ -247,6 +237,8 @@ export class BookingDialogComponent implements OnInit {
         }
         this.showAppointmentTypeSelectBox = true;
         this.filterData = finalFilter;
+        console.log(finalFilter);
+        
         this.selectedSlotInfo ={}
         this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
           finalFilter
@@ -368,7 +360,6 @@ export class BookingDialogComponent implements OnInit {
       this.activeTab = e;
     }
 
-
     if (e === 3 && this.form.valid) {
       this.formSubmitted = true
       if (this.filterData.length <= 0 && !this.selectedSlotInfo?.doctorScheduleId ) {
@@ -378,8 +369,6 @@ export class BookingDialogComponent implements OnInit {
         );
         return
       }
-
-
 
       const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
       const finalSchedule = this.doctorData.doctorScheduleInfo.find(
@@ -451,6 +440,7 @@ export class BookingDialogComponent implements OnInit {
         };
   
         if (infoForBooking && user) {
+          this.bookingInfo = infoForBooking
           this.formSubmitted = true
           if (this.bookingForm.get('bookMyself')?.value == 'bookMyself') {
             const obj = {
@@ -462,12 +452,15 @@ export class BookingDialogComponent implements OnInit {
             };
   
             this.PatientProfileService.update(obj).subscribe((res) => {
-              this.createAppointment(infoForBooking, e);
+              // this.createAppointment(infoForBooking, e);
+              this.activeTab = e;
+
             });
           }
   
           if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
-            this.createAppointment(infoForBooking, e);
+            // this.createAppointment(infoForBooking, e);
+            this.activeTab = e; 
           }
           return;
         }
@@ -481,42 +474,31 @@ export class BookingDialogComponent implements OnInit {
       }
 
    
-    } else if (e === 3 && !this.form.valid) {
+    } 
+    
+    else if (e === 3 && !this.form.valid) {
       this.formSubmitted = true
       this.TosterService.customToast(
         'Please select all the required fields',
         'warning'
       );
-    } else {
+    } 
+    
+    else {
       return;
     }
   }
 
-  createAppointment(infoForBooking: any, e: any) {
-    this.AppointmentService.create(infoForBooking).subscribe((res) => {
-      this.DoctorBookingStateService.sendBookingData({
-        ...infoForBooking,
-        appointmentCode: res.appointmentCode,
-      });
-      localStorage.setItem(
-        'patientAppointmentCode',
-        JSON.stringify(res.appointmentCode)
-      );
-      this.activeTab = e;
-    });
-  }
+
 
   //user existing check
   userExistCheck(status: string): void {
     this.createPatientForm.get('patientName')?.reset();
-this.createPatientForm.get('age')?.reset();
-this.createPatientForm.get('gender')?.reset();
-this.createPatientForm.get('bloodGroup')?.reset();
-this.createPatientForm.get('patientMobileNo')?.reset();
+    this.createPatientForm.get('age')?.reset();
+    this.createPatientForm.get('gender')?.reset();
+    this.createPatientForm.get('bloodGroup')?.reset();
+    this.createPatientForm.get('patientMobileNo')?.reset();
 
-
-    console.log( this.createPatientForm.value);
-    
     switch (status) {
       case 'new-user':
         this.isNewUser = true;

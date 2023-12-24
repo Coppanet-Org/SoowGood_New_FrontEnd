@@ -26,7 +26,7 @@ module.exports = {
 
     extend: {
       backgroundImage: {
-        "hero-pattern": "url('/assets/banner/banner-bg.png')",
+        "hero-pattern": "url(https://doccure.dreamstechnologies.com/react/template/cbd2669b9953bf399803.png)",
         // 'auth-pattern' :"url('/assets/')
       },
 
@@ -62,3 +62,5 @@ module.exports = {
 
   plugins: [require("daisyui")],
 };
+
+

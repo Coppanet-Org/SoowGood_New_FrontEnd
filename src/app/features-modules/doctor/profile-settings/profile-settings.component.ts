@@ -4,7 +4,7 @@ import {
   DoctorProfileService,
   DocumentsAttachmentService,
 } from 'src/app/proxy/services';
-import { slideInFrom } from 'src/app/animation';
+
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DoctorProfileInputDto } from 'src/app/proxy/input-dto';
@@ -14,7 +14,7 @@ import { ListItem } from 'src/app/shared/model/common-model';
 import { Router } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,7 +25,6 @@ import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-st
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss'],
-  animations: [slideInFrom('right')],
 })
 export class ProfileSettingsComponent implements OnInit {
   @ViewChild('attachments') attachment: any;

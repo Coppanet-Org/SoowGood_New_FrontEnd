@@ -1,12 +1,22 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { SpecializationDto } from '../dto-models/models';
+import type { SpecializationInputDto } from '../input-dto/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SpecializationService {
   apiName = 'Default';
+  
+
+  create = (input: SpecializationInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SpecializationDto>({
+      method: 'POST',
+      url: '/api/app/specialization',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
   
 
   get = (id: number, config?: Partial<Rest.Config>) =>
@@ -37,6 +47,15 @@ export class SpecializationService {
     this.restService.request<any, SpecializationDto[]>({
       method: 'GET',
       url: `/api/app/specialization/by-specialty-id/${specialityId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  update = (input: SpecializationInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SpecializationDto>({
+      method: 'PUT',
+      url: '/api/app/specialization',
+      body: input,
     },
     { apiName: this.apiName,...config });
 

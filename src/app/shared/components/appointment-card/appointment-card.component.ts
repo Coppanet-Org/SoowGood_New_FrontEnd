@@ -52,8 +52,10 @@ export class AppointmentCardComponent {
     if (apt) {
       const currentDate = new Date();
       const appointmentDate = new Date(apt.appointmentDate);
-      //currentDate.setHours(13);
-      //currentDate.setMinutes(35);
+      // currentDate.setHours(13);
+      // currentDate.setMinutes(35);
+
+
 
       console.log({
         currentDate,

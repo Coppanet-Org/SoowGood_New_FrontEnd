@@ -1,17 +1,16 @@
 import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
 import { TosterService } from './../../../../shared/services/toster.service';
 import { DoctorScheduleService } from './../../../../proxy/services/doctor-schedule.service';
-import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
+// import { DoctorScheduleDto } from './../../../../proxy/dto-models/models';
 import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -22,13 +21,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ScheduleDialogComponent } from '../schedule-dialog/schedule-dialog.component';
 import { CommonService } from 'src/app/shared/services/common.service';
 import {
-  AppointmentType,
+  // AppointmentType,
   ConsultancyType,
   ScheduleType,
 } from 'src/app/proxy/enums';
-import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
+// import { DoctorScheduleDaySessionDto } from 'src/app/proxy/dto-models';
 import { map } from 'rxjs';
-import { scheduleData } from 'src/app/shared/utils/input-info';
+// import { scheduleData } from 'src/app/shared/utils/input-info';
 
 @Component({
   selector: 'app-schedule-form',
@@ -65,7 +64,8 @@ export class ScheduleFormComponent implements OnInit {
   editData!: any;
   editScheduleId!: number;
   hospitalList: any;
-
+  formSubmitted:boolean = false
+  slotError:boolean = false
   constructor(
     private fb: FormBuilder,
     private DoctorChamberService: DoctorChamberService,
@@ -96,7 +96,7 @@ export class ScheduleFormComponent implements OnInit {
         )
         .subscribe((hospitalList) => {
           this.hospitalList = hospitalList
-          this.getInputFieldData()
+          // this.getInputFieldData()
         });
     }
     this.HospitalStateService.getIndividualScheduleInfo().subscribe((res) => {
@@ -123,27 +123,33 @@ export class ScheduleFormComponent implements OnInit {
     );
 
     this.form.get('consultancyType')?.valueChanges.subscribe((value) => {
-      if (value == 2 || value == 3) {
+      if (value == 2 || value == 3 || value == 4) {
         this.isDisable = true;
+        this.form.get('doctorChamberId')?.setValue('0')
       } else {
         this.isDisable = false;
       }
     });
+
+
+
+
   }
 
-  getInputFieldData() {
-    this.inputConfigs = scheduleData(
-      this.hospitalList,
-      this.scheduleType,
-      this.consultancyType
-    );
-  }
+  // getInputFieldData() {
+  //   this.inputConfigs = scheduleData(
+  //     this.hospitalList,
+  //     this.scheduleType,
+  //     this.consultancyType
+  //   );
+  // }
 
   loadForm() {
     this.form = this.fb.group({
       scheduleType: [0, Validators.required],
-      consultancyType: [0],
-      doctorChamberId: [null, Validators.required],
+      consultancyType: [0,Validators.required],
+      doctorChamberId: [0, Validators.required],
+      isSlotSelected : ['']
     });
   }
 
@@ -152,69 +158,81 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   submit() {
-
-    if (!this.form.value.scheduleType && !this.form.value.consultancyType) {
-      this.TosterService.customToast(
-        'Please field all required field',
-        'warning'
-      );
+    const consultencyType = Number(this.form.value.consultancyType);
+    const doctorChamberId = Number(this.form.value.doctorChamberId);
+  
+    this.formSubmitted = true;
+  
+    const scheduleType = Number(this.form.value.scheduleType);
+  
+    if ((consultencyType === 2 || consultencyType === 3 || consultencyType === 4) && !scheduleType) {
+      this.TosterService.customToast('Please select a schedule type', 'warning');
       return;
     }
-
-    //if (!this.form.valid) {
-    //  this.TosterService.customToast(
-    //    'Please field all required field',
-    //    'warning'
-    //  );
-    //  return;
-    //}
+  
+    if (consultencyType === 1  && !doctorChamberId ) {
+      this.TosterService.customToast('Please select a doctor chamber', 'warning');
+      return;
+    }
+  
+    if (this.allSelectedSession.length <= 0) {
+      this.TosterService.customToast('Please add your session', 'warning');
+      return;
+    }
+  
     const obj = {
       doctorProfileId: this.doctorId,
-      scheduleType: Number(this.form.value.scheduleType),
-      consultancyType: Number(this.form.value.consultancyType),
-      doctorChamberId: Number(this.form.value.doctorChamberId),
+      scheduleType: scheduleType,
+      consultancyType: consultencyType,
+      doctorChamberId: doctorChamberId,
       isActive: true,
       offDayFrom: '2023-08-13T08:27:02.691Z',
       offDayTo: '2023-08-13T08:27:02.691Z',
-      doctorScheduleDaySession: this.allSelectedSession.map((e: any) => {
-        return {
-          id: typeof e.id === 'string' || e.id instanceof String ? 0 : e.id,
-          scheduleDayofWeek: e.scheduleDayofWeek,
-          startTime: e.startTime,
-          endTime: e.endTime,
-          noOfPatients: e.noOfPatients,
-          isActive: true,
-        };
-      }),
+      doctorScheduleDaySession: this.allSelectedSession.map((e: any) => ({
+        id: typeof e.id === 'string' || e.id instanceof String ? 0 : e.id,
+        scheduleDayofWeek: e.scheduleDayofWeek,
+        startTime: e.startTime,
+        endTime: e.endTime,
+        noOfPatients: e.noOfPatients,
+        isActive: true,
+      })),
       doctorFeesSetup: [],
     };
-
+  
     if (!this.editScheduleId) {
-      this.DoctorScheduleService.create(obj).subscribe((res) => {
-        if (res.success == true) {
-          this.TosterService.customToast(String(res.message), 'success');
-          this.allSelectedSession = [];
-          this.form.reset();
-          this.HospitalStateService.setHospitalScheduleFormEvent(false);
-          this.rerenderDoctorSchedule.emit(true);
-        } else if (res.success == false) {
-          this.TosterService.customToast(String(res.message), 'error');
-        } else {
-          this.TosterService.customToast(String(res.message), 'warning');
-        }
-      });
+      this.scheduleCreate(obj);
     } else {
-      this.DoctorScheduleService.update({
-        ...obj,
-        id: this.editScheduleId,
-      }).subscribe((res) => {
-        this.TosterService.customToast(String(res.message), 'success')
-        this.rerenderDoctorSchedule.emit(true)
-      }
-
-      );
+      this.scheduleUpdate({ ...obj, id: this.editScheduleId });
     }
   }
+  
+  scheduleCreate(obj: any) {
+    this.DoctorScheduleService.create(obj).subscribe((res) => {
+      this.handleResponse(res);
+    });
+  }
+  
+  scheduleUpdate(obj: any) {
+    this.DoctorScheduleService.update(obj).subscribe((res) => {
+      this.handleResponse(res);
+    });
+  }
+  
+  handleResponse(res: any) {
+    if (res.success === true) {
+      this.TosterService.customToast(String(res.message), 'success');
+      this.allSelectedSession = [];
+      this.form.reset();
+      this.HospitalStateService.setHospitalScheduleFormEvent(false);
+      this.rerenderDoctorSchedule.emit(true);
+    } else if (res.success === false) {
+      this.TosterService.customToast(String(res.message), 'error');
+    } else {
+      this.TosterService.customToast(String(res.message), 'warning');
+    }
+  }
+  
+
 
   getDaySessions(day: string) {
     return this.allSelectedSession.filter(
@@ -228,6 +246,7 @@ export class ScheduleFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.form.get('isSlotSelected')?.setValue(true)
       result?.appointments.map(
         (e: any) => (this.allSelectedSession = [...this.allSelectedSession, e])
       );
@@ -236,11 +255,14 @@ export class ScheduleFormComponent implements OnInit {
 
   //should be refactor
   onSessionRemove(id: any) {
-    this.DoctorScheduleService.deleteSession(id).subscribe(
-      (res) =>
-      (this.allSelectedSession = this.allSelectedSession.filter(
+    this.DoctorScheduleService.deleteSession(id).subscribe((res) =>
+    {(this.allSelectedSession = this.allSelectedSession.filter(
         (f: any) => f.id !== id
-      ))
+      ))},(error)=>{
+        this.allSelectedSession = this.allSelectedSession.filter(
+          (f: any) => f.id !== id
+        )
+      }
     );
   }
 

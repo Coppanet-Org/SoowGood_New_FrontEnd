@@ -5,7 +5,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 //import { AbpOAuthModule } from "@abp/ng.oauth";
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { SubSink } from 'SubSink';
+import { SubSink } from 'subsink';
 import { UserModel, UserProfile } from '../auth-models/user.model';
 
 @Injectable({

@@ -2,11 +2,10 @@ import { registerLocale } from '@abp/ng.core/locale';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routing';
+import { appRoutes, AppRouting } from './app.routing';
 import { RouterModule, ExtraOptions, PreloadAllModules } from '@angular/router';
 import { EmptyPageComponent } from './features-modules/public/empty-page/empty-page.component';
-import { SignupComponent } from './core-modules/auth/signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@abp/ng.core';
 import { NgOtpInputModule } from 'ng-otp-input';
@@ -24,6 +23,13 @@ import { OtpInputComponent } from './shared/components/otp-input/otp-input.compo
 import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
 import { AbpOAuthModule } from "@abp/ng.oauth";
+import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
+import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
+import { CacheInterceptor } from './shared/utils/CacheInterceptor';
+
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -38,7 +44,11 @@ const routerConfig: ExtraOptions = {
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
     LoadingDirective,
-    OtpInputComponent
+    OtpInputComponent,
+    PaymentFaildComponent,
+    PaymentCancelComponent,
+    //PaginatorComponent
+   // PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -52,16 +62,24 @@ const routerConfig: ExtraOptions = {
     }),
     BrowserAnimationsModule,
     MaterialModulesModule,
-    RouterModule.forRoot(appRoutes, routerConfig),
+    //RouterModule.forRoot(appRoutes, routerConfig),
+    AppRouting,
     HotToastModule.forRoot({
       position: 'bottom-right',
     }),
     LoaderModule,
+    MatSidenavModule,
     ReactiveFormsModule, FormsModule,
     AbpOAuthModule.forRoot(),
   ],
-  providers: [],
+  // add this interceptors on static page
+
+   providers: [
+     { provide: LocationStrategy, useClass: HashLocationStrategy }
+   ],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule, ReactiveFormsModule, FormsModule],
+  exports: [MatDialogModule, ReactiveFormsModule, FormsModule
+    //, PaginatorComponent
+  ],
 })
 export class AppModule { }

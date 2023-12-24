@@ -10,7 +10,7 @@
 
 <div class="px-10 py-6">
     <form [formGroup]="form">
-        <div class="-mx-3 flex flex-wrap" *ngIf="feesData.length > 0;  else noData">
+        <div class="-mx-3 flex flex-wrap" *ngIf="feesData?.length > 0;  else noData">
             <ng-container class="w-full" *ngFor="let config of feesData">
                 <app-input [label]="config.label" [inputId]="config.inputId" [isSelectInput]="config.isSelect"
                     [readonly]="config.readonly ? config.readonly : false" [options]="config.options"

@@ -69,7 +69,7 @@ export class ScheduleInfoComponent implements OnInit {
 
   onViewDetails(item: any): void {
     this.clickView= item.id
-    this.HospitalStateService.setHospitalScheduleFormEvent(true);
+    this.HospitalStateService.setHospitalScheduleFormEvent(true)
     this.HospitalStateService.setIndividualScheduleInfoForEdit({edit:true,id:item.id})
     this.DoctorScheduleService.get(item.id).subscribe((res) =>
       this.HospitalStateService.setIndividualScheduleInfo(res)
