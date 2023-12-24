@@ -13,6 +13,7 @@ import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-lay
 
 import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 import { isAuth } from '../auth-gurd/auth.service';
+import { ScrollDirective } from '../shared/directive/scroll/scroll.directive';
 
 const routes: Route[] = [
   {
@@ -112,6 +113,58 @@ const routes: Route[] = [
     ],
   },
   {
+    path: 'soowgood-point',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/soowgood-point/soowgood-point.module').then(
+            (m) => m.SoowgoodPointModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'soowgood-booth',
+    component: PublicLayoutTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/soowgood-booth/soowgood-booth.module').then(
+            (m) => m.SoowgoodBoothModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'about-us',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/about-us/about-us.module').then(
+            (m) => m.AboutUsModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'contact-us',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/contact-us/contact-us.module').then(
+            (m) => m.ContactUsModule
+          ),
+      },
+    ],
+  },
+  {
     path: 'payment-success',
     component: PaymentSuccessComponent,
   },
@@ -126,9 +179,10 @@ const routes: Route[] = [
     AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
+    
     // DashboardHeaderComponent,
     PublicLayoutTwoComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes),ScrollDirective],
 })
 export class LayoutModule {}

@@ -6,6 +6,7 @@ export enum AppointmentStatus {
   InProgress = 3,
   Completed = 4,
   Cancelled = 5,
+  Failed = 6,
 }
 
 export const appointmentStatusOptions = mapEnumToOptions(AppointmentStatus);

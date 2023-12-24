@@ -12,7 +12,6 @@ export class AppointmentDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
   ){
-    console.log(this.editData);
-    
+
   }
 }

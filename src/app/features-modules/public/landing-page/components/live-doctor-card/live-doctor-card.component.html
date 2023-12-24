@@ -1,8 +1,8 @@
-<div class="live-card w-full hover:border-secondary/50 group relative border-[1px] overflow-hidden rounded-[10px] h-[400px] bg-white">
+<div class="live-card w-full hover:border-secondary/50 group relative border-[1px] overflow-hidden rounded-[10px] h-[300px] bg-white">
     <img class="absolute  card-img" src="assets/banner/shape-24.jpg" alt="">
     <div class="absolute top-0 left-0 w-full h-full z-10">
         <div class="w-[90px] relative after:w-[15px] after:h-[15px] after:border-[2px]  after:bg-green-400 after:rounded-full after:absolute after:bottom-0 after:right-0 ml-6 mt-6 overflow-hidden p-1 h-[90px] rounded-[10px] border-[1px] bg-secondary/10">
-          <img class="object-cover rounded-lg w-full h-full" src="assets/doctor/doctor.jpg" alt="">
+          <img class="object-cover rounded-lg w-full h-full" [src]="" alt="doctor">
         
         </div>
         <div>
@@ -21,12 +21,12 @@
                 <p class="text-sm">(105 reviews)</p>
             </div>
 
-            <div class="flex gap-3 px-6 items-center mt-4">
+            <!-- <div class="flex gap-3 px-6 items-center mt-4">
                 <i class="fa-solid fa-location-dot text-[24px] text-secondary"></i>   
                 <div>
                     <p class="font-Roboto text-primary/70 text-[14px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, nostrum.</p>
                 </div>
-            </div>
+            </div> -->
 
             <div  class="group-hover:border-t-secondary/50 border-t-[1px] w-full absolute bottom-0 flex justify-between">
                 <button [disabled]="isLoading" (click)="onClickConsultNow(doctorDetails)" class="border-r-[1px] hover:bg-primary/90 hover:text-white group-hover:border-r-secondary/50  w-1/2 py-3 font-semibold font-Roboto/80 text-primary/80 bg-secondary/10"><i class="text-secondary mr-2 fa-solid fa-video-slash"></i>{{isLoading ? 'Loading' : 'Consult Now'}}</button>

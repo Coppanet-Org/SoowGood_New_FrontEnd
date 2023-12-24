@@ -1,23 +1,59 @@
 import { Router } from '@angular/router';
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowPrescriptionModalComponent } from '../../modules/show-prescription-modal/show-prescription-modal.component';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
+import { UploadAppointmentDocDialogComponent } from '../upload-appointment-doc-dialog/upload-appointment-doc-dialog.component';
+import { DocumentsAttachmentService } from 'src/app/proxy/services';
+import { environment } from 'src/environments/environment';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-appointment-card',
   templateUrl: './appointment-card.component.html',
   styleUrls: ['./appointment-card.component.scss'],
 })
-export class AppointmentCardComponent {
+export class AppointmentCardComponent implements AfterViewInit {
   @Input() appointment: any;
   @Input() user: any;
+  uploadPrescriptiion: boolean = true;
+  btnDisable: boolean = false;
 
-  constructor(private Router: Router, public dialog: MatDialog) {}
+
+
+  constructor(private Router: Router, public dialog: MatDialog, private DoctorProfilePicService: DocumentsAttachmentService) { }
+
+
+  ngAfterViewInit(): void {
+    console.log(this.appointment);
+
+    const currentDate = new Date();
+    const appointmentDate = new Date(this.appointment.appointmentDate);
+
+    // Set hours, minutes, seconds, and milliseconds to 0 for both dates
+    currentDate.setHours(0, 0, 0, 0);
+    appointmentDate.setHours(0, 0, 0, 0);
+
+    // Compare the date components
+    if (appointmentDate.getTime() >= currentDate.getTime()) {
+      this.uploadPrescriptiion = true;
+    } else {
+      this.uploadPrescriptiion = false;
+    }
+
+    if (appointmentDate.getTime() < currentDate.getTime()) {
+      this.btnDisable = true;
+    } else {
+      this.btnDisable = false;
+    }
+
+  }
+
+
 
   goToBuildPrescription(aptCode: string) {
+
     if (aptCode != null && aptCode !== undefined) {
       const url = '/doctor/build-prescription/' + aptCode;
       window.open(url, '_blank');
@@ -47,23 +83,20 @@ export class AppointmentCardComponent {
     // const url = `https://agora-video-call-eight.vercel.app/?username=${'username'}&aptCode=${apt}&c=${user}`;
     // // window.location.href = url;
     // window.open(url, '_blank');
-// return
+    // return
 
     if (apt) {
       const currentDate = new Date();
       const appointmentDate = new Date(apt.appointmentDate);
       // currentDate.setHours(13);
       // currentDate.setMinutes(35);
-
-
-
-      console.log({
-        currentDate,
-        appointmentDate,
-        date: currentDate.getDate() === appointmentDate.getDate(),
-        month: currentDate.getMonth() === appointmentDate.getMonth(),
-        year: currentDate.getFullYear() === appointmentDate.getFullYear(),
-      });
+      // console.log({
+      //   currentDate,
+      //   appointmentDate,
+      //   date: currentDate.getDate() === appointmentDate.getDate(),
+      //   month: currentDate.getMonth() === appointmentDate.getMonth(),
+      //   year: currentDate.getFullYear() === appointmentDate.getFullYear(),
+      // });
 
       const appointmentTime = {
         hour: +apt.appointmentTime.split(':')[0],
@@ -80,7 +113,7 @@ export class AppointmentCardComponent {
           currentDate.getMonth() === appointmentDate.getMonth() &&
           currentDate.getDate() === appointmentDate.getDate()
         ) {
-          console.log('Today is appointment date');
+          //   console.log('Today is appointment date');
 
           // 15min age user can join
           const getTimeDifference = (
@@ -103,9 +136,9 @@ export class AppointmentCardComponent {
             const hourDiff = aptHour - currentHour;
             const minuteDiff = aptMinute - currentMinute;
 
-            console.log(hourDiff);
-            console.log(minuteDiff);
-            
+            // console.log(hourDiff);
+            // console.log(minuteDiff);
+
             return hourDiff * 60 + minuteDiff;
           };
           const timeDiff = getTimeDifference(
@@ -117,7 +150,7 @@ export class AppointmentCardComponent {
 
 
           if (timeDiff < 15 && timeDiff > -30) {
-            
+
             console.log('Appointment will start soon!');
             let username = apt.doctorName;
             const client = user;
@@ -127,37 +160,53 @@ export class AppointmentCardComponent {
             } else {
               username = apt.patientName;
             }
-           const url = `https://agora-video-call-eight.vercel.app/?username=${username}&aptCode=${aptCode}&c=${client}`;
+            const url = `https://agora-video-call-eight.vercel.app/?username=${username}&aptCode=${aptCode}&c=${client}`;
             // window.location.href = url;
             window.open(url, '_blank');
           } else if (timeDiff > 15) {
             this.openDialog('Appointment time is not here yet!')
-            console.log('Appointment time is not here yet!');
+            //  console.log('Appointment time is not here yet!');
           } else {
             this.openDialog("Appointment time is over!")
-            console.log('Appointment time is over!');
+            //  console.log('Appointment time is over!');
+            this.uploadPrescriptiion = false
           }
         } else {
           this.openDialog('Appointment date is coming soon!')
-          console.log('Appointment date is coming soon!');
+          // console.log('Appointment date is coming soon!');
         }
       } else {
         this.openDialog('Appointment date is over!')
-        console.log('Appointment date is over!');
+        // console.log('Appointment date is over!');
+        this.uploadPrescriptiion = false
+
       }
     }
   }
 
-  openDialog(data:string):void {
-    const dialogRef = this.dialog.open(AppointmentDialogComponent,{
+
+  uploadDocuments(data: any) {
+    const dialogRef = this.dialog.open(UploadAppointmentDocDialogComponent, {
       width: "40vw",
-      data : data
+      data: data?.patientProfileId
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
-  
+  }
+  openDialog(data: string): void {
+
+
+    const dialogRef = this.dialog.open(AppointmentDialogComponent, {
+      width: "40vw",
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
 

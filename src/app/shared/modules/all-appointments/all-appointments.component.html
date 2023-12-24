@@ -50,8 +50,9 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 3xl:grid-cols-4">
     <!-- [@enter] for animation -->
-    <div class=" border-[1px] rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
+    <div class=" border-[1px] h-fit  rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
       <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
+     
     </div>
   </div>
   <div class="flex w-full justify-center py-10">

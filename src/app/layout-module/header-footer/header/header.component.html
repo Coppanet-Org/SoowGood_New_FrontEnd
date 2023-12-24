@@ -32,21 +32,21 @@
     </div>
 </div> -->
 
-
-<div [class.scrolled]="scrolled" class="w-full transition-all border-b-secondary duration-200 fixed  py-2 z-50 top-0  supports-backdrop-blur:bg-primary/70">
+<div ></div>
+<div [class.scrolled]="scrolled"  class="w-full transition-all  duration-200 fixed  py-2 z-50 top-0  supports-backdrop-blur:bg-primary/70">
   <div [class]="layout== 'admin' || layout == 'spreed' ? 'container-full' : 'container'">
       <div *ngIf="layout == 'admin'">
           Admin Nav
       </div>
       <div class="container-items py-3" *ngIf="layout == 'public' || 'spreed'">
           <div class="header-logo" routerLink="/">
-              <img  class="w-full drop-shadow-md" [src]="logoPath" alt="logo">
+              <img appScroll class="w-full drop-shadow-md" [src]="logoPath" alt="logo">
           </div>
 <div>
   <div>
     <ul class="inline-flex gap-4">
-      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md">Soowgood Point</li>
-      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md">Village Booth</li>
+      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md cursor-pointer" routerLink="soowgood-point">Soowgood Point</li>
+      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md cursor-pointer" routerLink="soowgood-point">Village Booth</li>
     </ul>
   </div>
   <!-- <div class="flex items-center gap-2">

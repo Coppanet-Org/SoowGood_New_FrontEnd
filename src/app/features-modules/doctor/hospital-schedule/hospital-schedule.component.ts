@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+// import { TosterService } from './../../../shared/services/toster.service';
+import { Component, OnInit } from '@angular/core';
+import { HospitalStateService } from 'src/app/shared/services/states/hospital-state.service';
 
 @Component({
   selector: 'app-hospital-schedule',
@@ -7,20 +8,24 @@ import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@ang
   styleUrls: ['./hospital-schedule.component.scss'],
 
 })
-export class HospitalScheduleComponent {
+export class HospitalScheduleComponent implements OnInit {
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: [false],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: [''],
-  });
-  thirdFormGroup = this._formBuilder.group({
-    thirdCtrl: [''],
-  });
-  isLinear = false;
-  isEditable = false;
-  activeTab:any
-  constructor(private _formBuilder: FormBuilder) {}
-
+ 
+  activeTab: any
+  scheduleCompleted = false
+  constructor( private HospitalStateService: HospitalStateService,
+    // private TosterService: TosterService
+  ) { }
+  ngOnInit(): void {
+    this.HospitalStateService.getDoctorScheduleList().subscribe({
+      next: (res: any) => {
+        if (res?.length > 0) {
+          this.scheduleCompleted = true
+        } else {
+          // this.TosterService.customToast("Please add your schedule first!", 'warning')
+          this.scheduleCompleted = false
+        }
+      }
+    })
+  }
 }

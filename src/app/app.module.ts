@@ -18,19 +18,18 @@ import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
-import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
-import { CacheInterceptor } from './shared/utils/CacheInterceptor';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
   // preloadingStrategy       : PreloadAllModules  [ R&D]
 };
+
+
 
 @NgModule({
   declarations: [
@@ -39,10 +38,9 @@ const routerConfig: ExtraOptions = {
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
-    LoadingDirective,
     OtpInputComponent,
     PaymentFaildComponent,
-    PaymentCancelComponent,
+    PaymentCancelComponent
     //PaginatorComponent
    // PaginationComponent
   ],
@@ -63,7 +61,7 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-    MatSidenavModule,
+
     ReactiveFormsModule, FormsModule
   ],
   // add this interceptors on static page
@@ -71,9 +69,18 @@ const routerConfig: ExtraOptions = {
   // providers: [
   //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
   // ],
+  // providers: [
+  //   SplashScreenService,
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: SplashInterceptor,
+  //     multi: true,
+  //   },
+  // ],
   bootstrap: [AppComponent],
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
   ],
+  
 })
 export class AppModule { }

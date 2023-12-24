@@ -16,16 +16,16 @@ export class DoctorPatientAppointmentService {
     const cacheKey = `${user}-${id}`;
     
     // Check if data is already in cache
-    if (this.cache[cacheKey]) {
+    // if (this.cache[cacheKey]) {
       
-      return of(this.cache[cacheKey]);
-    }
+    //   return of(this.cache[cacheKey]);
+    // }
     
     if (user === "patient") {      
       return this.AppointmentService.getAppointmentListByPatientId(id).pipe(
         map((data) => {
           this.appointmentList = data;
-          this.cache[cacheKey] = data; // Cache the data
+         // this.cache[cacheKey] = data; // Cache the data
          
           return data;
         }),
@@ -40,7 +40,7 @@ export class DoctorPatientAppointmentService {
       return this.AppointmentService.getAppointmentListByDoctorId(id).pipe(
         map((data) => {
           this.appointmentList = data;
-          this.cache[cacheKey] = data; // Cache the data
+        //  this.cache[cacheKey] = data; // Cache the data
           return data;
         }),
         catchError(error => {
