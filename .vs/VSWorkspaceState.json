@@ -1,14 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\utils",
-    "\\src\\environments"
+    "\\src"
   ],
   "PreviewInSolutionExplorer": false
 }
