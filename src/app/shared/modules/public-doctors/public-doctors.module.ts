@@ -36,6 +36,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   ],
 exports:[
   PublicDoctorsComponent
-]
+],
+// providers: [
+//     {
+//       provide: HTTP_INTERCEPTORS,
+//       useClass: SplashInterceptor,
+//       multi: true,
+//     },
+//   ],
 })
 export class PublicDoctorsModule { }
