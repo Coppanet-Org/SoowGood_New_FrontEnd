@@ -21,6 +21,7 @@ import { PaymentSuccessComponent } from './shared/components/payment-success/pay
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
+import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
 
 
 
@@ -66,9 +67,9 @@ const routerConfig: ExtraOptions = {
   ],
   // add this interceptors on static page
 
-  // providers: [
-  //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  // ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  ],
   // providers: [
   //   SplashScreenService,
   //   {

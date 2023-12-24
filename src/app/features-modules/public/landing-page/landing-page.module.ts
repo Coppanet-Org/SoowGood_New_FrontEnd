@@ -43,18 +43,19 @@ const routes: Route[] = [
     ClientFeedbackComponent,
     NewsletterComponent,
   ],
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     ScrollDirective,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     MaterialModulesModule,
     BookingReviewModule
   ],
+
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
   ],
-    providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  ],
+
+
 })
 export class LandingPageModule {}

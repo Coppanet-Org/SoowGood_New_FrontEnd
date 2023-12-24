@@ -184,5 +184,6 @@ const routes: Route[] = [
     PublicLayoutTwoComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),ScrollDirective],
+  
 })
 export class LayoutModule {}

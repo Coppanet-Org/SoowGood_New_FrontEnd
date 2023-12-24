@@ -1,8 +1,11 @@
+import { DocumentsAttachmentService } from 'src/app/proxy/services';
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import KeenSlider, { KeenSliderInstance } from "keen-slider"
+import {  AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import KeenSlider from "keen-slider"
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -14,38 +17,28 @@ import { Router } from '@angular/router';
 export class LiveDoctorsComponent implements OnInit, AfterViewInit, OnChanges, AfterViewChecked {
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
   slider: any = null
-
-  showSlider = false
-
-  ngOnInit(): void {
-
-    this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
-      next: (res) => {
-        this.liveDoctorList = res
-        if (this.slider) {
-          setTimeout(() => {
-            this.slider?.update(undefined, 0)
-            this.showSlider = true
-            // Required when using indicator dots below the slides
-            this.updateDotHelper()
-          }, .1)
-        }
-
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete() {
-        console.log("completed");
-
-
-      },
-    })
-  }
-
   currentSlide: number = 1
   dotHelper: Array<Number> = []
-  // slider: KeenSliderInstance = null
+  public picUrl = `${environment.apis.default.url}/`;
+  doResize: boolean = false
+  showSlider = false
+  liveDoctorList: any
+  constructor(
+   private DoctorStateService: DoctorStateService,
+   private router: Router,
+   private DocumentsAttachmentService : DocumentsAttachmentService
+    ) {}
+  ngOnInit(): void {
+    this.getDoctorDetails()
+    if (this.slider) {
+      setTimeout(() => {
+        this.slider?.update(undefined, 0);
+        this.showSlider = true;
+        this.updateDotHelper();
+      }, 0);
+    }
+  }
+
   ngAfterViewInit() {
     if (this.sliderRef && this.sliderRef.nativeElement) {
       this.slider = new KeenSlider(this.sliderRef.nativeElement, {
@@ -81,10 +74,6 @@ export class LiveDoctorsComponent implements OnInit, AfterViewInit, OnChanges, A
     if (this.slider) this.slider.destroy()
   }
 
-
-  doResize: boolean = false
-
-
   ngAfterViewChecked(): void {
     if (this.slider && this.doResize) this.slider.resize()
     this.doResize = false
@@ -94,35 +83,42 @@ export class LiveDoctorsComponent implements OnInit, AfterViewInit, OnChanges, A
 
 
 
-
-
-
-
-
-
-
-  // ngOnDestroy(){
-  //   if(this.slider) this.slider.destroy()
-  // }
-  liveDoctorList: any
-  constructor(private DoctorStateService: DoctorStateService, private router: Router) {
-
-
-  }
-
-
-
   onClickSeeMore(value: string) {
-
-
     if (value) {
       this.router.navigate(['/search'], { queryParams: { type: value } });
-    } else {
-      // Handle the case where searchText is undefined or falsy.
-      // You might want to show an error message or take appropriate action.
-    }
-
+    } return
   }
 
-
+  getDoctorDetails(){
+    this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
+      next: (res) => {
+        const onlineDoctors = res;
+        const profilePictureObservables = onlineDoctors.map((doctor:any) => {
+          return this.DocumentsAttachmentService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType('Doctor', doctor.id, 'ProfilePicture');
+        });
+            forkJoin(profilePictureObservables).subscribe((profilePictureResults:any) => {
+            this.liveDoctorList = onlineDoctors.map((doctor:any, index:any) => {
+            const profilePicInfo = profilePictureResults[index];
+            let profilePicUrl = '';   
+            if (profilePicInfo) {
+              const prePaths: string = profilePicInfo.path || '';
+              const re = /wwwroot/gi;
+              const profilePic = prePaths.replace(re, '');
+              profilePicUrl = this.picUrl + profilePic;
+            }
+                return {
+              ...doctor,
+              profilePicUrl: profilePicUrl
+            };
+          });
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete() {
+        console.log("completed");
+      },
+    });
+  }
 }

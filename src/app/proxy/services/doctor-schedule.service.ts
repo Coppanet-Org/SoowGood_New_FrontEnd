@@ -44,6 +44,8 @@ export class DoctorScheduleService {
   
 
   getDetailsScheduleListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
+    
+    
     this.restService.request<any, DoctorScheduleDto[]>({
       method: 'GET',
       url: `/api/app/doctor-schedule/details-schedule-list-by-doctor-id/${doctorId}`,
