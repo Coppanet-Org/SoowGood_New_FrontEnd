@@ -41,7 +41,7 @@ const routerConfig: ExtraOptions = {
     PaymentSuccessComponent,
     OtpInputComponent,
     PaymentFaildComponent,
-    PaymentCancelComponent
+    PaymentCancelComponent,
     //PaginatorComponent
    // PaginationComponent
   ],
