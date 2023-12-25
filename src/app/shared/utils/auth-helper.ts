@@ -53,7 +53,7 @@ export function customNameValidator(
   }
 
   // Regular expression to validate only letters, numbers, and spaces between words
-  const regex = /^[a-zA-Z]+(?: [a-zA-Z]+)*[0-9]*$/;
+  const regex = /^[-\w\s]+$/;// /^[a-zA-Z]+(?: [a-zA-Z]+)*[0-9]*$/;
 
   if (!regex.test(value) || value.length < 3) {
     return { invalidName: true };
@@ -63,15 +63,15 @@ export function customNameValidator(
 }
 
 export class CustomValidators {
-  static startsWithUppercase(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const value = control.value as string;
-    if (value && !/^[A-Z]/.test(value)) {
-      return { startsWithUppercase: true };
-    }
-    return null;
-  }
+  //static startsWithUppercase(
+  //  control: AbstractControl
+  //): ValidationErrors | null {
+  //  const value = control.value as string;
+  //  if (value && !/^[A-Z]/.test(value)) {
+  //    return { startsWithUppercase: true };
+  //  }
+  //  return null;
+  //}
 
   // Validate that the password is at least 6 characters long
   static isAtLeast6Characters(
