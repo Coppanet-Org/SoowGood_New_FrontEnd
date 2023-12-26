@@ -6,11 +6,12 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
 import { UploadAppointmentDocDialogComponent } from '../upload-appointment-doc-dialog/upload-appointment-doc-dialog.component';
-import { DocumentsAttachmentService } from 'src/app/proxy/services';
+import { AppointmentService, DocumentsAttachmentService } from 'src/app/proxy/services';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { Common } from '../../common/common';
 import { AppointmentDto } from '../../../proxy/dto-models';
+import { TosterService } from './../../../shared/services/toster.service';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
@@ -23,7 +24,10 @@ export class AppointmentCardComponent implements AfterViewInit {
   @Input() user: any;
   uploadPrescriptiion: boolean = true;
   btnDisable: boolean = false;
-  constructor(private Router: Router, public dialog: MatDialog, private DoctorProfilePicService: DocumentsAttachmentService,
+  constructor(private Router: Router, public dialog: MatDialog,
+    private DoctorProfilePicService: DocumentsAttachmentService,
+    private AppointmentService: AppointmentService,
+    private tosterService: TosterService,
     private NormalAuth: AuthService) { }
 
   ngAfterViewInit(): void {
@@ -211,13 +215,15 @@ export class AppointmentCardComponent implements AfterViewInit {
   cancellAppointment(id: any) {
     let sessionUser = this.NormalAuth.authInfo();
     if (id) {
-      let result = confirm("hello");
+      let result = confirm("Are you Sure, to canel this appointment?");
       if (result) {
-
+        this.AppointmentService.cancellAppointment(id, sessionUser.id, sessionUser.userType).subscribe(res => {
+          if (res) {
+            this.tosterService.customToast("Appointment Cancelled!!", "success");
+          }
+        })
       }
-
     }
-
   }
 
   // generatePDF(action = 'open') {
