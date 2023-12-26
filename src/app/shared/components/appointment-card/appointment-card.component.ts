@@ -208,13 +208,17 @@ export class AppointmentCardComponent implements AfterViewInit {
 
   }
 
-  //cancellAppointment(id: any) {
-  //  let sessionUser = this.NormalAuth.authInfo();
-  //  if (confirm("Are you sure to Cancel ")) {
+  cancellAppointment(id: any) {
+    let sessionUser = this.NormalAuth.authInfo();
+    if (id) {
+      let result = confirm("hello");
+      if (result) {
 
-  //  }
+      }
 
-  //}
+    }
+
+  }
 
   // generatePDF(action = 'open') {
   //   const docDefinition = {

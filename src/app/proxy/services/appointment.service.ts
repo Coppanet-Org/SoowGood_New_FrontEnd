@@ -12,6 +12,15 @@ export class AppointmentService {
   apiName = 'Default';
   
 
+  cancellAppointment = (appId: number, cancelByid: number, cancelByRole: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'POST',
+      url: `/api/app/appointment/cancell-appointment/${appId}`,
+      params: { cancelByid, cancelByRole },
+    },
+    { apiName: this.apiName,...config });
+  
+
   create = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto>({
       method: 'POST',

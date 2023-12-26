@@ -59,7 +59,7 @@ appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus
       <i class="fa-solid fa-ban mr-1"></i> Cancel (click)="cancellAppointment(appointment.id)"
     </button> -->
 
-    <button *ngIf="appointment.appointmentStatus == 2 && appointment.appointmentStatus !== 4"
+    <button *ngIf="appointment.appointmentStatus == 2 && appointment.appointmentStatus !== 4" (click)="cancellAppointment(appointment.id)"
             [attr.data-tip]="btnDisable && 'Not acceptable!'"
             [class]="btnDisable ? 'btn-secondary-light tooltip tooltip-warning flex-1 basis-5/12 bg-primary/10 text-gray-400 hover:text-neutral-400  mr-0' : 'btn-secondary-light flex-1 basis-5/12 hover:text-white hover:bg-primary/30 bg-primary/90 text-white  mr-0'">
       <i class="fa-solid fa-ban mr-1"></i> Cancel
