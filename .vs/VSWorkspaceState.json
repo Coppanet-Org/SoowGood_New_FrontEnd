@@ -3,11 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\core-modules\\auth\\signup\\components"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\agent",
+    "\\src\\app\\features-modules\\agent\\appointments",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\appointments",
+    "\\src\\app\\features-modules\\patient",
+    "\\src\\app\\features-modules\\patient\\appointments"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.html",
+  "SelectedNode": "\\src\\app\\features-modules\\patient\\appointments\\appointments.module.ts",
   "PreviewInSolutionExplorer": false
 }
