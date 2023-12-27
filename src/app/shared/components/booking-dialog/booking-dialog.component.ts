@@ -354,6 +354,7 @@ export class BookingDialogComponent implements OnInit {
       ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
+      //creatorEntityId: [this.profileInfo.id, Validators.required],
     });
   }
 

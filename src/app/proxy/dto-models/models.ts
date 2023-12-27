@@ -113,6 +113,8 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  appointmentCreatorCode?: number;
+  appointmentCreatorRole?: number;
   isCousltationComplete?: boolean;
 }
 
@@ -144,6 +146,8 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  appointmentCreatorCode?: number;
+  appointmentCreatorRole?: number;
   isCousltationComplete?: boolean;
 }
 
@@ -433,6 +437,7 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   patientEmail?: string;
   createdBy?: string;
   cratorCode?: string;
+  creatorRole?: string;
   creatorEntityId?: number;
   userId?: string;
   profileRole?: string;

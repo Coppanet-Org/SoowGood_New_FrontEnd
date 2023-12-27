@@ -166,7 +166,8 @@ export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   email?: string;
   patientEmail?: string;
   createdBy?: string;
-  cratorCode?: string;
+  creatorCode?: string;
+  creatorRole?: string;
   creatorEntityId?: number;
   userId?: string;
 }
