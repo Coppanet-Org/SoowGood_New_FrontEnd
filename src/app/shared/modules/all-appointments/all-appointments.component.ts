@@ -141,10 +141,24 @@ export class AllAppointmentsComponent implements OnInit {
     //this.doctorFilterDto = {};
     }
 
-    if (this.user == 'patient' || this.user == 'agent') {
+    if (this.user == 'patient') {
       this.subs.sink = combineLatest([
-        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, this.doctorFilterDto, this.filterModel),
-        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, this.doctorFilterDto)
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto, this.filterModel),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto)
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+          this.appointmentList = buildingResponse;
+        },
+        (error) => {
+          console.log(error);
+        });
+      //this.doctorFilterDto = {};
+    }
+    if (this.user == 'agent') {
+      this.subs.sink = combineLatest([
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto, this.filterModel),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto)
       ]).subscribe(
         ([buildingResponse, countResponse]) => {
           this.totalCount = countResponse;

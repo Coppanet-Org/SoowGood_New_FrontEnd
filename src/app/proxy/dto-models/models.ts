@@ -113,8 +113,8 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
-  appointmentCreatorCode?: number;
-  appointmentCreatorRole?: number;
+  appointmentCreatorCode?: string;
+  appointmentCreatorRole?: string;
   isCousltationComplete?: boolean;
 }
 
@@ -146,8 +146,8 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
-  appointmentCreatorCode?: number;
-  appointmentCreatorRole?: number;
+  appointmentCreatorCode?: string;
+  appointmentCreatorRole?: string;
   isCousltationComplete?: boolean;
 }
 

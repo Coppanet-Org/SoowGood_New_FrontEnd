@@ -92,6 +92,7 @@ export class BookingDialogComponent implements OnInit {
   genderList: any;
   bookingInfo: any;
   filteredChamber: any = [];
+  sessionRole: any;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -113,7 +114,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.sessionRole = this.NormalAuth.authInfo()?.userType;
     this.selectedSlotInfo = ''
     this.dataLoader = true;
     this.appointmentType = CommonService.getEnumList(AppointmentType);
@@ -354,7 +355,7 @@ export class BookingDialogComponent implements OnInit {
       ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
-      //creatorEntityId: [this.profileInfo.id, Validators.required],
+      creatorRole: [(this.sessionRole == 'patient' ? 'patient' : 'agent'), Validators.required],
     });
   }
 
@@ -381,7 +382,7 @@ export class BookingDialogComponent implements OnInit {
       );
 
       if (finalSchedule && finalSchedule.consultancyType) {
-        let plFeeIn: any='';
+        let plFeeIn: any = '';
         let plFee: any = 0;
         let calculatedPlFee: any = 0;
         if (finalSchedule.consultancyType == 1) {
@@ -466,6 +467,7 @@ export class BookingDialogComponent implements OnInit {
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: user?.id,
+          appointmentCreatorRole: this.sessionRole == 'patient' ? 'patient' : 'agent'
         };
 
         if (infoForBooking && user) {
@@ -600,6 +602,7 @@ export class BookingDialogComponent implements OnInit {
               patientName: data.patientName,
               createdBy: data.createdBy,
               creatorEntityId: data.creatorEntityId,
+              creatorRole: data.creatorRole
             });
 
             //  this.createPatientForm.patchValue(data);
