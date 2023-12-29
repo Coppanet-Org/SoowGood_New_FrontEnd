@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\agent",
-    "\\src\\app\\features-modules\\agent\\appointments",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\appointments",
-    "\\src\\app\\features-modules\\patient",
-    "\\src\\app\\features-modules\\patient\\appointments"
+    ""
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\patient\\appointments\\appointments.module.ts",
+  "SelectedNode": "\\src\\app\\shared\\services\\states\\appointment-states\\doctor-patient-appointment.service.ts",
   "PreviewInSolutionExplorer": false
 }
