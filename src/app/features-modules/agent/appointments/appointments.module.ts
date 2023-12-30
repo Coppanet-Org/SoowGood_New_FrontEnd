@@ -24,6 +24,7 @@ const routes: Route[] = [
     CommonModule,
     RouterModule.forChild(routes),
     AllAppointmentsModule,
+    MatTabsModule,
   ]
 })
 export class AppointmentsModule { }
