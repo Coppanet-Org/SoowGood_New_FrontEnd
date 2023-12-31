@@ -221,13 +221,13 @@ export class SignupComponent implements OnInit {
       this.range.push(this.startYear - i);
     }
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.subs.unsubscribe();
   }
   //handle profile step 1
-
   private handleProfileStep1(): void {
     this.otpModal = false;
     this.userInfoModal = false;
@@ -354,9 +354,7 @@ export class SignupComponent implements OnInit {
         }
       });
   }
-
   // updated end
-
   loadForm() {
     this.formGroup = this.fb.group({
       mobile: [
@@ -430,12 +428,14 @@ export class SignupComponent implements OnInit {
         specializationId: [1, Validators.required],
         docFileName: [''],
       });
-    } else if (this.specialityId === 2) {
+    }
+    else if (this.specialityId === 2) {
       this.formSpecialization = this.fb.group({
         specializationId: [2, Validators.required],
         docFileName: [''],
       });
-    } else {
+    }
+    else {
       this.formSpecialization = this.fb.group({
         specializationId: [0, Validators.required],
         docFileName: [''],
@@ -444,7 +444,6 @@ export class SignupComponent implements OnInit {
   }
 
   // Future todo : add resend code feature
-
   // resendCodeEnabled: boolean = true;
   // countdown: number = 120;
   // minutes: number=0;
