@@ -383,27 +383,58 @@ export class BookingDialogComponent implements OnInit {
 
       if (finalSchedule && finalSchedule.consultancyType) {
         let plFeeIn: any = '';
+        let agentFeeIn: any = '';
         let plFee: any = 0;
+        let agentFee: any = 0;
         let calculatedPlFee: any = 0;
+        let calculatedAgentFee: any = 0;
+        
+
+        if (this.sessionRole == 'agent') {
+          if (finalSchedule.consultancyType == 1) {
+            agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 4)?.externalAmountIn;
+            agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 4 && f.externalAmountIn == agentFeeIn)?.externalAmount;
+            if (agentFeeIn == 'Percentage') {
+              calculatedAgentFee = this.selectedFeesInfo.totalFee * (agentFee / 100);
+            }
+            else if (agentFeeIn == 'Flat') {
+              calculatedAgentFee = agentFee;
+            }
+          }
+          else if (finalSchedule.consultancyType == 2) {
+            agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 5)?.externalAmountIn;
+            agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 5 && f.externalAmountIn == agentFeeIn)?.externalAmount;
+            if (agentFeeIn == 'Percentage') {
+              calculatedAgentFee = this.selectedFeesInfo.totalFee * (agentFee / 100);
+            }
+            else if (agentFeeIn == 'Flat') {
+              calculatedAgentFee = agentFee;
+            }
+          }          
+        }
+
         if (finalSchedule.consultancyType == 1) {
           plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 1)?.amountIn;
-
+          plFee = this.serviceFeeList.find(f => f.platformFacilityId == 1 && f.amountIn == plFeeIn)?.amount;
+          if (plFeeIn == 'Percentage') {
+            calculatedPlFee = this.selectedFeesInfo.totalFee * (plFee / 100);
+          }
+          else if (plFeeIn == 'Flat') {
+            calculatedPlFee = plFee;
+          }
         }
+
         else if (finalSchedule.consultancyType == 2) {
           plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 2)?.amountIn;
+          plFee = this.serviceFeeList.find(f => f.platformFacilityId == 2 && f.amountIn == plFeeIn)?.amount;
+          if (plFeeIn == 'Percentage') {
+            calculatedPlFee = this.selectedFeesInfo.totalFee * (plFee / 100);
+          }
+          else if (plFeeIn == 'Flat') {
+            calculatedPlFee = plFee;
+          }
         }
-
-        if (plFeeIn == 'Percentage') {
-          plFee = this.serviceFeeList.find(f => f.amountIn == 'Percentage')?.amount;
-          calculatedPlFee = this.selectedFeesInfo.totalFee * (plFee / 100);
-
-        }
-        else if (plFeeIn == 'Flat') {
-          plFee = this.serviceFeeList.find(f => f.amountIn == 'Flat')?.amount;
-          calculatedPlFee = plFee;
-
-        }
-
+        
 
         this.formSubmitted = true
         const {
@@ -461,9 +492,9 @@ export class BookingDialogComponent implements OnInit {
           appointmentTime: '',
           doctorFeesSetupId: this.selectedFeesInfo.id,
           doctorFee: this.selectedFeesInfo.totalFee,
-          agentFee: 0,
+          agentFee: calculatedAgentFee,
           platformFee: calculatedPlFee,
-          totalAppointmentFee: this.selectedFeesInfo.totalFee + calculatedPlFee,//this.selectedFeesInfo.totalFee,
+          totalAppointmentFee: this.selectedFeesInfo.totalFee + calculatedPlFee + calculatedAgentFee,//this.selectedFeesInfo.totalFee,
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: user?.id,
@@ -541,6 +572,7 @@ export class BookingDialogComponent implements OnInit {
         break;
     }
   }
+
   //create new patient under user
   createNewPatient(): void {
     this.formSubmitted = true

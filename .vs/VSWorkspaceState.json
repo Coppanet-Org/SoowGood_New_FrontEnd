@@ -4,6 +4,6 @@
     "\\src",
     "\\src\\app"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\src\\app\\shared\\components\\appointment-card\\appointment-card.component.html",
   "PreviewInSolutionExplorer": false
 }
