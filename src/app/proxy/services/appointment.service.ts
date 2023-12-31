@@ -12,6 +12,15 @@ export class AppointmentService {
   apiName = 'Default';
   
 
+  cancellAppointment = (appId: number, cancelByid: number, cancelByRole: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ResponseDto>({
+      method: 'POST',
+      url: `/api/app/appointment/cancell-appointment/${appId}`,
+      params: { cancelByid, cancelByRole },
+    },
+    { apiName: this.apiName,...config });
+  
+
   create = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto>({
       method: 'POST',
@@ -56,11 +65,11 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
-  getAppointmentCountForPatientWithSearchFilter = (patientId: number, dataFilter: DataFilterModel, config?: Partial<Rest.Config>) =>
+  getAppointmentCountForPatientWithSearchFilter = (patientId: number, role: string, dataFilter: DataFilterModel, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
       url: `/api/app/appointment/appointment-count-for-patient-with-search-filter/${patientId}`,
-      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline },
+      params: { role, name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline },
     },
     { apiName: this.apiName,...config });
   
@@ -73,10 +82,11 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
-  getAppointmentListByPatientId = (patientId: number, config?: Partial<Rest.Config>) =>
+  getAppointmentListByPatientId = (patientId: number, role: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: `/api/app/appointment/appointment-list-by-patient-id/${patientId}`,
+      params: { role },
     },
     { apiName: this.apiName,...config });
   
@@ -90,11 +100,11 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
-  getAppointmentListForPatientWithSearchFilter = (patientId: number, dataFilter: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
+  getAppointmentListForPatientWithSearchFilter = (patientId: number, role: string, dataFilter: DataFilterModel, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: `/api/app/appointment/appointment-list-for-patient-with-search-filter/${patientId}`,
-      params: { name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
+      params: { role, name: dataFilter.name, consultancyType: dataFilter.consultancyType, specialityId: dataFilter.specialityId, specializationId: dataFilter.specializationId, appointmentStatus: dataFilter.appointmentStatus, fromDate: dataFilter.fromDate, toDate: dataFilter.toDate, isCurrentOnline: dataFilter.isCurrentOnline, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
     },
     { apiName: this.apiName,...config });
   

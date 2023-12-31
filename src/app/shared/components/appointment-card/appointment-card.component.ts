@@ -6,8 +6,13 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
 import { UploadAppointmentDocDialogComponent } from '../upload-appointment-doc-dialog/upload-appointment-doc-dialog.component';
-import { DocumentsAttachmentService } from 'src/app/proxy/services';
+import { AppointmentService, DocumentsAttachmentService } from 'src/app/proxy/services';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../../services/auth.service';
+import { Common } from '../../common/common';
+import { AppointmentDto } from '../../../proxy/dto-models';
+import { TosterService } from './../../../shared/services/toster.service';
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-appointment-card',
@@ -19,11 +24,11 @@ export class AppointmentCardComponent implements AfterViewInit {
   @Input() user: any;
   uploadPrescriptiion: boolean = true;
   btnDisable: boolean = false;
-
-
-
-  constructor(private Router: Router, public dialog: MatDialog, private DoctorProfilePicService: DocumentsAttachmentService) { }
-
+  constructor(private Router: Router, public dialog: MatDialog,
+    private DoctorProfilePicService: DocumentsAttachmentService,
+    private AppointmentService: AppointmentService,
+    private tosterService: TosterService,
+    private NormalAuth: AuthService) { }
 
   ngAfterViewInit(): void {
     console.log(this.appointment);
@@ -50,8 +55,6 @@ export class AppointmentCardComponent implements AfterViewInit {
 
   }
 
-
-
   goToBuildPrescription(aptCode: string) {
 
     if (aptCode != null && aptCode !== undefined) {
@@ -61,6 +64,7 @@ export class AppointmentCardComponent implements AfterViewInit {
       console.log('Appointment not found');
     }
   }
+
   goToPatientProfile(appointment: any) {
     this.Router.navigate([
       '/doctor/patients/patient-details/',
@@ -157,7 +161,8 @@ export class AppointmentCardComponent implements AfterViewInit {
             const aptCode = apt.appointmentCode;
             if (client == 'doctor') {
               username = apt.doctorName;
-            } else {
+            }
+            else {
               username = apt.patientName;
             }
             const url = `https://agora-video-call-eight.vercel.app/?username=${username}&aptCode=${aptCode}&c=${client}`;
@@ -184,7 +189,6 @@ export class AppointmentCardComponent implements AfterViewInit {
     }
   }
 
-
   uploadDocuments(data: any) {
     const dialogRef = this.dialog.open(UploadAppointmentDocDialogComponent, {
       width: "40vw",
@@ -195,9 +199,8 @@ export class AppointmentCardComponent implements AfterViewInit {
 
     });
   }
+
   openDialog(data: string): void {
-
-
     const dialogRef = this.dialog.open(AppointmentDialogComponent, {
       width: "40vw",
       data: data
@@ -209,7 +212,19 @@ export class AppointmentCardComponent implements AfterViewInit {
 
   }
 
-
+  cancellAppointment(id: any) {
+    let sessionUser = this.NormalAuth.authInfo();
+    if (id) {
+      let result = confirm("Are you Sure, to canel this appointment?");
+      if (result) {
+        this.AppointmentService.cancellAppointment(id, sessionUser.id, sessionUser.userType).subscribe(res => {
+          if (res) {
+            this.tosterService.customToast("Appointment Cancelled!!", "success");
+          }
+        })
+      }
+    }
+  }
 
   // generatePDF(action = 'open') {
   //   const docDefinition = {

@@ -22,7 +22,7 @@ export class DoctorPatientAppointmentService {
     // }
     
     if (user === "patient") {      
-      return this.AppointmentService.getAppointmentListByPatientId(id).pipe(
+      return this.AppointmentService.getAppointmentListByPatientId(id, 'patient').pipe(
         map((data) => {
           this.appointmentList = data;
          // this.cache[cacheKey] = data; // Cache the data
@@ -35,7 +35,22 @@ export class DoctorPatientAppointmentService {
         })
       );
     }
-    
+
+    if (user === "agent") {
+      return this.AppointmentService.getAppointmentListByPatientId(id, 'agent').pipe(
+        map((data) => {
+          this.appointmentList = data;
+          // this.cache[cacheKey] = data; // Cache the data
+
+          return data;
+        }),
+        catchError(error => {
+          // Handle errors here if needed
+          return of(null);
+        })
+      );
+    }
+
     if (user === "doctor") {
       return this.AppointmentService.getAppointmentListByDoctorId(id).pipe(
         map((data) => {

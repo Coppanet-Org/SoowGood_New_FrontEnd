@@ -1,63 +1,66 @@
 
 <div class="bg-hero-pattern h-full relative overflow-hidden w-full bg-[#f2f6f6] ">
-    <img class="absolute left-0 top-0" src="assets/banner/left-shape.png" alt="">
-    <img class="absolute -right-20 opacity-40 top-0" src="assets/banner/right-shape.png" alt="">
-    <div class="container">
-        <div class="w-full flex flex-col h-screen justify-center">
-            <div class="w-full  flex justify-between items-center gap-8">
-                <div class="w-[65%] flex flex-col">
-                    <div class="w-full sm:w-full space-y-12 mt-8 md:mt-0">
-                        <div class="banner-left-top relative">
-                            <h1 class="leading-[1.2] md:text-[44px] drop-shadow-md 2xl:text-[58px] font-Roboto font-extrabold text-white tracking-[1.2px]">
-                                Your All-In-One <span class="text-primary ">Health</span> Platform</h1>
-                            <p class="mt-4 md:text-[15px] 2xl:text-[17px] leading-[30px] font-medium text-secondary-dark">Discover a comprehensive healthcare solution right at your fingertips. Consult with a qualified medical professional from anywhere, at any time, and receive instant prescriptions. Soowgood is dedicated to ensuring your health and wellness.
-                            </p>
-                        </div>
-                        <!-- <div class="flex gap-4 flex-wrap max-w-[580px] 2xl:mt-12">
-                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-red-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
-                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-green-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
-                             <br>
-                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-blue-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
-                            <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-yellow-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
-                        </div> -->
-                        <div class=" w-full mx-auto backdrop-blur-md bg-[#00A6E0]/10 2xl:rounded-[20px] rounded-[15px] 2xl:p-4 items-center border-[1px] box-border border-secondary-dark/30">
-                            <div class="search-area flex backdrop-blur-sm bg-[#00A6E0]/10 2xl:p-3 p-2 justify-between rounded-[10px]  2xl:rounded-[15px] items-centershadow-blue ">
-                               <form [formGroup]="searchForm" class="w-full flex gap-3">
-                                   <!-- <select formControlName="service" name="service" id="service" 
-                                   class="w-[35%] rounded-lg border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                   (change)=onChangeService($event)>
-                                   <option value="0" class="font-semibold text-gray-500">Select service</option>
-                                   <option *ngFor="let item of serviceList" value="{{ item.name }}"
-                                     class="font-semibold text-gray-500">{{item.name}}</option>
-                                 </select> -->
-                                 <input  class="w-full rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" type="search" formControlName="searchText"  placeholder="search by name...">
-            
-                               </form>
-                                <button class="btn-secondary ml-2" (click)="goToServicePage()"><i class="fa-solid fa-magnifying-glass mr-2"></i> Search </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-[35%] 2xl:mt-12 md:mt-6 flex justify-end  ">
-                  <div class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[300px] min-w-[400px] bg-white/10">
-                    <div class="p-8 bg-white/30 w-full h-full relative rounded-md text-center">
-                        <!-- <i class="fa-solid absolute -top-[50px] left-1/2 -translate-x-1/2 fa-door-open text-[36px] p-6 bg-primary/20 backdrop-blur-lg border-secondary-dark/50 border-4 text-white rounded-full"></i> -->
-                       
-                        <h1 class="font-Roboto text-primary text-center text-[34px] mt-5 font-bold" *ngIf="!authUser">Easy Login/Registration</h1>
-                        <h1 class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold" *ngIf="authUser">Manage Your Appointment</h1>
-                        <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="!authUser">
-                          <button class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]" routerLink="login">Login</button>
-                          <button class="btn-secondary bg-primary w-1/2 text-[18px]" routerLink="signup">Registration</button>
-                        </div>
-                        <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="authUser">
-                            <button [routerLink]="authUser.userType" class="btn-secondary w-full border-secondary-dark/40 text-[18px]"><i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard</button>
-                        </div>
-                    </div>
-                  </div>
-                
-                </div>
+  <img class="absolute left-0 top-0" loading="lazy" src="assets/banner/left-shape.png" alt="img">
+  <img class="absolute -right-20 opacity-40 top-0" loading="lazy" src="assets/banner/right-shape.png" alt="img">
+  <div class="container">
+    <div class="w-full flex flex-col h-screen justify-center">
+      <div class="w-full  flex justify-between items-center gap-8">
+        <div class="w-[65%] flex flex-col">
+          <div class="w-full sm:w-full space-y-12 mt-8 md:mt-0">
+            <div class="banner-left-top relative">
+              <h1 class="leading-[1.2] md:text-[44px] drop-shadow-md 2xl:text-[58px] font-Roboto font-extrabold text-white tracking-[1.2px]">
+                Your All-In-One <span class="text-primary ">Health</span> Platform
+              </h1>
+              <p class="mt-4 md:text-[15px] 2xl:text-[17px] leading-[30px] font-medium text-secondary-dark">
+                Discover a comprehensive healthcare solution right at your fingertips. Consult with a qualified medical professional from anywhere, at any time, and receive instant prescriptions. Soowgood is dedicated to ensuring your health and wellness.
+              </p>
             </div>
+            <!-- <div class="flex gap-4 flex-wrap max-w-[580px] 2xl:mt-12">
+                <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-red-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-green-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                 <br>
+                <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-blue-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+                <div class="border-secondary-dark/30 py-2 2xl:py-3 relative overflow-hidden after:left-0 after:w-[50px] after:h-full after:absolute after:top-0 after:bg-yellow-300/20  rounded-[5px] px-3 border-[1px] h-50px w-[250px] 2xl:w-[260px]">asd</div>
+            </div> -->
+            <div class=" w-full mx-auto backdrop-blur-md bg-[#00A6E0]/10 2xl:rounded-[20px] rounded-[15px] 2xl:p-4 items-center border-[1px] box-border border-secondary-dark/30">
+              <div class="search-area flex backdrop-blur-sm bg-[#00A6E0]/10 2xl:p-3 p-2 justify-between rounded-[10px]  2xl:rounded-[15px] items-centershadow-blue ">
+                <form [formGroup]="searchForm" class="w-full flex gap-3">
+                  <!-- <select formControlName="service" name="service" id="service"
+                    class="w-[35%] rounded-lg border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    (change)=onChangeService($event)>
+                    <option value="0" class="font-semibold text-gray-500">Select service</option>
+                    <option *ngFor="let item of serviceList" value="{{ item.name }}"
+                      class="font-semibold text-gray-500">{{item.name}}</option>
+                  </select> -->
+                  <input class="w-full rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" type="search" formControlName="searchText" placeholder="search by name...">
 
+                </form>
+                <button class="btn-secondary ml-2" (click)="goToServicePage()"><i class="fa-solid fa-magnifying-glass mr-2"></i> Search </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-[35%] 2xl:mt-12 md:mt-6 flex justify-end  ">
+          <div class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[300px] min-w-[400px] bg-white/10">
+            <div class="p-8 bg-white/30 w-full h-full relative rounded-md text-center">
+              <!-- <i class="fa-solid absolute -top-[50px] left-1/2 -translate-x-1/2 fa-door-open text-[36px] p-6 bg-primary/20 backdrop-blur-lg border-secondary-dark/50 border-4 text-white rounded-full"></i> -->
+
+              <h1 class="font-Roboto text-primary text-center text-[34px] mt-5 font-bold" *ngIf="!authUser">Easy Login/Registration</h1>
+              <h1 class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold" *ngIf="authUser">Manage Your Appointment</h1>
+              <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="!authUser">
+                <button class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]" routerLink="login">Login</button>
+                <button class="btn-secondary bg-primary w-1/2 text-[18px]" routerLink="signup">Registration</button>
+              </div>
+              <div class="flex justify-evenly items-end gap-4 mt-5" *ngIf="authUser">
+                <button [routerLink]="authUser.userType" class="btn-secondary w-full border-secondary-dark/40 text-[18px]">
+                  <i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       <!-- <div class=" md:mt-6 2xl:mt-10 w-full mx-auto bg-[#00A6E0]/10 rounded-[20px] p-4 items-center border-[1px] box-border border-secondary-dark/30">
           <div class="search-area flex bg-[#00A6E0]/10 p-3 justify-between rounded-[15px] items-centershadow-blue ">
@@ -77,7 +80,6 @@
       </div> -->
 
     </div>
-
   </div>
 </div>
 

@@ -4,7 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, of, switchMap } from 'rxjs';
-import { PatientProfileDto } from 'src/app/proxy/dto-models';
+import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
 import { Gender } from 'src/app/proxy/enums';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,6 +12,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { customNameValidator } from 'src/app/shared/utils/auth-helper';
+import { FinancialSetupService } from '../../../../../proxy/services';
 
 @Component({
   selector: 'app-live-consult-booking-dialog',
@@ -35,26 +36,39 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   btnLoader: boolean = false;
   profileInfo: any;
   userPatientList: any[]=[];
-  genderList: ListItem[]=[];
-  stepLoading: boolean= false;
+  genderList: ListItem[] = [];
+  serviceFeeList: FinancialSetupDto[] = [];
+  stepLoading: boolean = false;
+  userRole: any;
   constructor(
     public dialogRef: MatDialogRef<LiveConsultBookingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined,
     private fb: FormBuilder,
     private UserinfoStateService : UserinfoStateService,
     private TosterService : TosterService,
-    private PatientProfileService : PatientProfileService,
+    private PatientProfileService: PatientProfileService,
+    private FinancialSetupService: FinancialSetupService,
     private NormalAuth : AuthService,
     public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.genderList = CommonService.getEnumList(Gender)
-
+    this.FinancialSetupService.getList().subscribe(res => {
+      this.serviceFeeList = res;
+    });
+    this.userRole = this.NormalAuth.authInfo()?.userType;
+    
     let id = this.NormalAuth.authInfo()?.id;
-    if (id) {
+    if (this.userRole == 'patient' && id) {
+   
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       this.UserinfoStateService.getProfileInfo(id, 'patient');
+    }
+    if (this.userRole == 'agent' && id) {
+
+      this.UserinfoStateService.getUserPatientInfo(id, 'agent');
+      this.UserinfoStateService.getProfileInfo(id, 'agent');
     }
 
     this.UserinfoStateService.getData()
@@ -121,6 +135,48 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     }
     if (step === 2) {
       this.stepLoading = true
+
+
+      let plFeeIn: any = '';
+      let agentFeeIn: any = '';
+      let plFee: any = 0;
+      let agentFee: any = 0;
+      let providerfee: any = 0;
+      let calculatedPlFee: any = 0;
+      let calculatedAgentFee: any = 0;
+      if (this.userRole == 'patient') {
+        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.amountIn;
+        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.providerAmount;
+      }
+      else if (this.userRole == 'agent') {
+        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 4)?.amountIn;
+        agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 4)?.externalAmountIn;
+        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 4)?.providerAmount;
+
+      }
+
+      
+
+      if (plFeeIn == 'Percentage') {
+        plFee = this.serviceFeeList.find(f => f.amountIn == 'Percentage')?.amount;
+        calculatedPlFee = providerfee * (plFee / 100);
+      }
+      else if (plFeeIn == 'Flat') {
+        plFee = this.serviceFeeList.find(f => f.amountIn == 'Flat')?.amount;
+        calculatedPlFee = plFee;
+
+      }
+
+      if (agentFeeIn == 'Percentage') {
+        agentFee = this.serviceFeeList.find(f => f.externalAmountIn == 'Percentage')?.amount;
+        calculatedAgentFee = providerfee * (agentFee / 100);
+      }
+      else if (agentFeeIn == 'Flat') {
+        agentFee = this.serviceFeeList.find(f => f.externalAmountIn == 'Flat')?.amount;
+        calculatedAgentFee = agentFee;
+
+      }
+
       this.formSubmitted = true
         const infoForBooking = {
           doctorProfileId:this.doctorData.doctorDetails.id,
@@ -153,10 +209,10 @@ export class LiveConsultBookingDialogComponent implements OnInit {
             : this.profileInfo.email || 'admin@gmail.com',
           // appointmentDate:"2023-12-12T14:35:35.546Z",
           // appointmentTime: "10",
-          doctorFee: 100,
-          agentFee: 0,
-          platformFee: 0,
-          totalAppointmentFee: 100,
+          doctorFee: providerfee,
+          agentFee: calculatedAgentFee,
+          platformFee: calculatedPlFee,
+          totalAppointmentFee: providerfee+calculatedAgentFee+calculatedPlFee,
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: this.profileInfo?.id,

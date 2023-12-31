@@ -213,7 +213,8 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
   selectedFilterData(data: any) {
-
+    this.dataLoading = true;
+    // this.noDataAvailable = true;
     const {
       consultancy,
       speciality,
@@ -233,6 +234,8 @@ export class PublicDoctorsComponent implements OnInit {
     ]).subscribe(
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
+        this.dataLoading = false;
+
         this.doctorList = buildingResponse;
       },
       (error) => {

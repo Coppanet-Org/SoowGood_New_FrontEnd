@@ -160,6 +160,9 @@ export class SignupComponent implements OnInit {
   nidUploadBtn: any = true;
   stepBack2: any = false;
   stepBack1: any = false;
+
+  startYear = new Date().getFullYear();
+  range:any = [];
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -214,7 +217,9 @@ export class SignupComponent implements OnInit {
     else {
       this._router.navigate(['/']);
     }
-
+    for (let i = 0; i < 65; i++) {
+      this.range.push(this.startYear - i);
+    }
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -381,10 +386,11 @@ export class SignupComponent implements OnInit {
           '',
           [
             Validators.required,
-            CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{6,}$/)
+            //CustomValidators.startsWithUppercase,
+            //CustomValidators.isAtLeast6Characters,
+            //CustomValidators.includesSpecialCharacter,
+            //CustomValidators.includesNumber,
           ],
         ],
         confirmPassword: ['', Validators.required],
@@ -408,7 +414,7 @@ export class SignupComponent implements OnInit {
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
-      passingYear: [''], //, [Validators.required, customPassingYearValidator]
+      passingYear: ['2000'], //, [Validators.required, customPassingYearValidator]
       instituteName: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
@@ -1563,7 +1569,7 @@ export class SignupComponent implements OnInit {
   }
 
   getBackStep1Data() {
-
+    this.isLoading = true;
     let authInfo = this.normalAuth.authInfo();
     let profileId = authInfo.id;
     this.doctorProfileService.get(profileId).subscribe(res => {
@@ -1612,7 +1618,7 @@ export class SignupComponent implements OnInit {
       });
       this.doctorSpecializations = [];
       this.doctorDegrees = [];
-
+      this.isLoading = false;
     })
 
   }

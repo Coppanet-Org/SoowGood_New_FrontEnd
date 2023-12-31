@@ -80,6 +80,7 @@ export class AllAppointmentsComponent implements OnInit {
     };
     this.filter = this.fb.group({});
   }
+
   ngOnInit(): void {
 
     if (this.id && this.user) {
@@ -125,7 +126,7 @@ export class AllAppointmentsComponent implements OnInit {
     this.filterModel.limit = this.filterModel.pageSize;
     this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
 
-
+    if (this.user == 'doctor') {
     this.subs.sink = combineLatest([
       this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(this.id, this.doctorFilterDto, this.filterModel),
       this.AppointmentService.getAppointmentCountForDoctorWithSearchFilter(this.id, this.doctorFilterDto)
@@ -138,14 +139,46 @@ export class AllAppointmentsComponent implements OnInit {
         console.log(error);
       });
     //this.doctorFilterDto = {};
+    }
+
+    if (this.user == 'patient') {
+      this.subs.sink = combineLatest([
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto, this.filterModel),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto)
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+          this.appointmentList = buildingResponse;
+        },
+        (error) => {
+          console.log(error);
+        });
+      //this.doctorFilterDto = {};
+    }
+    if (this.user == 'agent') {
+      this.subs.sink = combineLatest([
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto, this.filterModel),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto)
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+          this.appointmentList = buildingResponse;
+        },
+        (error) => {
+          console.log(error);
+        });
+      //this.doctorFilterDto = {};
+    }
   }
 
   getSpecializations(e: any) {
 
   }
+
   searchData(e: any) {
 
   }
+
   searchChanged(e: string) {
     console.log(e);
   }
