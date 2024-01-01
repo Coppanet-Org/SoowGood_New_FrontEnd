@@ -55,8 +55,6 @@ export class DoctorComponent {
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
     }
-    
-    
   }
 
 

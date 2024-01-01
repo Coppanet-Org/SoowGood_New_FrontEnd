@@ -7,6 +7,8 @@ import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashb
 import { isAuth } from 'src/app/auth-gurd/auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterceptor';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 const routes: Route[] = [
   {
     path: '',
@@ -75,9 +77,10 @@ const routes: Route[] = [
   declarations: [
     DoctorComponent
   ],
-  imports: [DashboardHeaderModule,CommonModule,DashboardMenuModule, RouterModule.forChild(routes)],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  ],
+  imports: [DashboardHeaderModule,CommonModule,DashboardMenuModule,MatSidenavModule, RouterModule.forChild(routes)],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  // ],
+  
 })
 export class DoctorModule {}

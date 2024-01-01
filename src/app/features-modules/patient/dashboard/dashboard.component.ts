@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     {
       title: 'Total Pay',
       data: '',
+      currency : true
     },
     {
       title: 'Loyalty Points',

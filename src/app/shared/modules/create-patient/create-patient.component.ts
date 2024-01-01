@@ -12,13 +12,13 @@ createPatientForm!: FormGroup
 inputConfigs:any=inputForCreatePatient
 isLoading:boolean = false
 profileInfo:any
+formSubmitted:boolean = false
 constructor( private fb : FormBuilder){}
 ngOnInit(): void {
   this.loadForm()
 }
 loadForm() {
   this.createPatientForm = this.fb.group({
-    isSelf: [false, Validators.required],
     patientName: ['', Validators.required],
     age: ['', Validators.required],
     gender: ['', Validators.required],

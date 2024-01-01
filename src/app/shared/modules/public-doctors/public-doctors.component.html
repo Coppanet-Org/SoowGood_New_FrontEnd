@@ -27,9 +27,8 @@
             <div *ngIf="!dataLoading"
             [ngClass]="from=='globalSearch' ? 'w-full  grid lg:grid-cols-3 2xl:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' : 'w-full grid lg:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' ">
             <div *ngFor="let doctorDetails of doctorList" class="h-full">
-                <app-doctor-card [doctorDetails]="doctorDetails"  class="max-w-[350px] min-w-[310px]">
+                <app-doctor-card [doctorDetails]="doctorDetails "  class="max-w-[350px] min-w-[310px]">
                 </app-doctor-card>
-                
               </div>
             </div>
       

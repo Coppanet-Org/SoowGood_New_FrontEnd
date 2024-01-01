@@ -115,10 +115,21 @@
             <div *ngIf="!changePasswordShow">
               <label for="number" class="block mb-2 text-sm font-medium text-white dark:text-white">Your phone
                 number</label>
-              <input formControlName="username" type="number" name="number" id="number" inputmode="numeric" type="tel"
+              <input formControlName="username" name="number" id="number" inputmode="numeric" 
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@company.com" required="">
-            </div>
+                placeholder="018700 00 000" required>
+                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('required')">
+                  You must enter a valid mobile number.
+                </mat-error>
+                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('pattern')">
+                  Mobile number should have exactly 11 digits.
+                </mat-error>
+                <mat-error *ngIf="resetPasswordForm.get('username')?.hasError('customError')">
+                  {{ resetPasswordForm.get('username')?.getError('customError') }}
+                </mat-error>
+           
+           
+              </div>
 
 
             <div *ngIf="changePasswordShow">
@@ -129,19 +140,19 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required="">
                   <div class="flex flex-col">
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('required')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('required')">
                       Password is required.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('startsWithUppercase')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('startsWithUppercase')">
                       Password must start with an uppercase letter.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('isAtLeast6Characters')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('isAtLeast6Characters')">
                       Password must be at least 6 characters long.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesSpecialCharacter')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesSpecialCharacter')">
                       Password must include a special character.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesNumber')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesNumber')">
                       Password must include a number.
                     </mat-error>
                   </div>
@@ -156,11 +167,11 @@
                   required="">
 
                   <div class="flex flex-col">
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('confirmPassword')?.hasError('required')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.hasError('required')">
                       Confirm password is required.
                     </mat-error>
                     <mat-error
-                      *ngIf=" formSubmitted && resetPasswordForm.get('confirmPassword')?.valid && resetPasswordForm.get('confirmPassword')?.dirty  && resetPasswordForm.get('confirmPassword')?.errors">
+                      *ngIf=" resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.valid && resetPasswordForm.get('confirmPassword')?.dirty  && resetPasswordForm.get('confirmPassword')?.errors">
                       Password not matched.
                     </mat-error>
                   </div>

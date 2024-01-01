@@ -2,12 +2,10 @@
 <div  class="relative flex group  h-fit overflow-hidden w-full transition-all duration-500 shadow-2xl shadow-secondary/10  flex-col 
     rounded-xl bg-white bg-clip-border text-gray-700 border-[1px]">
     <div class="relative box-border flex justify-center  py-10 h-[100px] bg-primary/90  w-full">
-
         <div
             class="w-[120px] overflow-hidden shadow-2xl shadow-primary/30 bg-white h-[120px] rounded-full border-secondary/50 border-[1px]">
-            <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
+            <img class="w-full h-full object-cover" [src]="doctorDetails.url ? doctorDetails.url : '/assets/doctor/avater.png'" alt="avater">
         </div>
-
     </div>
 
     <div class="px-10 pt-9 mt-10 flex flex-col items-center">

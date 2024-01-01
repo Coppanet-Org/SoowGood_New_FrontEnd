@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AgentComponent } from './agent.component';
 import { Route, RouterModule } from '@angular/router';
 import { DashboardMenuModule } from 'src/app/shared/modules/dashboard-menu/dashboard-menu.module';
-import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
-import { InputModule } from 'src/app/shared/modules/input/input.module';
-import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
-import { isAuth } from 'src/app/auth-gurd/auth.service';
+
+import { DashboardHeaderModule } from 'src/app/shared/modules/dashboard-header/dashboard-header.module';
 
 const routes: Route[] = [
   {
@@ -73,6 +71,8 @@ const routes: Route[] = [
   imports: [
     CommonModule, RouterModule.forChild(routes),
     DashboardMenuModule,
+    DashboardHeaderModule
+    
   ]
 })
 export class AgentModule { }
