@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       if (res?.length > 0 && data) {
         const dialogRef = this.dialog.open(LiveConsultBookingDialogComponent, {
           maxWidth:600,
-          minWidth: 450,
+          minWidth:450,
           data: {
             doctorDetails:data,
             doctorScheduleInfo: res,

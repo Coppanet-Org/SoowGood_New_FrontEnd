@@ -292,7 +292,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   (doctorDto: DoctorProfileDto) => {
                     let saveLocalStorage = {
                       identityNumber: doctorDto.identityNumber,
-                      doctorName: doctorDto.fullName,
+                      fullName: doctorDto.fullName,
                       bmdcRegNo: doctorDto.bmdcRegNo,
                       isActive: doctorDto.isActive,
                       userId: doctorDto.userId,
@@ -337,6 +337,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               ).subscribe(
                 (patientDto: PatientProfileDto) => {
                   let saveLocalStorage = {
+                    fullName:patientDto.fullName,
                     userId: patientDto.userId,
                     id: patientDto.id,
                     userType: loginResponse.roleName.toString().toLowerCase(),

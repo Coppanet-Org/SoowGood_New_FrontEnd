@@ -72,7 +72,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
-    this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
+    this.UserinfoStateService.getData().subscribe((userInfo) => this.profileInfo = userInfo)
     this.getProfilePic();
   }
 

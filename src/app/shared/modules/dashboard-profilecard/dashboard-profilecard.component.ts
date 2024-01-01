@@ -11,7 +11,9 @@ import { UserinfoStateService } from '../../services/states/userinfo-state.servi
 export class DashboardProfilecardComponent implements OnInit {
   userInfo: any;
   authInfo: any;
-  status:any;
+  status: any;
+  profileTile: any;
+  profileName: any;
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private AuthService: AuthService,
@@ -20,6 +22,16 @@ export class DashboardProfilecardComponent implements OnInit {
   ngOnInit() {
     this.authInfo = this.AuthService.authInfo();
 
+    if (this.authInfo.userType == 'doctor') {
+      this.profileTile = 'Doctor';
+    }
+    else if (this.authInfo.userType == 'patient') {
+      this.profileTile = 'Patient';
+    }
+    else {
+      this.profileTile = 'Agent';
+    }   
+    this.profileName = this.authInfo.fullName;
     this.UserinfoStateService.getData().subscribe(
       (data) => {
         this.userInfo = data
@@ -48,4 +60,3 @@ export class DashboardProfilecardComponent implements OnInit {
     }
   }
 }
- 

@@ -107,15 +107,30 @@ export class AgentSignupComponent implements OnInit {
           ).subscribe((agentDto: AgentProfileInputDto) => {
             this.agentProfileDto = agentDto;
             this.agentId = agentDto.id;
-            let saveLocalStorage = {
-              isActive: agentDto.isActive,
-              userId: res.userId,
-              id: agentDto.id,
-              userType :"agent"
-            };
-            this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-            this.TosterService.customToast(String(res.message), 'success');
-            this._router.navigate(["/agent"])
+            //let saveLocalStorage = {
+            //  agentName: agentDto.fullName,
+            //  isActive: agentDto.isActive,
+            //  userId: res.userId,
+            //  id: agentDto.id,
+            //  userType :"agent"
+            //};
+            //this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+
+            this.NormalAuth.signOut();
+            //if (this.normalAuth) {
+            //  this.loadAuth();
+            //}
+            //let navUrl = this.userType.toLowerCase() + '/dashboard';
+            this._router
+              .navigate(['/agent/login'], {
+                state: { data: res }, // Pass the 'res' object as 'data' in the state object
+              })
+              .then((r) =>
+                this.TosterService.customToast(String(res.message), 'success')
+              );
+
+            //this.TosterService.customToast(String(res.message), 'success');
+            //this._router.navigate(["/agent"])
           });
         });
       } else{
