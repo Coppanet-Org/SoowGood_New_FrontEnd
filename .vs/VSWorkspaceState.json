@@ -4,6 +4,6 @@
     "\\src",
     "\\src\\app"
   ],
-  "SelectedNode": "\\src\\app\\shared\\components\\appointment-card\\appointment-card.component.html",
+  "SelectedNode": "\\src\\app\\features-modules\\public\\landing-page\\components\\live-consult-booking-dialog\\live-consult-booking-dialog.component.ts",
   "PreviewInSolutionExplorer": false
 }
