@@ -87,6 +87,7 @@ appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus
 
   </div>
 </div>
+
 <!-- Doctor start -->
 
 <div *ngIf="user == 'doctor'">
@@ -101,7 +102,6 @@ appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus
       <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
     </div>
   </div>
-
 
   <div class="px-6 ">
     <!-- <p class="text-[22px] font-Roboto font-semibold text-primary/80 flex justify-between"> {{appointment.scheduleDayofWeek}} {{ appointment.appointmentDate | date: 'hh:mm a' }}</p> -->
@@ -182,6 +182,7 @@ appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus
   </div>
 </div>
 
+<!-- Doctor start -->
 
 <div *ngIf="user == 'agent'">
   <div class="border-b-[1px] flex justify-between p-5 bg-primary/90">
@@ -272,4 +273,3 @@ appointment.appointmentStatus == 2 ? "Confirmed" : appointment.appointmentStatus
 
   </div>
 </div>
-<!-- Doctor start -->

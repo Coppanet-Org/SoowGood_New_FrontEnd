@@ -31,6 +31,7 @@ export class BannerComponent implements OnInit {
   authUser: any;
   profileStep: any;
   userRole: any;
+  routerlink: any;
   constructor(private fb: FormBuilder, private router: Router, private NormalAuth: AuthService) { }
 
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class BannerComponent implements OnInit {
     this.authUser = this.NormalAuth.authInfo();
     this.profileStep = this.authUser? this.authUser.profileStep:null;
     this.userRole = this.authUser ? this.authUser.userType : null;
+    //this.routerlink = this.userRole.toString().toLowerCase() + '/dashboard';
     this.searchForm.get('service')?.valueChanges.subscribe(service => {
       this.service = service
     });

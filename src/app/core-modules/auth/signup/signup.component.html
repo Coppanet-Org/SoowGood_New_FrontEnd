@@ -545,15 +545,19 @@
                      placeholder="Full Name"
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('required')">
-                Please enter your full name.
-              </mat-error>
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('pattern')">
-                Full name should contain only letters and numbers at the end.
-              </mat-error>
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('invalidName')">
-                Full name should be at least 3 characters long and follow the specified pattern.
-              </mat-error>
+              <div class="flex justify-between">
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('required')">
+                  Please enter your full name.
+                </mat-error>
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('pattern')">
+                  Full name should contain only letters and numbers at the end.
+                </mat-error>
+                <mat-error *ngIf="formSubmitted && userInfoForm.get('fullName')?.hasError('invalidName')">
+                  Full name should be at least 3 characters long and follow the specified pattern.
+                </mat-error>
+              </div>
+              <mat-hint *ngIf="userInfoForm.get('fullName')?.invalid" class="text-xs text-red-500 font-normal"
+                        align="end">Required* </mat-hint>
 
             </div>
           </div>
@@ -566,12 +570,18 @@
               <input autocomplete="off" formControlName="email" type="email" name="name" id="name"
                      placeholder="example@yourmail.com"
                      class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('required')">
-                Please enter your email.
-              </mat-error>
-              <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('pattern')">
-                Email should be valid.
-              </mat-error>
+              <div>
+                <div class="flex justify-between">
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('required')">
+                    Please enter your email.
+                  </mat-error>
+                  <mat-error *ngIf="formSubmitted && userInfoForm.get('email')?.hasError('pattern')">
+                    Email should be valid.
+                  </mat-error>
+                </div>
+                <mat-hint *ngIf="userInfoForm.get('email')?.invalid" class="text-xs text-red-500 font-normal"
+                          align="end">Required* </mat-hint>
+              </div>
 
             </div>
           </div>
