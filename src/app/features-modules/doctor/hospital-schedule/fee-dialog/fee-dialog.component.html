@@ -1,25 +1,147 @@
 <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
-    <h1 class="dashbord-heading-text"> <i class="fa-solid fa-plus"></i> {{editData ? "Update" : "Add"}} Fees Options
-    </h1>
-    <button class="btn-secondary-light" (click)="dialogRef.close(true)">Close</button>
+  <h1 class="dashbord-heading-text">
+    <i class="fa-solid fa-plus"></i> {{ editData ? "Update" : "Add" }} Fees
+    Options
+  </h1>
+  <button class="btn-secondary-light" (click)="dialogRef.close(true)">
+    Close
+  </button>
 </div>
 
-
-
-
-
 <div class="px-10 py-6">
+  <form [formGroup]="form">
+    <!-- <div class="-mx-3 flex flex-wrap">
+      <ng-container class="w-full" *ngFor="let config of feesData">
+        <app-input
+          [label]="config.label"
+          [inputId]="config.inputId"
+          [isSelectInput]="config.isSelect"
+          [readonly]="config.readonly ? config.readonly : false"
+          [options]="config.options"
+          [formControlName]="config.formControlName"
+          [placeholder]="config.placeholder"
+          [type]="config.type"
+          class="sm:w-1/3"
+        ></app-input>
+      </ng-container>
+    </div> -->
+
     <form [formGroup]="form">
-        <div class="-mx-3 flex flex-wrap" *ngIf="feesData?.length > 0;  else noData">
-            <ng-container class="w-full" *ngFor="let config of feesData">
-                <app-input [label]="config.label" [inputId]="config.inputId" [isSelectInput]="config.isSelect"
-                    [readonly]="config.readonly ? config.readonly : false" [options]="config.options"
-                    [formControlName]="config.formControlName" [placeholder]="config.placeholder" [type]="config.type" class="sm:w-1/3"></app-input>
-                 </ng-container>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="w-full px-3 sm:w-full">
+          <label for="appointmentType" class="mb-2"> AppointmentType </label>
+          <select
+            id="appointmentType"
+            class="form_input mt-1"
+            formControlName="appointmentType"
+          >
+            <option value="0">--Select--</option>
+            <option *ngFor="let item of appointmentType" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
         </div>
-        <ng-template #noData>
-            <h1>lOADING...</h1>
-          </ng-template>
-        <button class="btn-secondary" (click)="submit()"> Submit</button>
+        <div class="w-full px-3 sm:w-full">
+          <label for="doctorSchedule" class="mb-2"> Doctor Schedule </label>
+          <select
+            id="doctorScheduleId"
+            class="form_input mt-1"
+            formControlName="doctorScheduleId"
+          >
+            <option value="0">--Select--</option>
+            <option *ngFor="let item of doctorSchedule" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="w-full px-3 sm:w-full">
+          <label for="currrentFee" class="mb-2"> Currrent Fee </label>
+          <input
+            autocomplete="off"
+            formControlName="currentFee"
+            type="number"
+            inputmode="numeric"
+            placeholder="Currrent Fee"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full">
+          <label for="previousFee" class="mb-2"> Previous Fee </label>
+          <input
+            autocomplete="off"
+            formControlName="previousFee"
+            type="number"
+            inputmode="numeric"
+            placeholder="Previous Fee"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full">
+          <label for="feeAppliedFrom" class="mb-2">Fee Applied From</label>
+          <input
+            autocomplete="off"
+            formControlName="feeAppliedFrom"
+            type="date"
+            placeholder="Fee Applied From"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full" *ngIf="showFollowUpPeriod">
+          <label for="followUpPeriod" class="mb-2">FollowUp Period</label>
+          <input
+            autocomplete="off"
+            formControlName="followUpPeriod"
+            type="number"
+            placeholder="FollowUp Period"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full" *ngIf="showReportShowPeriod">
+          <label for="reportShowPeriod" class="mb-2">Report Show Period</label>
+          <input
+            autocomplete="off"
+            formControlName="reportShowPeriod"
+            type="number"
+            placeholder="Report Show Period"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full">
+          <label for="discount" class="mb-2">Discount</label>
+          <input
+            autocomplete="off"
+            formControlName="discount"
+            type="number"
+            placeholder="Discount"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full">
+          <label for="discountAppliedFrom" class="mb-2"
+            >Discount Applied From</label
+          >
+          <input
+            autocomplete="off"
+            formControlName="discountAppliedFrom"
+            type="date"
+            placeholder="Discount Applied From"
+            class="form_input mt-1"
+          />
+        </div>
+        <div class="w-full px-3 sm:w-full">
+            <label for="totalFee" class="mb-2"
+              >Total Fee</label
+            >
+            <input
+              autocomplete="off"
+              formControlName="totalFee"
+              placeholder="Total Fee"
+              class="form_input mt-1"
+            />
+          </div>
+      </div>
     </form>
+
+    <button class="btn-secondary mt-5" (click)="submit()">Submit</button>
+  </form>
 </div>

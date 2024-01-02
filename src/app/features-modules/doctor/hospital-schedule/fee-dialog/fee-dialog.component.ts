@@ -11,6 +11,7 @@ import { AppointmentType, ScheduleType } from 'src/app/proxy/enums';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { DoctorScheduleService } from 'src/app/proxy/services';
 import { DatePipe } from '@angular/common';
+import { ListItem } from 'src/app/shared/model/common-model';
 
 @Component({
   selector: 'app-fee-dialog',
@@ -22,8 +23,13 @@ export class FeeDialogComponent implements OnInit {
   doctorId: any;
   feesData: any;
   scheduleType: any;
+  formSubmitted: boolean = false;
+  appointmentType: ListItem[] = [];
+  doctorSchedule: any[] = [];
+  hideElement: any;
+  showFollowUpPeriod: boolean = true;
+  showReportShowPeriod: boolean = true;
   constructor(
- 
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FeeDialogComponent>,
     private normalAuth: AuthService,
@@ -42,32 +48,56 @@ export class FeeDialogComponent implements OnInit {
     this.loadForm(authInfo.id);
 
     let appointmentType = CommonService.getEnumList(AppointmentType);
+    this.appointmentType = CommonService.getEnumList(AppointmentType);
     this.DoctorScheduleService.getScheduleListByDoctorId(
       this.doctorId
     ).subscribe((res) => {
       if (res && appointmentType) {
-        let list = res.map((e) => {
+        this.doctorSchedule = res.map((e) => {
           return { name: e.scheduleName, id: e.id };
         });
-        this.feesData = feesInputData(appointmentType, list);
+
+        // this.feesData = feesInputData(appointmentType, list);
         if (this.editData.id) {
           this.DoctorFeeSetupService.get(this.editData.id).subscribe((res) => {
-            let feeAppliedFrom = ""
+            let feeAppliedFrom = '';
 
-            this.form.patchValue({...this.editData,feeAppliedFrom :feeAppliedFrom});
+            this.form.patchValue({
+              ...this.editData,
+              feeAppliedFrom: feeAppliedFrom,
+            });
           });
         }
       }
     });
+    this.form.get('discount')?.valueChanges.subscribe((value) => {
+      this.calculateTotalFee();
+    });
+    this.form.get('currentFee')?.valueChanges.subscribe((value) => {
+      this.calculateTotalFee();
+    });
+    this.form.get('appointmentType')?.valueChanges.subscribe((value) => {
+      if (value == 1) {
+        this.showFollowUpPeriod = false;
+        this.showReportShowPeriod = false;
+      } else if (value == 2) {
+        this.showReportShowPeriod = false;
+        this.showFollowUpPeriod = true;
+      } else if (value == 3) {
+        this.showFollowUpPeriod = false;
+        this.showReportShowPeriod = true;
+      } else {
+        this.showFollowUpPeriod = true;
+        this.showReportShowPeriod = true;
+      }
+    });
   }
-
-
 
   loadForm(id: any) {
     this.form = this.fb.group({
       doctorProfileId: [id, Validators.required],
-      doctorScheduleId: ['', Validators.required],
-      appointmentType: ['', Validators.required],
+      doctorScheduleId: ['0', Validators.required],
+      appointmentType: ['0', Validators.required],
       currentFee: ['', Validators.required],
       discount: ['', Validators.required],
       discountPeriod: ['', Validators.required],
@@ -111,5 +141,15 @@ export class FeeDialogComponent implements OnInit {
         this.dialogRef.close(true);
       });
     }
+  }
+
+  calculateTotalFee() {
+    const currentFee = this.form.get('currentFee')?.value;
+    const discount = this.form.get('discount')?.value;
+
+    const totalFee = currentFee - discount;
+    this.form.patchValue({
+      totalFee: totalFee,
+    });
   }
 }
