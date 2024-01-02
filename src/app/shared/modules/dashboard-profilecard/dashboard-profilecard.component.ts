@@ -16,8 +16,6 @@ export class DashboardProfilecardComponent implements OnInit {
   status: any;
   url: any;
   profilePic: string = '';
-
-  status: any;
   profileTile: any;
   profileName: any;
   constructor(
