@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   doctorId: any;
   appointmentList: AppointmentDto[] = [];
   constructor(private NormalAuth: AuthService, private DashboardService: DashboardService) { }
-  selectedValue = "Today"
+  selectedValue= "All"
   ngOnInit(): void {
     setTimeout(() => {
       this.showWarning = true

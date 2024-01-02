@@ -36,6 +36,7 @@ export class HospitalInfoComponent implements OnInit {
    })
   }
   onPlaceEdit(data:any){
+    console.log(data);
     const dialogRef = this.dialog.open(HospitalDialogComponent, {
       width: '40vw',
       data:data

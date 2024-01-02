@@ -35,7 +35,7 @@ export class DashboardComponent {
   isAuthUser: any;
   userType: any;
   appointmentList:AppointmentDto[]=[];
-  selectedValue= "Passed"
+  selectedValue= "All"
   constructor(
     // private DoctorProfileService: DoctorProfileService,
     private DoctorStateService :DoctorStateService,
