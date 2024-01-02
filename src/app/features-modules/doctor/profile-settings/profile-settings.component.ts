@@ -128,7 +128,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.isLoading = true;
-      this.doctorProfileService.update(updatedProfile).subscribe(
+      this.doctorProfileService.updateDocotrProfile(updatedProfile).subscribe(
         (res) => {
           // res condition may apply, need to update in the future
           this.isLoading = false;
