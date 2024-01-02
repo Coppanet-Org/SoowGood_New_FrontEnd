@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\layout-module",
+    "\\src\\app\\shared"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\public\\landing-page\\components\\live-consult-booking-dialog\\live-consult-booking-dialog.component.ts",
   "PreviewInSolutionExplorer": false
 }
