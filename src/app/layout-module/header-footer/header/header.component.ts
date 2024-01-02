@@ -1,8 +1,10 @@
 
 
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +31,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private router : Router
   ) {}
   ngOnInit(): void {
     //let id = this.NormalAuth.authInfo().id;
@@ -47,5 +50,8 @@ export class HeaderComponent implements OnInit {
     this.MainAuth.signOut();
     this.isAuthLogin = false;
   }
-
+  navigator(path:string){
+    let base = `/${path}`
+   this.router.navigateByUrl(base)
+  }
 }

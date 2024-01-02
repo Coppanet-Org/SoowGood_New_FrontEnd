@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     {
       title: 'Total Pay',
       data: '',
+      currency : true
     },
     {
       title: 'Loyalty Points',
@@ -92,7 +93,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboardStatisticData(id:number){
-    this.DashboardService.getDashboadDataForPatient(id).subscribe({
+    this.DashboardService.getDashboadDataForPatient(id,'patient').subscribe({
       next:(res)=>{
         this.details[0].data= Number(res.totalAppointment)
         this.details[1].data= Number(res.totalFeeAmount)
@@ -101,7 +102,7 @@ export class DashboardComponent implements OnInit {
     })
   }
   getDashboardAppointment(value: string) {
-    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, value).subscribe({
+    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, 'patient', value).subscribe({
       next: (res) => {
         this.appointmentList = res
       },

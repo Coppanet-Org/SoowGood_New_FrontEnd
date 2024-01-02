@@ -26,7 +26,8 @@ export class DashboardComponent implements OnInit {
     },
     {
       title: 'Total Income',
-      data: '',
+      data:  0,
+      currency : true
     },
   ];
   doctorId: any;
@@ -45,12 +46,11 @@ export class DashboardComponent implements OnInit {
   getDashboardStatisticData(id: number) {
     this.DashboardService.getDashboadDataForDoctor(id).subscribe({
       next: (res) => {
-        console.log(res);
-
         this.details[0].data = Number(res.totalAppointment)
         this.details[1].data = Number(res.totalPatient)
         this.details[2].data = Number(res.doctorLoyaltypoints)
-        this.details[3].data = Number(res.totalFeeAmount) + ".00 TK"
+        this.details[3].data = Number(res.totalFeeAmount) 
+ 
       }
     })
   }

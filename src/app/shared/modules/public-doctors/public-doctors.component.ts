@@ -198,7 +198,6 @@ export class PublicDoctorsComponent implements OnInit {
           this.doctorList = res;
           this.dataLoading = false;
           this.noDataAvailable = true;
-
         });
 
       this.subscriptions.push(doctorListSubscription);
@@ -260,8 +259,6 @@ export class PublicDoctorsComponent implements OnInit {
    
         // this.noDataAvailable = false;
         if (countResponse < 1 ) {
-          console.log("yes");
-          
           this.noDataAvailable = true;
           this.dataLoading = false;
           this.doctorList = buildingResponse;

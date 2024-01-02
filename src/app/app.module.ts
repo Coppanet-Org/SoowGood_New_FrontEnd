@@ -67,9 +67,9 @@ const routerConfig: ExtraOptions = {
   ],
   // add this interceptors on static page
 
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  ],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+  // ],
   // providers: [
   //   SplashScreenService,
   //   {

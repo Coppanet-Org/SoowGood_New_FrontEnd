@@ -9,9 +9,10 @@
                             <span class="bubble-inner-dot"></span>
                         </span>
                     </div>
-                    <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">Live Doctors </h1>
-
+                    
+                    <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">Live Doctors  <button (click)="getDoctorDetails()" title="Reload doctor list"><i class="fa-solid text-[20px] text-secondary font-semibold fa-rotate-right"></i></button></h1>
                 </div>
+       
                 <div class="flex gap-5">      
                     <button class="btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
                     <button class="btn-secondary"><i class="fa-solid fa-arrow-right"></i></button>
@@ -20,16 +21,17 @@
 
             <div *ngIf="liveDoctorList?.length < 1"
                 class="grid w-full grid-cols-1 justify-center items-center h-[300px]">
-                <p class="text-center leading-9">No doctors is available right now! <br> Please refresh <span> <i
+                <!-- <p class="text-center leading-9">No doctors is available right now! <br> Please refresh <span> <i
                             class="font-bold text-[20px] cursor-pointer fa-solid fa-arrows-rotate"></i> </span> or try
-                    again later.</p>
+                    again later.</p> -->
+                    <p class="text-center leading-9">Loading...</p> 
             </div>
             <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mt-9">
 
                 <app-live-doctor-card *ngFor="let details of liveDoctorList" [doctorDetails]="details"></app-live-doctor-card>
 
             </div>
-            <button class="rounded-3xl mt-10 px-6 py-2 bg-secondary text-white mx-auto" (click)="onClickSeeMore('livedoctors')">see more</button>
+            <button *ngIf="liveDoctorList?.length > 0" class="rounded-3xl mt-10 px-6 py-2 bg-secondary text-white mx-auto" (click)="onClickSeeMore('livedoctors')">see more</button>
         </div>
     </div>
 </div>

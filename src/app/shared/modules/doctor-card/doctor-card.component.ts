@@ -30,7 +30,6 @@ export class DoctorCardComponent implements OnInit {
 
 ngOnInit(): void {
   this.isAuthUser =  this.NormalAuth.authInfo()?.id;
-
 }
 
   openDialog(): void {
