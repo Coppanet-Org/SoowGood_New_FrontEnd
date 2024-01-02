@@ -62,7 +62,7 @@ export class DashboardComponent {
   }
   
   getDashboardStatisticData(id:number){
-    this.DashboardService.getDashboadDataForPatient(id).subscribe({
+    this.DashboardService.getDashboadDataForPatient(id,'agent').subscribe({
       next:(res)=>{
         this.details[0].data= Number(res.totalAppointment)
         this.details[1].data= Number(res.totalFeeAmount)
