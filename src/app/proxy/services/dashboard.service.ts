@@ -35,11 +35,11 @@ export class DashboardService {
     { apiName: this.apiName,...config });
   
 
-  getDashboardAppointmentListForPatient = (patientId: number, day: string, config?: Partial<Rest.Config>) =>
+  getDashboardAppointmentListForPatient = (patientId: number, role: string, day: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: `/api/app/dashboard/dashboard-appointment-list-for-patient/${patientId}`,
-      params: { day },
+      params: { role, day },
     },
     { apiName: this.apiName,...config });
 
