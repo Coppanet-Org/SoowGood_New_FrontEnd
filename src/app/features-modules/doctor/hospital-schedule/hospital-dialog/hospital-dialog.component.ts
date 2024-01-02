@@ -24,7 +24,9 @@ export class HospitalDialogComponent implements OnInit {
     private normalAuth: AuthService,
     private tosterService: TosterService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) {}
+  ) {
+   
+  }
 
   ngOnInit(): void {
  
@@ -33,6 +35,9 @@ export class HospitalDialogComponent implements OnInit {
       this.loadForm(authInfo.id);
       this.doctorId = authInfo.id;
     }
+    if (this.editData) {
+      this.form.patchValue(this.editData)
+    } return
   }
 
   loadForm(id:any) {
@@ -50,6 +55,8 @@ export class HospitalDialogComponent implements OnInit {
   }
   submit() {
     this.formSubmitted = true
+
+
     if (!this.form.valid || !this.form.touched) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
