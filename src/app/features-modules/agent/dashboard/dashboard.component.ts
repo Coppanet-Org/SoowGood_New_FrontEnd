@@ -71,7 +71,7 @@ export class DashboardComponent {
     })
   }
   getDashboardAppointment(value: string) {
-    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, value).subscribe({
+    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, 'agent', value).subscribe({
       next: (res) => {
         this.appointmentList = res
       },

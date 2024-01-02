@@ -102,7 +102,7 @@ export class DashboardComponent implements OnInit {
     })
   }
   getDashboardAppointment(value: string) {
-    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, value).subscribe({
+    this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, 'patient', value).subscribe({
       next: (res) => {
         this.appointmentList = res
       },
