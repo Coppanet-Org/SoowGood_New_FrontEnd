@@ -15,8 +15,9 @@ export class HospitalDialogComponent implements OnInit {
   form!: FormGroup;
   doctorId: any;
   error!: boolean;
-  formSubmitted: boolean = false
-  countryList = countries
+  formSubmitted: boolean = false;
+  countryList = countries;
+  isLoading: boolean = false;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<HospitalDialogComponent>,
@@ -24,23 +25,21 @@ export class HospitalDialogComponent implements OnInit {
     private normalAuth: AuthService,
     private tosterService: TosterService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) {
-   
-  }
+  ) {}
 
   ngOnInit(): void {
- 
     let authInfo = this.normalAuth.authInfo();
     if (authInfo && authInfo.id) {
       this.loadForm(authInfo.id);
       this.doctorId = authInfo.id;
     }
     if (this.editData) {
-      this.form.patchValue(this.editData)
-    } return
+      this.form.patchValue(this.editData);
+    }
+    return;
   }
 
-  loadForm(id:any) {
+  loadForm(id: any) {
     this.form = this.fb.group({
       doctorProfileId: [id, Validators.required],
       chamberName: ['', Validators.required],
@@ -54,27 +53,51 @@ export class HospitalDialogComponent implements OnInit {
     });
   }
   submit() {
-    this.formSubmitted = true
-
-
-    if (!this.form.valid || !this.form.touched) {
+    this.formSubmitted = true;
+    if (!this.form.valid) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'
       );
       return;
     }
-    this.DoctorChamberService.create(this.form.value).subscribe((res) => {
-      if (res) {
-        this.tosterService.customToast('Successfully updated!', 'success');
-        this.dialogRef.close(true);
-      } else {
-        this.tosterService.customToast(
-          'Something went wrong! Please contact your administrator.',
-          'error'
-        );
-        this.dialogRef.close(false);
-      }
-    });
+    this.isLoading = true;
+    if (this.editData) {
+      this.DoctorChamberService.update({
+        ...this.form.value,
+        // doctorProfileId: this.doctorId,
+        id:this.editData.id
+      }).subscribe({
+        next:(res)=>{
+          this.tosterService.customToast('Successfully updated!', 'success');
+          this.dialogRef.close(true);
+          this.isLoading = false;
+        },
+        error:()=>{
+          this.tosterService.customToast(
+            'Something went wrong! Please contact your administrator.',
+            'error'
+          );
+          this.isLoading = false;
+          this.dialogRef.close(false);
+        }
+      })
+    } else {
+      this.DoctorChamberService.create(this.form.value).subscribe({
+        next:(res)=>{
+          this.tosterService.customToast('Successfully updated!', 'success');
+          this.dialogRef.close(true);
+          this.isLoading = false;
+        },
+        error:()=>{
+          this.tosterService.customToast(
+            'Something went wrong! Please contact your administrator.',
+            'error'
+          );
+          this.isLoading = false;
+          this.dialogRef.close(false);
+        }
+      });
+    }
   }
 }
