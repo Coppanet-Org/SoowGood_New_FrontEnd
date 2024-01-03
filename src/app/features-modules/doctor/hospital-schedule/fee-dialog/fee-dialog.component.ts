@@ -37,7 +37,7 @@ export class FeeDialogComponent implements OnInit {
     private DoctorScheduleService: DoctorScheduleService,
     private DoctorFeeSetupService: DoctorFeeSetupService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
@@ -47,17 +47,15 @@ export class FeeDialogComponent implements OnInit {
 
     this.loadForm(authInfo.id);
 
-    let appointmentType = CommonService.getEnumList(AppointmentType);
     this.appointmentType = CommonService.getEnumList(AppointmentType);
+
     this.DoctorScheduleService.getScheduleListByDoctorId(
       this.doctorId
     ).subscribe((res) => {
-      if (res && appointmentType) {
+      if (res) {
         this.doctorSchedule = res.map((e) => {
           return { name: e.scheduleName, id: e.id };
         });
-
-        // this.feesData = feesInputData(appointmentType, list);
         if (this.editData.id) {
           this.DoctorFeeSetupService.get(this.editData.id).subscribe((res) => {
             let feeAppliedFrom = '';
@@ -96,8 +94,8 @@ export class FeeDialogComponent implements OnInit {
   loadForm(id: any) {
     this.form = this.fb.group({
       doctorProfileId: [id, Validators.required],
-      doctorScheduleId: ['0', Validators.required],
-      appointmentType: ['0', Validators.required],
+      doctorScheduleId: ['', Validators.required],
+      appointmentType: ['', Validators.required],
       currentFee: ['', Validators.required],
       discount: ['', Validators.required],
       discountPeriod: ['', Validators.required],
@@ -111,34 +109,65 @@ export class FeeDialogComponent implements OnInit {
   }
 
   submit() {
-    if (!this.form.valid) {
-      this.tosterService.customToast(
-        'Please fill all the required fields!',
-        'warning'
-      );
-      return;
-    }
+    this.formSubmitted = true;
+    // console.log(this.form.value);
+
+    // if (!this.form.valid) {
+    //   this.tosterService.customToast(
+    //     'Please fill all the required fields!',
+    //     'warning'
+    //   );
+    //   return;
+    // }
+    let followUpPeriod =
+      this.form.get('followUpPeriod')?.value == ''
+        ? 0
+        : this.form.get('followUpPeriod')?.value;
+    let reportShowPeriod =
+      this.form.get('reportShowPeriod')?.value == ''
+        ? 0
+        : this.form.get('reportShowPeriod')?.value;
+
+    let obj = {
+      ...this.form.value,
+      followUpPeriod,
+      reportShowPeriod,
+    };
 
     if (!this.editData) {
-      this.DoctorFeeSetupService.create(this.form.value).subscribe((res) => {
-        if (res) {
-          this.tosterService.customToast('Successfully created!', 'success');
+      this.DoctorFeeSetupService.create(obj).subscribe({
+        next: (res) => {
+          this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
           this.dialogRef.close(true);
-        } else {
+          this.formSubmitted = false;
+        },
+        error: (err) => {
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
           );
           this.dialogRef.close(false);
+          this.formSubmitted = false;
         }
       });
     } else {
       this.DoctorFeeSetupService.update({
-        ...this.form.value,
-        id: this.editData,
-      }).subscribe((res) => {
-        this.tosterService.customToast('Successfully Updated!', 'success');
-        this.dialogRef.close(true);
+        ...obj,
+        id: this.editData.id,
+      }).subscribe({
+        next: (res) => {
+          this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
+          this.dialogRef.close(true);
+          this.formSubmitted = false;
+        },
+        error: (err) => {
+          this.tosterService.customToast(
+            'Something went wrong! Please contact your administrator.',
+            'error'
+          );
+          this.dialogRef.close(false);
+          this.formSubmitted = false;
+        }
       });
     }
   }
