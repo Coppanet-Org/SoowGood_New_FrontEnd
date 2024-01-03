@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private ToasterService: TosterService,
     private NormalAuth: AuthService,
     private UserAccountsService: UserAccountsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -84,11 +84,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: [
         this.defaultAuth.password,
         Validators.compose([
-            Validators.required,
-            // CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
+          Validators.required,
+          // CustomValidators.startsWithUppercase,
+          CustomValidators.isAtLeast6Characters,
+          CustomValidators.includesSpecialCharacter,
+          CustomValidators.includesNumber,
 
         ]),
       ],
@@ -183,7 +183,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         (doctorDto: DoctorProfileDto) => {
                           let saveLocalStorage = {
                             identityNumber: doctorDto.identityNumber,
-                            doctorName: doctorDto.fullName,
+                            fullName: doctorDto.fullName,
                             bmdcRegNo: doctorDto.bmdcRegNo,
                             isActive: doctorDto.isActive,
                             userId: doctorDto.userId,
@@ -217,27 +217,26 @@ export class LoginComponent implements OnInit, OnDestroy {
                         (doctorError: any) => {
                           // Handle DoctorProfile service error
 
-                    this.handleProfileError(doctorError);
-                  }
-                );
-            } else if (
-              loginResponse.success &&
-              loginResponse.roleName[0] == 'Patient'
-            ) {
-              this.isLoading = false;
-              this.subs.sink = this.PatientProfileService.getByUserName(
-                loginResponse.userName ? loginResponse.userName : ''
-              ).subscribe(
-                (patientDto: PatientProfileDto) => {
-                  let saveLocalStorage = {
-                    fullName:patientDto.fullName,
-                    userId: patientDto.userId,
-                    id: patientDto.id,
-                    userType: loginResponse.roleName.toString().toLowerCase(),
-                  };
-                  this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  let userType =
-                    loginResponse.roleName.toString() + '/dashboard';
+                          this.handleProfileError(doctorError);
+                        }
+                      );
+                  } else if (
+                    loginResponse.success && loginResponse.roleName[0] == 'Patient'
+                  ) {
+                    this.isLoading = false;
+                    this.subs.sink = this.PatientProfileService.getByUserName(
+                      loginResponse.userName ? loginResponse.userName : ''
+                    ).subscribe(
+                      (patientDto: PatientProfileDto) => {
+                        let saveLocalStorage = {
+                          fullName: patientDto.fullName,
+                          userId: patientDto.userId,
+                          id: patientDto.id,
+                          userType: loginResponse.roleName.toString().toLowerCase(),
+                        };
+                        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                        let userType =
+                          loginResponse.roleName.toString() + '/dashboard';
 
                         this._router
                           .navigate([userType.toLowerCase()], {
@@ -309,10 +308,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.ToasterService.customToast(
         'Please enter your phone number',
         'warning'
-        );
-        return;
-      }
-      
+      );
+      return;
+    }
+
     this.resetLoading = true;
     try {
       this.authService.isUserExistsByUserName(
@@ -346,7 +345,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   confirmPassword() {
     this.resetFormSubmitted = true;
-    
+
     let obj = {
       userId: this.resetPasswordForm.get('username')?.value,
       newPassword: this.resetPasswordForm.get('newPassword')?.value,
@@ -355,10 +354,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.ToasterService.customToast(
         'Please enter your new password',
         'warning'
-        );
-        return;
-      }
-      this.resetLoading = true;
+      );
+      return;
+    }
+    this.resetLoading = true;
     this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
       next: (res) => {
         if (res.success) {
