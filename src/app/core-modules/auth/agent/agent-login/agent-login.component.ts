@@ -96,47 +96,50 @@ export class AgentLoginComponent implements OnInit {
                   loginResponseData = loginResponse;
 
 
-            if (!loginResponse.success) {
-              this.hasError = true;
-              this.ToasterService.customToast(
-                loginResponse.message || ' ',
-                'error'
-              );
-              return throwError(loginResponse.message || 'Login failed');
-            }
-            return this.AgentProfileService.getByUserName(
-              loginResponse.userName || ''
-            );
-          }),
-          catchError((error: any) => this.handleProfileError(error))
-        )
-        .subscribe((agentDto: any) => {
-          console.log(agentDto);
-          const saveLocalStorage = {
-            fullName: agentDto.fullName,
-            userId: agentDto.userId,
-            id: agentDto.id,
-            userType: loginResponseData.roleName.toString().toLowerCase(),
-          };
-          this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-          const userType = agentDto.isActive
-            ? loginResponseData.roleName.toString().toLowerCase()
-            : (
-              loginResponseData.roleName.toString() +
-              '/profile-settings'
-            ).toLowerCase();
-          this._router
-            .navigate([userType], {
-              state: { data: agentDto },
-            })
-            .then(() =>
-              this.ToasterService.customToast(
-                loginResponseData.message || ' ',
-                'success'
+                  if (!loginResponse.success) {
+                    this.hasError = true;
+                    this.ToasterService.customToast(
+                      loginResponse.message || ' ',
+                      'error'
+                    );
+                    return throwError(loginResponse.message || 'Login failed');
+                  }
+                  return this.AgentProfileService.getByUserName(
+                    loginResponse.userName || ''
+                  );
+                }),
+                catchError((error: any) => this.handleProfileError(error))
               )
-            );
+              .subscribe((agentDto: any) => {
+                console.log(agentDto);
+                const saveLocalStorage = {
+                  fullName: agentDto.fullName,
+                  userId: agentDto.userId,
+                  id: agentDto.id,
+                  userType: loginResponseData.roleName.toString().toLowerCase(),
+                };
+                this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                const userType = agentDto.isActive
+                  ? loginResponseData.roleName.toString().toLowerCase()
+                  : (
+                    loginResponseData.roleName.toString() +
+                    '/profile-settings'
+                  ).toLowerCase();
+                this._router
+                  .navigate([userType], {
+                    state: { data: agentDto },
+                  })
+                  .then(() =>
+                    this.ToasterService.customToast(
+                      loginResponseData.message || ' ',
+                      'success'
+                    )
+                  );
+              });
+          }
         });
-    } catch (error: any) {
+    }
+    catch (error: any) {
       this.hasError = true;
       if (error.message === "'tokenEndpoint' should not be null") {
         this.ToasterService.customToast(error.message || ' ', 'success');
