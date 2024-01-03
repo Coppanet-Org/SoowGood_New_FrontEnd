@@ -1,7 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\agent",
+    "\\src\\app\\core-modules\\auth\\agent\\agent-login",
+    "\\src\\app\\core-modules\\auth\\login",
+    "\\src\\app\\core-modules\\auth\\signup"
   ],
+  "SelectedNode": "\\src\\app\\core-modules\\auth\\login\\login.component.ts",
   "PreviewInSolutionExplorer": false
 }
