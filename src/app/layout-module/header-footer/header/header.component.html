@@ -1,75 +1,80 @@
-<!-- <div class="w-full  sticky max-h-[70px]  z-50 top-0 supports-backdrop-blur:bg-primary/70">
-    <div [class]="layout== 'admin' || layout == 'spreed' ? 'container-full' : 'spreed'">
-        <div *ngIf="layout == 'admin'">
-            Admin Nav
-        </div>
-        <div class="container-items h-full" *ngIf="layout == 'public' || 'spreed'">
-            <div class="header-logo bg-primary py-3 flex justify-center rounded-br-[140px] w-[20%] h-full" routerLink="/">
-                <img class="max-w-[180px] 2xl:max-w-[230px] h-full" src="../../../../assets/SoowGood-Logo.png" alt="logo">
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button *ngIf="!isAuthLogin" type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
-              <button *ngIf="!isAuthLogin" type="button" routerLink="/signup" class="btn-secondary py-2">Signup</button>
-              <div *ngIf="isAuthLogin" class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                  <div class="w-8 rounded-full">
-                    <img src="../../../../assets/person.png" />
-                  </div>
+<div
+  [class.scrolled]="scrolled"
+  class="w-full transition-all duration-200 fixed py-2 z-50 top-0 supports-backdrop-blur:bg-primary/70"
+>
+  <div
+    [class]="
+      layout == 'admin' || layout == 'spreed' ? 'container-full' : 'container'
+    "
+  >
+    <div *ngIf="layout == 'admin'">Admin Nav</div>
+    <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
+      <div class="header-logo" routerLink="/">
+        <img
+          appScroll
+          class="w-full drop-shadow-md"
+          loading="lazy"
+          [src]="logoPath"
+          alt="logo"
+        />
+      </div>
+      <div>
+        <div>
+          <ul class="inline-flex gap-4">
+            <li
+              class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
+              (click)="navigator('soowgood-point')"
+            >
+              Soowgood Point
+            </li>
+            <li
+              class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
+              (click)="navigator('village-booth')"
+            >
+              Village Booth
+            </li>
+            <li>
+              <div class="dropdown dropdown-end">
+                <label
+                  tabindex="0"
+                  class="btn-secondary bg-primary cursor-pointer border-secondary-dark flex"
+                >
+                  <i class="fa-solid fa-user mr-2"></i> Agent
                 </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52">
-                  <li>
-                    <a class="font-Roboto text-[16px] font-semibold py-2" [routerLink]="'/'+userType">
-                      <i class="fa-solid fa-border-none mr-1"></i> Dashboard
+                <ul
+                  tabindex="0"
+                  class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li (click)="checkAuthUser(userType)" *ngIf="userType !== 'agent'" routerLink="/agent/login">
+                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                      <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
                     </a>
                   </li>
-                  <li *ngIf="isAuthLogin"><a class="font-Roboto text-[16px] font-semibold  py-2" (click)="signOut()"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a></li>
-
+                  
+                    <li (click)="checkAuthUser(userType)" *ngIf="userType !== 'agent'" routerLink="/agent/signup">
+                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                      <i class="fa-solid fa-border-none mr-1"></i>Registration
+                    </a>
+                  </li>
+                  <li *ngIf="userType === 'agent'" routerLink="/agent/dashboard">
+                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                      <i class="fa-solid fa-right-to-bracket mr-1"></i> Dashboard
+                    </a>
+                  </li>
+                  <!-- <li *ngIf="isAuthLogin && userType=='agent'">
+                    <a
+                      class="font-Roboto text-[16px] font-semibold py-2"
+                      (click)="signOut()"
+                      ><i class="fa-solid fa-left-from-bracket mr-1"></i
+                      >Logout</a
+                    >
+                  </li> -->
                 </ul>
               </div>
-            </div>
+            </li>
+          </ul>
         </div>
-    </div>
-</div> -->
-
-<div ></div>
-<div [class.scrolled]="scrolled"  class="w-full transition-all  duration-200 fixed  py-2 z-50 top-0  supports-backdrop-blur:bg-primary/70">
-  <div [class]="layout== 'admin' || layout == 'spreed' ? 'container-full' : 'container'">
-      <div *ngIf="layout == 'admin'">
-          Admin Nav
       </div>
-      <div class="container-items py-3" *ngIf="layout == 'public' || 'spreed'">
-          <div class="header-logo" routerLink="/">
-              <img appScroll class="w-full drop-shadow-md" loading="lazy" [src]="logoPath" alt="logo">
-          </div>
-<div>
-  <div>
-    <ul class="inline-flex gap-4">
-      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md cursor-pointer" (click)="navigator('soowgood-point')">Soowgood Point</li>
-      <li class="font-semibold text-secondary bg-primary px-4 py-2 border-secondary border-[1px] rounded-md backdrop-blur-md cursor-pointer" (click)="navigator('village-booth')">Village Booth</li>
-    </ul>
-  </div>
-  <!-- <div class="flex items-center gap-2">
-    <button *ngIf="!isAuthLogin" type="button" routerLink="/login" class="btn-secondary bg-white text-primary py-2">Login</button>
-    <button *ngIf="!isAuthLogin" type="button" routerLink="/signup" class="btn-secondary py-2">Signup</button>
-    <div *ngIf="isAuthLogin" class="dropdown dropdown-end">
-      <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-        <div class="w-8 rounded-full">
-          <img src="../../../../assets/person.png" />
-        </div>
-      </label>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52">
-        <li>
-          <a class="font-Roboto text-[16px] font-semibold py-2" [routerLink]="'/'+userType">
-            <i class="fa-solid fa-border-none mr-1"></i> Dashboard
-          </a>
-        </li>
-        <li *ngIf="isAuthLogin"><a class="font-Roboto text-[16px] font-semibold  py-2" (click)="signOut()"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a></li>
-
-      </ul>
     </div>
-  </div> -->
-</div>
-      </div>
   </div>
 </div>

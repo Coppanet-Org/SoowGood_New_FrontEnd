@@ -1,3 +1,4 @@
+import { PatientProfileService } from './../../../proxy/services/patient-profile.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentService } from 'src/app/proxy/services';
@@ -19,7 +20,7 @@ export class PublicPatientsComponent implements OnInit {
     private AppointmentService: AppointmentService,
     private NormalAuth: AuthService,
     public dialog: MatDialog,
-
+    private PatientProfileService : PatientProfileService
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
@@ -59,5 +60,9 @@ export class PublicPatientsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       // this.getDegreeDataList(this.doctorId)
     });
+  }
+  onSearchChange(e:any){
+   
+    
   }
 }
