@@ -37,7 +37,7 @@ export class FeeDialogComponent implements OnInit {
     private DoctorScheduleService: DoctorScheduleService,
     private DoctorFeeSetupService: DoctorFeeSetupService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
@@ -136,12 +136,12 @@ export class FeeDialogComponent implements OnInit {
 
     if (!this.editData) {
       this.DoctorFeeSetupService.create(obj).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
           this.dialogRef.close(true);
           this.formSubmitted = false;
         },
-        error:(err)=>{
+        error: (err) => {
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
@@ -155,12 +155,12 @@ export class FeeDialogComponent implements OnInit {
         ...obj,
         id: this.editData.id,
       }).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
           this.dialogRef.close(true);
           this.formSubmitted = false;
         },
-        error:(err)=>{   
+        error: (err) => {
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
