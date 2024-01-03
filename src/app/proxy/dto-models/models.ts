@@ -568,6 +568,9 @@ export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   doctorName?: string;
   doctorCode?: string;
+  doctorBmdcRegNo?: string;
+  specialityId?: number;
+  doctorSpecilityName?: string;
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
