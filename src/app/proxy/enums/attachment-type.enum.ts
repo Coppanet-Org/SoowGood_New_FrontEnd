@@ -6,7 +6,7 @@ export enum AttachmentType {
   DoctIdentityDoc = 3,
   DoctorSpecialityDoc = 4,
   Prescription = 5,
-  PatientLabreport = 6,
+  PatientPreviousDocuments = 6,
 }
 
 export const attachmentTypeOptions = mapEnumToOptions(AttachmentType);

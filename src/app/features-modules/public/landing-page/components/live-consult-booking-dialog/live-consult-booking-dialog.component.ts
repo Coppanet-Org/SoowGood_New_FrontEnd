@@ -2,9 +2,9 @@ import { PatientProfileService } from './../../../../../proxy/services/patient-p
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, of, switchMap } from 'rxjs';
-import { PatientProfileDto } from 'src/app/proxy/dto-models';
+import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
 import { Gender } from 'src/app/proxy/enums';
 import { ListItem } from 'src/app/shared/model/common-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,6 +12,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { customNameValidator } from 'src/app/shared/utils/auth-helper';
+import { FinancialSetupService } from '../../../../../proxy/services';
 
 @Component({
   selector: 'app-live-consult-booking-dialog',
@@ -22,61 +23,76 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   bookingForm!: FormGroup;
-  createPatientForm!:FormGroup;
-  thirdFormGroup!:FormGroup;
-  fourFormGroup!:FormGroup;
-  bookingInfo:any
-  activeTab:number=0
-  formSubmitted: boolean= false;
+  createPatientForm!: FormGroup;
+  thirdFormGroup!: FormGroup;
+  fourFormGroup!: FormGroup;
+  bookingInfo: any
+  activeTab: number = 0
+  formSubmitted: boolean = false;
   createNewPatientInfo: PatientProfileDto = {};
   alreadyExistPatient: PatientProfileDto = {};
   isNewUser: boolean = false;
   isExistUser: boolean = true;
   btnLoader: boolean = false;
   profileInfo: any;
-  userPatientList: any[]=[];
-  genderList: ListItem[]=[];
+  userPatientList: any[] = [];
+  genderList: ListItem[] = [];
+  serviceFeeList: FinancialSetupDto[] = [];
+  stepLoading: boolean = false;
+  userRole: any;
   constructor(
     public dialogRef: MatDialogRef<LiveConsultBookingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined,
     private fb: FormBuilder,
-    private UserinfoStateService : UserinfoStateService,
-    private TosterService : TosterService,
-    private PatientProfileService : PatientProfileService,
-    private NormalAuth : AuthService
-  ) {}
+    private UserinfoStateService: UserinfoStateService,
+    private TosterService: TosterService,
+    private PatientProfileService: PatientProfileService,
+    private FinancialSetupService: FinancialSetupService,
+    private NormalAuth: AuthService,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.genderList = CommonService.getEnumList(Gender)
+    this.FinancialSetupService.getList().subscribe(res => {
+      this.serviceFeeList = res;
+    });
+    this.userRole = this.NormalAuth.authInfo()?.userType;
 
     let id = this.NormalAuth.authInfo()?.id;
-    if (id) {
+    if (this.userRole == 'patient' && id) {
+
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       this.UserinfoStateService.getProfileInfo(id, 'patient');
     }
+    if (this.userRole == 'agent' && id) {
+
+      this.UserinfoStateService.getUserPatientInfo(id, 'agent');
+      this.UserinfoStateService.getProfileInfo(id, 'agent');
+    }
 
     this.UserinfoStateService.getData()
-    .pipe(
-      switchMap((e) => {
-        this.profileInfo = e;
-        this.loadForm();
-        if (e) {
-          return this.UserinfoStateService.getUserPatientData().pipe(
-            map((data) => {
-              return data.map((item: any) => ({
-                name: item.patientName,
-                id: item.id,
-              }));
-            })
-          );
-        } else {
-          return of([]);
-        }
-      })
-    )
-    .subscribe((res) => {
-      this.userPatientList = res;
-    });
+      .pipe(
+        switchMap((e) => {
+          this.profileInfo = e;
+          this.loadForm();
+          if (e) {
+            return this.UserinfoStateService.getUserPatientData().pipe(
+              map((data) => {
+                return data.map((item: any) => ({
+                  name: item.patientName,
+                  id: item.id,
+                }));
+              })
+            );
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe((res) => {
+        this.userPatientList = res;
+      });
   }
   loadForm() {
     //future update
@@ -109,143 +125,159 @@ export class LiveConsultBookingDialogComponent implements OnInit {
       ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
+      creatorRole: [(this.userRole == 'patient' ? 'patient' : 'agent'), Validators.required],
     });
   }
-  onStepChange(step: number) {
-    if (step===0) {
+  onStepChange(step: number, bookFor?: string) {
+
+
+    if (step === 0) {
       this.activeTab = step;
     }
     if (step === 2) {
+      this.stepLoading = true
+
+
+      let plFeeIn: any = '';
+      let agentFeeIn: any = '';
+      let plFee: any = 0;
+      let agentFee: any = 0;
+      let providerfee: any = 0;
+      let calculatedPlFee: any = 0;
+      let calculatedAgentFee: any = 0;
+      if (this.userRole == 'patient') {
+        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.amountIn;
+        plFee = this.serviceFeeList.find(f => f.platformFacilityId == 3 && f.amountIn == plFeeIn)?.amount;
+        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.providerAmount;
+        if (plFeeIn == 'Percentage') {
+          calculatedPlFee = providerfee * (plFee / 100);
+        }
+        else if (plFeeIn == 'Flat') {
+          calculatedPlFee = plFee;
+        }
+      }
+      else if (this.userRole == 'agent') {
+        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.amountIn;
+        plFee = this.serviceFeeList.find(f => f.platformFacilityId == 6 && f.amountIn == plFeeIn)?.amount;
+        agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.externalAmountIn;
+        agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 6 && f.externalAmountIn == agentFeeIn)?.amount;
+        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.providerAmount;
+
+        if (plFeeIn == 'Percentage') {
+          calculatedPlFee = providerfee * (plFee / 100);
+        }
+        else if (plFeeIn == 'Flat') {
+          calculatedPlFee = plFee;
+        }
+
+        if (agentFeeIn == 'Percentage') {
+          calculatedAgentFee = providerfee * (agentFee / 100);
+        }
+        else if (agentFeeIn == 'Flat') {
+          calculatedAgentFee = agentFee;
+
+        }
+      }
+
+      
 
       this.formSubmitted = true
-
-        const infoForBooking = {
-          doctorProfileId:this.profileInfo?.id,
-          doctorName: this.doctorData?.doctorDetails.fullName,
-          doctorCode: this.doctorData?.doctorDetails.doctorCode,
-          patientProfileId: this.alreadyExistPatient?.id
-            ? this.alreadyExistPatient?.id
-            : this.createNewPatientInfo.id
+      const infoForBooking = {
+        doctorProfileId: this.doctorData.doctorDetails.id,
+        doctorName: this.doctorData?.doctorDetails.fullName,
+        doctorCode: this.doctorData?.doctorDetails.doctorCode,
+        patientProfileId: this.alreadyExistPatient?.id
+          ? this.alreadyExistPatient?.id
+          : this.createNewPatientInfo.id
             ? this.createNewPatientInfo?.id
             : this.profileInfo?.id,
-          patientName: this.alreadyExistPatient?.patientName
-            ? this.alreadyExistPatient?.patientName
-            : this.createNewPatientInfo?.patientName
+        patientName: this.alreadyExistPatient?.patientName
+          ? this.alreadyExistPatient?.patientName
+          : this.createNewPatientInfo?.patientName
             ? this.createNewPatientInfo?.patientName
             : this.profileInfo?.fullName,
-          patientCode: this.alreadyExistPatient?.patientCode
-            ? this.alreadyExistPatient?.patientCode
-            : this.createNewPatientInfo?.patientCode
+        patientCode: this.alreadyExistPatient?.patientCode
+          ? this.alreadyExistPatient?.patientCode
+          : this.createNewPatientInfo?.patientCode
             ? this.createNewPatientInfo?.patientCode
             : this.profileInfo?.patientCode,
-          patientMobileNo: this.alreadyExistPatient?.patientMobileNo
-            ? this.alreadyExistPatient?.patientMobileNo
-            : this.createNewPatientInfo?.patientMobileNo
+        patientMobileNo: this.alreadyExistPatient?.patientMobileNo
+          ? this.alreadyExistPatient?.patientMobileNo
+          : this.createNewPatientInfo?.patientMobileNo
             ? this.createNewPatientInfo?.patientMobileNo
             : this.profileInfo?.mobileNo,
-          patientEmail: this.alreadyExistPatient?.patientEmail
-            ? this.alreadyExistPatient?.patientEmail
-            : this.createNewPatientInfo?.patientEmail
+        patientEmail: this.alreadyExistPatient?.patientEmail
+          ? this.alreadyExistPatient?.patientEmail
+          : this.createNewPatientInfo?.patientEmail
             ? this.createNewPatientInfo?.patientEmail
             : this.profileInfo.email || 'admin@gmail.com',
-          // appointmentDate:"2023-12-12T14:35:35.546Z",
-          // appointmentTime: "10",
-          doctorFee: 100,
-          agentFee: 0,
-          platformFee: 0,
-          totalAppointmentFee: 100,
-          appointmentStatus: 1,
-          appointmentPaymentStatus: 2,
-          appointmentCreatorId: this.profileInfo?.id,
-///
+        // appointmentDate:"2023-12-12T14:35:35.546Z",
+        // appointmentTime: "10",
+        doctorFee: providerfee,
+        agentFee: calculatedAgentFee,
+        platformFee: calculatedPlFee,
+        totalAppointmentFee: providerfee + calculatedAgentFee + calculatedPlFee,
+        appointmentStatus: 1,
+        appointmentPaymentStatus: 2,
+        appointmentCreatorId: this.profileInfo?.id,
+        appointmentCreatorRole: this.userRole == 'patient' ? 'patient' : 'agent'
+      };
+      this.bookingInfo = infoForBooking
 
-          //appointmentCode: "string",
-          //doctorScheduleId: 0,
-          //consultancyType: 1,
-          //doctorChamberId: 0,
-          //doctorScheduleDaySessionId: 0,
-          //scheduleDayofWeek: "string",
-          // appointmentType: 1,
-          //doctorFeesSetupId: 0,
-          //cancelledByEntityId: 0,
-          //cancelledByRole: "string",
-          //paymentTransactionId: "string",
-          //isCousltationComplete: false
+      if (this.profileInfo && bookFor === 'self') {
+        this.formSubmitted = true
+        const obj = {
+          id: this.profileInfo?.id,
+          patientName: this.profileInfo.fullName,
+          patientCode: this.profileInfo.patientCode,
+          patientEmail: this.profileInfo.email ? this.profileInfo.email : 'admin@gmail.com',
+          patientMobileNo: this.profileInfo.mobileNo,
         };
 
+        this.PatientProfileService.update(obj).subscribe((res) => {
+          this.stepLoading = false
+          this.activeTab = step;
 
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        if (infoForBooking && this.profileInfo) {
-          this.bookingInfo = infoForBooking
-          this.formSubmitted = true
-      
-            const obj = {
-              id: this.profileInfo?.id,
-              patientName: this.profileInfo.fullName,
-              patientCode: this.profileInfo.patientCode,
-              patientEmail: this.profileInfo.email ? this.profileInfo.email : 'admin@gmail.com',
-              patientMobileNo: this.profileInfo.mobileNo,
-            };
-  
-            this.PatientProfileService.update(obj).subscribe((res) => {
-              // this.createAppointment(infoForBooking, e);
-              this.activeTab = step;
-
-            });
-          
-        }
-        
+      } else {
+        this.activeTab = step;
       }
-      if (step === 1) {
-        this.activeTab = step; 
-      }
-   
-    } 
-  
+
+    }
+    if (step === 1) {
+      this.activeTab = step;
+    }
+
+  }
+
 
   getSinglePatientData(e: any) {
-      if (e.target.value) {
-        this.UserinfoStateService.getUserPatientData().subscribe((res) =>
-          res.find((data: any) => {
-            if (data.id == e.target.value) {
-              this.alreadyExistPatient= data;
-              this.createPatientForm.patchValue({
-                patientProfileId: data.id,
-                age: data.age,
-                gender: data.gender,
-                bloodGroup: data.bloodGroup,
-                patientMobileNo: data.patientMobileNo,
-                patientEmail: data.patientEmail,
-                patientName: data.patientName,
-                createdBy: data.createdBy,
-                creatorEntityId: data.creatorEntityId,
-              });
-  
-              //  this.createPatientForm.patchValue(data);
-            }
-            return;
-          })
-        );
-      }
+    if (e.target.value) {
+      this.UserinfoStateService.getUserPatientData().subscribe((res) =>
+        res.find((data: any) => {
+          if (data.id == e.target.value) {
+            this.alreadyExistPatient = data;
+            this.createPatientForm.patchValue({
+              patientProfileId: data.id,
+              age: data.age,
+              gender: data.gender,
+              bloodGroup: data.bloodGroup,
+              patientMobileNo: data.patientMobileNo,
+              patientEmail: data.patientEmail,
+              patientName: data.patientName,
+              createdBy: data.createdBy,
+              creatorEntityId: data.creatorEntityId,
+            });
+
+            //  this.createPatientForm.patchValue(data);
+          }
+          return;
+        })
+      );
+    }
   }
-      //user existing check
+  //user existing check
   userExistCheck(status: string): void {
     this.createPatientForm.get('patientName')?.reset();
     this.createPatientForm.get('age')?.reset();
@@ -290,15 +322,17 @@ export class LiveConsultBookingDialogComponent implements OnInit {
               res.patientMobileNo
             ).subscribe((p) => {
               this.createNewPatientInfo = p;
+              this.TosterService.customToast('Your patient is created!', 'success');
+              this.UserinfoStateService.getUserPatientInfo(
+                this.profileInfo.id,
+                'patient'
+              );
+
+              this.onStepChange(2, 'others');
+              this.btnLoader = false;
             });
           }
-          this.btnLoader = false;
-          this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
-          this.onStepChange(2);
+
         });
       } catch (error) {
         this.TosterService.customToast(
@@ -311,6 +345,6 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     }
   }
 
-  }
-  
+}
+
 

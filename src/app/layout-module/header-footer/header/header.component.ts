@@ -1,8 +1,10 @@
 
 
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +17,7 @@ export class HeaderComponent implements OnInit {
   userType: string='';
   scrolled: boolean = false;
   logoPath:string= "assets/auth/clr-logo.png"
+  
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrolled = window.scrollY >= 100;
@@ -28,7 +31,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private router : Router
   ) {}
   ngOnInit(): void {
     //let id = this.NormalAuth.authInfo().id;
@@ -45,5 +49,9 @@ export class HeaderComponent implements OnInit {
     // this.NormalAuth.signOut();
     this.MainAuth.signOut();
     this.isAuthLogin = false;
+  }
+  navigator(path:string){
+    let base = `/${path}`
+   this.router.navigateByUrl(base)
   }
 }

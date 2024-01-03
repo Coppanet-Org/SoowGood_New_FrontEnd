@@ -10,7 +10,7 @@ const issuerUrl = 'https://192.168.1.105';
 
 
 export const environment = {
-  production: false,
+  production: true,
   application: {
     baseUrl,
     name: 'SoowGoodWeb',

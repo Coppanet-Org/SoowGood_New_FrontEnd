@@ -16,12 +16,8 @@ export class PaymentSuccessComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.appCode = JSON.parse(localStorage.getItem("patientAppointmentCode") || "");
-    this.sslCommerzService.updateAppointmentPaymentStatus(this.appCode).subscribe(st => {
-      this.tosterService.customToast(
-        'Appointment Confirmed, Show the appoinment list', 'success'
-      );
+    this.sslCommerzService.updateAppointmentPaymentStatus(this.appCode,1).subscribe(st => {
+      this.tosterService.customToast('Appointment Confirmed, Show the appoinment list', 'success');
     })
-
   }
-
 }

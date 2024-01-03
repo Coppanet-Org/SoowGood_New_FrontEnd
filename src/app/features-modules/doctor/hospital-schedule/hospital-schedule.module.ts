@@ -34,7 +34,7 @@ const routes: Route[] = [
     DialogHeaderComponent,
     ScheduleFormComponent,
     FeeSetupComponent,
-    FeeDialogComponent,
+    FeeDialogComponent
   ],
 
   imports: [

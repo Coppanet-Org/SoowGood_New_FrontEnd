@@ -160,6 +160,9 @@ export class SignupComponent implements OnInit {
   nidUploadBtn: any = true;
   stepBack2: any = false;
   stepBack1: any = false;
+
+  startYear = new Date().getFullYear();
+  range:any = [];
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -214,15 +217,17 @@ export class SignupComponent implements OnInit {
     else {
       this._router.navigate(['/']);
     }
-
+    for (let i = 0; i < 65; i++) {
+      this.range.push(this.startYear - i);
+    }
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.subs.unsubscribe();
   }
   //handle profile step 1
-
   private handleProfileStep1(): void {
     this.otpModal = false;
     this.userInfoModal = false;
@@ -349,9 +354,7 @@ export class SignupComponent implements OnInit {
         }
       });
   }
-
   // updated end
-
   loadForm() {
     this.formGroup = this.fb.group({
       mobile: [
@@ -381,10 +384,11 @@ export class SignupComponent implements OnInit {
           '',
           [
             Validators.required,
-            CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{6,}$/)
+            //CustomValidators.startsWithUppercase,
+            //CustomValidators.isAtLeast6Characters,
+            //CustomValidators.includesSpecialCharacter,
+            //CustomValidators.includesNumber,
           ],
         ],
         confirmPassword: ['', Validators.required],
@@ -408,7 +412,7 @@ export class SignupComponent implements OnInit {
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
       duration: ['0', Validators.required],
-      passingYear: [''], //, [Validators.required, customPassingYearValidator]
+      passingYear: ['2000'], //, [Validators.required, customPassingYearValidator]
       instituteName: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
@@ -424,12 +428,14 @@ export class SignupComponent implements OnInit {
         specializationId: [1, Validators.required],
         docFileName: [''],
       });
-    } else if (this.specialityId === 2) {
+    }
+    else if (this.specialityId === 2) {
       this.formSpecialization = this.fb.group({
         specializationId: [2, Validators.required],
         docFileName: [''],
       });
-    } else {
+    }
+    else {
       this.formSpecialization = this.fb.group({
         specializationId: [0, Validators.required],
         docFileName: [''],
@@ -438,7 +444,6 @@ export class SignupComponent implements OnInit {
   }
 
   // Future todo : add resend code feature
-
   // resendCodeEnabled: boolean = true;
   // countdown: number = 120;
   // minutes: number=0;
@@ -841,27 +846,41 @@ export class SignupComponent implements OnInit {
         userId: res.userId,
       })
       .subscribe((patientDto: PatientProfileDto) => {
-        const saveLocalStorage = {
-          patientName: patientDto.fullName,
-          email: patientDto.email,
-          mobileNo: patientDto.mobileNo,
-          userId: res.userId,
-          id: patientDto.id,
-          userType: this.userType,
-        };
+        //const saveLocalStorage = {
+        //  fullName: patientDto.fullName,
+        //  email: patientDto.email,
+        //  mobileNo: patientDto.mobileNo,
+        //  userId: res.userId,
+        //  id: patientDto.id,
+        //  userType: this.userType.toLowerCase(),
+        //};
 
-        const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+        //this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+        //const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+        //const navigate = `${this.formGroup?.value.userTypeName}/dashboard`;
 
-        this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-        this._router.navigate([navigate.toLowerCase()], {
-          state: { data: res }, // Pass the 'res' object as 'data' in the state object
-        });
+        //this._router.navigate([navigate.toLowerCase()], {
+        //  state: { data: res }, // Pass the 'res' object as 'data' in the state object
+        //});
 
-        if (this.normalAuth) {
-          this.loadAuth();
-        }
+        //if (this.normalAuth) {
+        //  this.loadAuth();
+        //}
 
-        this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success');
+        this.normalAuth.signOut();
+        //if (this.normalAuth) {
+        //  this.loadAuth();
+        //}
+        //let navUrl = this.userType.toLowerCase() + '/dashboard';
+        this._router
+          .navigate(['/login'], {
+            state: { data: res }, // Pass the 'res' object as 'data' in the state object
+          })
+          .then((r) =>
+            this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success')
+          );
+
+        //this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success');
         this.cdRef.detectChanges();
       });
   }
@@ -1563,7 +1582,7 @@ export class SignupComponent implements OnInit {
   }
 
   getBackStep1Data() {
-
+    this.isLoading = true;
     let authInfo = this.normalAuth.authInfo();
     let profileId = authInfo.id;
     this.doctorProfileService.get(profileId).subscribe(res => {
@@ -1612,7 +1631,7 @@ export class SignupComponent implements OnInit {
       });
       this.doctorSpecializations = [];
       this.doctorDegrees = [];
-
+      this.isLoading = false;
     })
 
   }

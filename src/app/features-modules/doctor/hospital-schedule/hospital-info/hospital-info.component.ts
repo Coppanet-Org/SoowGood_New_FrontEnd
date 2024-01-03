@@ -35,6 +35,20 @@ export class HospitalInfoComponent implements OnInit {
 
    })
   }
+  onPlaceEdit(data:any){
+    console.log(data);
+    const dialogRef = this.dialog.open(HospitalDialogComponent, {
+      width: '40vw',
+      data:data
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getChamberList(this.doctorId)
+      }
+    });
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(HospitalDialogComponent, {
       width: '40vw',
@@ -43,7 +57,6 @@ export class HospitalInfoComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getChamberList(this.doctorId)
-
       }
     });
   }

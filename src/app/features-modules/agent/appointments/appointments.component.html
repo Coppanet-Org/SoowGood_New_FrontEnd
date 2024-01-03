@@ -1,4 +1,48 @@
-<div class="overflow-hidden doctor-dashboard_midcontent_container w-ful">
+<!--<div class="overflow-hidden" class="doctor-dashboard_midcontent_container">
+
+  <div class=" doctor-dashboard_midcontent_container w-ful">
+    <div class="flex items-center justify-left">
+      <div class="w-full  bg-white">
+
+        <div class="relative overflow-x-auto  sm:rounded-lg px-8 py-6">
+          <div class=" flex gap-4 items-center justify-between">
+            <h1 class="dashbord-heading-text text-[22px] ">
+              <i class="fa-solid fa-building-columns mr-1"></i>
+              Appointments
+            </h1>
+          </div>
+
+          <div class="w-full mt-6">
+            <app-all-appointments [id]="agentId" [user]="'agent'"></app-all-appointments>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>-->
+
+<div class="w-full border-l-[1px] h-full">
+  <div class="flex items-center justify-left relative">
+
+
+    <div class=" overflow-x-auto  sm:rounded-lg px-8 py-6 w-full">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Appointments">
+          <!-- <app-appointment-card [id]="patientId" [user]="'patient'"></app-appointment-card> -->
+          <app-all-appointments [id]="agentId" [user]="'agent'"></app-all-appointments>
+        </mat-tab>
+
+        <!--<mat-tab label="Medical History">
+          <app-medical-history [id]="patientId"></app-medical-history>
+        </mat-tab>-->
+      </mat-tab-group>
+
+    </div>
+  </div>
+</div>
+
+<!--<div class="overflow-hidden doctor-dashboard_midcontent_container w-ful">
   <div class="flex items-center justify-left">
     <div class="w-full h-screen bg-white">
 
@@ -17,4 +61,4 @@
     </div>
   </div>
 
-</div>
+</div>-->

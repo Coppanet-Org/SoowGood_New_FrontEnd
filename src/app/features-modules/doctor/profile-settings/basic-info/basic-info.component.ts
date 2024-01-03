@@ -28,7 +28,7 @@ export class BasicInfoComponent implements OnInit {
   maritalOptions: ListItem[] = [];
   countryList = countries
   specialties: any = [];
-  formSubmitted:boolean = false
+  formSubmitted: boolean = false
   @Input() isLoading: boolean = false;
   doctorId: any;
   @Output() formDataEvent = new EventEmitter();
@@ -44,7 +44,7 @@ export class BasicInfoComponent implements OnInit {
     private LoaderService: LoaderService,
     private UserinfoStateService: UserinfoStateService,
     private TosterService: TosterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadForm();
@@ -97,25 +97,25 @@ export class BasicInfoComponent implements OnInit {
       // maritalStatus: ['', Validators.required],
       // mobileNo: [''],
       doctorTitle: ['', Validators.required],
-      fullName: ['', [Validators.required,Validators.minLength(3),customNameValidator,]],
-      email: ['',[Validators.required,Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
+      fullName: ['', [Validators.required, Validators.minLength(3), customNameValidator,]],
+      email: ['', [Validators.required, Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
       gender: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      city: ['', [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]],
-      country: ['', Validators.required],
-      address: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
-      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      country: ['Bangladesh', Validators.required],
+      address: [''], //[Validators.required,Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
+      zipCode: [''], //[Validators.required, Validators.pattern(/^\d{4}$/)]],
+      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{6,9}$/)]],
       bmdcRegExpiryDate: ['', [Validators.required]],
       specialityId: ['', Validators.required],
-      identityNumber: ['',[Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],],
+      identityNumber: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],],
 
     });
   }
   sendDataToParent() {
-    this.formSubmitted= true    
+    this.formSubmitted = true
     if (this.form.invalid) {
-      this.TosterService.customToast('Fill all the requirements','warning')
+      this.TosterService.customToast('Fill all the requirements', 'warning')
       return
     }
     this.formDataEvent.emit({ ...this.form.value, id: this.doctorId });

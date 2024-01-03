@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/dist
+
 /tmp
 /out-tsc
 /bazel-out
@@ -49,5 +49,4 @@ Thumbs.db
 *.vsidx
 /.vs/02.SoowGood_New_FrontEnd/FileContentIndex/131f1efe-7d22-452a-8960-807974cea3b0.vsidx
 /.vs/slnx.sqlite
-*.rar
-/FrontEnd_Release_20231217.rar
+/.vs/slnx.sqlite

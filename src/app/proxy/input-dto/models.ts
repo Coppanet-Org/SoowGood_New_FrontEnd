@@ -166,9 +166,19 @@ export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
   email?: string;
   patientEmail?: string;
   createdBy?: string;
-  cratorCode?: string;
+  creatorCode?: string;
+  creatorRole?: string;
   creatorEntityId?: number;
   userId?: string;
+}
+
+export interface PaymentHistoryMobileInputDto {
+  applicationCode?: string;
+  transactionId?: string;
+  totalAmount?: string;
+  sessionKey?: string;
+  status?: string;
+  failedReason?: string;
 }
 
 export interface PlatformFacilityInputDto extends FullAuditedEntityDto<number> {

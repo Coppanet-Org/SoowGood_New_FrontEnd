@@ -10,6 +10,7 @@
               <tr>
                 <th scope="col" class="th">Id</th>
                 <th scope="col" class="th">Hospital Name</th>
+                <th scope="col" class="th">City</th>
                 <th scope="col" class="th">Address</th>
                 <th scope="col" class=" text-righ th">Action</th>
               </tr>
@@ -19,9 +20,10 @@
               <tr *ngFor="let item of chamberList; let i = index">
                 <td class="td">{{i+1}}</td>
                 <td class="td">{{item.chamberName}}</td>
+                <td class="td">{{item.city}}</td>
                 <td class="td">{{item.address}}</td>
                 <td class="td">
-                  <a class="text-blue-500 hover:text-blue-700" href="#">Delete</a>
+                  <a class="text-blue-500 hover:text-blue-700" (click)="onPlaceEdit(item)">Edit</a>
                 </td>
               </tr>
   
