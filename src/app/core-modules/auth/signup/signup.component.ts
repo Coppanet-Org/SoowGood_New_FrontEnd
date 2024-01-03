@@ -394,7 +394,7 @@ export class SignupComponent implements OnInit {
         confirmPassword: ['', Validators.required],
         gender: ['0', Validators.required],
         dateOfBirth: ['', Validators.required],
-        city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+        city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
         country: ['Bangladesh', Validators.required],
         address: [''], //,[Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
         zipCode: [''], //, [Validators.required, Validators.pattern(/^\d{4}$/)]

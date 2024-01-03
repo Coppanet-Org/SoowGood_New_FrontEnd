@@ -9,22 +9,6 @@
 </div>
 
 <div class="px-10 py-6">
-  <form [formGroup]="form">
-    <!-- <div class="-mx-3 flex flex-wrap">
-      <ng-container class="w-full" *ngFor="let config of feesData">
-        <app-input
-          [label]="config.label"
-          [inputId]="config.inputId"
-          [isSelectInput]="config.isSelect"
-          [readonly]="config.readonly ? config.readonly : false"
-          [options]="config.options"
-          [formControlName]="config.formControlName"
-          [placeholder]="config.placeholder"
-          [type]="config.type"
-          class="sm:w-1/3"
-        ></app-input>
-      </ng-container>
-    </div> -->
 
     <form [formGroup]="form">
       <div class="grid grid-cols-2 gap-4">
@@ -40,6 +24,9 @@
               {{ item.name }}
             </option>
           </select>
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('appointmentType')?.invalid && form.get('appointmentType')?.value == 0">
+            Appointment type is required!
+        </p>
         </div>
         <div class="w-full px-3 sm:w-full">
           <label for="doctorSchedule" class="mb-2"> Doctor Schedule </label>
@@ -53,6 +40,9 @@
               {{ item.name }}
             </option>
           </select>
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('doctorScheduleId')?.hasError('pattern')">
+            Doctor scheduleId is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full">
           <label for="currrentFee" class="mb-2"> Currrent Fee </label>
@@ -64,6 +54,9 @@
             placeholder="Currrent Fee"
             class="form_input mt-1"
           />
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('currentFee')?.hasError('pattern')">
+            Current fee is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full">
           <label for="previousFee" class="mb-2"> Previous Fee </label>
@@ -75,6 +68,9 @@
             placeholder="Previous Fee"
             class="form_input mt-1"
           />
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('previousFee')?.hasError('pattern')">
+            Previous fee fee is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full">
           <label for="feeAppliedFrom" class="mb-2">Fee Applied From</label>
@@ -85,6 +81,9 @@
             placeholder="Fee Applied From"
             class="form_input mt-1"
           />
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('feeAppliedFrom')?.hasError('pattern')">
+            Fee Applied from is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full" *ngIf="showFollowUpPeriod">
           <label for="followUpPeriod" class="mb-2">FollowUp Period</label>
@@ -95,6 +94,9 @@
             placeholder="FollowUp Period"
             class="form_input mt-1"
           />
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('followUpPeriod')?.hasError('pattern')">
+            Follow up period from is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full" *ngIf="showReportShowPeriod">
           <label for="reportShowPeriod" class="mb-2">Report Show Period</label>
@@ -105,6 +107,9 @@
             placeholder="Report Show Period"
             class="form_input mt-1"
           />
+          <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('reportShowPeriod')?.hasError('pattern')">
+            Follow up period from is required!
+          </p>
         </div>
         <div class="w-full px-3 sm:w-full">
           <label for="discount" class="mb-2">Discount</label>
@@ -129,6 +134,10 @@
           />
         </div>
         <div class="w-full px-3 sm:w-full">
+            <label for="discountPeriod" class="mb-2">Discount Period</label>
+            <input autocomplete="off" formControlName="discountPeriod" type="number" placeholder="Discount Period" class="form_input" />
+          </div>
+        <div class="w-full px-3 sm:w-full">
             <label for="totalFee" class="mb-2"
               >Total Fee</label
             >
@@ -140,8 +149,8 @@
             />
           </div>
       </div>
-    </form>
+  
 
+    </form>
     <button class="btn-secondary mt-5" (click)="submit()">Submit</button>
-  </form>
 </div>
