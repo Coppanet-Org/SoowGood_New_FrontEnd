@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
       }
       if (type === 'patient') {
         this.TosterService.customToast(
-          'Your are already login as Doctor',
+          'Your are already login as Patient',
           'warning'
         );
       } else {

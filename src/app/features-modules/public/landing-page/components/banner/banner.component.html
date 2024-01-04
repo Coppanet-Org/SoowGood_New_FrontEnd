@@ -6,12 +6,16 @@
       <div class="w-[65%] flex flex-col">
         <div class="max-w-full space-y-12  md:mt-0">
           <div class="banner-left-top relative">
-            <h1 class="leading-[1.2] max-w-[650px] md:text-[48px] drop-shadow-sm 2xl:text-[58px] font-Roboto font-extrabold text-secondary tracking-[1.2px]">
+            <h1
+              class="leading-[1.2] max-w-[650px] md:text-[48px] drop-shadow-sm 2xl:text-[58px] font-Roboto font-extrabold text-secondary tracking-[1.2px]"
+            >
             
               Your <span class="text-primary"> All-In-One</span>
             Health Platform
             </h1>
-            <p class="mt-4 md:text-[16px] 2xl:text-[17px] leading-[30px] text-secondary-dark">
+            <p
+              class="mt-4 md:text-[16px] 2xl:text-[17px] leading-[30px] text-secondary-dark"
+            >
               Discover a comprehensive healthcare solution right at your
               fingertips. Consult with a qualified medical professional from
               anywhere, at any time, and receive instant prescriptions.
@@ -19,58 +23,70 @@
             </p>
           </div>
   
-          <div class="w-full mx-auto backdrop-blur-md bg-[#00A6E0]/10 2xl:rounded-[20px] rounded-[15px] 2xl:p-4 items-center border-[1px] box-border border-secondary-dark/30">
-            <div class="search-area flex backdrop-blur-sm bg-[#00A6E0]/10 2xl:p-3 p-2 justify-between rounded-[10px] 2xl:rounded-[15px] items-centershadow-blue">
+ 
+            <div
+              class="search-area flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-[550px]  p-2 justify-between rounded-[25px] 2xl:rounded-[50px] items-centershadow-blue"
+            >
               <form [formGroup]="searchForm" class="w-full flex gap-3">
                 <input
-                  class="w-full rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  class="w-full rounded-lg  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
                   type="search"
                   formControlName="searchText"
                   placeholder="search by name..."
                 />
               </form>
-              <button class="btn-secondary ml-2" (click)="goToServicePage()">
+              <button class="btn-secondary ml-2 py-2.5 rounded-full" (click)="goToServicePage()">
                 <i class="fa-solid fa-magnifying-glass mr-2"></i> Search
               </button>
             </div>
           </div>
-        </div>
+
       </div>
       <div class="w-[450px] 2xl:mt-12 md:mt-6 flex justify-end">
         <div *ngIf="authUser?.userType !== 'agent'"
-          class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[300px] max-w-[400px] bg-white/10">
-          <div class="p-8 bg-white/30 w-full h-full relative rounded-md text-center">
+          class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[300px] max-w-[400px] bg-white/10"
+        >
+          <div
+            class="p-8 bg-white/30 w-full h-full relative rounded-md text-center"
+          >
             <h1
               class="font-Roboto text-primary text-center text-[30px] font-bold"
-              *ngIf="!authUser">
+              *ngIf="!authUser"
+            >
               Easy Login/Registration
             </h1>
             <p  *ngIf="!authUser"  class="font-Roboto text-secondary-dark text-center text-[20px] my-3">Doctor & Patient</p>
             <h1
               class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold"
-              *ngIf="authUser">
+              *ngIf="authUser"
+            >
               Manage Your Appointment
             </h1>
             <div
               class="flex justify-evenly items-end gap-4 mt-5"
-              *ngIf="!authUser">
+              *ngIf="!authUser"
+            >
               <button
                 class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]"
-                routerLink="login">
+                routerLink="login"
+              >
                 Login
               </button>
               <button
                 class="btn-secondary bg-primary w-1/2 text-[18px]"
-                routerLink="signup">
+                routerLink="signup"
+              >
                 Registration
               </button>
             </div>
             <div
               class="flex justify-evenly items-end gap-4 mt-5"
-              *ngIf="authUser">
+              *ngIf="authUser"
+            >
               <button
                 [routerLink]="authUser.userType"
-                class="btn-secondary w-full border-secondary-dark/40 text-[18px]">
+                class="btn-secondary w-full border-secondary-dark/40 text-[18px]"
+              >
                 <i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard
               </button>
             </div>
