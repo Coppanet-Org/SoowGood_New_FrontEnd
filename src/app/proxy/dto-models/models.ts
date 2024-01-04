@@ -206,7 +206,7 @@ export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
 
 export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
   doctorScheduleId?: number;
-  doctorSchedule?: string;
+  doctorScheduleName?: string;
   appointmentType?: AppointmentType;
   appointmentTypeName?: string;
   currentFee?: number;
@@ -568,6 +568,9 @@ export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   doctorName?: string;
   doctorCode?: string;
+  doctorBmdcRegNo?: string;
+  specialityId?: number;
+  doctorSpecilityName?: string;
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
