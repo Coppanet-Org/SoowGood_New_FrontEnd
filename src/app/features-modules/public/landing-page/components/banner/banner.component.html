@@ -23,26 +23,24 @@
             </p>
           </div>
   
-          <div
-            class="w-full mx-auto backdrop-blur-md bg-[#00A6E0]/10 2xl:rounded-[20px] rounded-[15px] 2xl:p-4 items-center border-[1px] box-border border-secondary-dark/30"
-          >
+ 
             <div
-              class="search-area flex backdrop-blur-sm bg-[#00A6E0]/10 2xl:p-3 p-2 justify-between rounded-[10px] 2xl:rounded-[15px] items-centershadow-blue"
+              class="search-area flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-[550px]  p-2 justify-between rounded-[25px] 2xl:rounded-[50px] items-centershadow-blue"
             >
               <form [formGroup]="searchForm" class="w-full flex gap-3">
                 <input
-                  class="w-full rounded-lg border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  class="w-full rounded-lg  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
                   type="search"
                   formControlName="searchText"
                   placeholder="search by name..."
                 />
               </form>
-              <button class="btn-secondary ml-2" (click)="goToServicePage()">
+              <button class="btn-secondary ml-2 py-2.5 rounded-full" (click)="goToServicePage()">
                 <i class="fa-solid fa-magnifying-glass mr-2"></i> Search
               </button>
             </div>
           </div>
-        </div>
+
       </div>
       <div class="w-[450px] 2xl:mt-12 md:mt-6 flex justify-end">
         <div *ngIf="authUser?.userType !== 'agent'"
