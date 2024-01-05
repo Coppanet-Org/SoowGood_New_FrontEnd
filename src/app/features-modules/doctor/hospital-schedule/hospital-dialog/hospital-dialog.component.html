@@ -29,7 +29,7 @@
                     <p class="text-red-500 text-sm" *ngIf=" formSubmitted && form.get('address')?.invalid">Address is
                         required!</p>
 
-                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('address')?.hasError('pattern')">
+                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('address')?.hasError('required')">
                         Address should only contain alphanumeric characters and spaces.
                     </p>
                 </div>
@@ -44,7 +44,7 @@
                         placeholder="City" class="form_input" />
                     <p class="text-red-500 text-sm" *ngIf=" formSubmitted && form.get('city')?.invalid">City name is
                         required!</p>
-                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('city')?.hasError('pattern')">
+                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('city')?.hasError('required')">
                         city name should contain only letters (no numbers or special characters).
                     </p>
                 </div>
@@ -76,7 +76,7 @@
                     <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('zipCode')?.hasError('required')">
                             Zip code should be a 4-digit number.
                     </p>
-                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('zipCode')?.hasError('pattern')">
+                    <p class="text-red-500 text-sm" *ngIf="formSubmitted && form.get('zipCode')?.hasError('required')">
                         Zip code should be a 4-digit number.
                     </p>
                 </div>
@@ -84,7 +84,7 @@
 
         </div>
 
-        <button class="btn-secondary" (click)="submit()"> Submit</button>
+        <button class="btn-secondary" (click)="submit()"> {{isLoading ? 'Loading...': 'Submit'}}</button>
 
     </form>
 </div>

@@ -22,7 +22,7 @@
 
 @layer components {
   .container {
-    @apply max-w-[1340px] lg:max-w-[80%] 2xl:max-w-[75%] mx-auto;
+    @apply max-w-[90%] 2xl:max-w-[1340px] mx-auto;
   }
   .container-full{
     @apply xs:max-w-full sm:w-full md:w-[96%] mr-auto ml-auto;

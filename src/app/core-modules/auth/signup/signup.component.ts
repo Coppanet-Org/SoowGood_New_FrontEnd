@@ -394,7 +394,7 @@ export class SignupComponent implements OnInit {
         confirmPassword: ['', Validators.required],
         gender: ['0', Validators.required],
         dateOfBirth: ['', Validators.required],
-        city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+        city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
         country: ['Bangladesh', Validators.required],
         address: [''], //,[Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
         zipCode: [''], //, [Validators.required, Validators.pattern(/^\d{4}$/)]
@@ -846,27 +846,41 @@ export class SignupComponent implements OnInit {
         userId: res.userId,
       })
       .subscribe((patientDto: PatientProfileDto) => {
-        const saveLocalStorage = {
-          patientName: patientDto.fullName,
-          email: patientDto.email,
-          mobileNo: patientDto.mobileNo,
-          userId: res.userId,
-          id: patientDto.id,
-          userType: this.userType,
-        };
+        //const saveLocalStorage = {
+        //  fullName: patientDto.fullName,
+        //  email: patientDto.email,
+        //  mobileNo: patientDto.mobileNo,
+        //  userId: res.userId,
+        //  id: patientDto.id,
+        //  userType: this.userType.toLowerCase(),
+        //};
 
-        const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+        //this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+        //const navigate = `${this.formGroup?.value.userTypeName}/profile-settings`;
+        //const navigate = `${this.formGroup?.value.userTypeName}/dashboard`;
 
-        this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-        this._router.navigate([navigate.toLowerCase()], {
-          state: { data: res }, // Pass the 'res' object as 'data' in the state object
-        });
+        //this._router.navigate([navigate.toLowerCase()], {
+        //  state: { data: res }, // Pass the 'res' object as 'data' in the state object
+        //});
 
-        if (this.normalAuth) {
-          this.loadAuth();
-        }
+        //if (this.normalAuth) {
+        //  this.loadAuth();
+        //}
 
-        this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success');
+        this.normalAuth.signOut();
+        //if (this.normalAuth) {
+        //  this.loadAuth();
+        //}
+        //let navUrl = this.userType.toLowerCase() + '/dashboard';
+        this._router
+          .navigate(['/login'], {
+            state: { data: res }, // Pass the 'res' object as 'data' in the state object
+          })
+          .then((r) =>
+            this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success')
+          );
+
+        //this.tosterService.customToast('Patient Registration Successfull. Now login.', 'success');
         this.cdRef.detectChanges();
       });
   }

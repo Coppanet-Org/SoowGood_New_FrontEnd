@@ -25,10 +25,10 @@
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
             <tr *ngFor="let item of feeList; let i = index">
 
-              <td class="td">{{item.doctorSchedule}}</td>
+              <td class="td">{{item.doctorScheduleName}}</td>
               <td class="td">{{item.currentFee}}.00 tk</td>
               <!-- <td class="td">{{item.previousFee}}.00 tk</td> -->
-              <td class="td">{{item.discount}}%</td>
+              <td class="td">{{item.discount}}.00 tk</td>
               <td class="td">{{item.discountPeriod}} Days</td>
               <td class="td">{{item.reportShowPeriod}} Days</td>
               <td class="td">{{item.totalFee}}.00 tk</td>

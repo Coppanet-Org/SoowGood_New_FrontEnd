@@ -16,8 +16,9 @@
                     </h2>
                     <div>
                         <select [ngModel]="selectedValue" (change)="changeSelection($event)" [value]="selectedValue" >
-                            <option value="Today">Today</option>
-                            <option value="Passed">Passed</option>
+                            <option value="All">All</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
                         </select>
                     </div>
                     <button class="btn-secondary-light h-fit" routerLink="../appointments">View all</button>

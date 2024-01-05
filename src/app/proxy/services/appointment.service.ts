@@ -151,6 +151,15 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getSearchedPatientListByDoctorId = (doctorId: number, name: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/searched-patient-list-by-doctor-id/${doctorId}`,
+      params: { name },
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: AppointmentInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto>({
       method: 'PUT',

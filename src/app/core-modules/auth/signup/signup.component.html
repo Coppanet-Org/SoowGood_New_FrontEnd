@@ -267,7 +267,7 @@
                     Please enter your BMDC number.
                   </mat-error>
                   <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegNo')?.hasError('pattern')">
-                    BMDC number should be a 9-digit number.
+                    BMDC number should be a 6-9 digit number.
                   </mat-error>
                 </div>
                 <mat-hint *ngIf="userInfoForm.get('bmdcRegNo')?.invalid" class="text-xs text-red-500 font-normal"

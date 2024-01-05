@@ -31,7 +31,7 @@ export class AgentLoginComponent implements OnInit {
     private NormalAuth: AuthService,
     private _router: Router,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadForm();
@@ -79,7 +79,7 @@ export class AgentLoginComponent implements OnInit {
           catchError((error: any) => this.handleLoginError(error)),
           switchMap((loginResponse: any) => {
             loginResponseData = loginResponse;
-            
+
 
             if (!loginResponse.success) {
               this.hasError = true;
@@ -98,6 +98,7 @@ export class AgentLoginComponent implements OnInit {
         .subscribe((agentDto: any) => {
           console.log(agentDto);
           const saveLocalStorage = {
+            fullName: agentDto.fullName,
             userId: agentDto.userId,
             id: agentDto.id,
             userType: loginResponseData.roleName.toString().toLowerCase(),
@@ -106,9 +107,9 @@ export class AgentLoginComponent implements OnInit {
           const userType = agentDto.isActive
             ? loginResponseData.roleName.toString().toLowerCase()
             : (
-                loginResponseData.roleName.toString() +
-                '/profile-settings'
-              ).toLowerCase();
+              loginResponseData.roleName.toString() +
+              '/profile-settings'
+            ).toLowerCase();
           this._router
             .navigate([userType], {
               state: { data: agentDto },
@@ -127,8 +128,8 @@ export class AgentLoginComponent implements OnInit {
       }
     }
   }
-  handleLoginError(error: any): any {}
-  handleProfileError(error: any): any {}
+  handleLoginError(error: any): any { }
+  handleProfileError(error: any): any { }
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

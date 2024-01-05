@@ -72,7 +72,7 @@ const routes: Route[] = [
   },
   {
     path: 'agent',
-    component: AgentLayoutComponent,
+    component: DoctorLayoutComponent,
     canActivate:[isAuth],
     children: [
       {
@@ -101,7 +101,7 @@ const routes: Route[] = [
   {
     path: 'patient',
     canActivate:[isAuth],
-    component: PatientLayoutComponent,
+    component: DoctorLayoutComponent,
     children: [
       {
         path: '',
