@@ -223,6 +223,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
         appointmentCreatorRole: this.userRole == 'patient' ? 'patient' : 'agent'
       };
       this.bookingInfo = infoForBooking
+console.log(infoForBooking);
 
       if (this.profileInfo && bookFor === 'self') {
         this.formSubmitted = true

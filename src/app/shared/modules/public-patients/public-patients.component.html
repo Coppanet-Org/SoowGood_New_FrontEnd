@@ -10,7 +10,7 @@
               <i class="fa-solid fa-building-columns mr-1"></i>My Patients
             </h1>
             <button
-              *ngIf="userInfo.userType === 'agent'"
+              *ngIf="userInfo.userType === 'agent' || 'patient'"
               class="btn-secondary-light border-[1px] border-secondary-dark/50"
               (click)="addNewPatient('agent')"
             >

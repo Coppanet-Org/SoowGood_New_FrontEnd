@@ -184,7 +184,7 @@
 
           <div class="flex gap-5 mt-10 w-full">
             <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
-            <button class="btn-secondary py-2" (click)="onStepChange(3)">Next</button>
+            <button class="btn-secondary py-2" (click)="onStepChange(3)">{{isLoading ? 'Loading...': 'Next'}}</button>
           </div>
         </div>
 

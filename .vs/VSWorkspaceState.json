@@ -3,11 +3,11 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\core-modules",
-    "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\signup",
-    "\\src\\app\\features-modules"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-info"
   ],
-  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-info\\fee-setup.component.html",
   "PreviewInSolutionExplorer": false
 }

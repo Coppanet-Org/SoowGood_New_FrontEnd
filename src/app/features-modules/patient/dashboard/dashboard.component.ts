@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   userType: any;
   appointmentList:AppointmentDto[]=[];
   selectedValue= "All"
+  aptLoading:boolean = false
   constructor(
     // private DoctorProfileService: DoctorProfileService,
     private DoctorStateService :DoctorStateService,
@@ -102,12 +103,15 @@ export class DashboardComponent implements OnInit {
     })
   }
   getDashboardAppointment(value: string) {
+    this.aptLoading = true
     this.DashboardService.getDashboardAppointmentListForPatient(this.isAuthUser, 'patient', value).subscribe({
       next: (res) => {
         this.appointmentList = res
+        this.aptLoading = false
       },
       error: (err) => {
         console.log(err);
+        this.aptLoading = false
       }
     })
   }

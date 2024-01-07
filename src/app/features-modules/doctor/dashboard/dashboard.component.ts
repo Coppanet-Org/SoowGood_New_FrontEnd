@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   ];
   doctorId: any;
   appointmentList: AppointmentDto[] = [];
+  aptLoading: boolean=false;
   constructor(private NormalAuth: AuthService, private DashboardService: DashboardService) { }
   selectedValue= "All"
   ngOnInit(): void {
@@ -55,12 +56,15 @@ export class DashboardComponent implements OnInit {
     })
   }
   getDashboardAppointment(value: string) {
+    this.aptLoading = true
     this.DashboardService.getDashboardAppointmentListForDoctor(this.doctorId, value).subscribe({
       next: (res) => {
         this.appointmentList = res
+        this.aptLoading = false
       },
       error: (err) => {
         console.log(err);
+        this.aptLoading = false
       }
     })
   }

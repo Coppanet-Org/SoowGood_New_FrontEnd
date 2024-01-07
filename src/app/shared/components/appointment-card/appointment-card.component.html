@@ -275,25 +275,33 @@
 
   <div class="px-6">
     <!-- <p class="text-[22px] font-Roboto font-semibold text-primary/80 flex justify-between"> {{appointment.scheduleDayofWeek}} {{ appointment.appointmentDate | date: 'hh:mm a' }}</p> -->
+  
     <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between">
+      <b>Patient : </b> <span class="text-[18px] font-semibold capitalize">{{ appointment.patientName }}</span>
+    </p>    
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b>Code : </b> {{ appointment.appointmentCode }}
     </p>
-    <p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between">
+    <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b>Date & Time : </b>
-      {{ appointment.appointmentDate | date }} -
+      <span class="font-semibold">
+        {{ appointment.appointmentDate | date }} -
       {{ appointment.appointmentTime }}
+      </span>
     </p>
     <!--<p class="py-1 text-[14px] text-gray-500 mt-5 flex justify-between"><b>Date : </b> {{appointment.appointmentTime | date}}  </p>-->
     <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b>Doctor Fee :</b>
+     <span class="font-semibold text-[18px]">
       {{ appointment.totalAppointmentFee }} tk.
+     </span>
     </p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b> Appointment Type : </b>{{ appointment.appointmentTypeName }}
     </p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b>Consultancy Type : </b>
-      <span class="badge">
+      <span class="badge bg-green-200 font-semibold" >
         <i
           *ngIf="appointment.consultancyTypeName == 'online'"
           class="fa-solid fa-video"
@@ -302,15 +310,15 @@
       </span>
     </p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between">
-      <b> Appointment Serial: </b>{{ appointment.appointmentSerial }}
+      <b> Appointment Serial: </b> <span class="font-semibold">{{ appointment.appointmentSerial }} no.</span>
     </p>
     <p class="py-1 text-[14px] text-gray-500 flex justify-between">
       <b>Status : </b>
       <span
         [class]="
           appointment.appointmentStatus == 4
-            ? 'bg-green-100 text-green-950 py-.5 px-3 rounded-lg'
-            : 'bg-yellow-100 py-.5 px-3  text-yellow-800 rounded-lg'
+            ? 'bg-green-100 font-semibold text-green-950 py-.5 px-3 rounded-lg'
+            : 'bg-yellow-100 py-.5 px-3 font-semibold text-yellow-800 rounded-lg'
         "
       >
         {{

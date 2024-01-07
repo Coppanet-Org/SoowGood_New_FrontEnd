@@ -4,18 +4,15 @@ import { AppointmentsComponent } from './appointments.component';
 import { Route, RouterModule } from '@angular/router';
 import { AllAppointmentsModule } from 'src/app/shared/modules/all-appointments/all-appointments.module';
 import { MatTabsModule } from '@angular/material/tabs';
-import { PrescriptionsComponent } from 'src/app/shared/modules/prescriptions/prescriptions.component';
 import { MedicalHistoryComponent } from './medical-history/medical-history.component';
+import { PrescriptionsModule } from 'src/app/shared/modules/prescriptions/prescriptions.module';
 
 const routes: Route[] = [
   {
     path: '',
     component: AppointmentsComponent,
   },
-  {
-    path: 'prescriptions/:id',
-    component: PrescriptionsComponent,
-  }
+ 
 ]
 
 @NgModule({
@@ -25,7 +22,7 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     AllAppointmentsModule,
     MatTabsModule,
-    
+    PrescriptionsModule
   ]
 })
 export class AppointmentsModule { }
