@@ -142,7 +142,14 @@ export class BookingDialogComponent implements OnInit {
     }
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
+      if (this.sessionRole == 'patient') {
+
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
+      }
+      else if (this.sessionRole == 'agent') {
+
+        this.UserinfoStateService.getUserPatientInfo(id, 'agent');
+      }
       this.UserinfoStateService.getData()
         .pipe(
           switchMap((e) => {

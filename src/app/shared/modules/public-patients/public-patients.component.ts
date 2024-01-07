@@ -22,12 +22,17 @@ export class PublicPatientsComponent implements OnInit {
     private AppointmentService: AppointmentService,
     private NormalAuth: AuthService,
     public dialog: MatDialog,
-    private PatientProfileService : PatientProfileService,
-    private UserinfoStateService : UserinfoStateService
-  ) {}
+    private PatientProfileService: PatientProfileService,
+    private UserinfoStateService: UserinfoStateService
+  ) { }
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
+    if (user.userType === 'patient') {
     this.UserinfoStateService.getUserPatientInfo(user.id, 'patient');
+    }
+    else if (user.userType === 'agent') {
+      this.UserinfoStateService.getUserPatientInfo(user.id, 'agent');
+    }
     this.userInfo = user;
     // const { aptId } = this.route.snapshot.params;
     if (user.id) {
@@ -40,12 +45,11 @@ export class PublicPatientsComponent implements OnInit {
               this.patientLoader = false;
             }
           );
-        } else if (user.userType === 'patient') {
-         
-          this.UserinfoStateService.getData()
-            .pipe(
-              switchMap((e) => {
+        }
+        else if (user.userType === 'patient' || user.userType === 'agent') {
 
+          this.UserinfoStateService.getData()
+            .pipe(switchMap((e) => {
                 if (e) {
                   return this.UserinfoStateService.getUserPatientData().pipe(
                     map((data) => {
@@ -60,7 +64,7 @@ export class PublicPatientsComponent implements OnInit {
             .subscribe((res) => {
               this.patientList = res;
               console.log(res);
-              
+
             });
         }
         else if (user.userType === 'agent') {
@@ -72,22 +76,24 @@ export class PublicPatientsComponent implements OnInit {
       }
     }
   }
+
   goToPatientProfile(patient: any) {
-    if (this.userInfo.userType ==='doctor') {
+    if (this.userInfo.userType === 'doctor') {
       this.Router.navigate([
         '/doctor/patients/patient-details/',
         patient.patientProfileId
       ]);
     }
-    else if(this.userInfo.userType === 'patient'){
+    else if (this.userInfo.userType === 'patient') {
       this.Router.navigate([
         '/patient/my-patient/patient-details/',
         patient.id
       ]);
-    }else if (this.userInfo.userType === 'agent') {
+    } else if (this.userInfo.userType === 'agent') {
       // for agent 
     } return
   }
+
   addNewPatient(role: string) {
     const dialogRef = this.dialog.open(CreatePatientComponent, {
       width: '40vw',
@@ -97,8 +103,9 @@ export class PublicPatientsComponent implements OnInit {
       // this.getDegreeDataList(this.doctorId)
     });
   }
-  onSearchChange(e:any){
-   
-    
+
+  onSearchChange(e: any) {
+
+
   }
 }

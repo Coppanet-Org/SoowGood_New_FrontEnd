@@ -37,7 +37,7 @@
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="bookingForm">
           <ul class="grid grid-row-2 w-full gap-6">
-            <li (click)="onStepChange(2,'self')">
+            <li (click)="onStepChange(2,'self')" *ngIf="userRole=='patient'">
               <input type="radio" formControlName="bookMyself" id="bookMyself" value="bookMyself"
                      class="hidden peer" required>
               <label for="bookMyself"
