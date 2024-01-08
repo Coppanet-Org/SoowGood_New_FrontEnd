@@ -94,7 +94,7 @@ export class PublicPatientsComponent implements OnInit {
     } return
   }
 
-  addNewPatient(role: string) {
+  addNewPatient() {
     const dialogRef = this.dialog.open(CreatePatientComponent, {
       width: '40vw',
     });
