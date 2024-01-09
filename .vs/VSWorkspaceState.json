@@ -1,12 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dist",
     "\\src",
     "\\src\\app",
     "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
-    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-info"
+    "\\src\\app\\features-modules\\doctor"
   ],
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
