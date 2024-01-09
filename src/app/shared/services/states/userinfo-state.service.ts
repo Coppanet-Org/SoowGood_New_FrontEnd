@@ -72,15 +72,12 @@ export class UserinfoStateService implements OnInit {
 
   // get user created patient list
   getUserPatientInfo(id: any, role: string): void {    
-    if (id && role == 'patient') {
-      this.PatientProfileService.getPatientListByUserProfileId(id, 'patient').subscribe((res) =>
+    if (id && role ) {
+      this.PatientProfileService.getPatientListByUserProfileId(id, role).subscribe((res) =>
        this.sendUserPatientData(res)
       );
-    }
-    if (id && role == 'agent') {
-      this.PatientProfileService.getPatientListByUserProfileId(id, 'agent').subscribe((res) =>
-        this.sendUserPatientData(res)
-      );
+    }else{
+      this.sendUserPatientData(null) 
     }
   }
 

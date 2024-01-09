@@ -12,7 +12,7 @@
         <div class="flex flex-col space-y-5 mt-10">
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
+            <input  type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
               required
               [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
               inputmode="numeric">
@@ -22,6 +22,11 @@
             <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')">
               Mobile number should have exactly 11 digits.
             </mat-error>
+            
+            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidMobileNumberCharacters')">
+              Mobile number should not contain spaces or special characters.
+            </mat-error>
+            
             <mat-error *ngIf="loginForm.get('mobileNo')?.hasError('customError')">
               {{ loginForm.get('mobileNo')?.getError('customError') }}
             </mat-error>
