@@ -87,10 +87,20 @@ export class PatientProfileService {
     { apiName: this.apiName,...config });
   
 
-  getPatientListByUserProfileId = (profileId: number, config?: Partial<Rest.Config>) =>
+  getPatientListBySearchUserProfileId = (profileId: number, role: string, name: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/patient-profile/patient-list-by-search-user-profile-id/${profileId}`,
+      params: { role, name },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getPatientListByUserProfileId = (profileId: number, role: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PatientProfileDto[]>({
       method: 'GET',
       url: `/api/app/patient-profile/patient-list-by-user-profile-id/${profileId}`,
+      params: { role },
     },
     { apiName: this.apiName,...config });
   

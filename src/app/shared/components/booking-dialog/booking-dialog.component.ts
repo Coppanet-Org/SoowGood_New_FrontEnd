@@ -93,6 +93,7 @@ export class BookingDialogComponent implements OnInit {
   bookingInfo: any;
   filteredChamber: any = [];
   sessionRole: any;
+  isLoading: boolean= false;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -141,7 +142,14 @@ export class BookingDialogComponent implements OnInit {
     }
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
+      if (this.sessionRole == 'patient') {
+
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
+      }
+      else if (this.sessionRole == 'agent') {
+
+        this.UserinfoStateService.getUserPatientInfo(id, 'agent');
+      }
       this.UserinfoStateService.getData()
         .pipe(
           switchMap((e) => {
@@ -367,6 +375,7 @@ export class BookingDialogComponent implements OnInit {
     }
 
     if (e === 3 && this.form.valid) {
+      this.isLoading = true
       this.formSubmitted = true
       if (this.filterData.length <= 0 && !this.selectedSlotInfo?.doctorScheduleId) {
         this.TosterService.customToast(
@@ -516,13 +525,14 @@ export class BookingDialogComponent implements OnInit {
             this.PatientProfileService.update(obj).subscribe((res) => {
               // this.createAppointment(infoForBooking, e);
               this.activeTab = e;
-
+              this.isLoading = false
             });
           }
 
           if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
             // this.createAppointment(infoForBooking, e);
             this.activeTab = e;
+            this.isLoading = false
           }
           return;
         }
@@ -533,6 +543,7 @@ export class BookingDialogComponent implements OnInit {
           'Please select a slot',
           'warning'
         );
+        this.isLoading = false
       }
 
 
@@ -544,6 +555,7 @@ export class BookingDialogComponent implements OnInit {
         'Please select all the required fields',
         'warning'
       );
+      this.isLoading = false
     }
 
     else {
