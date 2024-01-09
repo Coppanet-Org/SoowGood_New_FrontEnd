@@ -58,7 +58,7 @@ export class AppointmentCardComponent implements AfterViewInit {
   goToBuildPrescription(aptCode: string) {
 
     if (aptCode != null && aptCode !== undefined) {
-      const url = '#/doctor/build-prescription/' + aptCode;
+      const url = '/#/doctor/build-prescription/' + aptCode;
       window.open(url, '_blank');
     } else {
       console.log('Appointment not found');
