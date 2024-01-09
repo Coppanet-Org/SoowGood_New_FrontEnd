@@ -27,7 +27,7 @@
 
         <div class="w-full flex h-screen flex-wrap justify-evenly overflow-y-scroll no-scrollbar px-5 pb-[50px]">
           <div class="px-4 py-3 w-full">
-            <table class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px]">
+            <table *ngIf="!patientLoader" class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px]">
               <thead class="text-xs rounded-lg text-gray-800 uppercase bg-black/5 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="px-6 py-3">S.L No</th>
@@ -67,6 +67,9 @@
                 </tr>
               </tbody>
             </table>
+            <div *ngIf="patientLoader" class="w-full h-[300px] flex justify-center items-center">
+              Data is loading ...
+            </div>
           </div>
         </div>
       </div>

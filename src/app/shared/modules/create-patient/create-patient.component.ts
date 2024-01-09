@@ -23,6 +23,7 @@ export class CreatePatientComponent implements OnInit {
   formSubmitted: boolean = false;
   btnLoader: boolean = false;
   genderList: ListItem[]=[];
+  authInfo: any;
   constructor(
     private fb: FormBuilder,
     private TosterService: TosterService,
@@ -32,9 +33,10 @@ export class CreatePatientComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
+    this.authInfo = user
     this.genderList = CommonService.getEnumList(Gender);
     this.loadForm();
-    if (user.userType === 'agent') {
+    if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
       this.createPatientForm.get('createdBy')?.setValue(user.userType)
     }return
@@ -58,6 +60,8 @@ export class CreatePatientComponent implements OnInit {
   createNewPatient(): void {
     this.formSubmitted = true;
 
+console.log(this.createPatientForm.value);
+
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
@@ -78,18 +82,20 @@ export class CreatePatientComponent implements OnInit {
               next:(res)=>{
                 console.log(res);
                 //TODO
-                this.UserinfoStateService.getUserPatientInfo(res.id, 'agent');
+                this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
+                this.TosterService.customToast('Your patient is created!', 'success');
+                this.btnLoader = false;
+                this.UserinfoStateService.getUserPatientInfo(
+                  res.id,
+                  'patient'
+                );
               },error:(err)=>{
-                console.log(err);     
+                this.TosterService.customToast('Something went wrong!', 'error');
+                this.btnLoader = false;   
               }
             })
           }
-          this.btnLoader = false;
-          this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
+
         }
       );
     } catch (error) {
