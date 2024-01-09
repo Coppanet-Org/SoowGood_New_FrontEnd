@@ -635,7 +635,7 @@
 
               <div class="form_input flex justify-between">
                 <input [type]="confirmPasswordFieldType" autocomplete="off" formControlName="confirmPassword"
-                       name="confirmPassword" class="outline-none border-none w-full" placeholder="Password" (keydown.enter)="$event.preventDefault()" />
+                       name="confirmPassword" class="outline-none border-none w-full" placeholder="Confirm password" (keydown.enter)="$event.preventDefault()" />
                 <button (click)="passwordVisibility('confirmPassword')" class="cursor-pointer">
                   <i [class]="confirmPasswordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>

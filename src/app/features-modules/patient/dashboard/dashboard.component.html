@@ -23,7 +23,7 @@
                     </div>
                     <button class="btn-secondary-light h-fit" routerLink="../appointments">View all</button>
                 </div>
-                <table  class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
+                <table *ngIf="!aptLoading" class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
                     <thead
                         class="text-xs rounded-lg text-gray-800 uppercase bg-black/5 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -66,6 +66,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="aptLoading" class="w-full h-[300px] flex justify-center items-center">
+                    Data is Loading...
+                 </div>
             </div>
 
         </div>
@@ -90,9 +93,9 @@
                             <div class="border-[1px] p-3 flex justify-between items-center">
                                 <div>
                                     <p class="text-sm pt-2 leading-4  text-gray-600 dark:text-gray-300">
-                                        Cardiologist</p>
+                                        {{details.specialityName}}</p>
                                     <a tabindex="0"
-                                        class="focus:outline-none text-lg font-normal leading-5 text-gray-800 dark:text-gray-100 mt-2">
+                                        class="focus:outline-none text-lg font-semibold leading-5 text-gray-800 dark:text-gray-100 mt-2">
                                         {{details.fullName}}
                                     </a>
                                 </div>

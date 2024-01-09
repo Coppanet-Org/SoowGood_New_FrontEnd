@@ -3,7 +3,7 @@ import { PatientProfileService } from './../../../proxy/services/patient-profile
 import { TosterService } from './../../services/toster.service';
 import { inputForCreatePatient } from './../../utils/input-info';
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonService } from '../../services/common.service';
 import { Gender } from 'src/app/proxy/enums';
@@ -23,22 +23,25 @@ export class CreatePatientComponent implements OnInit {
   formSubmitted: boolean = false;
   btnLoader: boolean = false;
   genderList: ListItem[]=[];
+  authInfo: any;
   constructor(
     private fb: FormBuilder,
     private TosterService: TosterService,
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
     private NormalAuth: AuthService
-  ) {}
+  ) { }
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
+    this.authInfo = user
     this.genderList = CommonService.getEnumList(Gender);
     this.loadForm();
-    if (user.userType === 'agent') {
+    if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-      this.createPatientForm.get('createdBy')?.setValue(user.userType)
-    }return
-   
+      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
+    //}
+    return
+
   }
   loadForm() {
     this.createPatientForm = this.fb.group({
@@ -52,11 +55,14 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
+        creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
+
+console.log(this.createPatientForm.value);
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
@@ -75,21 +81,23 @@ export class CreatePatientComponent implements OnInit {
               res.patientCode,
               res.patientMobileNo
             ).subscribe({
-              next:(res)=>{
+              next: (res) => {
                 console.log(res);
                 //TODO
-                this.UserinfoStateService.getUserPatientInfo(res.id, 'agent');
+                this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
+                this.TosterService.customToast('Your patient is created!', 'success');
+                this.btnLoader = false;
+                this.UserinfoStateService.getUserPatientInfo(
+                  res.id,
+                  'patient'
+                );
               },error:(err)=>{
-                console.log(err);     
+                this.TosterService.customToast('Something went wrong!', 'error');
+                this.btnLoader = false;   
               }
             })
           }
-          this.btnLoader = false;
-          this.TosterService.customToast('Your patient is created!', 'success');
-          this.UserinfoStateService.getUserPatientInfo(
-            this.profileInfo.id,
-            'patient'
-          );
+
         }
       );
     } catch (error) {
@@ -97,5 +105,5 @@ export class CreatePatientComponent implements OnInit {
     }
   }
 
- 
+
 }

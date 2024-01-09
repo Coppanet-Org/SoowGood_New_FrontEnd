@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.defaultAuth.mobileNo,
         [
           Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
+          Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
           Validators.minLength(11),
           Validators.maxLength(11),
         ],

@@ -55,7 +55,7 @@ export class LiveDoctorsComponent
       this.slider = new KeenSlider(this.sliderRef.nativeElement, {
         // initial: this.currentSlide,
         slides: {
-          perView: 1,
+          perView: 3,
         },
         slideChanged: (s) => {
           this.currentSlide = s.track.details.rel;
@@ -134,4 +134,10 @@ export class LiveDoctorsComponent
       },
     });
   }
+  slickInit(e:any) {
+    console.log('slick initialized');
+  }
+
+
+ 
 }

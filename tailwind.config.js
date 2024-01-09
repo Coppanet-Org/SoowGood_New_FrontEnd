@@ -26,7 +26,7 @@ module.exports = {
 
     extend: {
       backgroundImage: {
-        "hero-pattern": "url(/assets/banner/bg-shape.png)",
+        "hero-pattern": "url(/assets/banner/bg-shape.webp)",
         // 'auth-pattern' :"url('/assets/')
       },
 
