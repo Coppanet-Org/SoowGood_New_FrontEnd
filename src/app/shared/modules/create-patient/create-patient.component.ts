@@ -22,7 +22,7 @@ export class CreatePatientComponent implements OnInit {
   profileInfo: any;
   formSubmitted: boolean = false;
   btnLoader: boolean = false;
-  genderList: ListItem[]=[];
+  genderList: ListItem[] = [];
   authInfo: any;
   constructor(
     private fb: FormBuilder,
@@ -38,9 +38,8 @@ export class CreatePatientComponent implements OnInit {
     this.loadForm();
     if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
-    //}
-    return
+      this.createPatientForm.get('createdBy')?.setValue(user.userType)
+    } return
 
   }
   loadForm() {
@@ -55,14 +54,14 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
-        creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
+      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
 
-console.log(this.createPatientForm.value);
+    console.log(this.createPatientForm.value);
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
@@ -91,9 +90,9 @@ console.log(this.createPatientForm.value);
                   res.id,
                   'patient'
                 );
-              },error:(err)=>{
+              }, error: (err) => {
                 this.TosterService.customToast('Something went wrong!', 'error');
-                this.btnLoader = false;   
+                this.btnLoader = false;
               }
             })
           }
