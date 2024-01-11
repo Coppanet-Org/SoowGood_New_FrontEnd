@@ -1,12 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\dist",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features-modules",
-    "\\src\\app\\features-modules\\doctor"
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\src\\environments\\environment.ts",
   "PreviewInSolutionExplorer": false
 }
