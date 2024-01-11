@@ -23,9 +23,7 @@
               Mobile number should have exactly 11 digits.
             </mat-error>
             
-            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidMobileNumberCharacters')">
-              Mobile number should not contain spaces or special characters.
-            </mat-error>
+
             
             <mat-error *ngIf="loginForm.get('mobileNo')?.hasError('customError')">
               {{ loginForm.get('mobileNo')?.getError('customError') }}
