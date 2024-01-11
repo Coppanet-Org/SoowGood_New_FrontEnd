@@ -1,10 +1,10 @@
 <div class="signup-form">
   <div class="signup-form__left">
-    <img src="../../../../assets/auth/Group 11185.png" alt="auth">
+    <img src="../../../../auth/Group 11185.png" alt="auth">
 
   </div>
   <div class="signup-form__right drop-shadow-soft relative">
-    <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
+    <!-- <img src="../../../../SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
     <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
       <h1 class="text-4xl font-medium">Signup</h1>
@@ -16,7 +16,7 @@
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
-                <img src="../../../../assets/auth/doctor.png" alt="doctor">
+                <img src="../../../../auth/doctor.png" alt="doctor">
                 <h4>I am a Doctor</h4>
               </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
-                <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
+                <img src="../../../../auth/hospitalisation.png" alt="patient">
                 <h4>I am a Patient</h4>
               </div>
             </div>
@@ -85,7 +85,7 @@
     <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
          [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
       <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
-        <img src="../../../../assets/auth/v-code.jpg" alt="">
+        <img src="../../../../auth/v-code.jpg" alt="">
       </div>
       <h1 class="mt-4 text-[28px] font-semibold"> Verify Your Phone <br> Number</h1>
       <p>
@@ -1051,7 +1051,7 @@
                 Upload Profile Picture
               </label>
               <div class="relative w-fit bg-white transition">
-                <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
+                <img [src]="profPicUrl ? profPicUrl : '../../../../../doctor/dr.jpeg'" alt=""
                      class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #attachments type="file" #fileInput1 style="display: none"
                        accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
@@ -1088,7 +1088,7 @@
                 Upload Your NID/Passport
               </label>
               <div class="relative w-fit bg-white transition">
-                <img [src]="profNidUrl ? profNidUrl : '/assets/nid.jpg'" alt=""
+                <img [src]="profNidUrl ? profNidUrl : '/nid.jpg'" alt=""
                      class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #idAttachments type="file" #fileInput2 style="display: none"
                        accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">
