@@ -273,6 +273,7 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   profileStep?: number;
   createFrom?: string;
   profileRole?: string;
+  profilePic?: string;
 }
 
 export interface DoctorScheduleDaySessionDto extends FullAuditedEntityDto<number> {
