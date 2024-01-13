@@ -39,7 +39,7 @@ export class CreatePatientComponent implements OnInit {
     if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
       this.createPatientForm.get('createdBy')?.setValue(user.fullName)
-    //}
+    }
     return
 
   }
@@ -55,7 +55,7 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
-      creatorRole: [(this.userrole == 'patient' ? 'patient' : 'agent'), Validators.required]
+      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
