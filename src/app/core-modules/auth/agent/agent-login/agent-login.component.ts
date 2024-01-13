@@ -113,6 +113,7 @@ export class AgentLoginComponent implements OnInit {
               .subscribe((agentDto: any) => {
                 console.log(agentDto);
                 const saveLocalStorage = {
+                  fullName: agentDto.fullName,
                   userId: agentDto.userId,
                   id: agentDto.id,
                   userType: loginResponseData.roleName.toString().toLowerCase(),
@@ -145,10 +146,8 @@ export class AgentLoginComponent implements OnInit {
       }
     }
   }
-
   handleLoginError(error: any): any { }
   handleProfileError(error: any): any { }
-
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

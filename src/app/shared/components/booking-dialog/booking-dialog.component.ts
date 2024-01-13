@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { AppointmentService } from './../../../proxy/services/appointment.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
-import { PatientProfileService } from 'src/app/proxy/services';
+import { FinancialSetupService, PatientProfileService } from 'src/app/proxy/services';
 
 import {
   Component,
@@ -20,7 +20,7 @@ import {
 
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 import {
- 
+
   Observable,
   combineLatestWith,
   map,
@@ -30,7 +30,7 @@ import {
 } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../modules/input/input.component';
-import { PatientProfileDto } from 'src/app/proxy/dto-models';
+import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
 import { SubSink } from 'subsink';
 import { CommonService } from '../../services/common.service';
@@ -66,6 +66,7 @@ export class BookingDialogComponent implements OnInit {
   btnLoader: boolean = false;
   userPatientInfo: any;
   userPatientList: any = [];
+  serviceFeeList: FinancialSetupDto[] = [];
   value: any;
   ConsultancyType: any;
   doctorId: any;
@@ -85,20 +86,23 @@ export class BookingDialogComponent implements OnInit {
 
   subs = new SubSink();
   hospitalList: any;
-  appointmentType:any;
+  appointmentType: any;
   formSubmitted: boolean = false;
-  showEmptySlot: string="";
-  genderList:any;
-  bookingInfo:any;
-  filteredChamber: any=[];
+  showEmptySlot: string = "";
+  genderList: any;
+  bookingInfo: any;
+  filteredChamber: any = [];
+  sessionRole: any;
+  isLoading: boolean= false;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
+    private FinancialSetupService: FinancialSetupService,
     private TosterService: TosterService,
-    public dialogRef: MatDialogRef<BookingDialogComponent>,
     private DoctorScheduleStateService: DoctorScheduleStateService,
-    private NormalAuth :AuthService,
+    private NormalAuth: AuthService,
+    public dialogRef: MatDialogRef<BookingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -111,11 +115,14 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.sessionRole = this.NormalAuth.authInfo()?.userType;
     this.selectedSlotInfo = ''
     this.dataLoader = true;
     this.appointmentType = CommonService.getEnumList(AppointmentType);
     this.genderList = CommonService.getEnumList(Gender);
+    this.FinancialSetupService.getList().subscribe(res => {
+      this.serviceFeeList = res;
+    });
     this.DoctorScheduleStateService.getSelectedSlot()
       .pipe()
       .subscribe((slot: any) => {
@@ -135,34 +142,39 @@ export class BookingDialogComponent implements OnInit {
     }
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
+      if (this.sessionRole == 'patient') {
+
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
+      }
+      else if (this.sessionRole == 'agent') {
+
+        this.UserinfoStateService.getUserPatientInfo(id, 'agent');
+      }
       this.UserinfoStateService.getData()
-      .pipe(
-        switchMap((e) => {
-          this.profileInfo = e;
-          this.loadForm();
-          if (e) {
-            return this.UserinfoStateService.getUserPatientData().pipe(
-              map((data) => {
-                return data.map((item: any) => ({
-                  name: item.patientName,
-                  id: item.id,
-                }));
-              })
-            );
-          } else {
-            return of([]);
-          }
-        })
-      )
-      .subscribe((res) => {
-        this.userPatientList = res;
-      });
+        .pipe(
+          switchMap((e) => {
+            this.profileInfo = e;
+            this.loadForm();
+            if (e) {
+              return this.UserinfoStateService.getUserPatientData().pipe(
+                map((data) => {
+                  return data.map((item: any) => ({
+                    name: item.patientName,
+                    id: item.id,
+                  }));
+                })
+              );
+            } else {
+              return of([]);
+            }
+          })
+        )
+        .subscribe((res) => {
+          this.userPatientList = res;
+        });
     }
 
-     
-
-      //  filtering start
+    //  filtering start
     const selectedItem1$: any = this.form
       .get('appointmentDate')
       ?.valueChanges.pipe(startWith(this.form.get('appointmentDate')?.value));
@@ -229,7 +241,7 @@ export class BookingDialogComponent implements OnInit {
                 });
                 isMatchFound = true;
                 return;
-              }else{
+              } else {
                 this.showEmptySlot = "No slot is available! Please change appointment date or hospital/chamber."
               }
             });
@@ -238,8 +250,8 @@ export class BookingDialogComponent implements OnInit {
         this.showAppointmentTypeSelectBox = true;
         this.filterData = finalFilter;
         console.log(finalFilter);
-        
-        this.selectedSlotInfo ={}
+
+        this.selectedSlotInfo = {}
         this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
           finalFilter
         );
@@ -313,6 +325,7 @@ export class BookingDialogComponent implements OnInit {
       (session) => session.scheduleDayofWeek === day
     );
   }
+
   loadForm() {
     //future update
     this.bookingForm = this.fb.group({
@@ -350,19 +363,21 @@ export class BookingDialogComponent implements OnInit {
       ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
+      creatorRole: [(this.sessionRole == 'patient' ? 'patient' : 'agent'), Validators.required],
     });
   }
 
   // change step
   onStepChange(e: number) {
-    
+
     if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
 
     if (e === 3 && this.form.valid) {
+      this.isLoading = true
       this.formSubmitted = true
-      if (this.filterData.length <= 0 && !this.selectedSlotInfo?.doctorScheduleId ) {
+      if (this.filterData.length <= 0 && !this.selectedSlotInfo?.doctorScheduleId) {
         this.TosterService.customToast(
           'No slot found your selected options!',
           'warning'
@@ -376,6 +391,60 @@ export class BookingDialogComponent implements OnInit {
       );
 
       if (finalSchedule && finalSchedule.consultancyType) {
+        let plFeeIn: any = '';
+        let agentFeeIn: any = '';
+        let plFee: any = 0;
+        let agentFee: any = 0;
+        let calculatedPlFee: any = 0;
+        let calculatedAgentFee: any = 0;
+        
+
+        if (this.sessionRole == 'agent') {
+          if (finalSchedule.consultancyType == 1) {
+            agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 4)?.externalAmountIn;
+            agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 4 && f.externalAmountIn == agentFeeIn)?.externalAmount;
+            if (agentFeeIn == 'Percentage') {
+              calculatedAgentFee = this.selectedFeesInfo.totalFee * (agentFee / 100);
+            }
+            else if (agentFeeIn == 'Flat') {
+              calculatedAgentFee = agentFee;
+            }
+          }
+          else if (finalSchedule.consultancyType == 2) {
+            agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 5)?.externalAmountIn;
+            agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 5 && f.externalAmountIn == agentFeeIn)?.externalAmount;
+            if (agentFeeIn == 'Percentage') {
+              calculatedAgentFee = this.selectedFeesInfo.totalFee * (agentFee / 100);
+            }
+            else if (agentFeeIn == 'Flat') {
+              calculatedAgentFee = agentFee;
+            }
+          }          
+        }
+
+        if (finalSchedule.consultancyType == 1) {
+          plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 1)?.amountIn;
+          plFee = this.serviceFeeList.find(f => f.platformFacilityId == 1 && f.amountIn == plFeeIn)?.amount;
+          if (plFeeIn == 'Percentage') {
+            calculatedPlFee = this.selectedFeesInfo.totalFee * (plFee / 100);
+          }
+          else if (plFeeIn == 'Flat') {
+            calculatedPlFee = plFee;
+          }
+        }
+
+        else if (finalSchedule.consultancyType == 2) {
+          plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 2)?.amountIn;
+          plFee = this.serviceFeeList.find(f => f.platformFacilityId == 2 && f.amountIn == plFeeIn)?.amount;
+          if (plFeeIn == 'Percentage') {
+            calculatedPlFee = this.selectedFeesInfo.totalFee * (plFee / 100);
+          }
+          else if (plFeeIn == 'Flat') {
+            calculatedPlFee = plFee;
+          }
+        }
+        
+
         this.formSubmitted = true
         const {
           consultancyType,
@@ -383,14 +452,14 @@ export class BookingDialogComponent implements OnInit {
           doctorProfileId,
           scheduleType,
         } = finalSchedule;
-  
+
         const { appointmentType, appointmentDate } = this.form.value;
-  
+
         let user: any = '';
         this.UserinfoStateService.getData().subscribe(
           (userInfo) => (user = userInfo)
         );
-  
+
         const infoForBooking = {
           doctorScheduleId,
           doctorProfileId,
@@ -399,30 +468,31 @@ export class BookingDialogComponent implements OnInit {
           patientProfileId: this.alreadyExistPatient?.id
             ? this.alreadyExistPatient?.id
             : this.createNewPatientInfo.id
-            ? this.createNewPatientInfo?.id
-            : user?.id,
+              ? this.createNewPatientInfo?.id
+              : user?.id,
           patientName: this.alreadyExistPatient?.patientName
             ? this.alreadyExistPatient?.patientName
             : this.createNewPatientInfo?.patientName
-            ? this.createNewPatientInfo?.patientName
-            : user?.fullName,
+              ? this.createNewPatientInfo?.patientName
+              : user?.fullName,
           patientCode: this.alreadyExistPatient?.patientCode
             ? this.alreadyExistPatient?.patientCode
             : this.createNewPatientInfo?.patientCode
-            ? this.createNewPatientInfo?.patientCode
-            : user?.patientCode,
+              ? this.createNewPatientInfo?.patientCode
+              : user?.patientCode,
           patientMobileNo: this.alreadyExistPatient?.patientMobileNo
             ? this.alreadyExistPatient?.patientMobileNo
             : this.createNewPatientInfo?.patientMobileNo
-            ? this.createNewPatientInfo?.patientMobileNo
-            : user?.mobileNo,
+              ? this.createNewPatientInfo?.patientMobileNo
+              : user?.mobileNo,
           patientEmail: this.alreadyExistPatient?.patientEmail
             ? this.alreadyExistPatient?.patientEmail
             : this.createNewPatientInfo?.patientEmail
-            ? this.createNewPatientInfo?.patientEmail
-            : user.email || 'admin@gmail.com',
+              ? this.createNewPatientInfo?.patientEmail
+              : user.email || 'admin@gmail.com',
           consultancyType,
           doctorChamberId,
+          //doctorChamber,
           scheduleType,
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,
@@ -431,14 +501,15 @@ export class BookingDialogComponent implements OnInit {
           appointmentTime: '',
           doctorFeesSetupId: this.selectedFeesInfo.id,
           doctorFee: this.selectedFeesInfo.totalFee,
-          agentFee: 0,
-          platformFee: 0,
-          totalAppointmentFee: this.selectedFeesInfo.totalFee,
+          agentFee: calculatedAgentFee,
+          platformFee: calculatedPlFee,
+          totalAppointmentFee: this.selectedFeesInfo.totalFee + calculatedPlFee + calculatedAgentFee,//this.selectedFeesInfo.totalFee,
           appointmentStatus: 1,
           appointmentPaymentStatus: 2,
           appointmentCreatorId: user?.id,
+          appointmentCreatorRole: this.sessionRole == 'patient' ? 'patient' : 'agent'
         };
-  
+
         if (infoForBooking && user) {
           this.bookingInfo = infoForBooking
           this.formSubmitted = true
@@ -450,17 +521,18 @@ export class BookingDialogComponent implements OnInit {
               patientEmail: user.email ? user.email : 'admin@gmail.com',
               patientMobileNo: user.mobileNo,
             };
-  
+
             this.PatientProfileService.update(obj).subscribe((res) => {
               // this.createAppointment(infoForBooking, e);
               this.activeTab = e;
-
+              this.isLoading = false
             });
           }
-  
+
           if (this.bookingForm.get('bookOther')?.value == 'bookOther') {
             // this.createAppointment(infoForBooking, e);
-            this.activeTab = e; 
+            this.activeTab = e;
+            this.isLoading = false
           }
           return;
         }
@@ -471,25 +543,25 @@ export class BookingDialogComponent implements OnInit {
           'Please select a slot',
           'warning'
         );
+        this.isLoading = false
       }
 
-   
-    } 
-    
+
+    }
+
     else if (e === 3 && !this.form.valid) {
       this.formSubmitted = true
       this.TosterService.customToast(
         'Please select all the required fields',
         'warning'
       );
-    } 
-    
+      this.isLoading = false
+    }
+
     else {
       return;
     }
   }
-
-
 
   //user existing check
   userExistCheck(status: string): void {
@@ -512,6 +584,7 @@ export class BookingDialogComponent implements OnInit {
         break;
     }
   }
+
   //create new patient under user
   createNewPatient(): void {
     this.formSubmitted = true
@@ -556,6 +629,7 @@ export class BookingDialogComponent implements OnInit {
       this.onStepChange(1);
     }
   }
+
   getSinglePatientData(e: any) {
     if (e.target.value) {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
@@ -572,6 +646,7 @@ export class BookingDialogComponent implements OnInit {
               patientName: data.patientName,
               createdBy: data.createdBy,
               creatorEntityId: data.creatorEntityId,
+              creatorRole: data.creatorRole
             });
 
             //  this.createPatientForm.patchValue(data);
@@ -581,6 +656,7 @@ export class BookingDialogComponent implements OnInit {
       );
     }
   }
+
   closeDialogs() {
     this.selectedSlotInfo = ''
     this.dialogRef.close(false)

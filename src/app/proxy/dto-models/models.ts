@@ -113,6 +113,8 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  appointmentCreatorCode?: string;
+  appointmentCreatorRole?: string;
   isCousltationComplete?: boolean;
 }
 
@@ -144,6 +146,8 @@ export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
   cancelledByRole?: string;
   paymentTransactionId?: string;
   appointmentCreatorId?: number;
+  appointmentCreatorCode?: string;
+  appointmentCreatorRole?: string;
   isCousltationComplete?: boolean;
 }
 
@@ -151,6 +155,14 @@ export interface CommonDiseaseDto extends FullAuditedEntityDto<number> {
   code?: string;
   name?: string;
   description?: string;
+}
+
+export interface DashboardDto {
+  totalAppointment?: number;
+  totalPatient?: number;
+  totalFeeAmount?: number;
+  totalPaidAmount?: number;
+  doctorLoyaltypoints?: number;
 }
 
 export interface DataFilterModel {
@@ -194,7 +206,7 @@ export interface DoctorDegreeDto extends FullAuditedEntityDto<number> {
 
 export interface DoctorFeesSetupDto extends FullAuditedEntityDto<number> {
   doctorScheduleId?: number;
-  doctorSchedule?: string;
+  doctorScheduleName?: string;
   appointmentType?: AppointmentType;
   appointmentTypeName?: string;
   currentFee?: number;
@@ -425,6 +437,7 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   patientEmail?: string;
   createdBy?: string;
   cratorCode?: string;
+  creatorRole?: string;
   creatorEntityId?: number;
   userId?: string;
   profileRole?: string;
@@ -555,6 +568,9 @@ export interface PrescriptionMasterDto extends FullAuditedEntityDto<number> {
   doctorProfileId?: number;
   doctorName?: string;
   doctorCode?: string;
+  doctorBmdcRegNo?: string;
+  specialityId?: number;
+  doctorSpecilityName?: string;
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;

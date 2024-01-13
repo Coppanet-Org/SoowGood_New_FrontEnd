@@ -1,4 +1,4 @@
-import { AppointmentService, SslCommerzService } from 'src/app/proxy/services';
+import { AppointmentService, DoctorChamberService, SslCommerzService } from 'src/app/proxy/services';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { TosterService } from 'src/app/shared/services/toster.service';
@@ -31,6 +31,7 @@ export class BookingReviewComponent {
   constructor(
     private ToasterService: TosterService,
     private AppointmentService: AppointmentService,
+    private DoctorChamberService: DoctorChamberService,
     private sslCommerzService: SslCommerzService //private sslCommerzService: PaymentService
   ) {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
@@ -43,6 +44,12 @@ export class BookingReviewComponent {
       return;
     }
   }
+  //getChamber(id: any) {
+  //  this.DoctorChamberService.get(id).subscribe(c => {
+  //    return c.chamberName?c.chamberName:'N/A';
+  //  });
+    
+  //}
 
   createAppointmentAndPayment() {
     this.loading = true;

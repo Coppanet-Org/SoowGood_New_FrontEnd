@@ -20,6 +20,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { AvaterServiceService } from 'src/app/shared/services/avater-service.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -62,16 +63,21 @@ export class ProfileSettingsComponent implements OnInit {
     private normalAuth: AuthService,
     public dialog: MatDialog,
     private LoaderService: LoaderService,
-    private UserinfoStateService: UserinfoStateService
+    private UserinfoStateService: UserinfoStateService,
+    private profilePicService : AvaterServiceService
   ) { }
 
   ngOnInit(): void {
     //this.auth = localStorage.getItem("auth");
-    let authId = this.normalAuth.authInfo().id;
-    this.doctorId = authId;
+    let user = this.normalAuth.authInfo();
+    this.doctorId = user.id;
+    if (user.id) {
+      this.UserinfoStateService.getProfileInfo(user.id, user.userType);
+    }
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
+    
     this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
     this.getProfilePic();
   }
@@ -122,7 +128,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.isLoading = true;
-      this.doctorProfileService.update(updatedProfile).subscribe(
+      this.doctorProfileService.updateDocotrProfile(updatedProfile).subscribe(
         (res) => {
           // res condition may apply, need to update in the future
           this.isLoading = false;
@@ -139,7 +145,7 @@ export class ProfileSettingsComponent implements OnInit {
           }
           this.TosterService.customToast(successMessage, 'success');
           this.UserinfoStateService.getProfileInfo(this.doctorId, 'doctor')
-
+          this.getProfilePic()
 
         },
         (error) => {
@@ -208,25 +214,18 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
 
-  //Profile Picture Related Functions
 
   getProfilePic() {
-    // this.isLoading = true;
-    this.subs.sink = this.doctorProfilePicService
-      .getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
-        'Doctor',
-        this.profileInfo.id,
-        'ProfilePicture'
-      )
-      .subscribe((at) => {
-        if (at) {
-          let prePaths: string = '';
-          var re = /wwwroot/gi;
-          prePaths = at.path ? at.path : '';
-          this.profilePic = prePaths.replace(re, '');
-          this.url = this.picUrl + this.profilePic;
-          this.isLoading = false;
-        }
+    this.profilePicService
+      .getProfilePic('Doctor', this.doctorId, 'ProfilePicture')
+      .then(({profilePic,picUrl}) => {
+        this.profilePic = profilePic;
+        this.url = picUrl + this.profilePic;
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        this.TosterService.customToast('Error getting profile picture:', error);
+        this.isLoading = false;
       });
   }
 

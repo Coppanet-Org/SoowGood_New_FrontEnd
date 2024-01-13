@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   resetModalShow: boolean = false;
   resetLoading: boolean = false;
   loginResponse: any;
+  resetFormSubmitted: boolean = false;
   constructor(
     private authService: UserAccountsService,
     private appAuthService: AppAuthService,
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router,
     private ToasterService: TosterService,
     private NormalAuth: AuthService,
+    private UserAccountsService: UserAccountsService
   ) { }
 
   ngOnInit(): void {
@@ -71,39 +73,44 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        // [
-        //   Validators.required,
-        //   Validators.pattern(/^(?:88)?[0-9]{11}$/),
-        //   Validators.minLength(11),
-        //   Validators.maxLength(11),
-        // ],
+        [
+          Validators.required,
+          Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
       ],
 
       password: [
         this.defaultAuth.password,
-        // Validators.compose([
-        //     Validators.required,
-        //     CustomValidators.startsWithUppercase,
-        //     CustomValidators.isAtLeast6Characters,
-        //     CustomValidators.includesSpecialCharacter,
-        //     CustomValidators.includesNumber,
+        Validators.compose([
+          Validators.required,
+          // CustomValidators.startsWithUppercase,
+          CustomValidators.isAtLeast6Characters,
+          CustomValidators.includesSpecialCharacter,
+          CustomValidators.includesNumber,
 
-        // ]),
+        ]),
       ],
     });
 
     this.resetPasswordForm = this.fb.group(
       {
-        username: ['', Validators.required],
+        username: ['', [
+          Validators.required,
+          Validators.pattern(/^(?:88)?[0-9]{11}$/),
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ]],
         newPassword: [
-          // '',
-          // [
-          //   Validators.required,
-          //   CustomValidators.startsWithUppercase,
-          //   CustomValidators.isAtLeast6Characters,
-          //   CustomValidators.includesSpecialCharacter,
-          //   CustomValidators.includesNumber,
-          // ],
+          '',
+          [
+            Validators.required,
+            // CustomValidators.startsWithUppercase,
+            CustomValidators.isAtLeast6Characters,
+            CustomValidators.includesSpecialCharacter,
+            CustomValidators.includesNumber,
+          ],
         ],
         confirmPassword: ['', Validators.required],
       },
@@ -176,7 +183,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         (doctorDto: DoctorProfileDto) => {
                           let saveLocalStorage = {
                             identityNumber: doctorDto.identityNumber,
-                            doctorName: doctorDto.fullName,
+                            fullName: doctorDto.fullName,
                             bmdcRegNo: doctorDto.bmdcRegNo,
                             isActive: doctorDto.isActive,
                             userId: doctorDto.userId,
@@ -213,14 +220,16 @@ export class LoginComponent implements OnInit, OnDestroy {
                           this.handleProfileError(doctorError);
                         }
                       );
-                  }
-                  else if (loginResponse.success && loginResponse.roleName[0] == 'Patient') {
+                  } else if (
+                    loginResponse.success && loginResponse.roleName[0] == 'Patient'
+                  ) {
                     this.isLoading = false;
                     this.subs.sink = this.PatientProfileService.getByUserName(
                       loginResponse.userName ? loginResponse.userName : ''
                     ).subscribe(
                       (patientDto: PatientProfileDto) => {
                         let saveLocalStorage = {
+                          fullName: patientDto.fullName,
                           userId: patientDto.userId,
                           id: patientDto.id,
                           userType: loginResponse.roleName.toString().toLowerCase(),
@@ -294,6 +303,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   resetPassword() {
+    this.resetFormSubmitted = true;
     if (this.resetPasswordForm.get('username')?.invalid) {
       this.ToasterService.customToast(
         'Please enter your phone number',
@@ -301,6 +311,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
       return;
     }
+
     this.resetLoading = true;
     try {
       this.authService.isUserExistsByUserName(
@@ -310,6 +321,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (res) {
             this.resetLoading = false;
             this.changePasswordShow = res;
+            this.resetFormSubmitted = false;
           } else {
             this.ToasterService.customToast(
               'Something went wrong! Please try again',
@@ -317,37 +329,54 @@ export class LoginComponent implements OnInit, OnDestroy {
             );
             this.changePasswordShow = res;
             this.resetLoading = false;
+            this.resetFormSubmitted = false;
           }
         },
         error: (err) => {
           this.ToasterService.customToast(String(err.message), 'error');
+          this.resetFormSubmitted = false;
         },
       });
     } catch (error) {
       this.ToasterService.customToast(String(error), 'error');
+      this.resetFormSubmitted = false;
     }
   }
 
   confirmPassword() {
-    this.formSubmitted = true
+    this.resetFormSubmitted = true;
+
     let obj = {
       userId: this.resetPasswordForm.get('username')?.value,
       newPassword: this.resetPasswordForm.get('newPassword')?.value,
     };
-
-    this.authService.resetPasswordByInputDto(obj).subscribe({
+    if (!obj.newPassword && !this.resetPasswordForm.get('confirmPassword')?.value) {
+      this.ToasterService.customToast(
+        'Please enter your new password',
+        'warning'
+      );
+      return;
+    }
+    this.resetLoading = true;
+    this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
       next: (res) => {
-        console.log(res);
-
         if (res.success) {
           this.ToasterService.customToast(String(res.message), 'success');
           this.resetModalShow = false;
+          this.resetLoading = false;
+          this.resetFormSubmitted = false;
         } else {
           this.ToasterService.customToast(String(res.message), 'error');
+          this.resetFormSubmitted = false;
+          this.resetLoading = false;
+
         }
       },
       error: (err) => {
         this.ToasterService.customToast(String(err.message), 'error');
+        this.resetFormSubmitted = false;
+        this.resetLoading = false;
+
       },
     });
   }

@@ -18,7 +18,8 @@ import { AppMarketingComponent } from './components/app-marketing/app-marketing.
 import { ClientFeedbackComponent } from './components/client-feedback/client-feedback.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CacheInterceptor } from 'src/app/shared/utils/CacheInterceptor';
+import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterceptor';
+import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 
 const routes: Route[] = [
   {
@@ -42,17 +43,19 @@ const routes: Route[] = [
     ClientFeedbackComponent,
     NewsletterComponent,
   ],
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
+    ScrollDirective,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     MaterialModulesModule,
     BookingReviewModule
   ],
+
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
   ],
-    providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
-  ],
+
+
 })
 export class LandingPageModule {}

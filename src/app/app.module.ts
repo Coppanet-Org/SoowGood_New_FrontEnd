@@ -18,14 +18,13 @@ import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentSuccessComponent } from './shared/components/payment-success/payment-success.component';
-import { LoadingDirective } from './shared/directive/loading.directive';
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
 import { AbpOAuthModule } from "@abp/ng.oauth";
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
-import { CacheInterceptor } from './shared/utils/CacheInterceptor';
+import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -36,6 +35,8 @@ const routerConfig: ExtraOptions = {
   // preloadingStrategy       : PreloadAllModules  [ R&D]
 };
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,6 @@ const routerConfig: ExtraOptions = {
     DoctorProfileInfoFormComponent,
     DegreeSpecilizationInfoFormComponent,
     PaymentSuccessComponent,
-    LoadingDirective,
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
@@ -81,5 +81,6 @@ const routerConfig: ExtraOptions = {
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
   ],
+  
 })
 export class AppModule { }

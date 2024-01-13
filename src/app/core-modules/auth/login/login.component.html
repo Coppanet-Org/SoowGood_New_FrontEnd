@@ -12,7 +12,7 @@
         <div class="flex flex-col space-y-5 mt-10">
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
+            <input  type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
               required
               [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
               inputmode="numeric">
@@ -22,6 +22,11 @@
             <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')">
               Mobile number should have exactly 11 digits.
             </mat-error>
+            
+            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidMobileNumberCharacters')">
+              Mobile number should not contain spaces or special characters.
+            </mat-error>
+            
             <mat-error *ngIf="loginForm.get('mobileNo')?.hasError('customError')">
               {{ loginForm.get('mobileNo')?.getError('customError') }}
             </mat-error>
@@ -89,13 +94,18 @@
 </div>
  
 
-<div *ngIf="resetModalShow" class="absolute top-0 left-0 bg-black/40 border-none h-screen w-full flex justify-center items-center ">
+
+<div #reset *ngIf="resetModalShow" class="absolute top-0 left-0 bg-black/40 border-none h-screen w-full flex justify-center items-center ">
+ 
   <div class="w-[450px]  border-none  rounded-xl ">
     <section class="dark:bg-gray-900">
       <div class="flex flex-col items-center justify-center  mx-auto md:h-screen lg:py-0">
-
+        
         <div
-          class="w-full p-12 bg-primary rounded-lg ">
+        class="w-full relative p-12 bg-primary rounded-lg ">
+        <div class="absolute text-white right-5 top-5" (click)="resetModalShow = false">
+          <i class="fa-solid fa-rectangle-xmark"></i>
+        </div>
 
 
           <a href="/"
@@ -110,10 +120,21 @@
             <div *ngIf="!changePasswordShow">
               <label for="number" class="block mb-2 text-sm font-medium text-white dark:text-white">Your phone
                 number</label>
-              <input formControlName="username" type="number" name="number" id="number" inputmode="numeric" type="tel"
+              <input formControlName="username" name="number" id="number" inputmode="numeric" 
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@company.com" required="">
-            </div>
+                placeholder="018700 00 000" required>
+                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('required')">
+                  You must enter a valid mobile number.
+                </mat-error>
+                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('pattern')">
+                  Mobile number should have exactly 11 digits.
+                </mat-error>
+                <mat-error *ngIf="resetPasswordForm.get('username')?.hasError('customError')">
+                  {{ resetPasswordForm.get('username')?.getError('customError') }}
+                </mat-error>
+           
+           
+              </div>
 
 
             <div *ngIf="changePasswordShow">
@@ -124,19 +145,19 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required="">
                   <div class="flex flex-col">
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('required')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('required')">
                       Password is required.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('startsWithUppercase')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('startsWithUppercase')">
                       Password must start with an uppercase letter.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('isAtLeast6Characters')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('isAtLeast6Characters')">
                       Password must be at least 6 characters long.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesSpecialCharacter')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesSpecialCharacter')">
                       Password must include a special character.
                     </mat-error>
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesNumber')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesNumber')">
                       Password must include a number.
                     </mat-error>
                   </div>
@@ -146,29 +167,28 @@
               <div>
                 <label for="confirm-password"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                <input formControlName="confirmPassword" type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••"
+                <input formControlName="confirmPassword" type="password" name="confirm-password" id="confirm-password" placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required="">
 
                   <div class="flex flex-col">
-                    <mat-error *ngIf="formSubmitted && resetPasswordForm.get('confirmPassword')?.hasError('required')">
+                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.hasError('required')">
                       Confirm password is required.
                     </mat-error>
                     <mat-error
-                      *ngIf=" formSubmitted && resetPasswordForm.get('confirmPassword')?.valid && resetPasswordForm.get('confirmPassword')?.dirty  && resetPasswordForm.get('confirmPassword')?.errors">
+                      *ngIf=" resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.valid && resetPasswordForm.get('confirmPassword')?.dirty  && resetPasswordForm.get('confirmPassword')?.errors">
                       Password not matched.
                     </mat-error>
                   </div>
-                  <mat-hint *ngIf="resetPasswordForm.get('confirmPassword')?.invalid "
-                  class="text-xs text-red-500 font-normal" align="end" >hint: Password@123</mat-hint>
+
               </div>
-              <div class="flex items-start">
+              <div class="flex items-start mt-4">
                 <div class="flex items-center h-5">
                   <input id="newsletter" aria-describedby="newsletter" type="checkbox"
                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                     required="">
                 </div>
-                <div class="ml-3 text-sm">
+                <div class="ml-3  text-sm">
                   <label for="newsletter" class="font-light text-gray-500 dark:text-gray-300">I accept the <a
                       class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and
                       Conditions</a></label>

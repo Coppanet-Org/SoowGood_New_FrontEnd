@@ -1,7 +1,7 @@
 <div class="doctor-dashboard_midcontent_container w-full p-8 bg-white overflow-hidden">
     <div class="flex gap-6 ">
         <div class="w-[90px] h-[90px] rounded-full overflow-hidden border-[3px]">
-            <img class="w-full h-full object-cover" src="/assets/doctor/dr.jpeg" alt="">
+            <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
         </div>
         <div class="font-Roboto">
             <h1 class="text-[24px] font-medium text-primary">{{patientProfileInfo?.patientName }} </h1>
@@ -15,7 +15,7 @@
                     <p class="text-gray-600 my-2 text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p>
                 </div>
                 <div>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> {{patientProfileInfo.mobileNo}}</p>
+                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> {{patientProfileInfo?.mobileNo}}</p>
                     <p class="text-gray-600 my-2 text-[15px"><b>Email : </b> example@mail.com</p>
                 </div>
             </div>
@@ -25,12 +25,12 @@
     <div class="flex gap-5 mt-12">
         <div class=" h-[500px] w-full border-[1px] rounded-xl overflow-hidden shadow-secondary/10 shadow-2xl">
             <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
-                <mat-tab label="Appointment">
+                <!-- <mat-tab label="Appointment">
                     <app-patient-appointments></app-patient-appointments>
-                </mat-tab>
-                <mat-tab label="Doctors">
+                </mat-tab> -->
+                <!-- <mat-tab label="Doctors">
                     <app-patient-doctors></app-patient-doctors>
-                </mat-tab>
+                </mat-tab> -->
                 <mat-tab label="Medical Records">
                     <app-patient-medical-records></app-patient-medical-records>
                 </mat-tab>

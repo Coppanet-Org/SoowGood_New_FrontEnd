@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-landing-page',
@@ -51,4 +51,6 @@ export class LandingPageComponent implements OnInit {
       },
     };
   }
+
+
 }

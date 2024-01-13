@@ -13,18 +13,35 @@
       <form [formGroup]="form">
         <div class="p-head-bottom my-10">
           <div class="flex justify-between">
-            <span>Patient Code : </span> <b> <input type="text" formControlName="patientCode"> </b>
+            <!-- <span>Patient Code : </span> <b> <input type="text" formControlName="patientCode"> </b> -->
             <span>Patient Name : </span> <b> <input type="text" formControlName="patientName"> </b>
             <span>Age :</span> <b> <input type="text" formControlName="age"> </b>
             <span>Blood Group :</span> <b> <input type="text" formControlName="bloodGroup"> </b>
             <span>Date : <b> <input [value]="today"> </b></span>
-            <span>Time :<b> <input [value]="todayTime"> </b></span>
+            <!-- <span>Time :<b> <input [value]="todayTime"> </b></span> -->
           </div>
         </div>
       </form>
     </div>
+
+    <!-- previous documents -->
+      <div *ngIf="this.docFileUrl.length > 0">
+        <div class="p-body ">
+          <div class="p-body-item col-span-12">
+            <div class="font-Roboto text-[18px] text-primary/90  font-semibold">
+              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              Previous Documents <div class="badge bg-secondary text-white">+{{this.docFileUrl.length}}</div>
+            </div>
+            <div class="mt-5">
+              <p>Your patient has <strong>{{this.docFileUrl.length}}</strong> previous documents. <span (click)="showPreviousDocuments(appointmentInfo.patientProfileId)" class="badge cursor-pointer">Click to See</span></p>
+        
+            </div>
+          </div>
+        </div>
+      </div>
+
     <!-- patientAdditionalInfo -->
-    <form [formGroup]="prescriptionForm">
+    <form [formGroup]="prescriptionForm" class="mt-5">
       <div class="grid grid-cols-3 gap-5">
         <div class="p-body ">
           <div class="p-body-item col-span-12 mt-5">
@@ -34,7 +51,7 @@
             </div>
             <div class="mt-5">
               <textarea formControlName="patientAdditionalInfo"
-              class="w-full p-2 h-[150px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
+              class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
               placeholder="Write Info">
             </textarea>
             </div>
@@ -48,7 +65,7 @@
             </div>
             <div class="mt-5">
               <textarea formControlName="lifeStyle"
-              class="w-full p-2 h-[150px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
+              class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
               placeholder="Write Lifestyle">
             </textarea>
             </div>

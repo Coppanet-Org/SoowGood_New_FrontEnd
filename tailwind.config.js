@@ -26,7 +26,7 @@ module.exports = {
 
     extend: {
       backgroundImage: {
-        "hero-pattern": "url(https://doccure.dreamstechnologies.com/react/template/cbd2669b9953bf399803.png)",
+        "hero-pattern": "url(/assets/banner/bg-shape.webp)",
         // 'auth-pattern' :"url('/assets/')
       },
 

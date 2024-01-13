@@ -1,7 +1,6 @@
 import { FilterInputModel } from './../../utils/models/models';
 import { DoctorProfileService, SpecializationService } from 'src/app/proxy/services';
 import { SpecialityService } from './../../../proxy/services/speciality.service';
-
 import { DoctorStateService } from './../../services/states/doctors-states/doctor-state.service';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -199,7 +198,6 @@ export class PublicDoctorsComponent implements OnInit {
           this.doctorList = res;
           this.dataLoading = false;
           this.noDataAvailable = true;
-
         });
 
       this.subscriptions.push(doctorListSubscription);
@@ -214,7 +212,8 @@ export class PublicDoctorsComponent implements OnInit {
   }
 
   selectedFilterData(data: any) {
-
+    this.dataLoading = true;
+    // this.noDataAvailable = true;
     const {
       consultancy,
       speciality,
@@ -234,6 +233,8 @@ export class PublicDoctorsComponent implements OnInit {
     ]).subscribe(
       ([buildingResponse, countResponse]) => {
         this.totalCount = countResponse;
+        this.dataLoading = false;
+
         this.doctorList = buildingResponse;
       },
       (error) => {
@@ -258,8 +259,6 @@ export class PublicDoctorsComponent implements OnInit {
    
         // this.noDataAvailable = false;
         if (countResponse < 1 ) {
-          console.log("yes");
-          
           this.noDataAvailable = true;
           this.dataLoading = false;
           this.doctorList = buildingResponse;

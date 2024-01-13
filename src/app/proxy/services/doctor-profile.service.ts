@@ -149,6 +149,15 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  updateDocotrProfile = (input: DoctorProfileInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto>({
+      method: 'PUT',
+      url: '/api/app/doctor-profile/docotr-profile',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
   updateDoctorsOnlineStatusByIdAndOnlineStatus = (Id: number, onlineStatus: boolean, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto>({
       method: 'PUT',

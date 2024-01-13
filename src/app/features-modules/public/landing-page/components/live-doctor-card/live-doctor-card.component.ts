@@ -1,10 +1,10 @@
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, Input } from '@angular/core';
-import { DoctorScheduleService } from 'src/app/proxy/services';
+import { DoctorScheduleService, DocumentsAttachmentService } from 'src/app/proxy/services';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialog/live-consult-booking-dialog.component';
-import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-live-doctor-card',
@@ -16,11 +16,14 @@ export class LiveDoctorCardComponent {
   isLoading: boolean= false;
   userType: string='';
   @Input() doctorDetails:any
+  defaultImage = "assets/doctor/dr.jpeg"
+  public picUrl = `${environment.apis.default.url}/`;
 
   constructor(private DoctorScheduleService:DoctorScheduleService,
     private NormalAuth: AuthService,
     public dialog: MatDialog,
     private TosterService : TosterService,
+    private DocumentsAttachmentService : DocumentsAttachmentService
 
     ){
     this.isAuthUser =  this.NormalAuth.authInfo()?.id;
