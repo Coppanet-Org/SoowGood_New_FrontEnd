@@ -7,6 +7,7 @@ import { DoctorScheduleDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-doctor-card',
@@ -19,6 +20,9 @@ export class DoctorCardComponent implements OnInit {
   doctorScheduleList: DoctorScheduleDto[] = [];
   isLoading: boolean = false;
   isAuthUser: any;
+  doctorPicurl: any;
+  public picUrl = `${environment.apis.default.url}/`;
+
   constructor(
     public dialog: MatDialog,
     private DoctorScheduleService: DoctorScheduleService,
@@ -30,6 +34,11 @@ export class DoctorCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthUser = this.NormalAuth.authInfo()?.id;
+    const prePaths: string = this.doctorDetails.profilePic;
+    const re = /wwwroot/gi;
+    const profilePic = prePaths.replace(re, '');
+    this.doctorPicurl = this.picUrl + profilePic;
+    //this.doctorPicurl = this.picUrl + this.doctorDetails.profilePic;
   }
 
   openDialog(): void {
