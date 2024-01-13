@@ -27,32 +27,32 @@ export class PublicPatientsComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
-    if (user.userType === 'patient') {
-    this.UserinfoStateService.getUserPatientInfo(user.id, 'patient');
+    if (user) {
+    this.UserinfoStateService.getUserPatientInfo(user.id, user.userType);
     }
-    else if (user.userType === 'agent') {
-      this.UserinfoStateService.getUserPatientInfo(user.id, 'agent');
-    }
+   
     this.userInfo = user;
     // const { aptId } = this.route.snapshot.params;
     if (user.id) {
       this.patientLoader = true;
+
+      
       try {
         if (user.userType === 'doctor') {
           this.AppointmentService.getPatientListByDoctorId(user.id).subscribe(
             (res) => {
               this.patientList = res;
-              this.patientLoader = false;
+              // this.patientLoader = false;
             }
           );
         }
-        else if (user.userType === 'patient' || user.userType === 'agent') {
-
+        else if (user.userType === 'patient' || user.userType === 'agent') {  
           this.UserinfoStateService.getData()
             .pipe(switchMap((e) => {
                 if (e) {
                   return this.UserinfoStateService.getUserPatientData().pipe(
                     map((data) => {
+                      
                       return data
                     })
                   );
@@ -63,16 +63,16 @@ export class PublicPatientsComponent implements OnInit {
             )
             .subscribe((res) => {
               this.patientList = res;
-              console.log(res);
-
+              this.patientLoader = false;
             });
         }
-        else if (user.userType === 'agent') {
+        else {
           console.log('Data Nai');
+          // this.patientLoader = false;
         }
       } catch (error) {
         console.log(error);
-        this.patientLoader = false;
+        // this.patientLoader = false;
       }
     }
   }
@@ -90,7 +90,10 @@ export class PublicPatientsComponent implements OnInit {
         patient.id
       ]);
     } else if (this.userInfo.userType === 'agent') {
-      // for agent 
+      this.Router.navigate([
+        '/agent/patients/patient-details/',
+        patient.id
+      ]);
     } return
   }
 
