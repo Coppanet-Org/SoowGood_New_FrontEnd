@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\environments"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\agent",
+    "\\src\\app\\features-modules\\agent\\patients"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
   "PreviewInSolutionExplorer": false
 }

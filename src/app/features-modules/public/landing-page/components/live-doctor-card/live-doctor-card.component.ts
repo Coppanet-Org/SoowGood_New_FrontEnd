@@ -14,7 +14,8 @@ import { environment } from 'src/environments/environment';
 export class LiveDoctorCardComponent {
   isAuthUser: number;
   isLoading: boolean= false;
-  userType: string='';
+  userType: string = '';
+  picUrls: any;
   @Input() doctorDetails:any
   defaultImage = "assets/doctor/dr.jpeg"
   public picUrl = `${environment.apis.default.url}/`;
@@ -28,7 +29,7 @@ export class LiveDoctorCardComponent {
     ){
     this.isAuthUser =  this.NormalAuth.authInfo()?.id;
     this.userType =  this.NormalAuth.authInfo()?.userType;
-
+    //this.picUrls = this.picUrl + this.doctorDetails.profilePic;
   }
 
   onClickConsultNow(data:any){

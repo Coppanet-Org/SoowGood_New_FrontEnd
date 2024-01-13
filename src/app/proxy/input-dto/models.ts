@@ -125,6 +125,7 @@ export interface DoctorSpecializationInputDto extends FullAuditedEntityDto<numbe
   doctorProfileId?: number;
   specialityId?: number;
   specializationId?: number;
+  serviceDetails?: string;
   documentName?: string;
 }
 
