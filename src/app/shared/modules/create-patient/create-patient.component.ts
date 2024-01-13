@@ -23,7 +23,7 @@ export class CreatePatientComponent implements OnInit {
   formSubmitted: boolean = false;
   btnLoader: boolean = false;
   genderList: ListItem[] = [];
-  userrole: any;
+  authInfo: any;
   constructor(
     private fb: FormBuilder,
     private TosterService: TosterService,
@@ -33,14 +33,13 @@ export class CreatePatientComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
-    this.userrole = user.userType;
+    this.authInfo = user
     this.genderList = CommonService.getEnumList(Gender);
     this.loadForm();
-    //if (user.userType === 'agent') {
+    if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
-    //}
-    return
+      this.createPatientForm.get('createdBy')?.setValue(user.userType)
+    } return
 
   }
   loadForm() {
@@ -55,12 +54,14 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
-      creatorRole: [(this.userrole == 'patient' ? 'patient' : 'agent'), Validators.required]
+      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
+
+    console.log(this.createPatientForm.value);
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
@@ -82,25 +83,20 @@ export class CreatePatientComponent implements OnInit {
               next: (res) => {
                 console.log(res);
                 //TODO
-                if (this.userrole = 'agent') {
-                  this.UserinfoStateService.getUserPatientInfo(res.id, 'agent');
-                }
-                else {
-                  this.UserinfoStateService.getUserPatientInfo(res.id, 'patient');
-                }
+                this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
+                this.TosterService.customToast('Your patient is created!', 'success');
+                this.btnLoader = false;
+                this.UserinfoStateService.getUserPatientInfo(
+                  res.id,
+                  'patient'
+                );
               }, error: (err) => {
-                console.log(err);
+                this.TosterService.customToast('Something went wrong!', 'error');
+                this.btnLoader = false;
               }
             })
           }
-          this.btnLoader = false;
-          this.TosterService.customToast('Your patient is created!', 'success');
-          //if (this.userrole = 'agent') {
-          //  this.UserinfoStateService.getUserPatientInfo(this.profileInfo.id, 'agent');
-          //}
-          //else {
-          //  this.UserinfoStateService.getUserPatientInfo(this.profileInfo.id, 'patient');
-          //}
+
         }
       );
     } catch (error) {
