@@ -260,9 +260,11 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   bmdcRegNo?: string;
   bmdcRegExpiryDate?: string;
   degrees: DoctorDegreeDto[];
+  qualifications?: string;
   specialityId?: number;
   specialityName?: string;
   doctorSpecialization: DoctorSpecializationDto[];
+  areaOfExperties?: string;
   isIdFileUploaded?: boolean;
   isSpecialityFileUploaded?: boolean;
   isActive?: boolean;
@@ -336,6 +338,7 @@ export interface DoctorSpecializationDto extends FullAuditedEntityDto<number> {
   specialityName?: string;
   specializationId?: number;
   specializationName?: string;
+  serviceDetails?: string;
   documentName?: string;
 }
 
