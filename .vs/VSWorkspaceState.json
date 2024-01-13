@@ -2,7 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\agent",
+    "\\src\\app\\features-modules\\agent\\patients"
   ],
   "PreviewInSolutionExplorer": false
 }
