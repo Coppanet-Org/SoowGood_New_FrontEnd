@@ -13,14 +13,14 @@
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
             <input  type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
-              required
+              required maxlength="11"
               [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
               inputmode="numeric">
             <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
             <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')">
-              Mobile number should have exactly 11 digits.
+              Mobile number should have exactly 11 digits bd number and starts with 01(3456789).
             </mat-error>
             
 

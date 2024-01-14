@@ -234,6 +234,10 @@ export class SignupComponent implements OnInit {
     this.completeDegreeSpecilizationInfoModal = true;
     this.doctorName = this.normalAuth.authInfo().doctorName;
 
+    for (let i = 0; i < 65; i++) {
+      this.range.push(this.startYear - i);
+    }
+
     this.degreeService.getList().subscribe((res) => {
       this.degreeList = res;
     });
@@ -689,7 +693,7 @@ export class SignupComponent implements OnInit {
                 specialityId: doctorDto.specialityId,
                 profileStep: doctorDto.profileStep,
                 createFrom: doctorDto.createFrom,
-                userType: this.userType,
+                userType: this.userType.toLocaleLowerCase(),
               };
 
               this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);

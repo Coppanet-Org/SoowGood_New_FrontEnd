@@ -1,6 +1,4 @@
-<div
-  class="bg-hero-pattern min-h-screen max-h-full py-10 flex items-center relative overflow-hidden w-full bg-[#f2f6f6]"
->
+<div class="bg-hero-pattern min-h-screen max-h-full py-10 flex items-center relative overflow-hidden w-full bg-[#f2f6f6]">
   <!-- <div class="container mt-16">
     <div class="w-full flex justify-between items-center gap-8">
       <div class="w-[65%] flex flex-col">
@@ -8,7 +6,7 @@
           <div class="banner-left-top relative">
             <h1
               class="leading-[1.2] max-w-[650px] md:text-[48px] drop-shadow-sm 2xl:text-[58px] font-Roboto font-extrabold text-secondary tracking-[1.2px]"
-            >    
+            >
               Your <span class="text-primary"> All-In-One</span>
             Health Platform
             </h1>
@@ -21,8 +19,8 @@
               Soowgood is dedicated to ensuring your health and wellness.
             </p>
           </div>
-  
- 
+
+
             <div
               class="search-area flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-[550px]  p-2 justify-between rounded-[25px] 2xl:rounded-[50px] items-centershadow-blue"
             >
@@ -97,87 +95,59 @@
   <div class="container">
     <div class="w-full flex justify-between gap-8 mt-16">
       <div class="w-[65%] ">
-        <div
-          class="w-full h-[350px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary"
-        >
-          <img
-            class="object-cover w-full h-full"
-            src="/assets/banner/about-banner.webp"
-            alt="banner"
-          />
+        <div class="w-full h-[350px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary">
+          <img class="object-cover w-full h-full"
+               src="/assets/banner/about-banner.webp"
+               alt="banner" />
         </div>
 
-        <div
-        class="search-area mt-5 flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-full  p-2 justify-between rounded-[10px]  items-centershadow-blue"
-      >
-        <form [formGroup]="searchForm" class="w-full flex gap-3">
-          <input
-            class="w-full  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
-            type="search"
-            formControlName="searchText"
-            placeholder="Search Doctor by Name..."
-          />
-        </form>
-        <button class="btn-secondary bg-primary ml-2 py-2.5 rounded-[6px] min-w-[160px]" (click)="goToServicePage()">
-          <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
-        </button>
-      </div>
+        <div class="search-area mt-5 flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-full  p-2 justify-between rounded-[10px]  items-centershadow-blue">
+          <form [formGroup]="searchForm" class="w-full flex gap-3">
+            <input class="w-full  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
+                   type="search"
+                   formControlName="searchText"
+                   placeholder="Search Doctor by Name..." />
+          </form>
+          <button class="btn-secondary bg-primary ml-2 py-2.5 rounded-[6px] min-w-[160px]" (click)="goToServicePage()">
+            <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
+          </button>
+        </div>
       </div>
       <div class="w-[450px] flex h-full flex-col">
         <!-- <div class="h-[200px] w-full bg-white">
 
         </div> -->
-        <div
-          *ngIf="authUser?.userType !== 'agent'"
-          class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[430px] max-w-full bg-white/10"
-        >
-          <div
-            class="p-8 bg-white/30 w-full h-full flex items-center justify-center flex-col relative rounded-md text-center"
-          >
-             <img class="max-w-[100px] pb-6" src="/assets/banner/sg-icon.png" alt="icon">
-            <h1
-              class="font-Roboto text-primary text-center text-[30px] font-bold"
-              *ngIf="!authUser"
-            >
+        <div *ngIf="authUser?.userType !== 'agent'"
+             class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[430px] max-w-full bg-white/10">
+          <div class="p-8 bg-white/30 w-full h-full flex items-center justify-center flex-col relative rounded-md text-center">
+            <img class="max-w-[100px] pb-6" src="/assets/banner/sg-icon.png" alt="icon">
+            <h1 class="font-Roboto text-primary text-center text-[30px] font-bold"
+                *ngIf="!authUser">
               Easy Login/Registration
             </h1>
-            <p
-              *ngIf="!authUser"
-              class="font-Roboto text-secondary-dark text-center text-[20px] my-3"
-            >
+            <p *ngIf="!authUser"
+               class="font-Roboto text-secondary-dark text-center text-[20px] my-3">
               Doctor & Patient
             </p>
-            <h1
-              class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold"
-              *ngIf="authUser"
-            >
+            <h1 class="font-Roboto text-primary text-center text-[28px] mt-5 font-bold"
+                *ngIf="authUser">
               Manage Your Appointment
             </h1>
-            <div
-              class="flex justify-evenly items-end gap-4 mt-5"
-              *ngIf="!authUser"
-            >
-              <button
-                class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]"
-                routerLink="login"
-              >
+            <div class="flex justify-evenly items-end gap-4 mt-5"
+                 *ngIf="!authUser">
+              <button class="btn-secondary w-1/2 border-secondary-dark/40 text-[18px]"
+                      routerLink="login">
                 Login
               </button>
-              <button
-                class="btn-secondary bg-primary w-1/2 text-[18px]"
-                routerLink="signup"
-              >
+              <button class="btn-secondary bg-primary w-1/2 text-[18px]"
+                      routerLink="signup">
                 Registration
               </button>
             </div>
-            <div
-              class="flex justify-evenly items-end gap-4 mt-5"
-              *ngIf="authUser"
-            >
-              <button
-                [routerLink]="authUser.userType"
-                class="btn-secondary bg-primary w-full border-secondary-dark/40 text-[18px]"
-              >
+            <div class="flex justify-evenly items-end gap-4 mt-5"
+                 *ngIf="authUser">
+              <button [routerLink]="authUser.userType"
+                      class="btn-secondary bg-primary w-full border-secondary-dark/40 text-[18px]">
                 <i class="fa-solid fa-border-none mr-2"></i>Goto Dashboard
               </button>
             </div>
@@ -187,121 +157,74 @@
       </div>
     </div>
     <div class="grid grid-cols-8 gap-5 mt-6">
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/ambulance.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/ambulance.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
           <span>Ambulance Service</span>
         </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[60px]"
-          src="/assets/banner/diagn.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[60px]"
+             src="/assets/banner/diagn.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
           <span>Diagnostic Centre</span>
         </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/medicine.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
-          <span
-            >Order <br />
-            Medicine</span
-          >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/medicine.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
+          <span>
+            Order <br />
+            Medicine
+          </span>
         </h2>
       </div>
 
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/hospital.webp"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
-          <span
-            >Book <br />
-            hospital</span
-          >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/hospital.webp"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
+          <span>
+            Book <br />
+            hospital
+          </span>
         </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/product.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/product.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
           <span> Medical <br> Products</span>
         </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/donate.jpg"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
-        <span>Donate or <br>Get Blood</span> </h2>
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/donate.jpg"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
+          <span>Donate or <br>Get Blood</span>
+        </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/spe.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/spe.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
           <span>Book <br> Specialist</span>
         </h2>
       </div>
-      <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          src="/assets/banner/test.png"
-          alt="ambulance"
-        />
-        <h2
-          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
-        >
+      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
+        <img class="max-w-[50px]"
+             src="/assets/banner/test.png"
+             alt="ambulance" />
+        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
           <span>Medical <br> Test</span>
         </h2>
       </div>
