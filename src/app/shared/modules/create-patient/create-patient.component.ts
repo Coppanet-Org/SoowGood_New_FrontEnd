@@ -22,7 +22,7 @@ export class CreatePatientComponent implements OnInit {
   profileInfo: any;
   formSubmitted: boolean = false;
   btnLoader: boolean = false;
-  genderList: ListItem[]=[];
+  genderList: ListItem[] = [];
   authInfo: any;
   constructor(
     private fb: FormBuilder,
@@ -62,7 +62,7 @@ export class CreatePatientComponent implements OnInit {
   createNewPatient(): void {
     this.formSubmitted = true;
 
-console.log(this.createPatientForm.value);
+    console.log(this.createPatientForm.value);
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
@@ -91,9 +91,9 @@ console.log(this.createPatientForm.value);
                   res.id,
                   'patient'
                 );
-              },error:(err)=>{
+              }, error: (err) => {
                 this.TosterService.customToast('Something went wrong!', 'error');
-                this.btnLoader = false;   
+                this.btnLoader = false;
               }
             })
           }
