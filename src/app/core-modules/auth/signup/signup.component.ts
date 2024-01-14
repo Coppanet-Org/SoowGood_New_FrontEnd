@@ -162,7 +162,7 @@ export class SignupComponent implements OnInit {
   stepBack1: any = false;
 
   startYear = new Date().getFullYear();
-  range:any = [];
+  range: any = [];
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -203,12 +203,12 @@ export class SignupComponent implements OnInit {
     this.doctorId = authInfo.id;
     this.specialityId = authInfo.specialityId;
     this.profileStep = authInfo.profileStep;
-    if (this.specialityId == 1 || this.specialityId == 2) {
-      this.sp1or2 = true;
-    }
-    else {
-      this.sp1or2 = false;
-    }
+    //if (this.specialityId == 1 || this.specialityId == 2) {
+    //  this.sp1or2 = true;
+    //}
+    //else {
+    //  this.sp1or2 = false;
+    //}
     if (this.profileStep === 1) {
       this.handleProfileStep1();
     } else if (this.profileStep === 2) {
@@ -242,67 +242,67 @@ export class SignupComponent implements OnInit {
       .get(this.specialityId)
       .subscribe((n) => {
         this.specialityName = n.specialityName;
-        if (this.specialityId > 2) {
-          this.degreeMendatoryMassage =
-            'Please provide your degree qualifications as you are a ' +
-            this.specialityName +
-            ' specialist.';
-        }
-        else if (this.specialityId == 1) {
-          this.degreeList = this.degreeList.filter((d) => d.id == 1);
-        }
-        else if (this.specialityId == 2) {
-          this.degreeList = this.degreeList.filter((d) => d.id == 2);
-        }
-        else {
-          this.degreeList;
-        }
+        //if (this.specialityId > 2) {
+        //  this.degreeMendatoryMassage =
+        //    'Please provide your degree qualifications as you are a ' +
+        //    this.specialityName +
+        //    ' specialist.';
+        //}
+        //else if (this.specialityId == 1) {
+        //  this.degreeList = this.degreeList.filter((d) => d.id == 1);
+        //}
+        //else if (this.specialityId == 2) {
+        //  this.degreeList = this.degreeList.filter((d) => d.id == 2);
+        //}
+        //else {
+        //this.degreeList;
+        //}
         this.specializationService
           .getListBySpecialtyId(this.specialityId)
           .subscribe((res) => {
             this.specializationList = res;
-            if (this.specialityId == 1) {
-              this.specializationList = this.specializationList.filter(
-                (s) => s.specialityId == 1
-              );
-              let specId = this.specializationList.find(
-                (sp) => sp.specialityId == 1
-              );
-              let uniId = this.GenerateId();
-              let specialzDataForMbbs = {
-                id: +uniId,
-                specializationId: specId?.id,
-                specializationName: specId?.specializationName,
-                doctorId: this.doctorId,
-                specialityId: this.specialityId,
-                specialityName: this.specialityName,
-              };
-              this.doctorSpecializations.push(specialzDataForMbbs);
-            }
-            else if (this.specialityId == 2) {
-              this.specializationList = this.specializationList.filter(
-                (s) => s.specialityId == 2
-              );
-              let specId = this.specializationList.find(
-                (sp) => sp.specialityId == 2
-              );
-              let uniId = this.GenerateId();
-              let specialzDataBDS = {
-                id: +uniId,
-                specializationId: specId?.id,
-                specializationName: specId?.specializationName,
-                doctorId: this.doctorId,
-                specialityId: this.specialityId,
-                specialityName: this.specialityName,
-              };
-              this.doctorSpecializations.push(specialzDataBDS);
-            }
-            else {
-              this.spMendatoryMassage =
-                'Please select at least one specializtion as your a  ' +
-                this.specialityName +
-                ' specialist. you select maximum 3 specialization';
-            }
+            //if (this.specialityId == 1) {
+            //this.specializationList = this.specializationList.filter(
+            //  (s) => s.specialityId == this.specialityId
+            //);
+            //let specId = this.specializationList.find(
+            //  (sp) => sp.specialityId == 1
+            //);
+            //let uniId = this.GenerateId();
+            //let specialzDataForMbbs = {
+            //  id: +uniId,
+            //  specializationId: specId?.id,
+            //  specializationName: specId?.specializationName,
+            //  doctorId: this.doctorId,
+            //  specialityId: this.specialityId,
+            //  specialityName: this.specialityName,
+            //};
+            //this.doctorSpecializations.push(specialzDataForMbbs);
+            //}
+            //else if (this.specialityId == 2) {
+            //  this.specializationList = this.specializationList.filter(
+            //    (s) => s.specialityId == 2
+            //  );
+            //  let specId = this.specializationList.find(
+            //    (sp) => sp.specialityId == 2
+            //  );
+            //  let uniId = this.GenerateId();
+            //  let specialzDataBDS = {
+            //    id: +uniId,
+            //    specializationId: specId?.id,
+            //    specializationName: specId?.specializationName,
+            //    doctorId: this.doctorId,
+            //    specialityId: this.specialityId,
+            //    specialityName: this.specialityName,
+            //  };
+            //  this.doctorSpecializations.push(specialzDataBDS);
+            //}
+            //else {
+            //  this.spMendatoryMassage =
+            //    'Please select at least one specializtion as your a  ' +
+            //    this.specialityName +
+            //    ' specialist. you select maximum 3 specialization';
+            //}
           });
       });
   }
@@ -487,104 +487,17 @@ export class SignupComponent implements OnInit {
       this.doctorId = this.normalAuth.authInfo().id;
       this.specialityId = this.normalAuth.authInfo().specialityId;
       this.profileStep = this.normalAuth.authInfo().profileStep;
-      if (this.specialityId == 1 || this.specialityId == 2) {
-        this.sp1or2 = true;
-      }
-      else {
-        this.sp1or2 = false;
-      }
+      //if (this.specialityId == 1 || this.specialityId == 2) {
+      //  this.sp1or2 = true;
+      //}
+      //else {
+      //  this.sp1or2 = false;
+      //}
       if (this.profileStep == 1) {
         this.handleProfileStep1();
-        /*this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDegreeSpecilizationInfoModal = true;
-        this.doctorName = this.normalAuth.authInfo().doctorName;
-        this.degreeService.getList().subscribe((res) => {
-          this.degreeList = res;
-        });
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 2) {
-              this.degreeMendatoryMassage =
-                'Please provide your degree qualifications as you are a ' +
-                this.specialityName +
-                ' specialist.';
-            }
-            else if (this.specialityId == 1) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 1);
-            }
-            else if (this.specialityId == 2) {
-              this.degreeList = this.degreeList.filter((d) => d.id == 2);
-            }
-
-            this.subs.sink = this.specializationService
-              .getListBySpecialtyId(this.specialityId)
-              .subscribe((res) => {
-                this.specializationList = res;
-                if (this.specialityId == 1) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 1
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 1
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataForMbbs = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataForMbbs);
-                } else if (this.specialityId == 2) {
-                  this.specializationList = this.specializationList.filter(
-                    (s) => s.specialityId == 2
-                  );
-                  let specId = this.specializationList.find(
-                    (sp) => sp.specialityId == 2
-                  );
-                  let uniId = this.GenerateId();
-                  let specialzDataBDS = {
-                    id: +uniId,
-                    specializationId: specId?.id,
-                    specializationName: specId?.specializationName,
-                    doctorId: this.doctorId,
-                    specialityId: this.specialityId,
-                    specialityName: this.specialityName,
-                  };
-                  this.doctorSpecializations.push(specialzDataBDS);
-                } else {
-                  this.spMendatoryMassage =
-                    'Please select at least one specializtion as your a  ' +
-                    this.specialityName +
-                    ' specialist. you select maximum 3 specialization';
-                }
-              });
-          });*/
       }
       else if (this.profileStep == 2) {
         this.handleProfileStep2();
-        /*this.otpModal = false;
-        this.userInfoModal = false;
-        this.completeDocumentUpload = true;
-        this.subs.sink = this.specialityService
-          .get(this.specialityId)
-          .subscribe((n) => {
-            this.specialityName = n.specialityName;
-            if (this.specialityId > 2) {
-              this.documentMassage =
-                '(You must upload document as you are a ' +
-                this.specialityName +
-                ' specialist.)';
-            } else {
-              this.documentMassage =
-                '(Just upload a document which can prove that, you a Doctor.)';
-            }
-          });*/
       }
     }
   }
@@ -1050,8 +963,7 @@ export class SignupComponent implements OnInit {
 
   saveDegreeSpecialization() {
     this.isLoading = true;
-    let x = 0;
-    let y = +(this.doctorDegrees.length + this.doctorSpecializations.length);
+
     if (
       this.doctorDegrees.length === 0 ||
       this.doctorSpecializations.length === 0
@@ -1061,23 +973,28 @@ export class SignupComponent implements OnInit {
         'warning'
       );
       return;
-    } else if (this.doctorSpecializations.length > 3) {
-      this.tosterService.customToast(
-        'You are exeeding Specialization Limit.',
-        'warning'
-      );
-      return;
-    } else if (
-      this.specialityId > 1 &&
-      this.specialityId > 2 &&
-      this.doctorDegrees.length == 1
-    ) {
-      this.tosterService.customToast(
-        'You have to add your degrees according to you speciality',
-        'warning'
-      );
-      return;
-    } else {
+    }
+
+    /* else if (
+    //  this.specialityId > 1 &&
+    //  this.specialityId > 2 &&
+    //  this.doctorDegrees.length == 1
+    //) {
+    //  this.tosterService.customToast(
+    //    'You have to add your degrees according to you speciality',
+    //    'warning'
+    //  );
+    //  return;
+    //}
+    //else if (this.doctorSpecializations.length > 3) {
+    //  this.tosterService.customToast(
+    //    'You are exeeding Specialization Limit.',
+    //    'warning'
+    //  );
+    //  return;
+    //} */
+
+    else {
       this.doctorDegrees.forEach((d) => {
         let ddDto: DoctorDegreeDto = {} as DoctorDegreeDto;
         ddDto.degreeId = d.degreeId;
@@ -1696,11 +1613,11 @@ export class SignupComponent implements OnInit {
     //    this.doctorDegrees.push(newDegreeData);
     //  });
 
-      
+
 
     //  res.doctorSpecialization.forEach((s) => {
     //    let spDto: DoctorSpecializationDto = {} as DoctorSpecializationDto;
-        
+
     //    spDto.doctorProfileId = this.doctorId;
     //    spDto.specialityId = s.specialityId;
     //    spDto.specializationId = s.specializationId;
