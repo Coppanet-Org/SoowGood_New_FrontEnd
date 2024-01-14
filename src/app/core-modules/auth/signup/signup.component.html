@@ -435,7 +435,7 @@
               </label> -->
               <select formControlName="specialityId" name="select" id="specialityId"
                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                <option value="0" class="font-semibold text-gray-500">Select specialty </option>
+                <option value="0" class="font-semibold text-gray-500">Select Doctor Type </option>
                 <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
                   {{item.specialityName}}
                 </option>
@@ -680,7 +680,7 @@
       </h1>
 
       <!--degreeMendatoryMassage-->
-      <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
+      <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>-->
       <div class=" w-full bg-white mt-6">
         <form [formGroup]="formDegree">
 
@@ -880,10 +880,10 @@
         <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
           <i class="fa-solid fa-list mr-2"></i>Provide specialization info
         </h1>
-        <!--spMendatoryMassage-->
-        <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>
+        <!--spMendatoryMassage *ngIf="!sp1or2"-->
+        <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>-->
         <div class=" w-full  bg-white mt-6">
-          <form *ngIf="!sp1or2" [formGroup]="formSpecialization">
+          <form [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-3">
@@ -976,10 +976,12 @@
                       <th scope="col" class="px-6 py-3">
                         Specialization
                       </th>
-                      <th *ngIf="!sp1or2" scope="col" class="px-6 py-3">
+                      *<!--ngIf="!sp1or2"-->
+                      <th scope="col" class="px-6 py-3">
                         Document Name
                       </th>
-                      <th *ngIf="!sp1or2" scope="col" class="px-6 py-3">
+                      <!--*ngIf="!sp1or2"-->
+                      <th scope="col" class="px-6 py-3">
                         Action
                       </th>
                     </tr>
@@ -996,10 +998,12 @@
                       <td class="px-6 py-4">
                         {{item.specializationName}}
                       </td>
-                      <td *ngIf="!sp1or2" class="px-6 py-4">
+                      <!--*ngIf="!sp1or2"-->
+                      <td class="px-6 py-4">
                         {{item.documentName}}
                       </td>
-                      <td *ngIf="!sp1or2" class="px-6 py-4">
+                      <!--*ngIf="!sp1or2"-->
+                      <td class="px-6 py-4">
                         <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                            (click)="removeSp(item.id)">Delete</a>
                       </td>

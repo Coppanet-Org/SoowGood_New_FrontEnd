@@ -165,6 +165,32 @@ const routes: Route[] = [
     ],
   },
   {
+    path: 'terms-services',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/tearms-services/tearms-services.module').then(
+            (m) => m.TearmsServicesModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'privacy',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/public/privacy/privacy.module').then(
+            (m) => m.PrivacyModule
+          ),
+      },
+    ],
+  },
+  {
     path: 'payment-success',
     component: PaymentSuccessComponent,
   },

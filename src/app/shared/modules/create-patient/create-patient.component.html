@@ -6,90 +6,72 @@
     <form [formGroup]="createPatientForm">
       <div class="px-10 py-6 grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="mb-5">
-          <label
-            for="name"
-            class="mb-2 block font-medium text-[14px] text-[#07074D]"
-          >
+          <label for="name"
+                 class="mb-2 block font-medium text-[14px] text-[#07074D]">
             Full Name
           </label>
-          <input
-            autocomplete="off"
-            formControlName="patientName"
-            type="text"
-            name="patientName"
-            id="patientName"
-            placeholder="Full Name"
-            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
+          <input autocomplete="off"
+                 formControlName="patientName"
+                 type="text"
+                 name="patientName"
+                 id="patientName"
+                 placeholder="Full Name"
+                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-          <p
-            class="text-red-600 text-sm"
-            *ngIf="
+          <p class="text-red-600 text-sm"
+             *ngIf="
               formSubmitted &&
               createPatientForm.get('patientName')?.touched &&
               createPatientForm.get('patientName')?.hasError('required')
-            "
-          >
+            ">
             Please enter patient name.
           </p>
-          <p
-            class="text-red-600 text-sm"
-            *ngIf="
+          <p class="text-red-600 text-sm"
+             *ngIf="
               formSubmitted &&
               createPatientForm.get('patientName')?.touched &&
               createPatientForm.get('patientName')?.hasError('pattern')
-            "
-          >
+            ">
             Patient name should contain only letters and numbers at the end
             (optional).
           </p>
-          <p
-            class="text-red-600 text-sm"
-            *ngIf="
+          <p class="text-red-600 text-sm"
+             *ngIf="
               formSubmitted &&
               createPatientForm.get('patientName')?.touched &&
               createPatientForm.get('patientName')?.hasError('invalidName')
-            "
-          >
+            ">
             Patient name should be at least 3 characters long
           </p>
         </div>
         <div class="w-full">
           <div class="mb-5">
-            <label
-              for="age"
-              class="mb-2 block font-medium text-[14px] text-[#07074D]"
-            >
+            <label for="age"
+                   class="mb-2 block font-medium text-[14px] text-[#07074D]">
               Age
             </label>
-            <input
-              autocomplete="off"
-              maxlength="3"
-              minlength="1"
-              formControlName="age"
-              id="age"
-              placeholder="Age"
-              class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
+            <input autocomplete="off"
+                   maxlength="3"
+                   minlength="1"
+                   formControlName="age"
+                   id="age"
+                   placeholder="Age"
+                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-            <p
-              class="text-red-600 text-sm"
-              *ngIf="
+            <p class="text-red-600 text-sm"
+               *ngIf="
                 formSubmitted &&
                 createPatientForm.get('age')?.touched &&
                 createPatientForm.get('age')?.hasError('required')
-              "
-            >
+              ">
               Please enter patient age.
             </p>
-            <p
-              class="text-red-600 text-sm"
-              *ngIf="
+            <p class="text-red-600 text-sm"
+               *ngIf="
                 formSubmitted &&
                 createPatientForm.get('age')?.touched &&
                 createPatientForm.get('age')?.hasError('pattern')
-              "
-            >
+              ">
               Age should be a number.
             </p>
           </div>
@@ -123,7 +105,7 @@
             <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientEmail')?.touched && createPatientForm.get('patientEmail')?.hasError('required')">
               You must enter a valid email!
             </p>
-   
+
           </div>
         </div>
         <div class="w-full ">

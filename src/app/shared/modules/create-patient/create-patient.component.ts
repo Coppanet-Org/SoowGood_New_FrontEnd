@@ -54,8 +54,8 @@ export class CreatePatientComponent implements OnInit {
         '',
       ],
       createdBy: ['', Validators.required],
-      creatorEntityId: ['', Validators.required],
-      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
+      creatorEntityId: ['', Validators.required], //userType: "patient"
+      creatorRole: [(this.authInfo.userType == "patient" ? 'patient' : 'agent'), Validators.required]
     });
   }
 
