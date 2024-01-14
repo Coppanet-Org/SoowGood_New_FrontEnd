@@ -36,13 +36,12 @@ export class CreatePatientComponent implements OnInit {
     this.authInfo = user
     this.genderList = CommonService.getEnumList(Gender);
     this.loadForm();
-    //if (user) {
-    //  this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-    //  this.createPatientForm.get('createdBy')?.setValue(user.fullName)
-    //  //}
-    //  //return
+    if (user) {
+      this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
+      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
+    }
+    return
 
-    //}
   }
   loadForm() {
     this.createPatientForm = this.fb.group({
@@ -51,15 +50,20 @@ export class CreatePatientComponent implements OnInit {
       gender: ['0', Validators.required],
       bloodGroup: ['0', Validators.required],
       patientMobileNo: ['', Validators.required],
-      patientEmail: [''],
-      createdBy: [this.authInfo.fullName, Validators.required],
-      creatorEntityId: [this.authInfo.id, Validators.required],
-      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
+      patientEmail: [
+        '',
+      ],
+      createdBy: ['', Validators.required],
+      creatorEntityId: ['', Validators.required], //userType: "patient"
+      creatorRole: [(this.authInfo.userType == "patient" ? 'patient' : 'agent'), Validators.required]
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
+
+    console.log(this.createPatientForm.value);
+
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
@@ -100,4 +104,6 @@ export class CreatePatientComponent implements OnInit {
       this.TosterService.customToast('Something wrong! Please retry', 'error');
     }
   }
+
+
 }
