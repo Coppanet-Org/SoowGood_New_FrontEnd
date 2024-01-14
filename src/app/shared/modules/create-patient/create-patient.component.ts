@@ -43,6 +43,7 @@ export class CreatePatientComponent implements OnInit {
     return
 
   }
+}
   loadForm() {
     this.createPatientForm = this.fb.group({
       patientName: ['', Validators.required],
@@ -61,9 +62,6 @@ export class CreatePatientComponent implements OnInit {
 
   createNewPatient(): void {
     this.formSubmitted = true;
-
-console.log(this.createPatientForm.value);
-
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
@@ -104,6 +102,4 @@ console.log(this.createPatientForm.value);
       this.TosterService.customToast('Something wrong! Please retry', 'error');
     }
   }
-
-
 }
