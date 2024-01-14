@@ -9,7 +9,7 @@
             </h1>
             <button *ngIf="userInfo.userType === 'agent' || 'patient'"
                     class="btn-secondary-light border-[1px] border-secondary-dark/50"
-                    (click)="addNewPatient('agent')">
+                    (click)="addNewPatient()">
               <i class="fa-solid fa-plus mr-2"></i>Add New Patient
             </button>
           </div>

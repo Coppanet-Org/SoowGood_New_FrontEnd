@@ -3,7 +3,7 @@ import { PatientProfileService } from './../../../proxy/services/patient-profile
 import { TosterService } from './../../services/toster.service';
 import { inputForCreatePatient } from './../../utils/input-info';
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonService } from '../../services/common.service';
 import { Gender } from 'src/app/proxy/enums';
@@ -30,7 +30,7 @@ export class CreatePatientComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
     private NormalAuth: AuthService
-  ) {}
+  ) { }
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
     this.authInfo = user
@@ -38,9 +38,10 @@ export class CreatePatientComponent implements OnInit {
     this.loadForm();
     if (user) {
       this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-      this.createPatientForm.get('createdBy')?.setValue(user.userType)
-    }return
-   
+      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
+    //}
+    return
+
   }
   loadForm() {
     this.createPatientForm = this.fb.group({
@@ -54,6 +55,7 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
+      creatorRole: [(this.userrole == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
@@ -79,7 +81,7 @@ console.log(this.createPatientForm.value);
               res.patientCode,
               res.patientMobileNo
             ).subscribe({
-              next:(res)=>{
+              next: (res) => {
                 console.log(res);
                 //TODO
                 this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
@@ -103,5 +105,5 @@ console.log(this.createPatientForm.value);
     }
   }
 
- 
+
 }
