@@ -43,6 +43,7 @@ export class CreatePatientComponent implements OnInit {
     return
 
   }
+}
   loadForm() {
     this.createPatientForm = this.fb.group({
       patientName: ['', Validators.required],
@@ -55,15 +56,12 @@ export class CreatePatientComponent implements OnInit {
       ],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required],
-      creatorRole: [(this.userrole == 'patient' ? 'patient' : 'agent'), Validators.required]
+      creatorRole: [(this.authInfo.userType == 'patient' ? 'patient' : 'agent'), Validators.required]
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
-
-console.log(this.createPatientForm.value);
-
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
         'Please field all the required fields',
@@ -104,6 +102,4 @@ console.log(this.createPatientForm.value);
       this.TosterService.customToast('Something wrong! Please retry', 'error');
     }
   }
-
-
 }
