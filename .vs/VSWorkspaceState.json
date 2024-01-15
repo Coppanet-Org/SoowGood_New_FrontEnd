@@ -3,10 +3,9 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\modules",
-    "\\src\\app\\shared\\modules\\create-patient"
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\agent",
+    "\\src\\app\\features-modules\\agent\\patients"
   ],
-  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }

@@ -96,7 +96,7 @@
 
   <div class="container">
     <div class="w-full flex justify-between gap-8 mt-16">
-      <div class="w-[65%] ">
+      <div [class]="userRole ==='agent' ? 'w-full' : 'w-[75%]'">
         <div
           class="w-full h-[350px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary"
         >
@@ -108,6 +108,7 @@
         </div>
 
         <div
+        [ngClass]="userRole==='agent'? 'w-[60%] mx-auto': 'w-full'"
         class="search-area mt-5 flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-full  p-2 justify-between rounded-[10px]  items-centershadow-blue"
       >
         <form [formGroup]="searchForm" class="w-full flex gap-3">
@@ -123,7 +124,7 @@
         </button>
       </div>
       </div>
-      <div class="w-[450px] flex h-full flex-col">
+      <div *ngIf="userRole!=='agent'" class="max-w-[350px] flex h-full flex-col">
         <!-- <div class="h-[200px] w-full bg-white">
 
         </div> -->

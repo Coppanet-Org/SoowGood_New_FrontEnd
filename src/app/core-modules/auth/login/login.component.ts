@@ -69,32 +69,32 @@ export class LoginComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
         ],
       ],
 
       password: [
         this.defaultAuth.password,
         Validators.compose([
-            Validators.required,
-            // CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
-
+          Validators.required,
+          // CustomValidators.startsWithUppercase,
+          CustomValidators.isAtLeast6Characters,
+          CustomValidators.includesSpecialCharacter,
+          CustomValidators.includesNumber,
         ]),
       ],
     });
 
     this.resetPasswordForm = this.fb.group(
       {
-        username: ['', [
-          Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]],
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^(?:88)?[0-9]{11}$/),
+            Validators.minLength(11),
+            Validators.maxLength(11),
+          ],
+        ],
         newPassword: [
           '',
           [
@@ -283,11 +283,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           .loginByUserDto(this.loginDto)
           .subscribe((loginResponse: LoginResponseDto) => {
             this.loginResponse = loginResponse;
-            if (
-              this.loginResponse.message.includes(
-                'User Name Or Password is not correct !'
-              )
-            ) {
+            if (!loginResponse.success) {
               this.ToasterService.customToast(
                 String(this.loginResponse.message),
                 'error'
@@ -358,7 +354,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               ).subscribe(
                 (patientDto: PatientProfileDto) => {
                   let saveLocalStorage = {
-                    fullName:patientDto.fullName,
+                    fullName: patientDto.fullName,
                     userId: patientDto.userId,
                     id: patientDto.id,
                     userType: loginResponse.roleName.toString().toLowerCase(),
@@ -419,10 +415,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.ToasterService.customToast(
         'Please enter your phone number',
         'warning'
-        );
-        return;
-      }
-      
+      );
+      return;
+    }
+
     this.resetLoading = true;
     try {
       this.UserAccountsService.isUserExistsByUserName(
@@ -456,19 +452,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   confirmPassword() {
     this.resetFormSubmitted = true;
-    
+
     let obj = {
       userId: this.resetPasswordForm.get('username')?.value,
       newPassword: this.resetPasswordForm.get('newPassword')?.value,
     };
-    if (!obj.newPassword && !this.resetPasswordForm.get('confirmPassword')?.value) {
+    if (
+      !obj.newPassword &&
+      !this.resetPasswordForm.get('confirmPassword')?.value
+    ) {
       this.ToasterService.customToast(
         'Please enter your new password',
         'warning'
-        );
-        return;
-      }
-      this.resetLoading = true;
+      );
+      return;
+    }
+    this.resetLoading = true;
     this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
       next: (res) => {
         if (res.success) {
@@ -480,14 +479,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.ToasterService.customToast(String(res.message), 'error');
           this.resetFormSubmitted = false;
           this.resetLoading = false;
-
         }
       },
       error: (err) => {
         this.ToasterService.customToast(String(err.message), 'error');
         this.resetFormSubmitted = false;
         this.resetLoading = false;
-
       },
     });
   }
