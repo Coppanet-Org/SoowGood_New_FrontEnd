@@ -42,7 +42,7 @@ export class PublicPatientsComponent implements OnInit {
           this.AppointmentService.getPatientListByDoctorId(user.id).subscribe(
             (res) => {
               this.patientList = res;
-              // this.patientLoader = false;
+              this.patientLoader = false;
             }
           );
         }
