@@ -160,7 +160,7 @@ export class SignupComponent implements OnInit {
   nidUploadBtn: any = true;
   stepBack2: any = false;
   stepBack1: any = false;
-
+  errorMessage:string=""
   startYear = new Date().getFullYear();
   range:any = [];
   constructor(

@@ -284,10 +284,11 @@ export class LoginComponent implements OnInit, OnDestroy {
           .subscribe((loginResponse: LoginResponseDto) => {
             this.loginResponse = loginResponse;
             if (!loginResponse.success) {
-              this.ToasterService.customToast(
-                String(this.loginResponse.message),
-                'error'
-              );
+              // this.ToasterService.customToast(
+              //   String(this.loginResponse.message),
+              //   'error'
+              // );
+              this.errorMessage = this.loginResponse.message
               this.isLoading = false;
               return;
             }

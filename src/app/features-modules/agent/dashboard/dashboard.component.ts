@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppointmentDto, DoctorProfileDto } from 'src/app/proxy/dto-models';
 import { DashboardService, DoctorScheduleService } from 'src/app/proxy/services';
@@ -12,7 +12,7 @@ import { TosterService } from 'src/app/shared/services/toster.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   showWarning: boolean = false;
   currentOnlineDoctorList: DoctorProfileDto[] = [];
   details = [
