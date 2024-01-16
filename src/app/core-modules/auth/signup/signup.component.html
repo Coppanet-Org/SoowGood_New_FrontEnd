@@ -42,10 +42,33 @@
         <div class="flex flex-col space-y-5 mt-10">
 
           <label for="mobile">
-            <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input inputmode="numeric" matInput  autocomplete="off" type="tel" formControlName="mobile" id="phone"
-                   class="form_input font-semibold text-[16px]" placeholder="018-000-00000" required>
-            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
+            <div
+            class="form_input flex h-[40px]"
+            [ngClass]="{
+              'border-red-500':
+              formGroup.get('mobile')?.invalid &&
+              formGroup.get('mobile')?.touched
+            }"
+          >
+            <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
+              >+88 &nbsp;</span
+            >
+            <input
+              matInput
+              maxlength="11"
+              class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+              type="tel"
+              formControlName="mobile"
+              id="mobile"
+              placeholder="018-000-00000"
+              required
+              inputmode="numeric"
+            />
+          </div>
+           
+           
+           
+                   <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('pattern')">

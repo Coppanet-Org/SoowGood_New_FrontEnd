@@ -361,9 +361,7 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
+          Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
         ],
       ],
       otp: ['', Validators.required],
