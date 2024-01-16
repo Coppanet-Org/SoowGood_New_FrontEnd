@@ -590,6 +590,7 @@ export class SignupComponent implements OnInit {
   }
 
   sendOtp() {
+    this.errorMessage=""
     this.formSubmitted = true;
     if (
       this.formGroup.get('mobile')?.invalid ||
