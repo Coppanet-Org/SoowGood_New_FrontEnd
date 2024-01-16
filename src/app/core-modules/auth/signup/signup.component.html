@@ -53,13 +53,13 @@
             </mat-error>
           </label>
 
-          <!-- <div
+          <div
           *ngIf="this.errorMessage"
           class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
           role="alert"
         >
         <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
-        </div> -->
+        </div>
 
           <button class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex items-center">

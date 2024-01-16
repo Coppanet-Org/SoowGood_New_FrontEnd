@@ -603,20 +603,25 @@ export class SignupComponent implements OnInit {
     this.isLoading = true;
     this.subs.sink = this.otpService
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
-      .subscribe(
-        (res: boolean) => {
+      .subscribe({
+        next:(res)=>{
           if (res) {
             this.otpModal = res;
             this.isLoading = false;
-            this.formSubmitted = false;
+            this.formSubmitted = false
           } else {
+            this.otpModal = res;
+            this.errorMessage = "Mobile number already in used!"
+            this.isLoading = false;
+            this.formSubmitted = false
+            return
           }
-        },
-        (err) => {
-          this.isLoading = false;
-          this.formSubmitted = false;
+        },error:(err)=> {
+            this.otpModal = false;
+            this.isLoading = false;
+            this.formSubmitted = false
         }
-      );
+      });
   }
 
   back() {
