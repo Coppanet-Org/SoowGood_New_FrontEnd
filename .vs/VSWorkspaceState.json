@@ -3,9 +3,10 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\modules",
-    "\\src\\app\\shared\\modules\\create-patient"
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\login",
+    "\\src\\app\\core-modules\\auth\\signup"
   ],
   "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
