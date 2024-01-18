@@ -7,9 +7,9 @@
     <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
     <div class="max-w-lg min-w-[500px] relative mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
-         <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
+      <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
 
-         <h1 class="text-4xl font-semibold text-primary mt-8">Signup</h1>
+      <h1 class="text-4xl font-semibold text-primary mt-8">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
         <div class="grid-wrapper grid-col-auto">
@@ -42,33 +42,27 @@
         <div class="flex flex-col space-y-5 mt-10">
 
           <label for="mobile">
-            <div
-            class="form_input flex h-[40px]"
-            [ngClass]="{
+            <div class="form_input flex h-[40px]"
+                 [ngClass]="{
               'border-red-500':
               formGroup.get('mobile')?.invalid &&
               formGroup.get('mobile')?.touched
-            }"
-          >
-            <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
-              >+88 &nbsp;</span
-            >
-            <input
-              matInput
-              maxlength="11"
-              class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
-              type="tel"
-              formControlName="mobile"
-              id="mobile"
-              placeholder="018-000-00000"
-              required
-              inputmode="numeric"
-            />
-          </div>
-           
-           
-           
-                   <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
+            }">
+              <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]">+88 &nbsp;</span>
+              <input matInput
+                     maxlength="11"
+                     class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+                     type="tel"
+                     formControlName="mobile"
+                     id="mobile"
+                     placeholder="018-000-00000"
+                     required
+                     inputmode="numeric" />
+            </div>
+
+
+
+            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('pattern')">
@@ -76,13 +70,11 @@
             </mat-error>
           </label>
 
-          <div
-          *ngIf="this.errorMessage"
-          class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
-          role="alert"
-        >
-        <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
-        </div>
+          <div *ngIf="this.errorMessage"
+               class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+               role="alert">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
+          </div>
 
           <button class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex items-center">
