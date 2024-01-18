@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   isAuthLogin!: boolean;
   userType: string = '';
   scrolled: boolean = false;
-  logoPath: string = 'assets/auth/clr-logo.png';
+  logoPath: string = 'assets/SoowGood-Logo.png';
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     if (window.scrollY >= 100) {
       this.logoPath = 'assets/SoowGood-Logo.png';
     } else {
-      this.logoPath = 'assets/auth/clr-logo.png';
+      this.logoPath = 'assets/SoowGood-Logo.png';
     }
   }
   constructor(

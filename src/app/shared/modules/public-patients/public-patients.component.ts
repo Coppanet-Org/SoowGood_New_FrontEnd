@@ -28,38 +28,38 @@ export class PublicPatientsComponent implements OnInit {
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
     if (user) {
-    this.UserinfoStateService.getUserPatientInfo(user.id, user.userType);
+      this.UserinfoStateService.getUserPatientInfo(user.id, user.userType);
     }
-   
+
     this.userInfo = user;
     // const { aptId } = this.route.snapshot.params;
     if (user.id) {
       this.patientLoader = true;
 
-      
+
       try {
         if (user.userType === 'doctor') {
           this.AppointmentService.getPatientListByDoctorId(user.id).subscribe(
             (res) => {
               this.patientList = res;
-              // this.patientLoader = false;
+              this.patientLoader = false;
             }
           );
         }
-        else if (user.userType === 'patient' || user.userType === 'agent') {  
+        else if (user.userType === 'patient' || user.userType === 'agent') {
           this.UserinfoStateService.getData()
             .pipe(switchMap((e) => {
-                if (e) {
-                  return this.UserinfoStateService.getUserPatientData().pipe(
-                    map((data) => {
-                      
-                      return data
-                    })
-                  );
-                } else {
-                  return of([]);
-                }
-              })
+              if (e) {
+                return this.UserinfoStateService.getUserPatientData().pipe(
+                  map((data) => {
+
+                    return data
+                  })
+                );
+              } else {
+                return of([]);
+              }
+            })
             )
             .subscribe((res) => {
               this.patientList = res;
