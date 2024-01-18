@@ -28,7 +28,9 @@ export class AppointmentCardComponent implements AfterViewInit {
     private DoctorProfilePicService: DocumentsAttachmentService,
     private AppointmentService: AppointmentService,
     private tosterService: TosterService,
-    private NormalAuth: AuthService) { }
+    private NormalAuth: AuthService) {
+    this.btnDisable = false;
+  }
 
   ngAfterViewInit(): void {
     console.log(this.appointment);
