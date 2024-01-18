@@ -1,13 +1,15 @@
-<div class="signup-form">
+<div class="signup-form bg-primary">
   <div class="signup-form__left">
-    <img src="../../../../auth/Group 11185.png" alt="auth">
+    <img src="/assets/auth/doctor-auth.webp" alt="auth">
 
   </div>
-  <div class="signup-form__right drop-shadow-soft relative">
-    <!-- <img src="../../../../SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
-    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
+  <div class="signup-form__right  relative ">
+    <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
+    <div class="max-w-lg min-w-[500px] relative mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
-      <h1 class="text-4xl font-medium">Signup</h1>
+         <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
+
+         <h1 class="text-4xl font-semibold text-primary mt-8">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
         <div class="grid-wrapper grid-col-auto">
@@ -16,7 +18,7 @@
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
-                <img src="../../../../auth/doctor.png" alt="doctor">
+                <img src="../../../../assets/auth/doctor.png" alt="doctor">
                 <h4>I am a Doctor</h4>
               </div>
             </div>
@@ -26,7 +28,7 @@
             <div class="card-content-wrapper">
               <span class="check-icon"></span>
               <div class="card-content">
-                <img src="../../../../auth/hospitalisation.png" alt="patient">
+                <img src="../../../../assets/auth/hospitalisation.png" alt="patient">
                 <h4>I am a Patient</h4>
               </div>
             </div>
@@ -40,10 +42,33 @@
         <div class="flex flex-col space-y-5 mt-10">
 
           <label for="mobile">
-            <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input inputmode="numeric" matInput autocomplete="off" type="tel" formControlName="mobile" id="phone"
-                   class="form_input" placeholder="018-000-00000" required>
-            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
+            <div
+            class="form_input flex h-[40px]"
+            [ngClass]="{
+              'border-red-500':
+              formGroup.get('mobile')?.invalid &&
+              formGroup.get('mobile')?.touched
+            }"
+          >
+            <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
+              >+88 &nbsp;</span
+            >
+            <input
+              matInput
+              maxlength="11"
+              class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+              type="tel"
+              formControlName="mobile"
+              id="mobile"
+              placeholder="018-000-00000"
+              required
+              inputmode="numeric"
+            />
+          </div>
+           
+           
+           
+                   <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('pattern')">
@@ -51,16 +76,18 @@
             </mat-error>
           </label>
 
-
+          <div
+          *ngIf="this.errorMessage"
+          class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+          role="alert"
+        >
+        <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
+        </div>
 
           <button class="form_btn" (click)="sendOtp()">
-            <div *ngIf="!isLoading" class="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
+            <div *ngIf="!isLoading" class="flex items-center">
               <span>Signup</span>
+              <i class="fa-solid ml-2 fa-right-to-bracket"></i>
             </div>
             <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
           </button>
@@ -85,7 +112,7 @@
     <div class="max-w-lg text-center min-w-[400px] mx-auto my-10  bg-white p-5 rounded-xl shadow shadow-slate-300"
          [style]="otpModal == true && userInfoModal== false ? 'display:block'  : 'display:none'">
       <div class="w-[150px] m-auto rounded-full h-[150px]  bg-slate-200">
-        <img src="../../../../auth/v-code.jpg" alt="">
+        <img src="../../../../assets/auth/v-code.jpg" alt="">
       </div>
       <h1 class="mt-4 text-[28px] font-semibold"> Verify Your Phone <br> Number</h1>
       <p>
@@ -435,7 +462,7 @@
               </label> -->
               <select formControlName="specialityId" name="select" id="specialityId"
                       class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                <option value="0" class="font-semibold text-gray-500">Select specialty </option>
+                <option value="0" class="font-semibold text-gray-500">Select Doctor Type </option>
                 <option *ngFor="let item of specialties" value="{{item.id}}" class="font-semibold text-gray-500">
                   {{item.specialityName}}
                 </option>
@@ -655,10 +682,10 @@
 
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <div *ngIf="!isLoading" class="flex">
+            <span>Continue</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
-            <span>Continue</span>
           </div>
           <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>
@@ -680,7 +707,7 @@
       </h1>
 
       <!--degreeMendatoryMassage-->
-      <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>
+      <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>-->
       <div class=" w-full bg-white mt-6">
         <form [formGroup]="formDegree">
 
@@ -880,10 +907,10 @@
         <h1 class="dashboard-heading-text text-2xl font-bold text-primary/90">
           <i class="fa-solid fa-list mr-2"></i>Provide specialization info
         </h1>
-        <!--spMendatoryMassage-->
-        <h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>
+        <!--spMendatoryMassage *ngIf="!sp1or2"-->
+        <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>-->
         <div class=" w-full  bg-white mt-6">
-          <form *ngIf="!sp1or2" [formGroup]="formSpecialization">
+          <form [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
               <div class="w-full px-3 sm:w-1/4">
                 <div class="mb-3">
@@ -931,7 +958,7 @@
                          accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)">
                   <button class="btn" (click)="fileInput3.click()">Browse</button>
                   <div style="display: none">
-                    <table >
+                    <table>
                       <thead>
                         <tr>
                           <th>File Name<</th>
@@ -976,10 +1003,12 @@
                       <th scope="col" class="px-6 py-3">
                         Specialization
                       </th>
-                      <th *ngIf="!sp1or2" scope="col" class="px-6 py-3">
+                      *<!--ngIf="!sp1or2"-->
+                      <th scope="col" class="px-6 py-3">
                         Document Name
                       </th>
-                      <th *ngIf="!sp1or2" scope="col" class="px-6 py-3">
+                      <!--*ngIf="!sp1or2"-->
+                      <th scope="col" class="px-6 py-3">
                         Action
                       </th>
                     </tr>
@@ -996,10 +1025,12 @@
                       <td class="px-6 py-4">
                         {{item.specializationName}}
                       </td>
-                      <td *ngIf="!sp1or2" class="px-6 py-4">
+                      <!--*ngIf="!sp1or2"-->
+                      <td class="px-6 py-4">
                         {{item.documentName}}
                       </td>
-                      <td *ngIf="!sp1or2" class="px-6 py-4">
+                      <!--*ngIf="!sp1or2"-->
+                      <td class="px-6 py-4">
                         <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                            (click)="removeSp(item.id)">Delete</a>
                       </td>
@@ -1051,7 +1082,7 @@
                 Upload Profile Picture
               </label>
               <div class="relative w-fit bg-white transition">
-                <img [src]="profPicUrl ? profPicUrl : '../../../../../doctor/dr.jpeg'" alt=""
+                <img [src]="profPicUrl ? profPicUrl : '../../../../../assets/doctor/dr.jpeg'" alt=""
                      class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #attachments type="file" #fileInput1 style="display: none"
                        accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onFileChanged($event)">
@@ -1088,7 +1119,7 @@
                 Upload Your NID/Passport
               </label>
               <div class="relative w-fit bg-white transition">
-                <img [src]="profNidUrl ? profNidUrl : '/nid.jpg'" alt=""
+                <img [src]="profNidUrl ? profNidUrl : '/assets/nid.jpg'" alt=""
                      class="object-cover rounded-lg mx-auto w-32 h-32 shadow-md border-4 border-white">
                 <input autocomplete="off" #idAttachments type="file" #fileInput2 style="display: none"
                        accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onIdFileChanged($event)">

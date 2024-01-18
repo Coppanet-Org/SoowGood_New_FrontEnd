@@ -76,8 +76,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
         ],
       ],
 
@@ -89,19 +87,21 @@ export class LoginComponent implements OnInit, OnDestroy {
           CustomValidators.isAtLeast6Characters,
           CustomValidators.includesSpecialCharacter,
           CustomValidators.includesNumber,
-
         ]),
       ],
     });
 
     this.resetPasswordForm = this.fb.group(
       {
-        username: ['', [
-          Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]],
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^(?:88)?[0-9]{11}$/),
+            Validators.minLength(11),
+            Validators.maxLength(11),
+          ],
+        ],
         newPassword: [
           '',
           [
@@ -350,7 +350,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       userId: this.resetPasswordForm.get('username')?.value,
       newPassword: this.resetPasswordForm.get('newPassword')?.value,
     };
-    if (!obj.newPassword && !this.resetPasswordForm.get('confirmPassword')?.value) {
+    if (
+      !obj.newPassword &&
+      !this.resetPasswordForm.get('confirmPassword')?.value
+    ) {
       this.ToasterService.customToast(
         'Please enter your new password',
         'warning'
@@ -369,14 +372,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.ToasterService.customToast(String(res.message), 'error');
           this.resetFormSubmitted = false;
           this.resetLoading = false;
-
         }
       },
       error: (err) => {
         this.ToasterService.customToast(String(err.message), 'error');
         this.resetFormSubmitted = false;
         this.resetLoading = false;
-
       },
     });
   }

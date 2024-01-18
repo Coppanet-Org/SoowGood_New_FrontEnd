@@ -1,6 +1,6 @@
 import { DoctorFeeSetupService } from './../../../../proxy/services/doctor-fee-setup.service';
 import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -97,13 +97,13 @@ export class FeeDialogComponent implements OnInit {
       doctorScheduleId: ['', Validators.required],
       appointmentType: ['', Validators.required],
       currentFee: ['', Validators.required],
-      discount: ['', Validators.required],
-      discountPeriod: ['', Validators.required],
-      previousFee: ['', Validators.required],
-      feeAppliedFrom: ['', Validators.required],
-      followUpPeriod: ['', Validators.required],
-      reportShowPeriod: ['', Validators.required],
-      discountAppliedFrom: ['', Validators.required],
+      discount: [''],
+      discountPeriod: [''],
+      previousFee: [''],
+      feeAppliedFrom: [''],
+      followUpPeriod: [''],
+      reportShowPeriod: [''],
+      discountAppliedFrom: [''],
       totalFee: ['', Validators.required],
     });
   }

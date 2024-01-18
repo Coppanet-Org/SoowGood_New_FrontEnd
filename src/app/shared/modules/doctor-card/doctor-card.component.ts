@@ -7,6 +7,7 @@ import { DoctorScheduleDto } from 'src/app/proxy/dto-models';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-doctor-card',
@@ -15,22 +16,30 @@ import { UserinfoStateService } from '../../services/states/userinfo-state.servi
 })
 export class DoctorCardComponent implements OnInit {
   @Input() doctorDetails: any;
- 
+
   doctorScheduleList: DoctorScheduleDto[] = [];
   isLoading: boolean = false;
-  isAuthUser:any;
+  isAuthUser: any;
+  doctorPicurl: any;
+  public picUrl = `${environment.apis.default.url}/`;
+
   constructor(
     public dialog: MatDialog,
     private DoctorScheduleService: DoctorScheduleService,
     private router: Router,
-    private TosterService : TosterService,
-    private NormalAuth : AuthService,
-    private UserinfoStateService :UserinfoStateService
-  ) {}
+    private TosterService: TosterService,
+    private NormalAuth: AuthService,
+    private UserinfoStateService: UserinfoStateService
+  ) { }
 
-ngOnInit(): void {
-  this.isAuthUser =  this.NormalAuth.authInfo()?.id;
-}
+  ngOnInit(): void {
+    this.isAuthUser = this.NormalAuth.authInfo()?.id;
+    const prePaths: string = this.doctorDetails.profilePic;
+    const re = /wwwroot/gi;
+    const profilePic = prePaths.replace(re, '');
+    this.doctorPicurl = this.picUrl + profilePic;
+    //this.doctorPicurl = this.picUrl + this.doctorDetails.profilePic;
+  }
 
   openDialog(): void {
 
@@ -39,31 +48,31 @@ ngOnInit(): void {
     //   return
     // }
 
-   this.isLoading = true
+    this.isLoading = true
     if (this.doctorDetails != 'undefine || null') {
       this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
         this.doctorDetails.id
       ).subscribe((res) => {
         this.isLoading = false
-      if (res?.length > 0 && this.doctorDetails) {
-        const dialogRef = this.dialog.open(BookingDialogComponent, {
-          maxWidth:600,
-          minWidth: 450,
-          data: {
-            doctorDetails: this.doctorDetails,
-            doctorScheduleInfo: res,
-            isAuthUser : this.isAuthUser ? true : false
-          },
-        });
-        dialogRef.afterClosed().subscribe((result) => {});
-      } else {
-        this.TosterService.customToast(`No Details/Schedule found`,"warning")
-      }
+        if (res?.length > 0 && this.doctorDetails) {
+          const dialogRef = this.dialog.open(BookingDialogComponent, {
+            maxWidth: 600,
+            minWidth: 450,
+            data: {
+              doctorDetails: this.doctorDetails,
+              doctorScheduleInfo: res,
+              isAuthUser: this.isAuthUser ? true : false
+            },
+          });
+          dialogRef.afterClosed().subscribe((result) => { });
+        } else {
+          this.TosterService.customToast(`No Details/Schedule found`, "warning")
+        }
       });
     }
 
   }
-  goToProfile(){
-      this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
+  goToProfile() {
+    this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
   }
 }
