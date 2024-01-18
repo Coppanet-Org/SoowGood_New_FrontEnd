@@ -36,7 +36,7 @@ export class AgentLoginComponent implements OnInit {
     private NormalAuth: AuthService,
     private _router: Router,
     private fb: FormBuilder
-  ) { }
+  ) { } 
 
   ngOnInit(): void {
     this.loadForm();
