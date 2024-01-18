@@ -60,7 +60,7 @@ body{
     @apply flex items-center w-full h-screen bg-slate-100;
   }
   .signup-form__right {
-    @apply w-[60%] bg-hero-pattern h-screen flex items-center bg-primary;
+    @apply w-[60%] h-screen flex items-center bg-primary;
   }
 
   .signup-form__left {

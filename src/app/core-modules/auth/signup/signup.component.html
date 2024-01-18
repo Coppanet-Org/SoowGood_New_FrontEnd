@@ -1,13 +1,15 @@
-<div class="signup-form">
+<div class="signup-form bg-primary">
   <div class="signup-form__left">
-    <img src="../../../../assets/auth/Group 11185.png" alt="auth">
+    <img src="/assets/auth/doctor-auth.webp" alt="auth">
 
   </div>
-  <div class="signup-form__right drop-shadow-soft relative">
+  <div class="signup-form__right  relative ">
     <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
-    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
+    <div class="max-w-lg min-w-[500px] relative mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300"
          [style]="profileStep==null && otpModal==false? '' : userInfoModal==true? 'display:none' : 'display:none'">
-      <h1 class="text-4xl font-medium">Signup</h1>
+         <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
+
+         <h1 class="text-4xl font-semibold text-primary mt-8">Signup</h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
         <div class="grid-wrapper grid-col-auto">
@@ -40,10 +42,33 @@
         <div class="flex flex-col space-y-5 mt-10">
 
           <label for="mobile">
-            <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input inputmode="numeric" matInput autocomplete="off" type="tel" formControlName="mobile" id="phone"
-                   class="form_input" placeholder="018-000-00000" required>
-            <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
+            <div
+            class="form_input flex h-[40px]"
+            [ngClass]="{
+              'border-red-500':
+              formGroup.get('mobile')?.invalid &&
+              formGroup.get('mobile')?.touched
+            }"
+          >
+            <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
+              >+88 &nbsp;</span
+            >
+            <input
+              matInput
+              maxlength="11"
+              class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+              type="tel"
+              formControlName="mobile"
+              id="mobile"
+              placeholder="018-000-00000"
+              required
+              inputmode="numeric"
+            />
+          </div>
+           
+           
+           
+                   <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('required')">
               You must enter a valid mobile number.
             </mat-error>
             <mat-error *ngIf="formSubmitted && formGroup.get('mobile')?.hasError('pattern')">
@@ -51,16 +76,18 @@
             </mat-error>
           </label>
 
-
+          <div
+          *ngIf="this.errorMessage"
+          class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+          role="alert"
+        >
+        <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
+        </div>
 
           <button class="form_btn" (click)="sendOtp()">
-            <div *ngIf="!isLoading" class="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
+            <div *ngIf="!isLoading" class="flex items-center">
               <span>Signup</span>
+              <i class="fa-solid ml-2 fa-right-to-bracket"></i>
             </div>
             <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
           </button>
@@ -655,10 +682,10 @@
 
         <button class="form_btn mt-4" (click)="sendUserInfo()">
           <div *ngIf="!isLoading" class="flex">
+            <span>Continue</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
-            <span>Continue</span>
           </div>
           <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
         </button>

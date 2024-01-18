@@ -125,4 +125,17 @@ export class CustomValidators {
       }
     }
   }
+  static mobileNumberFormat(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const isValid = /^[0-9]+$/.test(control.value);
+      return isValid ? null : { invalidFormat: true };
+    };
+  }
+
+  static mobileNumberLength(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const isValidLength = control.value && control.value.length === 11;
+      return isValidLength ? null : { invalidLength: true };
+    };
+  }
 }
