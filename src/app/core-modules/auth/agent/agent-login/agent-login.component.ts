@@ -31,7 +31,7 @@ export class AgentLoginComponent implements OnInit {
     private NormalAuth: AuthService,
     private _router: Router,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadForm();
@@ -41,11 +41,7 @@ export class AgentLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]),
+        Validators.compose([Validators.required]),
       ],
       password: [
         this.defaultAuth.password,
@@ -59,6 +55,7 @@ export class AgentLoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isLoading = true;
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
         'Please filled all required field',
@@ -79,8 +76,6 @@ export class AgentLoginComponent implements OnInit {
           catchError((error: any) => this.handleLoginError(error)),
           switchMap((loginResponse: any) => {
             loginResponseData = loginResponse;
-
-
             if (!loginResponse.success) {
               this.hasError = true;
               this.ToasterService.customToast(
@@ -96,7 +91,6 @@ export class AgentLoginComponent implements OnInit {
           catchError((error: any) => this.handleProfileError(error))
         )
         .subscribe((agentDto: any) => {
-          console.log(agentDto);
           const saveLocalStorage = {
             fullName: agentDto.fullName,
             userId: agentDto.userId,
@@ -107,19 +101,19 @@ export class AgentLoginComponent implements OnInit {
           const userType = agentDto.isActive
             ? loginResponseData.roleName.toString().toLowerCase()
             : (
-              loginResponseData.roleName.toString() +
-              '/profile-settings'
-            ).toLowerCase();
+                loginResponseData.roleName.toString() + '/profile-settings'
+              ).toLowerCase();
           this._router
             .navigate([userType], {
               state: { data: agentDto },
             })
-            .then(() =>
+            .then(() => {
+              this.isLoading = false;
               this.ToasterService.customToast(
                 loginResponseData.message || ' ',
                 'success'
-              )
-            );
+              );
+            });
         });
     } catch (error: any) {
       this.hasError = true;
@@ -128,8 +122,12 @@ export class AgentLoginComponent implements OnInit {
       }
     }
   }
-  handleLoginError(error: any): any { }
-  handleProfileError(error: any): any { }
+  handleLoginError(error: any): any {
+    this.isLoading = false;
+  }
+  handleProfileError(error: any): any {
+    this.isLoading = false;
+  }
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

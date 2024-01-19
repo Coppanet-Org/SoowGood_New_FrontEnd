@@ -68,11 +68,11 @@ export class PublicPatientsComponent implements OnInit {
         }
         else {
           console.log('Data Nai');
-          // this.patientLoader = false;
+          this.patientLoader = false;
         }
       } catch (error) {
         console.log(error);
-        // this.patientLoader = false;
+        this.patientLoader = false;
       }
     }
   }

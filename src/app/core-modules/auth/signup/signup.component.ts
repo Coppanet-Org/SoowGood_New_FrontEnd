@@ -160,7 +160,7 @@ export class SignupComponent implements OnInit {
   nidUploadBtn: any = true;
   stepBack2: any = false;
   stepBack1: any = false;
-
+  errorMessage:string=""
   startYear = new Date().getFullYear();
   range: any = [];
   constructor(
@@ -365,9 +365,7 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?:88)?[0-9]{11}$/),
-          Validators.minLength(11),
-          Validators.maxLength(11),
+          Validators.pattern(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/),
         ],
       ],
       otp: ['', Validators.required],
@@ -507,6 +505,7 @@ export class SignupComponent implements OnInit {
   }
 
   sendOtp() {
+    this.errorMessage=""
     this.formSubmitted = true;
     if (
       this.formGroup.get('mobile')?.invalid ||
@@ -520,20 +519,25 @@ export class SignupComponent implements OnInit {
     this.isLoading = true;
     this.subs.sink = this.otpService
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
-      .subscribe(
-        (res: boolean) => {
+      .subscribe({
+        next:(res)=>{
           if (res) {
             this.otpModal = res;
             this.isLoading = false;
-            this.formSubmitted = false;
+            this.formSubmitted = false
           } else {
+            this.otpModal = res;
+            this.errorMessage = "Mobile number already in used!"
+            this.isLoading = false;
+            this.formSubmitted = false
+            return
           }
-        },
-        (err) => {
-          this.isLoading = false;
-          this.formSubmitted = false;
+        },error:(err)=> {
+            this.otpModal = false;
+            this.isLoading = false;
+            this.formSubmitted = false
         }
-      );
+      });
   }
 
   back() {

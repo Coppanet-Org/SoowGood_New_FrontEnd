@@ -1,219 +1,451 @@
 <div class="signup-form">
   <div class="signup-form__left">
-    <img src="../../../../assets/auth/Repeat Grid 3.png" alt="auth">
+    <img src="/assets/auth/login-auth.webp" alt="auth" />
   </div>
   <div class="signup-form__right drop-shadow-soft relative">
-    <!-- <img src="../../../../assets/SoowGood-Logo.png" alt="logo" class="absolute top-5 left-5"> -->
-    <div class="max-w-lg min-w-[500px] mx-auto mt-10  bg-white p-8 rounded-xl shadow shadow-slate-300">
-      <h1 class="text-4xl font-medium">Login</h1>
-      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
-      <form action="" class="mt-6" [formGroup]="loginForm">
 
+    
+    <div
+    class="max-w-lg relative min-w-[500px] mx-auto mt-10 bg-white p-8 rounded-xl shadow shadow-slate-300"
+    >
+    <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
+      <h1 class="text-4xl font-semibold font-Roboto text-primary mt-8">Login</h1>
+      <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
+      <form class="mt-6" [formGroup]="loginForm" (submit)="onSubmit()">
         <div class="flex flex-col space-y-5 mt-10">
           <label for="mobile">
             <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
-            <input  type="tel" formControlName="mobileNo" id="mobileNo" class="form_input" placeholder="018-000-00000"
-              required maxlength="11"
-              [ngClass]="{ 'border-red-500': loginForm.get('mobileNo')?.invalid && loginForm.get('mobileNo')?.touched }"
-              inputmode="numeric">
-            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('required')">
+            <div
+              class="form_input flex h-[40px]"
+              [ngClass]="{
+                'border-red-500':
+                  loginForm.get('mobileNo')?.invalid &&
+                  loginForm.get('mobileNo')?.touched
+              }"
+            >
+              <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
+                >+88 &nbsp;</span
+              >
+              <input
+                matInput
+                maxlength="11"
+                class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+                type="tel"
+                formControlName="mobileNo"
+                id="mobileNo"
+                placeholder="018-000-00000"
+                required
+                inputmode="numeric"
+              />
+            </div>
+            <mat-error
+              *ngIf="
+                formSubmitted && loginForm.get('mobileNo')?.hasError('required')
+              "
+            >
               You must enter a valid mobile number.
             </mat-error>
-            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')">
-              Mobile number should have exactly 11 digits bd number and starts with 01(3456789).
+            <mat-error
+              *ngIf="
+                formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')
+              "
+            >
+              Mobile number should be valid.
             </mat-error>
-            
 
-            
-            <mat-error *ngIf="loginForm.get('mobileNo')?.hasError('customError')">
-              {{ loginForm.get('mobileNo')?.getError('customError') }}
+            <!-- <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidFormat')">
+              Mobile number should only contain numeric digits.
+            </mat-error>
+            <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidLength')">
+              Mobile number should have 11 digits.
+            </mat-error> -->
+
+            <mat-error
+              *ngIf="loginForm.get('mobileNo')?.hasError('customError')"
+            >
+              {{ loginForm.get("mobileNo")?.getError("customError") }}
             </mat-error>
           </label>
 
-
-
           <label for="Password">
-            <p class="font-medium text-slate-700 pb-2"> Password</p>
-            <div class="form_input flex justify-between"
-              [ngClass]="{ 'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
-              <input formControlName="password" [type]="passwordFieldType" name="password" id="password"
-                class="outline-none border-none w-full" placeholder="Password123@*" />
-              <button (click)="passwordVisibility('password')" class="cursor-pointer">
-                <i [class]="passwordFieldType === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            <p class="font-medium text-slate-700 pb-2">Password</p>
+            <div
+              class="form_input flex justify-between"
+              [ngClass]="{
+                'border-red-500':
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+              }"
+            >
+              <input
+                formControlName="password"
+                [type]="passwordFieldType"
+                name="password"
+                id="password"
+                class="outline-none border-none w-full"
+                placeholder="Password123@*"
+              />
+              <button
+                (submit)="passwordVisibility('password')"
+                class="cursor-pointer"
+              >
+                <i
+                  [class]="
+                    passwordFieldType === 'password'
+                      ? 'fa fa-eye-slash'
+                      : 'fa fa-eye'
+                  "
+                ></i>
               </button>
             </div>
             <div class="flex flex-col">
-              <mat-error *ngIf="formSubmitted && loginForm.get('password')?.hasError('required')">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('required')
+                "
+              >
                 Password is required.
               </mat-error>
-              <mat-error *ngIf="formSubmitted && loginForm.get('password')?.hasError('startsWithUppercase')">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('startsWithUppercase')
+                "
+              >
                 Password must start with an uppercase letter.
               </mat-error>
-              <mat-error *ngIf="formSubmitted && loginForm.get('password')?.hasError('isAtLeast6Characters')">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('isAtLeast6Characters')
+                "
+              >
                 Password must be at least 6 characters long.
               </mat-error>
-              <mat-error *ngIf="formSubmitted && loginForm.get('password')?.hasError('includesSpecialCharacter')">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm
+                    .get('password')
+                    ?.hasError('includesSpecialCharacter')
+                "
+              >
                 Password must include a special character.
               </mat-error>
-              <mat-error *ngIf="formSubmitted && loginForm.get('password')?.hasError('includesNumber')">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('includesNumber')
+                "
+              >
                 Password must include a number.
               </mat-error>
-              <mat-error *ngIf="loginForm.get('password')?.hasError('customError')">
-                {{ loginForm.get('password')?.getError('customError') }}
+              <mat-error
+                *ngIf="loginForm.get('password')?.hasError('customError')"
+              >
+                {{ loginForm.get("password")?.getError("customError") }}
               </mat-error>
             </div>
           </label>
-
-
-          <button [disabled]="isLoading" class="form_btn disabled:bg-gray-500" (click)="onSubmit()">
-            <div *ngIf="!isLoading" class="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
+          <div
+          *ngIf="this.errorMessage"
+          class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+          role="alert"
+        >
+        <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
+        </div>
+          <button
+            [disabled]="isLoading"
+            type="submit"
+            class="form_btn disabled:bg-gray-500"
+          >
+            <div *ngIf="!isLoading" class="flex items-center">
               <span>Login</span>
+              <i class="fa-solid ml-2 fa-right-to-bracket"></i>
             </div>
-            <span *ngIf="isLoading" class="loading loading-dots loading-md"></span>
+            <span
+              *ngIf="isLoading"
+              class="loading loading-dots loading-md"
+            ></span>
           </button>
-          <p>Forgot your password? <strong class="cursor-pointer" (click)="resetModal()"> Reset now</strong></p>
-          <p class="text-center"> Don't have an account? <a routerLink="/signup"
-              class="text-primary font-medium inline-flex space-x-1 items-center"><span>Sign up
-              </span><span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg></span></a></p>
-          {{this.errorMessage}}
+
+          <p>
+            Forgot your password?<strong
+              class="cursor-pointer"
+              (click)="resetModal()"
+            >
+              Reset now</strong
+            >
+          </p>
+          <p class="text-center">
+            Don't have an account?
+            <a
+              routerLink="/signup"
+              class="text-primary font-medium inline-flex space-x-1 items-center"
+              ><span>Sign up </span
+              ><span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  /></svg></span
+            ></a>
+          </p>
+
+
         </div>
       </form>
     </div>
   </div>
 </div>
- 
 
-
-<div #reset *ngIf="resetModalShow" class="absolute top-0 left-0 bg-black/40 border-none h-screen w-full flex justify-center items-center ">
- 
-  <div class="w-[450px]  border-none  rounded-xl ">
+<div
+  #reset
+  *ngIf="resetModalShow"
+  class="absolute top-0 left-0 bg-black/40 border-none h-screen w-full flex justify-center items-center"
+>
+  <div class="w-[450px] border-none rounded-xl">
     <section class="dark:bg-gray-900">
-      <div class="flex flex-col items-center justify-center  mx-auto md:h-screen lg:py-0">
-        
-        <div
-        class="w-full relative p-12 bg-primary rounded-lg ">
-        <div class="absolute text-white right-5 top-5" (click)="resetModalShow = false">
-          <i class="fa-solid fa-rectangle-xmark"></i>
-        </div>
+      <div
+        class="flex flex-col items-center justify-center mx-auto md:h-screen lg:py-0"
+      >
+        <div class="w-full relative p-12 bg-primary rounded-lg">
+          <div
+            class="absolute text-white right-5 top-5"
+            (click)="resetModalShow = false"
+          >
+            <i class="fa-solid fa-rectangle-xmark"></i>
+          </div>
 
-
-          <a href="/"
-            class="flex justify-center items-center mb-3 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-[200px] h-12 mr-2" src="assets/SoowGood-Logo.png" alt="logo">
+          <a
+            href="/"
+            class="flex justify-center items-center mb-3 text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            <img
+              class="w-[200px] h-12 mr-2"
+              src="assets/SoowGood-Logo.png"
+              alt="logo"
+            />
           </a>
 
-          <h2 class="font-Roboto mb-8 text-[20px] font-normal text-gray-200 text-center">
+          <h2
+            class="font-Roboto mb-8 text-[20px] font-normal text-gray-200 text-center"
+          >
             Forgot Password
           </h2>
-          <form [formGroup]="resetPasswordForm" class="mt-8 space-y-4 lg:mt-7 md:space-y-5" >
+          <form
+            [formGroup]="resetPasswordForm"
+            class="mt-8 space-y-4 lg:mt-7 md:space-y-5"
+          >
             <div *ngIf="!changePasswordShow">
-              <label for="number" class="block mb-2 text-sm font-medium text-white dark:text-white">Your phone
-                number</label>
-              <input formControlName="username" name="number" id="number" inputmode="numeric" 
+              <label
+                for="number"
+                class="block mb-2 text-sm font-medium text-white dark:text-white"
+                >Your phone number</label
+              >
+              <input
+                formControlName="username"
+                name="number"
+                id="number"
+                inputmode="numeric"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="018700 00 000" required>
-                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('required')">
-                  You must enter a valid mobile number.
-                </mat-error>
-                <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('username')?.hasError('pattern')">
-                  Mobile number should have exactly 11 digits.
-                </mat-error>
-                <mat-error *ngIf="resetPasswordForm.get('username')?.hasError('customError')">
-                  {{ resetPasswordForm.get('username')?.getError('customError') }}
-                </mat-error>
-           
-           
-              </div>
-
+                placeholder="018700 00 000"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  resetFormSubmitted &&
+                  resetPasswordForm.get('username')?.hasError('required')
+                "
+              >
+                You must enter a valid mobile number.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  resetFormSubmitted &&
+                  resetPasswordForm.get('username')?.hasError('pattern')
+                "
+              >
+                Mobile number should have exactly 11 digits.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  resetPasswordForm.get('username')?.hasError('customError')
+                "
+              >
+                {{ resetPasswordForm.get("username")?.getError("customError") }}
+              </mat-error>
+            </div>
 
             <div *ngIf="changePasswordShow">
               <div>
-                <label for="newPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New
-                  Password</label>
-                <input type="password" formControlName="newPassword" name="newPassword" id="newPassword" placeholder="••••••••"
+                <label
+                  for="newPassword"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >New Password</label
+                >
+                <input
+                  type="password"
+                  formControlName="newPassword"
+                  name="newPassword"
+                  id="newPassword"
+                  placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required="">
-                  <div class="flex flex-col">
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('required')">
-                      Password is required.
-                    </mat-error>
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('startsWithUppercase')">
-                      Password must start with an uppercase letter.
-                    </mat-error>
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('isAtLeast6Characters')">
-                      Password must be at least 6 characters long.
-                    </mat-error>
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesSpecialCharacter')">
-                      Password must include a special character.
-                    </mat-error>
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('newPassword')?.hasError('includesNumber')">
-                      Password must include a number.
-                    </mat-error>
-                  </div>
-                  <mat-hint *ngIf="resetPasswordForm.get('newPassword')?.invalid || resetPasswordForm.get('newPassword')?.value === '0'"
-                  class="text-xs text-red-500 font-normal" align="end" >hint: Password@123</mat-hint>
+                  required=""
+                />
+                <div class="flex flex-col">
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm.get('newPassword')?.hasError('required')
+                    "
+                  >
+                    Password is required.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm
+                        .get('newPassword')
+                        ?.hasError('startsWithUppercase')
+                    "
+                  >
+                    Password must start with an uppercase letter.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm
+                        .get('newPassword')
+                        ?.hasError('isAtLeast6Characters')
+                    "
+                  >
+                    Password must be at least 6 characters long.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm
+                        .get('newPassword')
+                        ?.hasError('includesSpecialCharacter')
+                    "
+                  >
+                    Password must include a special character.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm
+                        .get('newPassword')
+                        ?.hasError('includesNumber')
+                    "
+                  >
+                    Password must include a number.
+                  </mat-error>
+                </div>
+                <mat-hint
+                  *ngIf="
+                    resetPasswordForm.get('newPassword')?.invalid ||
+                    resetPasswordForm.get('newPassword')?.value === '0'
+                  "
+                  class="text-xs text-red-500 font-normal"
+                  align="end"
+                  >hint: Password@123</mat-hint
+                >
               </div>
               <div>
-                <label for="confirm-password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                <input formControlName="confirmPassword" type="password" name="confirm-password" id="confirm-password" placeholder="••••••••"
+                <label
+                  for="confirm-password"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Confirm password</label
+                >
+                <input
+                  formControlName="confirmPassword"
+                  type="password"
+                  name="confirm-password"
+                  id="confirm-password"
+                  placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required="">
+                  required=""
+                />
 
-                  <div class="flex flex-col">
-                    <mat-error *ngIf="resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.hasError('required')">
-                      Confirm password is required.
-                    </mat-error>
-                    <mat-error
-                      *ngIf=" resetFormSubmitted && resetPasswordForm.get('confirmPassword')?.valid && resetPasswordForm.get('confirmPassword')?.dirty  && resetPasswordForm.get('confirmPassword')?.errors">
-                      Password not matched.
-                    </mat-error>
-                  </div>
-
+                <div class="flex flex-col">
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm
+                        .get('confirmPassword')
+                        ?.hasError('required')
+                    "
+                  >
+                    Confirm password is required.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      resetFormSubmitted &&
+                      resetPasswordForm.get('confirmPassword')?.valid &&
+                      resetPasswordForm.get('confirmPassword')?.dirty &&
+                      resetPasswordForm.get('confirmPassword')?.errors
+                    "
+                  >
+                    Password not matched.
+                  </mat-error>
+                </div>
               </div>
               <div class="flex items-start mt-4">
                 <div class="flex items-center h-5">
-                  <input id="newsletter" aria-describedby="newsletter" type="checkbox"
+                  <input
+                    id="newsletter"
+                    aria-describedby="newsletter"
+                    type="checkbox"
                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required="">
+                    required=""
+                  />
                 </div>
-                <div class="ml-3  text-sm">
-                  <label for="newsletter" class="font-light text-gray-500 dark:text-gray-300">I accept the <a
-                      class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and
-                      Conditions</a></label>
+                <div class="ml-3 text-sm">
+                  <label
+                    for="newsletter"
+                    class="font-light text-gray-500 dark:text-gray-300"
+                    >I accept the
+                    <a
+                      class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      href="#"
+                      >Terms and Conditions</a
+                    ></label
+                  >
                 </div>
               </div>
             </div>
 
-            <button *ngIf="!changePasswordShow" type="submit"
+            <button
+              *ngIf="!changePasswordShow"
+              type="submit"
               (click)="resetPassword()"
-              class="w-full text-white bg-secondary bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-             {{resetLoading ? "Loading..." : "Reset password"}}
-              
+              class="w-full text-white bg-secondary bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              {{ resetLoading ? "Loading..." : "Reset password" }}
             </button>
 
-            <button *ngIf="changePasswordShow" type="submit"
-            (click)="confirmPassword()"
-              class="w-full text-white bg-secondary bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirm
-              passwod
+            <button
+              *ngIf="changePasswordShow"
+              type="submit"
+              (click)="confirmPassword()"
+              class="w-full text-white bg-secondary bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              Confirm passwod
             </button>
-
           </form>
-
-
-
-
         </div>
       </div>
     </section>
   </div>
-</div> 
+</div>

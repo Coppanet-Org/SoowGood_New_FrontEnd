@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AgentLoginComponent } from './agent-login.component';
 import { Route, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  MatInputModule } from '@angular/material/input';
 
 const routes: Route[] = [
   {
@@ -19,7 +20,8 @@ const routes: Route[] = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule
   ]
 })
 export class AgentLoginModule { }
