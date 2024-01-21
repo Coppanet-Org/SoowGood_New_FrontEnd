@@ -8,13 +8,14 @@ import { SpecializationInfoComponent } from './specialization-info/specializatio
 import { DegreeDialogComponentnt } from './degree-dialog/degree-dialog.component';
 import { DegreeCardComponent } from './degree-card/degree-card.component';
 import { SpecializationDialogComponent } from './specialization-dialog/specialization-dialog.component';
-import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
+
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { DocumentsComponent } from './documents/documents.component';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { PictureDialogModule } from '../../../shared/modules/picture-dialog/picture-dialog.module';
 
 const routes: Route[] = [
   {
@@ -58,7 +59,6 @@ const routes: Route[] = [
     DegreeDialogComponentnt,
     DegreeCardComponent,
     SpecializationDialogComponent,
-    PictureDialogComponent,
     DocumentsComponent,
     
   ],
@@ -68,7 +68,8 @@ const routes: Route[] = [
     InputModule,
     LoaderModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    PictureDialogModule
   ],
 
   providers: [DatePipe], 

@@ -33,51 +33,17 @@
     </div>
 </div>
 
-
-
-<!-- <div class="navigation-wrapper" [ngClass]="showSlider ? 'opacity-1' : 'opacity-1'" >
-    <div class="keen-slider keen-slider--vertical" #sliderRef>
-      <div *ngFor="let details of liveDoctorList; let i = index">
-        <div [class]="'keen-slider__slide h-full number-slide'+(1+i)" >
-          <app-live-doctor-card class="w-full" [doctorDetails]="details"></app-live-doctor-card>
-        </div>
-
+<!-- 
+<div id="blogs-carousel" class="relative w-full">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div *ngFor="let details of liveDoctorList" class="swiper-slide">
+        <app-live-doctor-card  [doctorDetails]="details"></app-live-doctor-card>
       </div>
-       
     </div>
-    <svg
+    <div class="swiper-pagination"></div>
 
-      [ngClass]="
-        'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
-      "
-      (click)="slider.prev()"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
-      />
-    </svg>
-    <svg
-      *ngIf="slider"
-      [ngClass]="
-        'arrow arrow--right ' +
-        (slider.track.details.slides.length - 1 === currentSlide
-          ? 'arrow--disabled'
-          : '')
-      "
-      (click)="slider.next()"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-    >
-      <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
-    </svg>
-  </div> -->
-  <!-- <div class="dots">
-    <button
-      (click)="slider.moveToIdx(i)"
-      *ngFor="let slide of dotHelper; let i = index"
-      [class]="'dot ' + (i === currentSlide ? 'active' : '')"
-    ></button>
-  </div> -->
-   
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</div> -->
