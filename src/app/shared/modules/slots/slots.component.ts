@@ -13,6 +13,8 @@ export class SlotsComponent {
     this.DoctorScheduleStateService.getDoctorAvailableSlotData().pipe(
       filter((e)=> e)
     ).subscribe(filteredData => {
+      console.log(filteredData);
+      
       this.slotList = filteredData;
     });
   }

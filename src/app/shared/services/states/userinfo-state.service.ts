@@ -47,23 +47,23 @@ export class UserinfoStateService implements OnInit {
 
   getProfileInfo(id: any, role: string): void {
     if (id) {
-      this.LoaderService.sendLoaderState(true);
+      // this.LoaderService.sendLoaderState(true);
       if (role == 'doctor') {
         this.DoctorProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
       if (role == 'agent') {
         this.AgentProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
       if (role == 'patient') {
         this.PatientProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
     }

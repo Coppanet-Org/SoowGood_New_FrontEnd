@@ -29,14 +29,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatPaginatorModule,
     MatDatepickerModule,
     MatInputModule,
-    MatNativeDateModule,
     FilterModule,
-    MatSidenavModule
-    
+    MatSidenavModule 
   ],
 exports:[
   PublicDoctorsComponent
 ],
+
 // providers: [
 //     {
 //       provide: HTTP_INTERCEPTORS,
