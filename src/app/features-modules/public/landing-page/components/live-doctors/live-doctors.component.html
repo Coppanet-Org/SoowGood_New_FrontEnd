@@ -23,27 +23,22 @@
            class="grid w-full grid-cols-1 justify-center items-center h-[300px]">
         <p class="text-center leading-9">Loading...</p>
       </div>
-      <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 mt-9">
-
-        <app-live-doctor-card *ngFor="let details of liveDoctorList" [doctorDetails]="details"></app-live-doctor-card>
-
+      <div id="blogs-carousel" class="relative w-full">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let details of liveDoctorList" >
+              <app-live-doctor-card  [doctorDetails]="details"></app-live-doctor-card>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+      
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </div>
       <button *ngIf="liveDoctorList?.length > 0" class="rounded-3xl mt-10 px-6 py-2 bg-secondary text-white mx-auto" (click)="onClickSeeMore('livedoctors')">see more</button>
     </div>
   </div>
 </div>
 
-<!-- 
-<div id="blogs-carousel" class="relative w-full">
-  <div class="swiper">
-    <div class="swiper-wrapper">
-      <div *ngFor="let details of liveDoctorList" class="swiper-slide">
-        <app-live-doctor-card  [doctorDetails]="details"></app-live-doctor-card>
-      </div>
-    </div>
-    <div class="swiper-pagination"></div>
 
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-  </div>
-</div> -->

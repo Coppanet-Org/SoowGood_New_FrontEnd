@@ -1,6 +1,6 @@
 import { DocumentsAttachmentService } from 'src/app/proxy/services';
-// import Swiper from "swiper";
-// import { Navigation, Autoplay } from "swiper/modules";
+import Swiper from "swiper";
+import { Navigation } from "swiper/modules";
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import {
@@ -31,6 +31,7 @@ export class LiveDoctorsComponent
   liveDoctorList: any;
   isLoading: boolean = false;
   noData : boolean =false
+  swiper!: Swiper;
   constructor(
     private DoctorStateService: DoctorStateService,
     private router: Router,
@@ -41,39 +42,39 @@ export class LiveDoctorsComponent
   }
 
   ngAfterViewInit() {
-    // this.swiper = new Swiper(".swiper", {
-    //   speed: 2000,
-    //   spaceBetween: 30,
-    //   slidesPerView: 3,
-    //   autoplay: {
-    //     delay: 2000,
-    //   },
-    //   modules: [Navigation, Autoplay],
-    //   navigation: {
-    //     nextEl: ".swiper-button-next",
-    //     prevEl: ".swiper-button-prev",
-    //   },
-    //   pagination: {
-    //     el: ".swiper-pagination",
-    //   },
-    //   breakpoints: {
-    //     // when window width is >= 320px
-    //     320: {
-    //       slidesPerView: 1,
-    //       spaceBetween: 20,
-    //     },
-    //     // when window width is >= 480px
-    //     640: {
-    //       slidesPerView: 2,
-    //       spaceBetween: 30,
-    //     },
-    //     // when window width is >= 640px
-    //     992: {
-    //       slidesPerView: 3,
-    //       spaceBetween: 40,
-    //     },
-    //   },
-    // });
+    this.swiper = new Swiper(".swiper", {
+      speed: 1000,
+      spaceBetween: 30,
+      slidesPerView: 3,
+      autoplay: {
+        delay: 2000,
+      },
+       modules: [Navigation],
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        // when window width is >= 480px
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+        // when window width is >= 640px
+        992: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+      },
+    });
   }
 
  
