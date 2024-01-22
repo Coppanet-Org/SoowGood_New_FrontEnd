@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { DoctorProfileService } from './../../../../proxy/services/doctor-profile.service';
-import { TosterService } from './../../../../shared/services/toster.service';
+import { DoctorProfileService } from '../../../proxy/services/doctor-profile.service';
+import { TosterService } from '../../services/toster.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DegreeDialogComponentnt } from '../degree-dialog/degree-dialog.component';
+import { DegreeDialogComponentnt } from '../../../features-modules/doctor/profile-settings/degree-dialog/degree-dialog.component';
 
 @Component({
   selector: 'app-picture-dialog',
@@ -73,6 +73,8 @@ export class PictureDialogComponent implements OnInit {
       // save attachment
       this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
         (result: any) => {
+          console.log(result);
+          
           this.TosterService.customToast('Picture Changed Successfully', 'success');
           this.dialogRef.close(true);
         },

@@ -33,8 +33,9 @@
                   <th scope="col" class="px-6 py-3">S.L No</th>
                   <th scope="col" class="px-6 py-3">Patient's Name</th>
                   <th scope="col" class="px-6 py-3">Mobile No.</th>
-                  <th scope="col" class="px-6 py-3">Email</th>
-                  <th scope="col" class="px-6 py-3">Location</th>
+                  <th scope="col" class="px-6 py-3">Gender</th>
+                  <th scope="col" class="px-6 py-3">Age</th>
+                  <th scope="col" class="px-6 py-3">Blood Group</th>
                   <th scope="col" class="px-6 py-3">Profile</th>
                 </tr>
               </thead>
@@ -51,11 +52,14 @@
                     {{ patient.patientMobileNo }}
                   </td>
                   <td class="px-6 py-4">
-                    {{ patient.patientEmail }}
+                    {{ patient.genderName }}
+                  </td>
+                  <td class="px-6 py-4">
+                    {{ patient.age }}
                   </td>
                   <td class="px-6 py-4">
                     {{
-                      patient.patientLocation ? patient.patientLocation : "---"
+                      patient.bloodGroup ? patient.bloodGroup : "---"
                     }}
                   </td>
                   <td class="px-6 py-4">

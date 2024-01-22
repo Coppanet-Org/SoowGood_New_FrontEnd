@@ -96,23 +96,24 @@ export class BasicInfoComponent implements OnInit {
       // lastName: [''],
       // maritalStatus: ['', Validators.required],
       // mobileNo: [''],
-      doctorTitle: ['', Validators.required],
-      fullName: ['', [Validators.required, Validators.minLength(3), customNameValidator,]],
-      email: ['', [Validators.required, Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
-      country: ['Bangladesh', Validators.required],
+      doctorTitle: [''],
+      fullName: [''],
+      email: ['', [Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
+      gender: [''],
+      dateOfBirth: [''],
+      city: [''],
+      country: ['Bangladesh'],
       address: [''], //[Validators.required,Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
       zipCode: [''], //[Validators.required, Validators.pattern(/^\d{4}$/)]],
-      bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{6,9}$/)]],
-      bmdcRegExpiryDate: ['', [Validators.required]],
+      bmdcRegNo: [''],
+      bmdcRegExpiryDate: [''],
       specialityId: ['', Validators.required],
-      identityNumber: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],],
+      identityNumber: [''],
 
     });
   }
   sendDataToParent() {
+   
     this.formSubmitted = true
     if (this.form.invalid) {
       this.TosterService.customToast('Fill all the requirements', 'warning')

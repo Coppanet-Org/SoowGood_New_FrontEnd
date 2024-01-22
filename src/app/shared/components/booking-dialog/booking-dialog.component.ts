@@ -37,6 +37,7 @@ import { CommonService } from '../../services/common.service';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { customNameValidator } from '../../utils/auth-helper';
 import { AuthService } from '../../services/auth.service';
+import { DateFilterFn } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -83,7 +84,7 @@ export class BookingDialogComponent implements OnInit {
   hasValidCode = false;
   createNewPatientInfo: PatientProfileDto = {};
   alreadyExistPatient: PatientProfileDto = {};
-
+  disabledDays: number[] = [];
   subs = new SubSink();
   hospitalList: any;
   appointmentType: any;
@@ -94,6 +95,8 @@ export class BookingDialogComponent implements OnInit {
   filteredChamber: any = [];
   sessionRole: any;
   isLoading: boolean= false;
+  minDate: Date;
+  maxDate: Date;
   constructor(
     private fb: FormBuilder,
     private UserinfoStateService: UserinfoStateService,
@@ -112,6 +115,14 @@ export class BookingDialogComponent implements OnInit {
     this.secondFormGroup = this.fb.group({
       secondCtrl: ['', Validators.required],
     });
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDate = today.getDate();
+    this.minDate = new Date(currentYear, currentMonth, currentDate);
+    const twoWeeksLater = new Date(today);
+    twoWeeksLater.setDate(today.getDate() + 30);
+    this.maxDate = twoWeeksLater;
   }
 
   ngOnInit() {
@@ -128,18 +139,28 @@ export class BookingDialogComponent implements OnInit {
       .subscribe((slot: any) => {
         this.selectedSlotInfo = slot;
       });
-
-    let schedule = this.doctorData.doctorScheduleInfo;
-    if (schedule) {
-      this.hospitalList = this.doctorData.doctorScheduleInfo.map((e: any) => {
-        return { name: e.scheduleName, id: e.scheduleName };
-      });
-      // this.inputConfigs = bookingFilterInputData(list);
-      this.dataLoader = false;
-    } else {
-      // this.inputConfigs = bookingFilterInputData([]);
-      this.dataLoader = false;
-    }
+      let schedule = this.doctorData.doctorScheduleInfo;
+      if (schedule) {
+        // this.hospitalList = schedule.map((e: any) => {
+        //   return { name: e.scheduleName, id: e.scheduleName };
+        // });
+        // this.inputConfigs = bookingFilterInputData(list);
+        this.dataLoader = false;
+      } else {
+        // this.inputConfigs = bookingFilterInputData([]);
+        this.dataLoader = false;
+      }
+    // let schedule = this.doctorData.doctorScheduleInfo;
+    // if (schedule) {
+    //   this.hospitalList = this.doctorData.doctorScheduleInfo.map((e: any) => {
+    //     return { name: e.scheduleName, id: e.scheduleName };
+    //   });
+    //   // this.inputConfigs = bookingFilterInputData(list);
+    //   this.dataLoader = false;
+    // } else {
+    //   // this.inputConfigs = bookingFilterInputData([]);
+    //   this.dataLoader = false;
+    // }
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       if (this.sessionRole == 'patient') {
@@ -174,6 +195,7 @@ export class BookingDialogComponent implements OnInit {
         });
     }
 
+   
     //  filtering start
     const selectedItem1$: any = this.form
       .get('appointmentDate')
@@ -183,141 +205,265 @@ export class BookingDialogComponent implements OnInit {
       .get('doctorScheduleType')
       ?.valueChanges.pipe(startWith(this.form.get('doctorScheduleType')));
 
-    const selectedItem3$: any = this.form
-      .get('consultancyType')
-      ?.valueChanges.pipe(startWith(this.form.get('consultancyType')?.value));
-
     const selectedItem4$: any = this.form
       .get('appointmentType')
       ?.valueChanges.pipe(startWith(this.form.get('appointmentType')?.value));
 
-    let selectedItemCount = 0;
+    const enableDayList = schedule
+      .map((item: any) =>
+        item.doctorScheduleDaySession.map((days: any) => days.scheduleDayofWeek)
+      )
+      .flat();
 
-    // Combine the changes by adding them together
+    const dayToNumber = (days: any) => {
+      const daysOfWeek = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ];
+      return daysOfWeek.indexOf(days);
+    };
+
+    const days = [0, 1, 2, 3, 4, 5, 6];
+    const uniqueDaysAsNumbers = [...new Set(enableDayList)].map(dayToNumber);
+    this.disabledDays = days.filter(
+      (day) => !uniqueDaysAsNumbers.includes(day)
+    );
+
+    let day = '';
+
     selectedItem1$
-      .pipe(combineLatestWith([selectedItem2$, selectedItem3$, selectedItem4$]))
-      .subscribe((data: any) => {
-        let finalFilter: any = [];
-        let isMatchFound = false;
-        const day = dayFromDate(String(data[0]));
+      .pipe(
+        map((selectedItem1: any) => {
+          day = dayFromDate(String(selectedItem1));
 
-        if (data[3] == 0) {
-          this.showAppointmentTypeSelectBox = true;
-          this.filterData = finalFilter;
-          this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-            finalFilter
-          );
-          return;
-        }
-        if (data[0] && data[1]) {
-          this.showAppointmentTypeSelectBox = false;
-          selectedItemCount = 3;
-          const scheduleMap = new Map();
-          schedule.forEach((item: any) => {
-            this.filterDoctorId = item.doctorProfileId;
-            const key = `${item.scheduleName}`;
-            if (!scheduleMap.has(key)) {
-              scheduleMap.set(key, []);
-            }
-            scheduleMap.get(key).push(item);
-          });
-          const keyToSearch = `${data[1]}`;
-          if (scheduleMap.has(keyToSearch)) {
-            const items = scheduleMap.get(keyToSearch);
-            items.forEach((item: any) => {
-              const availableSessions = this.isDayAvailable(
-                item.doctorScheduleDaySession,
-                day
-              );
-              if (availableSessions.length > 0) {
-                finalFilter = availableSessions.map((session: any) => {
-                  let left = this.getLeftSlotForBooking(item, data[0])[
-                    session.id
-                  ];
-                  return {
-                    ...session,
-                    leftPatient: left,
-                  };
-                });
-                isMatchFound = true;
-                return;
-              } else {
-                this.showEmptySlot = "No slot is available! Please change appointment date or hospital/chamber."
-              }
-            });
-          }
-        }
-        this.showAppointmentTypeSelectBox = true;
-        this.filterData = finalFilter;
-        console.log(finalFilter);
-
-        this.selectedSlotInfo = {}
-        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-          finalFilter
-        );
-
-
+          const hospitals = schedule
+            .filter((item: any) =>
+              item.doctorScheduleDaySession.some(
+                (session: any) => session.scheduleDayofWeek === day
+              )
+            )
+            .map((item: any) => ({
+              name: item.scheduleName,
+              id: item.scheduleName,
+            }));
+          return hospitals;
+        })
+      )
+      .subscribe((hospitals: any) => {
+        this.hospitalList = hospitals;
       });
+
+    selectedItem2$
+      .pipe(
+        map((selectedItem2: any) => {
+          const sessions = schedule
+            .find((item: any) => item.scheduleName === selectedItem2)
+            ?.doctorScheduleDaySession.filter(
+              (e: any) => e.scheduleDayofWeek === day
+            );
+          return sessions;
+        })
+      )
+      .subscribe((sessions: any) => {
+      
+       let filterSession = sessions?.map((s:any)=>{
+         let apt = schedule[0].appointments?.filter((a:any)=> a.doctorScheduleDaySessionId == s.id)?.length
+          return {...s,leftSlot:s.noOfPatients - apt}
+        })
+        console.log(filterSession);
+        
+        this.filterData = filterSession;
+        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(filterSession);
+      });
+
+
 
     selectedItem2$
       .pipe(combineLatestWith(selectedItem4$))
       .subscribe((data: any) => {
+        if (data[1] == 0) {
+          this.totalFee = 0;
+          return;
+        }
         const feeEntry = schedule.filter((entry: any) => {
           return entry.scheduleName === data[0];
         });
         if (feeEntry) {
           feeEntry.map((fee: any) => {
+            console.log(fee);
+
             let fees = fee.doctorFeesSetup.find((f: any) =>
               f.appointmentType == data[1] ? f.totalFee : ''
             );
-            this.totalFee = fees?.totalFee;
-            this.selectedFeesInfo = fees;
+            if (!fees) {
+              this.TosterService.customToast(
+                'Fee not found your selected appointment type!',
+                'warning'
+              );
+              this.totalFee = 0;
+              return;
+            }
+            (this.totalFee = fees?.totalFee), (this.selectedFeesInfo = fees);
           });
         } else {
-          console.log(
-            'Fee not found for the given schedule and appointment type.'
+          this.TosterService.customToast(
+            'Fee not found your selected appointment type!',
+            'warning'
           );
         }
+
+        // this.totalFee = fees?.totalFee;
+        // this.selectedFeesInfo = fees.selectedFeesInfo;
       });
+
+
+
+
+
+    // let selectedItemCount = 0;
+
+    // // Combine the changes by adding them together
+    // selectedItem1$
+    //   .pipe(combineLatestWith([selectedItem2$, selectedItem3$, selectedItem4$]))
+    //   .subscribe((data: any) => {
+    //     let finalFilter: any = [];
+    //     let isMatchFound = false;
+    //     const day = dayFromDate(String(data[0]));
+
+    //     if (data[3] == 0) {
+    //       this.showAppointmentTypeSelectBox = true;
+    //       this.filterData = finalFilter;
+    //       this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+    //         finalFilter
+    //       );
+    //       return;
+    //     }
+    //     if (data[0] && data[1]) {
+    //       this.showAppointmentTypeSelectBox = false;
+    //       selectedItemCount = 3;
+    //       const scheduleMap = new Map();
+    //       schedule.forEach((item: any) => {
+    //         this.filterDoctorId = item.doctorProfileId;
+    //         const key = `${item.scheduleName}`;
+    //         if (!scheduleMap.has(key)) {
+    //           scheduleMap.set(key, []);
+    //         }
+    //         scheduleMap.get(key).push(item);
+    //       });
+    //       const keyToSearch = `${data[1]}`;
+    //       if (scheduleMap.has(keyToSearch)) {
+    //         const items = scheduleMap.get(keyToSearch);
+    //         items.forEach((item: any) => {
+    //           const availableSessions = this.isDayAvailable(
+    //             item.doctorScheduleDaySession,
+    //             day
+    //           );
+    //           if (availableSessions.length > 0) {
+    //             finalFilter = availableSessions.map((session: any) => {
+    //               let left = this.getLeftSlotForBooking(item, data[0])[
+    //                 session.id
+    //               ];
+    //               return {
+    //                 ...session,
+    //                 leftPatient: left,
+    //               };
+    //             });
+    //             isMatchFound = true;
+    //             return;
+    //           } else {
+    //             this.showEmptySlot = "No slot is available! Please change appointment date or hospital/chamber."
+    //           }
+    //         });
+    //       }
+    //     }
+    //     this.showAppointmentTypeSelectBox = true;
+    //     this.filterData = finalFilter;
+    //     console.log(finalFilter);
+
+    //     this.selectedSlotInfo = {}
+    //     this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+    //       finalFilter
+    //     );
+
+
+    //   });
+
+    // selectedItem2$
+    //   .pipe(combineLatestWith(selectedItem4$))
+    //   .subscribe((data: any) => {
+    //     const feeEntry = schedule.filter((entry: any) => {
+    //       return entry.scheduleName === data[0];
+    //     });
+    //     if (feeEntry) {
+    //       feeEntry.map((fee: any) => {
+    //         let fees = fee.doctorFeesSetup.find((f: any) =>
+    //           f.appointmentType == data[1] ? f.totalFee : ''
+    //         );
+    //         this.totalFee = fees?.totalFee;
+    //         this.selectedFeesInfo = fees;
+    //       });
+    //     } else {
+    //       console.log(
+    //         'Fee not found for the given schedule and appointment type.'
+    //       );
+    //     }
+    //   });
   }
 
-  getLeftSlotForBooking(item: any, selectedDate: string) {
-    // Create a dictionary to store the booked appointments count per session and date
-    const bookedAppointments: any = {};
+  // getLeftSlotForBooking(item: any, selectedDate: string) {
+  //   // Create a dictionary to store the booked appointments count per session and date
+  //   const bookedAppointments: any = {};
 
-    // Loop through the appointment objects to count booked appointments per session and date
-    item.appointments.forEach((appointment: any) => {
-      const sessionId = appointment.doctorScheduleDaySessionId;
-      const appointmentDate = appointment.appointmentDate.split('T')[0]; // Extract the date portion
+  //   // Loop through the appointment objects to count booked appointments per session and date
+  //   item.appointments.forEach((appointment: any) => {
+  //     const sessionId = appointment.doctorScheduleDaySessionId;
+  //     const appointmentDate = appointment.appointmentDate.split('T')[0]; // Extract the date portion
 
-      if (!bookedAppointments[sessionId]) {
-        bookedAppointments[sessionId] = {};
-      }
+  //     if (!bookedAppointments[sessionId]) {
+  //       bookedAppointments[sessionId] = {};
+  //     }
 
-      if (!bookedAppointments[sessionId][appointmentDate]) {
-        bookedAppointments[sessionId][appointmentDate] = 1;
-      } else {
-        bookedAppointments[sessionId][appointmentDate]++;
-      }
-    });
+  //     if (!bookedAppointments[sessionId][appointmentDate]) {
+  //       bookedAppointments[sessionId][appointmentDate] = 1;
+  //     } else {
+  //       bookedAppointments[sessionId][appointmentDate]++;
+  //     }
+  //   });
 
-    // Calculate the left number of patients for each session and date
-    const leftNoOfPatients: any = {};
+  //   // Calculate the left number of patients for each session and date
+  //   const leftNoOfPatients: any = {};
 
-    item.doctorScheduleDaySession.forEach((session: any) => {
-      const sessionId = session.id;
-      const sessionDate = selectedDate.split('T')[0]; // Extract the date portion
-      const bookedCount =
-        (bookedAppointments[sessionId] &&
-          bookedAppointments[sessionId][sessionDate]) ||
-        0;
+  //   item.doctorScheduleDaySession.forEach((session: any) => {
+  //     const sessionId = session.id;
+  //     const sessionDate = selectedDate.split('T')[0]; // Extract the date portion
+  //     const bookedCount =
+  //       (bookedAppointments[sessionId] &&
+  //         bookedAppointments[sessionId][sessionDate]) ||
+  //       0;
 
-      leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
-    });
+  //     leftNoOfPatients[sessionId] = session.noOfPatients - bookedCount;
+  //   });
 
-    // Return the available slots for the selected date
-    return leftNoOfPatients;
-  }
+  //   // Return the available slots for the selected date
+  //   return leftNoOfPatients;
+  // }
+
+
+  dateFilter: DateFilterFn<Date | null> = (date: Date | null): boolean => {
+    if (!date) {
+      return false; // Handle null case if needed
+    }
+    const day = date.getDay();
+    return !this.disabledDays.includes(day);
+  };
+
+
+
 
   isDayAvailable(doctorScheduleDaySession: any[], day: string): any {
     // console.log(doctorScheduleDaySession.some((session) => session.scheduleDayofWeek === day));

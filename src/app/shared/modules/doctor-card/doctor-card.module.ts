@@ -10,6 +10,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { SlotsModule } from '../slots/slots.module';
 import { BookingPaymentComponent } from '../../components/booking-dialog/booking-payment/booking-payment.component';
 import { BookingReviewModule } from '../booking-review/booking-review.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+
 
 @NgModule({
   declarations: [DoctorCardComponent,BookingDialogComponent,BookingPaymentComponent],
@@ -22,10 +27,14 @@ import { BookingReviewModule } from '../booking-review/booking-review.module';
     MaterialModulesModule,
     MatButtonModule,
     SlotsModule,
-    BookingReviewModule
+    BookingReviewModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
   ],
   exports:[
     DoctorCardComponent
-  ]
+  ],
+ 
 })
 export class DoctorCardModule { }

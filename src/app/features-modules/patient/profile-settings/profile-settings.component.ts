@@ -12,14 +12,12 @@ import { customNameValidator } from 'src/app/shared/utils/auth-helper';
 import { Gender } from 'src/app/proxy/enums';
 import { CommonService } from 'src/app/shared/services/common.service';
 
-
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
-  styleUrls: ['./profile-settings.component.scss']
+  styleUrls: ['./profile-settings.component.scss'],
 })
 export class ProfileSettingsComponent implements OnInit {
-
   form!: FormGroup;
   patientInputData: any = patientInputData;
   isLoading: boolean = false;
@@ -28,7 +26,7 @@ export class ProfileSettingsComponent implements OnInit {
   profileInfo: any;
   formSubmitted: boolean = false;
   genderList: any;
-  countryList= countries
+  countryList = countries;
   constructor(
     private fb: FormBuilder,
     private PatientProfileService: PatientProfileService,
@@ -51,10 +49,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   loadForm() {
     this.form = this.fb.group({
-      fullName: [
-        '',
-        [Validators.required, Validators.minLength(3)],
-      ],
+      fullName: ['', [Validators.required]],
       email: [
         '',
         [
@@ -63,24 +58,17 @@ export class ProfileSettingsComponent implements OnInit {
         ],
       ],
 
-      gender: ['0', Validators.required],
-      age: ['', Validators.required],
-      bloodGroup:['0',Validators.required],
-      dateOfBirth: ['', Validators.required],
-      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
-      country: ['Bangladesh', Validators.required],
-      address: [
-        '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
-      ],
-      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      gender: ['0'],
+      age: [''],
+      bloodGroup: ['0'],
+      dateOfBirth: [''],
+      city: [''],
+      country: ['Bangladesh'],
+      address: [''],
+      zipCode: [''],
     });
   }
   submit() {
-
-
-    console.log(this.form.value);
-    
     this.formSubmitted = true;
 
     this.isLoading = true;
@@ -121,6 +109,7 @@ export class ProfileSettingsComponent implements OnInit {
           //     successMessage = `${changedProperties[0]} Successfully Updated! `;
           //   }
           // }
+
           this.TosterService.customToast('Successfully update', 'success');
           this.isLoading = false;
           this.formSubmitted = false;

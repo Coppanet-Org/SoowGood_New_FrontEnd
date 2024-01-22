@@ -2,23 +2,25 @@
   <div class="box-border">
     <div class="card w-full bg-base-100 border-b-[1px]">
       <figure class="px-10 pt-10">
-        <img src="../../../../../assets/doctor/dr.jpeg" alt="Shoes"
+        <img [src]="url" alt="profile"
              class="rounded-full w-[100px] h-[100px] object-cover border-4 border-gray-300 " />
       </figure>
       <div class="card-body pb-3 items-center text-center">
+     
         <span class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold rounded-lg">
           <!--{{userInfo.doctorTitle ? 'Doctor' : userInfo.hasOwnProperty('patientName') ? 'Patient' : 'Agent'}}-->
           {{profileTile}}
         </span>
         <h2 class="card-title">
           <!--{{userInfo.doctorTitle ?userInfo.fullName:userInfo.hasOwnProperty('patientName') ?userInfo.patientName:userInfo.agentName}}-->
-          {{profileName}}
+          {{userInfo?.fullName}}
         </h2>
-        <p>{{userInfo.designation}}</p>
+        <p>{{userInfo?.designation}}</p>
 
         <div *ngIf="authInfo.userType == 'doctor'">
-          <label class="relative inline-flex items-center mb-5 cursor-pointer">
+          <label  class="relative inline-flex items-center mb-5 cursor-pointer">
             <input
+              [style]="isProfileLoad ? 'display:none': 'display:block'"
               type="checkbox"
               [value]="status"
               [(ngModel)]="status"
@@ -40,18 +42,11 @@
               >Offline</span
             >
           </label>
-        </div>
-        <!-- <div class="card-actions  " *ngIf="authInfo.userType != 'agent'">
-                    <div class="border-r-[1px] pr-3">
-                        <h5 class="dashbord-heading-subtext">Total Patients</h5>
-                        <h1 class="dashbord-heading-text">563+</h1>
-                    </div>
-                    <div>
-                        <h5 class="dashbord-heading-subtext">Total Reviews</h5>
-                        <h1 class="dashbord-heading-text">563+</h1>
-                    </div>
-                </div> -->
+   
+      </div>
+
       </div>
     </div>
   </div>
 </div>
+

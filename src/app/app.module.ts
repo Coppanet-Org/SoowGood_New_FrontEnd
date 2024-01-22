@@ -12,7 +12,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
@@ -22,6 +22,7 @@ import { OtpInputComponent } from './shared/components/otp-input/otp-input.compo
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
 import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -42,16 +43,13 @@ const routerConfig: ExtraOptions = {
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
-    
-    //PaginatorComponent
-   // PaginationComponent
   ],
   imports: [
     BrowserModule,
+    MatNativeDateModule,
     HttpClientModule,
     NgOtpInputModule,
-    // SignupModule,
-    // LoginModule,
+    MatNativeDateModule,
     CoreModule.forRoot({
       environment,
       registerLocaleFn: registerLocale(),
@@ -63,7 +61,6 @@ const routerConfig: ExtraOptions = {
       position: 'bottom-right',
     }),
     LoaderModule,
-
     ReactiveFormsModule, FormsModule
   ],
   // add this interceptors on static page
@@ -83,6 +80,5 @@ const routerConfig: ExtraOptions = {
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
     //, PaginatorComponent
   ],
-  
 })
 export class AppModule { }

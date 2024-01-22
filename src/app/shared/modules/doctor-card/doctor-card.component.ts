@@ -36,7 +36,7 @@ export class DoctorCardComponent implements OnInit {
     this.isAuthUser = this.NormalAuth.authInfo()?.id;
     const prePaths: string = this.doctorDetails.profilePic;
     const re = /wwwroot/gi;
-    const profilePic = prePaths.replace(re, '');
+    const profilePic = prePaths?.replace(re, '');
     this.doctorPicurl = this.picUrl + profilePic;
     //this.doctorPicurl = this.picUrl + this.doctorDetails.profilePic;
   }
@@ -59,7 +59,7 @@ export class DoctorCardComponent implements OnInit {
             maxWidth: 600,
             minWidth: 450,
             data: {
-              doctorDetails: this.doctorDetails,
+              doctorDetails: {...this.doctorDetails,picUrl:  this.doctorPicurl },
               doctorScheduleInfo: res,
               isAuthUser: this.isAuthUser ? true : false
             },

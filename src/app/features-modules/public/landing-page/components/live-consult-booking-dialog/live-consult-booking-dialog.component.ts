@@ -37,7 +37,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   profileInfo: any;
   userPatientList: any[] = [];
   genderList: ListItem[] = [];
-  serviceFeeList: FinancialSetupDto[] = [];
+  serviceFeeList: FinancialSetupDto[] = this.doctorData?.serviceFeeList;
   stepLoading: boolean = false;
   userRole: any;
   constructor(
@@ -47,16 +47,14 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService,
     private TosterService: TosterService,
     private PatientProfileService: PatientProfileService,
-    private FinancialSetupService: FinancialSetupService,
+ 
     private NormalAuth: AuthService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.genderList = CommonService.getEnumList(Gender)
-    this.FinancialSetupService.getList().subscribe(res => {
-      this.serviceFeeList = res;
-    });
+
     this.userRole = this.NormalAuth.authInfo()?.userType;
 
     let id = this.NormalAuth.authInfo()?.id;

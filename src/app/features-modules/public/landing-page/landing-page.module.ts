@@ -21,6 +21,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterceptor';
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 
+
+
 const routes: Route[] = [
   {
     path: '',
@@ -49,7 +51,8 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     MaterialModulesModule,
-    BookingReviewModule
+    BookingReviewModule,
+  
   ],
 
   schemas:[

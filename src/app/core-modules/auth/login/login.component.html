@@ -85,8 +85,8 @@
                 class="outline-none border-none w-full"
                 placeholder="Password123@*"
               />
-              <button
-                (submit)="passwordVisibility('password')"
+              <span
+                (click)="passwordVisibility('password')"
                 class="cursor-pointer"
               >
                 <i
@@ -96,7 +96,7 @@
                       : 'fa fa-eye'
                   "
                 ></i>
-              </button>
+              </span>
             </div>
             <div class="flex flex-col">
               <mat-error

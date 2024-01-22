@@ -18,7 +18,7 @@ import { SubSink } from 'subsink';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
+import { PictureDialogComponent } from '../../../shared/modules/picture-dialog/picture-dialog.component';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { AvaterServiceService } from 'src/app/shared/services/avater-service.service';
 
@@ -80,6 +80,8 @@ export class ProfileSettingsComponent implements OnInit {
     
     this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
     this.getProfilePic();
+
+    
   }
 
   // getProfileInfo(id: any): void {

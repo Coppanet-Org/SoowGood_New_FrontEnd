@@ -1,4 +1,3 @@
-import KeenSlider from "keen-slider"
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
@@ -15,19 +14,8 @@ export class PreviousDocumentsDialogComponent implements AfterViewInit {
   constructor( @Inject(MAT_DIALOG_DATA)
   public docData:any){}
   ngAfterViewInit() {
-    if (this.sliderRef && this.sliderRef.nativeElement) {
-      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-        // initial: this.currentSlide,
-        slides: {
-          perView: 1,
-        },
-        
-      })
-      // this.dotHelper = [
-      //   ...Array(this.slider.track.details.slides.length).keys(),
-      // ]
-
-    }
+   
+    
   }
   
 }
