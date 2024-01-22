@@ -1,4 +1,6 @@
-<div class="bg-hero-pattern min-h-screen max-h-full py-10 flex items-center relative overflow-hidden w-full bg-[#f2f6f6]">
+<div
+  class="bg-hero-pattern  max-h-full 3xl:pt-14 3xl:pb-20 py-10 flex  relative overflow-hidden w-full bg-[#f2f6f6]"
+>
   <!-- <div class="container mt-16">
     <div class="w-full flex justify-between items-center gap-8">
       <div class="w-[65%] flex flex-col">
@@ -94,35 +96,50 @@
 
   <div class="container">
     <div class="w-full flex justify-between gap-8 mt-16">
-      <div class="w-[65%] ">
-        <div class="w-full h-[350px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary">
-          <img class="object-cover w-full h-full"
-               src="/assets/banner/about-banner.webp"
-               alt="banner" />
+      <div [class]="userRole ==='agent' ? 'w-full' : 'w-[75%] 3xl:w-[70%]'">
+        <div
+          class="w-full h-[350px] 3xl:h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary"
+        >
+          <img
+            class="object-cover w-full h-full"
+            src="/assets/banner/about-banner.webp"
+            alt="banner"
+          />
         </div>
 
-        <div class="search-area mt-5 flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-full  p-2 justify-between rounded-[10px]  items-centershadow-blue">
-          <form [formGroup]="searchForm" class="w-full flex gap-3">
-            <input class="w-full  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
-                   type="search"
-                   formControlName="searchText"
-                   placeholder="Search Doctor by Name..." />
-          </form>
-          <button class="btn-secondary bg-primary ml-2 py-2.5 rounded-[6px] min-w-[160px]" (click)="goToServicePage()">
-            <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
-          </button>
-        </div>
+        <div
+        [ngClass]="userRole==='agent'? 'w-[60%] mx-auto': 'w-full'"
+        class="search-area mt-5 flex backdrop-blur-sm border-secondary-dark/30 border-[1px] bg-white max-w-full  p-2 justify-between rounded-[10px]  items-centershadow-blue"
+      >
+        <form [formGroup]="searchForm" class="w-full flex gap-3">
+          <input
+            class="w-full  py-1 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
+            type="search"
+            formControlName="searchText"
+            placeholder="Search Doctor by Name..."
+          />
+        </form>
+        <button class="btn-secondary bg-primary  py-2.5 rounded-[6px] min-w-[170px]" (click)="goToServicePage()">
+          <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
+        </button>
       </div>
-      <div class="w-[450px] flex h-full flex-col">
+      </div>
+      <div *ngIf="userRole!=='agent'" class="max-w-[350px] 3xl:max-w-[380px] flex h-full flex-col">
         <!-- <div class="h-[200px] w-full bg-white">
 
         </div> -->
-        <div *ngIf="authUser?.userType !== 'agent'"
-             class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[430px] max-w-full bg-white/10">
-          <div class="p-8 bg-white/30 w-full h-full flex items-center justify-center flex-col relative rounded-md text-center">
-            <img class="max-w-[100px] pb-6" src="/assets/banner/sg-icon.png" alt="icon">
-            <h1 class="font-Roboto text-primary text-center text-[30px] font-bold"
-                *ngIf="!authUser">
+        <div
+          *ngIf="authUser?.userType !== 'agent'"
+          class="border-secondary rounded-lg p-4 border-[1px] backdrop-blur-md h-[430px] 3xl:h-[530px] max-w-full bg-white/10"
+        >
+          <div
+            class="p-8 bg-white/30 w-full h-full flex items-center justify-center flex-col relative rounded-md text-center"
+          >
+             <img class="max-w-[100px] pb-6" src="/assets/banner/sg-icon.png" alt="icon">
+            <h1
+              class="font-Roboto text-primary text-center text-[30px] font-bold"
+              *ngIf="!authUser"
+            >
               Easy Login/Registration
             </h1>
             <p *ngIf="!authUser"
@@ -156,12 +173,18 @@
 
       </div>
     </div>
-    <div class="grid grid-cols-8 gap-5 mt-6">
-      <div class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary">
-        <img class="max-w-[50px]"
-             src="/assets/banner/ambulance.png"
-             alt="ambulance" />
-        <h2 class="font-Roboto text-[16px] block text-center font-semibold text-primary">
+    <div class="grid grid-cols-8 gap-5 mt-6 ">
+      <div
+        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
+      >
+        <img
+          class="max-w-[50px]"
+          src="/assets/banner/ambulance.png"
+          alt="ambulance"
+        />
+        <h2
+          class="font-Roboto text-[16px] block text-center font-semibold text-primary"
+        >
           <span>Ambulance Service</span>
         </h2>
       </div>

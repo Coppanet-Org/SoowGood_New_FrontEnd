@@ -30,8 +30,8 @@
       </div> -->
 
       <div class="group-hover:border-t-secondary/50 border-t-[1px] w-full absolute bottom-0 flex justify-between">
-        <button [disabled]="isLoading" (click)="onClickConsultNow(doctorDetails)" class="border-r-[1px] hover:bg-primary/90 hover:text-white group-hover:border-r-secondary/50  w-1/2 py-3 font-semibold font-Roboto/80 text-primary/80 bg-secondary/10"><i class="text-secondary mr-2 fa-solid fa-video-slash"></i>{{isLoading ? 'Loading' : 'Consult Now'}}</button>
-        <button class="w-1/2 py-2 font-semibold hover:bg-primary/90 hover:text-white font-Roboto/80 text-primary/80 bg-secondary/10"><i class="text-secondary mr-2 fa-solid fa-user-tie"></i>Profile</button>
+        <button [disabled]="isLoading" (click)="onClickConsultNow(doctorDetails)" class="border-r-[1px] hover:bg-primary/90 hover:text-white group-hover:border-r-secondary/50  w-full py-3 font-semibold font-Roboto/80 text-primary/80 bg-secondary/10"><i class="text-secondary mr-2 fa-solid fa-video-slash"></i>{{isLoading ? 'Loading' : 'Consult Now'}}</button>
+        <!-- <button class="w-1/2 py-2 font-semibold hover:bg-primary/90 hover:text-white font-Roboto/80 text-primary/80 bg-secondary/10"><i class="text-secondary mr-2 fa-solid fa-user-tie"></i>Profile</button> -->
       </div>
     </div>
   </div>

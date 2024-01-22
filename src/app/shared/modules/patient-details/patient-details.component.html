@@ -7,16 +7,18 @@
             <h1 class="text-[24px] font-medium text-primary">{{patientProfileInfo?.patientName }} </h1>
             <div class="flex gap-16 font-Roboto">
                 <div>
-                    <p class="text-gray-600 my-2 text-[15px"><b>ID: </b>SG25621 </p>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Age : </b>26y</p>
+                    <!-- <p class="text-gray-600 my-2 text-[15px"><b>ID: </b>SG25621 </p> -->
+                    <p class="text-gray-600 my-2 text-[15px"><b>Age : </b>{{patientProfileInfo?.age}}</p>
                 </div>
                 <div>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Blood Group :</b> B+</p>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p>
+                    <p class="text-gray-600 my-2 text-[15px"><b>Blood Group :</b> {{patientProfileInfo?.bloodGroup }}</p>
+                    <!-- <p class="text-gray-600 my-2 text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p> -->
                 </div>
                 <div>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> {{patientProfileInfo?.mobileNo}}</p>
-                    <p class="text-gray-600 my-2 text-[15px"><b>Email : </b> example@mail.com</p>
+                    <p class="text-gray-600 my-2 text-[15px"><b>Mobile :</b> {{patientProfileInfo.patientMobileNo}}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 my-2 text-[15px"><b>Email : </b>  {{patientProfileInfo.patientEmail}}</p>
                 </div>
             </div>
         </div>
@@ -47,7 +49,7 @@
                 <i class="fa-solid fa-clock text-primary mr-2"></i> History
             </h1>
 
-            <div class="p-4 text-[14px]">
+            <!-- <div class="p-4 text-[14px]">
                 <p class="relative"> <i
                         class=" after:content-[' '] after:w-[1px] after:h-[30px] after:bg-secondary after:absolute after:top-[17px] after:left-[7px] fa-regular fa-circle-dot mb-[20px] text-primary text-[16px]"></i>
                     <span>-----</span> Dr. John - 20/05/23 : 05.00pm
@@ -70,7 +72,7 @@
                     <span>-----</span> Revisit : 05.00pm
                 </p>
 
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

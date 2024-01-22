@@ -46,11 +46,7 @@ export class AgentLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]),
+        Validators.compose([Validators.required]),
       ],
       password: [
         this.defaultAuth.password,
@@ -64,6 +60,7 @@ export class AgentLoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isLoading = true;
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
         'Please filled all required field',
@@ -146,8 +143,12 @@ export class AgentLoginComponent implements OnInit {
       }
     }
   }
-  handleLoginError(error: any): any { }
-  handleProfileError(error: any): any { }
+  handleLoginError(error: any): any {
+    this.isLoading = false;
+  }
+  handleProfileError(error: any): any {
+    this.isLoading = false;
+  }
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

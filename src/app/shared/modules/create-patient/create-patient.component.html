@@ -21,7 +21,7 @@
           <p class="text-red-600 text-sm"
              *ngIf="
               formSubmitted &&
-              createPatientForm.get('patientName')?.touched &&
+           
               createPatientForm.get('patientName')?.hasError('required')
             ">
             Please enter patient name.
@@ -29,7 +29,7 @@
           <p class="text-red-600 text-sm"
              *ngIf="
               formSubmitted &&
-              createPatientForm.get('patientName')?.touched &&
+              
               createPatientForm.get('patientName')?.hasError('pattern')
             ">
             Patient name should contain only letters and numbers at the end
@@ -38,7 +38,7 @@
           <p class="text-red-600 text-sm"
              *ngIf="
               formSubmitted &&
-              createPatientForm.get('patientName')?.touched &&
+              
               createPatientForm.get('patientName')?.hasError('invalidName')
             ">
             Patient name should be at least 3 characters long
@@ -61,7 +61,7 @@
             <p class="text-red-600 text-sm"
                *ngIf="
                 formSubmitted &&
-                createPatientForm.get('age')?.touched &&
+               
                 createPatientForm.get('age')?.hasError('required')
               ">
               Please enter patient age.
@@ -69,7 +69,7 @@
             <p class="text-red-600 text-sm"
                *ngIf="
                 formSubmitted &&
-                createPatientForm.get('age')?.touched &&
+                
                 createPatientForm.get('age')?.hasError('pattern')
               ">
               Age should be a number.
@@ -81,14 +81,14 @@
             <label for="patientMobileNo" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
               Patient Mobile No
             </label>
-            <input autocomplete="off" maxlength="11" minlength="11" formControlName="patientMobileNo" id="patientMobileNo"
+            <input autocomplete="off" maxlength="11" formControlName="patientMobileNo" id="patientMobileNo"
                    placeholder="Patient Mobile No"
                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-            <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('required')">
+            <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientMobileNo')?.hasError('required')">
               You must enter a valid mobile number!
             </p>
-            <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('pattern')">
+            <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientMobileNo')?.hasError('pattern')">
               Mobile number should have exactly 11 digits and follow the Bangladeshi format!
             </p>
           </div>
@@ -102,7 +102,7 @@
                    placeholder="Patient Mobile No"
                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-            <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientEmail')?.touched && createPatientForm.get('patientEmail')?.hasError('required')">
+            <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientEmail')?.hasError('required')">
               You must enter a valid email!
             </p>
 
@@ -120,7 +120,7 @@
 
             </select>
             <p class="text-[14px] text-red-600"
-               *ngIf="formSubmitted && createPatientForm.get('gender')?.touched && createPatientForm.get('gender')?.value === '0'">
+               *ngIf="formSubmitted &&  createPatientForm.get('gender')?.value === '0'">
               Please select gender!
             </p>
           </div>
@@ -145,7 +145,7 @@
 
             </select>
             <p class="text-[14px] text-red-600"
-               *ngIf="formSubmitted && createPatientForm.get('bloodGroup')?.touched && createPatientForm.get('bloodGroup')?.value === '0'">
+               *ngIf="formSubmitted && createPatientForm.get('bloodGroup')?.value === '0'">
               Please select blood group!
             </p>
           </div>

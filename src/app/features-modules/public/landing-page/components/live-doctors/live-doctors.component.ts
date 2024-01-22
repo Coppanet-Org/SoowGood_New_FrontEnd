@@ -1,4 +1,6 @@
 import { DocumentsAttachmentService } from 'src/app/proxy/services';
+// import Swiper from "swiper";
+// import { Navigation, Autoplay } from "swiper/modules";
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import {
@@ -11,7 +13,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import KeenSlider from 'keen-slider';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -22,15 +23,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./live-doctors.component.scss'],
 })
 export class LiveDoctorsComponent
-  implements OnInit, AfterViewInit, OnChanges, AfterViewChecked
+  implements OnInit, AfterViewInit
 {
-  @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
-  slider: any = null;
-  currentSlide: number = 1;
-  dotHelper: Array<Number> = [];
+
   public picUrl = `${environment.apis.default.url}/`;
-  doResize: boolean = false;
-  showSlider = false;
+  // swiper!: Swiper;
   liveDoctorList: any;
   isLoading: boolean = false;
   noData : boolean =false
@@ -41,50 +38,48 @@ export class LiveDoctorsComponent
   ) {}
   ngOnInit(): void {
     this.getDoctorDetails();
-    if (this.slider) {
-      setTimeout(() => {
-        this.slider?.update(undefined, 0);
-        this.showSlider = true;
-        this.updateDotHelper();
-      }, 0);
-    }
   }
 
   ngAfterViewInit() {
-    if (this.sliderRef && this.sliderRef.nativeElement) {
-      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-        // initial: this.currentSlide,
-        slides: {
-          perView: 3,
-        },
-        slideChanged: (s) => {
-          this.currentSlide = s.track.details.rel;
-        },
-      });
-      // this.dotHelper = [
-      //   ...Array(this.slider.track.details.slides.length).keys(),
-      // ]
-    }
+    // this.swiper = new Swiper(".swiper", {
+    //   speed: 2000,
+    //   spaceBetween: 30,
+    //   slidesPerView: 3,
+    //   autoplay: {
+    //     delay: 2000,
+    //   },
+    //   modules: [Navigation, Autoplay],
+    //   navigation: {
+    //     nextEl: ".swiper-button-next",
+    //     prevEl: ".swiper-button-prev",
+    //   },
+    //   pagination: {
+    //     el: ".swiper-pagination",
+    //   },
+    //   breakpoints: {
+    //     // when window width is >= 320px
+    //     320: {
+    //       slidesPerView: 1,
+    //       spaceBetween: 20,
+    //     },
+    //     // when window width is >= 480px
+    //     640: {
+    //       slidesPerView: 2,
+    //       spaceBetween: 30,
+    //     },
+    //     // when window width is >= 640px
+    //     992: {
+    //       slidesPerView: 3,
+    //       spaceBetween: 40,
+    //     },
+    //   },
+    // });
   }
 
-  private updateDotHelper(): void {
-    if (this.slider) {
-      this.dotHelper = [
-        ...Array(this.slider.track.details.slides.length).keys(),
-      ];
-    }
-  }
+ 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.doResize = true;
-  }
-  ngOnDestroy() {
-    if (this.slider) this.slider.destroy();
-  }
-  ngAfterViewChecked(): void {
-    if (this.slider && this.doResize) this.slider.resize();
-    this.doResize = false;
-  }
+
+
   onClickSeeMore(value: string) {
     if (value) {
       this.router.navigate(['/search'], { queryParams: { type: value } });
@@ -134,9 +129,7 @@ export class LiveDoctorsComponent
       },
     });
   }
-  slickInit(e:any) {
-    console.log('slick initialized');
-  }
+
 
 
  

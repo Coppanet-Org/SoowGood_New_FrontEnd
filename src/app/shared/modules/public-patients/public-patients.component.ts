@@ -33,10 +33,44 @@ export class PublicPatientsComponent implements OnInit {
 
     this.userInfo = user;
     // const { aptId } = this.route.snapshot.params;
+    this.getPatientList(user)
+  }
+
+  goToPatientProfile(patient: any) {
+    if (this.userInfo.userType === 'doctor') {
+      this.Router.navigate([
+        '/doctor/patients/patient-details/',
+        patient.patientProfileId
+      ]);
+    }
+    else if (this.userInfo.userType === 'patient') {
+      this.Router.navigate([
+        '/patient/my-patient/patient-details/',
+        patient.id
+      ]);
+    } else if (this.userInfo.userType === 'agent') {
+      this.Router.navigate([
+        '/agent/patients/patient-details/',
+        patient.id
+      ]);
+    } return
+  }
+
+  addNewPatient() {
+    const dialogRef = this.dialog.open(CreatePatientComponent, {
+      width: '40vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.UserinfoStateService.getUserPatientInfo( this.userInfo.id,  this.userInfo.userType);
+    });
+  }
+
+  getPatientList(user:any){
     if (user.id) {
       this.patientLoader = true;
 
-
+      
       try {
         if (user.userType === 'doctor') {
           this.AppointmentService.getPatientListByDoctorId(user.id).subscribe(
@@ -68,43 +102,13 @@ export class PublicPatientsComponent implements OnInit {
         }
         else {
           console.log('Data Nai');
-          // this.patientLoader = false;
+          this.patientLoader = false;
         }
       } catch (error) {
         console.log(error);
-        // this.patientLoader = false;
+        this.patientLoader = false;
       }
     }
-  }
-
-  goToPatientProfile(patient: any) {
-    if (this.userInfo.userType === 'doctor') {
-      this.Router.navigate([
-        '/doctor/patients/patient-details/',
-        patient.patientProfileId
-      ]);
-    }
-    else if (this.userInfo.userType === 'patient') {
-      this.Router.navigate([
-        '/patient/my-patient/patient-details/',
-        patient.id
-      ]);
-    } else if (this.userInfo.userType === 'agent') {
-      this.Router.navigate([
-        '/agent/patients/patient-details/',
-        patient.id
-      ]);
-    } return
-  }
-
-  addNewPatient() {
-    const dialogRef = this.dialog.open(CreatePatientComponent, {
-      width: '40vw',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // this.getDegreeDataList(this.doctorId)
-    });
   }
 
   onSearchChange(e: any) {

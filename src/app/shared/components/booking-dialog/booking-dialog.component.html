@@ -78,120 +78,133 @@
       <!-- select doctor schedule filter -->
       <mat-step [stepControl]="secondFormGroup" [ariaSelected]="activeTab">
         <div *ngIf="!dataLoader; else loader">
-          <form [formGroup]="form">
-            <div class="flex justify-between">
-              <div class="flex gap-4">
-                <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
-                  <img class="w-full h-full object-cover" src="assets/doctor/dr.jpeg" alt="">
+            <form [formGroup]="form">
+                <div class="flex justify-between">
+                    <div class="flex gap-4">
+                        <div class="rounded-full w-[50px] h-[50px] overflow-hidden border-secondary border-2">
+                            <img class="w-full h-full object-cover" [src]="doctorData.doctorDetails?.picUrl || '/doctor/dr.jpeg'" alt="">
+                        </div>
+                        <div>
+                            <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
+                            <p>{{doctorData?.doctorDetails.areaOfExperties}}</p>
+
+                        </div>
+                    </div>
+                    <div class="py-0 px-3">
+                        <div class=" leading-0">
+                            <div class="stat-title">Total Fee</div>
+                            <div class="stat-value text-secondary text[24px]">{{totalFee ? totalFee : '00'}}.0
+                                tk.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                  <h2 class="heading text-[20px]">{{doctorData?.doctorDetails.fullName}}</h2>
-                  <p>General Medicine</p>
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="w-full px-3 sm:w-1/2">
+                        <div class="mb-5">
+                            <!-- <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                Appointment Date
+                            </label>
+                            <input autocomplete="off" required formControlName="appointmentDate" type="date"
+                                name="appointmentDate" id="appointmentDate"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            -->
+
+
+
+                            <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                Appointment Date
+                            </label>
+
+                            <input matInput formControlName="appointmentDate"
+                                (click)="picker.open()" 
+                                [matDatepickerFilter]="dateFilter"
+                                 [matDatepicker]="picker" 
+                                 [max]="maxDate"
+                                 [min]="minDate"
+                                placeholder="Appointment Date"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                [matDatepicker]="picker">
+                            <mat-datepicker #picker ></mat-datepicker>
+
+
+                            <p class="text-[14px] text-red-600"
+                                *ngIf=" formSubmitted && form.get('appointmentDate')?.hasError('required')">
+                                Please select appointment date.
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="w-full px-3 sm:w-1/2">
+                        <div class="mb-5">
+                            <label for="doctorScheduleType" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                Select place
+                            </label>
+                            <select formControlName="doctorScheduleType" name="doctorScheduleType" id="doctorScheduleType"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <option value="0" class="font-semibold text-gray-500">Select hospital/chamber
+                                </option>
+                                <option *ngFor="let item of hospitalList" [value]="item.id"
+                                    class="font-semibold text-gray-500">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                            <p class="text-[14px] text-red-600"
+                                *ngIf="formSubmitted  &&  form.get('doctorScheduleType')?.value === '0'">
+                                Please select a hospital/chamber
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="w-full px-3 sm:w-1/2">
+                        <div class="mb-5">
+                            <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                                Select appointment type
+                            </label>
+                            <select formControlName="appointmentType" name="appointmentType"
+                                id="appointmentType"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <option value="0" class="font-semibold text-gray-500">Select appointment type
+                                </option>
+                                <option *ngFor="let item of appointmentType" [value]="item.id"
+                                    class="font-semibold text-gray-500">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                            <p class="text-[14px] text-red-600"
+                                *ngIf="formSubmitted && form.get('appointmentType')?.value === '0'">
+                                Please select appointment type
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-              </div>
-              <div class="py-0 px-3">
-                <div class=" leading-0">
-                  <div class="stat-title">Total Fee</div>
-                  <div class="stat-value text-secondary text[24px]">
-                    {{totalFee ? totalFee : '00'}}.0 tk.
-                  </div>
+            </form>
+
+            <div class="py-3" *ngIf="filterData?.length > 0">
+                <label class="font-Roboto text-[16px] font-semibold text-primary/90"> Available Slots</label>
+                <div class="mt-2">
+                    <app-slots></app-slots>
                 </div>
-              </div>
             </div>
-            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-            <div class="-mx-3 flex flex-wrap">
-              <!-- <ng-container class="w-full" *ngFor="let config of inputConfigs; let i = index">
-                  <app-input [label]="config.label" [inputId]="config.inputId"
-                      [isSelectInput]="config.isSelect" [readonly]="config.readonly ? config.readonly : false"
-                      [options]="config.options" [formControlName]="config.formControlName" [formGroup]="form"
-                      [type]="config.type" class="sm:w-1/2 h-fit">
-                  </app-input>
-              </ng-container> -->
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                  <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Appointment Date
-                  </label>
-                  <input autocomplete="off" required formControlName="appointmentDate" type="date"
-                         name="appointmentDate" id="appointmentDate"
-                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                  <p class="text-[14px] text-red-600"
-                     *ngIf=" formSubmitted && form.get('appointmentDate')?.hasError('required')">
-                    Please select appointment date.
-                  </p>
 
-                </div>
-              </div>
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                  <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Select place
-                  </label>
-                  <select formControlName="doctorScheduleType" name="select" id="select"
-                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                    <option value="0" class="font-semibold text-gray-500">
-                      Select hospital/chamber
-                    </option>
-                    <option *ngFor="let item of hospitalList" [value]="item.id"
-                            class="font-semibold text-gray-500">
-                      {{item.name}}
-                    </option>
-                  </select>
-                  <p class="text-[14px] text-red-600"
-                     *ngIf="formSubmitted  &&  form.get('doctorScheduleType')?.value === '0'">
-                    Please select a hospital/chamber
-                  </p>
-                </div>
-              </div>
-
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                  <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                    Select appointment type
-                  </label>
-                  <select formControlName="appointmentType" name="appointmentType" id="appointmentType"
-                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                    <option value="0" class="font-semibold text-gray-500">
-                      Select appointment type
-                    </option>
-                    <option *ngFor="let item of appointmentType" [value]="item.id"
-                            class="font-semibold text-gray-500">
-                      {{item.name}}
-                    </option>
-                  </select>
-                  <p class="text-[14px] text-red-600"
-                     *ngIf="formSubmitted && form.get('appointmentType')?.value === '0'">
-                    Please select appointment type
-                  </p>
-                </div>
-              </div>
-
+            <div class="py-3" *ngIf="filterData?.length <= 0 && showEmptySlot !== ''">
+                <p>{{showEmptySlot}}</p>
             </div>
-          </form>
 
-          <div class="py-3" *ngIf="filterData?.length > 0">
-            <label class="font-Roboto text-[16px] font-semibold text-primary/90"> Available Slots</label>
-            <div class="mt-2">
-              <app-slots></app-slots>
+            <div class="flex gap-5 mt-10 w-full">
+              <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
+              <button class="btn-secondary py-2" (click)="onStepChange(3)">{{isLoading ? 'Loading...': 'Next'}}</button>
             </div>
-          </div>
-
-          <div class="py-3" *ngIf="filterData?.length <= 0 && showEmptySlot !== ''">
-            <p>{{showEmptySlot}}</p>
-          </div>
-
-          <div class="flex gap-5 mt-10 w-full">
-            <button class="btn-secondary py-2 bg-primary/90" (click)="onStepChange(0)">Back</button>
-            <button class="btn-secondary py-2" (click)="onStepChange(3)">{{isLoading ? 'Loading...': 'Next'}}</button>
-          </div>
         </div>
 
 
         <ng-template #loader>
-          Data is loading...
+            Data is loading...
         </ng-template>
 
-      </mat-step>
+    </mat-step>
 
       <!-- create new patient or exist patient -->
       <mat-step [stepControl]="thirdFormGroup">

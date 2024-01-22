@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 import { AvaterServiceService } from '../../services/avater-service.service';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-dashboard-profilecard',
@@ -18,14 +19,17 @@ export class DashboardProfilecardComponent implements OnInit {
   profilePic: string = '';
   profileTile: any;
   profileName: any;
+  isProfileLoad: boolean= true;
+  isProfilePicLoad:boolean = true
   constructor(
     private UserinfoStateService: UserinfoStateService,
     private AuthService: AuthService,
     private DoctorProfileService: DoctorProfileService,
     private profilePicService: AvaterServiceService,
-    private TosterService: TosterService
+    private TosterService: TosterService,
   ) {}
   ngOnInit() {
+
     this.authInfo = this.AuthService.authInfo();
 
     if (this.authInfo.userType == 'doctor') {
@@ -37,12 +41,13 @@ export class DashboardProfilecardComponent implements OnInit {
     else {
       this.profileTile = 'Agent';
     }   
-    this.profileName = this.authInfo.fullName;
+     this.isProfileLoad = true
       this.UserinfoStateService.getData().subscribe(
           (data) => {
             this.userInfo = data;
             this.status = data.isOnline;
               this.getProfilePic();
+              this.isProfileLoad = false
           });
     
   }
@@ -78,13 +83,13 @@ export class DashboardProfilecardComponent implements OnInit {
       console.log("usertype not found");   
       return
     }
+
     this.profilePicService
       .getProfilePic(type, this.authInfo.id, 'ProfilePicture')
       .then(({ profilePic, picUrl }) => {
         this.profilePic = profilePic;
         this.url = picUrl + this.profilePic;
         // this.isLoading = false;
-        console.log(this.url);
       })
       .catch((err) => {
         this.TosterService.customToast('Error getting profile picture', 'error');

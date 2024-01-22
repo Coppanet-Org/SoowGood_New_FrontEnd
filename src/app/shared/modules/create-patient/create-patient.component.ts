@@ -49,7 +49,7 @@ export class CreatePatientComponent implements OnInit {
       age: ['', Validators.required],
       gender: ['0', Validators.required],
       bloodGroup: ['0', Validators.required],
-      patientMobileNo: ['', Validators.required],
+      patientMobileNo: ['',Validators.required],
       patientEmail: [
         '',
       ],
@@ -62,9 +62,8 @@ export class CreatePatientComponent implements OnInit {
   createNewPatient(): void {
     this.formSubmitted = true;
 
-    console.log(this.createPatientForm.value);
 
-    if (!this.createPatientForm.valid) {
+    if (!this.createPatientForm.valid &&( this.createPatientForm.get('bloodGroup')?.value === '0' || this.createPatientForm.get('gender')?.value === '0' )) {
       this.TosterService.customToast(
         'Please field all the required fields',
         'warning'
@@ -84,13 +83,13 @@ export class CreatePatientComponent implements OnInit {
               next: (res) => {
                 console.log(res);
                 //TODO
-                this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
+                // this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
                 this.TosterService.customToast('Your patient is created!', 'success');
                 this.btnLoader = false;
-                this.UserinfoStateService.getUserPatientInfo(
-                  res.id,
-                  'patient'
-                );
+                // this.UserinfoStateService.getUserPatientInfo(
+                //   res.id,
+                //   'patient'
+                // );
               }, error: (err) => {
                 this.TosterService.customToast('Something went wrong!', 'error');
                 this.btnLoader = false;
@@ -102,6 +101,7 @@ export class CreatePatientComponent implements OnInit {
       );
     } catch (error) {
       this.TosterService.customToast('Something wrong! Please retry', 'error');
+      this.btnLoader = false;
     }
   }
 
