@@ -99,8 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           [
             Validators.required,
             Validators.pattern(/^(?:88)?[0-9]{11}$/),
-            Validators.minLength(11),
-            Validators.maxLength(11),
+
           ],
         ],
         newPassword: [
@@ -319,14 +318,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.resetPasswordForm.get('username')?.value
       ).subscribe({
         next: (res) => {
+          console.log(res);
           if (res) {
             this.resetLoading = false;
             this.changePasswordShow = res;
             this.resetFormSubmitted = false;
           } else {
             this.ToasterService.customToast(
-              'Something went wrong! Please try again',
-              'error'
+              'Mobile number not found!',
+              'warning'
             );
             this.changePasswordShow = res;
             this.resetLoading = false;

@@ -86,6 +86,7 @@
                 >+88 &nbsp;</span
               >
               <input
+                autocomplete="off"
                 matInput
                 maxlength="11"
                 class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
@@ -195,6 +196,14 @@
           [config]="{ length: 4, allowNumbersOnly: true }"
         ></ng-otp-input>
       </div>
+      <div
+      *ngIf="this.errorMessage"
+      class="p-4 mt-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+      role="alert"
+    >
+      <i class="fa-solid fa-circle-exclamation mr-2"></i>
+      {{ this.errorMessage }}
+    </div>
       <div class="flex gap-3 mt-6">
         <button  [disabled]="isLoading" class="btn-secondary w-1/2" (click)="back()">Back</button>
         <button [disabled]="isLoading"  class="form_btn w-1/2" (click)="verify()">Continue <i class="fa-solid fa-arrow-right ml-2"></i></button>

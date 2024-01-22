@@ -533,7 +533,7 @@ export class SignupComponent implements OnInit {
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
       .subscribe({
         next:(res)=>{
-          if (res) {
+          if (res) {         
             this.otpModal = res;
             this.isLoading = false;
             this.formSubmitted = false
@@ -557,6 +557,7 @@ export class SignupComponent implements OnInit {
   }
 
   verify() {
+    this.errorMessage=""
     let otp = this.otp;
     if (otp) {
       this.subs.sink = this.otpService
@@ -565,7 +566,7 @@ export class SignupComponent implements OnInit {
           if (res) {
             this.userInfoModal = res;
           } else {
-            this.errMsg = 'Invalid Otp!';
+            this.errorMessage = 'Invalid Otp!';
           }
         });
     }
