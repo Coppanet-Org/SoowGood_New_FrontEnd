@@ -7,4 +7,17 @@
         </div>
     </div>
 </div> -->
-TODO ADD SLIDER
+
+<div class="swiper w-full h-full">
+    <div class="swiper-wrapper !w-full h-full">
+      <div *ngFor="let docSrc of docData; let i = index" class="swiper-slide !w-full h-full">
+        <img
+          class=" w-full h-full"
+          src={{docSrc}}
+          alt="banner"
+        />
+      </div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>

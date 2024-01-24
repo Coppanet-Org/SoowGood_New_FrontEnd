@@ -48,10 +48,13 @@ export class UploadAppointmentDocDialogComponent {
           const arrayBuffer = e.target?.result as ArrayBuffer;
           const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
           this.selectedFileContent = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+          console.log(this.selectedFileContent);
+          
         } else {
           // Handle other file types as needed
           // For example, you can display images directly
           this.selectedFileContent = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(file));
+          console.log(this.selectedFileContent);
         }
       };
       reader.readAsArrayBuffer(file);
