@@ -877,15 +877,6 @@
                 >
                   Please enter your full name.
                 </mat-error>
-                <mat-error
-                  *ngIf="
-                    formSubmitted &&
-                    userInfoForm.get('fullName')?.hasError('pattern')
-                  "
-                >
-                  Full name should contain only letters and numbers at the end.
-                </mat-error>
-                <mat-error
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('fullName')?.hasError('invalidName')
@@ -893,18 +884,76 @@
                 >
                   Full name should be at least 3 characters long and follow the
                   specified pattern.
-                </mat-error>
+             
               </div>
-              <mat-hint
-                *ngIf="userInfoForm.get('fullName')?.invalid"
-                class="text-xs text-red-500 font-normal"
-                align="end"
-                >Required*
-              </mat-hint>
+
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-3">
+              <label
+                for="gender"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
+                Gender
+              </label>
+              <input
+                autocomplete="off"
+                formControlName="gender"
+                type="text"
+                name="gender"
+                id="gender"
+                placeholder="Gender"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              />
+              </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+              <div class="mb-3">
+                <label
+                  for="age"
+                  class="mb-2 block font-medium text-[14px] text-[#07074D]"
+                >
+                  Age
+                </label>
+                <input
+                  autocomplete="off"
+                  formControlName="age"
+                  type="text"
+                  name="age"
+                  id="age"
+                  placeholder="Age"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
+                </div>
+              </div>
+            <div class="w-1/2 ">
+              <div class="mb-5">
+                <label for="bloodGroup" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+                  Select blood group
+                </label>
+                <select formControlName="bloodGroup" name="bloodGroup" id="bloodGroup"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                        <option value="0" class="font-semibold text-gray-500">Select blood group </option>
+                        <option value="A+" class="font-semibold text-gray-500">A+ </option>
+                        <option value="A-" class="font-semibold text-gray-500">A- </option>
+                        <option value="B+" class="font-semibold text-gray-500">B+ </option>
+                        <option value="B-" class="font-semibold text-gray-500">B- </option>
+                        <option value="O+" class="font-semibold text-gray-500">O+ </option>
+                        <option value="O-" class="font-semibold text-gray-500">O- </option>
+                        <option value="AB+" class="font-semibold text-gray-500">AB+ </option>
+                        <option value="AB-" class="font-semibold text-gray-500">AB- </option>
+                        <option value="others" class="font-semibold text-gray-500">others </option>
+    
+                </select>
+                <p class="text-[14px] text-red-600"
+                   *ngIf="formSubmitted && userInfoForm.get('bloodGroup')?.value === '0'">
+                  Please select blood group!
+                </p>
+              </div>
+            </div>
+          <!-- <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <label
                 for="name"
@@ -948,7 +997,7 @@
                 </mat-hint>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="-mx-3 flex flex-wrap">

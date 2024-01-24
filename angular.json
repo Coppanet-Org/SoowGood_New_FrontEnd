@@ -25,6 +25,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "node_modules/swiper/swiper-bundle.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/@ngneat/hot-toast/src/styles/styles.css",
               "src/styles.scss"

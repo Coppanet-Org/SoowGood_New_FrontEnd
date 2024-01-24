@@ -65,10 +65,25 @@
           </div>
 
           <div class="w-full px-3 sm:w-1/2 mb-5">
-            <label for="Contact No">
-              <p class="font-medium text-slate-700 pb-2">Contact No</p>
-              <input type="tel" formControlName="mobileNo" id="mobileNo" class="form_input"
-                     placeholder="00-00-00-00-00" required>
+            <label for="mobile">
+              <p class="font-medium text-slate-700 pb-2">Mobile Number</p>
+              <div
+                class="form_input flex h-[40px]">
+                <span matPrefix class="h-fit font-Roboto font-semibold"
+                  >+88 &nbsp;</span
+                >
+                <input
+                  matInput
+                  maxlength="11"
+                  class="w-full border-none outline-none h-fit"
+                  type="tel"
+                  formControlName="mobileNo"
+                  id="mobileNo"
+                  placeholder="018-000-00000"
+                  required
+                  inputmode="numeric"
+                />
+              </div>
             </label>
           </div>
           <div class="w-full px-3 sm:w-1/2 mb-5">

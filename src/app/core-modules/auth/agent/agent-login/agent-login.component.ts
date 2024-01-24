@@ -82,6 +82,7 @@ export class AgentLoginComponent implements OnInit {
       this.appAuthService.isLoadingSubject.next(true);
       this.oAuthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
         .then((userInfo: UserProfile) => {
+          console.log(userInfo);
           if (userInfo) {
             //const userModel = this.appAuthService.createUserModel(userInfo);
             //var un = username.split('@')[0];
