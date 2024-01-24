@@ -47,7 +47,7 @@ export class LiveDoctorsComponent
       spaceBetween: 30,
       slidesPerView: 3,
       autoplay: {
-        delay: 2000,
+        delay: 5000,
       },
        modules: [Navigation,Pagination,Autoplay],
       navigation: {

@@ -73,11 +73,11 @@ export class BannerComponent implements OnInit {
   }
   ngAfterViewInit() {
     this.swiper = new Swiper(".swiper", {
-      speed: 1000,
+      speed: 1500,
       spaceBetween: 0,
       slidesPerView: 1,
       autoplay: {
-        delay: 2000,
+        delay: 5000,
       },
        modules: [Navigation,Pagination,Autoplay],
       navigation: {

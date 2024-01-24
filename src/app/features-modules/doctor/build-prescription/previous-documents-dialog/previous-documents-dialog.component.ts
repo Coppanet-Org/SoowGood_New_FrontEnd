@@ -7,18 +7,16 @@ import Swiper, { Navigation } from 'swiper';
   templateUrl: './previous-documents-dialog.component.html',
   styleUrls: ['./previous-documents-dialog.component.scss']
 })
-export class PreviousDocumentsDialogComponent implements OnInit, AfterViewInit {
+export class PreviousDocumentsDialogComponent implements  AfterViewInit {
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
   slider: any = null
   currentSlide: number = 1
   showSlider = false
   Swiper!:Swiper
+  selectedFileName:any
   constructor( @Inject(MAT_DIALOG_DATA)
   public docData:any){}
 
-ngOnInit(): void {
-  
-}
 
   ngAfterViewInit() {
     this.Swiper = new Swiper(".swiper", {
@@ -53,5 +51,7 @@ ngOnInit(): void {
       },
     });
   }
-  
+  isPdf(fileName: string): boolean {
+    return fileName.toLowerCase().endsWith('.pdf');
+  }
 }

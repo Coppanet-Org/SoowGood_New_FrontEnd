@@ -74,7 +74,10 @@ const routerConfig: ExtraOptions = {
   // add this interceptors on static page
 
    providers: [
-     { provide: LocationStrategy, useClass: HashLocationStrategy }
+     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    
+  { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+
    ],
   bootstrap: [AppComponent],
   exports: [MatDialogModule, ReactiveFormsModule, FormsModule
