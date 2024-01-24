@@ -1,6 +1,6 @@
 import { DocumentsAttachmentService } from 'src/app/proxy/services';
-import Swiper from "swiper";
-import { Navigation } from "swiper/modules";
+import Swiper,{Autoplay, Navigation,Pagination} from "swiper";
+// import { Navigation } from "swiper/modules";
 
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import {
@@ -49,7 +49,7 @@ export class LiveDoctorsComponent
       autoplay: {
         delay: 2000,
       },
-       modules: [Navigation],
+       modules: [Navigation,Pagination,Autoplay],
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
@@ -70,7 +70,7 @@ export class LiveDoctorsComponent
         },
         // when window width is >= 640px
         992: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 40,
         },
       },

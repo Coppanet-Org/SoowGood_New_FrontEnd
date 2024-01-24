@@ -257,3 +257,10 @@
 .arrow--disabled {
   fill: rgba(255, 255, 255, 0.5);
 }
+.swiper-button-prev::after,
+.swiper-button-next::after{
+display: none;
+}
+.swiper-pagination {
+  bottom: -25px!important;
+}

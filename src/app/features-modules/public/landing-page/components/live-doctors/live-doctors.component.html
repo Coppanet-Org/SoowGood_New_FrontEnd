@@ -10,12 +10,16 @@
             </span>
           </div>
 
-          <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">Live Doctors  <button (click)="getDoctorDetails()" title="Reload doctor list"><i class="fa-solid text-[20px] text-secondary font-semibold fa-rotate-right"></i></button></h1>
+          <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">Live Doctors 
+             <!-- <button (click)="getDoctorDetails()" title="Reload doctor list">
+              <i class="fa-solid text-[20px] text-secondary font-semibold fa-rotate-right"></i>
+            </button> -->
+          </h1>
         </div>
 
-        <div class="flex gap-5">
-          <button class="btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
-          <button class="btn-secondary"><i class="fa-solid fa-arrow-right"></i></button>
+        <div class="flex gap-5 ">
+          <button class="btn-secondary mr-4 swiper-button-prev"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-secondary swiper-button-next"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </div>
 
@@ -23,18 +27,19 @@
            class="grid w-full grid-cols-1 justify-center items-center h-[300px]">
         <p class="text-center leading-9">Loading...</p>
       </div>
-      <div id="blogs-carousel" class="relative w-full">
+      <div id="blogs-carousel py-6" class="relative w-full">
         <div class="swiper">
-          <div class="swiper-wrapper">
+          <div class="swiper-wrapper py-6">
             <div class="swiper-slide" *ngFor="let details of liveDoctorList" >
               <app-live-doctor-card  [doctorDetails]="details"></app-live-doctor-card>
             </div>
           </div>
-          <div class="swiper-pagination"></div>
       
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+      
+          <!-- <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div> -->
         </div>
+        <div class="swiper-pagination -bottom-7"></div>
       </div>
       <button *ngIf="liveDoctorList?.length > 0" class="rounded-3xl mt-10 px-6 py-2 bg-secondary text-white mx-auto" (click)="onClickSeeMore('livedoctors')">see more</button>
     </div>

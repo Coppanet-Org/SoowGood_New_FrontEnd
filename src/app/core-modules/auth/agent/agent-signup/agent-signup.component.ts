@@ -94,6 +94,8 @@ export class AgentSignupComponent implements OnInit {
       this.signupForm.value?.password,
       'Agent'
     ).subscribe((res: UserSignUpResultDto) => {
+
+      
       if (res.success) {
         this.AgentProfileService.create({
           ...this.signupForm.value,
