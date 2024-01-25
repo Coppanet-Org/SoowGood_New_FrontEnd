@@ -14,12 +14,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FilterModule } from '../filter/filter.module';
+import { UploadAppointmentDocDialogComponent } from '../../components/upload-appointment-doc-dialog/upload-appointment-doc-dialog.component';
 
 @NgModule({
   declarations: [
     AllAppointmentsComponent,
     AppointmentCardComponent,
     AppointmentDialogComponent,
+    UploadAppointmentDocDialogComponent
   ],
   imports: [
     CommonModule,

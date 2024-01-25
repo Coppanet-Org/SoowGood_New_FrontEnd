@@ -7,4 +7,16 @@
         </div>
     </div>
 </div> -->
-TODO ADD SLIDER
+
+<div class="swiper w-full h-full">
+    <div class="swiper-wrapper !w-full h-full">
+      <div *ngFor="let docSrc of docData; let i = index" class="swiper-slide !w-full h-full">
+        <ng-container *ngIf="docSrc">
+            <iframe *ngIf="isPdf(docSrc)" [src]="docSrc" width="100%" height="100%"></iframe>
+            <img class="w-full" *ngIf="!isPdf(docSrc)" [src]="docSrc" alt="selected file" >
+          </ng-container>
+      </div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
