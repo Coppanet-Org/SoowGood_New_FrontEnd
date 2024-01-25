@@ -6,6 +6,7 @@
     <h5 class=" text-base font-semibold text-gray-900 md:text-xl dark:text-white">
         {{bookingInfo?.doctorName}}
     </h5>
+    
     <p class="text-sm font-normal text-gray-500 dark:text-gray-400">General Medicine</p>
     <div>
         <div class="relative overflow-x-auto">
@@ -40,7 +41,7 @@
                     Appointment Type :
                   </th>
                   <td class="py-2">
-                    {{getTitle(bookingInfo?.appointmentType,"appointmentType")?.name}}
+                   {{bookingInfo?.appointmentTypeName}}
                   </td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -49,9 +50,14 @@
                   </th>
                   <td class="py-2">
                     <!--{{getChamber(bookingInfo?.doctorChamberId)}}-->
-                    {{bookingInfo?.doctorChamberId}}
+                    {{bookingInfo?.doctorChamberName}}
                   </td>
                 </tr>
+
+     
+
+
+                
                 <tr class="bg-white dark:bg-gray-800">
                   <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     Doctor Fee :

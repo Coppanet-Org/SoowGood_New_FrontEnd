@@ -65,7 +65,7 @@
                 <div class="flex items-center gap-3">
                   <i class="fa-solid fa-people-robbery text-[44px]"></i>
                   <div>
-                    <div class="w-full text-lg font-semibold"> Book for Other</div>
+                    <div class="w-full text-lg font-semibold">{{userRole ==='agent'? 'Book patients' : 'Book Someone'}} </div>
                     <div class="w-full">If you are not patient!</div>
                   </div>
                 </div>
@@ -129,14 +129,8 @@
                            placeholder="Full Name"
                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('required')">
+                    <p class="text-red-600 text-sm" *ngIf="formSubmitted  && createPatientForm.get('patientName')?.hasError('required')">
                       Please enter patient name.
-                    </p>
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('pattern')">
-                      Patient name should contain only letters and numbers at the end (optional).
-                    </p>
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientName')?.touched && createPatientForm.get('patientName')?.hasError('invalidName')">
-                      Patient name should be at least 3 characters long
                     </p>
                   </div>
                 </div>
@@ -150,10 +144,10 @@
                            placeholder="Age"
                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('required')">
+                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.hasError('required')">
                       Please enter patient age.
                     </p>
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.touched && createPatientForm.get('age')?.hasError('pattern')">
+                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('age')?.hasError('pattern')">
                       Age should be a number.
                     </p>
                   </div>
@@ -167,10 +161,10 @@
                            placeholder="Patient Mobile No"
                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('required')">
+                    <p class="text-red-600 text-sm" *ngIf="formSubmitted  && createPatientForm.get('patientMobileNo')?.hasError('required')">
                       You must enter a valid mobile number!
                     </p>
-                    <p class="text-red-600 text-sm" *ngIf="formSubmitted && createPatientForm.get('patientMobileNo')?.touched && createPatientForm.get('patientMobileNo')?.hasError('pattern')">
+                    <p class="text-red-600 text-sm" *ngIf="formSubmitted &&  createPatientForm.get('patientMobileNo')?.hasError('pattern')">
                       Mobile number should have exactly 11 digits and follow the Bangladeshi format!
                     </p>
                   </div>
@@ -182,12 +176,12 @@
                     </label>
                     <select formControlName="gender" name="gender" id="gender"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                      <option value="0" class="font-semibold text-gray-500">Select gender </option>
+                      <option value=0 class="font-semibold text-gray-500">Select gender </option>
 
                       <option *ngFor="let item of genderList" [value]="item.id">{{ item.name }}</option>
                     </select>
                     <p class="text-[14px] text-red-600"
-                       *ngIf="formSubmitted && createPatientForm.get('gender')?.touched && createPatientForm.get('gender')?.value === '0'">
+                       *ngIf="formSubmitted && (createPatientForm.get('gender')?.value == null || createPatientForm.get('bloodGroup')?.value == '0')">
                       Please select gender!
                     </p>
                   </div>
@@ -212,7 +206,7 @@
 
                     </select>
                     <p class="text-[14px] text-red-600"
-                       *ngIf="formSubmitted && createPatientForm.get('bloodGroup')?.touched && createPatientForm.get('bloodGroup')?.value === '0'">
+                       *ngIf="formSubmitted && (createPatientForm.get('bloodGroup')?.value == null || createPatientForm.get('bloodGroup')?.value == '0')">
                       Please select blood group!
                     </p>
                   </div>
@@ -227,7 +221,7 @@
 
         <div class="flex gap-5">
           <button class="btn-secondary py-2 mt-6" (click)="onStepChange(0)">Back</button>
-          <button class="btn-secondary bg-primary py-2 mt-6" (click)="createNewPatient()">
+          <button class="btn-secondary group bg-primary py-2 mt-6" (click)="createNewPatient()">
             <div *ngIf="btnLoader == false" class="flex items-center gap-1 text-white group-hover:text-primary">
               <span>Continue</span>
 

@@ -335,25 +335,11 @@ export const agentInputData =[
         type: 'text',
       },
       {
-        label: 'Mobile',
-        inputId: 'mobileNo',
-        formControlName: 'mobileNo',
-        isSelect: false,
-        type: 'tel',
-      },
-      {
-        label: 'Agent Organization',
-        inputId: 'organizationName',
-        formControlName: 'organizationName',
-        isSelect: false,
-        type: 'text',
-      },
-      {
         label: 'Email',
         inputId: 'email',
         formControlName: 'email',
         isSelect: false,
-        readonly: true,
+        readonly: false,
         type: 'email',
       },
       {

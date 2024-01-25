@@ -97,13 +97,13 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     this.bookingForm = this.fb.group({
       bookMyself: [''],
       bookOther: [''],
-      patientName: [''],
-      age: [''],
-      mobile: [''],
+      patientName: ['',Validators.required],
+      age: ['',Validators.required],
+      mobile: ['',Validators.required],
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
-      patientName: ['', [Validators.required, Validators.minLength(3), customNameValidator]],
+      patientName: ['', [Validators.required]],
       patientProfileId: [''],
       age: ['', [
         Validators.required,
@@ -113,9 +113,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
       bloodGroup: ['0', Validators.required],
       patientMobileNo: ['', [
         Validators.required,
-        Validators.pattern(/^(?:88)?[0-9]{11}$/),
-        Validators.minLength(11),
-        Validators.maxLength(11),
+        Validators.pattern(/^(?:88)?[0-9]{11}$/)
       ],],
       patientEmail: [
         '' || this.profileInfo?.email || 'admin@gmail.com',
@@ -209,9 +207,10 @@ export class LiveConsultBookingDialogComponent implements OnInit {
           : this.createNewPatientInfo?.patientEmail
             ? this.createNewPatientInfo?.patientEmail
             : this.profileInfo.email || 'admin@gmail.com',
-        // appointmentDate:"2023-12-12T14:35:35.546Z",
-        // appointmentTime: "10",
+        appointmentDate: new Date(),
+        appointmentTime: new Date().getTime(),
         doctorFee: providerfee,
+        doctorChamberName: "Soowgood Online",
         agentFee: calculatedAgentFee,
         platformFee: calculatedPlFee,
         totalAppointmentFee: providerfee + calculatedAgentFee + calculatedPlFee,
@@ -221,7 +220,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
         appointmentCreatorRole: this.userRole == 'patient' ? 'patient' : 'agent'
       };
       this.bookingInfo = infoForBooking
-console.log(infoForBooking);
+
 
       if (this.profileInfo && bookFor === 'self') {
         this.formSubmitted = true

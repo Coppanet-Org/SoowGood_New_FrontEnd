@@ -45,7 +45,7 @@ export class ProfileSettingsComponent implements OnInit {
       fullName: [''],
       agentCode: [''],
       mobileNo: [''],
-      organizationName: [''],
+    
       email: [''],
       address: [''],
       contact: [''],

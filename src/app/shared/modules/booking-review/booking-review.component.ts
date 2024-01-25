@@ -53,11 +53,12 @@ export class BookingReviewComponent {
 
   createAppointmentAndPayment() {
     this.loading = true;
-    console.log(this.bookingInfo);
-    
+
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
         next: (res) => {
+     
+          
           this.payWithSslCommerz(res.appointmentCode), 
           localStorage.setItem("patientAppointmentCode",JSON.stringify(res.appointmentCode))
         },

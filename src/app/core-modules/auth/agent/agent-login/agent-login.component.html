@@ -36,7 +36,7 @@
               <input
                 matInput
                 maxlength="11"
-                class="w-full border-none outline-none h-fit"
+                class="w-full border-none outline-none font-Roboto font-semibold h-fit"
                 type="tel"
                 formControlName="mobileNo"
                 id="mobileNo"
@@ -49,14 +49,29 @@
 
           <label for="Password">
             <p class="font-medium text-slate-700 pb-2">Password</p>
-            <input
-              formControlName="password"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password123@*"
-              class="form_input"
-            />
+            <div   class="form_input flex justify-between">
+
+              <input
+                formControlName="password"
+                [type]="passwordFieldType"
+                name="password"
+                id="password"
+                placeholder="Password123@*"
+                class="w-full outline-none"
+              />
+              <span
+              (click)="passwordVisibility('password')"
+              class="cursor-pointer"
+            >
+              <i
+                [class]="
+                  passwordFieldType === 'password'
+                    ? 'fa fa-eye-slash'
+                    : 'fa fa-eye'
+                "
+              ></i>
+            </span>
+            </div>
           </label>
 
           <button
