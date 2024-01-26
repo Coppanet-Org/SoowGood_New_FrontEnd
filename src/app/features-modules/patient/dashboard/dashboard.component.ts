@@ -3,11 +3,12 @@ import { DoctorStateService } from 'src/app/shared/services/states/doctors-state
 import { AppointmentDto, DoctorProfileDto } from 'src/app/proxy/dto-models';
 import { DoctorProfileService } from './../../../proxy/services/doctor-profile.service';
 import { Component, OnInit } from '@angular/core';
-import { DoctorScheduleService } from 'src/app/proxy/services';
+import { DoctorScheduleService, FinancialSetupService } from 'src/app/proxy/services';
 import { LiveConsultBookingDialogComponent } from '../../public/landing-page/components/live-consult-booking-dialog/live-consult-booking-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -45,7 +46,8 @@ export class DashboardComponent implements OnInit {
     public dialog: MatDialog,
     private NormalAuth : AuthService,
     private TosterService : TosterService,
-    private DashboardService: DashboardService
+    private DashboardService: DashboardService,
+    private FinancialSetupService : FinancialSetupService
     ) {
       this.isAuthUser =  this.NormalAuth.authInfo()?.id;
       this.userType =  this.NormalAuth.authInfo()?.userType;
@@ -68,31 +70,31 @@ export class DashboardComponent implements OnInit {
 
 
  openDialog(data:any): void {
-   this.isLoading = true
-    if (data.id) {
-      this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
-       data.id
-      ).subscribe((res) => {
-      this.isLoading = false
-      if (res?.length > 0 && data) {
+  this.isLoading = true;
+  if (data.id) {
+    const detailsSchedule$ = this.DoctorScheduleService.getDetailsScheduleListByDoctorId(data.id);
+    const financialSetup$ = this.FinancialSetupService.getList();
+    forkJoin([detailsSchedule$, financialSetup$]).subscribe(([detailsScheduleRes, financialSetupRes]) => {
+      if (detailsScheduleRes?.length > 0 && data) {
         const dialogRef = this.dialog.open(LiveConsultBookingDialogComponent, {
-          maxWidth:600,
-          minWidth:450,
+          maxWidth: 600,
+          minWidth: 450,
           data: {
-            doctorDetails:data,
-            doctorScheduleInfo: res,
-            isAuthUser : this.isAuthUser ? true : false,
-            userAccess: this.userType == 'doctor' ? false : true
+            doctorDetails: data,
+            doctorScheduleInfo: detailsScheduleRes,
+            isAuthUser: this.isAuthUser ? true : false,
+            userAccess: this.userType == 'doctor' ? false : true,
+            serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
           },
         });
+
         dialogRef.afterClosed().subscribe((result) => {});
       } else {
-        this.TosterService.customToast(`No Details/Schedule found`,"warning")
+        this.TosterService.customToast(`No Details/Schedule found`, "warning");
       }
-      });
-    }
+    })
   }
-
+ }
   getDashboardStatisticData(id:number){
     this.DashboardService.getDashboadDataForPatient(id,'patient').subscribe({
       next:(res)=>{

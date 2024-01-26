@@ -27,6 +27,8 @@ export class AgentLoginComponent implements OnInit {
     password: '',
   };
   subs = new SubSink();
+  passwordFieldType: string ="password";
+  confirmPasswordFieldType: string="password";
   constructor(
     private ToasterService: TosterService,
     private UserAuthService: UserAccountsService,
@@ -149,6 +151,15 @@ export class AgentLoginComponent implements OnInit {
   }
   handleProfileError(error: any): any {
     this.isLoading = false;
+  }
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+    }
   }
   ngOnDestroy() {
     this.subs.unsubscribe();

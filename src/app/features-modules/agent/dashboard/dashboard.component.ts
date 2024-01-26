@@ -1,3 +1,4 @@
+import { FinancialSetupService } from './../../../proxy/services/financial-setup.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppointmentDto, DoctorProfileDto } from 'src/app/proxy/dto-models';
@@ -6,6 +7,8 @@ import { AgentBookingDialogComponent } from 'src/app/shared/modules/agent-bookin
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
+import { LiveConsultBookingDialogComponent } from '../../public/landing-page/components/live-consult-booking-dialog/live-consult-booking-dialog.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +40,7 @@ export class DashboardComponent implements OnInit {
   appointmentList:AppointmentDto[]=[];
   selectedValue= "All"
   aptLoading: boolean = false
+  btnLoading: boolean = false;
   constructor(
     // private DoctorProfileService: DoctorProfileService,
     private DoctorStateService :DoctorStateService,
@@ -44,7 +48,8 @@ export class DashboardComponent implements OnInit {
     public dialog: MatDialog,
     private NormalAuth : AuthService,
     private TosterService : TosterService,
-    private DashboardService: DashboardService
+    private DashboardService: DashboardService,
+    private FinancialSetupService : FinancialSetupService
     ) {
       this.isAuthUser =  this.NormalAuth.authInfo()?.id;
       this.userType =  this.NormalAuth.authInfo()?.userType;
@@ -57,6 +62,8 @@ export class DashboardComponent implements OnInit {
       this.DoctorStateService.getCurrentlyOnlineDoctorList().subscribe({
         next: (res) => {
           this.currentOnlineDoctorList = res;
+     
+          
         },
       });
     } catch (error) {}
@@ -91,12 +98,38 @@ export class DashboardComponent implements OnInit {
     }
   }
   onClickConsultNow(data:any): void {
-    const dialogRef = this.dialog.open(AgentBookingDialogComponent, {
-      width: '40vw',
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      // this.getDegreeDataList(this.doctorId)
-    });
+    this.btnLoading = true;
+    if (data.id) {
+      const detailsSchedule$ = this.DoctorScheduleService.getDetailsScheduleListByDoctorId(data.id);
+      const financialSetup$ = this.FinancialSetupService.getList();
+      forkJoin([detailsSchedule$, financialSetup$]).subscribe(([detailsScheduleRes, financialSetupRes]) => {
+        if (detailsScheduleRes?.length > 0 && data) {
+          const dialogRef = this.dialog.open(LiveConsultBookingDialogComponent, {
+            maxWidth: 600,
+            minWidth: 450,
+            data: {
+              doctorDetails: data,
+              doctorScheduleInfo: detailsScheduleRes,
+              isAuthUser: this.isAuthUser ? true : false,
+              userAccess: this.userType == 'doctor' ? false : true,
+              serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
+            },
+          });
+  
+          dialogRef.afterClosed().subscribe((result) => {});
+        } else {
+          this.TosterService.customToast(`No Details/Schedule found`, "warning");
+        }
+      })
+    }
   }
+
+
+  
+  
+
+
+
+
 }

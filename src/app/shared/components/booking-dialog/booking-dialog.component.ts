@@ -477,9 +477,9 @@ export class BookingDialogComponent implements OnInit {
     this.bookingForm = this.fb.group({
       bookMyself: [''],
       bookOther: [''],
-      patientName: [''],
-      age: [''],
-      mobile: [''],
+      patientName: ['',Validators.required],
+      age: ['',Validators.required],
+      mobile: ['',Validators.required],
     });
     this.form = this.fb.group({
       consultancyType: [''],
@@ -489,7 +489,7 @@ export class BookingDialogComponent implements OnInit {
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
-      patientName: ['', [Validators.required, Validators.minLength(3), customNameValidator]],
+      patientName: ['',Validators.required],
       patientProfileId: [''],
       age: ['', [
         Validators.required,
@@ -499,9 +499,7 @@ export class BookingDialogComponent implements OnInit {
       bloodGroup: ['0', Validators.required],
       patientMobileNo: ['', [
         Validators.required,
-        Validators.pattern(/^(?:88)?[0-9]{11}$/),
-        Validators.minLength(11),
-        Validators.maxLength(11),
+        Validators.pattern(/^(?:88)?[0-9]{11}$/)
       ],],
       patientEmail: [
         '' || this.profileInfo?.email || 'admin@gmail.com',
@@ -597,6 +595,7 @@ export class BookingDialogComponent implements OnInit {
           doctorChamberId,
           doctorProfileId,
           scheduleType,
+          chamber,
         } = finalSchedule;
 
         const { appointmentType, appointmentDate } = this.form.value;
@@ -638,7 +637,7 @@ export class BookingDialogComponent implements OnInit {
               : user.email || 'admin@gmail.com',
           consultancyType,
           doctorChamberId,
-          //doctorChamber,
+          doctorChamberName: chamber,
           scheduleType,
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,

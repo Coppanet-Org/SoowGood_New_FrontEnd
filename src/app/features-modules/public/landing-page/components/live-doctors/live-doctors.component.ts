@@ -39,6 +39,7 @@ export class LiveDoctorsComponent
   ) {}
   ngOnInit(): void {
     this.getDoctorDetails();
+
   }
 
   ngAfterViewInit() {
