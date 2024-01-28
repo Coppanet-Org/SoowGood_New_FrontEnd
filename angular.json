@@ -30,14 +30,7 @@
               "node_modules/@ngneat/hot-toast/src/styles/styles.css",
               "src/styles.scss"
             ],
-            "scripts": [
-             
-              {
-                "input": "./node_modules/pdfmake/build/pdfmake.js",
-                "bundleName": "pdfmake",
-                "inject": false
-              }
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

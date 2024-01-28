@@ -29,28 +29,28 @@ export class ShowPrescriptionModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    window.scrollTo(0, 0);
+    this.prescriptionLoader = true;
+    try {
+      if (this.data.prescriptionId) {
+        this.PrescriptionMasterService.getPrescription(
+          this.data.prescriptionId
+        ).subscribe((res) => {
+          this.prescriptionInfo = res;
+          this.prescriptionLoader = false;
+        });
+      }
+      if (this.data.appointmentId) {
+        this.PrescriptionMasterService.getPrescriptionByAppointmentId(
+          this.data.appointmentId
+        ).subscribe((res) => {
+          this.prescriptionInfo = res;
+          this.prescriptionLoader = false;
+        });
+      }
+    } catch (error) {
+      this.TosterService.customToast(String(error), 'error');
       this.prescriptionLoader = true;
-      try {
-        if (this.data.prescriptionId) {
-          this.PrescriptionMasterService.getPrescription(
-            this.data.prescriptionId
-          ).subscribe((res) => {
-            this.prescriptionInfo = res;
-            this.prescriptionLoader = false;
-          });
-        }
-        if (this.data.appointmentId) {
-          this.PrescriptionMasterService.getPrescriptionByAppointmentId(
-            this.data.appointmentId
-          ).subscribe((res) => {
-            this.prescriptionInfo = res;
-            this.prescriptionLoader = false;
-          });
-        }
-      } catch (error) {
-        this.TosterService.customToast(String(error), 'error');
-        this.prescriptionLoader = true;
-      
     }
   }
 
@@ -93,29 +93,32 @@ export class ShowPrescriptionModalComponent implements OnInit {
   }
   convertToBanglaText(drugName: string, schedule: string): string {
     const parts = schedule.split('+');
-    const isTablet = drugName.toLowerCase().includes('tablet') || drugName.toLowerCase().includes('capsule');
+    const isTablet =
+      drugName.toLowerCase().includes('tablet') ||
+      drugName.toLowerCase().includes('capsule');
     const isInjection = drugName.toLowerCase().includes('injection');
     const isDrops = drugName.toLowerCase().includes('drops');
-    let medicineType:string;
-    
+    let medicineType: string;
+
     if (isTablet) {
       medicineType = 'টা';
     } else if (isInjection) {
       medicineType = 'নিবেন';
     } else if (isDrops) {
       medicineType = 'দিবেন ';
-    }
-    else {
+    } else {
       medicineType = 'বার';
     }
-  
+
     const banglaText = parts.map((part, index) => {
       const partValue = parseInt(part, 10);
       let doseText = '';
       if (partValue === 0) {
         doseText = ''; // No dose
       } else {
-        doseText = `১ ${medicineType == 'দিবেন' || 'দিবেন' ? 'বার' : medicineType} ${this.getTimeText(index)} ${isInjection ? 'নিবেন' : 'খাবেন'}`;
+        doseText = `১ ${
+          medicineType == 'দিবেন' || 'দিবেন' ? 'বার' : medicineType
+        } ${this.getTimeText(index)} ${isInjection ? 'নিবেন' : 'খাবেন'}`;
       }
       return doseText;
     });

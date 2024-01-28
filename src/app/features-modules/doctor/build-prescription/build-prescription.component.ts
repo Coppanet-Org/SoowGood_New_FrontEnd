@@ -164,7 +164,7 @@ export class BuildPrescriptionComponent implements OnInit {
           // console.log(at);
           this.docFileUrl.push(this.picUrl + this.docFile);
           console.log(this.docFileUrl);
-          
+
           // this.isLoading = false;
           // urls.push()
         });
@@ -358,7 +358,7 @@ export class BuildPrescriptionComponent implements OnInit {
 
   createDiagnosisFormGroup() {
     return this.fb.group({
-      testName: ['', Validators.required],
+      testName: [''],
       comments: [''],
     });
   }
@@ -474,8 +474,6 @@ export class BuildPrescriptionComponent implements OnInit {
       // need to add history
       prescriptionPatientDiseaseHistory: patientDiseaseHistory,
     };
-
-    console.log(prescription);
 
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
