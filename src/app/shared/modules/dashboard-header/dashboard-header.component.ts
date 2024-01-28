@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
@@ -5,27 +6,26 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
-  styleUrls: ['./dashboard-header.component.scss']
+  styleUrls: ['./dashboard-header.component.scss'],
 })
 export class DashboardHeaderComponent {
-
   isAuthLogin!: boolean;
-  constructor(private NormalAuth: AuthService, 
-    ) {}
+  constructor(private NormalAuth: AuthService, private Router: Router) {}
   ngOnInit(): void {
-    let id = this.NormalAuth.authInfo().id
+    let id = this.NormalAuth.authInfo().id;
     if (id) {
-      this.isAuthLogin = true
-    }else{
-      this.isAuthLogin = false
+      this.isAuthLogin = true;
+    } else {
+      this.isAuthLogin = false;
     }
-  
   }
   signOut(): void {
     // this.NormalAuth.signOut();
-   this.NormalAuth.signOut()
+    this.NormalAuth.signOut();
   }
-
+  goHome() {
+    this.Router.navigate(['/']);
+  }
   // headerElement: any;
   // ngAfterViewInit() {
   //   this.headerElement = this.el.nativeElement.querySelector('.header');
@@ -41,7 +41,6 @@ export class DashboardHeaderComponent {
   //   // Get the scroll position
   //   const scrollPosition = window.scrollY || (document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop) || 0;
 
-    
   //   if (scrollPosition >= threshold) {
   //     this.renderer.addClass(this.headerElement, 'sticky-header');
   //   } else {

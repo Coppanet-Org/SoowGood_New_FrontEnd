@@ -24,7 +24,7 @@ export class PublicPatientsComponent implements OnInit {
     public dialog: MatDialog,
     private PatientProfileService: PatientProfileService,
     private UserinfoStateService: UserinfoStateService
-  ) { }
+  ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
     if (user) {
@@ -33,44 +33,36 @@ export class PublicPatientsComponent implements OnInit {
 
     this.userInfo = user;
     // const { aptId } = this.route.snapshot.params;
-    this.getPatientList(user)
+    this.getPatientList(user);
   }
 
   goToPatientProfile(patient: any) {
     if (this.userInfo.userType === 'doctor') {
       this.Router.navigate([
         '/doctor/patients/patient-details/',
-        patient.patientProfileId
+        patient.patientProfileId,
       ]);
-    }
-    else if (this.userInfo.userType === 'patient') {
+    } else if (this.userInfo.userType === 'patient') {
       this.Router.navigate([
         '/patient/my-patient/patient-details/',
-        patient.id
+        patient.id,
       ]);
     } else if (this.userInfo.userType === 'agent') {
-      this.Router.navigate([
-        '/agent/patients/patient-details/',
-        patient.id
-      ]);
-    } return
+      this.Router.navigate(['/agent/patients/patient-details/', patient.id]);
+    }
+    return;
   }
 
   addNewPatient() {
-    const dialogRef = this.dialog.open(CreatePatientComponent, {
+    this.dialog.open(CreatePatientComponent, {
       width: '40vw',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.UserinfoStateService.getUserPatientInfo( this.userInfo.id,  this.userInfo.userType);
     });
   }
 
-  getPatientList(user:any){
+  getPatientList(user: any) {
     if (user.id) {
       this.patientLoader = true;
 
-      
       try {
         if (user.userType === 'doctor') {
           this.AppointmentService.getPatientListByDoctorId(user.id).subscribe(
@@ -79,28 +71,26 @@ export class PublicPatientsComponent implements OnInit {
               this.patientLoader = false;
             }
           );
-        }
-        else if (user.userType === 'patient' || user.userType === 'agent') {
+        } else if (user.userType === 'patient' || user.userType === 'agent') {
           this.UserinfoStateService.getData()
-            .pipe(switchMap((e) => {
-              if (e) {
-                return this.UserinfoStateService.getUserPatientData().pipe(
-                  map((data) => {
-
-                    return data
-                  })
-                );
-              } else {
-                return of([]);
-              }
-            })
+            .pipe(
+              switchMap((e) => {
+                if (e) {
+                  return this.UserinfoStateService.getUserPatientData().pipe(
+                    map((data) => {
+                      return data;
+                    })
+                  );
+                } else {
+                  return of([]);
+                }
+              })
             )
             .subscribe((res) => {
               this.patientList = res;
               this.patientLoader = false;
             });
-        }
-        else {
+        } else {
           console.log('Data Nai');
           this.patientLoader = false;
         }
@@ -111,8 +101,5 @@ export class PublicPatientsComponent implements OnInit {
     }
   }
 
-  onSearchChange(e: any) {
-
-
-  }
+  onSearchChange(e: any) {}
 }

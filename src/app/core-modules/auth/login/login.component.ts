@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private ToasterService: TosterService,
     private NormalAuth: AuthService,
     private UserAccountsService: UserAccountsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -79,28 +79,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         ],
       ],
 
-      password: [
-        this.defaultAuth.password,
-        Validators.compose([
-          Validators.required,
-          // CustomValidators.startsWithUppercase,
-          CustomValidators.isAtLeast6Characters,
-          CustomValidators.includesSpecialCharacter,
-          CustomValidators.includesNumber,
-
-        ]),
-      ],
+      password: [this.defaultAuth.password, Validators.required],
     });
 
     this.resetPasswordForm = this.fb.group(
       {
         username: [
           '',
-          [
-            Validators.required,
-            Validators.pattern(/^(?:88)?[0-9]{11}$/),
-
-          ],
+          [Validators.required, Validators.pattern(/^(?:88)?[0-9]{11}$/)],
         ],
         newPassword: [
           '',
@@ -159,7 +145,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       try {
         this.appAuthService.isLoadingSubject.next(true);
-        this.oAuthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
+        this.oAuthService
+          .fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
           .then((userInfo: UserProfile) => {
             if (userInfo) {
               const userModel = this.appAuthService.createUserModel(userInfo);
@@ -167,13 +154,23 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.authService
                 .loginByUserDto(this.loginDto)
                 .subscribe((loginResponse: LoginResponseDto) => {
-                  this.loginResponse = loginResponse
-                  if (this.loginResponse.message.includes('User Name Or Password is not correct !')) {
-                    this.ToasterService.customToast(String(this.loginResponse.message), 'error');
-                    this.isLoading = false
+                  this.loginResponse = loginResponse;
+                  if (
+                    this.loginResponse.message.includes(
+                      'User Name Or Password is not correct !'
+                    )
+                  ) {
+                    this.ToasterService.customToast(
+                      String(this.loginResponse.message),
+                      'warning'
+                    );
+                    this.isLoading = false;
                     return;
                   }
-                  if (loginResponse.success && loginResponse.roleName[0] == 'Doctor') {
+                  if (
+                    loginResponse.success &&
+                    loginResponse.roleName[0] == 'Doctor'
+                  ) {
                     this.isLoading = false;
                     this.subs.sink = this.doctorProfileService
                       .getByUserName(
@@ -191,9 +188,13 @@ export class LoginComponent implements OnInit, OnDestroy {
                             specialityId: doctorDto.specialityId,
                             profileStep: doctorDto.profileStep,
                             createFrom: doctorDto.createFrom,
-                            userType: loginResponse.roleName.toString().toLowerCase(),
+                            userType: loginResponse.roleName
+                              .toString()
+                              .toLowerCase(),
                           };
-                          this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                          this.NormalAuth.setAuthInfoInLocalStorage(
+                            saveLocalStorage
+                          );
                           if (
                             doctorDto.profileStep == 1 ||
                             doctorDto.profileStep == 2
@@ -204,14 +205,19 @@ export class LoginComponent implements OnInit, OnDestroy {
                             userType = doctorDto.isActive
                               ? loginResponse.roleName.toString() + '/dashboard'
                               : loginResponse.roleName.toString() +
-                              '/profile-settings/basic-info';
-
+                                '/profile-settings/basic-info';
                           }
-                          this._router.navigate([userType.toLowerCase()],
-                            {
+                          this._router
+                            .navigate([userType.toLowerCase()], {
                               state: { data: doctorDto },
-                            }).then(() => {
-                              this.ToasterService.customToast(loginResponse.message ? loginResponse.message : ' ', 'success');
+                            })
+                            .then(() => {
+                              this.ToasterService.customToast(
+                                loginResponse.message
+                                  ? loginResponse.message
+                                  : ' ',
+                                'success'
+                              );
                             });
                         },
                         (doctorError: any) => {
@@ -221,7 +227,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }
                       );
                   } else if (
-                    loginResponse.success && loginResponse.roleName[0] == 'Patient'
+                    loginResponse.success &&
+                    loginResponse.roleName[0] == 'Patient'
                   ) {
                     this.isLoading = false;
                     this.subs.sink = this.PatientProfileService.getByUserName(
@@ -232,9 +239,13 @@ export class LoginComponent implements OnInit, OnDestroy {
                           fullName: patientDto.fullName,
                           userId: patientDto.userId,
                           id: patientDto.id,
-                          userType: loginResponse.roleName.toString().toLowerCase(),
+                          userType: loginResponse.roleName
+                            .toString()
+                            .toLowerCase(),
                         };
-                        this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                        this.NormalAuth.setAuthInfoInLocalStorage(
+                          saveLocalStorage
+                        );
                         let userType =
                           loginResponse.roleName.toString() + '/dashboard';
 
@@ -244,7 +255,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                           })
                           .then(() => {
                             this.ToasterService.customToast(
-                              loginResponse.message ? loginResponse.message : ' ',
+                              loginResponse.message
+                                ? loginResponse.message
+                                : ' ',
                               'success'
                             );
                           });
@@ -254,8 +267,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.handleProfileError(patientError);
                       }
                     );
-                  }
-                  else {
+                  } else {
                     this.hasError = true;
                     this.ToasterService.customToast(
                       loginResponse.message ? loginResponse.message : ' ',
@@ -269,11 +281,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           .catch((errorResponse) => {
             this.hasError = true;
             this.appAuthService.isLoadingSubject.next(false);
-            this.errorMessage = errorResponse.error.error_description || errorResponse.error.error;
+            this.errorMessage =
+              errorResponse.error.error_description ||
+              errorResponse.error.error;
             this.isLoading = false;
           });
-      }
-      catch (error: any) {
+      } catch (error: any) {
         this.hasError = true;
         if (error.message === "'tokenEndpoint' should not be null") {
           this.errorMessage = 'Identity server is not running';
@@ -284,12 +297,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Additional method to handle profile service errors
   private handleProfileError(error: any): void {
-    console.log(error, this.loginResponse);
+    this.errorMessage = '';
     if (
       error.error.error.message ===
       'There is no entity DoctorProfile with id = !'
     ) {
-      this.ToasterService.customToast('User not found', 'error');
+      this.errorMessage = 'User not found';
     } else {
       this.ToasterService.customToast(
         String(error.error.error.message),
@@ -314,30 +327,30 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.resetLoading = true;
     try {
-      this.authService.isUserExistsByUserName(
-        this.resetPasswordForm.get('username')?.value
-      ).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res) {
-            this.resetLoading = false;
-            this.changePasswordShow = res;
+      this.authService
+        .isUserExistsByUserName(this.resetPasswordForm.get('username')?.value)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            if (res) {
+              this.resetLoading = false;
+              this.changePasswordShow = res;
+              this.resetFormSubmitted = false;
+            } else {
+              this.ToasterService.customToast(
+                'Mobile number not found!',
+                'warning'
+              );
+              this.changePasswordShow = res;
+              this.resetLoading = false;
+              this.resetFormSubmitted = false;
+            }
+          },
+          error: (err) => {
+            this.ToasterService.customToast(String(err.message), 'error');
             this.resetFormSubmitted = false;
-          } else {
-            this.ToasterService.customToast(
-              'Mobile number not found!',
-              'warning'
-            );
-            this.changePasswordShow = res;
-            this.resetLoading = false;
-            this.resetFormSubmitted = false;
-          }
-        },
-        error: (err) => {
-          this.ToasterService.customToast(String(err.message), 'error');
-          this.resetFormSubmitted = false;
-        },
-      });
+          },
+        });
     } catch (error) {
       this.ToasterService.customToast(String(error), 'error');
       this.resetFormSubmitted = false;
