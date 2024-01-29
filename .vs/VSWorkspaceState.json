@@ -5,12 +5,12 @@
     "\\src\\app",
     "\\src\\app\\core-modules",
     "\\src\\app\\core-modules\\auth",
-    "\\src\\app\\core-modules\\auth\\agent",
-    "\\src\\app\\core-modules\\auth\\agent\\agent-login",
-    "\\src\\app\\core-modules\\auth\\agent\\agent-signup",
-    "\\src\\app\\core-modules\\auth\\login",
-    "\\src\\environments"
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\schedule-form"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\core-modules\\auth\\signup\\signup.component.html",
   "PreviewInSolutionExplorer": false
 }
