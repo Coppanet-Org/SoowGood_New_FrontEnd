@@ -14,6 +14,8 @@ import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-lay
 import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 import { isAuth } from '../auth-gurd/auth.service';
 import { ScrollDirective } from '../shared/directive/scroll/scroll.directive';
+import { PaymentFaildComponent } from '../shared/components/payment-faild/payment-faild.component';
+import { PaymentCancelComponent } from '../shared/components/payment-cancel/payment-cancel.component';
 
 const routes: Route[] = [
   {
@@ -193,6 +195,14 @@ const routes: Route[] = [
   {
     path: 'payment-success',
     component: PaymentSuccessComponent,
+  },
+  {
+    path: 'payment-cancel',
+    component: PaymentCancelComponent,
+  },
+  {
+    path: 'payment-faild',
+    component: PaymentFaildComponent,
   },
 ];
 

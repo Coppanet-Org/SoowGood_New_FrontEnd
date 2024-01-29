@@ -16,7 +16,7 @@ export class PaymentFaildComponent implements OnInit {
   ngOnInit() {
     this.appCode = JSON.parse(localStorage.getItem("patientAppointmentCode") || "");
     this.sslCommerzService.updateAppointmentPaymentStatus(this.appCode,2).subscribe(st => {
-      this.tosterService.customToast('Appointment Confirmed, Show the appoinment list', 'success');
+      this.tosterService.customToast('Appointment Cancelled due to payment faild', 'error');
     })
   }
 }
