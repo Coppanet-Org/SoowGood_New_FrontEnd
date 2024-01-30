@@ -125,7 +125,7 @@
             {{ this.errorMessage }}
           </div>
 
-          <button  [disabled]="isLoading" class="form_btn" (click)="sendOtp()">
+          <button [disabled]="isLoading" class="form_btn" (click)="sendOtp()">
             <div *ngIf="!isLoading" class="flex items-center">
               <span>Signup</span>
               <i class="fa-solid ml-2 fa-right-to-bracket"></i>
@@ -197,16 +197,28 @@
         ></ng-otp-input>
       </div>
       <div
-      *ngIf="this.errorMessage"
-      class="p-4 mt-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
-      role="alert"
-    >
-      <i class="fa-solid fa-circle-exclamation mr-2"></i>
-      {{ this.errorMessage }}
-    </div>
+        *ngIf="this.errorMessage"
+        class="p-4 mt-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+        role="alert"
+      >
+        <i class="fa-solid fa-circle-exclamation mr-2"></i>
+        {{ this.errorMessage }}
+      </div>
       <div class="flex gap-3 mt-6">
-        <button  [disabled]="isLoading" class="btn-secondary w-1/2" (click)="back()">Back</button>
-        <button [disabled]="isLoading"  class="form_btn w-1/2" (click)="verify()">Continue <i class="fa-solid fa-arrow-right ml-2"></i></button>
+        <button
+          [disabled]="isLoading"
+          class="btn-secondary w-1/2"
+          (click)="back()"
+        >
+          Back
+        </button>
+        <button
+          [disabled]="isLoading"
+          class="form_btn w-1/2"
+          (click)="verify()"
+        >
+          Continue <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
       </div>
     </div>
 
@@ -219,7 +231,7 @@
       "
     >
       <h1 class="text-3xl font-semibold mb-2">Basic Information</h1>
-     <hr>
+      <hr />
       <form
         class="mt-5"
         [formGroup]="userInfoForm"
@@ -231,7 +243,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Your Title <span class="text-red-700">*</span>
               </label>
               <select
@@ -264,13 +279,15 @@
                     Please select your title.
                   </mat-error>
                 </div>
-    
               </div>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Full Name <span class="text-red-700">*</span>
               </label>
               <input
@@ -312,7 +329,6 @@
                     the specified pattern.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
@@ -321,7 +337,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-full">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Email
               </label>
 
@@ -351,7 +370,6 @@
                     Email should be valid.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
@@ -360,7 +378,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Gender
               </label>
               <select
@@ -390,14 +411,16 @@
                     Please select your gender.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="date"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Date of Birth
               </label>
               <!--<input autocomplete="off" required formControlName="dateOfBirth" type="date" name="date" id="dateOfBirth" onkeydown="return false"
@@ -424,7 +447,6 @@
                     Please enter your birth date.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
@@ -433,8 +455,11 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
-                BMDC Reg Number 
+              <label
+                for="phone"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
+                BMDC Reg Number
               </label>
               <input
                 autocomplete="off"
@@ -464,13 +489,15 @@
                     BMDC number should be a 6-9 digit number.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="date" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="date"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 BMDC Exp. Date
               </label>
               <!--<input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" onkeydown="return false"
@@ -500,7 +527,6 @@
                     BMDC expire date should be in the current year/month or a future.
                   </mat-error>
                 </div>-->
-     
               </div>
             </div>
           </div>
@@ -509,7 +535,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Address
               </label>
               <input
@@ -535,7 +564,10 @@
           </div>
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 City
               </label>
               <input
@@ -565,7 +597,6 @@
                     characters).
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
@@ -574,7 +605,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Zip Code
               </label>
               <input
@@ -603,7 +637,10 @@
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Country
               </label>
 
@@ -632,7 +669,6 @@
                     Please select your country!
                   </mat-error>
                 </div>
-  
               </div>
             </div>
           </div>
@@ -641,7 +677,10 @@
         <div class="-mx-3 flex flex-wrap">
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="phone" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="phone"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Identity Number
               </label>
               <input
@@ -672,14 +711,16 @@
                     Identity Number (Passport/NID) should be actual format.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
-              <label for="name" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+              <label
+                for="name"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
                 Specialties <span class="text-red-700">*</span>
               </label>
               <select
@@ -710,7 +751,6 @@
                     Please select your specialty.
                   </mat-error>
                 </div>
-
               </div>
             </div>
           </div>
@@ -775,7 +815,6 @@
                   Password must include a number.
                 </mat-error>-->
               </div>
-             
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2" *ngIf="!profileStep">
@@ -832,7 +871,11 @@
         </div>
         <!--(click)="sendUserInfo()"-->
 
-        <button  [disabled]="isLoading" class="form_btn mt-4" (click)="sendUserInfo()">
+        <button
+          [disabled]="isLoading"
+          class="form_btn mt-4"
+          (click)="sendUserInfo()"
+        >
           <div *ngIf="!isLoading" class="flex items-center">
             <span>Save & Continue</span>
             <i class="fa-solid fa-arrow-right ml-2"></i>
@@ -877,16 +920,11 @@
                 >
                   Please enter your full name.
                 </mat-error>
-                  *ngIf="
-                    formSubmitted &&
-                    userInfoForm.get('fullName')?.hasError('invalidName')
-                  "
-                >
-                  Full name should be at least 3 characters long and follow the
-                  specified pattern.
-             
+                *ngIf=" formSubmitted &&
+                userInfoForm.get('fullName')?.hasError('invalidName') " > Full
+                name should be at least 3 characters long and follow the
+                specified pattern.
               </div>
-
             </div>
           </div>
 
@@ -907,52 +945,82 @@
                 placeholder="Gender"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-              </div>
             </div>
-            <div class="w-full px-3 sm:w-1/2">
-              <div class="mb-3">
-                <label
-                  for="age"
-                  class="mb-2 block font-medium text-[14px] text-[#07074D]"
-                >
-                  Age
-                </label>
-                <input
-                  autocomplete="off"
-                  formControlName="age"
-                  type="text"
-                  name="age"
-                  id="age"
-                  placeholder="Age"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-                </div>
-              </div>
-            <div class="w-1/2 ">
-              <div class="mb-5">
-                <label for="bloodGroup" class="mb-2 block  font-medium text-[14px] text-[#07074D]">
+          </div>
+          <div class="w-full px-3 sm:w-1/2">
+            <div class="mb-3">
+              <label
+                for="age"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
+                Age
+              </label>
+              <input
+                autocomplete="off"
+                formControlName="age"
+                type="text"
+                name="age"
+                id="age"
+                placeholder="Age"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              />
+            </div>
+          </div>
+          <div class="w-1/2">
+            <div class="mb-5">
+              <label
+                for="bloodGroup"
+                class="mb-2 block font-medium text-[14px] text-[#07074D]"
+              >
+                Select blood group
+              </label>
+              <select
+                formControlName="bloodGroup"
+                name="bloodGroup"
+                id="bloodGroup"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              >
+                <option value="0" class="font-semibold text-gray-500">
                   Select blood group
-                </label>
-                <select formControlName="bloodGroup" name="bloodGroup" id="bloodGroup"
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                        <option value="0" class="font-semibold text-gray-500">Select blood group </option>
-                        <option value="A+" class="font-semibold text-gray-500">A+ </option>
-                        <option value="A-" class="font-semibold text-gray-500">A- </option>
-                        <option value="B+" class="font-semibold text-gray-500">B+ </option>
-                        <option value="B-" class="font-semibold text-gray-500">B- </option>
-                        <option value="O+" class="font-semibold text-gray-500">O+ </option>
-                        <option value="O-" class="font-semibold text-gray-500">O- </option>
-                        <option value="AB+" class="font-semibold text-gray-500">AB+ </option>
-                        <option value="AB-" class="font-semibold text-gray-500">AB- </option>
-                        <option value="others" class="font-semibold text-gray-500">others </option>
-    
-                </select>
-                <p class="text-[14px] text-red-600"
-                   *ngIf="formSubmitted && userInfoForm.get('bloodGroup')?.value === '0'">
-                  Please select blood group!
-                </p>
-              </div>
+                </option>
+                <option value="A+" class="font-semibold text-gray-500">
+                  A+
+                </option>
+                <option value="A-" class="font-semibold text-gray-500">
+                  A-
+                </option>
+                <option value="B+" class="font-semibold text-gray-500">
+                  B+
+                </option>
+                <option value="B-" class="font-semibold text-gray-500">
+                  B-
+                </option>
+                <option value="O+" class="font-semibold text-gray-500">
+                  O+
+                </option>
+                <option value="O-" class="font-semibold text-gray-500">
+                  O-
+                </option>
+                <option value="AB+" class="font-semibold text-gray-500">
+                  AB+
+                </option>
+                <option value="AB-" class="font-semibold text-gray-500">
+                  AB-
+                </option>
+                <option value="others" class="font-semibold text-gray-500">
+                  others
+                </option>
+              </select>
+              <p
+                class="text-[14px] text-red-600"
+                *ngIf="
+                  formSubmitted && userInfoForm.get('bloodGroup')?.value === '0'
+                "
+              >
+                Please select blood group!
+              </p>
             </div>
+          </div>
           <!-- <div class="w-full px-3 sm:w-1/2">
             <div class="mb-3">
               <label
@@ -1124,7 +1192,11 @@
           </div>
         </div>
 
-        <button [disabled]="isLoading" class="form_btn mt-4" (click)="sendUserInfo()">
+        <button
+          [disabled]="isLoading"
+          class="form_btn mt-4"
+          (click)="sendUserInfo()"
+        >
           <div *ngIf="!isLoading" class="flex items-center">
             <span> Save & Continue</span>
             <i class="fa-solid fa-arrow-right ml-2"></i>
@@ -1154,7 +1226,7 @@
 
       <!--degreeMendatoryMassage-->
       <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{degreeMendatoryMassage}}</strong></h2>-->
-      <div class=" w-full bg-white mt-6">
+      <div class="w-full bg-white mt-6">
         <form [formGroup]="formDegree">
           <div class="-mx-3 flex flex-wrap">
             <div class="w-full px-3 sm:w-1/3">
@@ -1238,11 +1310,18 @@
                 >
                   Passing Year
                 </label>
-              
-        
-                <input autocomplete="off"   formControlName="passingYear" placeholder="Passing Year" inputmode="numeric"  maxlength="4" minlength="4"
-                name="passingYear" id="passingYear"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+
+                <input
+                  autocomplete="off"
+                  formControlName="passingYear"
+                  placeholder="Passing Year"
+                  inputmode="numeric"
+                  maxlength="4"
+                  minlength="4"
+                  name="passingYear"
+                  id="passingYear"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
                 <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
                 <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
                 <!-- <mat-datepicker #picker></mat-datepicker> -->
@@ -1454,7 +1533,7 @@
         </h1>
         <!--spMendatoryMassage *ngIf="!sp1or2"-->
         <!--<h2 *ngIf="!sp1or2"><strong style="color:maroon">{{spMendatoryMassage}}</strong></h2>-->
-        <div class=" w-full  bg-white mt-6">
+        <div class="w-full bg-white mt-6">
           <form [formGroup]="formSpecialization">
             <div class="-mx-3 flex flex-wrap">
               <div class="w-full px-3 sm:w-1/4">
@@ -1542,7 +1621,7 @@
                     Browse
                   </button>
                   <div style="display: none">
-                    <table >
+                    <table>
                       <thead>
                         <tr>
                           <th>File Name</th>
@@ -1591,23 +1670,13 @@
                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
                   >
                     <tr>
-                      <th scope="col" class="px-6 py-3">
-                        Sl#
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Speciality
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Specialization
-                      </th>
+                      <th scope="col" class="px-6 py-3">Sl#</th>
+                      <th scope="col" class="px-6 py-3">Speciality</th>
+                      <th scope="col" class="px-6 py-3">Specialization</th>
                       *<!--ngIf="!sp1or2"-->
-                      <th scope="col" class="px-6 py-3">
-                        Document Name
-                      </th>
+                      <th scope="col" class="px-6 py-3">Document Name</th>
                       <!--*ngIf="!sp1or2"-->
-                      <th scope="col" class="px-6 py-3">
-                        Action
-                      </th>
+                      <th scope="col" class="px-6 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1626,12 +1695,15 @@
                       </td>
                       <!--*ngIf="!sp1or2"-->
                       <td class="px-6 py-4">
-                        {{item.documentName}}
+                        {{ item.documentName }}
                       </td>
                       <!--*ngIf="!sp1or2"-->
                       <td class="px-6 py-4">
-                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                           (click)="removeSp(item.id)">Delete</a>
+                        <a
+                          class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          (click)="removeSp(item.id)"
+                          >Delete</a
+                        >
                       </td>
                     </tr>
                   </tbody>
@@ -1644,13 +1716,17 @@
 
       <div class="flex gap-3 mt-6">
         <button class="btn-secondary" (click)="getBackStep1Data()">
-          <div  class="flex">
+          <div class="flex">
             <i class="fa-solid fa-arrow-left mr-2"></i>
             <span>Back</span>
           </div>
         </button>
 
-        <button [disabled]="isLoading" class="form_btn" (click)="saveDegreeSpecialization()">
+        <button
+          [disabled]="isLoading"
+          class="form_btn"
+          (click)="saveDegreeSpecialization()"
+        >
           <div *ngIf="!isLoading" class="flex items-center">
             <span>Save & Continue</span>
             <i class="fa-solid fa-arrow-right ml-2"></i>
@@ -1842,9 +1918,12 @@
           <div class="w-full px-3 sm:w-1/1">
             <div class="mb-3">
               <div class="flex gap-3 mt-6">
-                <button [disabled]="isLoading" class="btn-secondary" (click)="getBackStep2Data()">
-                  <div  *ngIf="!isLoading" class="flex items-center">
-                  
+                <button
+                  [disabled]="isLoading"
+                  class="btn-secondary"
+                  (click)="getBackStep2Data()"
+                >
+                  <div *ngIf="!isLoading" class="flex items-center">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
                     <span>Back</span>
                   </div>
@@ -1854,7 +1933,6 @@
                   (click)="finalContinue()"
                 >
                   <div *ngIf="!isLoading" class="flex items-center">
-                   
                     <span>Save & Finish</span>
                   </div>
                   <span
@@ -1870,4 +1948,3 @@
     </div>
   </div>
 </div>
-

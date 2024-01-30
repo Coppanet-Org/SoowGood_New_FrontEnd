@@ -3,13 +3,17 @@
     <img src="/assets/auth/login-auth.webp" alt="auth" />
   </div>
   <div class="signup-form__right drop-shadow-soft relative">
-
-    
     <div
-    class="max-w-lg relative min-w-[500px] mx-auto mt-10 bg-white p-8 rounded-xl shadow shadow-slate-300"
+      class="max-w-lg relative min-w-[500px] mx-auto mt-10 bg-white p-8 rounded-xl shadow shadow-slate-300"
     >
-    <img class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2" src="/assets/auth/ms-icon-310x310.png" alt="icon">
-      <h1 class="text-4xl font-semibold font-Roboto text-primary mt-8">Login</h1>
+      <img
+        class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2"
+        src="/assets/auth/ms-icon-310x310.png"
+        alt="icon"
+      />
+      <h1 class="text-4xl font-semibold font-Roboto text-primary mt-8">
+        Login
+      </h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood 👋</p>
       <form class="mt-6" [formGroup]="loginForm" (submit)="onSubmit()">
         <div class="flex flex-col space-y-5 mt-10">
@@ -23,11 +27,13 @@
                   loginForm.get('mobileNo')?.touched
               }"
             >
-              <span matPrefix class="h-fit font-Roboto font-semibold text-[16px]"
+              <span
+                matPrefix
+                class="h-fit font-Roboto font-semibold text-[16px]"
                 >+88 &nbsp;</span
               >
               <input
-               autocomplete="off"
+                autocomplete="off"
                 matInput
                 maxlength="11"
                 class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
@@ -151,16 +157,17 @@
             </div>
           </label>
           <div
-          *ngIf="this.errorMessage"
-          class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
-          role="alert"
-        >
-        <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ this.errorMessage }}
-        </div>
+            *ngIf="this.errorMessage"
+            class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+            role="alert"
+          >
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            {{ this.errorMessage }}
+          </div>
           <button
-            [disabled]="isLoading"
+            [disabled]="isLoading || !loginForm.dirty || loginForm.invalid"
             type="submit"
-            class="form_btn disabled:bg-gray-500"
+            class="form_btn disabled:bg-gray-500 disabled:select-none"
           >
             <div *ngIf="!isLoading" class="flex items-center">
               <span>Login</span>
@@ -202,8 +209,6 @@
                   /></svg></span
             ></a>
           </p>
-
-
         </div>
       </form>
     </div>

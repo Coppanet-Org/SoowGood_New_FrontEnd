@@ -7,9 +7,6 @@ import { isAuth } from 'src/app/auth-gurd/auth.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DashboardHeaderModule } from 'src/app/shared/modules/dashboard-header/dashboard-header.module';
 
-
-
-
 const routes: Route[] = [
   {
     path: '',
@@ -24,9 +21,7 @@ const routes: Route[] = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
+          import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: 'appointments',
@@ -38,19 +33,15 @@ const routes: Route[] = [
       {
         path: 'doctors',
         loadChildren: () =>
-          import('./doctors/doctors.module').then(
-            (m) => m.DoctorsModule
-          ),
+          import('./doctors/doctors.module').then((m) => m.DoctorsModule),
       },
       {
         path: 'billing',
         loadChildren: () =>
-          import('./billing/billing.module').then(
-            (m) => m.BillingModule
-          ),
+          import('./billing/billing.module').then((m) => m.BillingModule),
       },
       {
-        path: 'my-patient',
+        path: 'my-family',
         loadChildren: () =>
           import('./my-patient/my-patient.module').then(
             (m) => m.MyPatientModule
@@ -66,9 +57,9 @@ const routes: Route[] = [
       {
         path: 'patient-details/:id',
         loadChildren: () =>
-          import('../../shared/modules/patient-details/patient-details.module').then(
-            (m) => m.PatientDetailsModule
-          ),
+          import(
+            '../../shared/modules/patient-details/patient-details.module'
+          ).then((m) => m.PatientDetailsModule),
       },
     ],
   },
@@ -76,7 +67,10 @@ const routes: Route[] = [
 @NgModule({
   declarations: [PatientComponent],
   imports: [
-   DashboardHeaderModule, CommonModule,DashboardMenuModule,RouterModule.forChild(routes)
-  ]
+    DashboardHeaderModule,
+    CommonModule,
+    DashboardMenuModule,
+    RouterModule.forChild(routes),
+  ],
 })
-export class PatientModule { }
+export class PatientModule {}

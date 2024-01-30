@@ -49,8 +49,7 @@
 
           <label for="Password">
             <p class="font-medium text-slate-700 pb-2">Password</p>
-            <div   class="form_input flex justify-between">
-
+            <div class="form_input flex justify-between">
               <input
                 formControlName="password"
                 [type]="passwordFieldType"
@@ -60,27 +59,84 @@
                 class="w-full outline-none"
               />
               <span
-              (click)="passwordVisibility('password')"
-              class="cursor-pointer"
-            >
-              <i
-                [class]="
-                  passwordFieldType === 'password'
-                    ? 'fa fa-eye-slash'
-                    : 'fa fa-eye'
+                (click)="passwordVisibility('password')"
+                class="cursor-pointer"
+              >
+                <i
+                  [class]="
+                    passwordFieldType === 'password'
+                      ? 'fa fa-eye-slash'
+                      : 'fa fa-eye'
+                  "
+                ></i>
+              </span>
+            </div>
+            <div class="flex flex-col">
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('required')
                 "
-              ></i>
-            </span>
+              >
+                Password is required.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('startsWithUppercase')
+                "
+              >
+                Password must start with an uppercase letter.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('isAtLeast6Characters')
+                "
+              >
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm
+                    .get('password')
+                    ?.hasError('includesSpecialCharacter')
+                "
+              >
+                Password must include a special character.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  formSubmitted &&
+                  loginForm.get('password')?.hasError('includesNumber')
+                "
+              >
+                Password must include a number.
+              </mat-error>
+              <mat-error
+                *ngIf="loginForm.get('password')?.hasError('customError')"
+              >
+                {{ loginForm.get("password")?.getError("customError") }}
+              </mat-error>
             </div>
           </label>
 
+          <div
+            *ngIf="this.errorMessage"
+            class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 font-semibold font-Roboto"
+            role="alert"
+          >
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            {{ this.errorMessage }}
+          </div>
+
           <button
-            [disabled]="isLoading"
+            [disabled]="isLoading || !loginForm.dirty || loginForm.invalid"
             type="submit"
-            class="form_btn disabled:bg-gray-500"
+            class="form_btn disabled:bg-gray-500 disabled:select-none"
           >
             <div *ngIf="!isLoading" class="flex items-center">
-
               <span>Login</span>
               <i class="fa-solid ml-2 fa-right-to-bracket"></i>
             </div>
