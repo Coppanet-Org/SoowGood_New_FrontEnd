@@ -33,6 +33,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SplashComponent } from './shared/components/splash/splash.component';
+import { SplashInterceptor } from './shared/utils/interceptors/SplashInterceptor';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -49,6 +51,7 @@ const routerConfig: ExtraOptions = {
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
+    SplashComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,13 @@ const routerConfig: ExtraOptions = {
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
 
-    // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: SplashInterceptor,
+    //   multi: true,
+    // },
+
+    // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   exports: [
