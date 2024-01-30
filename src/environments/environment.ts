@@ -3,9 +3,9 @@ import { Environment } from '@abp/ng.core';
 //const baseUrl = 'https://103.125.253.240:4439';
 //const apiUrl = 'https://103.125.253.240:4437';
 //const issuerUrl = 'https://103.125.253.240';
-
+//'https://apisoowgoodbeta.com'; //
 const baseUrl = 'https://soowgoodbeta.com';
-const apiUrl = 'https://localhost:44339'//'https://apisoowgoodbeta.com'; //
+const apiUrl = 'https://localhost:44339';//
 const issuerUrl = 'https://authsoowgoodbeta.com';
 
 export const environment = {
