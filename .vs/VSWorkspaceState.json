@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\app\\auth-gurd",
-    "\\src\\app\\auth-services",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\services"
+    "\\src\\app"
   ],
+  "SelectedNode": "\\src\\app\\shared\\modules\\public-doctors\\public-doctors.component.ts",
   "PreviewInSolutionExplorer": false
 }
