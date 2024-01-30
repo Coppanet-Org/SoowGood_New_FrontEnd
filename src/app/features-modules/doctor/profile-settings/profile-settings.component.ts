@@ -64,7 +64,7 @@ export class ProfileSettingsComponent implements OnInit {
     public dialog: MatDialog,
     private LoaderService: LoaderService,
     private UserinfoStateService: UserinfoStateService,
-    private profilePicService : AvaterServiceService
+    private profilePicService: AvaterServiceService
   ) { }
 
   ngOnInit(): void {
@@ -77,11 +77,11 @@ export class ProfileSettingsComponent implements OnInit {
     this.doctorTitleList = CommonService.getEnumList(DoctorTitle);
     const currentURL = this._router.url;
     this.getLastPathSegment(currentURL);
-    
-    this.UserinfoStateService.getData().subscribe((userInfo)=> this.profileInfo = userInfo)
+
+    this.UserinfoStateService.getData().subscribe((userInfo) => this.profileInfo = userInfo)
     this.getProfilePic();
 
-    
+
   }
 
   // getProfileInfo(id: any): void {
@@ -220,7 +220,7 @@ export class ProfileSettingsComponent implements OnInit {
   getProfilePic() {
     this.profilePicService
       .getProfilePic('Doctor', this.doctorId, 'ProfilePicture')
-      .then(({profilePic,picUrl}) => {
+      .then(({ profilePic, picUrl }) => {
         this.profilePic = profilePic;
         this.url = picUrl + this.profilePic;
         this.isLoading = false;
