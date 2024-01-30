@@ -20,14 +20,13 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterceptor';
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
-
-
+import { SplashInterceptor } from 'src/app/shared/utils/interceptors/SplashInterceptor';
 
 const routes: Route[] = [
   {
     path: '',
     component: LandingPageComponent,
-  }
+  },
 ];
 @NgModule({
   declarations: [
@@ -52,13 +51,8 @@ const routes: Route[] = [
     ReactiveFormsModule,
     MaterialModulesModule,
     BookingReviewModule,
-  
   ],
 
-  schemas:[
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
-
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageModule {}

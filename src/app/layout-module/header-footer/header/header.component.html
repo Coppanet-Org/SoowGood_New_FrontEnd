@@ -7,7 +7,6 @@
       layout == 'admin' || layout == 'spreed' ? 'container-full' : 'container'
     "
   >
-    <div *ngIf="layout == 'admin'">Admin Nav</div>
     <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
       <div class="header-logo" routerLink="/">
         <img
@@ -45,20 +44,32 @@
                   tabindex="0"
                   class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
                 >
-                  <li (click)="checkAuthUser(userType)" *ngIf="userType !== 'agent'" routerLink="/agent/login">
+                  <li
+                    (click)="checkAuthUser(userType)"
+                    *ngIf="userType !== 'agent'"
+                    routerLink="/agent/login"
+                  >
                     <a class="font-Roboto text-[16px] font-semibold py-2">
                       <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
                     </a>
                   </li>
-                  
-                    <li (click)="checkAuthUser(userType)" *ngIf="userType !== 'agent'" routerLink="/agent/signup">
+
+                  <li
+                    (click)="checkAuthUser(userType)"
+                    *ngIf="userType !== 'agent'"
+                    routerLink="/agent/signup"
+                  >
                     <a class="font-Roboto text-[16px] font-semibold py-2">
                       <i class="fa-solid fa-border-none mr-1"></i>Registration
                     </a>
                   </li>
-                  <li *ngIf="userType === 'agent'" routerLink="/agent/dashboard">
+                  <li
+                    *ngIf="userType === 'agent'"
+                    routerLink="/agent/dashboard"
+                  >
                     <a class="font-Roboto text-[16px] font-semibold py-2">
-                      <i class="fa-solid fa-right-to-bracket mr-1"></i> Dashboard
+                      <i class="fa-solid fa-right-to-bracket mr-1"></i>
+                      Dashboard
                     </a>
                   </li>
                   <!-- <li *ngIf="isAuthLogin && userType=='agent'">

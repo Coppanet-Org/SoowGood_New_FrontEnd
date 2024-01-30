@@ -29,7 +29,19 @@ const routes: Route[] = [
             '../features-modules/public/landing-page/landing-page.module'
           ).then((m) => m.LandingPageModule),
       },
-      
+    ],
+  },
+  {
+    path: 'service',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../features-modules/service/service.module').then(
+            (m) => m.ServiceModule
+          ),
+      },
     ],
   },
   {
@@ -75,7 +87,7 @@ const routes: Route[] = [
   {
     path: 'agent',
     component: DoctorLayoutComponent,
-    canActivate:[isAuth],
+    canActivate: [isAuth],
     children: [
       {
         path: '',
@@ -88,7 +100,7 @@ const routes: Route[] = [
   },
   {
     path: 'doctor',
-    canActivate:[isAuth],
+    canActivate: [isAuth],
     component: DoctorLayoutComponent,
     children: [
       {
@@ -102,7 +114,7 @@ const routes: Route[] = [
   },
   {
     path: 'patient',
-    canActivate:[isAuth],
+    canActivate: [isAuth],
     component: DoctorLayoutComponent,
     children: [
       {
@@ -121,9 +133,9 @@ const routes: Route[] = [
       {
         path: '',
         loadChildren: () =>
-          import('../features-modules/public/soowgood-point/soowgood-point.module').then(
-            (m) => m.SoowgoodPointModule
-          ),
+          import(
+            '../features-modules/public/soowgood-point/soowgood-point.module'
+          ).then((m) => m.SoowgoodPointModule),
       },
     ],
   },
@@ -134,9 +146,9 @@ const routes: Route[] = [
       {
         path: '',
         loadChildren: () =>
-          import('../features-modules/public/soowgood-booth/soowgood-booth.module').then(
-            (m) => m.SoowgoodBoothModule
-          ),
+          import(
+            '../features-modules/public/soowgood-booth/soowgood-booth.module'
+          ).then((m) => m.SoowgoodBoothModule),
       },
     ],
   },
@@ -160,9 +172,9 @@ const routes: Route[] = [
       {
         path: '',
         loadChildren: () =>
-          import('../features-modules/public/contact-us/contact-us.module').then(
-            (m) => m.ContactUsModule
-          ),
+          import(
+            '../features-modules/public/contact-us/contact-us.module'
+          ).then((m) => m.ContactUsModule),
       },
     ],
   },
@@ -173,9 +185,9 @@ const routes: Route[] = [
       {
         path: '',
         loadChildren: () =>
-          import('../features-modules/public/tearms-services/tearms-services.module').then(
-            (m) => m.TearmsServicesModule
-          ),
+          import(
+            '../features-modules/public/tearms-services/tearms-services.module'
+          ).then((m) => m.TearmsServicesModule),
       },
     ],
   },
@@ -215,11 +227,10 @@ const routes: Route[] = [
     AgentLayoutComponent,
     HeaderComponent,
     FooterComponent,
-    
+
     // DashboardHeaderComponent,
-    PublicLayoutTwoComponent
+    PublicLayoutTwoComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes),ScrollDirective],
-  
+  imports: [CommonModule, RouterModule.forChild(routes), ScrollDirective],
 })
 export class LayoutModule {}

@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SplashScreenService {
+  private loading: boolean = false;
 
-  public isLoading = new BehaviorSubject<boolean>(false);
-
-  showLoader(): void {
-    this.isLoading.next(true);
+  setLoading(loading: boolean) {
+    this.loading = loading;
   }
 
-  hideLoader(): void {
-    this.isLoading.next(false);
+  getLoading(): boolean {
+    return this.loading;
   }
 }
