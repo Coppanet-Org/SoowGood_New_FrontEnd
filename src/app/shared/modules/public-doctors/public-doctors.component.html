@@ -1,50 +1,49 @@
-
 <!-- <button (click)="drawer.toggle()">click</button> -->
-  <mat-drawer-container class=" absolute top-0 right-0" [hasBackdrop]="true">
-    <mat-drawer #drawer mode="side">I'm a drawer</mat-drawer>
-    <mat-drawer-content>
-      <div class="doctor-dashboard_midcontent_container w-full ">
-        <div class="flex items-center justify-left border-[1px]">
-          <div class="w-full relative pb-10">
-            <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="selectedFilterData($event)" (getSpecializations)="getSpecializations($event)" (searchValue)="searchData($event)"></app-filter>
-            <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-              <app-skeleton></app-skeleton>
-            </div>
-            
-            <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
-              <div>No records has been found!</div>
-              {{noDataAvailable}}
-            </div>
-            
-            <p class="px-6">Total <strong>{{totalCount}}</strong> {{totalCount > 1 ? "doctors" :"doctor"}} found.</p> 
-            <div *ngIf="!dataLoading"
-            [ngClass]="from=='globalSearch' ? 'w-full  grid lg:grid-cols-3 2xl:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' : 'w-full grid lg:grid-cols-3 gap-10 p-5  flex-wrap  pb-[50px]' ">
+<mat-drawer-container class=" absolute top-0 right-0" [hasBackdrop]="true">
+  <mat-drawer #drawer mode="side">I'm a drawer</mat-drawer>
+  <mat-drawer-content>
+    <div class="doctor-dashboard_midcontent_container w-full ">
+      <div class="flex items-center justify-left border-[1px]">
+        <div class="w-full relative pb-10">
+          <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="selectedFilterData($event)" (getSpecializations)="getSpecializations()" (searchValue)="searchData($event)"></app-filter>
+          <div *ngIf="dataLoading" class="grid grid-cols-4 gap-10 flex-wrap p-5">
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+            <app-skeleton></app-skeleton>
+          </div>
+
+          <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+            <div>No records has been found!</div>
+            {{noDataAvailable}}
+          </div>
+
+          <p class="px-6">Total <strong>{{totalCount}}</strong> {{totalCount > 1 ? "doctors" :"doctor"}} found.</p>
+          <div *ngIf="!dataLoading"
+               [ngClass]="from=='globalSearch' ? 'w-full  grid lg:grid-cols-3 2xl:grid-cols-4 gap-10 p-5  flex-wrap  pb-[50px]' : 'w-full grid lg:grid-cols-3 gap-10 p-5  flex-wrap  pb-[50px]' ">
             <div *ngFor="let doctorDetails of doctorList" class="h-full">
-                <app-doctor-card [doctorDetails]="doctorDetails "  class="max-w-[350px] min-w-[310px]">
-                </app-doctor-card>
-              </div>
+              <app-doctor-card [doctorDetails]="doctorDetails " class="max-w-[350px] min-w-[310px]">
+              </app-doctor-card>
             </div>
-      
-            <div class="w-full flex justify-center">
-                <mat-paginator class="bg-primary/5 w-fit py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
-                [length]="totalCount"
-                [pageSize]="filterModel.pageSize"
-                [pageIndex]="filterModel.pageNo"
-                 aria-label="Select page"
-                               >
-                (page)="pageChanged($event)"
+          </div>
+
+          <div class="w-full flex justify-center">
+            <mat-paginator class="bg-primary/5 w-fit py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
+                           [length]="totalCount"
+                           [pageSize]="filterModel.pageSize"
+                           [pageIndex]="filterModel.pageNo"
+                           aria-label="Select page"
+              (page)="pageChanged($event)"
+                           >
             </mat-paginator>
-            </div>
-        </div> 
+          </div>
+        </div>
       </div>
     </div>
-  
-    </mat-drawer-content>
-  </mat-drawer-container>
+
+  </mat-drawer-content>
+</mat-drawer-container>
