@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { LoginDto, LoginResponseDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
+import type { AccountDeteleResponsesDto, LoginDto, LoginResponseDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
 import type { IdentityUser } from '../volo/abp/identity/models';
 
 @Injectable({
@@ -8,6 +8,15 @@ import type { IdentityUser } from '../volo/abp/identity/models';
 })
 export class UserAccountsService {
   apiName = 'Default';
+  
+
+  delete = (mobile: string, role: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AccountDeteleResponsesDto>({
+      method: 'DELETE',
+      url: '/api/app/user-accounts',
+      params: { mobile, role },
+    },
+    { apiName: this.apiName,...config });
   
 
   isUserExistsByUserName = (userName: string, config?: Partial<Rest.Config>) =>

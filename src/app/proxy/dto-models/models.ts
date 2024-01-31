@@ -11,6 +11,13 @@ import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
+export interface AccountDeteleResponsesDto {
+  userName?: string;
+  name?: string;
+  success?: boolean;
+  message?: string;
+}
+
 export interface AgentMasterDto extends FullAuditedEntityDto<number> {
   agentMasterOrgName?: string;
   agentMasterCode?: string;
@@ -534,6 +541,21 @@ export interface PaymentHistoryInputDto {
 export interface PlatformFacilityDto extends FullAuditedEntityDto<number> {
   serviceName?: string;
   description?: string;
+}
+
+export interface PlatformFinancialSetupDto extends FullAuditedEntityDto<number> {
+  platformServiceId?: number;
+  platformServiceName?: string;
+  amountIn?: string;
+  feeAmount?: number;
+  externalAmountIn?: string;
+  externalFeeAmount?: number;
+  isActive?: boolean;
+}
+
+export interface PlatformServiceDto extends FullAuditedEntityDto<number> {
+  serviceName?: string;
+  serviceDescription?: string;
 }
 
 export interface PrescriptionDrugDetailsDto extends FullAuditedEntityDto<number> {

@@ -20,6 +20,8 @@ export * from './otp.service';
 export * from './patient-profile.service';
 export * from './payment-history.service';
 export * from './platform-facility.service';
+export * from './platform-financial-setup.service';
+export * from './platform.service';
 export * from './prescription-master.service';
 export * from './sms.service';
 export * from './speciality.service';

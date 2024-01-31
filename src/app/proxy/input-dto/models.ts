@@ -187,6 +187,20 @@ export interface PlatformFacilityInputDto extends FullAuditedEntityDto<number> {
   description?: string;
 }
 
+export interface PlatformFinancialSetupInputDto extends FullAuditedEntityDto<number> {
+  platformServiceId?: number;
+  amountIn?: string;
+  feeAmount?: number;
+  externalAmountIn?: string;
+  externalFeeAmount?: number;
+  isActive?: boolean;
+}
+
+export interface PlatformServiceInputDto extends FullAuditedEntityDto<number> {
+  serviceName?: string;
+  serviceDescription?: string;
+}
+
 export interface PrescriptionDrugDetailsInputDto extends FullAuditedEntityDto<number> {
   prescriptionMasterId?: number;
   drugRxId?: number;
