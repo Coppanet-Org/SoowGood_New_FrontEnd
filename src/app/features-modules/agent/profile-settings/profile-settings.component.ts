@@ -1,4 +1,3 @@
-
 import { AgentProfileService } from './../../../proxy/services/agent-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,26 +17,26 @@ export class ProfileSettingsComponent implements OnInit {
   form!: FormGroup;
   url!: any;
   agentId: any;
+  profileInfo: any;
 
   constructor(
     private fb: FormBuilder,
     private NormalAuth: AuthService,
     private AgentProfileService: AgentProfileService,
     private TosterService: TosterService,
-    private UserinfoStateService:UserinfoStateService
+    private UserinfoStateService: UserinfoStateService
   ) {}
   ngOnInit() {
-    this.loadForm()
+    this.loadForm();
     let id = this.NormalAuth.authInfo().id;
     this.agentId = id;
     if (id) {
-      this.UserinfoStateService.getData().subscribe((res) =>
-        this.form.patchValue(res)
-      );
-      
+      this.UserinfoStateService.getData().subscribe((res) => {
+        this.profileInfo = res;
+        this.form.patchValue(res);
+      });
     }
     this.agentInputData = agentInputData;
-   
   }
 
   loadForm() {
@@ -45,7 +44,7 @@ export class ProfileSettingsComponent implements OnInit {
       fullName: [''],
       agentCode: [''],
       mobileNo: [''],
-    
+
       email: [''],
       address: [''],
       contact: [''],
@@ -60,14 +59,11 @@ export class ProfileSettingsComponent implements OnInit {
         id: this.agentId,
       }).subscribe((res) => {
         console.log(res);
-        this.TosterService.customToast(
-          'Successfully updated',
-          'success'
-        );
-        this.isLoading = false
+        this.TosterService.customToast('Successfully updated', 'success');
+        this.isLoading = false;
       });
     } catch (error) {
-      this.TosterService.customToast("Update Failed", 'error' )
+      this.TosterService.customToast('Update Failed', 'error');
     }
   }
 }

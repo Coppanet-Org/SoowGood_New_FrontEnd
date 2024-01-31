@@ -86,19 +86,6 @@
                       >
                         Please enter your full name.
                       </p>
-                      <p
-                        class="text-red-600"
-                        *ngIf="
-                          formSubmitted &&
-                          form.get('fullName')?.hasError('pattern')
-                        "
-                      >
-                        Full name should contain only letters and numbers at the
-                        end (optional).
-                      </p>
-                      <!-- <p class="text-red-600" *ngIf="formSubmitted && form.get('fullName')?.hasError('invalidName')">
-                                  Full name should be at least 3 characters long
-                                </p> -->
                     </div>
                   </div>
                   <div class="w-full px-3 sm:w-1/4">
@@ -218,7 +205,8 @@
                         class="text-red-600"
                         *ngIf="
                           formSubmitted &&
-                          form.get('dateOfBirth')?.hasError('required')
+                          form.get('dateOfBirth')?.hasError('required') &&
+                          form.get('dateOfBirth')?.dirty
                         "
                       >
                         Please enter your birth date.
@@ -457,8 +445,9 @@
                   Reset you password
                 </h2>
               </div>
-
-              <app-reset-password></app-reset-password>
+              <app-reset-password
+                [mobile]="profileInfo?.mobileNo"
+              ></app-reset-password>
             </div>
           </div>
         </div>

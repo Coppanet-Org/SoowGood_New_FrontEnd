@@ -16,6 +16,7 @@ import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PictureDialogModule } from '../../../shared/modules/picture-dialog/picture-dialog.module';
+import { ResetPasswordModule } from 'src/app/shared/modules/reset-password/reset-password.module';
 
 const routes: Route[] = [
   {
@@ -31,24 +32,22 @@ const routes: Route[] = [
       {
         path: 'basic-info',
         component: BasicInfoComponent,
-
       },
       {
         path: 'education',
-        component: EducationInfoComponent
+        component: EducationInfoComponent,
       },
       {
         path: 'specialization',
-        component: SpecializationInfoComponent
+        component: SpecializationInfoComponent,
       },
       {
         path: 'documents',
-        component: DocumentsComponent
+        component: DocumentsComponent,
       },
     ],
   },
-  
-]
+];
 
 @NgModule({
   declarations: [
@@ -60,18 +59,19 @@ const routes: Route[] = [
     DegreeCardComponent,
     SpecializationDialogComponent,
     DocumentsComponent,
-    
   ],
   imports: [
-    CommonModule,RouterModule.forChild(routes),
+    CommonModule,
+    RouterModule.forChild(routes),
     MaterialModulesModule,
     InputModule,
     LoaderModule,
     MatFormFieldModule,
     MatInputModule,
-    PictureDialogModule
+    PictureDialogModule,
+    ResetPasswordModule,
   ],
 
-  providers: [DatePipe], 
+  providers: [DatePipe],
 })
-export class ProfileSettingsModule { }
+export class ProfileSettingsModule {}

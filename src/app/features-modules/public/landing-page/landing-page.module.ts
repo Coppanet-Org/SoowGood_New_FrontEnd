@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterceptor';
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 import { SplashInterceptor } from 'src/app/shared/utils/interceptors/SplashInterceptor';
+import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
 
 const routes: Route[] = [
   {
@@ -43,6 +44,7 @@ const routes: Route[] = [
     AppMarketingComponent,
     ClientFeedbackComponent,
     NewsletterComponent,
+    PricingCardComponent,
   ],
   imports: [
     CommonModule,

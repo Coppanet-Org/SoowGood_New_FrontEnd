@@ -26,15 +26,16 @@ export class BasicInfoComponent implements OnInit {
   genderList: ListItem[] = [];
   titleList: ListItem[] = [];
   maritalOptions: ListItem[] = [];
-  countryList = countries
+  countryList = countries;
   specialties: any = [];
-  formSubmitted: boolean = false
+  formSubmitted: boolean = false;
   @Input() isLoading: boolean = false;
   doctorId: any;
   @Output() formDataEvent = new EventEmitter();
   @Output() profileData = new EventEmitter();
   receivedData: any;
   inputConfigs: any = inputConfigs;
+  authInfo: any;
   constructor(
     private fb: FormBuilder,
     private doctorSpeciality: SpecialityService,
@@ -44,7 +45,7 @@ export class BasicInfoComponent implements OnInit {
     private LoaderService: LoaderService,
     private UserinfoStateService: UserinfoStateService,
     private TosterService: TosterService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadForm();
@@ -55,18 +56,20 @@ export class BasicInfoComponent implements OnInit {
       this.specialties = res;
     });
     let authId = this.NormalAuth.authInfo().id;
+
     this.doctorId = authId;
     this.fetchProfileInfo(authId);
   }
   fetchProfileInfo(doctorId: any): void {
-    this.LoaderService.sendLoaderState(true);
+    // this.LoaderService.sendLoaderState(true);
     if (!doctorId) {
-      this.LoaderService.sendLoaderState(false);
+      // this.LoaderService.sendLoaderState(false);
       return;
     }
 
     this.UserinfoStateService.getData().subscribe(
       (profileInfo) => {
+        this.authInfo = profileInfo;
         profileInfo.dateOfBirth = this.formatDate(profileInfo.dateOfBirth); // Format the date of birth
         profileInfo.bmdcRegExpiryDate = this.formatDate(
           profileInfo.bmdcRegExpiryDate
@@ -98,7 +101,10 @@ export class BasicInfoComponent implements OnInit {
       // mobileNo: [''],
       doctorTitle: [''],
       fullName: [''],
-      email: ['', [Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)]],
+      email: [
+        '',
+        [Validators.pattern(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/)],
+      ],
       gender: [''],
       dateOfBirth: [''],
       city: [''],
@@ -109,15 +115,13 @@ export class BasicInfoComponent implements OnInit {
       bmdcRegExpiryDate: [''],
       specialityId: ['', Validators.required],
       identityNumber: [''],
-
     });
   }
   sendDataToParent() {
-   
-    this.formSubmitted = true
+    this.formSubmitted = true;
     if (this.form.invalid) {
-      this.TosterService.customToast('Fill all the requirements', 'warning')
-      return
+      this.TosterService.customToast('Fill all the requirements', 'warning');
+      return;
     }
     this.formDataEvent.emit({ ...this.form.value, id: this.doctorId });
   }

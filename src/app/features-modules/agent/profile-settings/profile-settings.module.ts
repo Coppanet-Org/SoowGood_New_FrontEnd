@@ -4,25 +4,24 @@ import { ProfileSettingsComponent } from './profile-settings.component';
 import { Route, RouterModule } from '@angular/router';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ResetPasswordModule } from 'src/app/shared/modules/reset-password/reset-password.module';
 
 const routes: Route[] = [
   {
     path: '',
-    component: ProfileSettingsComponent
+    component: ProfileSettingsComponent,
   },
-  
-]
+];
 
 @NgModule({
-  declarations: [
-    ProfileSettingsComponent
-  ],
+  declarations: [ProfileSettingsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     InputModule,
     ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+    ResetPasswordModule,
+  ],
 })
-export class ProfileSettingsModule { }
+export class ProfileSettingsModule {}

@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   userType: string = '';
   scrolled: boolean = false;
   logoPath: string = 'assets/SoowGood-Logo.png';
+  authInfo: any;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -44,8 +45,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     //let id = this.NormalAuth.authInfo().id;
     const authInfo = this.NormalAuth.authInfo();
+    this.authInfo = authInfo;
     let id = authInfo ? authInfo.id : null;
+    this.UserinfoStateService.getProfileInfo(id, this.authInfo?.userType);
     if (id) {
+      this.UserinfoStateService.getData().subscribe((res) => console.log(res));
       this.isAuthLogin = true;
     } else {
       this.isAuthLogin = false;
@@ -56,6 +60,7 @@ export class HeaderComponent implements OnInit {
     // this.NormalAuth.signOut();
     this.MainAuth.signOut();
     this.isAuthLogin = false;
+    window.location.reload();
   }
   navigator(path: string) {
     let base = `/${path}`;
@@ -75,9 +80,10 @@ export class HeaderComponent implements OnInit {
           'warning'
         );
       } else {
-        return
+        return;
         // this.TosterService.customToast('Something went wrong', 'error');
       }
-    }return
+    }
+    return;
   }
 }

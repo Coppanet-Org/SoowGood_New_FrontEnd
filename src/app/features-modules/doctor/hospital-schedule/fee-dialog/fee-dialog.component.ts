@@ -1,6 +1,13 @@
 import { DoctorFeeSetupService } from './../../../../proxy/services/doctor-fee-setup.service';
 import { HospitalStateService } from '../../../../shared/services/states/hospital-state.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -37,7 +44,7 @@ export class FeeDialogComponent implements OnInit {
     private DoctorScheduleService: DoctorScheduleService,
     private DoctorFeeSetupService: DoctorFeeSetupService,
     @Inject(MAT_DIALOG_DATA) public editData: any | undefined
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     let authInfo = this.normalAuth.authInfo();
@@ -137,7 +144,10 @@ export class FeeDialogComponent implements OnInit {
     if (!this.editData) {
       this.DoctorFeeSetupService.create(obj).subscribe({
         next: (res) => {
-          this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
+          this.tosterService.customToast(
+            String(res.message),
+            res.success == true ? 'success' : 'error'
+          );
           this.dialogRef.close(true);
           this.formSubmitted = false;
         },
@@ -148,7 +158,7 @@ export class FeeDialogComponent implements OnInit {
           );
           this.dialogRef.close(false);
           this.formSubmitted = false;
-        }
+        },
       });
     } else {
       this.DoctorFeeSetupService.update({
@@ -156,18 +166,23 @@ export class FeeDialogComponent implements OnInit {
         id: this.editData.id,
       }).subscribe({
         next: (res) => {
-          this.tosterService.customToast(String(res.message), res.success == true ? 'success' : 'error');
+          this.tosterService.customToast(
+            String(res.message),
+            res.success == true ? 'success' : 'error'
+          );
           this.dialogRef.close(true);
           this.formSubmitted = false;
         },
         error: (err) => {
+          console.log(err);
+
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
           );
           this.dialogRef.close(false);
           this.formSubmitted = false;
-        }
+        },
       });
     }
   }

@@ -80,9 +80,13 @@ export class AgentLoginComponent implements OnInit {
       this.appAuthService.isLoadingSubject.next(true);
       this.oAuthService
         .fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
-        .then((userInfo: UserProfile) => {
+        .then((userInfo: any) => {
           this.formSubmitted = false;
-          if (userInfo) {
+          if (
+            userInfo &&
+            (userInfo?.info?.role !== 'Doctor' ||
+              userInfo?.info?.role !== 'Patient')
+          ) {
             //const userModel = this.appAuthService.createUserModel(userInfo);
             //var un = username.split('@')[0];
 
@@ -133,11 +137,15 @@ export class AgentLoginComponent implements OnInit {
                   );
               });
           }
+          if (
+            userInfo?.info?.role === 'Doctor' ||
+            userInfo?.info?.role === 'Patient'
+          ) {
+            this.errorMessage = `You ara a ${userInfo?.info?.role}. Please login from ${userInfo?.info?.role} portal.`;
+          }
         })
         .catch((err) => {
           this.isLoading = false;
-          console.log(err.error?.error_description);
-
           this.errorMessage = err.error?.error_description;
         });
     } catch (error: any) {

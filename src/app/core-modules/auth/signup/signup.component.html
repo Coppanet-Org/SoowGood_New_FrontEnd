@@ -920,10 +920,6 @@
                 >
                   Please enter your full name.
                 </mat-error>
-                *ngIf=" formSubmitted &&
-                userInfoForm.get('fullName')?.hasError('invalidName') " > Full
-                name should be at least 3 characters long and follow the
-                specified pattern.
               </div>
             </div>
           </div>
@@ -936,15 +932,36 @@
               >
                 Gender
               </label>
-              <input
-                autocomplete="off"
+
+              <select
                 formControlName="gender"
-                type="text"
-                name="gender"
+                name="select"
                 id="gender"
-                placeholder="Gender"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-              />
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              >
+                <option value="0" class="font-semibold text-gray-500">
+                  Select gender
+                </option>
+                <option
+                  *ngFor="let item of genderList"
+                  value="{{ item.id }}"
+                  class="font-semibold text-gray-500"
+                >
+                  {{ item.name }}
+                </option>
+              </select>
+
+              <div>
+                <div class="flex justify-between">
+                  <mat-error
+                    *ngIf="
+                      formSubmitted && userInfoForm.get('gender')?.value === '0'
+                    "
+                  >
+                    Please select your gender.
+                  </mat-error>
+                </div>
+              </div>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">

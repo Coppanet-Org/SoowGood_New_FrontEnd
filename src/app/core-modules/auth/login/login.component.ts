@@ -147,8 +147,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.appAuthService.isLoadingSubject.next(true);
         this.oAuthService
           .fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
-          .then((userInfo: UserProfile) => {
-            if (userInfo) {
+          .then((userInfo: any) => {
+            console.log(userInfo);
+
+            if (userInfo && userInfo?.info?.role !== 'Agent') {
               const userModel = this.appAuthService.createUserModel(userInfo);
               var un = username.split('@')[0];
               this.authService
@@ -276,6 +278,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.isLoading = false;
                   }
                 });
+            }
+            if (userInfo?.info.role === 'Agent') {
+              this.hasError = true;
+              this.isLoading = false;
+              this.errorMessage =
+                'You are a Agent!. Please login from Agent portal.';
             }
           })
           .catch((errorResponse) => {
