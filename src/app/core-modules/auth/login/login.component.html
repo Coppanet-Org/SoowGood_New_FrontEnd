@@ -27,6 +27,7 @@
                 >+88 &nbsp;</span
               >
               <input
+               autocomplete="off"
                 matInput
                 maxlength="11"
                 class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
@@ -78,6 +79,7 @@
               }"
             >
               <input
+                autocomplete="off"
                 formControlName="password"
                 [type]="passwordFieldType"
                 name="password"
@@ -85,8 +87,8 @@
                 class="outline-none border-none w-full"
                 placeholder="Password123@*"
               />
-              <button
-                (submit)="passwordVisibility('password')"
+              <span
+                (click)="passwordVisibility('password')"
                 class="cursor-pointer"
               >
                 <i
@@ -96,7 +98,7 @@
                       : 'fa fa-eye'
                   "
                 ></i>
-              </button>
+              </span>
             </div>
             <div class="flex flex-col">
               <mat-error
@@ -290,7 +292,7 @@
               <div>
                 <label
                   for="newPassword"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
                   >New Password</label
                 >
                 <input
@@ -365,7 +367,7 @@
               <div>
                 <label
                   for="confirm-password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
                   >Confirm password</label
                 >
                 <input

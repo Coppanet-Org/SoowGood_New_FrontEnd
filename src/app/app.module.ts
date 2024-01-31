@@ -12,7 +12,11 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { DoctorProfileInfoFormComponent } from './core-modules/auth/signup/components/doctor-profile-info-form/doctor-profile-info-form.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MaterialModulesModule } from './shared/modules/material-modules/material-modules.module';
 import { LoaderModule } from './shared/modules/loader/loader.module';
 import { DegreeSpecilizationInfoFormComponent } from './core-modules/auth/signup/components/degree-specilization-info-form/degree-specilization-info-form.component';
@@ -21,21 +25,21 @@ import { PaymentSuccessComponent } from './shared/components/payment-success/pay
 import { OtpInputComponent } from './shared/components/otp-input/otp-input.component';
 import { SignupModule } from './core-modules/auth/signup/signup.module';
 import { LoginModule } from './core-modules/auth/login/login.module';
-import { AbpOAuthModule } from "@abp/ng.oauth";
+import { AbpOAuthModule } from '@abp/ng.oauth';
 import { PaymentFaildComponent } from './shared/components/payment-faild/payment-faild.component';
 import { PaymentCancelComponent } from './shared/components/payment-cancel/payment-cancel.component';
 import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
+import { MatNativeDateModule } from '@angular/material/core';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
+import { SplashComponent } from './shared/components/splash/splash.component';
+import { SplashInterceptor } from './shared/utils/interceptors/SplashInterceptor';
 
 const routerConfig: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
   // preloadingStrategy       : PreloadAllModules  [ R&D]
 };
-
-
 
 @NgModule({
   declarations: [
@@ -47,16 +51,14 @@ const routerConfig: ExtraOptions = {
     OtpInputComponent,
     PaymentFaildComponent,
     PaymentCancelComponent,
-    
-    //PaginatorComponent
-   // PaginationComponent
+    SplashComponent,
   ],
   imports: [
     BrowserModule,
+    MatNativeDateModule,
     HttpClientModule,
     NgOtpInputModule,
-    // SignupModule,
-    // LoginModule,
+    MatNativeDateModule,
     CoreModule.forRoot({
       environment,
       registerLocaleFn: registerLocale(),
@@ -70,18 +72,29 @@ const routerConfig: ExtraOptions = {
     }),
     LoaderModule,
     MatSidenavModule,
-    ReactiveFormsModule, FormsModule,
+    ReactiveFormsModule,
+    FormsModule,
     AbpOAuthModule.forRoot(),
   ],
   // add this interceptors on static page
 
-   providers: [
-     { provide: LocationStrategy, useClass: HashLocationStrategy }
-   ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: SplashInterceptor,
+    //   multi: true,
+    // },
+
+    // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
-  exports: [MatDialogModule, ReactiveFormsModule, FormsModule
+  exports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    FormsModule,
     //, PaginatorComponent
   ],
-  
 })
-export class AppModule { }
+export class AppModule {}

@@ -18,7 +18,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    
   ],
   imports: [
     DashboardStatisticscardModule,

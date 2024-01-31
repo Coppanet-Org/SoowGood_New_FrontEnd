@@ -162,7 +162,8 @@ export class SignupComponent implements OnInit {
   stepBack1: any = false;
   errorMessage:string=""
   startYear = new Date().getFullYear();
-  range: any = [];
+  range:any = [];
+  minYear = new Date().getFullYear() - 1;
   constructor(
     private fb: FormBuilder,
     private otpService: OtpService,
@@ -184,8 +185,14 @@ export class SignupComponent implements OnInit {
   ) {
     this.todayDate = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
     //this.maxdate = this.datePipe.transform(this.maxdate, 'yyyy-MM-dd');
+
+
   }
 
+
+
+
+  
   ngOnInit(): void {
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
@@ -373,7 +380,8 @@ export class SignupComponent implements OnInit {
     });
     this.userInfoForm = this.fb.group(
       {
-        fullName: ['', [Validators.required, customNameValidator]],
+        // fullName: ['', [Validators.required, customNameValidator]],
+        fullName: ['', [Validators.required]],
         doctorTitle: ['0', Validators.required],
         email: [
           '',
@@ -394,18 +402,23 @@ export class SignupComponent implements OnInit {
           ],
         ],
         confirmPassword: ['', Validators.required],
-        gender: ['0', Validators.required],
-        dateOfBirth: ['', Validators.required],
-        city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+        gender: [null],
+        dateOfBirth: [''],
+        // city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+        city: ['', ],
         country: ['Bangladesh', Validators.required],
         address: [''], //,[Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
         zipCode: [''], //, [Validators.required, Validators.pattern(/^\d{4}$/)]
-        bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{6,9}$/)]],
-        bmdcRegExpiryDate: ['', Validators.required],//[Validators.required, yearValidator()]],
+        // bmdcRegNo: ['', [Validators.required, Validators.pattern(/^\d{6,9}$/)]],
+        bmdcRegNo: [''],
+        bmdcRegExpiryDate: [''],//[Validators.required, yearValidator()]],
         specialityId: ['0', Validators.required],
+        // identityNumber: [
+        //   '',
+        //   [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{10,17}$/)],
+        // ],
         identityNumber: [
           '',
-          [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{10,17}$/)],
         ],
       },
       { validator: CustomValidators.matchValidator }
@@ -413,15 +426,14 @@ export class SignupComponent implements OnInit {
     this.formDegree = this.fb.group({
       zipCode: ['1216'],
       degreeId: ['0', Validators.required],
-      duration: ['0', Validators.required],
+      duration: ['0'],
       passingYear: ['2000'], //, [Validators.required, customPassingYearValidator]
       instituteName: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
+        Validators.required,
       ],
       instituteCity: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
       ],
       instituteCountry: ['Bangladesh', Validators.required]//['',[Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],],
     });
@@ -521,7 +533,7 @@ export class SignupComponent implements OnInit {
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
       .subscribe({
         next:(res)=>{
-          if (res) {
+          if (res) {         
             this.otpModal = res;
             this.isLoading = false;
             this.formSubmitted = false
@@ -545,6 +557,7 @@ export class SignupComponent implements OnInit {
   }
 
   verify() {
+    this.errorMessage=""
     let otp = this.otp;
     if (otp) {
       this.subs.sink = this.otpService
@@ -553,7 +566,7 @@ export class SignupComponent implements OnInit {
           if (res) {
             this.userInfoModal = res;
           } else {
-            this.errMsg = 'Invalid Otp!';
+            this.errorMessage = 'Invalid Otp!';
           }
         });
     }
@@ -575,23 +588,31 @@ export class SignupComponent implements OnInit {
     const { fullName, email, password, confirmPassword } =
       this.userInfoForm.value;
 
-    if (
-      this.userInfoForm.invalid &&
-      this.formGroup.get('userTypeName')?.value == 'Doctor'
-    ) {
-      this.TosterService.customToast('All fields is required', 'warning');
-      return;
-    } else if (
-      this.formGroup.get('userTypeName')?.value == 'Patient' &&
-      !fullName &&
-      !email &&
-      !password &&
-      !confirmPassword
-    ) {
-      this.TosterService.customToast('All fields is required', 'warning');
-      return;
-    }
-
+    // if (
+    //   this.userInfoForm.invalid &&
+    //   this.formGroup.get('userTypeName')?.value == 'Doctor'
+    // ) {
+    //   this.TosterService.customToast('All fields is required', 'warning');
+    //   return;
+    // } else if (
+    //   this.formGroup.get('userTypeName')?.value == 'Patient' &&
+    //   !fullName &&
+    //   !email &&
+    //   !password &&
+    //   !confirmPassword
+    // ) {
+    //   this.TosterService.customToast('All fields is required', 'warning');
+    //   return;
+    // }
+    if (this.formGroup.get('userTypeName')?.value == 'Patient' &&
+        !fullName &&
+        !email &&
+        !password &&
+        !confirmPassword
+      ) {
+        this.TosterService.customToast('All fields is required', 'warning');
+        return;
+      }
     try {
       this.isLoading = true;
 
@@ -643,7 +664,6 @@ export class SignupComponent implements OnInit {
         } else if (this.userType === 'Patient') {
           this.handlePatientProfile(signupResDto);
         }
-        this.isLoading = false;
       }
     } catch (err) {
       console.error('Error occurred:', err);
@@ -710,11 +730,13 @@ export class SignupComponent implements OnInit {
                 'Basic Information Saved Successfully',
                 'success'
               );
+              this.isLoading = false;
               this.cdRef.detectChanges();
             });
         });
     }
     else {
+      this.isLoading = true
       this.doctorProfileService
         .update(this.doctorProfileDto)
         .subscribe((profRes: any) => {
@@ -740,17 +762,17 @@ export class SignupComponent implements OnInit {
             createFrom: profRes.createFrom,
             userType: this.userType,
           };
-
           this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-
+          
           if (this.normalAuth) {
             this.loadAuth();
           }
-
+          
           this.tosterService.customToast(
-            'Basic Information Saved Successfully',
+            'Basic Information Update Successfully',
             'success'
-          );
+            );
+            this.isLoading = false
           this.cdRef.detectChanges();
           //});
         });
@@ -793,6 +815,7 @@ export class SignupComponent implements OnInit {
         //  this.loadAuth();
         //}
         //let navUrl = this.userType.toLowerCase() + '/dashboard';
+        this.isLoading = false;
         this._router
           .navigate(['/login'], {
             state: { data: res }, // Pass the 'res' object as 'data' in the state object
@@ -976,10 +999,12 @@ export class SignupComponent implements OnInit {
       this.doctorDegrees.length === 0 ||
       this.doctorSpecializations.length === 0
     ) {
+      this.isLoading = false;
       this.tosterService.customToast(
         'You have to add your medical degees and specializations',
         'warning'
       );
+
       return;
     }
 
@@ -1408,19 +1433,12 @@ export class SignupComponent implements OnInit {
   }
 
   finalContinue() {
-    if (this.fileList.length == 0 && this.idFileList.length == 0) {
-      this.tosterService.customToast(
-        'Please upload all the required documents',
-        'error'
-      );
-      return;
-    }
 
-    else {
+
+ 
       this.isLoading = true;
       //this.userType = this.normalAuth.authInfo().userType;
       //let userType = this.userType.toString().toLowerCase();
-      let message = 'Congratulations..!! Doctor Profile Created Successfully. You can login now.';
       this.subs.sink = this.doctorProfileService
         .get(this.doctorId)
         .subscribe((doctorDto: DoctorProfileInputDto) => {
@@ -1472,6 +1490,8 @@ export class SignupComponent implements OnInit {
                   //  this.loadAuth();
                   //}
                   //let navUrl = this.userType.toLowerCase() + '/dashboard';
+                  let message = 'Congratulations..!! Doctor Profile Created Successfully. You can login now.';
+
                   this._router
                     .navigate(['/login'], {
                       state: { data: res }, // Pass the 'res' object as 'data' in the state object
@@ -1486,7 +1506,7 @@ export class SignupComponent implements OnInit {
               });
           }
         });
-    }
+    
   }
 
   getErrorMessage(filed: string) {
@@ -1507,7 +1527,6 @@ export class SignupComponent implements OnInit {
   }
 
   getBackStep1Data() {
-    this.isLoading = true;
     let authInfo = this.normalAuth.authInfo();
     let profileId = authInfo.id;
     this.doctorProfileService.get(profileId).subscribe(res => {

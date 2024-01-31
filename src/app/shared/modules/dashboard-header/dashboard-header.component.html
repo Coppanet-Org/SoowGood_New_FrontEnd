@@ -1,4 +1,6 @@
-<div class=" sticky top-0 z-50 w-full backdrop-blur-md bg-primary h-[70px] flex px-10  box-border  justify-end items-center">
+<div
+  class="sticky top-0 z-50 w-full backdrop-blur-md bg-primary h-[70px] flex px-10 box-border justify-end items-center"
+>
   <!-- <div class="mr-10 py-2 h-fit px-4  rounded-md bg-white/20 flex items-center">
       <input class="outline-none bg-transparent w-[300px] text-white/80 placeholder:text-white/50" placeholder="Search patient/doctor..." />
       <span class="bg-transparent">
@@ -13,14 +15,20 @@
           <img src="../../../../assets/person.png" />
         </div>
       </label>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52">
-        <li routerLink=".../">
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
+      >
+        <li (click)="goHome()">
           <a class="font-Roboto text-[16px] font-semibold py-2">
             <i class="fa-solid fa-border-none mr-1"></i> Home Page
           </a>
         </li>
         <li *ngIf="isAuthLogin">
-          <a class="font-Roboto text-[16px] font-semibold  py-2" (click)="signOut()">
+          <a
+            class="font-Roboto text-[16px] font-semibold py-2"
+            (click)="signOut()"
+          >
             <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
           </a>
         </li>

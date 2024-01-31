@@ -11,6 +11,8 @@ export class AvaterServiceService {
   constructor(private doctorProfilePicService: DocumentsAttachmentService) {}
 
   getProfilePic(entityType: string, entityId: number, attachmentType: string) {
+
+    
     return new Promise<{profilePic:string,picUrl:string}>((resolve, reject) => {
       const subs = new Subscription();
 
@@ -21,23 +23,22 @@ export class AvaterServiceService {
             entityId,
             attachmentType
           )
-          .subscribe(
-            (at) => {
-              if (at) {
+          .subscribe({
+            next:(at)=>{
+              if (at) {               
                 let prePaths: string = '';
                 const re = /wwwroot/gi;
                 prePaths = at.path ? at.path : '';
                 const profilePic = prePaths.replace(re, '');
+               
+                
                 resolve({profilePic,picUrl:this.picUrl});
               }
             },
-            (error) => {
-              reject(error);
-            },
-            () => {
-              subs.unsubscribe();
+            error:(err)=>{
+              reject(err)
             }
-          )
+          })
       );
     });
   }

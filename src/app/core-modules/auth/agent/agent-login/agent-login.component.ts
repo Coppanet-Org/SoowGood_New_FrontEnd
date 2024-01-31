@@ -27,6 +27,8 @@ export class AgentLoginComponent implements OnInit {
     password: '',
   };
   subs = new SubSink();
+  passwordFieldType: string ="password";
+  confirmPasswordFieldType: string="password";
   constructor(
     private ToasterService: TosterService,
     private UserAuthService: UserAccountsService,
@@ -46,11 +48,7 @@ export class AgentLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       mobileNo: [
         this.defaultAuth.mobileNo,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]),
+        Validators.compose([Validators.required]),
       ],
       password: [
         this.defaultAuth.password,
@@ -64,6 +62,7 @@ export class AgentLoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isLoading = true;
     if (!this.loginForm.valid && !this.loginForm.touched) {
       this.ToasterService.customToast(
         'Please filled all required field',
@@ -85,6 +84,7 @@ export class AgentLoginComponent implements OnInit {
       this.appAuthService.isLoadingSubject.next(true);
       this.oAuthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
         .then((userInfo: UserProfile) => {
+          console.log(userInfo);
           if (userInfo) {
             //const userModel = this.appAuthService.createUserModel(userInfo);
             //var un = username.split('@')[0];
@@ -146,8 +146,21 @@ export class AgentLoginComponent implements OnInit {
       }
     }
   }
-  handleLoginError(error: any): any { }
-  handleProfileError(error: any): any { }
+  handleLoginError(error: any): any {
+    this.isLoading = false;
+  }
+  handleProfileError(error: any): any {
+    this.isLoading = false;
+  }
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+    }
+  }
   ngOnDestroy() {
     this.subs.unsubscribe();
   }

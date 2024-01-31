@@ -34,7 +34,7 @@ export class PatientDetailsComponent implements OnInit {
     //   });
 
     const { patientProfileId } = this.route.snapshot.params;
-    if (this.userInfo.userType === 'doctor' ) {      
+    if (this.userInfo.userType === 'doctor') {
       if (patientProfileId && user.id) {
         this.PatientProfileService.get(patientProfileId).subscribe((res) => {
           this.patientProfileInfo = res;
@@ -54,6 +54,7 @@ export class PatientDetailsComponent implements OnInit {
         patientProfileId
       ).subscribe((res) => {
         this.prescriptionListDetails = res;
+        console.log(res);
       });
     } else if (this.userInfo.userType === 'agent') {
       // this.PatientProfileService.get(patientProfileId).subscribe((res) => {
@@ -62,6 +63,7 @@ export class PatientDetailsComponent implements OnInit {
       // this.PrescriptionMasterService.getPrescriptionMasterListByPatientId(patientProfileId).subscribe((res)=>{
       //   this.prescriptionListDetails = res
       // })
-    }return
+    }
+    return;
   }
 }

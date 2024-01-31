@@ -2,7 +2,11 @@ import { PatientProfileService } from './../../../../../proxy/services/patient-p
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { map, of, switchMap } from 'rxjs';
 import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
 import { Gender } from 'src/app/proxy/enums';
@@ -26,8 +30,8 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   createPatientForm!: FormGroup;
   thirdFormGroup!: FormGroup;
   fourFormGroup!: FormGroup;
-  bookingInfo: any
-  activeTab: number = 0
+  bookingInfo: any;
+  activeTab: number = 0;
   formSubmitted: boolean = false;
   createNewPatientInfo: PatientProfileDto = {};
   alreadyExistPatient: PatientProfileDto = {};
@@ -37,7 +41,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   profileInfo: any;
   userPatientList: any[] = [];
   genderList: ListItem[] = [];
-  serviceFeeList: FinancialSetupDto[] = [];
+  serviceFeeList: FinancialSetupDto[] = this.doctorData?.serviceFeeList;
   stepLoading: boolean = false;
   userRole: any;
   constructor(
@@ -47,26 +51,22 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService,
     private TosterService: TosterService,
     private PatientProfileService: PatientProfileService,
-    private FinancialSetupService: FinancialSetupService,
+
     private NormalAuth: AuthService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.genderList = CommonService.getEnumList(Gender)
-    this.FinancialSetupService.getList().subscribe(res => {
-      this.serviceFeeList = res;
-    });
+    this.genderList = CommonService.getEnumList(Gender);
+
     this.userRole = this.NormalAuth.authInfo()?.userType;
 
     let id = this.NormalAuth.authInfo()?.id;
     if (this.userRole == 'patient' && id) {
-
       this.UserinfoStateService.getUserPatientInfo(id, 'patient');
       this.UserinfoStateService.getProfileInfo(id, 'patient');
     }
     if (this.userRole == 'agent' && id) {
-
       this.UserinfoStateService.getUserPatientInfo(id, 'agent');
       this.UserinfoStateService.getProfileInfo(id, 'agent');
     }
@@ -79,7 +79,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
           if (e) {
             return this.UserinfoStateService.getUserPatientData().pipe(
               map((data) => {
-                return data.map((item: any) => ({
+                return data?.map((item: any) => ({
                   name: item.patientName,
                   id: item.id,
                 }));
@@ -99,44 +99,45 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     this.bookingForm = this.fb.group({
       bookMyself: [''],
       bookOther: [''],
-      patientName: [''],
-      age: [''],
-      mobile: [''],
+      patientName: ['', Validators.required],
+      age: ['', Validators.required],
+      mobile: ['', Validators.required],
     });
     this.createPatientForm = this.fb.group({
       isSelf: [false, Validators.required],
-      patientName: ['', [Validators.required, Validators.minLength(3), customNameValidator]],
+      patientName: ['', [Validators.required]],
       patientProfileId: [''],
-      age: ['', [
-        Validators.required,
-        Validators.pattern(/^[1-9][0-9]{0,2}$/),
-      ]],
+      age: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{0,2}$/)]],
       gender: ['0', Validators.required],
       bloodGroup: ['0', Validators.required],
-      patientMobileNo: ['', [
-        Validators.required,
-        Validators.pattern(/^(?:88)?[0-9]{11}$/),
-        Validators.minLength(11),
-        Validators.maxLength(11),
-      ],],
+      patientMobileNo: [
+        '',
+        [Validators.required, Validators.pattern(/^(?:88)?[0-9]{11}$/)],
+      ],
       patientEmail: [
         '' || this.profileInfo?.email || 'admin@gmail.com',
         Validators.required,
       ],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
-      creatorRole: [(this.userRole == 'patient' ? 'patient' : 'agent'), Validators.required],
+      creatorRole: [
+        this.userRole == 'patient' ? 'patient' : 'agent',
+        Validators.required,
+      ],
     });
   }
   onStepChange(step: number, bookFor?: string) {
+    var appointmentTime = new Date();
 
+    var hours = appointmentTime.getHours();
+    var minutes = appointmentTime.getMinutes();
+    var seconds = appointmentTime.getSeconds();
 
     if (step === 0) {
       this.activeTab = step;
     }
     if (step === 2) {
-      this.stepLoading = true
-
+      this.stepLoading = true;
 
       let plFeeIn: any = '';
       let agentFeeIn: any = '';
@@ -146,42 +147,51 @@ export class LiveConsultBookingDialogComponent implements OnInit {
       let calculatedPlFee: any = 0;
       let calculatedAgentFee: any = 0;
       if (this.userRole == 'patient') {
-        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.amountIn;
-        plFee = this.serviceFeeList.find(f => f.platformFacilityId == 3 && f.amountIn == plFeeIn)?.amount;
-        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 3)?.providerAmount;
+        plFeeIn = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 3
+        )?.amountIn;
+        plFee = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 3 && f.amountIn == plFeeIn
+        )?.amount;
+        providerfee = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 3
+        )?.providerAmount;
         if (plFeeIn == 'Percentage') {
           calculatedPlFee = providerfee * (plFee / 100);
-        }
-        else if (plFeeIn == 'Flat') {
+        } else if (plFeeIn == 'Flat') {
           calculatedPlFee = plFee;
         }
-      }
-      else if (this.userRole == 'agent') {
-        plFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.amountIn;
-        plFee = this.serviceFeeList.find(f => f.platformFacilityId == 6 && f.amountIn == plFeeIn)?.amount;
-        agentFeeIn = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.externalAmountIn;
-        agentFee = this.serviceFeeList.find(f => f.platformFacilityId == 6 && f.externalAmountIn == agentFeeIn)?.amount;
-        providerfee = this.serviceFeeList.find(f => f.platformFacilityId == 6)?.providerAmount;
+      } else if (this.userRole == 'agent') {
+        plFeeIn = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 6
+        )?.amountIn;
+        plFee = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 6 && f.amountIn == plFeeIn
+        )?.amount;
+        agentFeeIn = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 6
+        )?.externalAmountIn;
+        agentFee = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 6 && f.externalAmountIn == agentFeeIn
+        )?.amount;
+        providerfee = this.serviceFeeList.find(
+          (f) => f.platformFacilityId == 6
+        )?.providerAmount;
 
         if (plFeeIn == 'Percentage') {
           calculatedPlFee = providerfee * (plFee / 100);
-        }
-        else if (plFeeIn == 'Flat') {
+        } else if (plFeeIn == 'Flat') {
           calculatedPlFee = plFee;
         }
 
         if (agentFeeIn == 'Percentage') {
           calculatedAgentFee = providerfee * (agentFee / 100);
-        }
-        else if (agentFeeIn == 'Flat') {
+        } else if (agentFeeIn == 'Flat') {
           calculatedAgentFee = agentFee;
-
         }
       }
 
-      
-
-      this.formSubmitted = true
+      this.formSubmitted = true;
       const infoForBooking = {
         doctorProfileId: this.doctorData.doctorDetails.id,
         doctorName: this.doctorData?.doctorDetails.fullName,
@@ -189,69 +199,67 @@ export class LiveConsultBookingDialogComponent implements OnInit {
         patientProfileId: this.alreadyExistPatient?.id
           ? this.alreadyExistPatient?.id
           : this.createNewPatientInfo.id
-            ? this.createNewPatientInfo?.id
-            : this.profileInfo?.id,
+          ? this.createNewPatientInfo?.id
+          : this.profileInfo?.id,
         patientName: this.alreadyExistPatient?.patientName
           ? this.alreadyExistPatient?.patientName
           : this.createNewPatientInfo?.patientName
-            ? this.createNewPatientInfo?.patientName
-            : this.profileInfo?.fullName,
+          ? this.createNewPatientInfo?.patientName
+          : this.profileInfo?.fullName,
         patientCode: this.alreadyExistPatient?.patientCode
           ? this.alreadyExistPatient?.patientCode
           : this.createNewPatientInfo?.patientCode
-            ? this.createNewPatientInfo?.patientCode
-            : this.profileInfo?.patientCode,
+          ? this.createNewPatientInfo?.patientCode
+          : this.profileInfo?.patientCode,
         patientMobileNo: this.alreadyExistPatient?.patientMobileNo
           ? this.alreadyExistPatient?.patientMobileNo
           : this.createNewPatientInfo?.patientMobileNo
-            ? this.createNewPatientInfo?.patientMobileNo
-            : this.profileInfo?.mobileNo,
+          ? this.createNewPatientInfo?.patientMobileNo
+          : this.profileInfo?.mobileNo,
         patientEmail: this.alreadyExistPatient?.patientEmail
           ? this.alreadyExistPatient?.patientEmail
           : this.createNewPatientInfo?.patientEmail
-            ? this.createNewPatientInfo?.patientEmail
-            : this.profileInfo.email || 'admin@gmail.com',
-        // appointmentDate:"2023-12-12T14:35:35.546Z",
-        // appointmentTime: "10",
+          ? this.createNewPatientInfo?.patientEmail
+          : this.profileInfo.email || 'admin@gmail.com',
+        appointmentDate: new Date(),
+        appointmentTime: String(hours + ':' + minutes + ':' + seconds),
         doctorFee: providerfee,
+        doctorChamberName: 'Soowgood Online',
         agentFee: calculatedAgentFee,
         platformFee: calculatedPlFee,
         totalAppointmentFee: providerfee + calculatedAgentFee + calculatedPlFee,
         appointmentStatus: 1,
         appointmentPaymentStatus: 2,
         appointmentCreatorId: this.profileInfo?.id,
-        appointmentCreatorRole: this.userRole == 'patient' ? 'patient' : 'agent'
+        appointmentCreatorRole:
+          this.userRole == 'patient' ? 'patient' : 'agent',
       };
-      this.bookingInfo = infoForBooking
-console.log(infoForBooking);
+      this.bookingInfo = infoForBooking;
 
       if (this.profileInfo && bookFor === 'self') {
-        this.formSubmitted = true
+        this.formSubmitted = true;
         const obj = {
           id: this.profileInfo?.id,
           patientName: this.profileInfo.fullName,
           patientCode: this.profileInfo.patientCode,
-          patientEmail: this.profileInfo.email ? this.profileInfo.email : 'admin@gmail.com',
+          patientEmail: this.profileInfo.email
+            ? this.profileInfo.email
+            : 'admin@gmail.com',
           patientMobileNo: this.profileInfo.mobileNo,
         };
 
         this.PatientProfileService.update(obj).subscribe((res) => {
-          this.stepLoading = false
+          this.stepLoading = false;
           this.activeTab = step;
-
         });
-
       } else {
         this.activeTab = step;
       }
-
     }
     if (step === 1) {
       this.activeTab = step;
     }
-
   }
-
 
   getSinglePatientData(e: any) {
     if (e.target.value) {
@@ -301,7 +309,7 @@ console.log(infoForBooking);
   }
   //create new patient under user
   createNewPatient(): void {
-    this.formSubmitted = true
+    this.formSubmitted = true;
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(
@@ -323,7 +331,10 @@ console.log(infoForBooking);
               res.patientMobileNo
             ).subscribe((p) => {
               this.createNewPatientInfo = p;
-              this.TosterService.customToast('Your patient is created!', 'success');
+              this.TosterService.customToast(
+                'Your patient is created!',
+                'success'
+              );
               this.UserinfoStateService.getUserPatientInfo(
                 this.profileInfo.id,
                 'patient'
@@ -333,7 +344,6 @@ console.log(infoForBooking);
               this.btnLoader = false;
             });
           }
-
         });
       } catch (error) {
         this.TosterService.customToast(
@@ -345,7 +355,4 @@ console.log(infoForBooking);
       this.onStepChange(2);
     }
   }
-
 }
-
-

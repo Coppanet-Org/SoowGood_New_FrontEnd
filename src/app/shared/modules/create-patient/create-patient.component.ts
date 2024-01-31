@@ -9,6 +9,7 @@ import { CommonService } from '../../services/common.service';
 import { Gender } from 'src/app/proxy/enums';
 import { ListItem } from '../../model/common-model';
 import { map, switchMap } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-patient',
@@ -29,19 +30,19 @@ export class CreatePatientComponent implements OnInit {
     private TosterService: TosterService,
     private UserinfoStateService: UserinfoStateService,
     private PatientProfileService: PatientProfileService,
-    private NormalAuth: AuthService
-  ) { }
+    private NormalAuth: AuthService,
+    public dialogRef: MatDialogRef<CreatePatientComponent>
+  ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
-    this.authInfo = user
+    this.authInfo = user;
     this.genderList = CommonService.getEnumList(Gender);
     this.loadForm();
     if (user) {
-      this.createPatientForm.get('creatorEntityId')?.setValue(user.id)
-      this.createPatientForm.get('createdBy')?.setValue(user.fullName)
+      this.createPatientForm.get('creatorEntityId')?.setValue(user.id);
+      this.createPatientForm.get('createdBy')?.setValue(user.fullName);
     }
-    return
-
+    return;
   }
   loadForm() {
     this.createPatientForm = this.fb.group({
@@ -50,21 +51,24 @@ export class CreatePatientComponent implements OnInit {
       gender: ['0', Validators.required],
       bloodGroup: ['0', Validators.required],
       patientMobileNo: ['', Validators.required],
-      patientEmail: [
-        '',
-      ],
+      patientEmail: [''],
       createdBy: ['', Validators.required],
       creatorEntityId: ['', Validators.required], //userType: "patient"
-      creatorRole: [(this.authInfo.userType == "patient" ? 'patient' : 'agent'), Validators.required]
+      creatorRole: [
+        this.authInfo.userType == 'patient' ? 'patient' : 'agent',
+        Validators.required,
+      ],
     });
   }
 
   createNewPatient(): void {
     this.formSubmitted = true;
 
-    console.log(this.createPatientForm.value);
-
-    if (!this.createPatientForm.valid) {
+    if (
+      !this.createPatientForm.valid &&
+      (this.createPatientForm.get('bloodGroup')?.value === '0' ||
+        this.createPatientForm.get('gender')?.value === '0')
+    ) {
       this.TosterService.customToast(
         'Please field all the required fields',
         'warning'
@@ -84,26 +88,33 @@ export class CreatePatientComponent implements OnInit {
               next: (res) => {
                 console.log(res);
                 //TODO
-                this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
-                this.TosterService.customToast('Your patient is created!', 'success');
-                this.btnLoader = false;
-                this.UserinfoStateService.getUserPatientInfo(
-                  res.id,
-                  'patient'
+                // this.UserinfoStateService.getUserPatientInfo(res.id, this.authInfo.userType);
+                this.TosterService.customToast(
+                  'Your patient is created!',
+                  'success'
                 );
-              }, error: (err) => {
-                this.TosterService.customToast('Something went wrong!', 'error');
                 this.btnLoader = false;
-              }
-            })
-          }
 
+                this.UserinfoStateService.getUserPatientInfo(
+                  this.authInfo.id,
+                  this.authInfo.userType
+                );
+                this.dialogRef.close();
+              },
+              error: (err) => {
+                this.TosterService.customToast(
+                  'Something went wrong!',
+                  'error'
+                );
+                this.btnLoader = false;
+              },
+            });
+          }
         }
       );
     } catch (error) {
       this.TosterService.customToast('Something wrong! Please retry', 'error');
+      this.btnLoader = false;
     }
   }
-
-
 }

@@ -44,10 +44,10 @@ export class ProfileSettingsComponent implements OnInit {
     this.form = this.fb.group({
       fullName: [''],
       agentCode: [''],
-      mobileNo: ['', Validators.required],
-      organizationName: [''],
+      mobileNo: [''],
+    
       email: [''],
-      address: ['', Validators.required],
+      address: [''],
       contact: [''],
     });
   }

@@ -1,4 +1,4 @@
-<div  class="flex items-center">
+<div *ngIf="item.leftSlot" class="flex items-center">
     <input hidden  [id]="item.id" type="radio" [value]="item.id" name="default-radio"
         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
     <label [for]="item.id" (click)="selectSlot(item)"
@@ -9,7 +9,7 @@
             <div  class="card-content tooltip">
                 <p class="text-[14px]">{{ formatTime(item.startTime) }} - {{ formatTime(item.endTime) }}</p>
             </div>
-            <p class="text-[14px]">({{item.leftPatient}} slot available)</p>
+            <p class="text-[14px]">({{item.leftSlot}} slot available)</p>
         </div>
     </label>
 </div>

@@ -1,3 +1,4 @@
+import { AppointmentService } from './../../../proxy/services/appointment.service';
 import {
   AgentProfileService,
   DoctorProfileService,
@@ -18,11 +19,11 @@ export class UserinfoStateService implements OnInit {
     private DoctorProfileService: DoctorProfileService,
     private AgentProfileService: AgentProfileService,
     private PatientProfileService: PatientProfileService,
-    private NormalAuth: AuthService
+    private NormalAuth: AuthService,
+    private AppointmentService: AppointmentService
   ) {}
   public authenticateUserInfo = new BehaviorSubject<any>({});
   public userPatientInfo = new BehaviorSubject<any>([]);
-
 
   sendData(data: any) {
     this.authenticateUserInfo.next(data);
@@ -40,48 +41,53 @@ export class UserinfoStateService implements OnInit {
     let user = this.NormalAuth.authInfo();
     console.log(user);
     if (user.id) {
-      
       this.getProfileInfo(user.id, user.userType);
     }
   }
 
   getProfileInfo(id: any, role: string): void {
     if (id) {
-      this.LoaderService.sendLoaderState(true);
+      // this.LoaderService.sendLoaderState(true);
       if (role == 'doctor') {
         this.DoctorProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
       if (role == 'agent') {
         this.AgentProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
       if (role == 'patient') {
         this.PatientProfileService.get(id).subscribe((res) => {
           this.sendData(res);
-          this.LoaderService.sendLoaderState(false);
+          // this.LoaderService.sendLoaderState(false);
         });
       }
     }
-
   }
 
   // get user created patient list
-  getUserPatientInfo(id: any, role: string): void {    
-    if (id && role ) {
-      this.PatientProfileService.getPatientListByUserProfileId(id, role).subscribe((res) =>
-       this.sendUserPatientData(res)
-      );
-    }else{
-      this.sendUserPatientData(null) 
+  getUserPatientInfo(id: any, role: string): void {
+    if (id && (role === 'patient' || role === 'agent')) {
+      this.PatientProfileService.getPatientListByUserProfileId(
+        id,
+        role
+      ).subscribe((res) => {
+        this.sendUserPatientData(res);
+        console.log(res);
+      });
+    }
+    if (id && role === 'doctor') {
+      this.AppointmentService.getPatientListByDoctorId(id).subscribe({
+        next: (res) => {
+          this.sendUserPatientData(res);
+        },
+      });
+    } else {
+      this.sendUserPatientData(null);
     }
   }
-
-
-
 }
-

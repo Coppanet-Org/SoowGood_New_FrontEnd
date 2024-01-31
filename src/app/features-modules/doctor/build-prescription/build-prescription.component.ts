@@ -89,11 +89,11 @@ export class BuildPrescriptionComponent implements OnInit {
 
   @ViewChild('diseaseInput') diseaseInput!: ElementRef<HTMLInputElement>;
 
-  isExpend= false
+  isExpend = false;
   announcer = inject(LiveAnnouncer);
   uniqueHistory!: string[];
-  docFile: string ="";
-  docFileUrl: any[]=[];
+  docFile: string = '';
+  docFileUrl: any[] = [];
   public picUrl = `${environment.apis.default.url}/`;
   constructor(
     private fb: FormBuilder,
@@ -105,7 +105,7 @@ export class BuildPrescriptionComponent implements OnInit {
     private DrugRxService: DrugRxService,
     private CommonDiseaseService: CommonDiseaseService,
     private PatientProfileService: PatientProfileService,
-    private DocumentsAttachmentService :DocumentsAttachmentService,
+    private DocumentsAttachmentService: DocumentsAttachmentService,
     public dialog: MatDialog
   ) {}
 
@@ -116,11 +116,9 @@ export class BuildPrescriptionComponent implements OnInit {
     const { aptId } = this.route.snapshot.params;
     if (aptId) {
       this.AppointmentService.get(aptId).subscribe((res) => {
-      
-
         if (res.appointmentCode) {
           this.appointmentInfo = res;
-          this.getDocuments(res.patientProfileId)
+          this.getDocuments(res.patientProfileId);
           this.PatientProfileService.get(
             res.patientProfileId ? res.patientProfileId : 0
           ).subscribe((patient) => {
@@ -150,48 +148,38 @@ export class BuildPrescriptionComponent implements OnInit {
     this.loadForm();
   }
 
-  
-getDocuments(id:any){
-  this.DocumentsAttachmentService
-  .getAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType(
-    'Patient',
-    id,
-    'PatientPreviousDocuments'
-  )
-  .subscribe((at) => {
-    // let urls=[]
-    if (at) {
-      at.map((e)=>{
-        let prePaths: string = '';
-      var re = /wwwroot/gi;
-      prePaths = e.path ? e.path : '';
-      this.docFile = prePaths.replace(re, '');
-      // console.log(at);
-      this.docFileUrl.push(this.picUrl + this.docFile)
-      // this.isLoading = false;
-      // urls.push()
+  getDocuments(id: any) {
+    this.DocumentsAttachmentService.getAttachmentInfoByEntityTypeAndEntityIdAndAttachmentType(
+      'Patient',
+      id,
+      'PatientPreviousDocuments'
+    ).subscribe((at) => {
+      // let urls=[]
+      if (at) {
+        at.map((e) => {
+          let prePaths: string = '';
+          var re = /wwwroot/gi;
+          prePaths = e.path ? e.path : '';
+          this.docFile = prePaths.replace(re, '');
+          // console.log(at);
+          this.docFileUrl.push(this.picUrl + this.docFile);
+          console.log(this.docFileUrl);
 
-      
-      })
-
-    }
-    
-  });
-}
-
-  
-  showPreviousDocuments(id:any){
-
-  
-    
-        const dialogRef = this.dialog.open(PreviousDocumentsDialogComponent,{
-          width: "60vw",
-          data: this.docFileUrl,
-          height:"100vh"
+          // this.isLoading = false;
+          // urls.push()
         });
-      
-        dialogRef.afterClosed().subscribe(result => {
-        });
+      }
+    });
+  }
+
+  showPreviousDocuments(id: any) {
+    const dialogRef = this.dialog.open(PreviousDocumentsDialogComponent, {
+      width: '60vw',
+      data: this.docFileUrl,
+      height: '100vh',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   loadForm() {
@@ -370,7 +358,7 @@ getDocuments(id:any){
 
   createDiagnosisFormGroup() {
     return this.fb.group({
-      testName: ['', Validators.required],
+      testName: [''],
       comments: [''],
     });
   }
@@ -434,13 +422,14 @@ getDocuments(id:any){
         };
       });
 
-      let patientDiseaseHistory: PrescriptionPatientDiseaseHistoryDto[] =
-      [...new Set(this.histories)]?.map((e: any) => {
-        return {
-          patientProfileId: this.appointmentInfo.patientProfileId,
-          diseaseName: e,
-        };
-      });
+    let patientDiseaseHistory: PrescriptionPatientDiseaseHistoryDto[] = [
+      ...new Set(this.histories),
+    ]?.map((e: any) => {
+      return {
+        patientProfileId: this.appointmentInfo.patientProfileId,
+        diseaseName: e,
+      };
+    });
     //let x : PrescriptionPatientDiseaseHistoryDto
     const {
       id: appointmentId,
@@ -486,9 +475,6 @@ getDocuments(id:any){
       prescriptionPatientDiseaseHistory: patientDiseaseHistory,
     };
 
-console.log(prescription);
-
-
     if (this.prescriptionForm.invalid) {
       this.TosterService.customToast('Please fill all the fields!', 'warning');
       return;
@@ -503,7 +489,7 @@ console.log(prescription);
             'Prescription created successfully!',
             'success'
           );
-          this.prescriptionForm.reset()
+          this.prescriptionForm.reset();
           window.close();
         } else {
           this.TosterService.customToast(
