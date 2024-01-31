@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\environments"
+    "\\src\\app"
   ],
-  "SelectedNode": "\\angular.json",
+  "SelectedNode": "\\dist",
   "PreviewInSolutionExplorer": false
 }
