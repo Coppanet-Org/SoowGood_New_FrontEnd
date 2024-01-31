@@ -1,1 +1,44 @@
-<p>pricing-card works!</p>
+<div
+  class="max-w-sm mx-auto border rounded-lg md:mx-4 hover:border-secondary/50 bg-white"
+>
+  <div class="p-6">
+    <h1
+      class="text-xl font-semibold font-Roboto text-gray-700 capitalize lg:text-2xl"
+    >
+      {{ details?.name }}
+    </h1>
+
+    <p class="mt-4 text-gray-500">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam
+      voluptatibus
+    </p>
+
+    <h2 class="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl">
+      {{ details?.price.monthly }} tk.
+      <span class="text-base font-medium">/Month</span>
+    </h2>
+
+    <!-- <p class="mt-1 text-gray-500">Yearly payment</p> -->
+
+    <button
+      class="w-full px-4 py-2 mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-secondary rounded-md hover:bg-primary focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+    >
+      Start Now
+    </button>
+  </div>
+
+  <hr class="border-gray-200" />
+
+  <div class="p-6">
+    <h1 class="text-lg font-medium text-gray-700 capitalize lg:text-xl">
+      What’s included:
+    </h1>
+
+    <div class="mt-8 space-y-4">
+      <app-pricing-card-include-list
+        *ngFor="let include of details.facilities"
+        [include]="include"
+      ></app-pricing-card-include-list>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,7 @@ import { CacheInterceptor } from 'src/app/shared/utils/interceptors/CacheInterce
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 import { SplashInterceptor } from 'src/app/shared/utils/interceptors/SplashInterceptor';
 import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
+import { PricingCardIncludeListComponent } from './components/pricing-card-include-list/pricing-card-include-list.component';
 
 const routes: Route[] = [
   {
@@ -45,6 +46,7 @@ const routes: Route[] = [
     ClientFeedbackComponent,
     NewsletterComponent,
     PricingCardComponent,
+    PricingCardIncludeListComponent,
   ],
   imports: [
     CommonModule,
