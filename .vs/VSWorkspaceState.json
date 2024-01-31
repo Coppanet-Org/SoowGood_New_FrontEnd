@@ -4,6 +4,6 @@
     "\\src",
     "\\src\\app"
   ],
-  "SelectedNode": "\\src\\app\\shared\\modules\\public-doctors\\public-doctors.component.ts",
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }
