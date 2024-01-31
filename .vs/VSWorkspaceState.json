@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\features-modules",
+    "\\src\\app\\features-modules\\doctor",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-dialog",
+    "\\src\\app\\features-modules\\doctor\\hospital-schedule\\fee-info"
   ],
-  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
+  "SelectedNode": "\\src\\app\\app.routing.ts",
   "PreviewInSolutionExplorer": false
 }
