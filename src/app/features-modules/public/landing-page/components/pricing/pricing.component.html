@@ -1,19 +1,25 @@
-<div class="bg-blue-50/80 dark:bg-gray-900 py-20">
-  <div class="container px-6 py-8 mx-auto">
+<div class="bg-blue-50/80 py-20">
+  <div class="container py-8 mx-auto">
     <div class="pb-20 flex justify-center">
       <h1 class="text-[44px] font-semibold font-Roboto text-primary">
         Choose Our pricing Plan
       </h1>
     </div>
-    <div class="xl:items-center xl:-mx-8 xl:flex">
-      <div class="flex-1 xl:mx-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10">
-          <app-pricing-card
-            [details]="details"
-            *ngFor="let details of packages"
-          ></app-pricing-card>
-        </div>
+    <div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <app-pricing-card
+          [details]="details"
+          *ngFor="let details of packages"
+        ></app-pricing-card>
       </div>
     </div>
   </div>
+</div>
+
+<div>
+  <img
+    class="object-cover w-full h-full"
+    src="/assets/other/sg-compare.jpg"
+    alt="pricing"
+  />
 </div>

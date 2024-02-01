@@ -1,9 +1,9 @@
 <!-- <span class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span> -->
 
 <div
-  class="w-full my-5 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700 m-auto"
+  class="w-full my-5 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 m-auto custom-scrollbar max-h-[460px] overflow-y-scroll"
 >
-  <h5 class="text-base font-semibold text-gray-900 md:text-xl dark:text-white">
+  <h5 class="text-base font-semibold text-gray-900 md:text-xl">
     {{ bookingInfo?.doctorName }}
   </h5>
 
@@ -12,14 +12,12 @@
   </p> -->
   <div>
     <div class="relative overflow-x-auto">
-      <table
-        class="w-full mt-6 text-sm text-left text-gray-500 dark:text-gray-400"
-      >
+      <table class="w-full mt-6 text-sm text-left text-gray-500">
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white border-b">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Patient name:
             </th>
@@ -27,18 +25,18 @@
               {{ bookingInfo?.patientName }}
             </td>
           </tr>
-          <!-- <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <!-- <tr class="bg-white border-b   ">
+                  <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap   ">
                     Appointment Day :
                   </th>
                   <td class=" py-2">
                     {{bookingInfo?.scheduleDayofWeek}}
                   </td>
                 </tr> -->
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white border-b">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Appointment Date :
             </th>
@@ -46,10 +44,10 @@
               {{ bookingInfo?.appointmentDate | date }}
             </td>
           </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white border-b">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Appointment Type :
             </th>
@@ -57,10 +55,10 @@
               {{ bookingInfo?.appointmentTypeName }}
             </td>
           </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white border-b">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Hospital name :
             </th>
@@ -70,37 +68,37 @@
             </td>
           </tr>
 
-          <tr class="bg-white dark:bg-gray-800">
+          <tr class="bg-white">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Doctor Fee :
             </th>
             <td class="py-2">{{ bookingInfo?.doctorFee }} tk.</td>
           </tr>
-          <tr class="bg-white dark:bg-gray-800">
+          <tr class="bg-white">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Booth Fee :
             </th>
             <td class="py-2">{{ bookingInfo?.agentFee }} tk.</td>
           </tr>
-          <tr class="bg-white dark:bg-gray-800">
+          <tr class="bg-white">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Platform Fee :
             </th>
             <td class="py-2">{{ bookingInfo?.platformFee }} tk.</td>
           </tr>
-          <tr class="bg-white dark:bg-gray-800">
+          <tr class="bg-white">
             <th
               scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="py-2 font-medium text-gray-900 whitespace-nowrap"
             >
               Total Fee :
             </th>

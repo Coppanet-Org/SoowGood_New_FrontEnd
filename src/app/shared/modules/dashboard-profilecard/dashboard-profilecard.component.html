@@ -1,26 +1,32 @@
-<div class=" bg-gray-100 main_right border-l-[1px]  border-box -z-10">
+<div class="main_right border-l-[1px] border-box -z-10 shadow-bottom">
   <div class="box-border">
-    <div class="card w-full bg-base-100 border-b-[1px]">
+    <div class="card w-full bg-base-100 border-none border-b-[1px]">
       <figure class="px-10 pt-10">
-        <img [src]="url" alt="profile"
-             class="rounded-full w-[100px] h-[100px] object-cover border-4 border-gray-300 " />
+        <img
+          [src]="url || ''"
+          alt="profile"
+          class="rounded-full w-[100px] h-[100px] object-cover border-4 border-gray-300"
+        />
       </figure>
-      <div class="card-body pb-3 items-center text-center">
-     
-        <span class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold rounded-lg">
+      <div
+        class="card-body pb-3 items-center text-center rounded-none border-none"
+      >
+        <span
+          class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold"
+        >
           <!--{{userInfo.doctorTitle ? 'Doctor' : userInfo.hasOwnProperty('patientName') ? 'Patient' : 'Agent'}}-->
-          {{profileTile}}
+          {{ profileTile }}
         </span>
         <h2 class="card-title">
           <!--{{userInfo.doctorTitle ?userInfo.fullName:userInfo.hasOwnProperty('patientName') ?userInfo.patientName:userInfo.agentName}}-->
-          {{userInfo?.fullName}}
+          {{ userInfo?.fullName }}
         </h2>
-        <p>{{userInfo?.designation}}</p>
+        <p>{{ userInfo?.designation }}</p>
 
         <div *ngIf="authInfo.userType == 'doctor'">
-          <label  class="relative inline-flex items-center mb-5 cursor-pointer">
+          <label class="relative inline-flex items-center mb-5 cursor-pointer">
             <input
-              [style]="isProfileLoad ? 'display:none': 'display:block'"
+              [style]="isProfileLoad ? 'display:none' : 'display:block'"
               type="checkbox"
               [value]="status"
               [(ngModel)]="status"
@@ -31,22 +37,15 @@
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"
             ></div>
-            <span
-              class="ms-3 text-sm font-medium text-green-700 dark:text-gray-300"
-              *ngIf="status"
+            <span class="ms-3 text-sm font-medium text-green-700" *ngIf="status"
               >Online</span
             >
-            <span
-              class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-              *ngIf="!status"
+            <span class="ms-3 text-sm font-medium text-gray-900" *ngIf="!status"
               >Offline</span
             >
           </label>
-   
-      </div>
-
+        </div>
       </div>
     </div>
   </div>
 </div>
-

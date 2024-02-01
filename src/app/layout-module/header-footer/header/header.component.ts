@@ -49,7 +49,6 @@ export class HeaderComponent implements OnInit {
     let id = authInfo ? authInfo.id : null;
     this.UserinfoStateService.getProfileInfo(id, this.authInfo?.userType);
     if (id) {
-      this.UserinfoStateService.getData().subscribe((res) => console.log(res));
       this.isAuthLogin = true;
     } else {
       this.isAuthLogin = false;
