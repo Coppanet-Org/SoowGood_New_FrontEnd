@@ -11,6 +11,7 @@ import { AppAuthService } from '../../../../auth-services/app-auth.service';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { SubSink } from 'subsink';
 import { UserProfile } from '../../../../auth-models/user.model';
+import { CustomValidators } from 'src/app/shared/utils/auth-helper';
 
 @Component({
   selector: 'app-agent-login',
@@ -20,6 +21,7 @@ import { UserProfile } from '../../../../auth-models/user.model';
 export class AgentLoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoading!: boolean;
+  formSubmitted = false;
   hasError!: boolean;
   errorMessage!: string;
   defaultAuth: any = {
@@ -27,8 +29,8 @@ export class AgentLoginComponent implements OnInit {
     password: '',
   };
   subs = new SubSink();
-  passwordFieldType: string ="password";
-  confirmPasswordFieldType: string="password";
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
   constructor(
     private ToasterService: TosterService,
     private UserAuthService: UserAccountsService,
@@ -38,7 +40,7 @@ export class AgentLoginComponent implements OnInit {
     private NormalAuth: AuthService,
     private _router: Router,
     private fb: FormBuilder
-  ) { } 
+  ) {}
 
   ngOnInit(): void {
     this.loadForm();
@@ -46,30 +48,24 @@ export class AgentLoginComponent implements OnInit {
 
   loadForm() {
     this.loginForm = this.fb.group({
-      mobileNo: [
-        this.defaultAuth.mobileNo,
-        Validators.compose([Validators.required]),
-      ],
+      mobileNo: [this.defaultAuth.mobileNo, Validators.required],
       password: [
         this.defaultAuth.password,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(100),
-        ]),
+        Validators.compose([Validators.required]),
       ],
     });
   }
 
   onSubmit(): void {
-    this.isLoading = true;
-    if (!this.loginForm.valid && !this.loginForm.touched) {
+    this.formSubmitted = true;
+    if (this.loginForm.invalid) {
       this.ToasterService.customToast(
         'Please filled all required field',
         'warning'
       );
       return;
     }
+    this.isLoading = true;
     let loginResponseData: LoginResponseDto;
     const username = this.loginForm.value.mobileNo;
     const password = this.loginForm.value.password;
@@ -82,10 +78,15 @@ export class AgentLoginComponent implements OnInit {
     };
     try {
       this.appAuthService.isLoadingSubject.next(true);
-      this.oAuthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
-        .then((userInfo: UserProfile) => {
-          console.log(userInfo);
-          if (userInfo) {
+      this.oAuthService
+        .fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password)
+        .then((userInfo: any) => {
+          this.formSubmitted = false;
+          if (
+            userInfo &&
+            (userInfo?.info?.role !== 'Doctor' ||
+              userInfo?.info?.role !== 'Patient')
+          ) {
             //const userModel = this.appAuthService.createUserModel(userInfo);
             //var un = username.split('@')[0];
 
@@ -94,7 +95,6 @@ export class AgentLoginComponent implements OnInit {
                 catchError((error: any) => this.handleLoginError(error)),
                 switchMap((loginResponse: any) => {
                   loginResponseData = loginResponse;
-
 
                   if (!loginResponse.success) {
                     this.hasError = true;
@@ -122,9 +122,9 @@ export class AgentLoginComponent implements OnInit {
                 const userType = agentDto.isActive
                   ? loginResponseData.roleName.toString().toLowerCase()
                   : (
-                    loginResponseData.roleName.toString() +
-                    '/profile-settings'
-                  ).toLowerCase();
+                      loginResponseData.roleName.toString() +
+                      '/profile-settings'
+                    ).toLowerCase();
                 this._router
                   .navigate([userType], {
                     state: { data: agentDto },
@@ -137,9 +137,20 @@ export class AgentLoginComponent implements OnInit {
                   );
               });
           }
+          if (
+            userInfo?.info?.role === 'Doctor' ||
+            userInfo?.info?.role === 'Patient'
+          ) {
+            this.errorMessage = `You ara a ${userInfo?.info?.role}. Please login from ${userInfo?.info?.role} portal.`;
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.errorMessage = err.error?.error_description;
         });
-    }
-    catch (error: any) {
+    } catch (error: any) {
+      console.log(error);
+
       this.hasError = true;
       if (error.message === "'tokenEndpoint' should not be null") {
         this.ToasterService.customToast(error.message || ' ', 'success');

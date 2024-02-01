@@ -7,7 +7,10 @@
         >
           <div class="flex gap-5">
             <h1 class="dashbord-heading-text text-[22px]">
-              <i class="fa-solid fa-building-columns mr-1"></i>My Patients
+              <i class="fa-solid fa-building-columns mr-1"></i
+              >{{
+                userInfo.userType === "patient" ? "My Family" : "My Patient"
+              }}
             </h1>
             <button
               *ngIf="

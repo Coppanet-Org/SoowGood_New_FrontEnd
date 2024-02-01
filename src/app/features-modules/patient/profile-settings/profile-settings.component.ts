@@ -86,10 +86,8 @@ export class ProfileSettingsComponent implements OnInit {
     if (changedProperties.length === 0) {
       this.TosterService.customToast('Nothing has changed', 'warning');
       this.isLoading = false;
-      this.formSubmitted = true;
+      this.formSubmitted = false;
     } else {
-      this.isLoading = true;
-      this.formSubmitted = true;
       this.PatientProfileService.update({
         ...this.form.value,
         id: this.patientId,

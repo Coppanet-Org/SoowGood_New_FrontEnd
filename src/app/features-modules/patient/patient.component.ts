@@ -1,9 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
-
 
 @Component({
   selector: 'app-patient',
@@ -28,8 +26,8 @@ export class PatientComponent implements OnInit {
       icon: 'fa-solid fa-bed-pulse',
     },
     {
-      menuName: 'My Patient',
-      route: 'my-patient',
+      menuName: 'My Family',
+      route: 'my-family',
       icon: 'fa-solid fa-bed-pulse',
     },
     {
@@ -47,17 +45,13 @@ export class PatientComponent implements OnInit {
   constructor(
     private NormalAuth: AuthService,
     private UserinfoStateService: UserinfoStateService,
-    private DoctorStateService:  DoctorStateService,
+    private DoctorStateService: DoctorStateService
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
-      this.DoctorStateService.getAllDoctorList()
+      this.DoctorStateService.getAllDoctorList();
     }
   }
-
-
-
-
 }

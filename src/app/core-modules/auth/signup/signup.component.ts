@@ -160,9 +160,9 @@ export class SignupComponent implements OnInit {
   nidUploadBtn: any = true;
   stepBack2: any = false;
   stepBack1: any = false;
-  errorMessage:string=""
+  errorMessage: string = ""
   startYear = new Date().getFullYear();
-  range:any = [];
+  range: any = [];
   minYear = new Date().getFullYear() - 1;
   constructor(
     private fb: FormBuilder,
@@ -192,7 +192,7 @@ export class SignupComponent implements OnInit {
 
 
 
-  
+
   ngOnInit(): void {
     this.loadForm();
     this.genderList = CommonService.getEnumList(Gender);
@@ -403,9 +403,10 @@ export class SignupComponent implements OnInit {
         ],
         confirmPassword: ['', Validators.required],
         gender: [null],
+        bloodGroup:[null],
         dateOfBirth: [''],
         // city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-        city: ['', ],
+        city: ['',],
         country: ['Bangladesh', Validators.required],
         address: [''], //,[Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
         zipCode: [''], //, [Validators.required, Validators.pattern(/^\d{4}$/)]
@@ -517,7 +518,7 @@ export class SignupComponent implements OnInit {
   }
 
   sendOtp() {
-    this.errorMessage=""
+    this.errorMessage = ""
     this.formSubmitted = true;
     if (
       this.formGroup.get('mobile')?.invalid ||
@@ -532,8 +533,8 @@ export class SignupComponent implements OnInit {
     this.subs.sink = this.otpService
       .applyOtpByClientKeyAndMobileNo('SoowGood_App', formData.mobile)
       .subscribe({
-        next:(res)=>{
-          if (res) {         
+        next: (res) => {
+          if (res) {
             this.otpModal = res;
             this.isLoading = false;
             this.formSubmitted = false
@@ -544,10 +545,10 @@ export class SignupComponent implements OnInit {
             this.formSubmitted = false
             return
           }
-        },error:(err)=> {
-            this.otpModal = false;
-            this.isLoading = false;
-            this.formSubmitted = false
+        }, error: (err) => {
+          this.otpModal = false;
+          this.isLoading = false;
+          this.formSubmitted = false
         }
       });
   }
@@ -557,7 +558,7 @@ export class SignupComponent implements OnInit {
   }
 
   verify() {
-    this.errorMessage=""
+    this.errorMessage = ""
     let otp = this.otp;
     if (otp) {
       this.subs.sink = this.otpService
@@ -604,15 +605,14 @@ export class SignupComponent implements OnInit {
     //   this.TosterService.customToast('All fields is required', 'warning');
     //   return;
     // }
-    if (this.formGroup.get('userTypeName')?.value == 'Patient' &&
-        !fullName &&
-        !email &&
-        !password &&
-        !confirmPassword
-      ) {
-        this.TosterService.customToast('All fields is required', 'warning');
-        return;
-      }
+    if (this.formGroup.get('userTypeName')?.value == 'Patient' && !fullName &&
+      //!email &&
+      !password &&
+      !confirmPassword
+    ) {
+      this.TosterService.customToast('All fields is required', 'warning');
+      return;
+    }
     try {
       this.isLoading = true;
 
@@ -624,7 +624,7 @@ export class SignupComponent implements OnInit {
         userName: this.mobile,
         name: this.userInfoForm?.value.fullName,
         surname: '',
-        email: this.userInfoForm.value.email,
+        email: this.userType == 'Patient' ? this.mobile+"@sg.com" : this.userInfoForm.value.email,
         emailConfirmed: true,
         phoneNumber: this.mobile,
         phoneNumberConfirmed: true,
@@ -634,9 +634,7 @@ export class SignupComponent implements OnInit {
         concurrencyStamp: '',
       };
       if (this.stepBack1 == false) {
-        const res: UserSignUpResultDto | undefined = await this.userAccountService
-          .signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType)
-          .toPromise();
+        const res: UserSignUpResultDto | undefined = await this.userAccountService.signupUserByUserDtoAndPasswordAndRole(userInfo, password, userType).toPromise();
         if (res?.success) {
           if (this.userType === 'Doctor') {
             this.handleDoctorProfile(res);
@@ -763,16 +761,16 @@ export class SignupComponent implements OnInit {
             userType: this.userType,
           };
           this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-          
+
           if (this.normalAuth) {
             this.loadAuth();
           }
-          
+
           this.tosterService.customToast(
             'Basic Information Update Successfully',
             'success'
-            );
-            this.isLoading = false
+          );
+          this.isLoading = false
           this.cdRef.detectChanges();
           //});
         });
@@ -1435,78 +1433,78 @@ export class SignupComponent implements OnInit {
   finalContinue() {
 
 
- 
-      this.isLoading = true;
-      //this.userType = this.normalAuth.authInfo().userType;
-      //let userType = this.userType.toString().toLowerCase();
-      this.subs.sink = this.doctorProfileService
-        .get(this.doctorId)
-        .subscribe((doctorDto: DoctorProfileInputDto) => {
-          if (doctorDto) {
-            this.forStepUpdateDto.id = doctorDto.id;
-            this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
-            this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle;
-            this.forStepUpdateDto.userId = doctorDto.userId;
-            this.forStepUpdateDto.fullName = doctorDto.fullName;
-            this.forStepUpdateDto.email = doctorDto.email;
-            this.forStepUpdateDto.mobileNo = doctorDto.mobileNo;
-            this.forStepUpdateDto.gender = doctorDto.gender;
-            this.forStepUpdateDto.dateOfBirth = doctorDto.dateOfBirth;
-            this.forStepUpdateDto.address = doctorDto.address;
-            this.forStepUpdateDto.city = doctorDto.city;
-            this.forStepUpdateDto.zipCode = doctorDto.zipCode;
-            this.forStepUpdateDto.country = doctorDto.country;
-            this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
-            this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
-            this.forStepUpdateDto.specialityId = doctorDto.specialityId;
-            this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
-            this.forStepUpdateDto.isActive = doctorDto.isActive;
-            this.forStepUpdateDto.profileStep = 3;
-            this.forStepUpdateDto.createFrom = doctorDto.createFrom;
-            this.forStepUpdateDto.degrees = []; // .push(this.doctorDegrees);
-            this.forStepUpdateDto.doctorSpecialization = [];
 
-            this.subs.sink = this.doctorProfileService
-              .update(this.forStepUpdateDto)
-              .subscribe((res: DoctorProfileDto) => {
-                if (res) {
-                  this.completeDegreeSpecilizationInfoModal = false;
-                  this.completeDocumentUpload = true;
-                  //let saveLocalStorage = {
-                  //  identityNumber: res.identityNumber,
-                  //  doctorName: res.fullName,
-                  //  bmdcRegNo: res.bmdcRegNo,
-                  //  isActive: res.isActive,
-                  //  userId: res.userId,
-                  //  id: res.id,
-                  //  specialityId: res.specialityId,
-                  //  profileStep: res.profileStep,
-                  //  createFrom: res.createFrom,
-                  //  userType: this.userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
-                  //};
-                  //this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-                  this.normalAuth.signOut();
-                  //if (this.normalAuth) {
-                  //  this.loadAuth();
-                  //}
-                  //let navUrl = this.userType.toLowerCase() + '/dashboard';
-                  let message = 'Congratulations..!! Doctor Profile Created Successfully. You can login now.';
+    this.isLoading = true;
+    //this.userType = this.normalAuth.authInfo().userType;
+    //let userType = this.userType.toString().toLowerCase();
+    this.subs.sink = this.doctorProfileService
+      .get(this.doctorId)
+      .subscribe((doctorDto: DoctorProfileInputDto) => {
+        if (doctorDto) {
+          this.forStepUpdateDto.id = doctorDto.id;
+          this.forStepUpdateDto.doctorCode = doctorDto.doctorCode;
+          this.forStepUpdateDto.doctorTitle = doctorDto.doctorTitle;
+          this.forStepUpdateDto.userId = doctorDto.userId;
+          this.forStepUpdateDto.fullName = doctorDto.fullName;
+          this.forStepUpdateDto.email = doctorDto.email;
+          this.forStepUpdateDto.mobileNo = doctorDto.mobileNo;
+          this.forStepUpdateDto.gender = doctorDto.gender;
+          this.forStepUpdateDto.dateOfBirth = doctorDto.dateOfBirth;
+          this.forStepUpdateDto.address = doctorDto.address;
+          this.forStepUpdateDto.city = doctorDto.city;
+          this.forStepUpdateDto.zipCode = doctorDto.zipCode;
+          this.forStepUpdateDto.country = doctorDto.country;
+          this.forStepUpdateDto.bmdcRegNo = doctorDto.bmdcRegNo;
+          this.forStepUpdateDto.bmdcRegExpiryDate = doctorDto.bmdcRegExpiryDate;
+          this.forStepUpdateDto.specialityId = doctorDto.specialityId;
+          this.forStepUpdateDto.identityNumber = doctorDto.identityNumber;
+          this.forStepUpdateDto.isActive = doctorDto.isActive;
+          this.forStepUpdateDto.profileStep = 3;
+          this.forStepUpdateDto.createFrom = doctorDto.createFrom;
+          this.forStepUpdateDto.degrees = []; // .push(this.doctorDegrees);
+          this.forStepUpdateDto.doctorSpecialization = [];
 
-                  this._router
-                    .navigate(['/login'], {
-                      state: { data: res }, // Pass the 'res' object as 'data' in the state object
-                    })
-                    .then((r) =>
-                      this.tosterService.customToast(message, 'success')
-                    );
-                  //this.tosterService.success("Degree and Specializtion info updated Successfully"),
-                  this.isLoading = false;
-                  this.cdRef.detectChanges();
-                }
-              });
-          }
-        });
-    
+          this.subs.sink = this.doctorProfileService
+            .update(this.forStepUpdateDto)
+            .subscribe((res: DoctorProfileDto) => {
+              if (res) {
+                this.completeDegreeSpecilizationInfoModal = false;
+                this.completeDocumentUpload = true;
+                //let saveLocalStorage = {
+                //  identityNumber: res.identityNumber,
+                //  doctorName: res.fullName,
+                //  bmdcRegNo: res.bmdcRegNo,
+                //  isActive: res.isActive,
+                //  userId: res.userId,
+                //  id: res.id,
+                //  specialityId: res.specialityId,
+                //  profileStep: res.profileStep,
+                //  createFrom: res.createFrom,
+                //  userType: this.userType, //this.userType.toString().toLowerCase()//loginResponse.roleName.toString().toLowerCase()
+                //};
+                //this.normalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
+                this.normalAuth.signOut();
+                //if (this.normalAuth) {
+                //  this.loadAuth();
+                //}
+                //let navUrl = this.userType.toLowerCase() + '/dashboard';
+                let message = 'Congratulations..!! Doctor Profile Created Successfully. You can login now.';
+
+                this._router
+                  .navigate(['/login'], {
+                    state: { data: res }, // Pass the 'res' object as 'data' in the state object
+                  })
+                  .then((r) =>
+                    this.tosterService.customToast(message, 'success')
+                  );
+                //this.tosterService.success("Degree and Specializtion info updated Successfully"),
+                this.isLoading = false;
+                this.cdRef.detectChanges();
+              }
+            });
+        }
+      });
+
   }
 
   getErrorMessage(filed: string) {

@@ -5,7 +5,11 @@
     <div class="w-full flex justify-between gap-8 mt-16">
       <div [class]="userRole === 'agent' ? 'w-full ' : 'w-[75%] 3xl:w-[70%]'">
         <div
-          [class]="userRole==='agent'? 'w-full h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary' :'w-full h-[350px] 3xl:h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'"
+          [class]="
+            userRole === 'agent'
+              ? 'w-full h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'
+              : 'w-full h-[350px] 3xl:h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'
+          "
         >
           <div class="swiper w-full h-full">
             <div class="swiper-wrapper !w-full h-full">
@@ -23,7 +27,13 @@
                   alt="banner"
                 />
               </div> -->
-             
+              <div class="swiper-slide !w-full h-full">
+                <img
+                  class="object-cover w-full h-full"
+                  src="/assets/banner/b-1.jpg"
+                  alt="banner"
+                />
+              </div>
               <div class="swiper-slide !w-full h-full">
                 <img
                   class="object-cover w-full h-full"
@@ -31,17 +41,24 @@
                   alt="banner"
                 />
               </div>
-              <div class="swiper-slide !w-full ">
+              <div class="swiper-slide !w-full">
                 <img
                   class="object-cover w-full h-full"
                   src="/assets/banner/b-3.jpg"
                   alt="banner"
                 />
               </div>
-              <div class="swiper-slide !w-full ">
+              <div class="swiper-slide !w-full">
                 <img
                   class="object-cover w-full h-full"
-                  src="/assets/banner/b-4.jpg"
+                  src="/assets/banner/b-5.jpg"
+                  alt="banner"
+                />
+              </div>
+              <div class="swiper-slide !w-full">
+                <img
+                  class="object-cover w-full h-full"
+                  src="/assets/banner/b-6.jpg"
                   alt="banner"
                 />
               </div>

@@ -5,6 +5,7 @@ import { Route, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { ProfileSettingsComponent } from './profile-settings.component';
+import { ResetPasswordModule } from 'src/app/shared/modules/reset-password/reset-password.module';
 const routes: Route[] = [
   {
     path: '',
@@ -13,11 +14,11 @@ const routes: Route[] = [
   {
     path: 'patient-details/:id',
     loadChildren: () =>
-      import('../../../shared/modules/patient-details/patient-details.module').then(
-        (m) => m.PatientDetailsModule
-      ),
+      import(
+        '../../../shared/modules/patient-details/patient-details.module'
+      ).then((m) => m.PatientDetailsModule),
   },
-]
+];
 
 @NgModule({
   declarations: [ProfileSettingsComponent],
@@ -26,12 +27,9 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
-    InputModule
+    InputModule,
+    ResetPasswordModule,
   ],
-  providers:[DatePipe]
+  providers: [DatePipe],
 })
-export class ProfileSettingsModule { }
-
-
-
-
+export class ProfileSettingsModule {}

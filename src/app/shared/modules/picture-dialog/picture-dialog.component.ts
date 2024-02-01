@@ -28,20 +28,20 @@ export class PictureDialogComponent implements OnInit {
 
   private apiUrl = `${environment.apis.default.url}/api`;
   public picUrl = `${environment.apis.default.url}/`;
-  profileInfo:any = []
+  profileInfo: any = []
   doctorId: any;
   constructor(
     private TosterService: TosterService,
-    private DoctorProfileService : DoctorProfileService,
+    private DoctorProfileService: DoctorProfileService,
     private http: HttpClient,
-    private normalAuth : AuthService,
+    private normalAuth: AuthService,
     public dialogRef: MatDialogRef<DegreeDialogComponentnt>,
-  ){
+  ) {
 
   }
 
 
-  ngOnInit():void{
+  ngOnInit(): void {
     let authId = this.normalAuth.authInfo().id
     this.doctorId = authId
     if (authId) {
@@ -49,13 +49,13 @@ export class PictureDialogComponent implements OnInit {
       this.getProfileInfo(authId)
     }
   }
-  getProfileInfo(id:any):void {
-  
+  getProfileInfo(id: any): void {
+
     if (id) {
-      this.DoctorProfileService.get(id).subscribe((res)=>{
+      this.DoctorProfileService.get(id).subscribe((res) => {
         this.profileInfo = res
-        
-        
+
+
       })
     }
   }
@@ -74,7 +74,7 @@ export class PictureDialogComponent implements OnInit {
       this.http.post(`${this.apiUrl}/Common/Documents`, this.fileData).subscribe(
         (result: any) => {
           console.log(result);
-          
+
           this.TosterService.customToast('Picture Changed Successfully', 'success');
           this.dialogRef.close(true);
         },
@@ -85,7 +85,7 @@ export class PictureDialogComponent implements OnInit {
     }
   }
 
-  
+
 
   onFileChanged(event: any) {
     for (var i = 0; i <= event.target.files.length - 1; i++) {
@@ -116,7 +116,7 @@ export class PictureDialogComponent implements OnInit {
         if (files[i].size > 5242880) {
           this.fileNames.splice(i, 1);
           this.fileList.splice(i, 1);
-         
+
           this.TosterService.customToast('Maximum 5MB Accepted', 'warning');
           //this.toastr.warning('Maximum 5MB Accepted.', 'Warning');
         }

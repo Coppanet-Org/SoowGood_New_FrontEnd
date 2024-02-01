@@ -1,6 +1,6 @@
-import { AppointmentService, DoctorChamberService, SslCommerzService } from 'src/app/proxy/services';
+import { AppointmentService, DoctorChamberService, EkPayService, SslCommerzService } from 'src/app/proxy/services';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SslCommerzInputDto } from 'src/app/proxy/input-dto';
+import { EkPayInputDto, SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { AppointmentType } from 'src/app/proxy/enums';
@@ -32,7 +32,8 @@ export class BookingReviewComponent {
     private ToasterService: TosterService,
     private AppointmentService: AppointmentService,
     private DoctorChamberService: DoctorChamberService,
-    private sslCommerzService: SslCommerzService //private sslCommerzService: PaymentService
+    private sslCommerzService: SslCommerzService, //private sslCommerzService: PaymentService
+    private ekPayService: EkPayService //private sslCommerzService: PaymentService
   ) {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
   }
@@ -75,16 +76,16 @@ export class BookingReviewComponent {
 
   payWithSslCommerz(appointmentCode: any): void {
     if (this.bookingInfo) {
-      const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
+      const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
       sslCommerzInputDto.applicationCode = appointmentCode;
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
       );
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
-
-      //this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
-      this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
+      //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
            next:(response)=>{
             if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
               window.location.href = response.gatewayPageURL;

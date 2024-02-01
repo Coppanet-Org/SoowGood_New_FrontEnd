@@ -19,7 +19,7 @@
       </div>
       <div>
         <div>
-          <ul class="inline-flex gap-4">
+          <ul class="flex gap-4 items-center">
             <li
               class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
               (click)="navigator('soowgood-point')"
@@ -32,7 +32,7 @@
             >
               Village Booth
             </li>
-            <li>
+            <li *ngIf="userType === 'agent' || !userType">
               <div class="dropdown dropdown-end">
                 <label
                   tabindex="0"
@@ -44,6 +44,19 @@
                   tabindex="0"
                   class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
                 >
+                  <span
+                    *ngIf="userType === 'agent'"
+                    class="pb-3 font-semibold font-Roboto pl-3 border-b-[1px] text-[20px]"
+                    >{{ authInfo?.fullName }}</span
+                  >
+                  <li *ngIf="userType == 'agent'">
+                    <a
+                      class="font-Roboto text-[16px] font-semibold py-2"
+                      (click)="signOut()"
+                    >
+                      <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+                    </a>
+                  </li>
                   <li
                     (click)="checkAuthUser(userType)"
                     *ngIf="userType !== 'agent'"
@@ -81,6 +94,66 @@
                     >
                   </li> -->
                 </ul>
+              </div>
+            </li>
+
+            <li>
+              <!-- <div class="avatar mt-2">
+                <div
+                  class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+                >
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  />
+                </div>
+              </div> -->
+              <div
+                *ngIf="
+                  isAuthLogin &&
+                  (userType === 'doctor' || userType === 'patient')
+                "
+                class="flex items-center"
+              >
+                <div class="dropdown dropdown-end">
+                  <label
+                    tabindex="0"
+                    class="btn btn-ghost btn-circle avatar flex"
+                  >
+                    <div class="w-8 rounded-full">
+                      <img src="../../../../assets/person.png" />
+                    </div>
+                  </label>
+                  <ul
+                    tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <span
+                      class="pb-3 font-semibold font-Roboto pl-3 border-b-[1px] text-[20px]"
+                    >
+                      {{
+                        authInfo.userType === "doctor"
+                          ? authInfo?.doctorTitle
+                          : ""
+                      }}
+                      {{ authInfo.fullName }}</span
+                    >
+                    <li [routerLink]="userType + '/dashboard'">
+                      <a class="font-Roboto text-[16px] font-semibold py-2">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i
+                        >Dashboard
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="font-Roboto text-[16px] font-semibold py-2"
+                        (click)="signOut()"
+                      >
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i
+                        >Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </li>
           </ul>

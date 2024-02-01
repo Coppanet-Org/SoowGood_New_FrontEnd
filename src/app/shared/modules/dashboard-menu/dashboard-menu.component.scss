@@ -2,3 +2,16 @@
 .menu{
     overflow: hidden;
 }
+
+
+.menu_list::-webkit-scrollbar {
+    width: 2px;
+  }
+   
+
+   
+  .menu_list::-webkit-scrollbar-thumb {
+    background-color: #ebebebdc;
+    outline: none;
+    border-radius: 5px;
+  }

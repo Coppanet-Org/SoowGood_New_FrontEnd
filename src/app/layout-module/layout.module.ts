@@ -72,19 +72,6 @@ const routes: Route[] = [
     ],
   },
   {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('../features-modules/admin/admin.module').then(
-            (m) => m.AdminModule
-          ),
-      },
-    ],
-  },
-  {
     path: 'agent',
     component: DoctorLayoutComponent,
     canActivate: [isAuth],
