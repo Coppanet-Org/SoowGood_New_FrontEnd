@@ -83,9 +83,9 @@ export class BookingReviewComponent {
       );
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
-
-      this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
       //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
            next:(response)=>{
             if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
               window.location.href = response.gatewayPageURL;
