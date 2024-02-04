@@ -15,6 +15,8 @@ export class ResetPasswordComponent implements OnInit {
   resetLoading = false;
   resetFormSubmitted = false;
   @Input() mobile!: string;
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
   constructor(
     private fb: FormBuilder,
     private UserAccountsService: UserAccountsService,
@@ -89,5 +91,15 @@ export class ResetPasswordComponent implements OnInit {
         this.resetLoading = false;
       },
     });
+  }
+
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+    }
   }
 }

@@ -16,6 +16,7 @@ import {
   AgentMasterService,
   AgentSupervisorService,
 } from '../../../../proxy/services';
+import { CustomValidators } from 'src/app/shared/utils/auth-helper';
 @Component({
   selector: 'app-agent-signup',
   templateUrl: './agent-signup.component.html',
@@ -29,6 +30,9 @@ export class AgentSignupComponent implements OnInit {
   agentSupervisorList!: AgentSupervisorDto[];
   agentId: any;
   subs = new SubSink();
+  confirmPasswordFieldType: string = 'password';
+  passwordFieldType: string = 'password';
+  formSubmitted: boolean = false;
   constructor(
     private fb: FormBuilder,
     private AgentProfileService: AgentProfileService,
@@ -48,31 +52,47 @@ export class AgentSignupComponent implements OnInit {
   }
 
   loadForm() {
-    this.signupForm = this.fb.group({
-      fullName: ['', Validators.required],
-      //agentCode: ['123456', Validators.required],
-      organizationName: ['0', Validators.required],
-      agentSuperVisor: ['0', Validators.required],
-      address: ['', Validators.required],
-      city: ['Dhaka', Validators.required],
-      zipCode: ['1212', Validators.required],
-      country: ['Bangladesh', Validators.required],
-      mobileNo: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
+    this.signupForm = this.fb.group(
+      {
+        fullName: ['', Validators.required],
+        //agentCode: ['123456', Validators.required],
+        organizationName: ['0', Validators.required],
+        agentSuperVisor: ['0', Validators.required],
+        address: ['', Validators.required],
+        city: ['Dhaka', Validators.required],
+        zipCode: ['1212', Validators.required],
+        country: ['Bangladesh', Validators.required],
+        mobileNo: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(11),
+            Validators.maxLength(11),
+          ],
         ],
-      ],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      isActive: ['true', Validators.required],
-    });
+        email: ['', Validators.required],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{6,}$/
+            ),
+            // CustomValidators.startsWithUppercase,
+            // CustomValidators.isAtLeast6Characters,
+            // CustomValidators.includesSpecialCharacter,
+            // CustomValidators.includesNumber,
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+        isActive: ['true', Validators.required],
+      },
+      { validator: CustomValidators.matchValidator }
+    );
   }
   onSubmit() {
     this.isLoading = true;
-
+    this.formSubmitted = true;
     if (!this.signupForm.valid) {
       this.isLoading = false;
       this.TosterService.customToast(
@@ -132,7 +152,7 @@ export class AgentSignupComponent implements OnInit {
             //  userType :"agent"
             //};
             //this.NormalAuth.setAuthInfoInLocalStorage(saveLocalStorage);
-
+            this.formSubmitted = false;
             this.NormalAuth.signOut();
             //if (this.normalAuth) {
             //  this.loadAuth();
@@ -152,11 +172,20 @@ export class AgentSignupComponent implements OnInit {
         });
       } else {
         this.isLoading = false;
+        this.formSubmitted = false;
         this.TosterService.customToast(String(res.message), 'error');
       }
     });
   }
-
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+    }
+  }
   loadAgentSupervisors(event: any) {
     this.AgentSupervisorService.getAgentSupervisorsByAgentMasterList(
       event.target.value

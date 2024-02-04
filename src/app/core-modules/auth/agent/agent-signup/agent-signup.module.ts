@@ -4,23 +4,23 @@ import { AgentSignupComponent } from './agent-signup.component';
 
 import { Route, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Route[] = [
   {
     path: '',
     component: AgentSignupComponent,
   },
-]
+];
 
 @NgModule({
-  declarations: [
-    AgentSignupComponent
-  ],
+  declarations: [AgentSignupComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    MatInputModule,
+  ],
 })
-export class AgentSignupModule { }
+export class AgentSignupModule {}
