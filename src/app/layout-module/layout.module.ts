@@ -11,11 +11,11 @@ import { FooterComponent } from './header-footer/footer/footer.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
 
-import { PaymentSuccessComponent } from '../shared/components/payment-success/payment-success.component';
 import { isAuth } from '../auth-gurd/auth.service';
 import { ScrollDirective } from '../shared/directive/scroll/scroll.directive';
-import { PaymentFaildComponent } from '../shared/components/payment-faild/payment-faild.component';
-import { PaymentCancelComponent } from '../shared/components/payment-cancel/payment-cancel.component';
+import { PaymentSuccessComponent } from '../features-modules/public/payment-success/payment-success.component';
+import { PaymentCancelComponent } from '../features-modules/public/payment-cancel/payment-cancel.component';
+import { PaymentFaildComponent } from '../features-modules/public/payment-faild/payment-faild.component';
 
 const routes: Route[] = [
   {
@@ -175,6 +175,19 @@ const routes: Route[] = [
           import(
             '../features-modules/public/tearms-services/tearms-services.module'
           ).then((m) => m.TearmsServicesModule),
+      },
+    ],
+  },
+  {
+    path: 'refund-policy',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import(
+            '../features-modules/public/refund-policy/refund-policy.module'
+          ).then((m) => m.RefundPolicyModule),
       },
     ],
   },

@@ -1,4 +1,3 @@
-import { AuthService } from './../../services/auth.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
@@ -7,6 +6,7 @@ import {
 } from '../../../proxy/services';
 import { TosterService } from '../../../shared/services/toster.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-payment-success',
