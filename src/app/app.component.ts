@@ -1,13 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  AfterViewInit,
-  ElementRef,
-  OnChanges,
-  SimpleChanges,
-  Renderer2,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LoaderService } from './shared/services/loader.service';
 
 @Component({
@@ -19,9 +10,7 @@ export class AppComponent implements OnInit {
   isLoading: boolean = false;
   constructor(
     private loaderService: LoaderService,
-    private cdr: ChangeDetectorRef,
-    private elRef: ElementRef,
-    private Renderer: Renderer2
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {

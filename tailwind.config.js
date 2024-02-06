@@ -38,8 +38,9 @@ module.exports = {
       boxShadow: {
         soft: "rgba(0, 0, 0, 0.06) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
         high: "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
-        bottom: "rgba(0, 0, 0, 0.09) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
-        blue :"rgba(84, 87, 172, 0.2) 0px 7px 29px 0px"
+        bottom:
+          "rgba(0, 0, 0, 0.09) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
+        blue: "rgba(84, 87, 172, 0.2) 0px 7px 29px 0px",
       },
 
       colors: {
@@ -60,12 +61,10 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        Roboto: ["Roboto", "sans-serif"],
+        Roboto: ["Roboto-Medium", "sans-serif"],
       },
     },
   },
 
   plugins: [require("daisyui")],
 };
-
-

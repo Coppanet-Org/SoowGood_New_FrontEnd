@@ -1,0 +1,1 @@
+import{Z as e,eb as n}from"./chunk-BMLH63KZ.js";var a=(()=>{let i=class i{onClick(){window.scrollTo({top:0,behavior:"smooth"})}};i.\u0275fac=function(o){return new(o||i)},i.\u0275dir=e({type:i,selectors:[["","appScroll",""]],hostBindings:function(o,c){o&1&&n("click",function(){return c.onClick()})},standalone:!0});let t=i;return t})();export{a};

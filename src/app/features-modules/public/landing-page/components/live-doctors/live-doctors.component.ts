@@ -1,20 +1,11 @@
 import { DocumentsAttachmentService } from 'src/app/proxy/services';
-import Swiper, { Autoplay, Navigation, Pagination } from 'swiper';
+import Swiper from 'swiper';
 // import { Navigation } from "swiper/modules";
 
-import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin, map, filter } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
+import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

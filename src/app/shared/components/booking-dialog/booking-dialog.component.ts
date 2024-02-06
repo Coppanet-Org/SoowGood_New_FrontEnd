@@ -78,7 +78,7 @@ export class BookingDialogComponent implements OnInit {
   selectedSlotInfo: any;
   selectedFeesInfo: any;
   @ViewChildren(InputComponent) customInputs!: QueryList<InputComponent>;
-  dataLoader!: boolean;
+  dataLoader: boolean = false;
 
   hasValidCode = false;
   createNewPatientInfo: PatientProfileDto = {};
@@ -125,9 +125,10 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataLoader = true;
     this.sessionRole = this.NormalAuth.authInfo()?.userType;
     this.selectedSlotInfo = '';
-    this.dataLoader = true;
+
     this.appointmentType = CommonService.getEnumList(AppointmentType);
     this.genderList = CommonService.getEnumList(Gender);
     this.FinancialSetupService.getList().subscribe((res) => {
@@ -139,27 +140,16 @@ export class BookingDialogComponent implements OnInit {
         this.selectedSlotInfo = slot;
       });
     let schedule = this.doctorData.doctorScheduleInfo;
-    if (schedule) {
-      // this.hospitalList = schedule.map((e: any) => {
-      //   return { name: e.scheduleName, id: e.scheduleName };
-      // });
-      // this.inputConfigs = bookingFilterInputData(list);
-      this.dataLoader = false;
-    } else {
-      // this.inputConfigs = bookingFilterInputData([]);
-      this.dataLoader = false;
-    }
+
     // let schedule = this.doctorData.doctorScheduleInfo;
-    // if (schedule) {
-    //   this.hospitalList = this.doctorData.doctorScheduleInfo.map((e: any) => {
-    //     return { name: e.scheduleName, id: e.scheduleName };
-    //   });
+
     //   // this.inputConfigs = bookingFilterInputData(list);
     //   this.dataLoader = false;
     // } else {
     //   // this.inputConfigs = bookingFilterInputData([]);
     //   this.dataLoader = false;
     // }
+
     let id = this.NormalAuth.authInfo()?.id;
     if (id) {
       if (this.sessionRole == 'patient') {
@@ -173,6 +163,7 @@ export class BookingDialogComponent implements OnInit {
           switchMap((e) => {
             this.profileInfo = e;
             this.loadForm();
+            this.dataLoader = false;
             if (e) {
               return this.UserinfoStateService.getUserPatientData().pipe(
                 map((data) => {

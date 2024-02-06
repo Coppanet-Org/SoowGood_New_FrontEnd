@@ -1,8 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
+// @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
+
+
+@font-face {
+  font-family: 'Roboto-Light';
+  src: url('/assets/fonts/Roboto/Roboto-Light.ttf');
+}
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url('/assets/fonts/Roboto/Roboto-Medium.ttf');
+}
+@font-face {
+  font-family: 'Roboto-Bold';
+  src: url('/assets/fonts/Roboto/Roboto-Bold.ttf');
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto/Roboto-Regular.ttf');
+}
 body{
   scroll-behavior: smooth;
 }
@@ -57,18 +75,17 @@ body::-webkit-scrollbar-thumb {
     @apply active:scale-90 transition-all duration-75 h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
   }
 
-  .form-left {
-    @apply w-[50%] bg-primary h-full;
-  }
-  .form-right {
-    @apply w-[50%]  bg-primary;
-  }
+  // .form-left {
+  //   @apply w-[50%] bg-primary h-full;
+  // }
+  // .form-right {
+  //   @apply w-[50%]  bg-primary;
+  // }
   .form_btn {
- 
     @apply active:scale-90 transition-all duration-75 w-full py-3 font-medium text-white bg-primary hover:bg-skyblue rounded-lg border-primary hover:shadow inline-flex space-x-2 items-center justify-center;
   }
   .btn-secondary {
-    @apply active:scale-90 transition-all duration-75 hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
+    @apply active:scale-90 disabled:scale-100 disabled:bg-gray-400 disabled:text-gray-700 disabled:select-none transition-all duration-75 hover:text-primary border border-transparent  hover:border hover:border-secondary-border flex items-center justify-center text-center relative text-sm bg-secondary hover:bg-secondary-light hover:border-secondary-dark text-white font-Roboto font-medium  px-8 py-3 rounded-md shadow-lg hover:shadow-none hover:opacity-75;
   }
   .btn-secondary-light {
     @apply active:scale-90 transition-all duration-75 bg-secondary-light text-secondary-dark  hover:text-primary py-2.5 px-5 mr-2 h-fit text-sm font-medium focus:outline-none  rounded-md border-secondary-border;
@@ -116,7 +133,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   .heading{
-    @apply font-Roboto font-semibold text-[22px] text-primary/90
+    @apply font-Roboto text-[22px] text-primary/90
   }
   .label{
     @apply  block font-medium text-[14px] text-[#07074D]

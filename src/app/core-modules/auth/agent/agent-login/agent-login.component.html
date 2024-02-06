@@ -2,7 +2,9 @@
   <div class="signup-form__left">
     <img
       class="w-full h-full object-cover"
-      src="/assets/agent/auth-bg.avif"
+      width="300"
+      height="300"
+      ngSrc="/assets/agent/auth-bg.avif"
       alt="auth"
     />
   </div>
@@ -30,13 +32,11 @@
                   loginForm.get('mobileNo')?.touched
               }"
             >
-              <span matPrefix class="h-fit font-Roboto font-semibold"
-                >+88 &nbsp;</span
-              >
+              <span matPrefix class="h-fit font-Roboto">+88 &nbsp;</span>
               <input
                 matInput
                 maxlength="11"
-                class="w-full border-none outline-none font-Roboto font-semibold h-fit"
+                class="w-full border-none outline-none font-Roboto h-fit"
                 type="tel"
                 formControlName="mobileNo"
                 id="mobileNo"

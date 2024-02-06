@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { SignupComponent } from './signup.component';
-import { NgOtpInputModule } from  'ng-otp-input';
+import { NgOtpInputModule } from 'ng-otp-input';
 import { DoctorSetPasswordFormComponent } from './components/doctor-set-password-form/doctor-set-password-form.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { NgOptimizedImage } from '@angular/common';
 const routes: Route[] = [
   {
     path: '',
     component: SignupComponent,
   },
-]
+];
 @NgModule({
   declarations: [
     SignupComponent,
@@ -24,7 +24,8 @@ const routes: Route[] = [
     //DegreeSpecilizationInfoFormComponent
   ],
   imports: [
-    CommonModule,RouterModule.forChild(routes),
+    CommonModule,
+    RouterModule.forChild(routes),
     NgOtpInputModule,
     MatFormFieldModule,
     MatInputModule,
@@ -32,8 +33,9 @@ const routes: Route[] = [
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgOptimizedImage,
   ],
 
   providers: [DatePipe],
 })
-export class SignupModule { }
+export class SignupModule {}

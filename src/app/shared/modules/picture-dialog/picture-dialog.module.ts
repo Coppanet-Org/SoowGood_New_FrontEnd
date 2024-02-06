@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PictureDialogComponent } from './picture-dialog.component';
-
-
 
 @NgModule({
   declarations: [PictureDialogComponent],
-  imports: [
-    CommonModule
-  ],
-  exports:[PictureDialogComponent]
+  imports: [CommonModule, NgOptimizedImage],
+  exports: [PictureDialogComponent],
 })
-export class PictureDialogModule { }
+export class PictureDialogModule {}

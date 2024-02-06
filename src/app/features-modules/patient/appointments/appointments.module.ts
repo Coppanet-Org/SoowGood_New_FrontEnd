@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AppointmentsComponent } from './appointments.component';
 import { Route, RouterModule } from '@angular/router';
 import { AllAppointmentsModule } from 'src/app/shared/modules/all-appointments/all-appointments.module';
@@ -12,8 +12,7 @@ const routes: Route[] = [
     path: '',
     component: AppointmentsComponent,
   },
- 
-]
+];
 
 @NgModule({
   declarations: [AppointmentsComponent, MedicalHistoryComponent],
@@ -22,10 +21,8 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     AllAppointmentsModule,
     MatTabsModule,
-    PrescriptionsModule
-  ]
+    PrescriptionsModule,
+    NgOptimizedImage,
+  ],
 })
-export class AppointmentsModule { }
-
-
-
+export class AppointmentsModule {}
