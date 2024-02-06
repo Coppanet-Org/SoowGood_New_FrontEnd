@@ -1,27 +1,23 @@
-import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { FooterComponent } from './header-footer/footer/footer.component';
+import { HeaderComponent } from './header-footer/header/header.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { PatientLayoutComponent } from './layouts/patient-layout/patient-layout.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
-import { Route, RouterModule } from '@angular/router';
-import { HeaderComponent } from './header-footer/header/header.component';
-import { FooterComponent } from './header-footer/footer/footer.component';
 // import { DashboardHeaderComponent } from '../shared/components/dashboard-header/dashboard-header.component';
 import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
 import { PublicLayoutTwoComponent } from './layouts/public-layout-two/public-layout-two.component';
 
 import { isAuth } from '../auth-gurd/auth.service';
 import { ScrollDirective } from '../shared/directive/scroll/scroll.directive';
-import { PaymentSuccessComponent } from '../features-modules/public/payment-success/payment-success.component';
-import { PaymentCancelComponent } from '../features-modules/public/payment-cancel/payment-cancel.component';
-import { PaymentFaildComponent } from '../features-modules/public/payment-faild/payment-faild.component';
 
 const routes: Route[] = [
   {
     path: '',
     component: PublicLayoutComponent,
-
     loadChildren: () =>
       import(
         '../features-modules/public/landing-page/landing-page.module'
@@ -199,18 +195,6 @@ const routes: Route[] = [
           ),
       },
     ],
-  },
-  {
-    path: 'payment-success',
-    component: PaymentSuccessComponent,
-  },
-  {
-    path: 'payment-cancel',
-    component: PaymentCancelComponent,
-  },
-  {
-    path: 'payment-faild',
-    component: PaymentFaildComponent,
   },
 ];
 

@@ -1,1 +1,0 @@
-import{R as i,e as r}from"./chunk-BMLH63KZ.js";var c=(()=>{let t=class t{constructor(){this.isLoading=new r(!1)}sendLoaderState(o){this.isLoading.next(o)}getLoaderState(){return this.isLoading.asObservable()}};t.\u0275fac=function(a){return new(a||t)},t.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"});let e=t;return e})();export{c as a};

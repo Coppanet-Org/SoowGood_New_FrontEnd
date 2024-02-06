@@ -1,6 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booking-review.module';
@@ -18,11 +18,31 @@ import { PricingModalComponent } from './components/pricing/pricing-modal/pricin
 import { PricingComponent } from './components/pricing/pricing.component';
 import { SignupMarketingBannerComponent } from './components/signup-marketing-banner/signup-marketing-banner.component';
 import { LandingPageComponent } from './landing-page.component';
+import { AccoutDeleteRequestComponent } from '../accout-delete-request/accout-delete-request.component';
+import { PaymentSuccessComponent } from '../payment-success/payment-success.component';
+import { PaymentCancelComponent } from '../payment-cancel/payment-cancel.component';
+import { PaymentFaildComponent } from '../payment-faild/payment-faild.component';
 
 const routes: Route[] = [
   {
     path: '',
     component: LandingPageComponent,
+  },
+  {
+    path: 'acoount-delete-request',
+    component: AccoutDeleteRequestComponent,
+  },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+  },
+  {
+    path: 'payment-cancel',
+    component: PaymentCancelComponent,
+  },
+  {
+    path: 'payment-faild',
+    component: PaymentFaildComponent,
   },
 ];
 @NgModule({
@@ -40,6 +60,7 @@ const routes: Route[] = [
     PricingCardComponent,
     PricingCardIncludeListComponent,
     PricingModalComponent,
+    AccoutDeleteRequestComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +70,7 @@ const routes: Route[] = [
     MaterialModulesModule,
     BookingReviewModule,
     NgOptimizedImage,
+    FormsModule,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

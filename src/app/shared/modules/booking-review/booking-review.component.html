@@ -10,22 +10,22 @@
   <!-- <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
     General Medicine
   </p> -->
-  <div>
-    <div class="relative overflow-x-auto">
-      <table class="w-full mt-6 text-sm text-left text-gray-500">
-        <tbody>
-          <tr class="bg-white border-b">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Patient name:
-            </th>
-            <td class="py-2">
-              {{ bookingInfo?.patientName }}
-            </td>
-          </tr>
-          <!-- <tr class="bg-white border-b   ">
+
+  <div class="relative overflow-x-auto">
+    <table class="w-full mt-6 text-sm text-left text-gray-500">
+      <tbody>
+        <tr class="bg-white border-b">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Patient name:
+          </th>
+          <td class="py-2">
+            {{ bookingInfo?.patientName }}
+          </td>
+        </tr>
+        <!-- <tr class="bg-white border-b   ">
                   <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap   ">
                     Appointment Day :
                   </th>
@@ -33,95 +33,94 @@
                     {{bookingInfo?.scheduleDayofWeek}}
                   </td>
                 </tr> -->
-          <tr class="bg-white border-b">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Appointment Date :
-            </th>
-            <td class="py-2">
-              {{ bookingInfo?.appointmentDate | date }}
-            </td>
-          </tr>
-          <tr class="bg-white border-b">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Appointment Type :
-            </th>
-            <td class="py-2">
-              {{ bookingInfo?.appointmentTypeName }}
-            </td>
-          </tr>
-          <tr class="bg-white border-b">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Hospital name :
-            </th>
-            <td class="py-2">
-              <!--{{getChamber(bookingInfo?.doctorChamberId)}}-->
-              @if (bookingInfo?.doctorChamberName) {
-              {{ bookingInfo?.doctorChamberName }}
-              }@else{ Soowgood Online Platform }
-            </td>
-          </tr>
+        <tr class="bg-white border-b">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Appointment Date :
+          </th>
+          <td class="py-2">
+            {{ bookingInfo?.appointmentDate | date }}
+          </td>
+        </tr>
+        <tr class="bg-white border-b">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Appointment Type :
+          </th>
+          <td class="py-2">
+            {{ bookingInfo?.appointmentTypeName }}
+          </td>
+        </tr>
+        <tr class="bg-white border-b">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Hospital name :
+          </th>
+          <td class="py-2">
+            <!--{{getChamber(bookingInfo?.doctorChamberId)}}-->
+            @if (bookingInfo?.doctorChamberName) {
+            {{ bookingInfo?.doctorChamberName }}
+            }@else{ Soowgood Online Platform }
+          </td>
+        </tr>
 
-          <tr class="bg-white">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Doctor Fee :
-            </th>
-            <td class="py-2">{{ bookingInfo?.doctorFee }} tk.</td>
-          </tr>
-          <tr class="bg-white">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Booth Fee :
-            </th>
-            <td class="py-2">{{ bookingInfo?.agentFee }} tk.</td>
-          </tr>
-          <tr class="bg-white">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Platform Fee :
-            </th>
-            <td class="py-2">{{ bookingInfo?.platformFee }} tk.</td>
-          </tr>
-          <tr class="bg-white">
-            <th
-              scope="row"
-              class="py-2 font-medium text-gray-900 whitespace-nowrap"
-            >
-              Total Fee :
-            </th>
-            <td class="py-2">{{ bookingInfo?.totalAppointmentFee }} tk.</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex gap-5">
-        <button
-          class="btn-secondary bg-primary mt-6 text-[15px] tracking-[1px] py-1 w-full"
-          (click)="gotToBack.emit(1)"
-        >
-          Back
-        </button>
-        <button
-          class="btn-secondary mt-6 text-[16px] tracking-[1px] py-2 w-full"
-          (click)="createAppointmentAndPayment()"
-        >
-          {{ loading ? "Loading..." : "Confirm & Pay" }}
-        </button>
-      </div>
+        <tr class="bg-white">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Doctor Fee :
+          </th>
+          <td class="py-2">{{ bookingInfo?.doctorFee }} tk.</td>
+        </tr>
+        <tr class="bg-white">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Booth Fee :
+          </th>
+          <td class="py-2">{{ bookingInfo?.agentFee }} tk.</td>
+        </tr>
+        <tr class="bg-white">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Platform Fee :
+          </th>
+          <td class="py-2">{{ bookingInfo?.platformFee }} tk.</td>
+        </tr>
+        <tr class="bg-white">
+          <th
+            scope="row"
+            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+          >
+            Total Fee :
+          </th>
+          <td class="py-2">{{ bookingInfo?.totalAppointmentFee }} tk.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex gap-5">
+      <button
+        class="btn-secondary bg-primary mt-6 text-[15px] tracking-[1px] py-1 w-full"
+        (click)="gotToBack.emit(1)"
+      >
+        Back
+      </button>
+      <button
+        class="btn-secondary mt-6 text-[16px] tracking-[1px] py-2 w-full"
+        (click)="createAppointmentAndPayment()"
+      >
+        {{ loading ? "Loading..." : "Confirm & Pay" }}
+      </button>
     </div>
   </div>
 </div>

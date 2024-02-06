@@ -1,1 +1,0 @@
-import{S as n,Y as i,ac as a}from"./chunk-BMLH63KZ.js";var x=(()=>{let t=class t{};t.\u0275fac=function(o){return new(o||t)},t.\u0275mod=i({type:t}),t.\u0275inj=n({imports:[a]});let e=t;return e})();export{x as a};
