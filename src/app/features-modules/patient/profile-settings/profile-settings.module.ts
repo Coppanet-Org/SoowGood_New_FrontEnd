@@ -28,7 +28,7 @@ const routes: Route[] = [
     ReactiveFormsModule,
     FormsModule,
     InputModule,
-    ResetPasswordModule,
+    // ResetPasswordModule,
   ],
   providers: [DatePipe],
 })

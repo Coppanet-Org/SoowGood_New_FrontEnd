@@ -64,7 +64,9 @@
             </th>
             <td class="py-2">
               <!--{{getChamber(bookingInfo?.doctorChamberId)}}-->
+              @if (bookingInfo?.doctorChamberName) {
               {{ bookingInfo?.doctorChamberName }}
+              }@else{ Soowgood Online Platform }
             </td>
           </tr>
 
