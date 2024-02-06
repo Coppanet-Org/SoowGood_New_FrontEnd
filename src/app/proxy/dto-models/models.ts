@@ -703,6 +703,12 @@ export interface TransactionValidationDto {
   isValidTransaction?: boolean;
 }
 
+export interface UserDataDeleteRequestDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  mobileNumber?: string;
+  description?: string;
+}
+
 export interface UserInfoDto extends FullAuditedEntityDto<string> {
   tenantId?: string;
   userName?: string;

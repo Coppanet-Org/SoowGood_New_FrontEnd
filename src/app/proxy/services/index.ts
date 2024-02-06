@@ -28,3 +28,4 @@ export * from './speciality.service';
 export * from './specialization.service';
 export * from './ssl-commerz.service';
 export * from './user-accounts.service';
+export * from './user-data-delete.service';
