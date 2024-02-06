@@ -26,15 +26,6 @@ export class HeaderComponent implements OnInit {
   logoPath: string = 'assets/SoowGood-Logo.png';
   authInfo: any;
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrolled = window.scrollY >= 100;
-    if (window.scrollY >= 100) {
-      this.logoPath = 'assets/SoowGood-Logo.png';
-    } else {
-      this.logoPath = 'assets/SoowGood-Logo.png';
-    }
-  }
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,

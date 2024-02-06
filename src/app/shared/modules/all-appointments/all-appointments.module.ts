@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AllAppointmentsComponent } from './all-appointments.component';
 import { RouterModule } from '@angular/router';
 import { AppointmentCardComponent } from '../../components/appointment-card/appointment-card.component';
@@ -21,7 +21,7 @@ import { UploadAppointmentDocDialogComponent } from '../../components/upload-app
     AllAppointmentsComponent,
     AppointmentCardComponent,
     AppointmentDialogComponent,
-    UploadAppointmentDocDialogComponent
+    UploadAppointmentDocDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,8 @@ import { UploadAppointmentDocDialogComponent } from '../../components/upload-app
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    FilterModule
+    FilterModule,
+    NgOptimizedImage,
   ],
   exports: [AllAppointmentsComponent],
 })

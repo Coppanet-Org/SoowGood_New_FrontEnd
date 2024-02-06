@@ -291,3 +291,9 @@ export interface SslCommerzInputDto {
   transactionId?: string;
   totalAmount?: string;
 }
+
+export interface UserDataDeleteRequestInputDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  mobileNumber?: string;
+  description?: string;
+}

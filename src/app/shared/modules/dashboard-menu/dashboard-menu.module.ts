@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { DashboardMenuComponent } from './dashboard-menu.component';
 import { DashboardMenuItemComponent } from '../../components/dashboard-menu-item/dashboard-menu-item.component';
 import { Route, RouterModule } from '@angular/router';
@@ -9,15 +9,20 @@ const routes: Route[] = [
   {
     path: '*',
     component: DashboardMenuComponent,
-  }
-]
+  },
+];
 @NgModule({
-  declarations: [DashboardMenuComponent,DashboardMenuItemComponent,DashboardProfilecardComponent],
+  declarations: [
+    DashboardMenuComponent,
+    DashboardMenuItemComponent,
+    DashboardProfilecardComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule
+    FormsModule,
+    NgOptimizedImage,
   ],
-  exports:[DashboardMenuComponent,]
+  exports: [DashboardMenuComponent],
 })
-export class DashboardMenuModule { }
+export class DashboardMenuModule {}

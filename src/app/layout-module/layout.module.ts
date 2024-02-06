@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { PatientLayoutComponent } from './layouts/patient-layout/patient-layout.component';
@@ -21,15 +21,11 @@ const routes: Route[] = [
   {
     path: '',
     component: PublicLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import(
-            '../features-modules/public/landing-page/landing-page.module'
-          ).then((m) => m.LandingPageModule),
-      },
-    ],
+
+    loadChildren: () =>
+      import(
+        '../features-modules/public/landing-page/landing-page.module'
+      ).then((m) => m.LandingPageModule),
   },
   {
     path: 'service',
@@ -231,6 +227,11 @@ const routes: Route[] = [
     // DashboardHeaderComponent,
     PublicLayoutTwoComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), ScrollDirective],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ScrollDirective,
+    NgOptimizedImage,
+  ],
 })
 export class LayoutModule {}
