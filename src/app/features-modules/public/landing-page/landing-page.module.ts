@@ -22,6 +22,9 @@ import { AccoutDeleteRequestComponent } from '../accout-delete-request/accout-de
 import { PaymentSuccessComponent } from '../payment-success/payment-success.component';
 import { PaymentCancelComponent } from '../payment-cancel/payment-cancel.component';
 import { PaymentFaildComponent } from '../payment-faild/payment-faild.component';
+import { HeaderModule } from 'src/app/layout-module/header-footer/header/header.module';
+import { FooterComponent } from 'src/app/layout-module/header-footer/footer/footer.component';
+import { FooterModule } from 'src/app/layout-module/header-footer/footer/footer.module';
 
 const routes: Route[] = [
   {
@@ -71,8 +74,9 @@ const routes: Route[] = [
     BookingReviewModule,
     NgOptimizedImage,
     FormsModule,
+    HeaderModule,
+    FooterModule,
   ],
-
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageModule {}
