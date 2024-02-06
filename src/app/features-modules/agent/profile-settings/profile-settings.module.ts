@@ -21,7 +21,6 @@ const routes: Route[] = [
     InputModule,
     ReactiveFormsModule,
     FormsModule,
-    ResetPasswordModule,
     NgOptimizedImage,
   ],
 })

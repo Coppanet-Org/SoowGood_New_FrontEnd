@@ -3,7 +3,7 @@
   <app-banner></app-banner>
   @defer (on viewport) {
   <app-live-doctors></app-live-doctors> }@placeholder {
-  <div class="max-h-[400px] flex justify-center items-center">
+  <div class="h-[400px] w-full flex justify-center items-center">
     <h1>Loading ....</h1>
   </div>
   } @defer (on viewport; prefetch on idle) {
@@ -21,8 +21,6 @@
   }@placeholder {
   <h1>Laoding</h1>
   }
-  <!-- <app-client-feedback></app-client-feedback> -->
-  <app-newsletter></app-newsletter>
 </div>
 
 <div
