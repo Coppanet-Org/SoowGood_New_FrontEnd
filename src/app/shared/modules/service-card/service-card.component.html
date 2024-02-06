@@ -2,7 +2,13 @@
   [routerLink]="'/service/' + service.link"
   class="h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] border-secondary-dark/40 rounded-md shadow-secondary"
 >
-  <img class="w-[50px]" [src]="service.img" alt="ambulance" />
+  <img
+    class="w-[50px]"
+    width="50"
+    height="50"
+    [ngSrc]="service.img"
+    alt="ambulance"
+  />
   <h2
     class="font-Roboto text-[16px] block text-center font-semibold text-primary"
   >

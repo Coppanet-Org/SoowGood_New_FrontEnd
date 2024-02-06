@@ -11,10 +11,9 @@ export const appRoutes: Route[] = [
       import('./layout-module/layout.module').then((m) => m.LayoutModule),
   },
 
-
   {
     path: 'login',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/login/login.module').then(
         (m) => m.LoginModule
@@ -30,7 +29,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'agent/signup',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/agent/agent-signup/agent-signup.module').then(
         (m) => m.AgentSignupModule
@@ -38,7 +37,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'agent/login',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/agent/agent-login/agent-login.module').then(
         (m) => m.AgentLoginModule
@@ -53,4 +52,4 @@ export const appRoutes: Route[] = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
-export class AppRouting { }
+export class AppRouting {}

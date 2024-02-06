@@ -1,11 +1,10 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AppointmentsComponent } from './appointments.component';
+import { MatTabsModule } from '@angular/material/tabs';
 import { Route, RouterModule } from '@angular/router';
 import { AllAppointmentsModule } from '../../../shared/modules/all-appointments/all-appointments.module';
-import { MatTabsModule } from '@angular/material/tabs';
 import { PrescriptionsComponent } from '../../../shared/modules/prescriptions/prescriptions.component';
-import { MedicalHistoryComponent } from '../../patient/appointments/medical-history/medical-history.component';
+import { AppointmentsComponent } from './appointments.component';
 
 const routes: Route[] = [
   {
@@ -15,8 +14,8 @@ const routes: Route[] = [
   {
     path: 'prescriptions/:id',
     component: PrescriptionsComponent,
-  }
-]
+  },
+];
 
 @NgModule({
   declarations: [AppointmentsComponent],
@@ -25,9 +24,10 @@ const routes: Route[] = [
     RouterModule.forChild(routes),
     AllAppointmentsModule,
     MatTabsModule,
-  ]
+    NgOptimizedImage,
+  ],
 })
-export class AppointmentsModule { }
+export class AppointmentsModule {}
 
 //, MedicalHistoryComponent
 //import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';

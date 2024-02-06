@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
@@ -6,10 +6,7 @@ import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directiv
 import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booking-review.module';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { AppMarketingComponent } from './components/app-marketing/app-marketing.component';
-import { AvailableDoctorsComponent } from './components/available-doctors/available-doctors.component';
 import { BannerComponent } from './components/banner/banner.component';
-import { BestDoctorsComponent } from './components/best-doctors/best-doctors.component';
-import { CategoryComponent } from './components/category/category.component';
 import { ClientFeedbackComponent } from './components/client-feedback/client-feedback.component';
 import { LiveConsultBookingDialogComponent } from './components/live-consult-booking-dialog/live-consult-booking-dialog.component';
 import { LiveDoctorCardComponent } from './components/live-doctor-card/live-doctor-card.component';
@@ -32,9 +29,6 @@ const routes: Route[] = [
   declarations: [
     LandingPageComponent,
     BannerComponent,
-    AvailableDoctorsComponent,
-    BestDoctorsComponent,
-    CategoryComponent,
     LiveDoctorsComponent,
     LiveDoctorCardComponent,
     PricingComponent,
@@ -54,6 +48,7 @@ const routes: Route[] = [
     ReactiveFormsModule,
     MaterialModulesModule,
     BookingReviewModule,
+    NgOptimizedImage,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,14 +1,21 @@
 <div class="signup-form">
   <div class="signup-form__left">
-    <img src="/assets/auth/login-auth.webp" alt="auth" />
+    <img
+      ngSrc="/assets/auth/login-auth.webp"
+      width="400"
+      height="400"
+      alt="auth"
+    />
   </div>
   <div class="signup-form__right drop-shadow-soft relative">
     <div
       class="max-w-lg relative min-w-[500px] mx-auto mt-10 bg-white p-8 rounded-xl shadow shadow-slate-300"
     >
       <img
+        width="70"
+        height="70"
         class="w-[100px] rounded-full border-2 border-white h-[100px] absolute -top-[60px] left-1/2 -translate-x-1/2"
-        src="/assets/auth/ms-icon-310x310.png"
+        ngSrc="/assets/auth/ms-icon-310x310.png"
         alt="icon"
       />
       <h1 class="text-4xl font-semibold font-Roboto text-primary mt-8">
@@ -27,9 +34,7 @@
                   loginForm.get('mobileNo')?.touched
               }"
             >
-              <span
-                matPrefix
-                class="h-fit font-Roboto font-semibold text-[16px]"
+              <span matPrefix class="h-fit font-Roboto text-[16px]"
                 >+88 &nbsp;</span
               >
               <input
@@ -239,8 +244,10 @@
           >
             <img
               class="w-[200px] h-12 mr-2"
-              src="assets/SoowGood-Logo.png"
+              ngSrc="assets/SoowGood-Logo.png"
               alt="logo"
+              width="200"
+              height="48"
             />
           </a>
 
@@ -366,7 +373,7 @@
                   "
                   class="text-xs text-red-500 font-normal"
                   align="end"
-                  >hint: Password@123</mat-hint
+                  >hint: Password&#64;123</mat-hint
                 >
               </div>
               <div>
