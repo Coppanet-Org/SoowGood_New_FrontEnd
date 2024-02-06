@@ -69,7 +69,6 @@ const routes: Route[] = [
     MatFormFieldModule,
     MatInputModule,
     PictureDialogModule,
-    ResetPasswordModule,
   ],
 
   providers: [DatePipe],
