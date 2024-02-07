@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   resetLoading: boolean = false;
   loginResponse: any;
   resetFormSubmitted: boolean = false;
+  resetPasswordFieldType = 'password';
+  resetConfPasswordFieldType = 'password';
   constructor(
     private authService: UserAccountsService,
     private appAuthService: AppAuthService,
@@ -113,7 +115,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
   }
-
+  resetPasswordVisibility(field: string) {
+    if (field === 'newPassword') {
+      this.resetPasswordFieldType =
+        this.resetPasswordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.resetConfPasswordFieldType =
+        this.resetConfPasswordFieldType === 'password' ? 'text' : 'password';
+    }
+  }
   onSubmit(): void {
     this.formSubmitted = true;
 
@@ -390,6 +400,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.resetModalShow = false;
           this.resetLoading = false;
           this.resetFormSubmitted = false;
+          this.resetPasswordForm.reset();
         } else {
           this.ToasterService.customToast(String(res.message), 'error');
           this.resetFormSubmitted = false;
