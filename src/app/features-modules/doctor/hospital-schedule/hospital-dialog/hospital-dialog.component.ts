@@ -43,18 +43,17 @@ export class HospitalDialogComponent implements OnInit {
     this.form = this.fb.group({
       doctorProfileId: [id, Validators.required],
       chamberName: ['', Validators.required],
-      city: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      city: ['', Validators.required],
       country: ['Bangladesh', Validators.required],
-      address: [
-        '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)],
-      ],
-      zipCode: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      address: ['', Validators.required],
+      zipCode: [''],
     });
   }
   submit() {
     this.formSubmitted = true;
-    if (!this.form.valid) {
+    const { doctorProfileId, chamberName, city, country, address } =
+      this.form.value;
+    if (!doctorProfileId || !chamberName || !city || !country || !address) {
       this.tosterService.customToast(
         'Please fill all the required fields!',
         'warning'
@@ -66,37 +65,37 @@ export class HospitalDialogComponent implements OnInit {
       this.DoctorChamberService.update({
         ...this.form.value,
         // doctorProfileId: this.doctorId,
-        id:this.editData.id
+        id: this.editData.id,
       }).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.tosterService.customToast('Successfully updated!', 'success');
           this.dialogRef.close(true);
           this.isLoading = false;
         },
-        error:()=>{
+        error: () => {
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
           );
           this.isLoading = false;
           this.dialogRef.close(false);
-        }
-      })
+        },
+      });
     } else {
       this.DoctorChamberService.create(this.form.value).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.tosterService.customToast('Successfully updated!', 'success');
           this.dialogRef.close(true);
           this.isLoading = false;
         },
-        error:()=>{
+        error: () => {
           this.tosterService.customToast(
             'Something went wrong! Please contact your administrator.',
             'error'
           );
           this.isLoading = false;
           this.dialogRef.close(false);
-        }
+        },
       });
     }
   }
