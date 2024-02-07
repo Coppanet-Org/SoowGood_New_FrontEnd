@@ -87,7 +87,7 @@ export class BookingReviewComponent {
       //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
       this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
            next:(response)=>{
-            if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
+            if (response && response.status === '1000' && response.gatewayPageURL) {
               window.location.href = response.gatewayPageURL;
               this.loading = false;
             } else {
