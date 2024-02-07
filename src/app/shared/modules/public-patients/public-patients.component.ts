@@ -43,10 +43,7 @@ export class PublicPatientsComponent implements OnInit {
         patient.patientProfileId,
       ]);
     } else if (this.userInfo.userType === 'patient') {
-      this.Router.navigate([
-        '/patient/my-patient/patient-details/',
-        patient.id,
-      ]);
+      this.Router.navigate(['/patient/my-family/patient-details/', patient.id]);
     } else if (this.userInfo.userType === 'agent') {
       this.Router.navigate(['/agent/patients/patient-details/', patient.id]);
     }

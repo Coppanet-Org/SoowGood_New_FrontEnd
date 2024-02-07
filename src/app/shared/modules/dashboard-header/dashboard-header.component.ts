@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.component';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -9,15 +11,14 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./dashboard-header.component.scss'],
 })
 export class DashboardHeaderComponent {
-  isAuthLogin!: boolean;
-  constructor(private NormalAuth: AuthService, private Router: Router) {}
+  authInfo: any;
+  constructor(
+    private NormalAuth: AuthService,
+    private Router: Router,
+    public dialog: MatDialog
+  ) {}
   ngOnInit(): void {
-    let id = this.NormalAuth.authInfo().id;
-    if (id) {
-      this.isAuthLogin = true;
-    } else {
-      this.isAuthLogin = false;
-    }
+    this.authInfo = this.NormalAuth.authInfo();
   }
   signOut(): void {
     // this.NormalAuth.signOut();
@@ -26,25 +27,11 @@ export class DashboardHeaderComponent {
   goHome() {
     this.Router.navigate(['/']);
   }
-  // headerElement: any;
-  // ngAfterViewInit() {
-  //   this.headerElement = this.el.nativeElement.querySelector('.header');
-
-  //   // Attach a scroll event listener to the window
-  //   window.addEventListener('scroll', this.onScroll.bind(this));
-  // }
-  // onScroll(event: Event) {
-
-  //   // Define a threshold where the header becomes sticky
-  //   const threshold = 100; // Adjust this value as needed
-
-  //   // Get the scroll position
-  //   const scrollPosition = window.scrollY || (document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop) || 0;
-
-  //   if (scrollPosition >= threshold) {
-  //     this.renderer.addClass(this.headerElement, 'sticky-header');
-  //   } else {
-  //     this.renderer.removeClass(this.headerElement, 'sticky-header');
-  //   }
-  // }
+  onClickModal(component: string) {
+    const dialogRef = this.dialog.open(DynamicDialogComponent, {
+      maxWidth: 600,
+      minWidth: 450,
+      data: component,
+    });
+  }
 }

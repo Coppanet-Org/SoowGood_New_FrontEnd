@@ -382,7 +382,7 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
 
 export interface EkPayInitDto {
   status?: string;
-  failedreason?: string;
+  message?: string;
   gatewayPageURL?: string;
 }
 
@@ -701,6 +701,12 @@ export interface SslCommerzInitDto {
 export interface TransactionValidationDto {
   message?: string;
   isValidTransaction?: boolean;
+}
+
+export interface UserDataDeleteRequestDto extends FullAuditedEntityDto<number> {
+  fullName?: string;
+  mobileNumber?: string;
+  description?: string;
 }
 
 export interface UserInfoDto extends FullAuditedEntityDto<string> {

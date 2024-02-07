@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ProfileSettingsComponent } from './profile-settings.component';
 import { Route, RouterModule } from '@angular/router';
 import { InputModule } from 'src/app/shared/modules/input/input.module';
@@ -21,7 +21,7 @@ const routes: Route[] = [
     InputModule,
     ReactiveFormsModule,
     FormsModule,
-    ResetPasswordModule,
+    NgOptimizedImage,
   ],
 })
 export class ProfileSettingsModule {}

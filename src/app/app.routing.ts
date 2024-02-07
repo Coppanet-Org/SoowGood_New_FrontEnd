@@ -3,18 +3,22 @@ import { EmptyPageComponent } from './features-modules/public/empty-page/empty-p
 import { isAuth } from './auth-gurd/auth.service';
 import { routerGuard } from './auth-gurd/router.guard';
 import { NgModule } from '@angular/core';
+import { PublicLayoutComponent } from './layout-module/layouts/public-layout/public-layout.component';
+import { PublicLayoutModule } from './layout-module/layouts/public-layout/public-layout.module';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    loadChildren: () =>
-      import('./layout-module/layout.module').then((m) => m.LayoutModule),
+    component: PublicLayoutComponent,
+    // loadChildren: () =>
+    //   import('./features-modules/public/landing-page/landing-page.module').then(
+    //     (m) => m.LandingPageModule
+    //   ),
   },
-
 
   {
     path: 'login',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/login/login.module').then(
         (m) => m.LoginModule
@@ -30,7 +34,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'agent/signup',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/agent/agent-signup/agent-signup.module').then(
         (m) => m.AgentSignupModule
@@ -38,7 +42,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'agent/login',
-    canActivate:[routerGuard],
+    canActivate: [routerGuard],
     loadChildren: () =>
       import('./core-modules/auth/agent/agent-login/agent-login.module').then(
         (m) => m.AgentLoginModule
@@ -50,7 +54,7 @@ export const appRoutes: Route[] = [
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes), PublicLayoutModule],
   exports: [RouterModule],
 })
-export class AppRouting { }
+export class AppRouting {}

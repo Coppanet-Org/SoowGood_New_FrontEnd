@@ -3,6 +3,8 @@ import { UserAccountsService } from './../../../proxy/services/user-accounts.ser
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../utils/auth-helper';
+import { MatDialogRef } from '@angular/material/dialog';
+import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.component';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,10 +17,13 @@ export class ResetPasswordComponent implements OnInit {
   resetLoading = false;
   resetFormSubmitted = false;
   @Input() mobile!: string;
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
   constructor(
     private fb: FormBuilder,
     private UserAccountsService: UserAccountsService,
-    private ToasterService: TosterService
+    private ToasterService: TosterService,
+    public dialogRef: MatDialogRef<DynamicDialogComponent>
   ) {}
   ngOnInit(): void {
     this.loadForm();
@@ -89,5 +94,15 @@ export class ResetPasswordComponent implements OnInit {
         this.resetLoading = false;
       },
     });
+  }
+
+  passwordVisibility(field: string) {
+    if (field === 'password') {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordFieldType =
+        this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+    }
   }
 }

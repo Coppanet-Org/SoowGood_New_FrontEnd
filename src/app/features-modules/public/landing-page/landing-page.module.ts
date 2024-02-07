@@ -1,15 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 import { ScrollDirective } from 'src/app/shared/directive/scroll/scroll.directive';
 import { BookingReviewModule } from 'src/app/shared/modules/booking-review/booking-review.module';
 import { MaterialModulesModule } from 'src/app/shared/modules/material-modules/material-modules.module';
 import { AppMarketingComponent } from './components/app-marketing/app-marketing.component';
-import { AvailableDoctorsComponent } from './components/available-doctors/available-doctors.component';
 import { BannerComponent } from './components/banner/banner.component';
-import { BestDoctorsComponent } from './components/best-doctors/best-doctors.component';
-import { CategoryComponent } from './components/category/category.component';
 import { ClientFeedbackComponent } from './components/client-feedback/client-feedback.component';
 import { LiveConsultBookingDialogComponent } from './components/live-consult-booking-dialog/live-consult-booking-dialog.component';
 import { LiveDoctorCardComponent } from './components/live-doctor-card/live-doctor-card.component';
@@ -21,20 +18,40 @@ import { PricingModalComponent } from './components/pricing/pricing-modal/pricin
 import { PricingComponent } from './components/pricing/pricing.component';
 import { SignupMarketingBannerComponent } from './components/signup-marketing-banner/signup-marketing-banner.component';
 import { LandingPageComponent } from './landing-page.component';
+import { AccoutDeleteRequestComponent } from '../accout-delete-request/accout-delete-request.component';
+import { PaymentSuccessComponent } from '../payment-success/payment-success.component';
+import { PaymentCancelComponent } from '../payment-cancel/payment-cancel.component';
+import { PaymentFaildComponent } from '../payment-faild/payment-faild.component';
+import { HeaderModule } from 'src/app/layout-module/header-footer/header/header.module';
+import { FooterComponent } from 'src/app/layout-module/header-footer/footer/footer.component';
+import { FooterModule } from 'src/app/layout-module/header-footer/footer/footer.module';
 
 const routes: Route[] = [
   {
     path: '',
     component: LandingPageComponent,
   },
+  {
+    path: 'acoount-delete-request',
+    component: AccoutDeleteRequestComponent,
+  },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+  },
+  {
+    path: 'payment-cancel',
+    component: PaymentCancelComponent,
+  },
+  {
+    path: 'payment-faild',
+    component: PaymentFaildComponent,
+  },
 ];
 @NgModule({
   declarations: [
     LandingPageComponent,
     BannerComponent,
-    AvailableDoctorsComponent,
-    BestDoctorsComponent,
-    CategoryComponent,
     LiveDoctorsComponent,
     LiveDoctorCardComponent,
     PricingComponent,
@@ -46,6 +63,7 @@ const routes: Route[] = [
     PricingCardComponent,
     PricingCardIncludeListComponent,
     PricingModalComponent,
+    AccoutDeleteRequestComponent,
   ],
   imports: [
     CommonModule,
@@ -54,8 +72,11 @@ const routes: Route[] = [
     ReactiveFormsModule,
     MaterialModulesModule,
     BookingReviewModule,
+    NgOptimizedImage,
+    FormsModule,
+    HeaderModule,
+    FooterModule,
   ],
-
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageModule {}

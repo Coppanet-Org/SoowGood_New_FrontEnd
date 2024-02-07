@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { DashboardHeaderComponent } from './dashboard-header.component';
-
-
+import { DynamicDialogModule } from '../dynamic-dialog/dynamic-dialog.module';
 
 @NgModule({
   declarations: [DashboardHeaderComponent],
-  imports: [
-    CommonModule
-  ],exports:[
-    DashboardHeaderComponent
-  ]
+  imports: [CommonModule, NgOptimizedImage, DynamicDialogModule],
+  exports: [DashboardHeaderComponent],
 })
-export class DashboardHeaderModule { }
+export class DashboardHeaderModule {}

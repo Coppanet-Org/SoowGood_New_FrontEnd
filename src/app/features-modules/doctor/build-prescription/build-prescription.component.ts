@@ -490,7 +490,9 @@ export class BuildPrescriptionComponent implements OnInit {
             'success'
           );
           this.prescriptionForm.reset();
-          window.close();
+          setTimeout(() => {
+            window.close();
+          }, 1500);
         } else {
           this.TosterService.customToast(
             'Prescription create failed!',

@@ -12,8 +12,7 @@
         <img
           appScroll
           class="w-full drop-shadow-md"
-          loading="lazy"
-          [src]="logoPath"
+          src="/assets/SoowGood-Logo.png"
           alt="logo"
         />
       </div>
@@ -28,7 +27,7 @@
             </li>
             <li
               class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
-              (click)="navigator('village-booth')"
+              (click)="navigator('soowgood-booth')"
             >
               Village Booth
             </li>
@@ -137,7 +136,7 @@
                       }}
                       {{ authInfo.fullName }}</span
                     >
-                    <li [routerLink]="userType + '/dashboard'">
+                    <li [routerLink]="'/' + userType + '/dashboard'">
                       <a class="font-Roboto text-[16px] font-semibold py-2">
                         <i class="fa-solid fa-right-from-bracket mr-1"></i
                         >Dashboard

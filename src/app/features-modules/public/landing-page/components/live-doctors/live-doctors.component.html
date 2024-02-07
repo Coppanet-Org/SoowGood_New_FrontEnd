@@ -10,7 +10,7 @@
             </span>
           </div>
 
-          <h1 class="text-[44px] text-primary/90 font-Roboto font-semibold">
+          <h1 class="text-[44px] text-primary/90 font-Roboto">
             Live Doctors
             <!-- <button (click)="getDoctorDetails()" title="Reload doctor list">
               <i class="fa-solid text-[20px] text-secondary font-semibold fa-rotate-right"></i>
@@ -19,23 +19,26 @@
         </div>
       </div>
 
-      <div
+      <!-- <div
         *ngIf="liveDoctorList?.length < 1"
         class="grid w-full grid-cols-1 justify-center items-center h-[300px]"
       >
         <p class="text-center leading-9">Loading...</p>
-      </div>
+      </div> -->
       <div
         id=" py-6"
-        class="relative w-full grid gap-10 mt-5 grid-cols-1 md:grid-cols-4"
+        class="relative w-full grid gap-7 mt-5 grid-cols-1 md:grid-cols-4"
       >
         <!-- <div class="swiper"> -->
         <!-- <div class="swiper-wrapper py-6"> -->
         <!-- <div class="swiper-slide" > -->
-        <app-live-doctor-card
-          *ngFor="let details of liveDoctorList"
-          [doctorDetails]="details"
-        ></app-live-doctor-card>
+
+        @defer (on viewport; prefetch on idle) { @for (details of
+        liveDoctorList; track details.id) {
+        <app-live-doctor-card [doctorDetails]="details"></app-live-doctor-card>
+        } }@placeholder {
+        <h1>Data is loading</h1>
+        }
         <!-- </div> -->
         <!-- </div> -->
 
@@ -47,7 +50,7 @@
       <button
         *ngIf="liveDoctorList?.length > 0"
         class="rounded-3xl mt-10 px-6 py-2 bg-secondary text-white mx-auto"
-        (click)="onClickSeeMore('onlineRT')"
+        (click)="onClickSeeMore('OnlineRT')"
       >
         see more
       </button>

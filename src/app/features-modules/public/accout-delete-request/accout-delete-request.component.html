@@ -1,0 +1,66 @@
+<div class="h-screen flex items-center justify-center pt-[100px]">
+  <form
+    [formGroup]="deleteForm"
+    (submit)="submit()"
+    class="border-[1px] p-5 rounded-lg mx-auto w-[450px]"
+  >
+    <h1 class="pb-4 pt-2 text-[24px] font-Roboto border-b-[1px]">
+      Request to Delete Acoount!
+    </h1>
+    <div class="flex flex-col space-y-1 mt-6">
+      <label class="font-semibold" for="mobileNumber">Mobile Number</label>
+      <div
+        class="flex gap-1 border-[1px] py-2.5 px-3 h-[40px] rounded-md outline-none focus:bg-secondary/10"
+      >
+        <span matPrefix class="h-fit font-Roboto text-[14px]">+88 &nbsp;</span>
+        <input
+          autocomplete="off"
+          matInput
+          maxlength="11"
+          class="w-full border-none outline-none font-Roboto h-fit text-[14px]"
+          type="tel"
+          formControlName="mobileNumber"
+          id="mobileNo"
+          placeholder="018-000-00000"
+          required
+          inputmode="numeric"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col space-y-1 mt-3">
+      <label class="font-semibold" for="username">Username</label>
+      <input
+        type="text"
+        placeholder="Enter your username"
+        formControlName="fullName"
+        class="border-[1px] py-2 px-3 rounded-md outline-none focus:bg-secondary/10"
+      />
+    </div>
+
+    <div class="flex flex-col space-y-1 mt-3">
+      <label class="font-semibold" for="description"
+        >Why you want to delete your account?</label
+      >
+      <textarea
+        type="text"
+        rows="2"
+        placeholder="Reason"
+        formControlName="description"
+        class="border-[1px] py-2 px-3 rounded-md outline-none focus:bg-secondary/10"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn-secondary bg-red-500 w-full mt-6">
+      Request
+    </button>
+    @if (message ) {
+    <div class="p-4 bg-green-200 text-green-900 font-Roboto mt-3">
+      successfully sent your request for user: {{ message.fullName }} mobile
+      number: {{ message.mobileNumber }}
+    </div>
+    } @if (errorMessage) {
+    <div class="p-4 bg-red-200 text-red-900 font-Roboto mt-3">
+      {{ errorMessage }}
+    </div>
+    }
+  </form>
+</div>

@@ -1,23 +1,20 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DoctorCardComponent } from './doctor-card.component';
-import { BookingDialogComponent } from '../../components/booking-dialog/booking-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { BookingDialogComponent } from '../../components/booking-dialog/booking-dialog.component';
+import { BookingReviewModule } from '../booking-review/booking-review.module';
 import { InputModule } from '../input/input.module';
 import { MaterialModulesModule } from '../material-modules/material-modules.module';
-import {MatButtonModule} from '@angular/material/button';
 import { SlotsModule } from '../slots/slots.module';
-import { BookingPaymentComponent } from '../../components/booking-dialog/booking-payment/booking-payment.component';
-import { BookingReviewModule } from '../booking-review/booking-review.module';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-
+import { DoctorCardComponent } from './doctor-card.component';
 
 @NgModule({
-  declarations: [DoctorCardComponent,BookingDialogComponent,BookingPaymentComponent],
+  declarations: [DoctorCardComponent, BookingDialogComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -30,11 +27,9 @@ import { MatInputModule } from '@angular/material/input';
     BookingReviewModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgOptimizedImage,
   ],
-  exports:[
-    DoctorCardComponent
-  ],
- 
+  exports: [DoctorCardComponent],
 })
-export class DoctorCardModule { }
+export class DoctorCardModule {}
