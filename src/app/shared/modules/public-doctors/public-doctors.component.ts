@@ -182,6 +182,8 @@ export class PublicDoctorsComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       const doctorName = params['doctorname'];
+      const type = params['type'];
+      this.selectedFilterData({ consultancy: type });
       this.searchData(doctorName);
       if (!params) {
         this.getDoctors();

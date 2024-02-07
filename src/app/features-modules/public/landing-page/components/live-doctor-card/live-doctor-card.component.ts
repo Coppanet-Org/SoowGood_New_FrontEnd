@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialog/live-consult-booking-dialog.component';
 import { environment } from 'src/environments/environment';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-live-doctor-card',
@@ -31,7 +32,8 @@ export class LiveDoctorCardComponent {
     public dialog: MatDialog,
     private TosterService: TosterService,
     private DocumentsAttachmentService: DocumentsAttachmentService,
-    private FinancialSetupService: FinancialSetupService
+    private FinancialSetupService: FinancialSetupService,
+    private router: Router
   ) {
     this.isAuthUser = this.NormalAuth.authInfo()?.id;
     this.userType = this.NormalAuth.authInfo()?.userType;
@@ -41,7 +43,9 @@ export class LiveDoctorCardComponent {
   onClickConsultNow(data: any) {
     this.openDialog(data);
   }
-
+  goToProfile(id: number) {
+    this.router.navigate([`/search/doctors/${id}`]);
+  }
   openDialog(data: any): void {
     this.isLoading = true;
 

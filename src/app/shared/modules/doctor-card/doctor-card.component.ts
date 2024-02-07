@@ -30,10 +30,10 @@ export class DoctorCardComponent implements OnInit {
     private TosterService: TosterService,
     private NormalAuth: AuthService,
     private UserinfoStateService: UserinfoStateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.isAuthUser = this.NormalAuth.authInfo()?.id;
+    this.isAuthUser = this.NormalAuth.authInfo();
     const prePaths: string = this.doctorDetails.profilePic;
     const re = /wwwroot/gi;
     const profilePic = prePaths?.replace(re, '');
@@ -42,37 +42,42 @@ export class DoctorCardComponent implements OnInit {
   }
 
   openDialog(): void {
-
     // if (!this.isAuthUser) {
     //   this.router.navigate(['/login'])
     //   return
     // }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.doctorDetails != 'undefine || null') {
       this.DoctorScheduleService.getDetailsScheduleListByDoctorId(
         this.doctorDetails.id
       ).subscribe((res) => {
-        this.isLoading = false
+        this.isLoading = false;
         if (res?.length > 0 && this.doctorDetails) {
           const dialogRef = this.dialog.open(BookingDialogComponent, {
             maxWidth: 600,
             minWidth: 450,
             data: {
-              doctorDetails: {...this.doctorDetails,picUrl:  this.doctorPicurl },
+              doctorDetails: {
+                ...this.doctorDetails,
+                picUrl: this.doctorPicurl,
+              },
               doctorScheduleInfo: res,
-              isAuthUser: this.isAuthUser ? true : false
+              userAccess: this.isAuthUser.userType == 'doctor' ? false : true,
+              isAuthUser: this.isAuthUser?.id ? true : false,
             },
           });
-          dialogRef.afterClosed().subscribe((result) => { });
+          dialogRef.afterClosed().subscribe((result) => {});
         } else {
-          this.TosterService.customToast(`No Details/Schedule found`, "warning")
+          this.TosterService.customToast(
+            `No Details/Schedule found`,
+            'warning'
+          );
         }
       });
     }
-
   }
   goToProfile() {
-    this.router.navigate([`/search/doctors/${this.doctorDetails.id}`])
+    this.router.navigate([`/search/doctors/${this.doctorDetails.id}`]);
   }
 }

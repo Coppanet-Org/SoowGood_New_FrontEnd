@@ -13,95 +13,73 @@
     </p>
   </div>
 
-  <div class="flex pt-10 w-full">
-    <div class="pb-6 w-1/3">
+  <div class="grid grid-cols-4 pt-10 w-full">
+    <div class="pb-6 col-span-2">
       <h2 class="text-[20px] font-Roboto text-primary/90">
-        <i class="fa-solid fa-briefcase mb-3 mr-2"></i>Experience :-
+        <i class="fa-solid fa-briefcase mb-3 mr-2"></i>Hospital & Location :-
       </h2>
+      @for (schedule of scheduleInfo; track $index) {
+      <!-- {{ schedule | json }} -->
       <p class="relative mt-5 ml-6 flex gap-3">
         <i
           class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
         ></i>
         <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80">
-            Glowing Smiles Family Dental Clinic
+          <span class="text-[18px] font-Roboto text-primary/80">
+            @if (schedule.consultancyTypeName === 'Online') { Online video
+            consultation }@else if (schedule.consultancyTypeName === 'Chamber')
+            {
+            {{ schedule.chamber }}
+            }
           </span>
-          <span class="text-[15px] text-gray-500 ml-2"
-            >2010 - Present (5 years)</span
-          >
-        </span>
-      </p>
+          <div class="text-[15px] font-Roboto text-gray-500 ml-2 space-y-4">
+            Available Day & Time
 
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:bg-secondary fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >Comfort Care Dental Clinic
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2"
-            >2007 - 2010 (3 years)
-          </span>
+            <div class="flex gap-3 mt-2">
+              @for(scession of schedule.doctorScheduleDaySession; track $index)
+              {
+              <span class="bg-secondary/10 text-secondary-dark py-1 px-4">
+                <p>{{ scession.scheduleDayofWeek }}</p>
+                {{ scession.startTime }} --
+                {{ scession.endTime }}
+              </span>
+              }
+            </div>
+          </div>
         </span>
       </p>
+      }
     </div>
-
-    <div class="pb-6 w-1/3">
+    <div class="pb-6 col-span-1">
       <h2 class="text-[20px] font-Roboto text-primary/90">
         <i class="fa-solid fa-school mb-3 mr-2"></i>Education :-
       </h2>
+      @for (details of degreeDetails; track $index;) {
+
       <p class="relative mt-5 ml-6 flex gap-3">
         <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
+          [class]="
+            $index == degreeDetails.length - 1
+              ? 'fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]'
+              : 'after:content-[] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]'
+          "
         ></i>
         <span class="flex flex-col">
           <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
+            >{{ details.instituteName }}
           </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
+          <span class="text-[15px] text-gray-500 ml-2"
+            >{{ details.degreeName }}
+          </span>
+          <span class="text-[15px] text-gray-500 ml-2">{{
+            details.passingYear
+          }}</span>
         </span>
       </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:bg-secondary fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
+      }
     </div>
 
-    <div class="pb-6 w-1/3">
+    <div class="pb-6 col-span-1">
       <h2 class="text-[20px] font-Roboto text-primary/90">
         <i class="fa-solid fa-school mb-3 mr-2"></i>Awards :-
       </h2>

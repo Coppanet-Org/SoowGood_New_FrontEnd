@@ -3,12 +3,17 @@ import { EmptyPageComponent } from './features-modules/public/empty-page/empty-p
 import { isAuth } from './auth-gurd/auth.service';
 import { routerGuard } from './auth-gurd/router.guard';
 import { NgModule } from '@angular/core';
+import { PublicLayoutComponent } from './layout-module/layouts/public-layout/public-layout.component';
+import { PublicLayoutModule } from './layout-module/layouts/public-layout/public-layout.module';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    loadChildren: () =>
-      import('./layout-module/layout.module').then((m) => m.LayoutModule),
+    component: PublicLayoutComponent,
+    // loadChildren: () =>
+    //   import('./features-modules/public/landing-page/landing-page.module').then(
+    //     (m) => m.LandingPageModule
+    //   ),
   },
 
   {
@@ -49,7 +54,7 @@ export const appRoutes: Route[] = [
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes), PublicLayoutModule],
   exports: [RouterModule],
 })
 export class AppRouting {}

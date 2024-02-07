@@ -634,7 +634,7 @@ export class BookingDialogComponent implements OnInit {
             : user.email || 'admin@gmail.com',
           consultancyType,
           doctorChamberId,
-          doctorChamberName: chamber,
+          // doctorChamberName: chamber,
           scheduleType,
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,
