@@ -1,4 +1,9 @@
-import { AppointmentService, DoctorChamberService, EkPayService, SslCommerzService } from 'src/app/proxy/services';
+import {
+  AppointmentService,
+  DoctorChamberService,
+  EkPayService,
+  SslCommerzService,
+} from 'src/app/proxy/services';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EkPayInputDto, SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { TosterService } from 'src/app/shared/services/toster.service';
@@ -49,7 +54,7 @@ export class BookingReviewComponent {
   //  this.DoctorChamberService.get(id).subscribe(c => {
   //    return c.chamberName?c.chamberName:'N/A';
   //  });
-    
+
   //}
 
   createAppointmentAndPayment() {
@@ -58,16 +63,20 @@ export class BookingReviewComponent {
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
         next: (res) => {
-     
-          
-          this.payWithSslCommerz(res.appointmentCode), 
-          localStorage.setItem("patientAppointmentCode",JSON.stringify(res.appointmentCode))
+          this.payWithSslCommerz(res.appointmentCode),
+            localStorage.setItem(
+              'patientAppointmentCode',
+              JSON.stringify(res.appointmentCode)
+            );
         },
         error: (err) => {
           console.log(err);
-          this.ToasterService.customToast(String(err.error.error.message), 'error'),
-          this.loading = false;
-        }
+          this.ToasterService.customToast(
+            String(err.error.error.message),
+            'error'
+          ),
+            (this.loading = false);
+        },
       });
     } catch (error) {
       console.log(error);
@@ -83,27 +92,32 @@ export class BookingReviewComponent {
       );
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
-      //this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
       //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
-      this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
-           next:(response)=>{
-            if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
-              window.location.href = response.gatewayPageURL;
-              this.loading = false;
-            } else {
-              this.ToasterService.customToast(
-                'Unable to initiate your payment request. Please contact our support team.',
-                'error'
-              );
-            }
-           },
-           error:(err)=>{
-            this.ToasterService.customToast(String(err.error.error.message), 'error'),
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
+        next: (response) => {
+          if (
+            response &&
+            response.status === 'SUCCESS' &&
+            response.gatewayPageURL
+          ) {
+            window.location.href = response.gatewayPageURL;
             this.loading = false;
-           }
-      })
-        
-      
+          } else {
+            this.ToasterService.customToast(
+              'Unable to initiate your payment request. Please contact our support team.',
+              'error'
+            );
+          }
+        },
+        error: (err) => {
+          this.ToasterService.customToast(
+            String(err.error.error.message),
+            'error'
+          ),
+            (this.loading = false);
+        },
+      });
     } else {
       this.ToasterService.customToast('Booking info not found', 'error');
     }
