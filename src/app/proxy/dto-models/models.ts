@@ -382,7 +382,7 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
 
 export interface EkPayInitDto {
   status?: string;
-  failedreason?: string;
+  message?: string;
   gatewayPageURL?: string;
 }
 
