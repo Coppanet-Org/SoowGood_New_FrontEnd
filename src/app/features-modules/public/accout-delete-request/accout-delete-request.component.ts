@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,6 +12,7 @@ export class AccoutDeleteRequestComponent implements OnInit {
   deleteForm!: FormGroup;
   url: string = `https://apisoowgoodbeta.com/api/app/user-data-delete`;
   message: any = '';
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient) {}
 
@@ -22,16 +23,23 @@ export class AccoutDeleteRequestComponent implements OnInit {
 
   loadForm() {
     this.deleteForm = this.fb.group({
-      mobileNumber: '',
-      fullName: '',
+      mobileNumber: ['', Validators.required],
+      fullName: ['', Validators.required],
       description: '',
     });
   }
 
   submit() {
+    if (this.deleteForm.invalid) {
+      this.errorMessage = '';
+      this.errorMessage = 'Mobile and Username is Required';
+      return;
+    }
+
     try {
       this.httpClient.post(this.url, this.deleteForm.value).subscribe({
         next: (res) => {
+          this.errorMessage = '';
           this.message = res;
           console.log('Request successful:', res);
         },
