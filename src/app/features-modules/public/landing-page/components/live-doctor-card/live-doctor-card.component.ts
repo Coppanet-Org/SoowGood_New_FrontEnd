@@ -1,16 +1,15 @@
-import { TosterService } from 'src/app/shared/services/toster.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import {
   DoctorScheduleService,
-  DocumentsAttachmentService,
   FinancialSetupService,
 } from 'src/app/proxy/services';
-import { MatDialog } from '@angular/material/dialog';
-import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialog/live-consult-booking-dialog.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { TosterService } from 'src/app/shared/services/toster.service';
 import { environment } from 'src/environments/environment';
-import { forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import { LiveConsultBookingDialogComponent } from '../live-consult-booking-dialog/live-consult-booking-dialog.component';
 
 @Component({
   selector: 'app-live-doctor-card',
@@ -31,7 +30,6 @@ export class LiveDoctorCardComponent {
     private NormalAuth: AuthService,
     public dialog: MatDialog,
     private TosterService: TosterService,
-    private DocumentsAttachmentService: DocumentsAttachmentService,
     private FinancialSetupService: FinancialSetupService,
     private router: Router
   ) {
@@ -58,26 +56,20 @@ export class LiveDoctorCardComponent {
         ([detailsScheduleRes, financialSetupRes]) => {
           if (detailsScheduleRes?.length > 0 && data) {
             this.isLoading = false;
-            const dialogRef = this.dialog.open(
-              LiveConsultBookingDialogComponent,
-              {
-                maxWidth: 600,
-                minWidth: 450,
-
-                data: {
-                  doctorDetails: data,
-                  doctorScheduleInfo: detailsScheduleRes,
-                  isAuthUser: this.isAuthUser ? true : false,
-                  userAccess: this.userType == 'doctor' ? false : true,
-                  serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
-                },
-              }
-            );
-
-            dialogRef.afterClosed().subscribe((result) => {
-              this.isLoading = false;
+            this.dialog.open(LiveConsultBookingDialogComponent, {
+              maxWidth: 600,
+              minWidth: 450,
+              data: {
+                doctorDetails: data,
+                doctorScheduleInfo: detailsScheduleRes,
+                isAuthUser: this.isAuthUser ? true : false,
+                userAccess: this.userType == 'doctor' ? false : true,
+                serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
+              },
             });
           } else {
+            this.isLoading = false;
+
             this.TosterService.customToast(
               `No Details/Schedule found`,
               'warning'

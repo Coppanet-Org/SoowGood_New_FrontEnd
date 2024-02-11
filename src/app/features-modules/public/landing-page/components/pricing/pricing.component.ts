@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PricingModalComponent } from './pricing-modal/pricing-modal.component';
 
 @Component({
   selector: 'app-pricing',
@@ -118,4 +120,10 @@ export class PricingComponent {
       condition: 'Subscription based, has auto-renew option',
     },
   ];
+  constructor(public dialog: MatDialog) {}
+  comparePrice() {
+    const dialogRef = this.dialog.open(PricingModalComponent, {
+      data: 'compare',
+    });
+  }
 }

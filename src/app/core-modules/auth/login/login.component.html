@@ -301,119 +301,142 @@
             </div>
 
             <div *ngIf="changePasswordShow">
-              <div>
-                <label
-                  for="newPassword"
-                  class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
-                  >New Password</label
-                >
+              <label
+                for="newPassword"
+                class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
+                >New Password</label
+              >
+              <div class="form_input flex justify-between">
                 <input
-                  type="password"
+                  [type]="resetPasswordFieldType"
                   formControlName="newPassword"
+                  (keydown.enter)="$event.preventDefault()"
                   name="newPassword"
                   id="newPassword"
                   placeholder="••••••••"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  class="outline-none border-none w-full"
                 />
-                <div class="flex flex-col">
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm.get('newPassword')?.hasError('required')
-                    "
-                  >
-                    Password is required.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm
-                        .get('newPassword')
-                        ?.hasError('startsWithUppercase')
-                    "
-                  >
-                    Password must start with an uppercase letter.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm
-                        .get('newPassword')
-                        ?.hasError('isAtLeast6Characters')
-                    "
-                  >
-                    Password must be at least 6 characters long.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm
-                        .get('newPassword')
-                        ?.hasError('includesSpecialCharacter')
-                    "
-                  >
-                    Password must include a special character.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm
-                        .get('newPassword')
-                        ?.hasError('includesNumber')
-                    "
-                  >
-                    Password must include a number.
-                  </mat-error>
-                </div>
-                <mat-hint
-                  *ngIf="
-                    resetPasswordForm.get('newPassword')?.invalid ||
-                    resetPasswordForm.get('newPassword')?.value === '0'
-                  "
-                  class="text-xs text-red-500 font-normal"
-                  align="end"
-                  >hint: Password&#64;123</mat-hint
+                <button
+                  (click)="resetPasswordVisibility('newPassword')"
+                  class="cursor-pointer"
                 >
+                  <i
+                    [class]="
+                      resetPasswordFieldType === 'password'
+                        ? 'fa fa-eye-slash'
+                        : 'fa fa-eye'
+                    "
+                  ></i>
+                </button>
               </div>
-              <div>
-                <label
-                  for="confirm-password"
-                  class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
-                  >Confirm password</label
+              <div class="flex flex-col">
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm.get('newPassword')?.hasError('required')
+                  "
                 >
+                  Password is required.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm
+                      .get('newPassword')
+                      ?.hasError('startsWithUppercase')
+                  "
+                >
+                  Password must start with an uppercase letter.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm
+                      .get('newPassword')
+                      ?.hasError('isAtLeast6Characters')
+                  "
+                >
+                  Password must be at least 6 characters long.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm
+                      .get('newPassword')
+                      ?.hasError('includesSpecialCharacter')
+                  "
+                >
+                  Password must include a special character.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm
+                      .get('newPassword')
+                      ?.hasError('includesNumber')
+                  "
+                >
+                  Password must include a number.
+                </mat-error>
+              </div>
+              <mat-hint
+                *ngIf="
+                  resetPasswordForm.get('newPassword')?.invalid ||
+                  resetPasswordForm.get('newPassword')?.value === '0'
+                "
+                class="text-xs text-red-500 font-normal"
+                align="end"
+                >hint: Password&#64;123</mat-hint
+              >
+              <label
+                for="confirm-password"
+                class="block mb-2 text-sm font-medium text-gray-100 dark:text-white"
+                >Confirm password</label
+              >
+              <div class="form_input flex justify-between">
                 <input
                   formControlName="confirmPassword"
-                  type="password"
+                  [type]="resetConfPasswordFieldType"
+                  (keydown.enter)="$event.preventDefault()"
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="••••••••"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  class="outline-none border-none w-full"
                 />
-
-                <div class="flex flex-col">
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm
-                        .get('confirmPassword')
-                        ?.hasError('required')
+                <button
+                  (click)="resetPasswordVisibility('confirmPassword')"
+                  class="cursor-pointer"
+                >
+                  <i
+                    [class]="
+                      resetConfPasswordFieldType === 'password'
+                        ? 'fa fa-eye-slash'
+                        : 'fa fa-eye'
                     "
-                  >
-                    Confirm password is required.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      resetFormSubmitted &&
-                      resetPasswordForm.get('confirmPassword')?.valid &&
-                      resetPasswordForm.get('confirmPassword')?.dirty &&
-                      resetPasswordForm.get('confirmPassword')?.errors
-                    "
-                  >
-                    Password not matched.
-                  </mat-error>
-                </div>
+                  ></i>
+                </button>
+              </div>
+              <div class="flex flex-col">
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm
+                      .get('confirmPassword')
+                      ?.hasError('required')
+                  "
+                >
+                  Confirm password is required.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    resetFormSubmitted &&
+                    resetPasswordForm.get('confirmPassword')?.valid &&
+                    resetPasswordForm.get('confirmPassword')?.dirty &&
+                    resetPasswordForm.get('confirmPassword')?.errors
+                  "
+                >
+                  Password not matched.
+                </mat-error>
               </div>
               <div class="flex items-start mt-4">
                 <div class="flex items-center h-5">
