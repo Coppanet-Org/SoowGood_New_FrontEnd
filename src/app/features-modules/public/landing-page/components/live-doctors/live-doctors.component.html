@@ -33,12 +33,12 @@
         <!-- <div class="swiper-wrapper py-6"> -->
         <!-- <div class="swiper-slide" > -->
 
-        @defer (on viewport; prefetch on idle) { @for (details of
-        liveDoctorList; track details.id) {
+        @for (details of liveDoctorList; track details.id) { @defer () {
         <app-live-doctor-card [doctorDetails]="details"></app-live-doctor-card>
-        } }@placeholder {
-        <h1>Data is loading</h1>
-        }
+        }@placeholder {
+        <app-skeleton></app-skeleton>
+        }@loading {Loading...} }
+
         <!-- </div> -->
         <!-- </div> -->
 

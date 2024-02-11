@@ -8,11 +8,9 @@
 <div class="flex flex-col mt-3">
   <div class="-m-1.5 overflow-x-auto">
     <div class="p-1.5 min-w-full inline-block align-middle">
-      <div
-        class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900"
-      >
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead class="bg-gray-50 dark:bg-gray-700">
+      <div class="border rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="th">Schedule with Hospital</th>
               <th scope="col" class="th">Current Fee</th>
@@ -26,7 +24,7 @@
               <th scope="col" class="text-righ th">Action</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody class="divide-y divide-gray-200">
             <tr *ngFor="let item of feeList; let i = index">
               <td class="td">{{ item.doctorScheduleName }}</td>
               <td class="td">{{ item.currentFee }}.00 tk</td>

@@ -148,7 +148,7 @@
       <!-- History start -->
 
       <!-- Compliments start -->
-      <div class="p-body">
+      <div class="p-body" id="complients">
         <div class="p-body-item col-span-12 mt-7">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -202,36 +202,16 @@
                 "
                 [formGroupName]="i"
               >
-                <!--
-                <td class=" p-0 w-[22%] relative">
-                  <input type="text" placeholder="Select Symptoms"formControlName="symptoms"
-                  [class]="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary' : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'"
-                     >
-                     <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched"
-                       class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
-                       Symptoms is required!
-                     </div>
-                </td> -->
                 <td class="p-0 w-[22%] relative">
                   <input
                     placeholder="Select Symptoms"
                     formControlName="symptom"
                     [class]="
-                      complaint.get('symptoms')?.invalid &&
-                      complaint.get('symptoms')?.touched
-                        ? 'border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'
-                        : 'w-full bg-transparent p-2 h-[47px] text-[16px]  text-primary font-Roboto focus:outline-secondary'
+                      formSubmitted && complaint.get('symptom')?.invalid
+                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
                     "
                   />
-
-                  <!-- <mat-autocomplete #auto="matAutocomplete" > -->
-                  <!-- <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option" [innerHTML]="formatOption(option, prescriptionForm.get(['chiefComplaints', i, 'symptoms'])?.value)"></mat-option> -->
-                  <!-- <mat-option *ngFor="let option of filteredFruits[i] | async" [value]="option">{{ option }}</mat-option>
-
-                    </mat-autocomplete> -->
-                  <!-- <div *ngIf="complaint.get('symptoms')?.invalid && complaint.get('symptoms')?.touched" class="text-red-500 absolute -bottom-1 left-[8px] z-10 text-[11px] font-[300]">
-                    Symptoms is required!
-                  </div> -->
                 </td>
 
                 <td class="p-0 w-[10%]">
@@ -256,7 +236,11 @@
                 <td class="p-0 w-[22%]">
                   <input
                     formControlName="problems"
-                    class="w-full h-[47px] px-3 py-2 text-[16px] text-primary font-Roboto focus:outline-secondary"
+                    [class]="
+                      formSubmitted && complaint.get('problems')?.invalid
+                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                    "
                     placeholder="Problems"
                   />
                 </td>
@@ -302,7 +286,7 @@
       </div>
 
       <!-- Findings/ On Examination* start -->
-      <div class="p-body">
+      <div class="p-body" id="findings">
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -345,7 +329,11 @@
                   <input
                     type="text"
                     placeholder="Observation"
-                    class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                    [class]="
+                    formSubmitted && finding.get('observation')?.invalid
+                      ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                      : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                  "
                     formControlName="observation"
                   />
                 </td>
@@ -392,7 +380,7 @@
       </div>
 
       <!-- Medication & Schedule * start -->
-      <div class="p-body">
+      <div class="p-body" id="medicine">
         <div class="p-body-item col-span-12 mt-5">
           <div class="flex justify-between">
             <h1 class="font-Roboto text-[18px] text-primary/90 font-semibold">
@@ -451,11 +439,15 @@
               >
                 <td class="p-0 w-[30%]">
                   <input
-                    placeholder="Select Symptoms"
+                    placeholder="Select medicine"
                     formControlName="drugName"
                     [matAutocomplete]="auto"
-                    class="border-red-500 w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary"
-                  />
+                    [class]="
+                    formSubmitted && medicine.get('drugName')?.invalid
+                      ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                      : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                  "
+                    />
                   <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">
                       {{option}}
@@ -505,7 +497,7 @@
                     <mat-select
                       formControlName="drugDoseSchedule"
                       placeholder="Select timing"
-                      class="text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
+                      [class]="formSubmitted && medicine.get('drugDoseSchedule')?.invalid ? 'border-red-500 border-[1px] text-[16px]  p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary' : 'text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'"
                     >
                       <mat-option value="1 + 1 + 1"> 1 + 1 + 1</mat-option>
                       <mat-option value="1 + 1 + 0">1 + 1 + 0</mat-option>
@@ -547,7 +539,7 @@
                     <button
                       [disabled]="i === 0"
                       type="button"
-                      (click)="removeChiefComplaint(i)"
+                      (click)="removeMedicineSchedule(i)"
                     >
                       <i
                         class="fa-solid fa-trash"
@@ -748,46 +740,6 @@
           class="loading loading-dots loading-md"
         ></span>
       </button>
-      <!-- <button class="btn-secondary rounded-[25px]">Send Pharmacy</button>
-      <button class="btn-secondary rounded-[25px]">Send by Email</button>
-      <button class="btn-secondary rounded-[25px]">Download</button> -->
     </div>
   </div>
 </div>
-
-<!-- <nav class="flex" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3">
-      <li class="inline-flex items-center">
-        <a href="#"
-          class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-          <svg class="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            viewBox="0 0 20 20">
-            <path
-              d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-          </svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <div class="flex items-center">
-          <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 9 4-4-4-4" />
-          </svg>
-          <a href="#"
-            class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Doctor</a>
-        </div>
-      </li>
-      <li aria-current="page">
-        <div class="flex items-center">
-          <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 9 4-4-4-4" />
-          </svg>
-          <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Build Prescription</span>
-        </div>
-      </li>
-    </ol>
-  </nav> -->

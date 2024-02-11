@@ -69,6 +69,7 @@
             </div>
           </label>
           <mat-error
+            class="text-red-500"
             *ngIf="
               formSubmitted ||
               (formGroup.get('userTypeName')?.invalid &&
@@ -96,7 +97,7 @@
                 autocomplete="off"
                 matInput
                 maxlength="11"
-                class="w-full border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
+                class="w-full bg-white border-none outline-none font-Roboto h-fit font-semibold text-[16px]"
                 type="tel"
                 formControlName="mobile"
                 id="mobile"
@@ -107,6 +108,7 @@
             </div>
 
             <mat-error
+              class="text-red-600"
               *ngIf="
                 formSubmitted && formGroup.get('mobile')?.hasError('required')
               "
@@ -114,6 +116,7 @@
               You must enter a valid mobile number.
             </mat-error>
             <mat-error
+              class="text-red-500"
               *ngIf="
                 formSubmitted && formGroup.get('mobile')?.hasError('pattern')
               "
@@ -142,7 +145,7 @@
               class="loading loading-dots loading-md"
             ></span>
           </button>
-          <p class="text-center">
+          <p class="text-center text-primary">
             Already have an account?
             <a
               routerLink="/login"
@@ -180,13 +183,18 @@
       "
     >
       <div class="w-[150px] m-auto rounded-full h-[150px] bg-slate-200">
-        <img ngSrc="/assets/auth/v-code.jpg" alt="IMG" width="50" height="50" />
+        <img
+          ngSrc="/assets/auth/v-code.jpg"
+          alt="IMG"
+          width="150"
+          height="150"
+        />
       </div>
-      <h1 class="mt-4 text-[28px] font-semibold">
+      <h1 class="mt-4 text-[28px] text-primary font-semibold">
         Verify Your Phone <br />
         Number
       </h1>
-      <p>
+      <p class="text-primary">
         We have already sent a verification code<br />to
         <b>{{ mobile }}</b>
       </p>
@@ -196,9 +204,10 @@
           ({{ minutes }}:{{ seconds < 10 ? '0' + seconds : seconds }})
         </span>
       </a> -->
-      <div class="mt-6">
+      <div class="mt-6 bg-white">
         <ng-otp-input
-          inputClass="verify-focus"
+          style="background: white"
+          inputClass="verify-focus bg-white "
           (onInputChange)="onOtpChange($event)"
           [config]="{ length: 4, allowNumbersOnly: true }"
         ></ng-otp-input>
@@ -237,7 +246,9 @@
           : 'display:none'
       "
     >
-      <h1 class="text-3xl font-semibold mb-2">Basic Information</h1>
+      <h1 class="text-3xl font-semibold mb-2 text-primary">
+        Basic Information
+      </h1>
       <hr />
       <form
         class="mt-5"
@@ -278,6 +289,7 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('doctorTitle')?.value === '0'
@@ -310,30 +322,13 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('fullName')?.hasError('required')
                     "
                   >
                     Please enter your full name.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('fullName')?.hasError('pattern')
-                    "
-                  >
-                    Full name should contain only letters and numbers at the
-                    end.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('fullName')?.hasError('invalidName')
-                    "
-                  >
-                    Full name should be at least 3 characters long and follow
-                    the specified pattern.
                   </mat-error>
                 </div>
               </div>
@@ -361,6 +356,7 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('email')?.hasError('required')
@@ -369,6 +365,7 @@
                     Please enter your email.
                   </mat-error>
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('email')?.hasError('pattern')
@@ -411,6 +408,7 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted && userInfoForm.get('gender')?.value === '0'
                     "
@@ -446,6 +444,7 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('dateOfBirth')?.hasError('required')
@@ -476,27 +475,6 @@
                 placeholder="Enter your BMDC number"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-
-              <div>
-                <div class="flex justify-between">
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('bmdcRegNo')?.hasError('required')
-                    "
-                  >
-                    Please enter your BMDC number.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('bmdcRegNo')?.hasError('pattern')
-                    "
-                  >
-                    BMDC number should be a 6-9 digit number.
-                  </mat-error>
-                </div>
-              </div>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
@@ -507,9 +485,6 @@
               >
                 BMDC Exp. Date
               </label>
-              <!--<input autocomplete="off" formControlName="bmdcRegExpiryDate" type="date" name="date" onkeydown="return false"
-                     [min]="todayDate" id="bmdcRegExpiryDate" class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
-
               <input
                 placeholder="BMDC Reg Exp. Date"
                 formControlName="bmdcRegExpiryDate"
@@ -521,20 +496,6 @@
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
               <mat-datepicker #picker2></mat-datepicker>
-
-              <div>
-                <!--<div class="flex justify-between">
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('required')">
-                    Please enter the BMDC expire date.
-                  </mat-error>
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('invalidDate')">
-                    Invalid date format.
-                  </mat-error>
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('bmdcRegExpiryDate')?.hasError('expiredDate')">
-                    BMDC expire date should be in the current year/month or a future.
-                  </mat-error>
-                </div>-->
-              </div>
             </div>
           </div>
         </div>
@@ -555,18 +516,7 @@
                 placeholder="Enter your address"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-              <div>
-                <div class="flex justify-between">
-                  <!--<mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('required')">
-                    Please enter your address.
-                  </mat-error>
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('address')?.hasError('pattern')">
-                    Address should only contain alphanumeric characters and spaces.
-                  </mat-error>-->
-                </div>
-                <!--<mat-hint *ngIf="userInfoForm.get('address')?.invalid" class="text-xs text-red-500 font-normal"
-                          align="end">Required*</mat-hint>-->
-              </div>
+              <div></div>
             </div>
           </div>
           <div class="w-full px-3 sm:w-1/2">
@@ -584,27 +534,7 @@
                 placeholder="Enter city"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-              <div>
-                <div class="flex justify-between">
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('city')?.hasError('required')
-                    "
-                  >
-                    Please enter your city name.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('city')?.hasError('pattern')
-                    "
-                  >
-                    city name should contain only letters (no numbers or special
-                    characters).
-                  </mat-error>
-                </div>
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
@@ -620,25 +550,11 @@
               </label>
               <input
                 autocomplete="off"
-                maxlength="4"
-                minlength="4"
                 formControlName="zipCode"
                 id="post-code"
                 placeholder="Zip Code"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-              <div>
-                <div class="flex justify-between">
-                  <!--<mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('required')">
-                    Please enter your zip code.
-                  </mat-error>
-                  <mat-error *ngIf="formSubmitted && userInfoForm.get('zipCode')?.hasError('pattern')">
-                    Zip code should be a 4-digit number.
-                  </mat-error>-->
-                </div>
-                <!--<mat-hint *ngIf="userInfoForm.get('zipCode')?.invalid" class="text-xs text-red-500 font-normal"
-                          align="end">Required* </mat-hint>-->
-              </div>
             </div>
           </div>
 
@@ -665,18 +581,6 @@
                   {{ item }}
                 </option>
               </select>
-              <div>
-                <div class="flex justify-between">
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('country')?.hasError('required')
-                    "
-                  >
-                    Please select your country!
-                  </mat-error>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -699,26 +603,7 @@
                 placeholder="Identity Number (Passport/NID)"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
-              <div>
-                <div class="flex justify-between">
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('identityNumber')?.hasError('required')
-                    "
-                  >
-                    Please enter your Identity Number (Passport/NID).
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('identityNumber')?.hasError('pattern')
-                    "
-                  >
-                    Identity Number (Passport/NID) should be actual format.
-                  </mat-error>
-                </div>
-              </div>
+              <div></div>
             </div>
           </div>
 
@@ -750,6 +635,7 @@
               <div>
                 <div class="flex justify-between">
                   <mat-error
+                    class="text-red-500"
                     *ngIf="
                       formSubmitted &&
                       userInfoForm.get('specialityId')?.value === '0'
@@ -773,7 +659,7 @@
                   name="password"
                   id="password"
                   autocomplete="off"
-                  class="outline-none border-none w-full"
+                  class="outline-none border-none w-full bg-white"
                   placeholder="Password"
                   (keydown.enter)="$event.preventDefault()"
                 />
@@ -794,6 +680,7 @@
 
               <div class="flex flex-col">
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.hasError('required')
@@ -802,6 +689,7 @@
                   Password is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.hasError('pattern')
@@ -832,7 +720,7 @@
                   autocomplete="off"
                   formControlName="confirmPassword"
                   name="confirmPassword"
-                  class="outline-none border-none w-full"
+                  class="outline-none border-none w-full bg-white"
                   placeholder="Password"
                   (keydown.enter)="$event.preventDefault()"
                 />
@@ -853,6 +741,7 @@
 
               <div class="flex flex-col">
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('confirmPassword')?.hasError('required')
@@ -861,6 +750,7 @@
                   Confirm password is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.valid &&
@@ -920,6 +810,7 @@
 
               <div class="flex justify-between">
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('fullName')?.hasError('required')
@@ -1039,51 +930,6 @@
               </p>
             </div>
           </div>
-          <!-- <div class="w-full px-3 sm:w-1/2">
-            <div class="mb-3">
-              <label
-                for="name"
-                class="mb-2 block font-medium text-[14px] text-[#07074D]"
-              >
-                Email
-              </label>
-              <input
-                autocomplete="off"
-                formControlName="email"
-                type="email"
-                name="name"
-                id="name"
-                placeholder="example@yourmail.com"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-              />
-              <div>
-                <div class="flex justify-between">
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('email')?.hasError('required')
-                    "
-                  >
-                    Please enter your email.
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      formSubmitted &&
-                      userInfoForm.get('email')?.hasError('pattern')
-                    "
-                  >
-                    Email should be valid.
-                  </mat-error>
-                </div>
-                <mat-hint
-                  *ngIf="userInfoForm.get('email')?.invalid"
-                  class="text-xs text-red-500 font-normal"
-                  align="end"
-                  >Required*
-                </mat-hint>
-              </div>
-            </div>
-          </div> -->
         </div>
 
         <div class="-mx-3 flex flex-wrap">
@@ -1115,6 +961,7 @@
 
               <div class="flex flex-col">
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.hasError('required')
@@ -1123,6 +970,7 @@
                   Password is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.hasError('pattern')
@@ -1131,6 +979,7 @@
                   Password should be valid.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm
@@ -1141,6 +990,7 @@
                   Password must start with an uppercase letter.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm
@@ -1151,6 +1001,7 @@
                   Password must be at least 6 characters long.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm
@@ -1161,6 +1012,7 @@
                   Password must include a special character.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.hasError('includesNumber')
@@ -1169,18 +1021,6 @@
                   Password must include a number.
                 </mat-error>
               </div>
-              <!-- <mat-hint *ngIf="
-                  userInfoForm.get('password')?.invalid ||
-                  userInfoForm.get('password')?.value === '0'
-                "
-                        class="text-xs text-red-500 font-normal"
-                        align="end">
-                <p>Minimum 6 characters</p>
-                <p>At least one uppercase letter</p>
-                <p>At least one lowercase letter</p>
-                <p>At least one number and one special character</p>
-                <p>Example: Password@123</p>
-              </mat-hint> -->
             </div>
           </div>
 
@@ -1212,6 +1052,7 @@
 
               <div class="flex flex-col">
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('confirmPassword')?.hasError('required')
@@ -1220,6 +1061,7 @@
                   Confirm password is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     userInfoForm.get('password')?.valid &&
@@ -1300,6 +1142,7 @@
                   </option>
                 </select>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted && formDegree.get('degreeId')?.value === '0'
                   "
@@ -1336,6 +1179,7 @@
                   </option>
                 </select>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted && formDegree.get('duration')?.value === '0'
                   "
@@ -1364,29 +1208,6 @@
                   id="passingYear"
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
-                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-                <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
-                <!-- <mat-datepicker #picker></mat-datepicker> -->
-                <!-- <select
-                  formControlName="passingYear"
-                  id="passingYear"
-                  name="passingYear"
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                >
-                  <option
-                    *ngFor="let item of range"
-                    value="{{ item }}"
-                    class="font-semibold text-gray-500"
-                  >
-                    {{ item }}
-                  </option>
-                </select> -->
-                <!--<mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.hasError('required')">
-                  Passing Year is required.
-                </mat-error>
-                <mat-error *ngIf="formSubmitted && formDegree.get('passingYear')?.touched && formDegree.get('passingYear')?.hasError('invalidPassingYear')">
-                  Please enter a valid Passing Year that is not more than the current year.
-                </mat-error>-->
               </div>
             </div>
           </div>
@@ -1410,6 +1231,7 @@
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteName')?.hasError('required')
@@ -1418,6 +1240,7 @@
                   Institute Name is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteName')?.touched &&
@@ -1446,6 +1269,7 @@
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteCity')?.hasError('required')
@@ -1454,6 +1278,7 @@
                   City is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteCity')?.touched &&
@@ -1492,6 +1317,7 @@
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-1.5 px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />-->
 
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteCountry')?.hasError('required')
@@ -1500,6 +1326,7 @@
                   Country is required.
                 </mat-error>
                 <mat-error
+                  class="text-red-500"
                   *ngIf="
                     formSubmitted &&
                     formDegree.get('instituteCountry')?.touched &&
@@ -1518,15 +1345,11 @@
 
         <div *ngIf="doctorDegrees.length > 0" class="w-full mt-3">
           <div class="relative overflow-x-auto shadow-md w-full sm:rounded-lg">
-            <div
-              class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900"
-            >
+            <div class="flex items-center justify-between pb-4 bg-white">
               <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]"
+                class="w-full text-sm text-left text-gray-500 border-[1px]"
               >
-                <thead
-                  class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                >
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
                     <th scope="col" class="px-6 py-3">Sl#</th>
                     <th scope="col" class="px-6 py-3">Degree</th>
@@ -1537,7 +1360,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    class="bg-white hover:bg-gray-50"
                     *ngFor="let item of doctorDegrees; index as i"
                   >
                     <td class="w-4 p-4">
@@ -1555,7 +1378,7 @@
                     </td>
                     <td class="px-6 py-4">
                       <a
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        class="font-medium text-blue-600 hover:underline"
                         (click)="remove(item.id)"
                         >Delete</a
                       >
@@ -1701,15 +1524,11 @@
             <div
               class="relative overflow-x-auto shadow-md w-full sm:rounded-lg"
             >
-              <div
-                class="flex items-center justify-between bg-white dark:bg-gray-900"
-              >
+              <div class="flex items-center justify-between bg-white">
                 <table
-                  class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]"
+                  class="w-full text-sm text-left text-gray-500 border-[1px]"
                 >
-                  <thead
-                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                  >
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                       <th scope="col" class="px-6 py-3">Sl#</th>
                       <th scope="col" class="px-6 py-3">Speciality</th>
@@ -1722,7 +1541,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      class="bg-white hover:bg-gray-50"
                       *ngFor="let item of doctorSpecializations; index as i"
                     >
                       <td class="w-4 p-4">
@@ -1741,7 +1560,7 @@
                       <!--*ngIf="!sp1or2"-->
                       <td class="px-6 py-4">
                         <a
-                          class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          class="font-medium text-blue-600 hover:underline"
                           (click)="removeSp(item.id)"
                           >Delete</a
                         >
@@ -1825,7 +1644,7 @@
                 </div>
               </div>
               <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]"
+                class="w-full text-sm text-left text-gray-500 border-[1px]"
               >
                 <tbody>
                   <tr *ngFor="let fileName of fileNames; let i = index">
@@ -1887,7 +1706,7 @@
                 </div>
               </div>
               <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]"
+                class="w-full text-sm text-left text-gray-500 border-[1px]"
               >
                 <tbody>
                   <tr *ngFor="let idFileName of idFileNames; let i = index">
@@ -1916,46 +1735,6 @@
           </div>
         </div>
         <div class="-mx-3 flex flex-wrap">
-          <!--<div class="w-full px-3 sm:w-1/1">
-            <div class="mb-3">
-              <label class="mb-2 block  font-medium text-[14px] text-[#07074D]">Upload documents for your specializatoin verification</label>
-              <input autocomplete="off" #spAttachments type="file" #fileInput3 style="display: none"
-                     accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" (change)="onSpFileChanged($event)" multiple>
-              <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="fileInput3.click()">Browse Files</button>
-            </div>
-          </div>-->
-          <!--<div class="w-full px-3 sm:w-1/1">
-            <div class="mb-3">
-              <label class="mb-2 block  font-medium text-[14px] text-[#07074D]">File List for Specializations</label>
-              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-[1px]">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th>Sl.</th>
-                    <th>File Name</th>
-                    <th>Remove</th>
-                    <th>Upload</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      *ngFor="let spFileName of spFileNames; let i=index">
-                    <td>{{i+1}}</td>
-                    <td>
-                      {{ spFileName }}
-                    </td>
-                    <td>
-                      <a href="javascript:void(0)" (click)="removeSpSelectedFile(i)" style="background-color:rgb(196, 32, 32);">
-                        <i class="fa fa-remove" aria-hidden="true"></i>
-                      </a>
-                    </td>
-                    <td>
-                      <button class="hover:shadow-form w-full rounded-md bg-secondary py-3 px-8 text-center text-base font-medium text-white outline-none" (click)="uploadSpDoc()">Attach</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>-->
           <div class="w-full px-3 sm:w-1/1">
             <div class="mb-3">
               <div class="flex gap-3 mt-6">

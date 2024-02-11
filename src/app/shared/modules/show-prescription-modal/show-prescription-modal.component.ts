@@ -37,6 +37,8 @@ export class ShowPrescriptionModalComponent implements OnInit {
           this.data.prescriptionId
         ).subscribe((res) => {
           this.prescriptionInfo = res;
+          console.log(res);
+          
           this.prescriptionLoader = false;
         });
       }
@@ -97,7 +99,7 @@ export class ShowPrescriptionModalComponent implements OnInit {
       drugName.toLowerCase().includes('tablet') ||
       drugName.toLowerCase().includes('capsule');
     const isInjection = drugName.toLowerCase().includes('injection');
-    const isDrops = drugName.toLowerCase().includes('drops');
+    const isDrops = drugName.toLowerCase().includes('drop');
     let medicineType: string;
 
     if (isTablet) {
@@ -112,42 +114,127 @@ export class ShowPrescriptionModalComponent implements OnInit {
 
     const banglaText = parts.map((part, index) => {
       const partValue = parseInt(part, 10);
-      let doseText = '';
+      console.log(partValue);
+
+      let doseText = ' ';
       if (partValue === 0) {
-        doseText = ''; // No dose
+        doseText = '___'; // No dose
       } else {
-        doseText = `১ ${
-          medicineType == 'দিবেন' || 'দিবেন' ? 'বার' : medicineType
-        } ${this.getTimeText(index)} ${isInjection ? 'নিবেন' : 'খাবেন'}`;
+        doseText = this.getTimeText(index);
       }
       return doseText;
     });
-    return banglaText.join(' - ');
+    return banglaText.join('  +  ');
   }
 
   // Helper function to get Bangla time text
   getTimeText(index: number): string {
     switch (index) {
       case 0:
-        return 'সকালে';
+        return ' সকালে ';
       case 1:
-        return 'দুপুর ';
+        return ' দুপুরে ';
       case 2:
-        return 'রাতে';
+        return ' রাতে ';
       default:
-        return 'অজানা';
+        return ' অজানা ';
     }
   }
   getDurationEnglishToBangla(index: number): string {
     switch (index) {
       case 0:
-        return 'সকালে';
+        return ' সকালে ';
       case 1:
-        return 'দুপুর ';
+        return ' দুপুর ';
       case 2:
-        return 'রাতে';
+        return ' রাতে ';
       default:
-        return 'অজানা';
+        return ' অজানা ';
     }
   }
+
+  convertToBanglaDuration(duration: string): string {
+    // Split the duration into number and unit
+    const [num, unit] = duration.split(' ');
+
+    // Convert numbers to Bangla text
+    const banglaNumbers: { [key: string]: string } = {
+      '0': '০',
+      '1': '১',
+      '2': '২',
+      '3': '৩',
+      '4': '৪',
+      '5': '৫',
+      '6': '৬',
+      '7': '৭',
+      '8': '৮',
+      '9': '৯',
+    };
+
+    const banglaNum = num
+      .split('')
+      .map((digit) => banglaNumbers[digit])
+      .join('');
+
+    // Convert unit to Bangla
+    let banglaUnit: string;
+    switch (unit) {
+      case 'day':
+      case 'days':
+        banglaUnit = 'দিন';
+        break;
+      case 'week':
+      case 'weeks':
+        banglaUnit = 'সপ্তাহ';
+        break;
+      case 'month':
+      case 'months':
+        banglaUnit = 'মাস';
+        break;
+      case 'year':
+      case 'years':
+        banglaUnit = 'বছর';
+        break;
+      default:
+        return duration; // If unit is not recognized, return as is
+    }
+
+    return `${banglaNum} ${banglaUnit}`;
+  }
+
+  // convertToBanglaText(drugName: string, schedule: string): string {
+  //   const parts = schedule.split('+');
+  //   const isTablet =
+  //     drugName.toLowerCase().includes('tablet') ||
+  //     drugName.toLowerCase().includes('capsule');
+  //   const isInjection = drugName.toLowerCase().includes('injection');
+  //   const isDrops = drugName.toLowerCase().includes('drop');
+  //   let medicineType: string;
+
+  //   if (isTablet) {
+  //     medicineType = 'টা';
+  //   } else if (isInjection) {
+  //     medicineType = 'নিবেন';
+  //   } else if (isDrops) {
+  //     medicineType = 'দিবেন ';
+  //   } else {
+  //     medicineType = 'বার';
+  //   }
+
+  //   const banglaText = parts.map((part, index) => {
+  //     const partValue = parseInt(part, 10);
+  //     console.log(partValue);
+
+  //     let doseText = '';
+  //     if (partValue === 0) {
+  //       doseText = ''; // No dose
+  //     } else {
+  //       doseText = `১ ${
+  //         medicineType == 'দিবেন' || 'দিবেন' ? 'বার' : medicineType
+  //       } ${this.getTimeText(index)} ${isInjection ? 'নিবেন' : ''}`;
+  //     }
+  //     return doseText;
+  //   });
+  //   return banglaText.join(' - ');
+  // }
 }

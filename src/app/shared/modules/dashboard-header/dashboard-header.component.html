@@ -17,22 +17,25 @@
       </label>
       <ul
         tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-64"
+        class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-64"
       >
         <li (click)="goHome()">
-          <a class="font-Roboto text-[16px] py-2">
+          <a class="font-Roboto text-primary text-[16px] py-2">
             <i class="fa-solid fa-border-none mr-1"></i> Home Page
           </a>
         </li>
         <li *ngIf="authInfo?.userType">
-          <a class="font-Roboto text-[16px] py-2" (click)="signOut()">
+          <a
+            class="font-Roboto text-primary text-[16px] py-2"
+            (click)="signOut()"
+          >
             <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
           </a>
         </li>
         @if (authInfo?.userType === 'patient') {
 
         <li class="mt-2 border-t-2" (click)="onClickModal('change-password')">
-          <a class="font-Roboto text-[16px] py-2">
+          <a class="font-Roboto text-primary text-[16px] py-2">
             <i class="fa-solid fa-right-from-bracket mr-1"></i>
             Change password
           </a>
