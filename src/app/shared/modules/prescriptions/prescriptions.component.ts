@@ -61,7 +61,7 @@ export class PrescriptionsComponent implements OnInit {
   openPdfDialog(id: any): void {
     this.dialog.open(ShowPrescriptionModalComponent, {
       minWidth: '820px',
-      maxWidth: '100%',
+      maxWidth: '860px',
       height: '1000px',
       data: { prescriptionId: id },
     });

@@ -1,6 +1,6 @@
-<div class="main_right border-l-[1px] border-box -z-10 shadow-bottom">
+<div class="main_right border-l-[1px] border-box -z-10 shadow-bottom bg-white">
   <div class="box-border">
-    <div class="card w-full bg-base-100 border-none border-b-[1px]">
+    <div class="card w-full bg-white border-none border-b-[1px]">
       <figure class="px-10 pt-10">
         <img
           [src]="url || ''"
@@ -12,16 +12,16 @@
         class="card-body pb-3 items-center text-center rounded-none border-none"
       >
         <span
-          class="py-.5 px-4 bg-sky-300/30 font-Roboto text-[12px] font-semibold"
+          class="py-.5 px-4 bg-sky-300/30 text-primary font-Roboto text-[12px] font-semibold"
         >
           <!--{{userInfo.doctorTitle ? 'Doctor' : userInfo.hasOwnProperty('patientName') ? 'Patient' : 'Agent'}}-->
           {{ profileTile }}
         </span>
-        <h2 class="card-title">
+        <h2 class="card-title text-primary">
           <!--{{userInfo.doctorTitle ?userInfo.fullName:userInfo.hasOwnProperty('patientName') ?userInfo.patientName:userInfo.agentName}}-->
           {{ userInfo?.fullName }}
         </h2>
-        <p>{{ userInfo?.designation }}</p>
+        <p class="text-primary">{{ userInfo?.designation }}</p>
 
         <div *ngIf="authInfo.userType == 'doctor'">
           <label class="relative inline-flex items-center mb-5 cursor-pointer">
@@ -32,7 +32,7 @@
               [(ngModel)]="status"
               (change)="onChangeStatus()"
               name="status"
-              class="sr-only peer"
+              class="sr-only peer "
             />
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"

@@ -25,6 +25,7 @@ import { PaymentFaildComponent } from '../payment-faild/payment-faild.component'
 import { HeaderModule } from 'src/app/layout-module/header-footer/header/header.module';
 import { FooterComponent } from 'src/app/layout-module/header-footer/footer/footer.component';
 import { FooterModule } from 'src/app/layout-module/header-footer/footer/footer.module';
+import { SkeletonModule } from 'src/app/shared/modules/skeleton/skeleton.module';
 
 const routes: Route[] = [
   {
@@ -76,6 +77,7 @@ const routes: Route[] = [
     FormsModule,
     HeaderModule,
     FooterModule,
+    SkeletonModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

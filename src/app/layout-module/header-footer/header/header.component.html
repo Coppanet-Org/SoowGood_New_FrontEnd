@@ -41,16 +41,16 @@
                 </label>
                 <ul
                   tabindex="0"
-                  class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
+                  class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
                 >
                   <span
                     *ngIf="userType === 'agent'"
-                    class="pb-3 font-semibold font-Roboto pl-3 border-b-[1px] text-[20px]"
+                    class="pb-3 font-Roboto text-primary pl-3 border-b-[1px] text-[20px]"
                     >{{ authInfo?.fullName }}</span
                   >
                   <li *ngIf="userType == 'agent'">
                     <a
-                      class="font-Roboto text-[16px] font-semibold py-2"
+                      class="font-Roboto text-primary text-[16px] py-2"
                       (click)="signOut()"
                     >
                       <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
@@ -61,7 +61,7 @@
                     *ngIf="userType !== 'agent'"
                     routerLink="/agent/login"
                   >
-                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                    <a class="font-Roboto text-primary text-[16px] py-2">
                       <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
                     </a>
                   </li>
@@ -71,7 +71,7 @@
                     *ngIf="userType !== 'agent'"
                     routerLink="/agent/signup"
                   >
-                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                    <a class="font-Roboto text-primary text-[16px] py-2">
                       <i class="fa-solid fa-border-none mr-1"></i>Registration
                     </a>
                   </li>
@@ -79,33 +79,16 @@
                     *ngIf="userType === 'agent'"
                     routerLink="/agent/dashboard"
                   >
-                    <a class="font-Roboto text-[16px] font-semibold py-2">
+                    <a class="font-Roboto text-primary text-[16px] py-2">
                       <i class="fa-solid fa-right-to-bracket mr-1"></i>
                       Dashboard
                     </a>
                   </li>
-                  <!-- <li *ngIf="isAuthLogin && userType=='agent'">
-                    <a
-                      class="font-Roboto text-[16px] font-semibold py-2"
-                      (click)="signOut()"
-                      ><i class="fa-solid fa-left-from-bracket mr-1"></i
-                      >Logout</a
-                    >
-                  </li> -->
                 </ul>
               </div>
             </li>
 
             <li>
-              <!-- <div class="avatar mt-2">
-                <div
-                  class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
-                >
-                  <img
-                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  />
-                </div>
-              </div> -->
               <div
                 *ngIf="
                   isAuthLogin &&
@@ -124,10 +107,10 @@
                   </label>
                   <ul
                     tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-52"
+                    class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
                   >
                     <span
-                      class="pb-3 font-semibold font-Roboto pl-3 border-b-[1px] text-[20px]"
+                      class="pb-3 text-primary font-Roboto pl-3 border-b-[1px] text-[20px]"
                     >
                       {{
                         authInfo.userType === "doctor"
@@ -137,14 +120,14 @@
                       {{ authInfo.fullName }}</span
                     >
                     <li [routerLink]="'/' + userType + '/dashboard'">
-                      <a class="font-Roboto text-[16px] font-semibold py-2">
+                      <a class="font-Roboto text-[16px] text-primary py-2">
                         <i class="fa-solid fa-right-from-bracket mr-1"></i
                         >Dashboard
                       </a>
                     </li>
                     <li>
                       <a
-                        class="font-Roboto text-[16px] font-semibold py-2"
+                        class="font-Roboto text-[16px] text-primary py-2"
                         (click)="signOut()"
                       >
                         <i class="fa-solid fa-right-from-bracket mr-1"></i
