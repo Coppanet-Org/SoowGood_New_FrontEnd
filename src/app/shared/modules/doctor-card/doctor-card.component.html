@@ -1,5 +1,5 @@
 <div
-  class="relative flex group max-h-[380px] overflow-hidden w-full transition-all duration-500 shadow-2xl shadow-secondary/10 flex-col rounded-xl bg-white bg-clip-border text-gray-700 border-[1px]"
+  class="relative flex group h-[400px] overflow-hidden w-full transition-all duration-500 shadow-2xl shadow-secondary/10 flex-col rounded-xl bg-white bg-clip-border text-gray-700 border-[1px]"
 >
   <div
     class="relative box-border flex justify-center py-10 h-[100px] bg-primary/90 w-full"
@@ -17,10 +17,10 @@
     </div>
   </div>
 
-  <div class="px-10 pt-9 mt-10 flex flex-col items-center">
+  <div class="px-10 pt-9 mt-10 flex flex-col items-center h-full">
     <div class="flex items-center justify-between">
       <h4
-        class="block text-[18px] font-Roboto font-medium leading-snug tracking-normal text-blue-gray-900 antialiased"
+        class="block text-center text-[18px] font-Roboto font-medium leading-snug tracking-normal text-blue-gray-900 antialiased"
       >
         {{ doctorDetails.doctorTitleName }}. {{ doctorDetails.fullName }}
         <span class="mr-2">
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="px-4 pt-5 pb-4 flex gap-2">
-    @if (isAuthUser.userType !=='doctor') {
+    @if (isAuthUser?.userType !=='doctor') {
     <button
       [disabled]="isLoading"
       class="rounded-md block hover:bg-secondary/90 bg-primary w-full select-none hover:border-secondary border-secondary/20 border-[1px] py-2 px-7 text-center align-middle font-sans font-medium text-[14px] text-white hover:text-white/90 transition-all focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

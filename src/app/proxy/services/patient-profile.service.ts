@@ -87,6 +87,22 @@ export class PatientProfileService {
     { apiName: this.apiName,...config });
   
 
+  getListPatientListByAgentMaster = (masterId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/patient-profile/patient-list-by-agent-master/${masterId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListPatientListByAgentSuperVisor = (supervisorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/patient-profile/patient-list-by-agent-super-visor/${supervisorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPatientListBySearchUserProfileId = (profileId: number, role: string, name: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PatientProfileDto[]>({
       method: 'GET',

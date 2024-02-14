@@ -13,11 +13,13 @@
     />
   </div>
 
-  <div class="w-full sticky top-[75px]">
-    <div class="w-full bg-gray-100 main_right relative border-box -z-10">
+  <div
+    class="w-full sticky top-[70px] h-[calc(100vh-70px)] overflow-y-scroll menu_list border-r-[1px]"
+  >
+    <div class="w-full bg-gray-100 main_right border-box -z-10">
       <app-dashboard-profilecard></app-dashboard-profilecard>
     </div>
-    <div class="menu_list box-border p-2 max-h-[400px] overflow-y-scroll">
+    <div class="box-border p-2">
       <ul class="menu w-full">
         <button class="bg-secondary w-full btn-secondary mb-3" routerLink="/">
           <i class="fa-solid fa-arrow-left mr-2"></i> Back to Home Page
@@ -26,6 +28,23 @@
         <app-dashboard-menu-item
           [menuItemDetails]="menuList"
         ></app-dashboard-menu-item>
+        <hr class="mt-5 mb-3" />
+        <div
+          class="bg-secondary py-5 w-full gap-3 border-white/50 rounded-lg mt-5 border-[1px]"
+          px
+        >
+          <h1
+            class="text-[22px] font-Roboto drop-shadow-md text-white text-center mb-3"
+          >
+            Hotline
+          </h1>
+
+          <h1
+            class="text-[24px] text-white drop-shadow-lg text-center font-semibold"
+          >
+            +880 1605-144633
+          </h1>
+        </div>
       </ul>
     </div>
   </div>

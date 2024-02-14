@@ -142,9 +142,7 @@
       <!-- create new patient or exist patient -->
       <mat-step [stepControl]="thirdFormGroup">
         <div class="flex gap-4">
-          <div
-            class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700"
-          >
+          <div class="flex items-center px-4 border border-gray-200 rounded">
             <input
               (click)="userExistCheck('exist-user')"
               checked
@@ -152,29 +150,27 @@
               type="radio"
               value=""
               name="bordered-radio"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
             />
             <label
               for="bordered-radio-2"
-              class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="w-full py-2 ml-2 text-sm font-medium text-gray-900"
             >
               Already Exist
             </label>
           </div>
-          <div
-            class="flex items-center px-4 border border-gray-200 rounded dark:border-gray-700"
-          >
+          <div class="flex items-center px-4 border border-gray-200 rounded">
             <input
               (click)="userExistCheck('new-user')"
               id="bordered-radio-1"
               type="radio"
               value=""
               name="bordered-radio"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
             />
             <label
               for="bordered-radio-1"
-              class="w-full py-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="w-full py-2 ml-2 text-sm font-medium text-gray-900"
             >
               New Patient
             </label>

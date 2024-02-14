@@ -49,6 +49,14 @@ export class PaymentService {
     { apiName: this.apiName,...config });
   
 
+  successTestIPNPayment = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, IActionResult>({
+      method: 'POST',
+      url: '/api/test/ipn',
+    },
+    { apiName: this.apiName,...config });
+  
+
   successTestPayment = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, IActionResult>({
       method: 'POST',

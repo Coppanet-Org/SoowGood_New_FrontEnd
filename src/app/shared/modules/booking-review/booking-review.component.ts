@@ -1,5 +1,12 @@
-import { AppointmentService, DoctorChamberService, EkPayService, SslCommerzService } from 'src/app/proxy/services';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
+import { UserinfoStateService } from './../../services/states/userinfo-state.service';
+import {
+  AppointmentService,
+  DoctorChamberService,
+  EkPayService,
+  SslCommerzService,
+} from 'src/app/proxy/services';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EkPayInputDto, SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -11,7 +18,7 @@ import { ListItem } from 'src/app/shared/model/common-model';
   templateUrl: './booking-review.component.html',
   styleUrls: ['./booking-review.component.scss'],
 })
-export class BookingReviewComponent {
+export class BookingReviewComponent implements OnInit {
   @Input() bookingInfo: any;
   @Output() gotToBack = new EventEmitter<any>();
   //SSLCommerz
@@ -27,17 +34,21 @@ export class BookingReviewComponent {
   sslCInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
   loading: boolean = false;
   appointmentType: ListItem[];
+  userType!: string;
 
   constructor(
     private ToasterService: TosterService,
     private AppointmentService: AppointmentService,
     private DoctorChamberService: DoctorChamberService,
+    private AuthService: AuthService,
     private sslCommerzService: SslCommerzService, //private sslCommerzService: PaymentService
     private ekPayService: EkPayService //private sslCommerzService: PaymentService
   ) {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
   }
-
+  ngOnInit(): void {
+    this.userType = this.AuthService.authInfo().userType;
+  }
   getTitle(id: any, type: string) {
     if (type == 'appointmentType') {
       return this.appointmentType.find((res) => res.id == id);
@@ -49,7 +60,7 @@ export class BookingReviewComponent {
   //  this.DoctorChamberService.get(id).subscribe(c => {
   //    return c.chamberName?c.chamberName:'N/A';
   //  });
-    
+
   //}
 
   createAppointmentAndPayment() {
@@ -58,15 +69,15 @@ export class BookingReviewComponent {
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
         next: (res) => {
-     
-          
-          this.payWithSslCommerz(res.appointmentCode), 
-          localStorage.setItem("patientAppointmentCode",JSON.stringify(res.appointmentCode))
+
+
+          this.payWithSslCommerz(res.appointmentCode),
+            localStorage.setItem("patientAppointmentCode", JSON.stringify(res.appointmentCode))
         },
         error: (err) => {
           console.log(err);
           this.ToasterService.customToast(String(err.error.error.message), 'error'),
-          this.loading = false;
+            this.loading = false;
         }
       });
     } catch (error) {
@@ -77,6 +88,7 @@ export class BookingReviewComponent {
   payWithSslCommerz(appointmentCode: any): void {
     if (this.bookingInfo) {
       const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
+      //const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
       sslCommerzInputDto.applicationCode = appointmentCode;
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
@@ -100,10 +112,10 @@ export class BookingReviewComponent {
            error:(err)=>{
             this.ToasterService.customToast(String(err.error.error.message), 'error'),
             this.loading = false;
-           }
+        }
       })
-        
-      
+
+
     } else {
       this.ToasterService.customToast('Booking info not found', 'error');
     }

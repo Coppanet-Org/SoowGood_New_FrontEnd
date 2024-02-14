@@ -52,6 +52,22 @@ export class AgentProfileService {
     { apiName: this.apiName,...config });
   
 
+  getListByMasterId = (masterId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/agent-profile/by-master-id/${masterId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListBySupervisorId = (supervisorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentProfileDto[]>({
+      method: 'GET',
+      url: `/api/app/agent-profile/by-supervisor-id/${supervisorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getlByUserName = (userName: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentProfileDto>({
       method: 'GET',

@@ -51,6 +51,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BuildPrescriptionComponent implements OnInit {
   form!: FormGroup;
+  formSubmitted: boolean = false;
   prescriptionForm!: FormGroup;
   appointmentInfo: AppointmentDto = {};
   specialCaseChecked: boolean = false;
@@ -114,28 +115,62 @@ export class BuildPrescriptionComponent implements OnInit {
     this.todayTime = new Date().toLocaleTimeString();
 
     const { aptId } = this.route.snapshot.params;
+
+    console.log(aptId);
+
     if (aptId) {
-      this.AppointmentService.get(aptId).subscribe((res) => {
-        if (res.appointmentCode) {
-          this.appointmentInfo = res;
-          this.getDocuments(res.patientProfileId);
-          this.PatientProfileService.get(
-            res.patientProfileId ? res.patientProfileId : 0
-          ).subscribe((patient) => {
-            this.form.get('patientCode')?.patchValue(patient.patientCode);
-            this.form.get('patientName')?.patchValue(res.patientName);
-            this.form.get('age')?.patchValue(patient.age);
-            this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
-            this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
-          });
-        } else {
-          this.Router.navigate(['/doctor/appointments']).then((r) => {
-            this.TosterService.customToast('Documents not found!', 'error');
-          });
-        }
+      this.AppointmentService.get(aptId).subscribe({
+        next: (res) => {
+          if (res.appointmentCode) {
+            this.appointmentInfo = res;
+
+            this.PatientProfileService.get(
+              Number(res.patientProfileId)
+            ).subscribe((patient) => {
+              console.log(patient);
+
+              this.form.get('patientCode')?.patchValue(patient.patientCode);
+              this.form.get('patientName')?.patchValue(res.patientName);
+              this.form.get('age')?.patchValue(patient.age);
+              this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
+              this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
+            });
+            this.getDocuments(res.patientProfileId);
+          } else {
+            this.Router.navigate(['/doctor/appointments']).then((r) => {
+              this.TosterService.customToast(
+                'Appointment documents not found!',
+                'error'
+              );
+            });
+          }
+        },
+        error: (err) => console.log(err),
       });
     }
 
+    // (res) => {
+    //   if (res.appointmentCode) {
+    //     this.appointmentInfo = res;
+
+    //     this.PatientProfileService.get(
+    //       Number(res.patientProfileId)
+    //     ).subscribe((patient) => {
+    //       console.log(patient);
+
+    //       this.form.get('patientCode')?.patchValue(patient.patientCode);
+    //       this.form.get('patientName')?.patchValue(res.patientName);
+    //       this.form.get('age')?.patchValue(patient.age);
+    //       this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
+    //       this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
+    //     });
+    //     this.getDocuments(res.patientProfileId);
+    //   } else {
+    //     this.Router.navigate(['/doctor/appointments']).then((r) => {
+    //       this.TosterService.customToast('Documents not found!', 'error');
+    //     });
+    //   }
+    // });
     // this.DrugRxService.getDrugNameSearchList().subscribe((res) => {
     //   this.options = res.map((drug:any) => {
     //     return {
@@ -373,7 +408,13 @@ export class BuildPrescriptionComponent implements OnInit {
     this.medicineSchedule.push(this.createMedicineScheduleFormGroup());
   }
   addDiagnosis() {
-    this.diagnosis.push(this.createDiagnosisFormGroup());
+    this.diagnosis.value?.map((d: any): void => {
+      if (d.testName) {
+        this.diagnosis.push(this.createDiagnosisFormGroup());
+      } else {
+        return;
+      }
+    });
   }
   //remove each row
   removeChiefComplaint(index: number) {
@@ -390,8 +431,7 @@ export class BuildPrescriptionComponent implements OnInit {
   }
 
   submitPrescription() {
-    console.log(this.prescriptionForm.value);
-
+    this.formSubmitted = true;
     const {
       chiefComplaints,
       findings,
@@ -431,6 +471,7 @@ export class BuildPrescriptionComponent implements OnInit {
       };
     });
     //let x : PrescriptionPatientDiseaseHistoryDto
+
     const {
       id: appointmentId,
       appointmentSerial,
@@ -466,7 +507,8 @@ export class BuildPrescriptionComponent implements OnInit {
       prescriptionMainComplaints,
       prescriptionFindingsObservations: findings,
       prescriptionDrugDetails: formattedMedicineSchedule,
-      prescriptionMedicalCheckups: diagnosis,
+      prescriptionMedicalCheckups:
+        diagnosis[0].testName !== '' ? diagnosis : [],
       followupDate: followUp,
       advice: advice,
       patientAdditionalInfo: patientAdditionalInfo,
@@ -476,6 +518,21 @@ export class BuildPrescriptionComponent implements OnInit {
     };
 
     if (this.prescriptionForm.invalid) {
+      const { chiefComplaints, findings, medicineSchedule } =
+        this.prescriptionForm.controls;
+
+      let complient = document.getElementById('complients');
+      let finding = document.getElementById('findings');
+      let medicine = document.getElementById('medicine');
+
+      if (chiefComplaints.status == 'INVALID') {
+        complient?.scrollIntoView({ behavior: 'smooth' });
+      } else if (findings.status == 'INVALID') {
+        finding?.scrollIntoView({ behavior: 'smooth' });
+      } else if (medicineSchedule.status == 'INVALID') {
+        medicine?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+      }
       this.TosterService.customToast('Please fill all the fields!', 'warning');
       return;
     }
@@ -485,6 +542,7 @@ export class BuildPrescriptionComponent implements OnInit {
       this.PrescriptionMasterService.create(prescription).subscribe((res) => {
         if (res) {
           this.prescriptionLoader = false;
+          this.formSubmitted = false;
           this.TosterService.customToast(
             'Prescription created successfully!',
             'success'
@@ -494,6 +552,7 @@ export class BuildPrescriptionComponent implements OnInit {
             window.close();
           }, 1500);
         } else {
+          this.formSubmitted = false;
           this.TosterService.customToast(
             'Prescription create failed!',
             'error'
@@ -501,6 +560,7 @@ export class BuildPrescriptionComponent implements OnInit {
         }
       });
     } catch (error) {
+      this.formSubmitted = false;
       this.TosterService.customToast(String(error), 'error');
     }
   }

@@ -1,10 +1,8 @@
-import { Router } from '@angular/router';
-import { AppointmentService } from './../../../proxy/services/appointment.service';
-import { TosterService } from 'src/app/shared/services/toster.service';
 import {
   FinancialSetupService,
   PatientProfileService,
 } from 'src/app/proxy/services';
+import { TosterService } from 'src/app/shared/services/toster.service';
 
 import {
   Component,
@@ -18,25 +16,17 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dayFromDate, inputForCreatePatient } from '../../utils/input-info';
 
-import { UserinfoStateService } from '../../services/states/userinfo-state.service';
-import {
-  Observable,
-  combineLatestWith,
-  map,
-  of,
-  startWith,
-  switchMap,
-} from 'rxjs';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { InputComponent } from '../../modules/input/input.component';
-import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
-import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
-import { SubSink } from 'subsink';
-import { CommonService } from '../../services/common.service';
-import { AppointmentType, Gender } from 'src/app/proxy/enums';
-import { customNameValidator } from '../../utils/auth-helper';
-import { AuthService } from '../../services/auth.service';
 import { DateFilterFn } from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
+import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
+import { AppointmentType, Gender } from 'src/app/proxy/enums';
+import { SubSink } from 'subsink';
+import { InputComponent } from '../../modules/input/input.component';
+import { AuthService } from '../../services/auth.service';
+import { CommonService } from '../../services/common.service';
+import { DoctorScheduleStateService } from '../../services/states/doctors-states/doctor-schedule-state.service';
+import { UserinfoStateService } from '../../services/states/userinfo-state.service';
 
 @Component({
   selector: 'app-booking-dialog',

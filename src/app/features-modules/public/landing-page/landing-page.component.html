@@ -1,11 +1,16 @@
 <app-header></app-header>
 <div #scrolltop></div>
-<div class="relative">
+<div class="relative w-full">
   <app-banner></app-banner>
   @defer (on viewport) {
-  <app-live-doctors></app-live-doctors> }@placeholder {
-  <div class="h-[400px] w-full flex justify-center items-center">
-    <h1>Loading ....</h1>
+  <app-live-doctors></app-live-doctors>
+  }@placeholder {
+  <div class="h-[300px] w-full flex justify-center items-center">
+    Laoding...
+  </div>
+  }@loading {
+  <div class="h-[300px] w-full flex justify-center items-center">
+    Laoding...
   </div>
   } @defer (on viewport; prefetch on idle) {
   <app-signup-marketing-banner></app-signup-marketing-banner>

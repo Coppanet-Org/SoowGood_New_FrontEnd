@@ -35,6 +35,15 @@ export class AgentMasterService {
     { apiName: this.apiName,...config });
   
 
+  getByUserName = (userName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentMasterDto>({
+      method: 'GET',
+      url: '/api/app/agent-master/by-user-name',
+      params: { userName },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentMasterDto[]>({
       method: 'GET',

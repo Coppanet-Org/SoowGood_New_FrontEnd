@@ -1,92 +1,69 @@
 <div class="overflow-hidden doctor-dashboard_midcontent_container w-ful p-4">
-    <div class="flex items-center justify-left my-2 ">
-        <div class="w-full h-screen bg-white">
-
-            <div class="relative overflow-x-auto  sm:rounded-lg p-8">
-                <div class=" flex gap-4 items-center justify-between">
-                    <h1 class="dashbord-heading-text text-[22px] "> <i class="fa-solid fa-building-columns mr-1"></i>
-                        Billing Information</h1>
-                </div>
-
-                <div class="w-full mt-6">
-                    <div class="w-full min-w-[100%] max-w-[100%]">
-                        <div
-                            class="bottom-box border-[1px] mt-7 h-[400px] bg-white rounded-lg  box-border shadow-2xl shadow-blue-500/10">
-                            <div class=" flex justify-between border-b-[1px] items-center  px-5 py-3">
-                                <h2 class="dashbord-heading-text  h-fit">
-                                    <i class="fa-solid fa-calendar-check mr-2"></i> Billing
-                                </h2>
-                                <div class="flex gap-3">
-                                    <button class="btn-secondary h-fit py-2 px-4 bg-primary ">Add payment methods</button>
-                                </div>
-                            </div>
-
-                            
-                            <div class="px-4 py-3">
-                                <table
-                                    class="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400 border-[1px] ">
-                                    <thead
-                                        class="text-xs rounded-lg text-gray-800 uppercase bg-black/5 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">
-                                                Invoice ID
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Payment date
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Appointment ID
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Payment Status:
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Total amount
-                                            </th>
-    
-                                            <th scope="col" class="px-6 py-3">
-                                                Action
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-
-                                            <td class="px-6 py-4">
-                                                SG0213
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                01/12/2023
-                                            </td>
-                                            <td class="px-6 py-4">
-                                               513562SAS
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                Received
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                120TK.
-                                            </td>
-               
-                                            <td class="px-6 py-4 flex gap-2">
-                                                <a
-                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                                <a
-                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                                            </td>
-                                        </tr>
-
-
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="flex items-center justify-left my-2">
+    <div class="w-full h-screen bg-white">
+      <div class="relative overflow-x-auto sm:rounded-lg p-8">
+        <div class="flex gap-4 items-center justify-between">
+          <h1 class="dashbord-heading-text text-[22px]">
+            <i class="fa-solid fa-building-columns mr-1"></i> Billing
+            Information
+          </h1>
         </div>
-    </div>
 
+        <div class="w-full mt-6">
+          <div class="w-full min-w-[100%] max-w-[100%]">
+            <div
+              class="bottom-box border-[1px] mt-7 h-[400px] bg-white rounded-lg box-border shadow-2xl shadow-blue-500/10"
+            >
+              <div
+                class="flex justify-between border-b-[1px] items-center px-5 py-3"
+              >
+                <h2 class="dashbord-heading-text h-fit">
+                  <i class="fa-solid fa-calendar-check mr-2"></i> Billing
+                </h2>
+                <div class="flex gap-3">
+                  <button class="btn-secondary h-fit py-2 px-4 bg-primary">
+                    Add payment methods
+                  </button>
+                </div>
+              </div>
+
+              <div class="px-4 py-3">
+                <table
+                  class="w-full text-sm text-left rounded-lg text-gray-500 border-[1px]"
+                >
+                  <thead
+                    class="text-xs rounded-lg text-gray-800 uppercase bg-black/5"
+                  >
+                    <tr>
+                      <th scope="col" class="px-6 py-3">Invoice ID</th>
+                      <th scope="col" class="px-6 py-3">Payment date</th>
+                      <th scope="col" class="px-6 py-3">Appointment ID</th>
+                      <th scope="col" class="px-6 py-3">Payment Status:</th>
+                      <th scope="col" class="px-6 py-3">Total amount</th>
+
+                      <th scope="col" class="px-6 py-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white hover:bg-gray-50">
+                      <td class="px-6 py-4">SG0213</td>
+                      <td class="px-6 py-4">01/12/2023</td>
+                      <td class="px-6 py-4">513562SAS</td>
+                      <td class="px-6 py-4">Received</td>
+                      <td class="px-6 py-4">120TK.</td>
+
+                      <td class="px-6 py-4 flex gap-2">
+                        <a class="font-medium text-blue-600">Edit</a>
+                        <a class="font-medium text-blue-600">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

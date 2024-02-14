@@ -54,7 +54,7 @@ export class DoctorCardComponent implements OnInit {
       ).subscribe((res) => {
         this.isLoading = false;
         if (res?.length > 0 && this.doctorDetails) {
-          const dialogRef = this.dialog.open(BookingDialogComponent, {
+          this.dialog.open(BookingDialogComponent, {
             maxWidth: 600,
             minWidth: 450,
             data: {
@@ -67,8 +67,8 @@ export class DoctorCardComponent implements OnInit {
               isAuthUser: this.isAuthUser?.id ? true : false,
             },
           });
-          dialogRef.afterClosed().subscribe((result) => {});
         } else {
+          this.isLoading = false;
           this.TosterService.customToast(
             `No Details/Schedule found`,
             'warning'

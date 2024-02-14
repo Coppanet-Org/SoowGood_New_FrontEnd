@@ -4,11 +4,11 @@
   <div
     #printableSection
     *ngIf="!prescriptionLoader"
-    class="px-12 pt-12 h-[1100px] bg-white relative"
+    class="px-12 pt-12 h-[800px] bg-white relative"
   >
     <!-- Doctor Info -->
-    <div class="flex justify-between">
-      <div class="mb-4">
+    <div class="flex justify-between mb-5">
+      <div>
         <h1 class="text-2xl font-semibold">
           Dr. {{ prescriptionInfo.doctorName }}
         </h1>
@@ -28,8 +28,9 @@
     </div>
 
     <!-- Patient Info -->
+    <hr />
     <div
-      class="mt-5 grid grid-cols-1 md:grid-cols-4 print:grid-cols-4 gap-4 border-t-[1px] border-b-[1px]"
+      class="mt-2 mb-2 grid grid-cols-1 md:grid-cols-4 print:grid-cols-4 gap-4"
     >
       <div>
         <label class="text-sm text-gray-600">Patient Name</label>
@@ -54,74 +55,82 @@
         </p>
       </div>
     </div>
-
+    <hr />
     <!-- Additional Information -->
     <div class="grid grid-cols-3 print:grid-cols-3">
       <div class="mb-4 py-4 border-r-[1px] h-full">
-        <div class="mt-3">
-          <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+        <div class="mt-3 border-b-[1px] pb-3">
+          <h2 class="text-[16px] font-Roboto text-primary/90">
             Patient History
           </h2>
           <ul>
-            <li
-              *ngFor="
-                let history of prescriptionInfo.prescriptionPatientDiseaseHistory
-              "
-              class="pl-2 text-[14px] font-poppins text-primary/90"
-            >
+            @for (history of prescriptionInfo.prescriptionPatientDiseaseHistory;
+            track $index) {
+            <li class="pl-2 text-[14px] font-poppins text-primary/90">
               {{ history.diseaseName }}
             </li>
+            }@empty {
+            <p class="text-[12px] ml-2">No history found!</p>
+            }
           </ul>
         </div>
-        <div class="mt-3">
-          <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+        <div class="mt-3 border-b-[1px] pb-3">
+          <h2 class="text-[16px] font-Roboto text-primary/90">
             Additional Info
           </h2>
+          @if (prescriptionInfo.patientAdditionalInfo) {
           <p class="pl-2 text-[14px] font-poppins text-primary/90">
             {{ prescriptionInfo.patientAdditionalInfo }}
           </p>
+          }@else {
+          <p class="text-[12px] ml-2">No additional info found!</p>
+          }
         </div>
-        <div class="mt-3">
-          <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+        <div class="mt-3 border-b-[1px] pb-3">
+          <h2 class="text-[16px] font-Roboto text-primary/90">
             Doctor Findings
           </h2>
           <ul>
-            <li
-              *ngFor="
-                let findings of prescriptionInfo.prescriptionFindingsObservations
-              "
-              class="pl-2 text-[14px] font-poppins text-primary/90"
-            >
+            @for (findings of prescriptionInfo.prescriptionFindingsObservations;
+            track $index) {
+            <li class="pl-2 text-[14px] font-poppins text-primary/90">
               {{ findings.observation }}
             </li>
+            }@empty {
+            <p class="text-[12px] ml-2">No findings found!</p>
+            }
           </ul>
         </div>
-        <div class="mt-3">
-          <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
-            Observation
-          </h2>
+        <div class="mt-3 border-b-[1px] pb-3">
+          <h2 class="text-[16px] font-Roboto text-primary/90">Observation</h2>
           <ul>
-            <li
-              *ngFor="
-                let complaints of prescriptionInfo.prescriptionMainComplaints
-              "
-              class="pl-2 text-[14px] font-poppins text-primary/90"
-            >
-              {{ complaints.symptom }}-({{ complaints.duration }})
+            @for (complaints of prescriptionInfo.prescriptionMainComplaints;
+            track $index) {
+            <li class="pl-2 text-[14px] font-poppins text-primary/90">
+              <p class="w-[180px] inline-block">{{ complaints.symptom }}-</p>
+              <span class="text-[14px] mr-2"
+                >({{ convertToBanglaDuration(complaints.duration) }})</span
+              >
             </li>
+            }@empty {
+            <p class="text-[12px] ml-2">No complaints found!</p>
+            }
           </ul>
         </div>
-        <div class="mt-3">
-          <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+        <div class="mt-3 border-b-[1px] pb-3">
+          <h2 class="text-[16px] font-Roboto text-primary/90">
             Test Recommended
           </h2>
           <ul>
-            <li
-              *ngFor="let test of prescriptionInfo.prescriptionMedicalCheckups"
-              class="pl-2 text-[14px] font-poppins text-primary/90"
-            >
+            @for (test of prescriptionInfo.prescriptionMedicalCheckups; track
+            $index; let count = $count) {
+            <li class="pl-2 text-[14px] font-poppins text-primary/90">
               {{ test.testName }}
             </li>
+            }@empty {
+            <p class="text-[12px] ml-2">No test found!</p>
+
+            }
           </ul>
         </div>
       </div>
@@ -135,7 +144,7 @@
             alt="rx"
           />
           <div
-            class="mt-3 pl-3"
+            class="mt-3 pl-3 pb-2 border-b-[1px] drug"
             *ngFor="
               let medicine of prescriptionInfo.prescriptionDrugDetails;
               let i = index
@@ -144,40 +153,64 @@
             <h1 class="font-Roboto text-[16px] text-primary">
               {{ i + 1 }}. {{ medicine.drugName }}
             </h1>
-            <p class="font-Roboto pl-4 text-[14px] text-primary/80">
-              {{
-                convertToBanglaText(
-                  medicine.drugName,
-                  medicine.drugDoseSchedule
-                )
-              }}
-            </p>
-            <p class="font-Roboto pl-4 text-[14px] text-primary/80">
+            <div class="font-Roboto pl-4 py-2 text-[14px] text-primary/80">
+              <p class="w-[250px] inline-block">
+                {{
+                  convertToBanglaText(
+                    medicine.drugName,
+                    medicine.drugDoseSchedule
+                  )
+                }}
+              </p>
+
+              <span class="ml-5 font-semibold"
+                >( {{ convertToBanglaDuration(medicine.duration) }})</span
+              >
+            </div>
+            <!-- <p class="font-Roboto pl-4 text-[14px] text-primary/80">
               {{ medicine.duration }}
-            </p>
+            </p> -->
+            @if (medicine.instruction !== '') {
             <p class="font-Roboto pl-4 text-[14px] text-primary/80">
-              Instruction: {{ medicine.instruction }}
+              মন্তব্য: {{ medicine.instruction }}
             </p>
+            }
           </div>
         </div>
         <div
           class="grid grid-cols-1 mt-5 md:grid-cols-2 print:grid-cols-2 gap-3"
         >
           <div class="mt-3">
-            <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+            <h2
+              class="text-[16px] font-Roboto text-primary/90 border-b-[1px] pb-1"
+            >
               Follow up
             </h2>
-            <p>{{ prescriptionInfo.followupDate | date }}</p>
+            <p class="text-[12px] mt-2">
+              {{
+                prescriptionInfo.followupDate
+                  ? (prescriptionInfo.followupDate | date)
+                  : "No need to followup"
+              }}
+            </p>
           </div>
           <!-- <div class="mt-3">
                                     <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">Refer to</h2>
                                      <p>Dr. Sadia sultana</p>
                                </div> -->
           <div class="mt-3">
-            <h2 class="text-[16px] font-semibold font-Roboto text-primary/90">
+            <h2
+              class="text-[16px] font-Roboto text-primary/90 border-b-[1px] pb-1"
+            >
               Doctor Advice
             </h2>
-            <p>{{ prescriptionInfo.advice }}</p>
+            <p class="text-[12px] mt-2">
+              {{
+                prescriptionInfo.advice
+                  ? prescriptionInfo.advice
+                  : "No advice found!"
+              }}
+            </p>
           </div>
         </div>
       </div>
