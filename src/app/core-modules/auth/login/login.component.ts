@@ -83,27 +83,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       password: [this.defaultAuth.password, Validators.required],
     });
-
-    this.resetPasswordForm = this.fb.group(
-      {
-        username: [
-          '',
-          [Validators.required, Validators.pattern(/^(?:88)?[0-9]{11}$/)],
-        ],
-        newPassword: [
-          '',
-          [
-            Validators.required,
-            // CustomValidators.startsWithUppercase,
-            CustomValidators.isAtLeast6Characters,
-            CustomValidators.includesSpecialCharacter,
-            CustomValidators.includesNumber,
-          ],
-        ],
-        confirmPassword: ['', Validators.required],
-      },
-      { validator: CustomValidators.matchValidator }
-    );
   }
 
   passwordVisibility(field: string) {
@@ -115,15 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
   }
-  resetPasswordVisibility(field: string) {
-    if (field === 'newPassword') {
-      this.resetPasswordFieldType =
-        this.resetPasswordFieldType === 'password' ? 'text' : 'password';
-    } else if (field === 'confirmPassword') {
-      this.resetConfPasswordFieldType =
-        this.resetConfPasswordFieldType === 'password' ? 'text' : 'password';
-    }
-  }
+
   onSubmit(): void {
     this.formSubmitted = true;
 
@@ -327,92 +298,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         'error'
       );
     }
-  }
-
-  resetModal() {
-    this.resetModalShow = !this.resetModalShow;
-  }
-
-  resetPassword() {
-    this.resetFormSubmitted = true;
-    if (this.resetPasswordForm.get('username')?.invalid) {
-      this.ToasterService.customToast(
-        'Please enter your phone number',
-        'warning'
-      );
-      return;
-    }
-
-    this.resetLoading = true;
-    try {
-      this.authService
-        .isUserExistsByUserName(this.resetPasswordForm.get('username')?.value)
-        .subscribe({
-          next: (res) => {
-            console.log(res);
-            if (res) {
-              this.resetLoading = false;
-              this.changePasswordShow = res;
-              this.resetFormSubmitted = false;
-            } else {
-              this.ToasterService.customToast(
-                'Mobile number not found!',
-                'warning'
-              );
-              this.changePasswordShow = res;
-              this.resetLoading = false;
-              this.resetFormSubmitted = false;
-            }
-          },
-          error: (err) => {
-            this.ToasterService.customToast(String(err.message), 'error');
-            this.resetFormSubmitted = false;
-          },
-        });
-    } catch (error) {
-      this.ToasterService.customToast(String(error), 'error');
-      this.resetFormSubmitted = false;
-    }
-  }
-
-  confirmPassword() {
-    this.resetFormSubmitted = true;
-
-    let obj = {
-      userId: this.resetPasswordForm.get('username')?.value,
-      newPassword: this.resetPasswordForm.get('newPassword')?.value,
-    };
-    if (
-      !obj.newPassword &&
-      !this.resetPasswordForm.get('confirmPassword')?.value
-    ) {
-      this.ToasterService.customToast(
-        'Please enter your new password',
-        'warning'
-      );
-      return;
-    }
-    this.resetLoading = true;
-    this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.ToasterService.customToast(String(res.message), 'success');
-          this.resetModalShow = false;
-          this.resetLoading = false;
-          this.resetFormSubmitted = false;
-          this.resetPasswordForm.reset();
-        } else {
-          this.ToasterService.customToast(String(res.message), 'error');
-          this.resetFormSubmitted = false;
-          this.resetLoading = false;
-        }
-      },
-      error: (err) => {
-        this.ToasterService.customToast(String(err.message), 'error');
-        this.resetFormSubmitted = false;
-        this.resetLoading = false;
-      },
-    });
   }
 
   ngOnDestroy() {

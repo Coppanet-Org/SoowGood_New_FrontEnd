@@ -9,6 +9,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { LiveConsultBookingDialogComponent } from '../landing-page/components/live-consult-booking-dialog/live-consult-booking-dialog.component';
 
 const routes: Route[] = [
   {

@@ -115,28 +115,62 @@ export class BuildPrescriptionComponent implements OnInit {
     this.todayTime = new Date().toLocaleTimeString();
 
     const { aptId } = this.route.snapshot.params;
+
+    console.log(aptId);
+
     if (aptId) {
-      this.AppointmentService.get(aptId).subscribe((res) => {
-        if (res.appointmentCode) {
-          this.appointmentInfo = res;
-          this.getDocuments(res.patientProfileId);
-          this.PatientProfileService.get(
-            res.patientProfileId ? res.patientProfileId : 0
-          ).subscribe((patient) => {
-            this.form.get('patientCode')?.patchValue(patient.patientCode);
-            this.form.get('patientName')?.patchValue(res.patientName);
-            this.form.get('age')?.patchValue(patient.age);
-            this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
-            this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
-          });
-        } else {
-          this.Router.navigate(['/doctor/appointments']).then((r) => {
-            this.TosterService.customToast('Documents not found!', 'error');
-          });
-        }
+      this.AppointmentService.get(aptId).subscribe({
+        next: (res) => {
+          if (res.appointmentCode) {
+            this.appointmentInfo = res;
+
+            this.PatientProfileService.get(
+              Number(res.patientProfileId)
+            ).subscribe((patient) => {
+              console.log(patient);
+
+              this.form.get('patientCode')?.patchValue(patient.patientCode);
+              this.form.get('patientName')?.patchValue(res.patientName);
+              this.form.get('age')?.patchValue(patient.age);
+              this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
+              this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
+            });
+            this.getDocuments(res.patientProfileId);
+          } else {
+            this.Router.navigate(['/doctor/appointments']).then((r) => {
+              this.TosterService.customToast(
+                'Appointment documents not found!',
+                'error'
+              );
+            });
+          }
+        },
+        error: (err) => console.log(err),
       });
     }
 
+    // (res) => {
+    //   if (res.appointmentCode) {
+    //     this.appointmentInfo = res;
+
+    //     this.PatientProfileService.get(
+    //       Number(res.patientProfileId)
+    //     ).subscribe((patient) => {
+    //       console.log(patient);
+
+    //       this.form.get('patientCode')?.patchValue(patient.patientCode);
+    //       this.form.get('patientName')?.patchValue(res.patientName);
+    //       this.form.get('age')?.patchValue(patient.age);
+    //       this.form.get('bloodGroup')?.patchValue(patient.bloodGroup);
+    //       this.form.get('patientAdditionalInfo'); //?.patchValue(patient.patientAdditionalInfo);
+    //     });
+    //     this.getDocuments(res.patientProfileId);
+    //   } else {
+    //     this.Router.navigate(['/doctor/appointments']).then((r) => {
+    //       this.TosterService.customToast('Documents not found!', 'error');
+    //     });
+    //   }
+    // });
     // this.DrugRxService.getDrugNameSearchList().subscribe((res) => {
     //   this.options = res.map((drug:any) => {
     //     return {
@@ -374,14 +408,13 @@ export class BuildPrescriptionComponent implements OnInit {
     this.medicineSchedule.push(this.createMedicineScheduleFormGroup());
   }
   addDiagnosis() {
-     this.diagnosis.value?.map((d: any):void => {
+    this.diagnosis.value?.map((d: any): void => {
       if (d.testName) {
-         this.diagnosis.push(this.createDiagnosisFormGroup());
+        this.diagnosis.push(this.createDiagnosisFormGroup());
       } else {
-       return
+        return;
       }
     });
-  
   }
   //remove each row
   removeChiefComplaint(index: number) {

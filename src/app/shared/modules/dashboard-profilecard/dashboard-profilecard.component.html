@@ -1,11 +1,11 @@
-<div class="main_right border-l-[1px] border-box -z-10 shadow-bottom bg-white">
+<div class="main_right border-l-[1px] border-box -z-10 bg-white">
   <div class="box-border">
     <div class="card w-full bg-white border-none border-b-[1px]">
       <figure class="px-10 pt-10">
         <img
           [src]="url || ''"
           alt="profile"
-          class="rounded-full w-[100px] h-[100px] object-cover border-4 border-gray-300"
+          class="rounded-full w-[100px] h-[100px] object-cover border-2 border-secondary"
         />
       </figure>
       <div
@@ -32,7 +32,7 @@
               [(ngModel)]="status"
               (change)="onChangeStatus()"
               name="status"
-              class="sr-only peer "
+              class="sr-only peer"
             />
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"

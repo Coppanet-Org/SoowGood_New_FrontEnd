@@ -1,7 +1,7 @@
 import { CoreModule } from '@abp/ng.core';
 import { registerLocale } from '@abp/ng.core/locale';
 import { AbpOAuthModule } from '@abp/ng.oauth';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -27,6 +27,7 @@ import { PaymentCancelComponent } from './features-modules/public/payment-cancel
 import { PaymentFaildComponent } from './features-modules/public/payment-faild/payment-faild.component';
 import { PaymentSuccessComponent } from './features-modules/public/payment-success/payment-success.component';
 import { SplashComponent } from './shared/components/splash/splash.component';
+import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
 
 // const routerConfig: ExtraOptions = {
 //   scrollPositionRestoration: 'enabled',

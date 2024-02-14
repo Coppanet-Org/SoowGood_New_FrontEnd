@@ -19,12 +19,12 @@
         </div>
       </div>
 
-      <!-- <div
-        *ngIf="liveDoctorList?.length < 1"
+      <div
+        *ngIf="isLoading"
         class="grid w-full grid-cols-1 justify-center items-center h-[300px]"
       >
         <p class="text-center leading-9">Loading...</p>
-      </div> -->
+      </div>
       <div
         id=" py-6"
         class="relative w-full grid gap-7 mt-5 grid-cols-1 md:grid-cols-4"
@@ -33,11 +33,12 @@
         <!-- <div class="swiper-wrapper py-6"> -->
         <!-- <div class="swiper-slide" > -->
 
-        @for (details of liveDoctorList; track details.id) { @defer () {
-        <app-live-doctor-card [doctorDetails]="details"></app-live-doctor-card>
-        }@placeholder {
-        <app-skeleton></app-skeleton>
-        }@loading {Loading...} }
+        <!-- @for (details of liveDoctorList; track details.id) { -->
+        <app-live-doctor-card
+          *ngFor="let details of liveDoctorList"
+          [doctorDetails]="details"
+        ></app-live-doctor-card>
+        <!-- } -->
 
         <!-- </div> -->
         <!-- </div> -->
