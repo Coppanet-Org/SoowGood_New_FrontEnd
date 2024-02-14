@@ -194,10 +194,10 @@ export class SignupComponent implements OnInit {
       .getList()
       .subscribe((res) => (this.specialties = res));
     this.titleList = CommonService.getEnumList(DoctorTitle);
-    this.doctorProfileService.getList().subscribe((d) => {
-      this.doctorList = d;
-      this.lastCount = this.doctorList.length;
-    });
+    //this.doctorProfileService.getList().subscribe((d) => {
+    //  this.doctorList = d;
+    //  this.lastCount = this.doctorList.length;
+    //});
     const authInfo = this.normalAuth.authInfo();
     if (authInfo == null) {
       return;
@@ -999,24 +999,24 @@ export class SignupComponent implements OnInit {
       return;
     } else {
 
-    /* else if (
-    //  this.specialityId > 1 &&
-    //  this.specialityId > 2 &&
-    //  this.doctorDegrees.length == 1
-    //) {
-    //  this.tosterService.customToast(
-    //    'You have to add your degrees according to you speciality',
-    //    'warning'
-    //  );
-    //  return;
-    //}
-    //else if (this.doctorSpecializations.length > 3) {
-    //  this.tosterService.customToast(
-    //    'You are exeeding Specialization Limit.',
-    //    'warning'
-    //  );
-    //  return;
-    //} */
+      /* else if (
+      //  this.specialityId > 1 &&
+      //  this.specialityId > 2 &&
+      //  this.doctorDegrees.length == 1
+      //) {
+      //  this.tosterService.customToast(
+      //    'You have to add your degrees according to you speciality',
+      //    'warning'
+      //  );
+      //  return;
+      //}
+      //else if (this.doctorSpecializations.length > 3) {
+      //  this.tosterService.customToast(
+      //    'You are exeeding Specialization Limit.',
+      //    'warning'
+      //  );
+      //  return;
+      //} */
       this.doctorDegrees.forEach((d) => {
         let ddDto: DoctorDegreeDto = {} as DoctorDegreeDto;
         ddDto.degreeId = d.degreeId;
