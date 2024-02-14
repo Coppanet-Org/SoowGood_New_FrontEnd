@@ -36,18 +36,18 @@ export class LiveDoctorsComponent implements OnInit {
     return;
   }
   getDoctorDetails() {
+    this.isLoading = true;
     this.liveDoctorList = [];
     this.DoctorStateService.getCurrentlyOnlineDoctorList()
       .pipe(
         map((list: any) => {
           return list.filter((e: any, i: number) => {
-            return i < 12;
+            return i < 8;
           });
         })
       )
       .subscribe({
         next: (res) => {
-          this.isLoading = false;
           const onlineDoctors = res;
           const profilePictureObservables = onlineDoctors.map((doctor: any) => {
             return this.DocumentsAttachmentService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
@@ -76,10 +76,11 @@ export class LiveDoctorsComponent implements OnInit {
               );
             }
           );
+          this.isLoading = false;
         },
         error: (err) => {
           console.log(err);
-          // this.isLoading = false;
+          this.isLoading = false;
         },
         complete() {
           console.log('completed');

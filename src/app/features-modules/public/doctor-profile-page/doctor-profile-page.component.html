@@ -86,7 +86,7 @@
         </p>
       </div>
       <div class="w-[250px] flex flex-col gap-2">
-        <div class="text-[15px]"><i class="fa-solid fa-heart"></i> 99%</div>
+        <!-- <div class="text-[15px]"><i class="fa-solid fa-heart"></i> 99%</div>
         <div class="text-[15px]">
           <i class="fa-solid fa-comment"></i> 402 Feedback
         </div>
@@ -105,25 +105,27 @@
           ></span>
           <span class="w-[40px] h-[40px] border-[1px] py-2 px-3"
             ><i class="fa-solid fa-phone-volume"></i
-          ></span>
-        </div>
-        <!-- <button class="btn-secondary w-[200px] mt-3">Book Now</button> -->
+          ></span> -->
+        <button (click)="liveBooking()">Live Booking</button>
+        <button (click)="scheduleBooking()">Schedule Booking</button>
       </div>
+      <!-- <button class="btn-secondary w-[200px] mt-3">Book Now</button> -->
     </div>
+  </div>
 
-    <div class="w-full border-[1px] rounded-md flex gap-8 mt-5">
-      <mat-tab-group
-        style="width: 100%"
-        mat-align-tabs="start"
-        [selectedIndex]="active"
-      >
-        <mat-tab label="Overview">
-          <app-overview
-            [scheduleInfo]="scheduleInfo"
-            [degreeDetails]="profileInfo.degrees"
-          ></app-overview>
-        </mat-tab>
-        <!-- <mat-tab label="Hospital & Location">
+  <div class="w-full border-[1px] rounded-md flex gap-8 mt-5">
+    <mat-tab-group
+      style="width: 100%"
+      mat-align-tabs="start"
+      [selectedIndex]="active"
+    >
+      <mat-tab label="Overview">
+        <app-overview
+          [scheduleInfo]="scheduleInfo"
+          [degreeDetails]="profileInfo.degrees"
+        ></app-overview>
+      </mat-tab>
+      <!-- <mat-tab label="Hospital & Location">
           <app-hospital-locations></app-hospital-locations>
         </mat-tab>
         <mat-tab label="Schedule">
@@ -133,7 +135,6 @@
           <app-reviews></app-reviews>
         </mat-tab>
         <mat-tab label="Doctor Blogs"> </mat-tab> -->
-      </mat-tab-group>
-    </div>
+    </mat-tab-group>
   </div>
 </div>

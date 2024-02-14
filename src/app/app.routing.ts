@@ -25,6 +25,13 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'forgot-password',
+    loadChildren: () =>
+      import(
+        './features-modules/public/forgot-password/forgot-password.module'
+      ).then((m) => m.ForgotPasswordModule),
+  },
+  {
     path: 'signup',
     //canActivate:[routerGuard],
     loadChildren: () =>

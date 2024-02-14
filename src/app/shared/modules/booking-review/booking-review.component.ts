@@ -1,5 +1,12 @@
-import { AppointmentService, DoctorChamberService, EkPayService, SslCommerzService } from 'src/app/proxy/services';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
+import { UserinfoStateService } from './../../services/states/userinfo-state.service';
+import {
+  AppointmentService,
+  DoctorChamberService,
+  EkPayService,
+  SslCommerzService,
+} from 'src/app/proxy/services';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EkPayInputDto, SslCommerzInputDto } from 'src/app/proxy/input-dto';
 import { TosterService } from 'src/app/shared/services/toster.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -11,7 +18,7 @@ import { ListItem } from 'src/app/shared/model/common-model';
   templateUrl: './booking-review.component.html',
   styleUrls: ['./booking-review.component.scss'],
 })
-export class BookingReviewComponent {
+export class BookingReviewComponent implements OnInit {
   @Input() bookingInfo: any;
   @Output() gotToBack = new EventEmitter<any>();
   //SSLCommerz
@@ -27,17 +34,21 @@ export class BookingReviewComponent {
   sslCInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
   loading: boolean = false;
   appointmentType: ListItem[];
+  userType!: string;
 
   constructor(
     private ToasterService: TosterService,
     private AppointmentService: AppointmentService,
     private DoctorChamberService: DoctorChamberService,
+    private AuthService: AuthService,
     private sslCommerzService: SslCommerzService, //private sslCommerzService: PaymentService
     private ekPayService: EkPayService //private sslCommerzService: PaymentService
   ) {
     this.appointmentType = CommonService.getEnumList(AppointmentType);
   }
-
+  ngOnInit(): void {
+    this.userType = this.AuthService.authInfo().userType;
+  }
   getTitle(id: any, type: string) {
     if (type == 'appointmentType') {
       return this.appointmentType.find((res) => res.id == id);

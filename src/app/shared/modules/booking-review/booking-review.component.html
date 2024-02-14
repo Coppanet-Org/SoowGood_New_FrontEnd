@@ -3,7 +3,7 @@
 <div
   class="w-full my-5 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 m-auto custom-scrollbar max-h-[460px] overflow-y-scroll"
 >
-  <h5 class="text-base font-semibold text-gray-900 md:text-xl">
+  <h5 class="text-base font-semibold text-primary md:text-xl">
     {{ bookingInfo?.doctorName }}
   </h5>
 
@@ -17,7 +17,7 @@
         <tr class="bg-white border-b">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Patient name:
           </th>
@@ -26,7 +26,7 @@
           </td>
         </tr>
         <!-- <tr class="bg-white border-b   ">
-                  <th scope="row" class=" py-2 font-medium text-gray-900 whitespace-nowrap   ">
+                  <th scope="row" class=" py-2 font-medium text-primary whitespace-nowrap   ">
                     Appointment Day :
                   </th>
                   <td class=" py-2">
@@ -36,7 +36,7 @@
         <tr class="bg-white border-b">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Appointment Date :
           </th>
@@ -44,21 +44,21 @@
             {{ bookingInfo?.appointmentDate | date }}
           </td>
         </tr>
-        <tr class="bg-white border-b">
+        <!-- <tr class="bg-white border-b">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Appointment Type :
           </th>
           <td class="py-2">
             {{ bookingInfo?.appointmentTypeName }}
           </td>
-        </tr>
+        </tr> -->
         <tr class="bg-white border-b">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Hospital name :
           </th>
@@ -73,25 +73,28 @@
         <tr class="bg-white">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Doctor Fee :
           </th>
           <td class="py-2">{{ bookingInfo?.doctorFee }} tk.</td>
         </tr>
+        @if (userType !=='patient') {
         <tr class="bg-white">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Booth Fee :
           </th>
           <td class="py-2">{{ bookingInfo?.agentFee }} tk.</td>
         </tr>
+        }
+
         <tr class="bg-white">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-medium text-primary whitespace-nowrap"
           >
             Platform Fee :
           </th>
@@ -100,11 +103,13 @@
         <tr class="bg-white">
           <th
             scope="row"
-            class="py-2 font-medium text-gray-900 whitespace-nowrap"
+            class="py-2 font-Roboto font-semibold text-[18px] text-primary whitespace-nowrap"
           >
             Total Fee :
           </th>
-          <td class="py-2">{{ bookingInfo?.totalAppointmentFee }} tk.</td>
+          <td class="py-2 font-Roboto font-semibold text-[18px] text-primary">
+            {{ bookingInfo?.totalAppointmentFee }} tk.
+          </td>
         </tr>
       </tbody>
     </table>
