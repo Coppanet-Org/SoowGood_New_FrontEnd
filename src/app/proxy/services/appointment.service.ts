@@ -143,6 +143,22 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getListAppointmentListByAgentMaster = (agentMasterId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-agent-master/${agentMasterId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListAppointmentListByAgentSupervisor = (supervisorId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AppointmentDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/appointment-list-by-agent-supervisor/${supervisorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPatientListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
