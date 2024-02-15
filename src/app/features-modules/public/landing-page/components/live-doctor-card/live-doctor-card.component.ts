@@ -67,16 +67,12 @@ export class LiveDoctorCardComponent {
                 serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
               },
             });
-          } else {
-            this.isLoading = false;
-
-            this.TosterService.customToast(
-              `No Details/Schedule found`,
-              'warning'
-            );
           }
         }
       );
+    } else {
+      this.isLoading = false;
+      this.TosterService.customToast(`No Details/Schedule found`, 'warning');
     }
   }
 }
