@@ -490,8 +490,12 @@ export class BookingDialogComponent implements OnInit {
     if (e >= 0 && e < 3) {
       this.activeTab = e;
     }
-
-    if (e === 3 && this.form.valid) {
+    console.log(e);
+    const { appointmentType, appointmentDate, doctorScheduleType } =
+      this.form.value;
+    const validForm =
+      appointmentType != 0 && doctorScheduleType != 0 && appointmentDate;
+    if (e === 3 && validForm) {
       this.isLoading = true;
       this.formSubmitted = true;
       if (
@@ -585,8 +589,6 @@ export class BookingDialogComponent implements OnInit {
           chamber,
         } = finalSchedule;
 
-        const { appointmentType, appointmentDate } = this.form.value;
-
         let user: any = '';
         this.UserinfoStateService.getData().subscribe(
           (userInfo) => (user = userInfo)
@@ -678,15 +680,17 @@ export class BookingDialogComponent implements OnInit {
         this.TosterService.customToast('Please select a slot', 'warning');
         this.isLoading = false;
       }
-    } else if (e === 3 && !this.form.valid) {
+    } else {
+      // this.formSubmitted = true;
+      this.isLoading = false;
+    }
+    if (e === 3 && !validForm) {
       this.formSubmitted = true;
       this.TosterService.customToast(
         'Please select all the required fields',
         'warning'
       );
       this.isLoading = false;
-    } else {
-      return;
     }
   }
 
