@@ -52,6 +52,15 @@ export class CommonService {
       params: { entityType, entityId, attachmentType, fileName },
     },
     { apiName: this.apiName,...config });
+  
+
+  getDocumentId = (entityType: string, entityId: number, attachmentType: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/Common/GetDocumentId',
+      params: { entityType, entityId, attachmentType },
+    },
+    { apiName: this.apiName,...config });
 
   constructor(private restService: RestService) {}
 }

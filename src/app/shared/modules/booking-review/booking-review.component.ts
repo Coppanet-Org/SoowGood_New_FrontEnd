@@ -69,20 +69,16 @@ export class BookingReviewComponent implements OnInit {
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
         next: (res) => {
+
+
           this.payWithSslCommerz(res.appointmentCode),
-            localStorage.setItem(
-              'patientAppointmentCode',
-              JSON.stringify(res.appointmentCode)
-            );
+            localStorage.setItem("patientAppointmentCode", JSON.stringify(res.appointmentCode))
         },
         error: (err) => {
           console.log(err);
-          this.ToasterService.customToast(
-            String(err.error.error.message),
-            'error'
-          ),
-            (this.loading = false);
-        },
+          this.ToasterService.customToast(String(err.error.error.message), 'error'),
+            this.loading = false;
+        }
       });
     } catch (error) {
       console.log(error);
@@ -92,21 +88,19 @@ export class BookingReviewComponent implements OnInit {
   payWithSslCommerz(appointmentCode: any): void {
     if (this.bookingInfo) {
       const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
+      //const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
       sslCommerzInputDto.applicationCode = appointmentCode;
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
       );
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
-      //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      //this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
       //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
-      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
         next: (response) => {
-          if (
-            response &&
-            response.status === 'SUCCESS' &&
-            response.gatewayPageURL
-          ) {
+          if (response && response.status === '1000' && response.gatewayPageURL) {
+            //if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
             window.location.href = response.gatewayPageURL;
             this.loading = false;
           } else {
@@ -117,13 +111,12 @@ export class BookingReviewComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.ToasterService.customToast(
-            String(err.error.error.message),
-            'error'
-          ),
-            (this.loading = false);
-        },
-      });
+          this.ToasterService.customToast(String(err.error.error.message), 'error'),
+            this.loading = false;
+        }
+      })
+
+
     } else {
       this.ToasterService.customToast('Booking info not found', 'error');
     }

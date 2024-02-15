@@ -35,10 +35,27 @@ export class AgentSupervisorService {
     { apiName: this.apiName,...config });
   
 
+  getByUserName = (userName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentSupervisorDto>({
+      method: 'GET',
+      url: '/api/app/agent-supervisor/by-user-name',
+      params: { userName },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentSupervisorDto[]>({
       method: 'GET',
       url: '/api/app/agent-supervisor',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListByMasterId = (masterId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentSupervisorDto[]>({
+      method: 'GET',
+      url: `/api/app/agent-supervisor/by-master-id/${masterId}`,
     },
     { apiName: this.apiName,...config });
   

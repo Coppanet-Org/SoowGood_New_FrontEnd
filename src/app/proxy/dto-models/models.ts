@@ -123,6 +123,10 @@ export interface AppointmentDto extends FullAuditedEntityDto<number> {
   appointmentCreatorCode?: string;
   appointmentCreatorRole?: string;
   isCousltationComplete?: boolean;
+  creatorName?: string;
+  boothName?: string;
+  agentMasterName?: string;
+  agentSupervisorName?: string;
 }
 
 export interface AppointmentInputDto extends FullAuditedEntityDto<number> {
@@ -186,6 +190,10 @@ export interface DataFilterModel {
 export interface DegreeDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
+}
+
+export interface DeleteUserDataDto {
+  userName?: string;
 }
 
 export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
@@ -382,7 +390,7 @@ export interface DrugRxDto extends FullAuditedEntityDto<number> {
 
 export interface EkPayInitDto {
   status?: string;
-  failedreason?: string;
+  message?: string;
   gatewayPageURL?: string;
 }
 
@@ -453,6 +461,10 @@ export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   creatorEntityId?: number;
   userId?: string;
   profileRole?: string;
+  creatorName?: string;
+  boothName?: string;
+  agentMasterName?: string;
+  agentSupervisorName?: string;
 }
 
 export interface PaymentHistoryDto extends EntityDto<number> {
