@@ -330,10 +330,10 @@
                     type="text"
                     placeholder="Observation"
                     [class]="
-                    formSubmitted && finding.get('observation')?.invalid
-                      ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                      : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
-                  "
+                      formSubmitted && finding.get('observation')?.invalid
+                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                    "
                     formControlName="observation"
                   />
                 </td>
@@ -443,11 +443,11 @@
                     formControlName="drugName"
                     [matAutocomplete]="auto"
                     [class]="
-                    formSubmitted && medicine.get('drugName')?.invalid
-                      ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                      : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
-                  "
-                    />
+                      formSubmitted && medicine.get('drugName')?.invalid
+                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                    "
+                  />
                   <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">
                       {{option}}
@@ -497,7 +497,12 @@
                     <mat-select
                       formControlName="drugDoseSchedule"
                       placeholder="Select timing"
-                      [class]="formSubmitted && medicine.get('drugDoseSchedule')?.invalid ? 'border-red-500 border-[1px] text-[16px]  p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary' : 'text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'"
+                      [class]="
+                        formSubmitted &&
+                        medicine.get('drugDoseSchedule')?.invalid
+                          ? 'border-red-500 border-[1px] text-[16px]  p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
+                          : 'text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
+                      "
                     >
                       <mat-option value="1 + 1 + 1"> 1 + 1 + 1</mat-option>
                       <mat-option value="1 + 1 + 0">1 + 1 + 0</mat-option>
@@ -571,7 +576,7 @@
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
-            Diagnosis*
+            Diagnosis
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm">
             <thead
@@ -695,7 +700,7 @@
           <div class="p-body-item mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
               <i class="fa-solid fa-circle-stop text-[16px]"></i>
-              Advice*
+              Advice
             </div>
             <table
               class="table text-gray-400 border-separate space-y-6 text-sm"

@@ -93,30 +93,11 @@
           class="max-h-[calc(100vh-100px)] overflow-y-scroll custom-scrollbar"
         >
           <div class="max-w-full w-full shadow-lg p-3">
-            <div
-              *ngFor="let details of currentOnlineDoctorList"
-              class="bg-gray-50 rounded-b"
-            >
-              <div class="border-[1px] p-3 flex flex-col gap-3">
-                <div>
-                  <p class="text-sm pt-2 leading-4 text-gray-600">
-                    {{ details.specialityName }}
-                  </p>
-                  <a
-                    tabindex="0"
-                    class="focus:outline-none text-[20px] font-semibold leading-5 text-gray-800 mt-2"
-                  >
-                    {{ details.fullName }}
-                  </a>
-                </div>
-                <button
-                  (click)="onClickConsultNow(details)"
-                  class="bg-green-700/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"
-                >
-                  Consult Now
-                </button>
-              </div>
-            </div>
+            @for (details of currentOnlineDoctorList; track $index) {
+            <app-dashboard-live-doctor-card
+              [details]="details"
+            ></app-dashboard-live-doctor-card>
+            }
           </div>
         </div>
       </div>

@@ -57,6 +57,8 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.doctorData);
+
     this.genderList = CommonService.getEnumList(Gender);
 
     this.userRole = this.NormalAuth.authInfo()?.userType;

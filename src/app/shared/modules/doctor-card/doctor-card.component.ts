@@ -75,6 +75,9 @@ export class DoctorCardComponent implements OnInit {
           );
         }
       });
+    } else {
+      this.isLoading = false;
+      this.TosterService.customToast(`No Details/Schedule found`, 'warning');
     }
   }
   goToProfile() {
