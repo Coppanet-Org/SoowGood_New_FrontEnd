@@ -97,7 +97,11 @@
           [ngClass]="userRole === 'agent' ? 'w-[60%] mx-auto' : 'w-full'"
           class="search-area mt-5 flex backdrop-blur-sm border-[1px] bg-white max-w-full p-2 justify-between rounded-[10px] items-centershadow-blue"
         >
-          <form [formGroup]="searchForm" class="w-full flex gap-3">
+          <form
+            [formGroup]="searchForm"
+            class="w-full flex gap-3"
+            (ngSubmit)="goToServicePage()"
+          >
             <input
               class="w-full py-1 bg-white px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
               type="search"
@@ -107,7 +111,7 @@
           </form>
           <button
             class="btn-secondary bg-primary py-2.5 rounded-[6px] min-w-[170px]"
-            (click)="goToServicePage()"
+            type="submit"
           >
             <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
           </button>

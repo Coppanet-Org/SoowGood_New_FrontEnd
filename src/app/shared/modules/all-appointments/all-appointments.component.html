@@ -31,9 +31,16 @@
                 </div>
   </div> -->
   <!-- <app-filter [filterInput]="filterInput" [filterForm]="filter" [from]="'appointment'" (searchChanged)="searchChanged($event)"></app-filter> -->
-  <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData($event)" (getSpecializations)="getSpecializations($event)" (searchValue)="searchData($event)"></app-filter>
+  <app-filter
+    [filterInput]="filterInput"
+    [filterForm]="filter"
+    [from]="'appointment'"
+  ></app-filter>
 
-  <div *ngIf="skelton" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-10 flex-wrap ">
+  <div
+    *ngIf="skelton"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-10 flex-wrap"
+  >
     <app-skeleton></app-skeleton>
     <app-skeleton></app-skeleton>
     <app-skeleton></app-skeleton>
@@ -44,20 +51,39 @@
     <app-skeleton></app-skeleton>
   </div>
 
-  <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+  <div
+    *ngIf="noDataAvailable"
+    class="flex justify-center items-center h-[500px] w-full"
+  >
     <div>No records has been found!</div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 3xl:grid-cols-4">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 3xl:grid-cols-4 w-full"
+  >
     <!-- [@enter] for animation -->
-    <div class=" border-[1px] h-fit  rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
-      <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
-     
+    @for (appointment of appointmentList; track $index) {
+
+    <div class="border-[1px] h-fit rounded-md bg-white overflow-hidden">
+      <app-appointment-card
+        [appointment]="appointment"
+        [user]="user"
+      ></app-appointment-card>
     </div>
+    }@empty {
+    <div class="flex justify-center items-center h-[500px] flex-shrink">
+      <div>No records has been found!</div>
+    </div>
+    }
   </div>
-  <div class="flex w-full justify-center py-10">
-    <mat-paginator class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
-        [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  <!-- <div class="flex w-full justify-center py-10">
+    <mat-paginator
+      class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10"
+      [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
     </mat-paginator>
-</div>
+  </div> -->
 </div>

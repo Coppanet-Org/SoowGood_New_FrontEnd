@@ -212,11 +212,12 @@ export class BookingDialogComponent implements OnInit {
     );
 
     let day = '';
-
+    let dateString = '';
     selectedItem1$
       .pipe(
         map((selectedItem1: any) => {
           day = dayFromDate(String(selectedItem1));
+          dateString = selectedItem1;
 
           const hospitals = schedule
             .filter((item: any) =>
@@ -251,8 +252,6 @@ export class BookingDialogComponent implements OnInit {
         })
       )
       .subscribe(({ sessions, updatedSchedule }: any) => {
-        console.log(updatedSchedule);
-
         let filterSession = sessions?.map((s: any) => {
           let apt = updatedSchedule?.appointments?.filter(
             (a: any) => a.doctorScheduleDaySessionId == s.id

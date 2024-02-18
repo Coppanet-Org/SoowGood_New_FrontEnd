@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { DoctorPatientAppointmentService } from '../../services/states/appointment-states/doctor-patient-appointment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -6,8 +7,12 @@ import { CommonService } from '../../services/common.service';
 import { ConsultancyType } from 'src/app/proxy/enums';
 import { DataFilterModel, FilterModel } from 'src/app/proxy/dto-models';
 import { SubSink } from 'subsink';
-import { DoctorProfileService, AppointmentService } from 'src/app/proxy/services';
+import {
+  DoctorProfileService,
+  AppointmentService,
+} from 'src/app/proxy/services';
 import { combineLatest } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 // import { fadeInAnimation, fadeInExpandOnEnterAnimation, fadeInOnEnterAnimation, zoomInAnimation, zoomInUpOnEnterAnimation } from 'angular-animations';
 
 @Component({
@@ -37,7 +42,7 @@ export class AllAppointmentsComponent implements OnInit {
   totalCount: any = 0;
 
   filter!: FormGroup;
-  filterInput!: FilterInputModel
+  filterInput!: FilterInputModel;
   filterModel: FilterModel = {
     offset: 0,
     limit: 0,
@@ -49,22 +54,25 @@ export class AllAppointmentsComponent implements OnInit {
   };
   subs = new SubSink();
   doctorFilterDto: DataFilterModel = {} as DataFilterModel;
+  userType: any;
   constructor(
     private DoctorPatientAppointmentService: DoctorPatientAppointmentService,
     private fb: FormBuilder,
-    private AppointmentService: AppointmentService
+    private AppointmentService: AppointmentService,
+    private route: ActivatedRoute,
+    private AuthService: AuthService
   ) {
     this.filterInput = {
       fields: {
         searchField: {
-          formControlName: 'search',
+          formControlName: 'appointmentSearch',
         },
         filterField: [
           {
             label: 'Consultancy Type',
             fieldType: 'select',
-            formControlName: 'consultancyType',
-            options: CommonService.getEnumList(ConsultancyType)
+            formControlName: 'consultancy',
+            options: CommonService.getEnumList(ConsultancyType),
           },
           {
             label: 'start date',
@@ -72,9 +80,8 @@ export class AllAppointmentsComponent implements OnInit {
             formControlName: {
               startDate: 'startDate',
               endDate: 'endDate',
-            }
-          }
-
+            },
+          },
         ],
       },
     };
@@ -82,104 +89,175 @@ export class AllAppointmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = this.AuthService.authInfo().userType;
+    // if (this.id && this.user) {
+    //   this.dataLoading = true;
+    //   this.skelton = true;
+    //   this.DoctorPatientAppointmentService.getAllAppointmentList(
+    //     this.id,
+    //     this.user
+    //   )
+    //     .subscribe({
+    //       next: (res) => {
+    //         if (res.length === 0) {
+    //           this.appointmentList = [];
+    //           this.skelton = false;
+    //           this.noDataAvailable = true;
+    //         } else {
+    //           this.appointmentList = res;
+    //           this.skelton = false;
+    //           this.noDataAvailable = false;
+    //         }
+    //       },
+    //       error: (error) => {
+    //         this.skelton = true;
+    //       },
+    //     })
+    //     .add(() => {
+    //       this.dataLoading = false;
+    //     });
+    // } else {
+    //   console.log('Doctor ID not found');
+    // }
 
-    if (this.id && this.user) {
-      this.dataLoading = true;
-      this.skelton = true;
-      this.DoctorPatientAppointmentService.getAllAppointmentList(
-        this.id,
-        this.user
-      )
-        .subscribe({
-          next: (res) => {
-            if (res.length === 0) {
-              this.appointmentList = [];
-              this.skelton = false;
-              this.noDataAvailable = true;
-            } else {
-              this.appointmentList = res;
-              this.skelton = false;
-              this.noDataAvailable = false;
-            }
-          },
-          error: (error) => {
-            this.skelton = true;
-          },
-        })
-        .add(() => {
-          this.dataLoading = false;
+    this.route.queryParams.subscribe((params) => {
+      const name = params['apt-patientname']
+        ? params['apt-patientname']
+        : params['apt-doctorname']
+        ? params['apt-doctorname']
+        : params['patientname']
+        ? params['patientname']
+        : params['doctorname'];
+
+      const consultancyType = params['consultancyType'];
+      const startDate = params['startDate'];
+      const endDate = params['endDate'];
+
+      if (consultancyType || name || startDate || endDate) {
+        this.loadData({
+          consultancy: consultancyType,
+          name: name,
+          startDate: startDate,
+          endDate: endDate,
         });
-    } else {
-      console.log('Doctor ID not found');
-    }
+      } else {
+        this.loadData({
+          consultancy: undefined,
+          name: undefined,
+          endDate: undefined,
+          startDate: undefined,
+        });
+      }
+    });
   }
 
   loadData(data: any) {
+    console.log(data);
 
-    const { consultancyType, startDate, endDate } = data;
-    let sDate: any = new Date(startDate).toLocaleDateString()
-    let eDate: any = new Date(endDate).toLocaleDateString()
-    this.doctorFilterDto.consultancyType = consultancyType;
+    const { consultancy, startDate, endDate, name } = data;
+
+    let sDate: any =
+      startDate !== undefined
+        ? new Date(startDate).toLocaleDateString()
+        : undefined;
+    let eDate: any =
+      endDate !== undefined
+        ? new Date(endDate).toLocaleDateString()
+        : undefined;
+    this.doctorFilterDto.consultancyType = consultancy;
     this.doctorFilterDto.fromDate = sDate;
     this.doctorFilterDto.toDate = eDate;
+    this.doctorFilterDto.name = name;
 
     this.filterModel.limit = this.filterModel.pageSize;
-    this.filterModel.offset = (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+    this.filterModel.offset =
+      (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
+    this.dataLoading = true;
+    this.skelton = true;
 
     if (this.user == 'doctor') {
-    this.subs.sink = combineLatest([
-      this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(this.id, this.doctorFilterDto, this.filterModel),
-      this.AppointmentService.getAppointmentCountForDoctorWithSearchFilter(this.id, this.doctorFilterDto)
-    ]).subscribe(
-      ([buildingResponse, countResponse]) => {
-        this.totalCount = countResponse;
-        this.appointmentList = buildingResponse;
-      },
-      (error) => {
-        console.log(error);
-      });
-    //this.doctorFilterDto = {};
+      this.subs.sink = combineLatest([
+        this.AppointmentService.getAppointmentListForDoctorWithSearchFilter(
+          this.id,
+          this.doctorFilterDto,
+          this.filterModel
+        ),
+        this.AppointmentService.getAppointmentCountForDoctorWithSearchFilter(
+          this.id,
+          this.doctorFilterDto
+        ),
+      ]).subscribe(
+        ([buildingResponse, countResponse]) => {
+          this.totalCount = countResponse;
+
+          this.appointmentList = buildingResponse;
+          this.dataLoading = false;
+          this.skelton = false;
+        },
+        (error) => {
+          console.log(error);
+          this.dataLoading = false;
+          this.skelton = false;
+        }
+      );
+      //this.doctorFilterDto = {};
     }
 
     if (this.user == 'patient') {
       this.subs.sink = combineLatest([
-        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto, this.filterModel),
-        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'patient', this.doctorFilterDto)
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(
+          this.id,
+          'patient',
+          this.doctorFilterDto,
+          this.filterModel
+        ),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(
+          this.id,
+          'patient',
+          this.doctorFilterDto
+        ),
       ]).subscribe(
         ([buildingResponse, countResponse]) => {
           this.totalCount = countResponse;
           this.appointmentList = buildingResponse;
+          this.dataLoading = false;
+          this.skelton = false;
         },
         (error) => {
           console.log(error);
-        });
+          this.dataLoading = false;
+          this.skelton = false;
+        }
+      );
       //this.doctorFilterDto = {};
     }
     if (this.user == 'agent') {
       this.subs.sink = combineLatest([
-        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto, this.filterModel),
-        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(this.id, 'agent', this.doctorFilterDto)
+        this.AppointmentService.getAppointmentListForPatientWithSearchFilter(
+          this.id,
+          'agent',
+          this.doctorFilterDto,
+          this.filterModel
+        ),
+        this.AppointmentService.getAppointmentCountForPatientWithSearchFilter(
+          this.id,
+          'agent',
+          this.doctorFilterDto
+        ),
       ]).subscribe(
         ([buildingResponse, countResponse]) => {
           this.totalCount = countResponse;
           this.appointmentList = buildingResponse;
+          this.dataLoading = false;
+          this.skelton = false;
         },
         (error) => {
           console.log(error);
-        });
+          this.dataLoading = false;
+          this.skelton = false;
+        }
+      );
       //this.doctorFilterDto = {};
     }
-  }
-
-  getSpecializations(e: any) {
-
-  }
-
-  searchData(e: any) {
-
-  }
-
-  searchChanged(e: string) {
-    console.log(e);
   }
 }
