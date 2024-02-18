@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\app"
   ],
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\specialization-dialog\\specialization-dialog.component.ts",
   "PreviewInSolutionExplorer": false
 }
