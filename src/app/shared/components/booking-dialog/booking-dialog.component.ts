@@ -18,7 +18,7 @@ import { dayFromDate, inputForCreatePatient } from '../../utils/input-info';
 
 import { DateFilterFn } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
+import { combineLatestWith, map, of, startWith, switchMap, tap } from 'rxjs';
 import { FinancialSetupDto, PatientProfileDto } from 'src/app/proxy/dto-models';
 import { AppointmentType, Gender } from 'src/app/proxy/enums';
 import { SubSink } from 'subsink';
@@ -227,7 +227,7 @@ export class BookingDialogComponent implements OnInit {
             )
             .map((item: any) => ({
               name: item.scheduleName,
-              id: item.scheduleName,
+              id: item.id,
             }));
           return hospitals;
         })
@@ -236,34 +236,45 @@ export class BookingDialogComponent implements OnInit {
         this.hospitalList = hospitals;
       });
 
-    selectedItem2$
-      .pipe(
-        map((selectedItem2: any) => {
-          const sessions = schedule
-            .find((item: any) => item.scheduleName === selectedItem2)
-            ?.doctorScheduleDaySession.filter(
-              (e: any) => e.scheduleDayofWeek === day
-            );
-          const updatedSchedule = schedule.find(
-            (e: any) => e.scheduleName === selectedItem2
-          );
+    // selectedItem2$
+    //   .pipe(
+    //     map((selectedItem2: any) => {
+    //       const sessions = schedule
+    //         .find((item: any) => item.scheduleName === selectedItem2)
+    //         ?.doctorScheduleDaySession.filter(
+    //           (e: any) => e.scheduleDayofWeek === day
+    //         );
+    //       const updatedSchedule = schedule.find(
+    //         (e: any) => e.scheduleName === selectedItem2
+    //       );
 
-          return { sessions, updatedSchedule };
-        })
-      )
-      .subscribe(({ sessions, updatedSchedule }: any) => {
-        let filterSession = sessions?.map((s: any) => {
-          let apt = updatedSchedule?.appointments?.filter(
-            (a: any) => a.doctorScheduleDaySessionId == s.id
-          )?.length;
-          return { ...s, leftSlot: s.noOfPatients - apt };
-        });
+    //       return { sessions, updatedSchedule };
+    //     })
+    //   )
+    //   .subscribe(({ sessions, updatedSchedule }: any) => {
+    //     let filterSession = sessions?.map((s: any) => {
+    //       let apt = updatedSchedule?.appointments?.filter(
+    //         (a: any) => a.doctorScheduleDaySessionId == s.id
+    //       )?.length;
+    //       return { ...s, leftSlot: s.noOfPatients - apt };
+    //     });
 
-        this.filterData = filterSession;
-        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-          filterSession
-        );
-      });
+    //     this.filterData = filterSession;
+    //     this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+    //       filterSession
+    //     );
+    //   });
+
+    selectedItem2$.pipe(map((res: any) => res)).subscribe({
+      next: (filterSession: any) => {
+        console.log(filterSession, day);
+
+        // this.filterData = filterSession;
+        // this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+        //   filterSession
+        // );
+      },
+    });
 
     selectedItem2$
       .pipe(combineLatestWith(selectedItem4$))
@@ -625,7 +636,7 @@ export class BookingDialogComponent implements OnInit {
             : user.email || 'admin@gmail.com',
           consultancyType,
           doctorChamberId,
-          // doctorChamberName: chamber,
+          doctorChamberName: chamber,
           scheduleType,
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,

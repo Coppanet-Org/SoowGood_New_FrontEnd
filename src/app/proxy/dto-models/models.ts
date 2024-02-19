@@ -668,6 +668,14 @@ export interface ResponseDto {
   message?: string;
 }
 
+export interface SessionWeekDayTimeSlotPatientCountDto {
+  sessionId?: number;
+  weekDay?: string;
+  startTime?: string;
+  endTime?: string;
+  patientCount?: number;
+}
+
 export interface SmsInfo {
   sms_status?: string;
   status_message?: string;
