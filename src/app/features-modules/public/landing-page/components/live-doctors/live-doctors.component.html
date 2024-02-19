@@ -33,12 +33,15 @@
         <!-- <div class="swiper-wrapper py-6"> -->
         <!-- <div class="swiper-slide" > -->
 
-        <!-- @for (details of liveDoctorList; track details.id) { -->
-        <app-live-doctor-card
-          *ngFor="let details of liveDoctorList"
-          [doctorDetails]="details"
-        ></app-live-doctor-card>
-        <!-- } -->
+        @for (details of liveDoctorList; track details.id) {
+        <app-live-doctor-card [doctorDetails]="details"></app-live-doctor-card>
+        } @if (isLoading) {
+        <div
+          class="flex flex-shrink-1 w-full h-[300px] justify-center items-center"
+        >
+          Loading...
+        </div>
+        }
 
         <!-- </div> -->
         <!-- </div> -->
