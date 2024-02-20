@@ -669,6 +669,7 @@ export interface ResponseDto {
 }
 
 export interface SessionWeekDayTimeSlotPatientCountDto {
+  scheduleId?: number;
   sessionId?: number;
   weekDay?: string;
   startTime?: string;

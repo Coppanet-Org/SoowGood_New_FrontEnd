@@ -1,0 +1,1 @@
+import{S as i,Y as r,cc as e}from"./chunk-TXQBTV46.js";var p=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=r({type:t}),t.\u0275inj=i({imports:[e]});let o=t;return o})();export{p as a};

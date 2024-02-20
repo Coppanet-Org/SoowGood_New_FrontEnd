@@ -91,24 +91,28 @@ export class BookingReviewComponent implements OnInit {
 
   payWithSslCommerz(appointmentCode: any): void {
     if (this.bookingInfo) {
-      const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
-      // const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
+      //const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
+      const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
       sslCommerzInputDto.applicationCode = appointmentCode;
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
       );
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
-      //this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
-      // this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
-      this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
+      this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
+        // this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
+        //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
         next: (response) => {
+          // if (
+          //   response &&
+          //   response.status === '1000' &&
+          //   response.gatewayPageURL
+          // ) {
           if (
             response &&
-            response.status === '1000' &&
+            response.status === 'SUCCESS' &&
             response.gatewayPageURL
           ) {
-            //if (response && response.status === 'SUCCESS' && response.gatewayPageURL) {
             window.location.href = response.gatewayPageURL;
             this.loading = false;
           } else {

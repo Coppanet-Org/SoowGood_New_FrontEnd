@@ -9,11 +9,13 @@ import { DoctorScheduleStateService } from '../../services/states/doctors-states
 export class SlotItemComponent {
   @Input() item: any;
   constructor(private DoctorScheduleStateService: DoctorScheduleStateService) {}
-  selectSlot(data:{}) {
+  selectSlot(data: {}) {
+    console.log(data);
+
     this.DoctorScheduleStateService.sendSelectedSlot(data);
   }
-  formatTime(time: string): string {
-    const formattedTime = new Date(`1970-01-01T${time}`);
-    return formattedTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  }
+  // formatTime(time: string): string {
+  //   const formattedTime = new Date(`1970-01-01T${time}`);
+  //   return formattedTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  // }
 }

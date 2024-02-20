@@ -1,7 +1,7 @@
 <!-- <span class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded  ">Popular</span> -->
 
 <div
-  class="w-full my-3 p-4 max-w-[450px] border-[1px] border-secondary-dark/50 rounded-lg shadow m-auto custom-scrollbar max-h-[470px] overflow-y-scroll"
+  class="w-full my-3 p-4 max-w-[470px] border-[1px] border-secondary-dark/50 rounded-lg shadow m-auto custom-scrollbar max-h-[470px] overflow-y-scroll"
 >
   <h5 class="text-[26px] font-semibold text-primary text-center">
     Dr. {{ bookingInfo?.doctorName }}
@@ -42,24 +42,30 @@
           <p class="text-sm text-primary">Day</p>
         </div>
       </div>
-      <div class="text-center lg:text-left mt-5">
-        <p class="mt-2 text-zinc-500">
-          Doctor Fee : {{ bookingInfo?.doctorFee }} tk.
-        </p>
-        @if (userType !=='patient') {
+      <div
+        class="text-center grid gap-5 grid-cols-2 items-center lg:text-left mt-5"
+      >
+        <div>
+          <p class="mt-2 text-gray-500">
+            Doctor Fee : {{ bookingInfo?.doctorFee }} tk.
+          </p>
+          @if (userType !=='patient') {
 
-        <p class="mt-2 text-zinc-500">
-          Booth Fee : {{ bookingInfo?.agentFee }} tk.
-        </p>
-        }
-        <p class="mt-2 text-zinc-500">
-          Platform Fee : {{ bookingInfo?.platformFee }} tk.
-        </p>
-        <p class="mt-2 text-zinc-700 text-[22px] font-semibold">
-          Total : {{ bookingInfo?.totalAppointmentFee }} tk.
-        </p>
+          <p class="mt-2 text-gray-500">
+            Booth Fee : {{ bookingInfo?.agentFee }} tk.
+          </p>
+          }
+          <p class="mt-2 text-gray-500">
+            Platform Fee : {{ bookingInfo?.platformFee }} tk.
+          </p>
+        </div>
+        <div class="flex justify-center">
+          <p class="mt-2 inline-block text-secondary text-[28px] font-bold">
+            Total : {{ bookingInfo?.totalAppointmentFee }} tk.
+          </p>
+        </div>
       </div>
-      <div class="mt-5 grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <button
           class="btn-secondary bg-primary mt-6 text-[15px] tracking-[1px] py-1 w-full"
           (click)="gotToBack.emit(1)"
