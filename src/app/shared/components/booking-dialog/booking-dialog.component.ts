@@ -1,3 +1,4 @@
+import { AppointmentService } from './../../../proxy/services/appointment.service';
 import {
   FinancialSetupService,
   PatientProfileService,
@@ -95,6 +96,7 @@ export class BookingDialogComponent implements OnInit {
     private DoctorScheduleStateService: DoctorScheduleStateService,
     private NormalAuth: AuthService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
+    private AppointmentService: AppointmentService,
     @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
@@ -218,7 +220,7 @@ export class BookingDialogComponent implements OnInit {
         map((selectedItem1: any) => {
           day = dayFromDate(String(selectedItem1));
           dateString = selectedItem1;
-
+          console.log(dateString);
           const hospitals = schedule
             .filter((item: any) =>
               item.doctorScheduleDaySession.some(
@@ -236,45 +238,52 @@ export class BookingDialogComponent implements OnInit {
         this.hospitalList = hospitals;
       });
 
+    selectedItem2$
+      .pipe(
+        map((selectedItem2: any) => {
+          const sessions = schedule
+            .find((item: any) => item.scheduleName === selectedItem2)
+            ?.doctorScheduleDaySession.filter(
+              (e: any) => e.scheduleDayofWeek === day
+            );
+          const updatedSchedule = schedule.find(
+            (e: any) => e.scheduleName === selectedItem2
+          );
+
+          return { sessions, updatedSchedule };
+        })
+      )
+      .subscribe(({ sessions, updatedSchedule }: any) => {
+        let filterSession = sessions?.map((s: any) => {
+          let apt = updatedSchedule?.appointments?.filter(
+            (a: any) => a.doctorScheduleDaySessionId == s.id
+          )?.length;
+          return { ...s, leftSlot: s.noOfPatients - apt };
+        });
+
+        this.filterData = filterSession;
+        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+          filterSession
+        );
+      });
+
     // selectedItem2$
     //   .pipe(
-    //     map((selectedItem2: any) => {
-    //       const sessions = schedule
-    //         .find((item: any) => item.scheduleName === selectedItem2)
-    //         ?.doctorScheduleDaySession.filter(
-    //           (e: any) => e.scheduleDayofWeek === day
-    //         );
-    //       const updatedSchedule = schedule.find(
-    //         (e: any) => e.scheduleName === selectedItem2
-    //       );
-
-    //       return { sessions, updatedSchedule };
-    //     })
+    //     switchMap(({ scheduleId }) =>
+    //       this.AppointmentService.getListOfSessionsWithWeekDayTimeSlotPatientCount(
+    //         scheduleId,
+    //         dateString
+    //       )
+    //     )
     //   )
-    //   .subscribe(({ sessions, updatedSchedule }: any) => {
-    //     let filterSession = sessions?.map((s: any) => {
-    //       let apt = updatedSchedule?.appointments?.filter(
-    //         (a: any) => a.doctorScheduleDaySessionId == s.id
-    //       )?.length;
-    //       return { ...s, leftSlot: s.noOfPatients - apt };
-    //     });
+    //   .subscribe({
+    //     next: (sessiond: any) => {
 
-    //     this.filterData = filterSession;
-    //     this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-    //       filterSession
-    //     );
+    //     },
+    //     error: (err: any) => {
+    //       console.log(err);
+    //     },
     //   });
-
-    selectedItem2$.pipe(map((res: any) => res)).subscribe({
-      next: (filterSession: any) => {
-        console.log(filterSession, day);
-
-        // this.filterData = filterSession;
-        // this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-        //   filterSession
-        // );
-      },
-    });
 
     selectedItem2$
       .pipe(combineLatestWith(selectedItem4$))
