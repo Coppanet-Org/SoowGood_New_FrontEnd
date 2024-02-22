@@ -130,7 +130,14 @@
             <i class="fa-solid fa-circle-exclamation mr-2"></i>
             {{ this.errorMessage }}
           </div>
-
+          <p>
+            Forgot your password?<strong
+              class="cursor-pointer"
+              routerLink="/forgot-password"
+            >
+              Reset now</strong
+            >
+          </p>
           <button
             [disabled]="isLoading || !loginForm.dirty || loginForm.invalid"
             type="submit"

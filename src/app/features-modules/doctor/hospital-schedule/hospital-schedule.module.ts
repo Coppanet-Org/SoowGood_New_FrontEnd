@@ -14,9 +14,9 @@ import { InputModule } from 'src/app/shared/modules/input/input.module';
 import { FeeSetupComponent } from './fee-info/fee-setup.component';
 import { FeeDialogComponent } from './fee-dialog/fee-dialog.component';
 import { ConfirmDialogModule } from 'src/app/shared/modules/confirm-dialog/confirm-dialog.module';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 const routes: Route[] = [
   {
     path: '',
@@ -34,17 +34,19 @@ const routes: Route[] = [
     DialogHeaderComponent,
     ScheduleFormComponent,
     FeeSetupComponent,
-    FeeDialogComponent
+    FeeDialogComponent,
   ],
 
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModulesModule,
-    InputModule,ConfirmDialogModule,
+    InputModule,
+    ConfirmDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
   ],
-  providers: [DatePipe], 
+  providers: [DatePipe],
 })
 export class HospitalScheduleModule {}
