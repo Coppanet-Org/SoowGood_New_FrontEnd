@@ -1,7 +1,7 @@
 import { TosterService } from './../../../shared/services/toster.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OtpService, UserAccountsService } from 'src/app/proxy/services';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CustomValidators } from 'src/app/shared/utils/auth-helper';
@@ -25,13 +25,15 @@ export class ForgotPasswordComponent implements OnInit {
   otpMessage = '';
   errorMessage = '';
   otpLoading: boolean = false;
+  redirectTo!: string | null;
   constructor(
     private UserAccountsService: UserAccountsService,
     private TosterService: TosterService,
     private fb: FormBuilder,
     private otpService: OtpService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {}
   ngOnInit(): void {
     if (this.authService.authInfo()) {
@@ -42,6 +44,9 @@ export class ForgotPasswordComponent implements OnInit {
       this.router.navigate(['/']);
     }
     this.loadForm();
+    this.activeRoute.queryParamMap.subscribe((params) => {
+      this.redirectTo = params.get('redirect');
+    });
   }
   loadForm() {
     // this.resetPasswordForm = this.fb.group(
@@ -81,6 +86,7 @@ export class ForgotPasswordComponent implements OnInit {
             CustomValidators.includesNumber,
           ],
         ],
+        accept: ['', Validators.required],
         confirmPassword: ['', Validators.required],
       },
       { validator: CustomValidators.matchValidator }
@@ -173,13 +179,25 @@ export class ForgotPasswordComponent implements OnInit {
 
   confirmPassword() {
     this.resetFormSubmitted = true;
+    this.errorMessage = '';
+    let accept = this.resetPasswordForm.get('accept')?.value;
+    let confirmPassword = this.resetPasswordForm.get('confirmPassword')?.value;
 
     let obj = {
       userId: this.resetPasswordForm.get('username')?.value,
       newPassword: this.resetPasswordForm.get('newPassword')?.value,
     };
 
-    if (this.resetPasswordForm.valid && this.resetPasswordForm.dirty) {
+    if (!accept) {
+      this.errorMessage = 'You must accept terms & condition';
+      return;
+    }
+
+    if (confirmPassword !== obj.newPassword) {
+      this.errorMessage = 'Password not matched';
+      return;
+    }
+    if (obj.newPassword && obj.userId && accept) {
       this.resetLoading = true;
       this.UserAccountsService.resetPasswordByInputDto(obj).subscribe({
         next: (res) => {
@@ -187,6 +205,7 @@ export class ForgotPasswordComponent implements OnInit {
             this.TosterService.customToast(String(res.message), 'success');
             this.resetLoading = false;
             this.resetFormSubmitted = false;
+            this.router.navigate(['/' + this.redirectTo]);
             this.resetPasswordForm.reset();
           } else {
             this.TosterService.customToast(String(res.message), 'error');
@@ -200,7 +219,10 @@ export class ForgotPasswordComponent implements OnInit {
           this.resetLoading = false;
         },
       });
+    } else {
+      this.TosterService.customToast('Password/userId not found', 'error');
+      this.resetFormSubmitted = false;
+      this.resetLoading = false;
     }
-    this.TosterService.customToast('Please enter your new password', 'warning');
   }
 }

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.component';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -12,12 +13,23 @@ import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.compone
 })
 export class DashboardHeaderComponent {
   authInfo: any;
+  isVisible!: boolean;
   constructor(
     private NormalAuth: AuthService,
     private Router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private menuService: MenuService
   ) {}
+
+  onClickMobileMenu(status: boolean) {
+    console.log(status);
+
+    this.menuService.visible(status);
+  }
+
   ngOnInit(): void {
+    this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
+
     this.authInfo = this.NormalAuth.authInfo();
   }
   signOut(): void {

@@ -70,7 +70,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   get formControl() {
     return this.loginForm.controls;
   }
-
+  goToForgotPassword() {
+    this._router.navigate(['/forgot-password'], {
+      queryParams: { redirect: 'login' },
+    });
+  }
   initForm() {
     this.loginForm = this.fb.group({
       mobileNo: [
