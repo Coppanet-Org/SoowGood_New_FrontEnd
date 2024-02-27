@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../utils/auth-helper';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,6 +16,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   changePasswordShow = false;
   resetLoading = false;
+  @Input() from!: string;
   resetFormSubmitted = false;
   @Input() mobile!: string;
   passwordFieldType: string = 'password';
@@ -24,7 +26,9 @@ export class ResetPasswordComponent implements OnInit {
     private UserAccountsService: UserAccountsService,
     private ToasterService: TosterService,
     public dialogRef: MatDialogRef<DynamicDialogComponent>
-  ) {}
+  ) {
+    console.log('hello');
+  }
   ngOnInit(): void {
     this.loadForm();
   }

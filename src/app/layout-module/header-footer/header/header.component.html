@@ -8,7 +8,10 @@
     "
   >
     <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
-      <div class="header-logo" routerLink="/">
+      <div
+        class="header-logo xs:max-w-[170px] md:max-w-[200px] lg:max-w-[220px]"
+        routerLink="/"
+      >
         <img
           appScroll
           class="w-full drop-shadow-md active:scale-95 duration-200 cursor-pointer"
@@ -16,131 +19,180 @@
           alt="logo"
         />
       </div>
-      <div>
-        <div>
-          <ul class="flex gap-4 items-center">
-            <li
-              class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
-              (click)="navigator('soowgood-point')"
-            >
-              Soowgood Point
-            </li>
-            <li
-              class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
-              (click)="navigator('soowgood-booth')"
-            >
-              Village Booth
-            </li>
-            <li *ngIf="userType === 'agent' || !userType">
-              <div class="dropdown dropdown-end">
-                <label
-                  tabindex="0"
-                  class="btn-secondary bg-primary cursor-pointer border-secondary-dark flex"
-                >
-                  <i class="fa-solid fa-user mr-2"></i> Agent
-                </label>
-                <ul
-                  tabindex="0"
-                  class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
-                >
-                  <span
-                    *ngIf="userType === 'agent'"
-                    class="pb-3 font-Roboto text-primary pl-3 border-b-[1px] text-[20px]"
-                    >{{ authInfo?.fullName }}</span
-                  >
-                  <li *ngIf="userType == 'agent'">
-                    <a
-                      class="font-Roboto text-primary text-[16px] py-2"
-                      (click)="signOut()"
-                    >
-                      <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
-                    </a>
-                  </li>
-                  <li
-                    (click)="checkAuthUser(userType)"
-                    *ngIf="userType !== 'agent'"
-                    routerLink="/agent/login"
-                  >
-                    <a class="font-Roboto text-primary text-[16px] py-2">
-                      <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
-                    </a>
-                  </li>
 
-                  <li
-                    (click)="checkAuthUser(userType)"
-                    *ngIf="userType !== 'agent'"
-                    routerLink="/agent/signup"
-                  >
-                    <a class="font-Roboto text-primary text-[16px] py-2">
-                      <i class="fa-solid fa-border-none mr-1"></i>Registration
-                    </a>
-                  </li>
-                  <li
-                    *ngIf="userType === 'agent'"
-                    routerLink="/agent/dashboard"
-                  >
-                    <a class="font-Roboto text-primary text-[16px] py-2">
-                      <i class="fa-solid fa-right-to-bracket mr-1"></i>
-                      Dashboard
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li>
-              <div
-                *ngIf="
-                  isAuthLogin &&
-                  (userType === 'doctor' || userType === 'patient')
-                "
-                class="flex items-center"
+      <ul class="lg:flex gap-4 items-center hidden">
+        <li
+          class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
+          (click)="navigator('soowgood-point')"
+        >
+          Soowgood Point
+        </li>
+        <li
+          class="btn-secondary-anim border-secondary-dark/50 border-[1px]"
+          (click)="navigator('soowgood-booth')"
+        >
+          Village Booth
+        </li>
+        <li *ngIf="userType === 'agent' || !userType">
+          <div class="dropdown dropdown-end">
+            <label
+              tabindex="0"
+              class="btn-secondary bg-primary cursor-pointer border-secondary-dark flex"
+            >
+              <i class="fa-solid fa-user mr-2"></i> Agent
+            </label>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
+            >
+              <span
+                *ngIf="userType === 'agent'"
+                class="pb-3 font-Roboto text-primary pl-3 border-b-[1px] text-[20px]"
+                >{{ authInfo?.fullName }}</span
               >
-                <div class="dropdown dropdown-end">
-                  <label
-                    tabindex="0"
-                    class="btn btn-ghost btn-circle avatar flex"
-                  >
-                    <div class="w-8 rounded-full">
-                      <img src="../../../../assets/person.png" />
-                    </div>
-                  </label>
-                  <ul
-                    tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
-                  >
-                    <span
-                      class="pb-3 text-primary font-Roboto pl-3 border-b-[1px] text-[20px]"
-                    >
-                      {{
-                        authInfo.userType === "doctor"
-                          ? authInfo?.doctorTitle
-                          : ""
-                      }}
-                      {{ authInfo.fullName }}</span
-                    >
-                    <li [routerLink]="'/' + userType + '/dashboard'">
-                      <a class="font-Roboto text-[16px] text-primary py-2">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i
-                        >Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="font-Roboto text-[16px] text-primary py-2"
-                        (click)="signOut()"
-                      >
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i
-                        >Logout
-                      </a>
-                    </li>
-                  </ul>
+              <li *ngIf="userType == 'agent'">
+                <a
+                  class="font-Roboto text-primary text-[16px] py-2"
+                  (click)="signOut()"
+                >
+                  <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+                </a>
+              </li>
+              <li
+                (click)="checkAuthUser(userType)"
+                *ngIf="userType !== 'agent'"
+                routerLink="/agent/login"
+              >
+                <a class="font-Roboto text-primary text-[16px] py-2">
+                  <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
+                </a>
+              </li>
+
+              <li
+                (click)="checkAuthUser(userType)"
+                *ngIf="userType !== 'agent'"
+                routerLink="/agent/signup"
+              >
+                <a class="font-Roboto text-primary text-[16px] py-2">
+                  <i class="fa-solid fa-border-none mr-1"></i>Registration
+                </a>
+              </li>
+              <li *ngIf="userType === 'agent'" routerLink="/agent/dashboard">
+                <a class="font-Roboto text-primary text-[16px] py-2">
+                  <i class="fa-solid fa-right-to-bracket mr-1"></i>
+                  Dashboard
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <div
+            *ngIf="
+              isAuthLogin && (userType === 'doctor' || userType === 'patient')
+            "
+            class="flex items-center"
+          >
+            <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
+                <div class="w-8 rounded-full">
+                  <img src="../../../../assets/person.png" />
                 </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+              </label>
+              <ul
+                tabindex="0"
+                class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-52"
+              >
+                <span
+                  class="pb-3 text-primary font-Roboto pl-3 border-b-[1px] text-[20px]"
+                >
+                  {{
+                    authInfo.userType === "doctor" ? authInfo?.doctorTitle : ""
+                  }}
+                  {{ authInfo.fullName }}</span
+                >
+                <li [routerLink]="'/' + userType + '/dashboard'">
+                  <a class="font-Roboto text-[16px] text-primary py-2">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i>Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="font-Roboto text-[16px] text-primary py-2"
+                    (click)="signOut()"
+                  >
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <svg
+        version="1.1"
+        id="_x32_"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 512 512"
+        xml:space="preserve"
+        width="34px"
+        height="24px"
+        fill="#ffffff"
+        stroke="#ffffff"
+        class="mr-2 ml-2 lg:hidden"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <style type="text/css">
+            .st0 {
+              fill: #ffffff;
+            }
+          </style>
+          <g>
+            <path
+              class="st0"
+              d="M40.252,14.489C18.019,14.489,0,32.507,0,54.741c0,22.233,18.019,40.252,40.252,40.252 c22.225,0,40.252-18.019,40.252-40.252C80.504,32.507,62.477,14.489,40.252,14.489z"
+            ></path>
+            <rect
+              x="148.122"
+              y="14.489"
+              class="st0"
+              width="363.878"
+              height="80.504"
+            ></rect>
+            <path
+              class="st0"
+              d="M40.252,215.748C18.019,215.748,0,233.767,0,256c0,22.233,18.019,40.252,40.252,40.252 c22.225,0,40.252-18.019,40.252-40.252C80.504,233.767,62.477,215.748,40.252,215.748z"
+            ></path>
+            <rect
+              x="148.122"
+              y="215.748"
+              class="st0"
+              width="363.878"
+              height="80.504"
+            ></rect>
+            <path
+              class="st0"
+              d="M40.252,417.007C18.019,417.007,0,435.026,0,457.259c0,22.232,18.019,40.252,40.252,40.252 c22.225,0,40.252-18.019,40.252-40.252C80.504,435.026,62.477,417.007,40.252,417.007z"
+            ></path>
+            <rect
+              x="148.122"
+              y="417.007"
+              class="st0"
+              width="363.878"
+              height="80.504"
+            ></rect>
+          </g>
+        </g>
+      </svg>
     </div>
   </div>
 </div>
