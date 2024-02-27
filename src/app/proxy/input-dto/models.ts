@@ -2,6 +2,7 @@ import type { FullAuditedEntityDto } from '@abp/ng.core';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
+import type { DiagonsticServiceType } from '../enums/diagonstic-service-type.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
 
@@ -141,6 +142,7 @@ export interface FileDeleteInputDto {
 
 export interface FinancialSetupInputDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
+  diagonsticServiceType?: DiagonsticServiceType;
   amountIn?: string;
   amount?: number;
   externalAmountIn?: string;
@@ -272,6 +274,19 @@ export interface RtcTokenBuilerDto {
   appCertificate?: string;
   chanelName?: string;
   uid: number;
+}
+
+export interface ServiceProviderInputDto extends FullAuditedEntityDto<number> {
+  platformFacilityId?: number;
+  providerOrganizationName?: string;
+  organizationCode?: string;
+  contactPerson?: string;
+  contactPersonMobileNo?: string;
+  contactPersonEmail?: string;
+  address?: string;
+  organizationPhoneNumber?: string;
+  organizationAvailability?: string;
+  isActive?: boolean;
 }
 
 export interface SpecialityInputDto extends FullAuditedEntityDto<number> {

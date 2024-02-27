@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit(): void {
     if (this.authService.authInfo()) {
       this.TosterService.customToast(
@@ -105,34 +105,58 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.resetLoading = true;
     try {
-      this.UserAccountsService.isUserExistsByUserName(
-        this.resetPasswordForm.get('username')?.value
-      ).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res) {
-            this.resetLoading = false;
-            this.next(1);
+      this.otpService
+        .applyOtpForPasswordResetByClientKeyAndRoleAndMobileNo('SoowGood_App', this.redirectTo?.includes("agent") ? "agent" : "", this.resetPasswordForm.get('username')?.value)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.resetLoading = false;
+              this.next(1);
+              this.resetFormSubmitted = false;
+            } else {
+              this.errorMessage = 'User not found!';
+              this.resetLoading = false;
+              this.resetFormSubmitted = false;
+              return;
+            }
+          },
+          error: (err) => {
+            this.TosterService.customToast(String(err.message), 'error');
             this.resetFormSubmitted = false;
-          } else {
-            this.errorMessage = 'Mobile number not found!';
-            this.resetLoading = false;
-            this.resetFormSubmitted = false;
-          }
-        },
-        error: (err) => {
-          this.TosterService.customToast(String(err.message), 'error');
-          this.resetFormSubmitted = false;
-        },
-      });
+          },
+        });
+
+
+      //this.UserAccountsService.isUserExistsByUserName(
+      //  this.resetPasswordForm.get('username')?.value
+      //).subscribe({
+      //  next: (res) => {
+      //    console.log(res);
+      //    if (res) {
+      //      this.resetLoading = false;
+      //      this.next(1);
+      //      this.resetFormSubmitted = false;
+      //    } else {
+      //      this.errorMessage = 'Mobile number not found!';
+      //      this.resetLoading = false;
+      //      this.resetFormSubmitted = false;
+      //    }
+      //  },
+      //  error: (err) => {
+      //    this.TosterService.customToast(String(err.message), 'error');
+      //    this.resetFormSubmitted = false;
+      //  },
+      //});
     } catch (error) {
       this.TosterService.customToast(String(error), 'error');
       this.resetFormSubmitted = false;
     }
   }
+
   back(step: number) {
     this.activeTab = step;
   }
+
   next(step: number) {
     this.activeTab = step;
   }
@@ -140,6 +164,7 @@ export class ForgotPasswordComponent implements OnInit {
   onIndexChange(stepper: any) {
     this.activeTab = stepper._selectedIndex;
   }
+
   verify() {
     this.errorMessage = '';
     this.otpLoading = true;

@@ -3,6 +3,7 @@ export * from './appointment-status.enum';
 export * from './appointment-type.enum';
 export * from './attachment-type.enum';
 export * from './consultancy-type.enum';
+export * from './diagonstic-service-type.enum';
 export * from './doctor-title.enum';
 export * from './entity-type.enum';
 export * from './gender.enum';
