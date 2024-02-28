@@ -51,18 +51,23 @@
               />
             </div>
             <mat-error
+              class="text-red-600"
               *ngIf="
-                formSubmitted && loginForm.get('mobileNo')?.hasError('required')
+                loginForm.get('mobileNo')?.hasError('required') &&
+                loginForm.get('mobileNo')?.touched
               "
             >
               You must enter a valid mobile number.
             </mat-error>
             <mat-error
+              class="text-red-500"
               *ngIf="
-                formSubmitted && loginForm.get('mobileNo')?.hasError('pattern')
+                loginForm.get('mobileNo')?.hasError('pattern') &&
+                loginForm.get('mobileNo')?.touched
               "
             >
-              Mobile number should be valid.
+              Mobile number should have exactly 11 digits and follow the
+              Bangladeshi format.
             </mat-error>
 
             <!-- <mat-error *ngIf="formSubmitted && loginForm.get('mobileNo')?.hasError('invalidFormat')">
@@ -187,7 +192,7 @@
           <p>
             Forgot your password?<strong
               class="cursor-pointer"
-              routerLink="/forgot-password"
+              (click)="goToForgotPassword()"
             >
               Reset now</strong
             >

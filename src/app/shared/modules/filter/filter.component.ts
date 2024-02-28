@@ -1,9 +1,14 @@
-
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FilterInputModel } from '../../utils/models/models';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-filter',
@@ -13,32 +18,88 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FilterComponent implements OnInit {
   @Input() filterForm!: FormGroup;
-  @Input() filterInput!: FilterInputModel
-  @Input() from = ''
-  @Output() searchChanged = new EventEmitter<string>();
-  @Output() getSpecializations = new EventEmitter<any>();
-  @Output() callBuildForm = new EventEmitter<any>();
-  @Output() selectedValueForFilter = new EventEmitter<any>();
-  @Output() searchValue = new EventEmitter<any>();
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  @Input() filterInput!: FilterInputModel;
+  @Input() from = '';
+  selectedConsultancy = '';
+  userType: any;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private AuthService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.filterForm.get('speciality')?.valueChanges.subscribe(specialtyId => {
-      this.getSpecializations.emit(specialtyId);
+    this.userType = this.AuthService.authInfo()?.userType;
+    this.filterForm
+      .get('consultancy')
+      ?.valueChanges.subscribe((consultancy) => {
+        this.updateQueryParam('consultancyType', consultancy);
+      });
 
+    this.filterForm
+      .get('specialization')
+      ?.valueChanges.subscribe((specialization) => {
+        this.updateQueryParam('specialization', specialization);
+      });
+
+    this.filterForm.get('startDate')?.valueChanges.subscribe((startDate) => {
+      this.updateQueryParam('startDate', startDate);
+    });
+    this.filterForm.get('endDate')?.valueChanges.subscribe((endDate) => {
+      this.updateQueryParam('endDate', endDate);
+    });
+    this.route.queryParams.subscribe((params) => {
+      const name = params['doctorname'];
+      const appointmentSearch =
+        this.userType == 'doctor'
+          ? params['apt-patientname']
+          : params['apt-patientname'];
+      const consultancy = params['consultancyType'];
+      const specialization = params['specialization'];
+      this.filterForm.get('search')?.setValue(name);
+      this.filterForm.get('appointmentSearch')?.setValue(appointmentSearch);
+      this.filterForm.get('consultancy')?.setValue(consultancy);
+      this.filterForm.get('specialization')?.setValue(specialization);
     });
 
-    this.route.queryParams.subscribe(params => {
-      const doctorName = params['doctorname'];
-      this.filterForm.get('search')?.setValue(doctorName);
+    this.filterForm
+      .get('search')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe({
+        next: (text) => {
+          this.updateQueryParam('doctorname', text);
+          if (!text) {
+            this.updateQueryParam('doctorname', null);
+          }
+        },
+      });
+    console.log(this.filterForm.value);
 
-    });
+    this.filterForm
+      .get('appointmentSearch')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe({
+        next: (text) => {
+          if (this.userType == 'patient') {
+            this.updateQueryParam('apt-doctorname', text);
+            if (!text) {
+              this.updateQueryParam('apt-doctorname', null);
+            }
+          } else {
+            this.updateQueryParam('apt-patientname', text);
+            if (!text) {
+              this.updateQueryParam('apt-patientname', null);
+            }
+          }
+        },
+      });
   }
+
   getFormControlsFields() {
     const formGroupFields: any = {};
     formGroupFields['search'] = new FormControl('');
+    formGroupFields['appointmentSearch'] = new FormControl('');
     for (const field of this.filterInput.fields.filterField) {
       if (typeof field.formControlName === 'string') {
         formGroupFields[field.formControlName] = new FormControl('');
@@ -50,35 +111,19 @@ export class FilterComponent implements OnInit {
     return formGroupFields;
   }
 
-
-
   buildForm() {
     const formGroupFields = this.getFormControlsFields();
     this.filterForm = new FormGroup(formGroupFields);
-    this.filterForm.get('search')?.valueChanges.subscribe(value => {
-      this.searchChanged.emit(value);
-    });
   }
 
-
-
-  submit() {
-    this.selectedValueForFilter.emit(this.filterForm.value)
-  }
-
-  search() {
-    this.searchValue.emit(this.filterForm.get('search')?.value)
-    this.updateQueryParam(this.filterForm.get('search')?.value)
-  }
-
-  updateQueryParam(newDoctorName: string) {
+  updateQueryParam(paramName: string, paramValue: any) {
     const currentParams = { ...this.route.snapshot.queryParams };
-    currentParams['doctorname'] = newDoctorName;
+    currentParams[paramName] = paramValue;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: currentParams,
       queryParamsHandling: 'merge',
-      replaceUrl: true
+      replaceUrl: true,
     });
   }
 }

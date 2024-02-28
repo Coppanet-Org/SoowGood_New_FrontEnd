@@ -30,11 +30,9 @@ export class PublicDoctorsComponent implements OnInit {
   doctorList: DoctorProfileDto[] = [];
   dataLoading: boolean = true;
   //filterForm!:FormGroup
-  consultancyType!: ListItem[];
+  consultancyType: ListItem[] = CommonService.getEnumList(ConsultancyType);
   @Input() from!: string;
-  specialityList!: any;
   subscriptions: Subscription[] = [];
-  specializationList: any;
   filterInput!: FilterInputModel;
   filter!: FormGroup;
   noDataAvailable: boolean = false;
@@ -51,9 +49,7 @@ export class PublicDoctorsComponent implements OnInit {
     isDesc: false,
   };
   constructor(
-    private DoctorStateService: DoctorStateService,
     private fb: FormBuilder,
-    private SpecialityService: SpecialityService,
     private SpecializationService: SpecializationService,
     private DoctorProfileService: DoctorProfileService,
     private route: ActivatedRoute
@@ -69,24 +65,12 @@ export class PublicDoctorsComponent implements OnInit {
           formControlName: 'search',
         },
         filterField: [
-          //{
-          //  label: '',
-          //  fieldType: 'input',
-          //  formControlName: 'name',
-          //  options: [],
-          //},
           {
             label: 'Consultancy Type',
             fieldType: 'select',
             formControlName: 'consultancy',
             options: CommonService.getEnumList(ConsultancyType),
           },
-          //{
-          //  label: 'Specialty',
-          //  fieldType: 'select',
-          //  formControlName: 'speciality',
-          //  options: []
-          //},
           {
             label: 'Specialization',
             fieldType: 'select',
@@ -97,50 +81,9 @@ export class PublicDoctorsComponent implements OnInit {
       },
     };
 
-    //this.loadForm();
-    //const specialitySubscription = this.SpecialityService.getList().subscribe({
-    //  next: (res: any) => {
-    //    this.specialityList = res;
-
-    //    this.filterInput = {
-    //      fields: {
-    //        searchField: {
-    //          formControlName: 'search',
-    //        },
-    //        filterField: [
-    //          {
-    //            label: 'Consultancy Type',
-    //            fieldType: 'select',
-    //            formControlName: 'consultancy',
-    //            options: CommonService.getEnumList(ConsultancyType),
-    //          },
-    //          //{
-    //          //  label: 'Specialty',
-    //          //  fieldType: 'select',
-    //          //  formControlName: 'speciality',
-    //          //  options: res.map((l: any) => {
-    //          //    return { id: l.id, name: l.specialityName };
-    //          //  }),
-    //          //},
-    //          {
-    //            label: 'Specialization',
-    //            fieldType: 'select',
-    //            formControlName: 'specialization',
-    //            options: [],
-    //          },
-    //        ],
-    //      },
-    //    };
-    //  },
-    //  complete: () => {
-    //    specialitySubscription.unsubscribe();
-    //  },
-    //});
-
     const specialitySubscription =
       this.SpecializationService.getList().subscribe({
         next: (res) => {
-          this.specializationList = res;
           this.filterInput = {
             fields: {
               searchField: {
@@ -151,16 +94,8 @@ export class PublicDoctorsComponent implements OnInit {
                   label: 'Consultancy Type',
                   fieldType: 'select',
                   formControlName: 'consultancy',
-                  options: CommonService.getEnumList(ConsultancyType),
+                  options: this.consultancyType,
                 },
-                //{
-                //  label: 'Specialty',
-                //  fieldType: 'select',
-                //  formControlName: 'speciality',
-                //  options: this.specialityList.map((l: any) => {
-                //    return { id: l.id, name: l.specialityName };
-                //  }),
-                //},
                 {
                   label: 'Specialization',
                   fieldType: 'select',
@@ -181,91 +116,38 @@ export class PublicDoctorsComponent implements OnInit {
     this.subscriptions.push(specialitySubscription);
 
     this.route.queryParams.subscribe((params) => {
-      const doctorName = params['doctorname'];
-      const type = params['type'];
-      this.selectedFilterData({ consultancy: type });
-      this.searchData(doctorName);
-      if (!params) {
-        this.getDoctors();
+      const name = params['doctorname']
+        ? params['doctorname']
+        : params['patientname']
+        ? params['patientname']
+        : undefined;
+      const consultancyType = params['consultancyType'];
+      const specialization = params['specialization'];
+      console.log(specialization);
+
+      if (consultancyType || name || specialization) {
+        this.selectedFilterData({
+          consultancy: consultancyType,
+          name: name,
+          specialization: specialization,
+        });
+      } else {
+        this.selectedFilterData({
+          consultancy: '',
+          name: '',
+          specialization: '',
+        });
       }
     });
-  }
-
-  getSpecializations() {
-    //if (!id) {
-    //  return
-    //}
-    const specialitySubscription =
-      this.SpecializationService.getList().subscribe({
-        next: (res) => {
-          this.specializationList = res;
-          this.filterInput = {
-            fields: {
-              searchField: {
-                formControlName: 'search',
-              },
-              filterField: [
-                {
-                  label: 'Consultancy Type',
-                  fieldType: 'select',
-                  formControlName: 'consultancy',
-                  options: CommonService.getEnumList(ConsultancyType),
-                },
-                //{
-                //  label: 'Specialty',
-                //  fieldType: 'select',
-                //  formControlName: 'speciality',
-                //  options: this.specialityList.map((l: any) => {
-                //    return { id: l.id, name: l.specialityName };
-                //  }),
-                //},
-                {
-                  label: 'Specialization',
-                  fieldType: 'select',
-                  formControlName: 'specialization',
-                  options: res.map((l: any) => {
-                    return { id: l.id, name: l.specializationName };
-                  }),
-                },
-              ],
-            },
-          };
-        },
-        complete: () => {
-          specialitySubscription.unsubscribe();
-        },
-      });
-  }
-
-  getDoctors() {
-    if (this.DoctorStateService.doctorsList.value.length <= 0) {
-      const doctorListSubscription =
-        this.DoctorStateService.getAllDoctorList().subscribe((res) => {
-          this.doctorList = res;
-          this.dataLoading = false;
-          this.noDataAvailable = true;
-        });
-
-      this.subscriptions.push(doctorListSubscription);
-    } else {
-      const doctorListSubscription =
-        this.DoctorStateService.getDoctorListData().subscribe((res) => {
-          this.doctorList = res;
-
-          this.dataLoading = false;
-          this.noDataAvailable = false;
-        });
-      this.subscriptions.push(doctorListSubscription);
-    }
   }
 
   selectedFilterData(data: any) {
     this.dataLoading = true;
     // this.noDataAvailable = true;
-    const { consultancy, specialization } = data;
+    const { consultancy, specialization, name } = data;
 
     this.doctorFilterDto.consultancyType = consultancy;
-    //this.doctorFilterDto.specialityId = speciality;
+    this.doctorFilterDto.name = name;
     this.doctorFilterDto.specializationId = specialization;
 
     this.filterModel.limit = this.filterModel.pageSize;
@@ -284,42 +166,6 @@ export class PublicDoctorsComponent implements OnInit {
         this.dataLoading = false;
 
         this.doctorList = buildingResponse;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    //this.doctorFilterDto = {};
-  }
-
-  searchData(data: any) {
-    this.dataLoading = true;
-    this.doctorFilterDto.name = data;
-
-    this.filterModel.limit = this.filterModel.pageSize;
-    this.filterModel.offset =
-      (this.filterModel.pageNo - 1) * this.filterModel.pageSize;
-
-    this.subs.sink = combineLatest([
-      this.DoctorProfileService.getDoctorListFilter(
-        this.doctorFilterDto,
-        this.filterModel
-      ),
-      this.DoctorProfileService.getDoctorsCountByFilters(this.doctorFilterDto),
-    ]).subscribe(
-      ([buildingResponse, countResponse]) => {
-        this.totalCount = countResponse;
-
-        // this.noDataAvailable = false;
-        if (countResponse < 1) {
-          this.noDataAvailable = true;
-          this.dataLoading = false;
-          this.doctorList = buildingResponse;
-        } else {
-          this.noDataAvailable = false;
-          this.doctorList = buildingResponse;
-          this.dataLoading = false;
-        }
       },
       (error) => {
         console.log(error);

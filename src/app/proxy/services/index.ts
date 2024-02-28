@@ -23,6 +23,7 @@ export * from './platform-facility.service';
 export * from './platform-financial-setup.service';
 export * from './platform.service';
 export * from './prescription-master.service';
+export * from './service-provider.service';
 export * from './sms.service';
 export * from './speciality.service';
 export * from './specialization.service';

@@ -100,10 +100,14 @@ export class BookingReviewComponent implements OnInit {
       //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
       this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
-        //this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
+        // this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
         //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
         next: (response) => {
-          //if (response && response.status === '1000' && response.gatewayPageURL) {
+          // if (
+          //   response &&
+          //   response.status === '1000' &&
+          //   response.gatewayPageURL
+          // ) {
           if (
             response &&
             response.status === 'SUCCESS' &&
@@ -112,6 +116,7 @@ export class BookingReviewComponent implements OnInit {
             window.location.href = response.gatewayPageURL;
             this.loading = false;
           } else {
+            this.loading = false;
             this.ToasterService.customToast(
               'Unable to initiate your payment request. Please contact our support team.',
               'error'
@@ -119,15 +124,30 @@ export class BookingReviewComponent implements OnInit {
           }
         },
         error: (err) => {
+          this.loading = false;
           this.ToasterService.customToast(
             String(err.error.error.message),
             'error'
-          ),
-            (this.loading = false);
+          );
         },
       });
     } else {
+      this.loading = false;
       this.ToasterService.customToast('Booking info not found', 'error');
     }
+  }
+
+  getDayOfWeek(date: Date) {
+    date = new Date(date);
+    const daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    return daysOfWeek[date.getDay()];
   }
 }

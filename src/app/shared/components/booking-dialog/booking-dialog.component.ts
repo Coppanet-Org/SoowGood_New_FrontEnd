@@ -1,3 +1,4 @@
+import { AppointmentService } from './../../../proxy/services/appointment.service';
 import {
   FinancialSetupService,
   PatientProfileService,
@@ -95,7 +96,8 @@ export class BookingDialogComponent implements OnInit {
     private DoctorScheduleStateService: DoctorScheduleStateService,
     private NormalAuth: AuthService,
     public dialogRef: MatDialogRef<BookingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined
+    @Inject(MAT_DIALOG_DATA) public doctorData: any | undefined,
+    private AppointmentService: AppointmentService
   ) {
     this.inputForCreatePatient = inputForCreatePatient;
     this.firstFormGroup = this.fb.group({
@@ -212,11 +214,12 @@ export class BookingDialogComponent implements OnInit {
     );
 
     let day = '';
-
+    let dateString = '';
     selectedItem1$
       .pipe(
         map((selectedItem1: any) => {
           day = dayFromDate(String(selectedItem1));
+          dateString = selectedItem1;
 
           const hospitals = schedule
             .filter((item: any) =>
@@ -226,7 +229,7 @@ export class BookingDialogComponent implements OnInit {
             )
             .map((item: any) => ({
               name: item.scheduleName,
-              id: item.scheduleName,
+              id: item.id,
             }));
           return hospitals;
         })
@@ -235,36 +238,50 @@ export class BookingDialogComponent implements OnInit {
         this.hospitalList = hospitals;
       });
 
-    selectedItem2$
-      .pipe(
-        map((selectedItem2: any) => {
-          const sessions = schedule
-            .find((item: any) => item.scheduleName === selectedItem2)
-            ?.doctorScheduleDaySession.filter(
-              (e: any) => e.scheduleDayofWeek === day
-            );
-          const updatedSchedule = schedule.find(
-            (e: any) => e.scheduleName === selectedItem2
-          );
+    // selectedItem2$
+    //   .pipe(
+    //     map((selectedItem2: any) => {
+    //       const sessions = schedule
+    //         .find((item: any) => item.scheduleName === selectedItem2)
+    //         ?.doctorScheduleDaySession.filter(
+    //           (e: any) => e.scheduleDayofWeek === day
+    //         );
+    //       const updatedSchedule = schedule.find(
+    //         (e: any) => e.scheduleName === selectedItem2
+    //       );
 
-          return { sessions, updatedSchedule };
-        })
-      )
-      .subscribe(({ sessions, updatedSchedule }: any) => {
-        console.log(updatedSchedule);
+    //       return { sessions, updatedSchedule };
+    //     })
+    //   )
+    //   .subscribe(({ sessions, updatedSchedule }: any) => {
+    //     let filterSession = sessions?.map((s: any) => {
+    //       let apt = updatedSchedule?.appointments?.filter(
+    //         (a: any) => a.doctorScheduleDaySessionId == s.id
+    //       )?.length;
+    //       return { ...s, leftSlot: s.noOfPatients - apt };
+    //     });
 
-        let filterSession = sessions?.map((s: any) => {
-          let apt = updatedSchedule?.appointments?.filter(
-            (a: any) => a.doctorScheduleDaySessionId == s.id
-          )?.length;
-          return { ...s, leftSlot: s.noOfPatients - apt };
-        });
-
-        this.filterData = filterSession;
-        this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
-          filterSession
-        );
-      });
+    //     this.filterData = filterSession;
+    //     this.DoctorScheduleStateService.sendDoctorAvailableSlotData(
+    //       filterSession
+    //     );
+    //   });
+    selectedItem1$.pipe(combineLatestWith(selectedItem2$)).subscribe({
+      next: ([date, scheduleId]: any[]) => {
+        if (date && scheduleId) {
+          this.AppointmentService.getListOfSessionsWithWeekDayTimeSlotPatientCount(
+            scheduleId,
+            this.dateFormater(date)
+          ).subscribe((res) => {
+            this.filterData = res;
+            this.DoctorScheduleStateService.sendDoctorAvailableSlotData(res);
+          });
+        }
+        this.filterData = [];
+        this.DoctorScheduleStateService.sendDoctorAvailableSlotData([]);
+      },
+      error: (err: any) => console.log(err),
+    });
 
     selectedItem2$
       .pipe(combineLatestWith(selectedItem4$))
@@ -274,8 +291,11 @@ export class BookingDialogComponent implements OnInit {
           return;
         }
         const feeEntry = schedule.filter((entry: any) => {
-          return entry.scheduleName === data[0];
+          console.log(entry.id, data[0]);
+
+          return entry.id === Number(data[0]);
         });
+        console.log(feeEntry);
         if (feeEntry) {
           feeEntry.map((fee: any) => {
             console.log(fee);
@@ -430,7 +450,14 @@ export class BookingDialogComponent implements OnInit {
   //   // Return the available slots for the selected date
   //   return leftNoOfPatients;
   // }
-
+  dateFormater(date: Date) {
+    let formattedDate = date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    });
+    return formattedDate;
+  }
   dateFilter: DateFilterFn<Date | null> = (date: Date | null): boolean => {
     if (!date) {
       return false; // Handle null case if needed
@@ -498,10 +525,7 @@ export class BookingDialogComponent implements OnInit {
     if (e === 3 && validForm) {
       this.isLoading = true;
       this.formSubmitted = true;
-      if (
-        this.filterData.length <= 0 &&
-        !this.selectedSlotInfo?.doctorScheduleId
-      ) {
+      if (this.filterData.length <= 0 && !this.selectedSlotInfo?.scheduleId) {
         this.TosterService.customToast(
           'No slot found your selected options!',
           'warning'
@@ -509,9 +533,9 @@ export class BookingDialogComponent implements OnInit {
         return;
       }
 
-      const { doctorScheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
+      const { scheduleId, id, scheduleDayofWeek } = this.selectedSlotInfo;
       const finalSchedule = this.doctorData.doctorScheduleInfo.find(
-        (res: any) => res.id === doctorScheduleId
+        (res: any) => res.id === scheduleId
       );
 
       if (finalSchedule && finalSchedule.consultancyType) {
@@ -595,7 +619,7 @@ export class BookingDialogComponent implements OnInit {
         );
 
         const infoForBooking = {
-          doctorScheduleId,
+          doctorScheduleId: scheduleId,
           doctorProfileId,
           doctorName: this.doctorData?.doctorDetails.fullName,
           doctorCode: this.doctorData?.doctorDetails.doctorCode,
@@ -626,7 +650,7 @@ export class BookingDialogComponent implements OnInit {
             : user.email || 'admin@gmail.com',
           consultancyType,
           doctorChamberId,
-          // doctorChamberName: chamber,
+          doctorChamberName: chamber,
           scheduleType,
           doctorScheduleDaySessionId: id,
           scheduleDayofWeek,

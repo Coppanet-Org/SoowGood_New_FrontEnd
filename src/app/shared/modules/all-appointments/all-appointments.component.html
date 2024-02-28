@@ -1,39 +1,19 @@
-<div class="py-4 w-full relative">
-  <!-- <div class="w-full border-[1px] sticky rounded-md  mb-5 px-5 flex justify-between items-center bg-white">
-                <div class="flex gap-8 items-center">
-                    <div
-                        class="max-w-[300px] py-3 max-h-[50px] px-4  rounded-md bg-gray-400/10 flex items-center border-gray-200 border-[1px] ">
-                        <input
-                            class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
-                            placeholder="Search by doctor name" />
-                        <span class="bg-transparent">
-                            <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="flex justify-end ">
-                    <div class="flex gap-3 mt-5">
-                        <form >
-                            <mat-form-field>
-                                <mat-select placeholder="Consultancy Type">
-                                    <mat-option *ngFor="let item of consultancyType" value="{{item.id}}"
-                                        class="font-semibold text-gray-500">
-                                        {{item.name}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field  class="example-full-width" (click)="picker.open()">
-                                    <input placeholder="Appointment date" matInput [matDatepicker]="picker">
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                        </form>
-                        <button class="btn-secondary h-fit"><i class="fa-solid fa-filter mr-1"></i>Filter</button>
-                    </div>
-                </div>
-  </div> -->
-  <!-- <app-filter [filterInput]="filterInput" [filterForm]="filter" [from]="'appointment'" (searchChanged)="searchChanged($event)"></app-filter> -->
-  <app-filter [filterInput]="filterInput" [filterForm]="filter" (selectedValueForFilter)="loadData($event)" (getSpecializations)="getSpecializations($event)" (searchValue)="searchData($event)"></app-filter>
-
-  <div *ngIf="skelton" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-10 flex-wrap ">
+<div class="w-full relative">
+  <app-filter
+    [filterInput]="filterInput"
+    [filterForm]="filter"
+    [from]="'appointment'"
+  ></app-filter>
+  <div class="flex gap-4 items-center justify-between">
+    <h1 class="dashbord-heading-text text-[22px]">
+      <i class="fa-solid fa-building-columns mr-1"></i>
+      Appointments
+    </h1>
+  </div>
+  <div
+    *ngIf="skelton"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-10 flex-wrap"
+  >
     <app-skeleton></app-skeleton>
     <app-skeleton></app-skeleton>
     <app-skeleton></app-skeleton>
@@ -44,20 +24,41 @@
     <app-skeleton></app-skeleton>
   </div>
 
-  <div *ngIf="noDataAvailable" class="flex justify-center items-center h-[500px] w-full">
+  <div
+    *ngIf="noDataAvailable"
+    class="flex justify-center items-center h-[500px] w-full"
+  >
     <div>No records has been found!</div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 3xl:grid-cols-4">
+  <div
+    class="grid px-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 3xl:grid-cols-4 w-full"
+  >
     <!-- [@enter] for animation -->
-    <div class=" border-[1px] h-fit  rounded-md bg-white overflow-hidden" *ngFor="let appointment of appointmentList">
-      <app-appointment-card [appointment]="appointment" [user]="user"></app-appointment-card>
-     
+    @for (appointment of appointmentList; track $index) {
+
+    <div
+      class="border-[1px] min-w-[330px] h-fit rounded-md bg-gray-300 overflow-hidden"
+    >
+      <app-appointment-card
+        [appointment]="appointment"
+        [user]="user"
+      ></app-appointment-card>
     </div>
+    }@empty {
+    <div class="flex justify-center items-center h-[500px] flex-shrink">
+      <div>No records has been found!</div>
+    </div>
+    }
   </div>
-  <div class="flex w-full justify-center py-10">
-    <mat-paginator class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10 "
-        [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  <!-- <div class="flex w-full justify-center py-10">
+    <mat-paginator
+      class="bg-primary/5 py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10"
+      [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
     </mat-paginator>
-</div>
+  </div> -->
 </div>

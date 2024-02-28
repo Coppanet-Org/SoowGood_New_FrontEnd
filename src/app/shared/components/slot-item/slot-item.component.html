@@ -1,4 +1,4 @@
-@if (item.leftSlot > 0) {
+@if (item.patientCount > 0) {
 <div class="flex items-center">
   <input
     hidden
@@ -16,11 +16,9 @@
     <div class="card-content-wrapper">
       <span class="check-icon"></span>
       <div class="card-content tooltip">
-        <p class="text-[14px]">
-          {{ formatTime(item.startTime) }} - {{ formatTime(item.endTime) }}
-        </p>
+        <p class="text-[14px]">{{ item.startTime }} - {{ item.endTime }}</p>
       </div>
-      <p class="text-[14px]">({{ item.leftSlot }} slot available)</p>
+      <p class="text-[14px]">({{ item.patientCount }} slot available)</p>
     </div>
   </label>
 </div>

@@ -226,7 +226,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
         appointmentDate: new Date(),
         appointmentTime: String(hours + ':' + minutes + ':' + seconds),
         doctorFee: providerfee,
-        doctorChamberName: 'Soowgood Online',
+        doctorChamberName: 'Online',
         agentFee: calculatedAgentFee,
         platformFee: calculatedPlFee,
         totalAppointmentFee: providerfee + calculatedAgentFee + calculatedPlFee,

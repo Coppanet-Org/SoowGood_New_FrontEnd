@@ -87,17 +87,17 @@
         <div class="flex gap-3 w-full">
           @for (schedule of scheduleInfo; track $index) {
           <div
-            class="border-[1px] border-secondary-dark/20 rounded-md p-1 w-1/2 h-fit"
+            class="border-[1px] border-secondary-dark/20 rounded-md p-1 w-fit h-fit"
           >
             <p
               class="border-[1px] font-semibold border-secondary-dark/20 rounded-md mb-2 py-1 px-3 bg-secondary/5 text-primary"
             >
               {{ schedule.scheduleName }}
             </p>
-            <div class="flex gap-3 max-w-full h-fit">
+            <div class="flex gap-3 max-w-fit h-fit">
               @for (fee of schedule.doctorFeesSetup; track $index) {
               <div
-                class="bg-secondary/5 py-1 flex-1 px-4 rounded-md border-secondary-dark/20 border-[1px]"
+                class="bg-secondary/5 py-1 w-fit px-4 rounded-md border-secondary-dark/20 border-[1px]"
               >
                 <p class="font-Roboto text-secondary text-[16px]">
                   {{ fee.appointmentTypeName }} Patient
@@ -115,27 +115,8 @@
           }
         </div>
       </div>
+      @if (userType !=='doctor') {
       <div class="w-[250px] flex flex-col gap-2 justify-center">
-        <!-- <div class="text-[15px]"><i class="fa-solid fa-heart"></i> 99%</div>
-        <div class="text-[15px]">
-          <i class="fa-solid fa-comment"></i> 402 Feedback
-        </div>
-        <div class="text-[15px]">
-          <i class="fa-solid fa-location-dot"></i> Florida, USA
-        </div>
-        <div class="flex gap-2 mt-3">
-          <span class="w-[40px] h-[40px] border-[1px] py-2 px-3"
-            ><i class="fa-solid fa-bookmark"></i
-          ></span>
-          <span class="w-[40px] h-[40px] border-[1px] py-2 px-3"
-            ><i class="fa-regular fa-message"></i
-          ></span>
-          <span class="w-[40px] h-[40px] border-[1px] py-2 px-3"
-            ><i class="fa-solid fa-video"></i
-          ></span>
-          <span class="w-[40px] h-[40px] border-[1px] py-2 px-3"
-            ><i class="fa-solid fa-phone-volume"></i
-          ></span> -->
         <button
           (click)="liveBooking()"
           class="btn-secondary bg-secondary/5 text-secondary border-secondary/40"
@@ -276,7 +257,7 @@
           Schedule Booking }
         </button>
       </div>
-      <!-- <button class="btn-secondary w-[200px] mt-3">Book Now</button> -->
+      }
     </div>
   </div>
 

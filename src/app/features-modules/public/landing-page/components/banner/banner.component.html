@@ -2,26 +2,17 @@
   class="bg-hero-pattern max-h-full 3xl:pt-14 3xl:pb-20 py-10 flex relative overflow-hidden w-full bg-[#f2f6f6]"
 >
   <div class="container">
-    <div class="w-full flex justify-between gap-8 mt-16">
-      <div [class]="userRole === 'agent' ? 'w-full ' : 'w-[75%] 3xl:w-[70%]'">
+    <div class="w-full grid lg:grid-cols-[9fr,3fr] grid-cols-1 gap-8 mt-16">
+      <div [class]="userRole === 'agent' ? 'w-full ' : 'w-full'">
         <div
           [class]="
             userRole === 'agent'
               ? 'w-full h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'
-              : 'w-full h-[350px] 3xl:h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'
+              : 'w-full h-[150px] xs:h-[180px] lg:h-[350px] 3xl:h-[450px] overflow-hidden bg-white border-[1px] rounded-xl shadow-secondary'
           "
         >
           <div class="swiper w-full h-full">
             <div class="swiper-wrapper !w-full h-full">
-              <!-- <div class="swiper-slide !w-full h-full">
-                <img
-                  class="object-cover w-full h-full"
-                        width="300"
-      height="300"
-                  ngSrc="/assets/banner/about-banner.webp"
-                  alt="banner"
-                />
-              </div> -->
               <div class="swiper-slide !w-full h-full">
                 <img
                   class="object-cover w-full h-full"
@@ -78,15 +69,6 @@
                   alt="banner"
                 />
               </div>
-              <!-- <div class="swiper-slide !w-full ">
-                <img
-                  class="object-cover w-full h-full"
-                        width="300"
-      height="300"
-                  ngSrc="/assets/banner/b-5_50.webp"
-                  alt="banner"
-                />
-              </div> -->
             </div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
@@ -97,26 +79,31 @@
           [ngClass]="userRole === 'agent' ? 'w-[60%] mx-auto' : 'w-full'"
           class="search-area mt-5 flex backdrop-blur-sm border-[1px] bg-white max-w-full p-2 justify-between rounded-[10px] items-centershadow-blue"
         >
-          <form [formGroup]="searchForm" class="w-full flex gap-3">
+          <form
+            [formGroup]="searchForm"
+            class="w-full flex gap-3"
+            (ngSubmit)="goToServicePage()"
+          >
             <input
               class="w-full py-1 bg-white px-3 text-base font-normal text-[14px] text-[#6B7280] outline-none"
               type="search"
               formControlName="searchText"
               placeholder="Search Doctor by Name..."
             />
+            <button
+              class="btn-secondary bg-primary py-2.5 rounded-[6px] lg:min-w-[170px]"
+              type="submit"
+            >
+              <i class="fa-solid fa-magnifying-glass lg:mr-2"></i>
+              <span class="hidden lg:block"> Find Doctor</span>
+            </button>
           </form>
-          <button
-            class="btn-secondary bg-primary py-2.5 rounded-[6px] min-w-[170px]"
-            (click)="goToServicePage()"
-          >
-            <i class="fa-solid fa-magnifying-glass mr-2"></i> Find Doctor
-          </button>
         </div>
       </div>
 
       <div
         *ngIf="userRole !== 'agent'"
-        class="max-w-[350px] 3xl:max-w-[380px] flex h-full flex-col"
+        class="max-w-[350px] 3xl:max-w-[380px] lg:flex hidden h-full flex-col"
       >
         <div
           *ngIf="authUser?.userType !== 'agent'"
@@ -182,9 +169,11 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-8 gap-5 mt-6">
+    <div
+      class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 place-items-center lg:grid-cols-7 xl:grid-cols-8 lg:gap-5 mt-6"
+    >
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -198,7 +187,7 @@
         </h2>
       </div>
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[60px]"
@@ -212,7 +201,7 @@
         </h2>
       </div>
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -230,7 +219,7 @@
       </div>
 
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -247,7 +236,7 @@
         </h2>
       </div>
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -265,7 +254,7 @@
       </div>
 
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -282,7 +271,7 @@
         </h2>
       </div>
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <img
           class="max-w-[50px]"
@@ -299,7 +288,7 @@
         </h2>
       </div>
       <div
-        class="max-w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
       >
         <h2
           class="font-Roboto text-[16px] block text-center text-primary cursor-pointer"

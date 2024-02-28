@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, DataFilterModel, FilterModel, ResponseDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto, DataFilterModel, FilterModel, ResponseDto, SessionWeekDayTimeSlotPatientCountDto } from '../dto-models/models';
 import type { AppointmentStatus } from '../enums/appointment-status.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { RtcTokenBuilerDto } from '../input-dto/models';
@@ -164,6 +164,15 @@ export class AppointmentService {
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
       url: `/api/app/appointment/appointment-list-by-agent-supervisor/${supervisorId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListOfSessionsWithWeekDayTimeSlotPatientCount = (secheduleId: number, date: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SessionWeekDayTimeSlotPatientCountDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/of-sessions-with-week-day-time-slot-patient-count/${secheduleId}`,
+      params: { date },
     },
     { apiName: this.apiName,...config });
   
