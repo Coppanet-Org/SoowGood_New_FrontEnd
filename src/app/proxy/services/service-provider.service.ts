@@ -27,10 +27,36 @@ export class ServiceProviderService {
     { apiName: this.apiName,...config });
   
 
+  getBranchListByProviderName = (providerName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ServiceProviderDto[]>({
+      method: 'GET',
+      url: '/api/app/service-provider/branch-list-by-provider-name',
+      params: { providerName },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, ServiceProviderDto[]>({
       method: 'GET',
       url: '/api/app/service-provider',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListByFacilityId = (facilityId: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ServiceProviderDto[]>({
+      method: 'GET',
+      url: `/api/app/service-provider/by-facility-id/${facilityId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListBySlug = (slug: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, string[]>({
+      method: 'GET',
+      url: '/api/app/service-provider/by-slug',
+      params: { slug },
     },
     { apiName: this.apiName,...config });
   

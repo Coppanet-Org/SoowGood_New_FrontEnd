@@ -10,3 +10,4 @@ export * from './gender.enum';
 export * from './marital-status.enum';
 export * from './otp-status.enum';
 export * from './schedule-type.enum';
+export * from './service-request-status.enum';
