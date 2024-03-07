@@ -3,13 +3,15 @@ import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
 import type { AppointmentStatus } from '../enums/appointment-status.enum';
 import type { AppointmentPaymentStatus } from '../enums/appointment-payment-status.enum';
+import type { DiagonsticServiceType } from '../enums/diagonstic-service-type.enum';
+import type { ServiceRequestStatus } from '../enums/service-request-status.enum';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { ScheduleType } from '../enums/schedule-type.enum';
 import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
-import type { DiagonsticServiceType } from '../enums/diagonstic-service-type.enum';
+import type { FacilityEntityType } from '../enums/facility-entity-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
 export interface AccountDeteleResponsesDto {
@@ -195,6 +197,69 @@ export interface DegreeDto extends FullAuditedEntityDto<number> {
 
 export interface DeleteUserDataDto {
   userName?: string;
+}
+
+export interface DiagonsticPackageDto extends FullAuditedEntityDto<number> {
+  serviceProviderId?: number;
+  serviceProviderName?: string;
+  packageName?: string;
+  packageDescription?: string;
+  providerRate?: number;
+  discountRate?: number;
+  finalRate?: number;
+}
+
+export interface DiagonsticPackageTestDto extends FullAuditedEntityDto<number> {
+  diagonsticPackageId?: number;
+  diagonsticPackageName?: string;
+  pathologyCategoryId?: number;
+  pathologyCategoryName?: string;
+  pathologyTestId?: number;
+  pathologyTestName?: string;
+}
+
+export interface DiagonsticPathologyServiceManagementDto extends FullAuditedEntityDto<number> {
+  serviceRequestCode?: string;
+  serviceProviderId?: number;
+  serviceProviderName?: number;
+  diagonsticServiceType?: DiagonsticServiceType;
+  diagonsticServiceTypeName?: string;
+  diagonsticCategoryName?: string;
+  diagonsticPackageId?: number;
+  diagonsticPackageName?: string;
+  organizationCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  requestDate?: string;
+  appointmentDate?: string;
+  providerFee?: number;
+  discount?: number;
+  finalFee?: number;
+  serviceRequestStatus?: ServiceRequestStatus;
+  serviceRequestStatusName?: string;
+  diagonsticTestRequested: DiagonsticTestRequestedDto[];
+}
+
+export interface DiagonsticTestDto extends FullAuditedEntityDto<number> {
+  serviceProviderId?: number;
+  serviceProviderName?: string;
+  pathologyCategoryId?: number;
+  pathologyCategoryName?: string;
+  pathologyTestId?: number;
+  pathologyTestName?: string;
+  providerRate?: number;
+  totalProviderRate?: number;
+  discountRate?: number;
+  finalRate?: number;
+}
+
+export interface DiagonsticTestRequestedDto extends FullAuditedEntityDto<number> {
+  diagonsticPathologyServiceManagementId?: number;
+  diagonsticTestId?: number;
+  diagonsticTestName?: string;
+  pathologyCategoryAndTest?: string;
+  providerRate?: number;
 }
 
 export interface DoctorChamberDto extends FullAuditedEntityDto<number> {
@@ -407,8 +472,12 @@ export interface FilterModel {
 
 export interface FinancialSetupDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
+  facilityEntityType?: FacilityEntityType;
+  facilityEntityTypeName?: string;
   diagonsticServiceType?: DiagonsticServiceType;
   diagonsticServiceTypeName?: string;
+  facilityEntityID?: number;
+  facilityEntityName?: string;
   facilityName?: string;
   amountIn?: string;
   amount?: number;
@@ -438,6 +507,18 @@ export interface OtpDto extends FullAuditedEntityDto<number> {
   mobileNo?: string;
   otpStatus?: OtpStatus;
   maxAttempt?: number;
+}
+
+export interface PathologyCategoryDto extends FullAuditedEntityDto<number> {
+  pathologyCategoryName?: string;
+  pathologyCategoryDescription?: string;
+}
+
+export interface PathologyTestDto extends FullAuditedEntityDto<number> {
+  pathologyCategoryId?: number;
+  pathologyCategoryName?: string;
+  pathologyTestName?: string;
+  pathologyTestDescription?: string;
 }
 
 export interface PatientProfileDto extends FullAuditedEntityDto<number> {
@@ -680,6 +761,7 @@ export interface ServiceProviderDto extends FullAuditedEntityDto<number> {
   contactPerson?: string;
   contactPersonMobileNo?: string;
   contactPersonEmail?: string;
+  branch?: string;
   address?: string;
   organizationPhoneNumber?: string;
   organizationAvailability?: string;
