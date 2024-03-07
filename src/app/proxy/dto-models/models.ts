@@ -556,6 +556,7 @@ export interface PaymentHistoryInputDto {
 export interface PlatformFacilityDto extends FullAuditedEntityDto<number> {
   serviceName?: string;
   description?: string;
+  slug?: string;
 }
 
 export interface PlatformFinancialSetupDto extends FullAuditedEntityDto<number> {

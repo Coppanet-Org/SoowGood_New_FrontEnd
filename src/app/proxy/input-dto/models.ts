@@ -187,6 +187,7 @@ export interface PaymentHistoryMobileInputDto {
 export interface PlatformFacilityInputDto extends FullAuditedEntityDto<number> {
   serviceName?: string;
   description?: string;
+  slug?: string;
 }
 
 export interface PlatformFinancialSetupInputDto extends FullAuditedEntityDto<number> {
