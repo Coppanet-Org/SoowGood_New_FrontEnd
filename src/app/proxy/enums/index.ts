@@ -6,6 +6,7 @@ export * from './consultancy-type.enum';
 export * from './diagonstic-service-type.enum';
 export * from './doctor-title.enum';
 export * from './entity-type.enum';
+export * from './facility-entity-type.enum';
 export * from './gender.enum';
 export * from './marital-status.enum';
 export * from './otp-status.enum';

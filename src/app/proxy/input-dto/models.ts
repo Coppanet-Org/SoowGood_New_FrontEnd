@@ -4,6 +4,7 @@ import type { ServiceRequestStatus } from '../enums/service-request-status.enum'
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
+import type { FacilityEntityType } from '../enums/facility-entity-type.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
 
@@ -188,7 +189,9 @@ export interface FileDeleteInputDto {
 
 export interface FinancialSetupInputDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
+  facilityEntityType?: FacilityEntityType;
   diagonsticServiceType?: DiagonsticServiceType;
+  facilityEntityID?: number;
   amountIn?: string;
   amount?: number;
   externalAmountIn?: string;

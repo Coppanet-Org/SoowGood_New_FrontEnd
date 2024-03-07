@@ -11,6 +11,7 @@ import type { MaritalStatus } from '../enums/marital-status.enum';
 import type { ScheduleType } from '../enums/schedule-type.enum';
 import type { EntityType } from '../enums/entity-type.enum';
 import type { AttachmentType } from '../enums/attachment-type.enum';
+import type { FacilityEntityType } from '../enums/facility-entity-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
 export interface AccountDeteleResponsesDto {
@@ -471,8 +472,12 @@ export interface FilterModel {
 
 export interface FinancialSetupDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
+  facilityEntityType?: FacilityEntityType;
+  facilityEntityTypeName?: string;
   diagonsticServiceType?: DiagonsticServiceType;
   diagonsticServiceTypeName?: string;
+  facilityEntityID?: number;
+  facilityEntityName?: string;
   facilityName?: string;
   amountIn?: string;
   amount?: number;
