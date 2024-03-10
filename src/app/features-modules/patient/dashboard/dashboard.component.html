@@ -1,40 +1,30 @@
 <div class="doctor-dashboard_midcontent_container p-4">
   <div class="top-bar flex justify-between">
     <div class="w-full min-w-[70%] max-w-[70%]">
-      <div
-        class="top-box mt-2 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 max-w-[100%] gap-5"
-      >
-        <app-dashboard-statisticscard
-          *ngFor="let detail of details"
-          [details]="detail"
-        ></app-dashboard-statisticscard>
+      <div class="top-box mt-2 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 max-w-[100%] gap-5">
+        <app-dashboard-statisticscard *ngFor="let detail of details"
+                                      [details]="detail"></app-dashboard-statisticscard>
       </div>
 
       <div class="bottom-box border-[1px] mt-5 bg-white rounded-lg box-border">
         <div class="flex justify-between border-b-[1px] px-5 py-3 items-center">
           <h2 class="dashbord-heading-text h-fit">Appointments Activity</h2>
           <div>
-            <select
-              [ngModel]="selectedValue"
-              (change)="changeSelection($event)"
-              [value]="selectedValue"
-            >
+            <select [ngModel]="selectedValue"
+                    (change)="changeSelection($event)"
+                    [value]="selectedValue">
               <option value="All">All</option>
               <option value="Confirmed">Confirmed</option>
               <option value="Completed">Completed</option>
             </select>
           </div>
-          <button
-            class="btn-secondary-light h-fit"
-            routerLink="../appointments"
-          >
+          <button class="btn-secondary-light h-fit"
+                  routerLink="../appointments">
             View all
           </button>
         </div>
-        <table
-          *ngIf="!aptLoading"
-          class="w-full text-sm text-left rounded-lg text-gray-500 border-[1px]"
-        >
+        <table *ngIf="!aptLoading"
+               class="w-full text-sm text-left rounded-lg text-gray-500 border-[1px]">
           <thead class="text-xs rounded-lg text-gray-800 uppercase bg-black/5">
             <tr>
               <th scope="col" class="px-6 py-3">Doctor Name</th>
@@ -47,10 +37,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let apt of appointmentList"
-              class="bg-white hover:bg-gray-50"
-            >
+            <tr *ngFor="let apt of appointmentList"
+                class="bg-white hover:bg-gray-50">
               <td class="px-6 py-4">
                 {{ apt.doctorName }}
               </td>
@@ -66,57 +54,28 @@
             </tr>
           </tbody>
         </table>
-        <div
-          *ngIf="aptLoading"
-          class="w-full h-[300px] flex justify-center items-center"
-        >
+        <div *ngIf="aptLoading"
+             class="w-full h-[300px] flex justify-center items-center">
           Data is Loading...
         </div>
       </div>
     </div>
 
-    <div
-      class="dashboard_today_appointment min-w-[28%] max-w-[28%] min-h-screen rounded-lg box-border"
-    >
+    <div class="dashboard_today_appointment min-w-[28%] max-w-[28%] min-h-screen rounded-lg box-border">
       <div class="mt-4 border-[1px] relative">
         <div class="flex items-center justify-between">
-          <h2
-            class="dashbord-heading-text bg-secondary/10 text-secondary border-b-[1px] w-full px-5 py-2"
-          >
+          <h2 class="dashbord-heading-text bg-secondary/10 text-secondary border-b-[1px] w-full px-5 py-2">
             <i class="fa-solid fa-house-signal mr-2"></i>
             Live Doctor
             <span>({{ currentOnlineDoctorList.length }})</span>
           </h2>
         </div>
         <!-- component -->
-        <div
-          class="max-h-[calc(100vh-100px)] overflow-y-scroll custom-scrollbar"
-        >
+        <div class="max-h-[calc(100vh-100px)] overflow-y-scroll custom-scrollbar">
           <div class="max-w-full w-full shadow-lg p-3">
-            <div
-              *ngFor="let details of currentOnlineDoctorList"
-              class="bg-gray-50 rounded-b"
-            >
-              <div class="border-[1px] p-3 flex flex-col gap-3">
-                <div>
-                  <p class="text-sm pt-2 leading-4 text-gray-600">
-                    {{ details.specialityName }}
-                  </p>
-                  <a
-                    tabindex="0"
-                    class="focus:outline-none text-[20px] font-semibold leading-5 text-gray-800 mt-2"
-                  >
-                    {{ details.fullName }}
-                  </a>
-                </div>
-                <button
-                  (click)="onClickConsultNow(details)"
-                  class="bg-green-700/90 text-white h-fit py-1 px-3 rounded-md text-[14px]"
-                >
-                  Consult Now
-                </button>
-              </div>
-            </div>
+            @for (details of currentOnlineDoctorList; track $index) {
+            <app-dashboard-live-doctor-card [details]="details"></app-dashboard-live-doctor-card>
+            }
           </div>
         </div>
       </div>

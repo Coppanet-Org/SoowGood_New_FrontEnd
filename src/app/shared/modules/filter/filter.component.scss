@@ -5,7 +5,13 @@
 ::ng-deep .mat-mdc-text-field-wrapper{
     border: 1px solid rgb(211, 211, 211);
     height: 45px!important;
+    background: white!important;
 }
+
+::ng-deep .mat-mdc-text-field-wrapper:focus-within{
+  background: red;
+}
+
 ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
     top: 30px;
 }

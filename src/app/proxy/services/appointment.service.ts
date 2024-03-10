@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AppointmentDto, AppointmentInputDto, DataFilterModel, FilterModel, ResponseDto } from '../dto-models/models';
+import type { AppointmentDto, AppointmentInputDto, DataFilterModel, FilterModel, ResponseDto, SessionWeekDayTimeSlotPatientCountDto } from '../dto-models/models';
 import type { AppointmentStatus } from '../enums/appointment-status.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { RtcTokenBuilerDto } from '../input-dto/models';
@@ -168,6 +168,15 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
+  getListOfSessionsWithWeekDayTimeSlotPatientCount = (secheduleId: number, date: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SessionWeekDayTimeSlotPatientCountDto[]>({
+      method: 'GET',
+      url: `/api/app/appointment/of-sessions-with-week-day-time-slot-patient-count/${secheduleId}`,
+      params: { date },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getPatientListByDoctorId = (doctorId: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AppointmentDto[]>({
       method: 'GET',
@@ -208,16 +217,6 @@ export class AppointmentService {
       method: 'PUT',
       url: '/api/app/appointment/call-consultation-appointment',
       params: { appCode },
-    },
-    { apiName: this.apiName,...config });
-  
-
-  testAcTokenByInput = (input: RtcTokenBuilerDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'POST',
-      responseType: 'text',
-      url: '/api/app/appointment/test-ac-token',
-      body: input,
     },
     { apiName: this.apiName,...config });
   

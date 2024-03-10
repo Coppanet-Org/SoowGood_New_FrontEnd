@@ -9,15 +9,20 @@
           <h1 class="dashbord-heading-text text-[22px]">
             <i class="fa-solid fa-building-columns mr-1"></i> Hospital &
             Schedule
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="home"
+            ></mat-icon>
           </h1>
         </div>
 
         <div class="w-full mt-6">
           <mat-stepper class="mt-7" linear>
-            <mat-step label="Add New Place" [completed]="true">
-              <ng-container>
-                <app-hospital-info></app-hospital-info>
-              </ng-container>
+            <ng-template #stepperIcon> done </ng-template>
+            <mat-step state="hospital" label="Add New Place" [completed]="true">
+              <app-hospital-info></app-hospital-info>
+
               <button
                 matStepperNext
                 class="mt-5 h-fit btn-secondary bg-secondary-light border-secondary-dark text-secondary-dark group"

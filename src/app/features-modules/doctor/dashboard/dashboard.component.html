@@ -15,10 +15,10 @@
         <img src="../../../assets/doctor/residency-removebg-preview.png" class="w-full" alt="doctor">
       </div>
     </div> -->
-  <div class="top-bar flex justify-between gap-6">
-    <div class="w-full max-w-[70%]">
+  <div class="top-bar grid lg:grid-cols-[8fr,4fr] w-full grid-cols-1 gap-6">
+    <div class="w-full">
       <div
-        class="top-box mt-2 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 max-w-[100%] gap-5"
+        class="top-box mt-2 grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-2 max-w-[100%] gap-5"
       >
         <app-dashboard-statisticscard
           *ngFor="let detail of details"
@@ -26,7 +26,9 @@
         ></app-dashboard-statisticscard>
       </div>
 
-      <div class="bottom-box border-[1px] mt-5 bg-white rounded-lg box-border">
+      <div
+        class="bottom-box border-[1px] mt-5 bg-white rounded-lg box-border overflow-auto"
+      >
         <div class="flex justify-between p-4 border-b-[1px] items-center">
           <h2 class="dashbord-heading-text h-fit">All Appointments</h2>
           <div>
@@ -96,7 +98,7 @@
       </div>
     </div>
     <div
-      class="dashboard_today_appointment min-w-[38%] max-w-[38%] bg-white border-[1px] h-[500px] rounded-lg p-5 box-border"
+      class="dashboard_today_appointment hidden min-w-[38%] max-w-[38%] bg-white border-[1px] h-[500px] rounded-lg p-5 box-border"
     >
       <h2 class="dashbord-heading-text border-b-[1px] pb-3">
         Recent Notifications

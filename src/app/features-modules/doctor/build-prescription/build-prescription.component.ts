@@ -108,7 +108,7 @@ export class BuildPrescriptionComponent implements OnInit {
     private PatientProfileService: PatientProfileService,
     private DocumentsAttachmentService: DocumentsAttachmentService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.today = new Date().toDateString();
@@ -214,7 +214,7 @@ export class BuildPrescriptionComponent implements OnInit {
       height: '100vh',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   loadForm() {
@@ -232,6 +232,7 @@ export class BuildPrescriptionComponent implements OnInit {
     this.prescriptionForm = this.fb.group({
       followUp: [''],
       advice: [''],
+      //age:[''],
       chiefComplaints: this.fb.array([this.createChiefComplaintFormGroup()]),
       findings: this.fb.array([this.createFindingsFormGroup()]),
       medicineSchedule: this.fb.array([this.createMedicineScheduleFormGroup()]),
@@ -433,6 +434,7 @@ export class BuildPrescriptionComponent implements OnInit {
   submitPrescription() {
     this.formSubmitted = true;
     const {
+      //age,
       chiefComplaints,
       findings,
       diagnosis,
@@ -498,6 +500,7 @@ export class BuildPrescriptionComponent implements OnInit {
       patientProfileId,
       patientCode,
       patientName,
+      age:this.form.controls['age'].value,
       consultancyType,
       appointmentType,
       appointmentDate,

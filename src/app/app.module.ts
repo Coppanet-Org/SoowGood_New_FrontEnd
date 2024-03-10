@@ -28,6 +28,7 @@ import { PaymentFaildComponent } from './features-modules/public/payment-faild/p
 import { PaymentSuccessComponent } from './features-modules/public/payment-success/payment-success.component';
 import { SplashComponent } from './shared/components/splash/splash.component';
 import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
+import { NgxFacebookMessengerModule } from 'ngx-facebook-messenger';
 
 // const routerConfig: ExtraOptions = {
 //   scrollPositionRestoration: 'enabled',
@@ -52,6 +53,7 @@ import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
     HttpClientModule,
     NgOtpInputModule,
     MatNativeDateModule,
+    NgxFacebookMessengerModule,
     CoreModule.forRoot({
       environment,
       registerLocaleFn: registerLocale(),

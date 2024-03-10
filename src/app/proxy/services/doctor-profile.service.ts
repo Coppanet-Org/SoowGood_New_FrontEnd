@@ -28,6 +28,14 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
+  getAllActiveDoctorList = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DoctorProfileDto[]>({
+      method: 'GET',
+      url: '/api/app/doctor-profile/active-doctor-list',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getAllDoctorsSearchList = (name: string, consultType: number, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',

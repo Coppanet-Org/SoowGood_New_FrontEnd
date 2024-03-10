@@ -1,7 +1,10 @@
 import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { DiagonsticServiceType } from '../enums/diagonstic-service-type.enum';
+import type { ServiceRequestStatus } from '../enums/service-request-status.enum';
 import type { DoctorTitle } from '../enums/doctor-title.enum';
 import type { Gender } from '../enums/gender.enum';
 import type { MaritalStatus } from '../enums/marital-status.enum';
+import type { FacilityEntityType } from '../enums/facility-entity-type.enum';
 import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { AppointmentType } from '../enums/appointment-type.enum';
 
@@ -68,6 +71,51 @@ export interface AgentSupervisorInputDto extends FullAuditedEntityDto<number> {
 export interface DegreeInputDto extends FullAuditedEntityDto<number> {
   degreeName?: string;
   description?: string;
+}
+
+export interface DiagonsticPackageInputDto extends FullAuditedEntityDto<number> {
+  serviceProviderId?: number;
+  packageName?: string;
+  packageDescription?: string;
+  providerRate?: number;
+}
+
+export interface DiagonsticPackageTestInputDto extends FullAuditedEntityDto<number> {
+  diagonsticPackageId?: number;
+  pathologyCategoryId?: number;
+  pathologyTestId?: number;
+}
+
+export interface DiagonsticPathologyServiceManagementInputDto extends FullAuditedEntityDto<number> {
+  serviceRequestCode?: string;
+  serviceProviderId?: number;
+  diagonsticServiceType?: DiagonsticServiceType;
+  diagonsticPackageId?: number;
+  organizationCode?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  requestDate?: string;
+  appointmentDate?: string;
+  providerFee?: number;
+  discount?: number;
+  finalFee?: number;
+  serviceRequestStatus?: ServiceRequestStatus;
+  diagonsticTestRequested: DiagonsticTestRequestedInputDto[];
+}
+
+export interface DiagonsticTestInputDto extends FullAuditedEntityDto<number> {
+  serviceProviderId?: number;
+  pathologyCategoryId?: number;
+  pathologyTestId?: number;
+  providerRate?: number;
+}
+
+export interface DiagonsticTestRequestedInputDto extends FullAuditedEntityDto<number> {
+  diagonsticPathologyServiceManagementId?: number;
+  diagonsticTestId?: number;
+  pathologyCategoryAndTest?: string;
+  providerRate?: number;
 }
 
 export interface DoctorChamberInputDto extends FullAuditedEntityDto<number> {
@@ -141,12 +189,26 @@ export interface FileDeleteInputDto {
 
 export interface FinancialSetupInputDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
+  facilityEntityType?: FacilityEntityType;
+  diagonsticServiceType?: DiagonsticServiceType;
+  facilityEntityID?: number;
   amountIn?: string;
   amount?: number;
   externalAmountIn?: string;
   externalAmount?: number;
   providerAmount?: number;
   isActivie?: boolean;
+}
+
+export interface PathologyCategoryInputDto extends FullAuditedEntityDto<number> {
+  pathologyCategoryName?: string;
+  pathologyCategoryDescription?: string;
+}
+
+export interface PathologyTestInputDto extends FullAuditedEntityDto<number> {
+  pathologyCategoryId?: number;
+  pathologyTestName?: string;
+  pathologyTestDescription?: string;
 }
 
 export interface PatientProfileInputDto extends FullAuditedEntityDto<number> {
@@ -185,6 +247,7 @@ export interface PaymentHistoryMobileInputDto {
 export interface PlatformFacilityInputDto extends FullAuditedEntityDto<number> {
   serviceName?: string;
   description?: string;
+  slug?: string;
 }
 
 export interface PlatformFinancialSetupInputDto extends FullAuditedEntityDto<number> {
@@ -238,6 +301,7 @@ export interface PrescriptionMasterInputDto extends FullAuditedEntityDto<number>
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  age?: number;
   patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   appointmentType?: AppointmentType;
@@ -272,6 +336,20 @@ export interface RtcTokenBuilerDto {
   appCertificate?: string;
   chanelName?: string;
   uid: number;
+}
+
+export interface ServiceProviderInputDto extends FullAuditedEntityDto<number> {
+  platformFacilityId?: number;
+  providerOrganizationName?: string;
+  organizationCode?: string;
+  contactPerson?: string;
+  contactPersonMobileNo?: string;
+  contactPersonEmail?: string;
+  branch?: string;
+  address?: string;
+  organizationPhoneNumber?: string;
+  organizationAvailability?: string;
+  isActive?: boolean;
 }
 
 export interface SpecialityInputDto extends FullAuditedEntityDto<number> {
