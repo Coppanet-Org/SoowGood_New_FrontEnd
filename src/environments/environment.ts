@@ -1,7 +1,7 @@
 import { Environment } from '@abp/ng.core';
 
 
-const baseUrl = 'https://apibetasoowgood.com';
+const baseUrl = 'http://apibetasoowgood.com';
 const apiUrl = 'https://soowgoodbeta.com';
 const issuerUrl = 'https://authsoowgoodbeta.com';
 
