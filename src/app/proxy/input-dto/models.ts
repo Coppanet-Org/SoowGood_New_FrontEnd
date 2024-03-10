@@ -301,6 +301,7 @@ export interface PrescriptionMasterInputDto extends FullAuditedEntityDto<number>
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  age?: number;
   patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   appointmentType?: AppointmentType;

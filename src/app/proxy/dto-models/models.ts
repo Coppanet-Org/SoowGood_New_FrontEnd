@@ -487,6 +487,10 @@ export interface FinancialSetupDto extends FullAuditedEntityDto<number> {
   isActivie?: boolean;
 }
 
+export interface JAccessToken {
+  jwtToken?: string;
+}
+
 export interface LoginDto {
   userName?: string;
   email?: string;
@@ -519,6 +523,16 @@ export interface PathologyTestDto extends FullAuditedEntityDto<number> {
   pathologyCategoryName?: string;
   pathologyTestName?: string;
   pathologyTestDescription?: string;
+}
+
+export interface PatientDetailsForServiceDto {
+  userNmae?: string;
+  role?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  success?: boolean;
+  message?: string;
 }
 
 export interface PatientProfileDto extends FullAuditedEntityDto<number> {

@@ -221,16 +221,6 @@ export class AppointmentService {
     { apiName: this.apiName,...config });
   
 
-  testAcTokenByInput = (input: RtcTokenBuilerDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'POST',
-      responseType: 'text',
-      url: '/api/app/appointment/test-ac-token',
-      body: input,
-    },
-    { apiName: this.apiName,...config });
-  
-
   testBuildTokenWithUIDByInput = (input: RtcTokenBuilerDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, string>({
       method: 'POST',
