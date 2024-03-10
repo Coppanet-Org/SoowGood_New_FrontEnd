@@ -108,7 +108,7 @@ export class BuildPrescriptionComponent implements OnInit {
     private PatientProfileService: PatientProfileService,
     private DocumentsAttachmentService: DocumentsAttachmentService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.today = new Date().toDateString();
@@ -214,7 +214,7 @@ export class BuildPrescriptionComponent implements OnInit {
       height: '100vh',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   loadForm() {
