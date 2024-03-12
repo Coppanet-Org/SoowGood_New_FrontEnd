@@ -26,7 +26,7 @@ import { HeaderModule } from 'src/app/layout-module/header-footer/header/header.
 import { FooterComponent } from 'src/app/layout-module/header-footer/footer/footer.component';
 import { FooterModule } from 'src/app/layout-module/header-footer/footer/footer.module';
 import { SkeletonModule } from 'src/app/shared/modules/skeleton/skeleton.module';
-
+import { ServiceCardComponent } from './components/service-card/service-card.component';
 const routes: Route[] = [
   {
     path: '',
@@ -65,6 +65,7 @@ const routes: Route[] = [
     PricingCardIncludeListComponent,
     PricingModalComponent,
     AccoutDeleteRequestComponent,
+    ServiceCardComponent,
   ],
   imports: [
     CommonModule,

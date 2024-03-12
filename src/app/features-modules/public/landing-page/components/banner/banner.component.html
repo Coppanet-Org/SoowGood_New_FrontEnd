@@ -2,7 +2,9 @@
   class="bg-hero-pattern max-h-full 3xl:pt-14 3xl:pb-20 py-10 flex relative overflow-hidden w-full bg-[#f2f6f6]"
 >
   <div class="container">
-    <div class="w-full grid lg:grid-cols-[9fr,3fr] grid-cols-1 gap-8 mt-16">
+    <div
+      class="w-full grid lg:grid-cols-[9fr,3fr] grid-cols-1 gap-8 mt-10 lg:mt-16"
+    >
       <div [class]="userRole === 'agent' ? 'w-full ' : 'w-full'">
         <div
           [class]="
@@ -170,132 +172,11 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 place-items-center lg:grid-cols-7 xl:grid-cols-8 lg:gap-5 mt-6"
+      class="flex flex-wrap gap-5 w-full lg:justify-start justify-center lg:gap-10 mt-6"
     >
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/ambulance.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span>Ambulance Service</span>
-        </h2>
-      </div>
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[60px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/diagn.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span>Diagnostic Centre</span>
-        </h2>
-      </div>
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/medicine.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span>
-            Order <br />
-            Medicine
-          </span>
-        </h2>
-      </div>
-
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/hospital.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span>
-            Book <br />
-            hospital
-          </span>
-        </h2>
-      </div>
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/product.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span>
-            Medical <br />
-            Products</span
-          >
-        </h2>
-      </div>
-
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/spe.webp"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span
-            >Book <br />
-            Specialist</span
-          >
-        </h2>
-      </div>
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <img
-          class="max-w-[50px]"
-          width="70"
-          height="70"
-          ngSrc="/assets/banner/test.png"
-          alt="ambulance"
-        />
-        <h2 class="font-Roboto text-[16px] block text-center text-primary">
-          <span
-            >Medical <br />
-            Test</span
-          >
-        </h2>
-      </div>
-      <div
-        class="w-full lg:min-w-[140px] lg:max-w-[150px] flex-1 h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
-      >
-        <h2
-          class="font-Roboto text-[16px] block text-center text-primary cursor-pointer"
-        >
-          <a href="http://localhost:3000">See more</a>
-        </h2>
-      </div>
+      @for (serviceDetails of serviceList; track $index) {
+      <app-service-card [serviceDetails]="serviceDetails" />
+      }@empty { loading..}
     </div>
   </div>
 </div>

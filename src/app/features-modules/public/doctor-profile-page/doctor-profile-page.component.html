@@ -1,9 +1,9 @@
 <div class="container" id="scrollToElement">
-  <div class="pt-[100px]">
+  <div class="lg:pt-[100px] pt-[80px]">
     <div className="w-1/2 text-left">
-      <nav aria-label="breadcrumb" class="w-max">
+      <nav aria-label="breadcrumb" class="">
         <ol
-          class="flex w-full flex-wrap items-center rounded-md bg-blue-gray-50 bg-opacity-60 py-2 px-4"
+          class="flex w-full text-[14px] md:text-[16px] flex-wrap items-center rounded-md bg-blue-gray-50 bg-opacity-60 md:py-2 md:px-4"
         >
           <li
             class="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-blue-gray-900 antialiased transition-colors duration-400 hover:text-pink-500"
@@ -29,7 +29,7 @@
           <li
             class="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-blue-gray-900 antialiased transition-colors duration-400 hover:text-pink-500"
           >
-            <a class="opacity-60" href="#">
+            <a class="opacity-60">
               <span>Doctors</span>
             </a>
             <span
@@ -43,7 +43,6 @@
           >
             <a
               class="font-medium text-blue-gray-900 transition-colors hover:text-secondary"
-              href="#"
             >
               {{ profileInfo.doctorTitleName }} {{ profileInfo.fullName }}
             </a>
@@ -54,16 +53,24 @@
 
     <!-- bread end -->
 
-    <div class="w-full border-[1px] rounded-md p-8 flex gap-8 mt-5">
-      <div class="w-[200px] h-[160px] border-4 flex-2">
+    <div
+      class="w-full shadow-sm border-[1px] rounded-md p-8 grid grid-cols-1 md:grid-cols-[1fr,11fr] lg:grid-cols-[1fr,8fr,2fr] gap-2 lg:gap-8 mt-5"
+    >
+      <div
+        class="w-[100px] h-[110px] md:w-[120px] md:h-[130px] lg:w-[130px] lg:h-[140px] xl:w-[160px] xl:h-[170px] border-4 flex-2"
+      >
         <img class="w-full h-full" [src]="profileInfo.profilePic" alt="pic" />
       </div>
-      <div class="w-[80%] flex flex-col flex-3">
+      <div class="flex flex-col flex-3">
         <div>
-          <h2 class="text-[26px] font-Roboto font-medium text-primary">
+          <h2
+            class="text-[18px] md:text-[20px] lg:text-[24px] xl:text-[26px] font-Roboto font-medium text-primary"
+          >
             {{ profileInfo.doctorTitleName }} {{ profileInfo.fullName }}
           </h2>
-          <p class="text-[15px] font-normal text-gray-500 font-poppins">
+          <p
+            class="text-[14px] lg:text-[15px] font-normal text-gray-500 font-poppins"
+          >
             <!-- MDS - Periodontology and Oral Planetology, BDS -->
             {{ profileInfo.areaOfExperties }}
           </p>
@@ -90,20 +97,22 @@
             class="border-[1px] border-secondary-dark/20 rounded-md p-1 w-fit h-fit"
           >
             <p
-              class="border-[1px] font-semibold border-secondary-dark/20 rounded-md mb-2 py-1 px-3 bg-secondary/5 text-primary"
+              class="border-[1px] text-[14px] lg:text-[16px] font-semibold border-secondary-dark/20 rounded-md mb-2 py-1 px-3 bg-secondary/5 text-primary"
             >
-              {{ schedule.scheduleName }}
+              {{ schedule.chamber ? schedule.chamber : schedule.scheduleName }}
             </p>
             <div class="flex gap-3 max-w-fit h-fit">
               @for (fee of schedule.doctorFeesSetup; track $index) {
               <div
-                class="bg-secondary/5 py-1 w-fit px-4 rounded-md border-secondary-dark/20 border-[1px]"
+                class="bg-secondary/5 py-1 w-fit px-4 text-[14px] lg:text-[16px] rounded-md border-secondary-dark/20 border-[1px]"
               >
-                <p class="font-Roboto text-secondary text-[16px]">
+                <p
+                  class="font-Roboto text-secondary text-[14px] lg:text-[16px]"
+                >
                   {{ fee.appointmentTypeName }} Patient
                 </p>
                 <h3
-                  class="font-Roboto text-[24px] font-semibold text-secondary"
+                  class="font-Roboto text-[18px] md:text-[20px] lg:text-[22px] xl:text-[24px] font-semibold text-secondary"
                 >
                   {{ fee.totalFee }} tk
                 </h3>
@@ -116,7 +125,7 @@
         </div>
       </div>
       @if (userType !=='doctor') {
-      <div class="w-[250px] flex flex-col gap-2 justify-center">
+      <div class="flex flex-col gap-2 justify-center">
         <button
           (click)="liveBooking()"
           class="btn-secondary bg-secondary/5 text-secondary border-secondary/40"
