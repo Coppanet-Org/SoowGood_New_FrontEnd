@@ -232,6 +232,7 @@ export class BuildPrescriptionComponent implements OnInit {
     this.prescriptionForm = this.fb.group({
       followUp: [''],
       advice: [''],
+      //age:[''],
       chiefComplaints: this.fb.array([this.createChiefComplaintFormGroup()]),
       findings: this.fb.array([this.createFindingsFormGroup()]),
       medicineSchedule: this.fb.array([this.createMedicineScheduleFormGroup()]),
@@ -433,6 +434,7 @@ export class BuildPrescriptionComponent implements OnInit {
   submitPrescription() {
     this.formSubmitted = true;
     const {
+      //age,
       chiefComplaints,
       findings,
       diagnosis,
@@ -497,8 +499,8 @@ export class BuildPrescriptionComponent implements OnInit {
       doctorCode,
       patientProfileId,
       patientCode,
-      patientName: this.form.get('patientName')?.value,
-
+      patientName,
+      age: this.form.controls['age'].value,
       consultancyType,
       appointmentType,
       appointmentDate,

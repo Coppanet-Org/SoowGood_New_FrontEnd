@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AccountDeteleResponsesDto, DeleteUserDataDto, LoginDto, LoginResponseDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
+import type { AccountDeteleResponsesDto, DeleteUserDataDto, JAccessToken, LoginDto, LoginResponseDto, PatientDetailsForServiceDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
 import type { IdentityUser } from '../volo/abp/identity/models';
 
 @Injectable({
@@ -8,6 +8,15 @@ import type { IdentityUser } from '../volo/abp/identity/models';
 })
 export class UserAccountsService {
   apiName = 'Default';
+  
+
+  decodeJwtByJwt = (jwt: JAccessToken, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientDetailsForServiceDto>({
+      method: 'POST',
+      url: '/api/app/user-accounts/decode-jwt',
+      body: jwt,
+    },
+    { apiName: this.apiName,...config });
   
 
   isUserExistsByUserName = (userName: string, config?: Partial<Rest.Config>) =>

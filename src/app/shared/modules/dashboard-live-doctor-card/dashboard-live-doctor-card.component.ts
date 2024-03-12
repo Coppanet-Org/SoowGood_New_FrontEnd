@@ -24,7 +24,7 @@ export class DashboardLiveDoctorCardComponent {
     private FinancialSetupService: FinancialSetupService,
     public dialog: MatDialog,
     private TosterService: TosterService
-  ) {}
+  ) { }
   onClickConsultNow(data: any): void {
     if (data.id) {
       this.isLoading = true;
