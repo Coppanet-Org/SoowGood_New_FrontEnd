@@ -497,7 +497,8 @@ export class BuildPrescriptionComponent implements OnInit {
       doctorCode,
       patientProfileId,
       patientCode,
-      patientName,
+      patientName: this.form.get('patientName')?.value,
+
       consultancyType,
       appointmentType,
       appointmentDate,
@@ -516,7 +517,8 @@ export class BuildPrescriptionComponent implements OnInit {
       // need to add history
       prescriptionPatientDiseaseHistory: patientDiseaseHistory,
     };
-
+    // console.log(prescription);
+    // return;
     if (this.prescriptionForm.invalid) {
       const { chiefComplaints, findings, medicineSchedule } =
         this.prescriptionForm.controls;

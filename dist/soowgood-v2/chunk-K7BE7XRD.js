@@ -1,0 +1,1 @@
+import{R as s,d as o}from"./chunk-TXQBTV46.js";var c=(()=>{let t=class t{constructor(){this.mobileMenu=new o,this.menuVisibility$=this.mobileMenu.asObservable(),this.isVisible=!1}visible(e){this.mobileMenu.next(!e)}};t.\u0275fac=function(r){return new(r||t)},t.\u0275prov=s({token:t,factory:t.\u0275fac,providedIn:"root"});let i=t;return i})();export{c as a};

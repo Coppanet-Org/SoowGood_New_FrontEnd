@@ -11,7 +11,11 @@
           ></app-filter>
           <div
             *ngIf="dataLoading"
-            class="grid grid-cols-4 gap-10 flex-wrap p-5"
+            [ngClass]="
+              from == 'globalSearch'
+                ? 'w-full  grid lg:grid-cols-3 xl:grid-cols-4 gap-7 p-5  flex-wrap  pb-[50px]'
+                : 'w-full grid lg:grid-cols-3 gap-10 p-5  flex-wrap  pb-[50px]'
+            "
           >
             <app-skeleton></app-skeleton>
             <app-skeleton></app-skeleton>

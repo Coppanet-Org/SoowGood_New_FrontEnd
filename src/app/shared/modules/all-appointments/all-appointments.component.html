@@ -4,7 +4,7 @@
     [filterForm]="filter"
     [from]="'appointment'"
   ></app-filter>
-  <div class="flex gap-4 items-center justify-between">
+  <div class="flex gap-4 items-center justify-between px-6 pb-6">
     <h1 class="dashbord-heading-text text-[22px]">
       <i class="fa-solid fa-building-columns mr-1"></i>
       Appointments
@@ -38,7 +38,7 @@
     @for (appointment of appointmentList; track $index) {
 
     <div
-      class="border-[1px] min-w-[330px] h-fit rounded-md bg-gray-300 overflow-hidden"
+      class="border-[1px] min-w-[330px] h-fit rounded-md bg-white overflow-hidden"
     >
       <app-appointment-card
         [appointment]="appointment"

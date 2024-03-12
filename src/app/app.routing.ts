@@ -32,6 +32,20 @@ export const appRoutes: Route[] = [
       ).then((m) => m.ForgotPasswordModule),
   },
   {
+    path: 'auth-checking',
+    loadChildren: () =>
+      import('./core-modules/auth/auth-checking/auth-checking.module').then(
+        (m) => m.AuthCheckingModule
+      ),
+  },
+  {
+    path: 'service-login',
+    loadChildren: () =>
+      import('./core-modules/auth/service-login/service-login.module').then(
+        (m) => m.ServiceLoginModule
+      ),
+  },
+  {
     path: 'signup',
     //canActivate:[routerGuard],
     loadChildren: () =>
