@@ -58,7 +58,7 @@ export class LiveDoctorCardComponent {
             this.isLoading = false;
             this.dialog.open(LiveConsultBookingDialogComponent, {
               maxWidth: 600,
-              minWidth: 450,
+              minWidth: 320,
               data: {
                 doctorDetails: data,
                 doctorScheduleInfo: detailsScheduleRes,

@@ -8,7 +8,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class LandingPageComponent implements OnInit {
   model: any;
   ngOnInit() {
-    
     this.model = {
       firstname: {
         type: 'text',
@@ -52,6 +51,4 @@ export class LandingPageComponent implements OnInit {
       },
     };
   }
-
-
 }

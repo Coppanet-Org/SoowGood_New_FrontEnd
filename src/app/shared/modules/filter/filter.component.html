@@ -8,7 +8,7 @@
   >
     <div class="flex sm:gap-8 items-center">
       <div
-        class="max-w-[300px] focus-within:shadow-xl pr-2 focus-within:max-w-[350px] duration-300 py-3 max-h-[50px] overflow-hidden rounded-md bg-slate-100 flex items-center border-gray-200 border-[1px]"
+        class="lg:max-w-[300px] max-w-full lg:focus-within:shadow-xl pr-2 lg:focus-within:max-w-[350px] duration-300 py-3 max-h-[50px] overflow-hidden rounded-md bg-slate-100 flex items-center border-gray-200 border-[1px]"
       >
         <span class="p-3 bg-secondary cursor-pointer mr-2">
           <i class="fa-solid fa-magnifying-glass text-white"></i>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="flex sm:ml-auto sm:justify-end">
-      <div class="flex w-full sm:flex-row flex-col sm:gap-3 sm:mt-5">
+      <div class="flex w-full mt-3 sm:flex-row flex-col sm:gap-3 sm:mt-5">
         <mat-form-field *ngFor="let item of filterInput.fields.filterField">
           <mat-select
             *ngIf="item.fieldType == 'select'"

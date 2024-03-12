@@ -63,7 +63,7 @@ export class DoctorCardComponent implements OnInit {
                 picUrl: this.doctorPicurl,
               },
               doctorScheduleInfo: res,
-              userAccess: this.isAuthUser.userType == 'doctor' ? false : true,
+              userAccess: this.isAuthUser?.userType == 'doctor' ? false : true,
               isAuthUser: this.isAuthUser?.id ? true : false,
             },
           });
