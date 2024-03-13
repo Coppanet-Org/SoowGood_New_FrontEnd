@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\environments"
+    "\\src\\app"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
   "PreviewInSolutionExplorer": false
 }
