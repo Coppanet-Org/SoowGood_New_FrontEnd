@@ -13,8 +13,10 @@ import {
 } from 'src/app/proxy/services';
 import { combineLatest } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 // import { fadeInAnimation, fadeInExpandOnEnterAnimation, fadeInOnEnterAnimation, zoomInAnimation, zoomInUpOnEnterAnimation } from 'angular-animations';
 
+import * as signalR from '@microsoft/signalr';
 @Component({
   selector: 'app-all-appointments',
   templateUrl: './all-appointments.component.html',
@@ -259,5 +261,20 @@ export class AllAppointmentsComponent implements OnInit {
       );
       //this.doctorFilterDto = {};
     }
+
+    const connection = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Information)
+      .withUrl(environment.apis.default.url + '/notify')
+      .build();
+
+    connection.start().then(function () {
+      console.log('SignalR Connected!');
+    }).catch(function (err) {
+      return console.error(err.toString());
+    });
+
+    connection.on("BroadcastMessage", () => {
+      //this.getEmployeeData();
+    }); 
   }
 }

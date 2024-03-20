@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\environments"
+    ""
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
   "PreviewInSolutionExplorer": false
 }
