@@ -23,6 +23,7 @@ import { CustomValidators } from 'src/app/shared/utils/auth-helper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { USER_SECRATE } from 'src/environments/environment';
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

@@ -1,39 +1,44 @@
-<div
-  class="sticky top-0 z-50 w-full backdrop-blur-md bg-primary h-[70px] flex px-10 box-border justify-between lg:justify-end items-center"
->
-  <div
-    class="header-logo xs:max-w-[170px] md:max-w-[200px] lg:hidden"
-    routerLink="/"
-  >
-    <img
-      appScroll
-      class="w-full drop-shadow-md active:scale-95 duration-200 cursor-pointer"
-      src="/assets/SoowGood-Logo.png"
-      alt="logo"
-    />
+<div class="sticky top-0 z-50 w-full backdrop-blur-md bg-primary h-[70px] flex px-10 box-border justify-between lg:justify-end items-center">
+  <div class="header-logo xs:max-w-[170px] md:max-w-[200px] lg:hidden"
+       routerLink="/">
+    <img appScroll
+         class="w-full drop-shadow-md active:scale-95 duration-200 cursor-pointer"
+         src="/assets/SoowGood-Logo.png"
+         alt="logo" />
   </div>
 
   <div class="flex items-center">
+    <div class="dropdown dropdown-end" style="color:white;">
+      
+        <i class="fa fa-bell  has-badge" style="color:red; cursor : pointer;" width="50" height="50"></i>
+        <div class="w-8 rounded-full" style="cursor: pointer;">
+          <!--<img ngSrc="/assets/person.png" width="50" height="50" />-->
+
+
+          
+            {{notificationCount}}
+          
+
+        </div>
+      
+      
+    </div>
     <div class="dropdown dropdown-end">
       <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
         <div class="w-8 rounded-full">
           <img ngSrc="/assets/person.png" width="50" height="50" />
         </div>
       </label>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-64"
-      >
+      <ul tabindex="0"
+          class="menu menu-sm dropdown-content mt-3 p-4 shadow bg-white rounded-box w-64">
         <li (click)="goHome()">
           <a class="font-Roboto text-primary text-[16px] py-2">
             <i class="fa-solid fa-border-none mr-1"></i> Home Page
           </a>
         </li>
         <li *ngIf="authInfo?.userType">
-          <a
-            class="font-Roboto text-primary text-[16px] py-2"
-            (click)="signOut()"
-          >
+          <a class="font-Roboto text-primary text-[16px] py-2"
+             (click)="signOut()">
             <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
           </a>
         </li>
@@ -55,27 +60,21 @@
         }
       </ul>
     </div>
-    <svg
-      (click)="onClickMobileMenu(isVisible)"
-      fill="#ffffff"
-      class="lg:hidden"
-      width="24px"
-      height="24px"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="#ffffff"
-    >
+    <svg (click)="onClickMobileMenu(isVisible)"
+         fill="#ffffff"
+         class="lg:hidden"
+         width="24px"
+         height="24px"
+         viewBox="0 0 16 16"
+         xmlns="http://www.w3.org/2000/svg"
+         stroke="#ffffff">
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      ></g>
+      <g id="SVGRepo_tracerCarrier"
+         stroke-linecap="round"
+         stroke-linejoin="round"></g>
       <g id="SVGRepo_iconCarrier">
-        <path
-          d="M0 0h4v4H0V0zm0 6h4v4H0V6zm0 6h4v4H0v-4zM6 0h4v4H6V0zm0 6h4v4H6V6zm0 6h4v4H6v-4zm6-12h4v4h-4V0zm0 6h4v4h-4V6zm0 6h4v4h-4v-4z"
-          fill-rule="evenodd"
-        ></path>
+        <path d="M0 0h4v4H0V0zm0 6h4v4H0V6zm0 6h4v4H0v-4zM6 0h4v4H6V0zm0 6h4v4H6V6zm0 6h4v4H6v-4zm6-12h4v4h-4V0zm0 6h4v4h-4V6zm0 6h4v4h-4v-4z"
+              fill-rule="evenodd"></path>
       </g>
     </svg>
   </div>

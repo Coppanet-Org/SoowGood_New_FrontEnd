@@ -506,6 +506,11 @@ export interface LoginResponseDto {
   message?: string;
 }
 
+export interface NotificationDto extends FullAuditedEntityDto<number> {
+  message?: string;
+  transactionType?: string;
+}
+
 export interface OtpDto extends FullAuditedEntityDto<number> {
   otpNo?: number;
   mobileNo?: string;
