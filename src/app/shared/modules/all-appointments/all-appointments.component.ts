@@ -274,6 +274,7 @@ export class AllAppointmentsComponent implements OnInit {
     });
 
     connection.on("BroadcastMessage", () => {
+      "Hello";
       //this.getEmployeeData();
     }); 
   }
