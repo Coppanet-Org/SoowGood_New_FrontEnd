@@ -301,6 +301,7 @@ export interface PrescriptionMasterInputDto extends FullAuditedEntityDto<number>
   patientProfileId?: number;
   patientName?: string;
   patientCode?: string;
+  age?: number;
   patientAdditionalInfo?: string;
   consultancyType?: ConsultancyType;
   appointmentType?: AppointmentType;
@@ -335,6 +336,11 @@ export interface RtcTokenBuilerDto {
   appCertificate?: string;
   chanelName?: string;
   uid: number;
+}
+
+export interface SendNotificationInputDto {
+  targetUserName?: string;
+  message?: string;
 }
 
 export interface ServiceProviderInputDto extends FullAuditedEntityDto<number> {

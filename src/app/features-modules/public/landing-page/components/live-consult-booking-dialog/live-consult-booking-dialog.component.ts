@@ -116,10 +116,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern(/^(?:88)?[0-9]{11}$/)],
       ],
-      patientEmail: [
-        '' || this.profileInfo?.email || 'admin@gmail.com',
-        Validators.required,
-      ],
+      patientEmail: ['' || this.profileInfo?.email || 'admin@gmail.com'],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
       creatorRole: [
@@ -266,7 +263,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   getSinglePatientData(e: any) {
     if (e.target.value) {
       this.UserinfoStateService.getUserPatientData().subscribe((res) =>
-        res.find((data: any) => {
+        res?.find((data: any) => {
           if (data.id == e.target.value) {
             this.alreadyExistPatient = data;
             this.createPatientForm.patchValue({
@@ -283,7 +280,6 @@ export class LiveConsultBookingDialogComponent implements OnInit {
 
             //  this.createPatientForm.patchValue(data);
           }
-          return;
         })
       );
     }
@@ -312,6 +308,7 @@ export class LiveConsultBookingDialogComponent implements OnInit {
   //create new patient under user
   createNewPatient(): void {
     this.formSubmitted = true;
+    console.log(this.createPatientForm.value);
 
     if (!this.createPatientForm.valid) {
       this.TosterService.customToast(

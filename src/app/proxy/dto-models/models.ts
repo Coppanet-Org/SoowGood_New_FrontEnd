@@ -529,6 +529,16 @@ export interface PathologyTestDto extends FullAuditedEntityDto<number> {
   pathologyTestDescription?: string;
 }
 
+export interface PatientDetailsForServiceDto {
+  userNmae?: string;
+  role?: string;
+  patientProfileId?: number;
+  patientName?: string;
+  patientCode?: string;
+  success?: boolean;
+  message?: string;
+}
+
 export interface PatientProfileDto extends FullAuditedEntityDto<number> {
   fullName?: string;
   isSelf?: boolean;

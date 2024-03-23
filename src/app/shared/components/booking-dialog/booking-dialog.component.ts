@@ -117,6 +117,8 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.doctorData);
+
     this.dataLoader = true;
     this.sessionRole = this.NormalAuth.authInfo()?.userType;
     this.selectedSlotInfo = '';
@@ -499,10 +501,7 @@ export class BookingDialogComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern(/^(?:88)?[0-9]{11}$/)],
       ],
-      patientEmail: [
-        '' || this.profileInfo?.email || 'admin@gmail.com',
-        Validators.required,
-      ],
+      patientEmail: ['' || this.profileInfo?.email || 'admin@gmail.com'],
       createdBy: [this.profileInfo.fullName, Validators.required],
       creatorEntityId: [this.profileInfo.id, Validators.required],
       creatorRole: [

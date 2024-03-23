@@ -79,9 +79,7 @@ body::-webkit-scrollbar-thumb {
   .container-items {
     @apply flex items-center justify-between w-full ;
   }
-  .header-logo {
-    @apply w-[240px];
-  }
+
   .btn-primary {
     @apply active:scale-90 transition-all duration-75 h-fit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-sm text-sm px-5 py-2 text-center mr-2;
   }
