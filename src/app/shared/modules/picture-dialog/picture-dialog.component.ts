@@ -49,6 +49,7 @@ export class PictureDialogComponent implements OnInit {
       this.getProfileInfo(authId)
     }
   }
+
   getProfileInfo(id: any): void {
 
     if (id) {
@@ -59,6 +60,7 @@ export class PictureDialogComponent implements OnInit {
       })
     }
   }
+
   uploadPic() {
 
     this.fileData.append("entityId", this.profileInfo.id.toString());
@@ -84,8 +86,6 @@ export class PictureDialogComponent implements OnInit {
         });
     }
   }
-
-
 
   onFileChanged(event: any) {
     for (var i = 0; i <= event.target.files.length - 1; i++) {

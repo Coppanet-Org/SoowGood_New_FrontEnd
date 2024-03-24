@@ -38,7 +38,7 @@ export class ShowPrescriptionModalComponent implements OnInit {
         ).subscribe((res) => {
           this.prescriptionInfo = res;
           console.log(res);
-          
+
           this.prescriptionLoader = false;
         });
       }

@@ -1,0 +1,356 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\environments\\environment.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\environments\\environment.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\login\\login.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\core-modules\\auth\\login\\login.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\signup\\signup.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\core-modules\\auth\\signup\\signup.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\layout-module\\header-footer\\header\\header.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\layout-module\\header-footer\\header\\header.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\booking-review\\booking-review.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\shared\\modules\\booking-review\\booking-review.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\doctor\\appointments\\appointments.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 18,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "payment-cancel.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts",
+              "RelativeToolTip": "src\\app\\features-modules\\public\\payment-cancel\\payment-cancel.component.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-24T04:48:34.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "payment-faild.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts",
+              "RelativeToolTip": "src\\app\\features-modules\\public\\payment-faild\\payment-faild.component.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-24T04:48:04.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "payment-success.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts",
+              "RelativeToolTip": "src\\app\\features-modules\\public\\payment-success\\payment-success.component.ts",
+              "ViewState": "AQIAABEAAAAAAAAAAAAQwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-24T04:47:40.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "dashboard-header.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
+              "RelativeToolTip": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-21T07:58:18.987Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "dashboard-header.component.html",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
+              "RelativeDocumentMoniker": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
+              "RelativeToolTip": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAABUAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-21T07:58:14.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "booking-review.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
+              "RelativeToolTip": "src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-21T05:31:50.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "environment.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\environments\\environment.ts",
+              "RelativeDocumentMoniker": "src\\environments\\environment.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\environments\\environment.ts",
+              "RelativeToolTip": "src\\environments\\environment.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-20T07:05:31.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "signup.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+              "RelativeToolTip": "src\\app\\core-modules\\auth\\signup\\signup.component.ts",
+              "ViewState": "AQIAADYBAAAAAAAAAAAmwL8BAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-20T07:02:29.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "all-appointments.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts",
+              "RelativeToolTip": "src\\app\\shared\\modules\\all-appointments\\all-appointments.component.ts",
+              "ViewState": "AQIAALUAAAAAAAAAAAAgwBABAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-20T06:54:55.198Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appointments.component.html",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.html",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\doctor\\appointments\\appointments.component.html",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.html",
+              "RelativeToolTip": "src\\app\\features-modules\\doctor\\appointments\\appointments.component.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-20T06:54:35.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appointments.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts",
+              "RelativeToolTip": "src\\app\\features-modules\\doctor\\appointments\\appointments.component.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-20T06:54:30.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "login.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\login\\login.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\core-modules\\auth\\login\\login.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\core-modules\\auth\\login\\login.component.ts",
+              "RelativeToolTip": "src\\app\\core-modules\\auth\\login\\login.component.ts",
+              "ViewState": "AQIAACwAAAAAAAAAAAAQwBIAAABJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-19T09:30:18.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "header.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\layout-module\\header-footer\\header\\header.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.ts",
+              "RelativeToolTip": "src\\app\\layout-module\\header-footer\\header\\header.component.ts",
+              "ViewState": "AQIAACsAAAAAAAAAAAAgwB0AAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-19T09:25:00.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "header.component.html",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.html",
+              "RelativeDocumentMoniker": "src\\app\\layout-module\\header-footer\\header\\header.component.html",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\layout-module\\header-footer\\header\\header.component.html",
+              "RelativeToolTip": "src\\app\\layout-module\\header-footer\\header\\header.component.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-19T09:24:44.379Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "picture-dialog.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts",
+              "RelativeToolTip": "src\\app\\shared\\modules\\picture-dialog\\picture-dialog.component.ts",
+              "ViewState": "AQIAAA8AAAAAAAAAAAA2wFUAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-13T08:04:34.98Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "profile-settings.component.ts",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
+              "RelativeToolTip": "src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.ts",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAgwOoAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-03-13T08:04:15.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "profile-settings.component.html",
+              "DocumentMoniker": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html",
+              "RelativeDocumentMoniker": "src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html",
+              "ToolTip": "F:\\SoowGood_Scratch\\SoowGoodWeb\\SoowGood_New_FrontEnd\\src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html",
+              "RelativeToolTip": "src\\app\\features-modules\\doctor\\profile-settings\\profile-settings.component.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-13T08:04:12.357Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

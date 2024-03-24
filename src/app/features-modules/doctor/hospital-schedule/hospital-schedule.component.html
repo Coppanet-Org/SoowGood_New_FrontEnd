@@ -4,20 +4,15 @@
 >
   <div class="flex items-center justify-left">
     <div class="w-full bg-white">
-      <div class="relative overflow-x-auto sm:rounded-lg p-8">
+      <div class="relative overflow-x-auto sm:rounded-lg px-4 py-6 md:p-8">
         <div class="flex gap-4 items-center justify-between">
-          <h1 class="dashbord-heading-text text-[22px]">
+          <h1 class="dashbord-heading-text text-[18px] md:text-[22px]">
             <i class="fa-solid fa-building-columns mr-1"></i> Hospital &
             Schedule
-            <mat-icon
-              aria-hidden="false"
-              aria-label="Example home icon"
-              fontIcon="home"
-            ></mat-icon>
           </h1>
         </div>
 
-        <div class="w-full mt-6">
+        <div class="w-full mt-3 md:mt-6">
           <mat-stepper class="mt-7" linear>
             <ng-template #stepperIcon> done </ng-template>
             <mat-step state="hospital" label="Add New Place" [completed]="true">

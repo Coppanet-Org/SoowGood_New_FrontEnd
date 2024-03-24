@@ -2,7 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\core-modules",
+    "\\src\\app\\core-modules\\auth",
+    "\\src\\app\\core-modules\\auth\\signup",
+    "\\src\\app\\layout-module",
+    "\\src\\app\\layout-module\\header-footer",
+    "\\src\\app\\layout-module\\header-footer\\header",
+    "\\src\\environments"
   ],
   "SelectedNode": "\\src\\app\\features-modules\\doctor\\profile-settings\\specialization-dialog\\specialization-dialog.component.ts",
   "PreviewInSolutionExplorer": false

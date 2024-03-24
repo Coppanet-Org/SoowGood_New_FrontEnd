@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AgentSignupComponent } from './agent-signup.component';
 
 import { Route, RouterModule } from '@angular/router';
@@ -21,6 +21,7 @@ const routes: Route[] = [
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    NgOptimizedImage,
   ],
 })
 export class AgentSignupModule {}

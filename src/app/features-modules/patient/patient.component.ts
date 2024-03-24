@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 import { DoctorStateService } from 'src/app/shared/services/states/doctors-states/doctor-state.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
@@ -30,22 +31,29 @@ export class PatientComponent implements OnInit {
       route: 'my-family',
       icon: 'fa-solid fa-bed-pulse',
     },
-    {
-      menuName: 'Billing',
-      route: 'billing',
-      icon: 'fa-solid fa-money-bill-transfer',
-    },
+    // {
+    //   menuName: 'Orders',
+    //   route: 'order',
+    //   icon: 'fa-solid fa-bed-pulse',
+    // },
+    // {
+    //   menuName: 'Billing',
+    //   route: 'billing',
+    //   icon: 'fa-solid fa-money-bill-transfer',
+    // },
     {
       menuName: 'Profile Settings',
       route: 'profile-settings',
       icon: 'fa-solid fa-gear',
     },
   ];
+  visiblemenu!: boolean;
 
   constructor(
     private NormalAuth: AuthService,
     private UserinfoStateService: UserinfoStateService,
-    private DoctorStateService: DoctorStateService
+    private DoctorStateService: DoctorStateService,
+    private menuService: MenuService
   ) {}
   ngOnInit(): void {
     let user = this.NormalAuth.authInfo();
@@ -53,5 +61,8 @@ export class PatientComponent implements OnInit {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
       this.DoctorStateService.getAllDoctorList();
     }
+    this.menuService.menuVisibility$.subscribe(
+      (res) => (this.visiblemenu = res)
+    );
   }
 }

@@ -375,3 +375,8 @@ export interface UserDataDeleteRequestInputDto extends FullAuditedEntityDto<numb
   mobileNumber?: string;
   description?: string;
 }
+
+export interface SendNotificationInputDto {
+  targetUserName?: string;
+  message?: string;
+}

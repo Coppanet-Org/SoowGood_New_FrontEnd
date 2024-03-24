@@ -108,7 +108,7 @@ export class BuildPrescriptionComponent implements OnInit {
     private PatientProfileService: PatientProfileService,
     private DocumentsAttachmentService: DocumentsAttachmentService,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.today = new Date().toDateString();
@@ -214,7 +214,7 @@ export class BuildPrescriptionComponent implements OnInit {
       height: '100vh',
     });
 
-    dialogRef.afterClosed().subscribe((result) => { });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   loadForm() {
@@ -500,7 +500,7 @@ export class BuildPrescriptionComponent implements OnInit {
       patientProfileId,
       patientCode,
       patientName,
-      age:this.form.controls['age'].value,
+      age: this.form.controls['age'].value,
       consultancyType,
       appointmentType,
       appointmentDate,
@@ -519,7 +519,8 @@ export class BuildPrescriptionComponent implements OnInit {
       // need to add history
       prescriptionPatientDiseaseHistory: patientDiseaseHistory,
     };
-
+    // console.log(prescription);
+    // return;
     if (this.prescriptionForm.invalid) {
       const { chiefComplaints, findings, medicineSchedule } =
         this.prescriptionForm.controls;
