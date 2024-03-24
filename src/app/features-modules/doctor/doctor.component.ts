@@ -30,11 +30,11 @@ export class DoctorComponent {
       route: 'hospital-schedule',
       icon: 'fa-solid fa-calendar-days',
     },
-    {
-      menuName: 'Billing',
-      route: 'billing',
-      icon: 'fa-solid fa-money-bill-transfer',
-    },
+    // {
+    //   menuName: 'Billing',
+    //   route: 'billing',
+    //   icon: 'fa-solid fa-money-bill-transfer',
+    // },
     {
       menuName: 'Profile Settings',
       route: 'profile-settings',

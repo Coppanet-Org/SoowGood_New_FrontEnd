@@ -31,6 +31,7 @@
   height: 50px!important;
 }
 
+
 ::ng-deep .mat-typography p{
   margin:2px 0;
 }
@@ -74,4 +75,61 @@
 }
 h1{
   text-transform: capitalize;
+}
+
+
+
+@media  (max-width: 575px) {
+  ::ng-deep .mat-horizontal-stepper-header{
+    height: 40px!important;
+    padding: 0 10px!important;
+    
+  }
+  ::ng-deep .mat-step-text-label{
+    font-size: 14px;
+  }
+  ::ng-deep .mat-horizontal-stepper-header-container{
+   flex-wrap: wrap;
+   gap: 6px;
+  }
+  ::ng-deep .mat-stepper-horizontal-line{
+   display: none;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  ::ng-deep .mat-horizontal-stepper-header-container{
+   flex-wrap: wrap;
+   min-width:190px!important
+  }
+
+}
+
+.dashboard-menu{
+  width: 300px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  top: 0px;
+  height: 100vh;
+  left: 0;
+  transition: 0.3s;
+  overflow-y: auto;
+  z-index: 1;
+  ul{
+    li{
+      color: white;
+      transition: 0.3s;
+    }&:hover{
+      color: #30bced;
+    }
+  }
+
+}
+.show-dashboard-menu{
+  left: 0%;
+}
+.hide-dashboard-menu{
+  left: -150%;
 }

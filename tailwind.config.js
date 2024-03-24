@@ -34,7 +34,10 @@ module.exports = {
         "hero-pattern": "url(/assets/banner/bg-shape.webp)",
         // 'auth-pattern' :"url('/assets/')
       },
-
+      gridTemplateColumns: {
+        "auto-fill-100": "repeat(auto-fill, minmax(160px, 1fr))",
+        "auto-fit-100": "repeat(auto-fit, minmax(100px, 1fr))",
+      },
       boxShadow: {
         soft: "rgba(0, 0, 0, 0.06) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
         high: "0 35px 60px -15px rgba(0, 0, 0, 0.3)",

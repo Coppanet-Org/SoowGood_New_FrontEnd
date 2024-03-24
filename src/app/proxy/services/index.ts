@@ -20,6 +20,7 @@ export * from './documents-attachment.service';
 export * from './drug-rx.service';
 export * from './ek-pay.service';
 export * from './financial-setup.service';
+export * from './notification.service';
 export * from './otp.service';
 export * from './pathology-category.service';
 export * from './pathology-test.service';

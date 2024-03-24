@@ -22,7 +22,7 @@ export class LiveDoctorCardComponent {
   userType: string = '';
   picUrls: any;
   @Input() doctorDetails: any;
-  defaultImage = 'assets/doctor/dr.jpeg';
+  defaultImage = 'assets/doctor/avater.png';
   public picUrl = `${environment.apis.default.url}/`;
 
   constructor(

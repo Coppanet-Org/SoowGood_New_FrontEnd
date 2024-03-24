@@ -1,3 +1,5 @@
+import { PartnersCardComponent } from './components/partners-card/partners-card.component';
+import { PartnersComponent } from './components/partners/partners.component';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -66,6 +68,8 @@ const routes: Route[] = [
     PricingModalComponent,
     AccoutDeleteRequestComponent,
     ServiceCardComponent,
+    PartnersComponent,
+    PartnersCardComponent,
   ],
   imports: [
     CommonModule,

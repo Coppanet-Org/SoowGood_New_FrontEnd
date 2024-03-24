@@ -1,5 +1,5 @@
 <div
-  class="px-10 py-6 border-[1px] rounded-md mt-3 transition-all ease-in-out duration-1000"
+  class="px-5 md:px-10 py-4 md:py-6 border-[1px] rounded-md mt-3 transition-all ease-in-out duration-1000"
   [class]="openFormComponent ? 'block ' : ' hidden '"
 >
   <form [formGroup]="form">
@@ -137,7 +137,7 @@
 
           <table class="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr class="flex flex-wrap gap-x-2">
+              <tr class="flex flex-wrap gap-2">
                 <div *ngFor="let day of days" class="flex flex-1 flex-col">
                   <th
                     class="btn-secondary text-secondary-dark border-gray-300 cursor-pointer"

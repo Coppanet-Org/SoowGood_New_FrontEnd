@@ -1,35 +1,47 @@
-
-
-    <div class="border bg-secondary-light bg-opacity-25 rounded-lg p-6 text-gray-800 relative z-10" style="cursor: auto;">
-        <div class="flex flex-wrap items-center">
-            <div class="w-full flex flex-col justify-between">
-                <div>
-                    <h2 class="font-bold text-[24px]">{{degreeData?.instituteName}}</h2>
-                    <div class="flex flex-wrap text-center pt-4 mb-2">
-                        <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white">{{degreename}}
-                        </div>
-                        <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white">Duration: {{degreeData?.duration}} Years</div>
-                        <!-- <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white">Next.js</div> -->
-                    </div>
-                    <!-- <p class="text-xs leading-relaxed text-gray-500">This revolutionary email design kit is going to
-                        transform the way in which you send modern emails.</p> -->
-                    <ul class="text-sm mt-2 list-disc list-inside text-gray-500 leading-relaxed">
-                        <li>Institute City : {{degreeData?.instituteCity}}</li>
-                        <li>Institute Country :{{degreeData?.instituteCountry}}</li>
-                        <li>Zip Code{{degreeData?.zipCode}}</li>
-                    </ul>
-
-                </div>
-
-                <div class="w-full sm:flex-2 grid gap-4 grid-cols-2 pt-6">
-
-                    <button class="btn-secondary " (click)="editDegree.emit(degreeData)">Update</button>
-                    <button class="btn-secondary bg-primary text-white hover:bg-secondary-light hover:text-secondary-dark hover:border-secondary-border-[4px]">Delete</button>
-                </div>
-
-            </div>
-
-
+<div
+  class="border bg-secondary-light bg-opacity-25 rounded-lg p-6 text-gray-800 relative z-10"
+  style="cursor: auto"
+>
+  <div class="flex flex-wrap items-center">
+    <div class="w-full flex flex-col justify-between">
+      <div>
+        <h2 class="font-bold text-[20px] md:text-[24px]">
+          {{ degreeData?.instituteName }}
+        </h2>
+        <div class="flex flex-wrap text-center pt-4 mb-2">
+          <div
+            class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white"
+          >
+            {{ degreename }}
+          </div>
+          <div
+            class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white"
+          >
+            Duration: {{ degreeData?.duration }} Years
+          </div>
+          <!-- <div class="mr-2 mb-2 rounded-full px-3 py-1 text-xs bg-primary text-white">Next.js</div> -->
         </div>
+        <!-- <p class="text-xs leading-relaxed text-gray-500">This revolutionary email design kit is going to
+                        transform the way in which you send modern emails.</p> -->
+        <ul
+          class="text-sm mt-2 list-disc list-inside text-gray-500 leading-relaxed"
+        >
+          <li>Institute City : {{ degreeData?.instituteCity }}</li>
+          <li>Institute Country :{{ degreeData?.instituteCountry }}</li>
+          <li>Zip Code{{ degreeData?.zipCode }}</li>
+        </ul>
+      </div>
 
+      <div class="w-full sm:flex-2 grid gap-4 grid-cols-2 pt-6">
+        <button class="btn-secondary" (click)="editDegree.emit(degreeData)">
+          Update
+        </button>
+        <button
+          class="btn-secondary bg-primary text-white hover:bg-secondary-light hover:text-secondary-dark hover:border-secondary-border-[4px]"
+        >
+          Delete
+        </button>
+      </div>
     </div>
+  </div>
+</div>

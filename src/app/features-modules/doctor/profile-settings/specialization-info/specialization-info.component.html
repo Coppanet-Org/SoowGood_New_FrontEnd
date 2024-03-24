@@ -2,11 +2,13 @@
   <div class="w-full bg-white">
     <div class="relative overflow-x-auto sm:rounded-lg">
       <div
-        class="py-2 pl-5 pr-1 border-[1px] rounded-md flex gap-4 items-center"
+        class="py-2 pl-5 pr-1 border-[1px] justify-between md:justify-start rounded-md flex gap-4 items-center"
       >
-        <h1 class="dashbord-heading-text text-[18px] font-medium">
+        <h1
+          class="dashbord-heading-text text-[15px] md:text-[18px] font-medium"
+        >
           <i class="fa-solid fa-building-columns mr-1"></i>
-          Skill & Specializations
+          Specializations
         </h1>
         <button class="btn-secondary-light" (click)="openDialog()">
           <i class="fa-solid fa-plus mr-1"></i> Add Specialization
@@ -55,8 +57,8 @@
                     <a
                       class="font-medium text-blue-600 hover:underline"
                       (click)="handleSpecializationEdit(item)"
-                      >Edit Specialization</a
-                    >
+                      >Edit
+                    </a>
                   </td>
                 </tr>
               </tbody>
