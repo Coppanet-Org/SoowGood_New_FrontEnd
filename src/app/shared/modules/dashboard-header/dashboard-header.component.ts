@@ -9,7 +9,7 @@ import { NotificationService } from '../../../proxy/services';
 import { environment } from 'src/environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { NotificationDto } from 'src/app/proxy/dto-models';
-import { Observable } from 'rxjs';
+import { Observable, elementAt } from 'rxjs';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -34,9 +34,9 @@ export class DashboardHeaderComponent {
 
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
-    this.getNotificationMessage();
     this.authInfo = this.NormalAuth.authInfo();
-    this.getNotificationCount();
+    this.getNotification();
+
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(environment.apis.default.url + '/notify')
@@ -53,9 +53,7 @@ export class DashboardHeaderComponent {
       });
 
     connection.on('BroadcastMessage', () => {
-      console.log('notif');
-
-      this.getNotificationCount();
+      this.getNotification();
     });
   }
   signOut(): void {
@@ -73,23 +71,36 @@ export class DashboardHeaderComponent {
     });
   }
 
-  getNotificationCount() {
-    this.notificationService.getCount().subscribe(
-      (notification) => {
-        this.notificationCount = notification;
-      }
-      //,      error => this.errorMessage = <any>error
-    );
-  }
+  //getNotificationCount() {
 
-  getNotificationMessage() {
+
+  //  this.notificationService.getList().subscribe(
+  //    (notification) => {
+  //      let nlist = notification;
+  //      if (this.authInfo.userType == "doctor") {
+  //        this.notificationCount = nlist.filter(n => n.notifyToEntityId == this.authInfo.id).length;
+  //      }
+  //      else {
+  //        this.notificationCount = nlist.filter(n => n.creatorEntityId == this.authInfo.id).length;
+  //      }
+  //    }
+  //  );
+
+  //}
+  //Message
+  getNotification() {
     this.notificationService.getList().subscribe(
       (messages) => {
-        console.log(messages);
+        if (this.authInfo.userType == "doctor") {
 
-        this.messageList = messages.filter(m=>m.notifyToEntityId == this.authInfo.id);
+          this.messageList = messages.filter(m => m.notifyToEntityId == this.authInfo.id);
+          
+        }
+        else {
+          this.messageList = messages.filter(m => m.creatorEntityId == this.authInfo.id);
+        }
+        this.notificationCount = this.messageList.length;
       }
-      //,      error => this.errorMessage = <any>error
     );
   }
 }
