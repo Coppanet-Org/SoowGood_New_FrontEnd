@@ -1,10 +1,32 @@
-<div class="flex justify-between w-full -z-10">
+<!-- <div class="flex justify-between w-full -z-10">
     <app-dashboard-menu [menuList]="menuList" class="w-[20%] min-w-[250px]"></app-dashboard-menu> 
     <div class="doctor-dashboard_midcontent w-[80%] h-full bg-[#f4f4fb]">
         <app-dashboard-header ></app-dashboard-header>
         <router-outlet></router-outlet>
     </div>
-    <!-- <app-right-sidebar class="w-[20%] min-w-[250px]"></app-right-sidebar> -->
+  </div> -->
+
+<div class="flex justify-between w-full -z-10">
+  <app-dashboard-menu
+    [menuList]="menuList"
+    class="lg:w-[20%] min-w-[250px] hidden lg:block"
+  ></app-dashboard-menu>
+
+  @if (visiblemenu) {
+  <app-dashboard-menu
+    [menuList]="menuList"
+    [class]="
+      visiblemenu
+        ? 'w-[20%] min-w-[250px] fixed translate-x-0 z-10 duration-300 '
+        : ' -translate-x-[150%] duration-300'
+    "
+  ></app-dashboard-menu>
+  }
+
+  <div class="doctor-dashboard_midcontent w-full lg:w-[80%] bg-[#F9F9FF]">
+    <app-dashboard-header></app-dashboard-header>
+    <router-outlet></router-outlet>
   </div>
-  
-  
+</div>
+
+<!-- <app-right-sidebar class="w-[20%] min-w-[250px]"></app-right-sidebar> -->

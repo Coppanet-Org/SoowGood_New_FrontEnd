@@ -1,14 +1,16 @@
 <div
-  class="lg:max-w-[160px] cursor-pointer w-[150px] h-[140px] flex flex-col gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
+  class="lg:max-w-[160px] hover:border-secondary-dark hover:scale-105 my-3 duration-300 cursor-pointer w-[130px] h-[130px] sm:w-[140px] md:h-[140px] lg:w-[150px] lg:h-[150px] flex flex-col gap-2 md:gap-3 justify-center items-center p-3 bg-white/80 border-[1px] rounded-md shadow-secondary"
 >
   <img
     class="max-w-[60px]"
     width="60"
     height="60"
     ngSrc="/assets/banner/diagn.webp"
-    alt="ambulance"
+    alt="service"
   />
-  <h2 class="font-Roboto text-[16px] block text-center text-primary">
+  <h2
+    class="font-Roboto text-[15px] md:text-[16px] block text-center text-primary"
+  >
     <span>{{ serviceDetails.serviceName || "Service" }}</span>
   </h2>
 </div>

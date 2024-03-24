@@ -1,4 +1,4 @@
-<div class="bg-blue-50/80 py-10 md:py-20">
+<div class="bg-blue-50/80 py-10">
   <div class="container py-8 mx-auto">
     <div
       class="pb-20 flex justify-center mx-auto text-center md:w-1/2 flex-col items-center"
@@ -17,15 +17,14 @@
         Compare Price
       </button>
     </div>
-    <div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 bg-white p-5"
-      >
-        <app-pricing-card
-          [details]="details"
-          *ngFor="let details of packages"
-        ></app-pricing-card>
-      </div>
+
+    <div
+      class="grid shadow-soft grid-cols-1 md:grid-cols-2 xl:grid-cols-3 bg-white"
+    >
+      <app-pricing-card
+        [details]="details"
+        *ngFor="let details of packages"
+      ></app-pricing-card>
     </div>
   </div>
 </div>

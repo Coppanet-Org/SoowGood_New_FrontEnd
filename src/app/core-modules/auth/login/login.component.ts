@@ -18,13 +18,12 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AppAuthService } from '../../../auth-services/app-auth.service';
 import { UserProfile } from '../../../auth-models/user.model';
-import { throwError, catchError, from } from 'rxjs';
+import { throwError, catchError } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/utils/auth-helper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { USER_SECRATE } from 'src/environments/environment';
-import * as CryptoJS  from 'crypto-js'
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

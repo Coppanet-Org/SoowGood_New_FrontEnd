@@ -4,16 +4,14 @@
     class="lg:w-[20%] min-w-[250px] hidden lg:block"
   ></app-dashboard-menu>
 
-  @if (visiblemenu) {
   <app-dashboard-menu
     [menuList]="menuList"
     [class]="
       visiblemenu
-        ? 'w-[20%] min-w-[250px] fixed translate-x-0 z-10 duration-300 '
-        : ' -translate-x-[150%] duration-300'
+        ? 'dashboard-menu show-dashboard-menu'
+        : 'dashboard-menu hide-dashboard-menu'
     "
   ></app-dashboard-menu>
-  }
 
   <div class="doctor-dashboard_midcontent w-full lg:w-[80%] bg-[#F9F9FF]">
     <app-dashboard-header></app-dashboard-header>

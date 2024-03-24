@@ -13,50 +13,53 @@ import { DoctorChamberDto } from 'src/app/proxy/dto-models';
 })
 export class HospitalInfoComponent implements OnInit {
   doctorId: any;
-  chamberList:DoctorChamberDto[]=[];
+  chamberList: DoctorChamberDto[] = [];
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private normalAuth: AuthService,
     private doctorChamberService: DoctorChamberService,
-    private HospitalStateService:HospitalStateService
-    ) {}
+    private HospitalStateService: HospitalStateService
+  ) {}
 
   ngOnInit(): void {
     let doctorId = this.normalAuth.authInfo().id;
     if (doctorId) {
-      this.doctorId =doctorId ;
-      this.getChamberList(doctorId)
+      this.doctorId = doctorId;
+      this.getChamberList(doctorId);
     }
   }
-  getChamberList(doctorId:any):void{
-   this.doctorChamberService.getDoctorChamberListByDoctorId(doctorId).subscribe((res)=>{
-    this.chamberList = res
-    this.HospitalStateService.sendData(res)
-
-   })
+  getChamberList(doctorId: any): void {
+    this.doctorChamberService
+      .getDoctorChamberListByDoctorId(doctorId)
+      .subscribe((res) => {
+        this.chamberList = res;
+        this.HospitalStateService.sendData(res);
+      });
   }
-  onPlaceEdit(data:any){
-    console.log(data);
+  onPlaceEdit(data: any) {
     const dialogRef = this.dialog.open(HospitalDialogComponent, {
-      width: '40vw',
-      data:data
+      maxWidth: '500px',
+      maxHeight: '450px',
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getChamberList(this.doctorId)
+        this.getChamberList(this.doctorId);
       }
     });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(HospitalDialogComponent, {
-      width: '40vw',
+      // maxWidth: '500px',
+      // maxHeight: '450px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getChamberList(this.doctorId)
+        this.getChamberList(this.doctorId);
       }
     });
   }
