@@ -26,7 +26,7 @@ export class DashboardHeaderComponent {
     public dialog: MatDialog,
     private menuService: MenuService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   onClickMobileMenu(status: boolean) {
     this.menuService.visible(status);
@@ -87,7 +87,7 @@ export class DashboardHeaderComponent {
       (messages) => {
         console.log(messages);
 
-        this.messageList = messages;
+        this.messageList = messages.filter(m=>m.notifyToEntityId == this.authInfo.id);
       }
       //,      error => this.errorMessage = <any>error
     );
