@@ -15,7 +15,6 @@ export class FeeSetupComponent implements OnInit {
   feeList: DoctorFeesSetupDto[] = [];
   doctorId!: number;
 
-
   constructor(
     public dialog: MatDialog,
     private normalAuth: AuthService,
@@ -38,7 +37,7 @@ export class FeeSetupComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FeeDialogComponent, {
-      width: '40vw',
+      maxHeight: '450px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -46,11 +45,10 @@ export class FeeSetupComponent implements OnInit {
     });
   }
   handleFeeEdit(row: any) {
-
     this.dialog
       .open(FeeDialogComponent, {
         data: row,
-        width: "40vw",
+        maxHeight: '450px',
       })
       .afterClosed()
       .subscribe((result) => {
@@ -63,7 +61,7 @@ export class FeeSetupComponent implements OnInit {
     this.dialog
       .open(ConfirmDialogComponent, {
         data: row,
-        width: "25vw",
+        width: '25vw',
       })
       .afterClosed()
       .subscribe((result) => {

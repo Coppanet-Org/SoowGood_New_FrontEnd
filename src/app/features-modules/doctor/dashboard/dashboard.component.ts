@@ -3,14 +3,13 @@ import { DashboardService } from './../../../proxy/services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { AppointmentDto } from 'src/app/proxy/dto-models';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  showWarning: boolean = false
+  showWarning: boolean = false;
   details = [
     {
       title: 'Total appointments',
@@ -26,52 +25,57 @@ export class DashboardComponent implements OnInit {
     },
     {
       title: 'Total Income',
-      data:  0,
-      currency : true
+      data: 0,
+      currency: true,
     },
   ];
   doctorId: any;
   appointmentList: AppointmentDto[] = [];
-  aptLoading: boolean=false;
-  constructor(private NormalAuth: AuthService, private DashboardService: DashboardService) { }
-  selectedValue= "All"
+  aptLoading: boolean = false;
+  constructor(
+    private NormalAuth: AuthService,
+    private DashboardService: DashboardService
+  ) {}
+  selectedValue = 'All';
   ngOnInit(): void {
     setTimeout(() => {
-      this.showWarning = true
-    }, 1000)
+      this.showWarning = true;
+    }, 1000);
     let authId = this.NormalAuth.authInfo()?.id;
-    this.doctorId = authId
-    this.getDashboardStatisticData(authId)
-    this.getDashboardAppointment(this.selectedValue)
+    this.doctorId = authId;
+    this.getDashboardStatisticData(authId);
+    this.getDashboardAppointment(this.selectedValue);
   }
   getDashboardStatisticData(id: number) {
     this.DashboardService.getDashboadDataForDoctor(id).subscribe({
       next: (res) => {
-        this.details[0].data = Number(res.totalAppointment)
-        this.details[1].data = Number(res.totalPatient)
-        this.details[2].data = Number(res.doctorLoyaltypoints)
-        this.details[3].data = Number(res.totalFeeAmount) 
- 
-      }
-    })
+        this.details[0].data = Number(res.totalAppointment);
+        this.details[1].data = Number(res.totalPatient);
+        this.details[2].data = Number(res.doctorLoyaltypoints);
+        this.details[3].data = Number(res.totalFeeAmount);
+      },
+    });
   }
   getDashboardAppointment(value: string) {
-    this.aptLoading = true
-    this.DashboardService.getDashboardAppointmentListForDoctor(this.doctorId, value).subscribe({
+    this.aptLoading = true;
+    this.DashboardService.getDashboardAppointmentListForDoctor(
+      this.doctorId,
+      value
+    ).subscribe({
       next: (res) => {
-        this.appointmentList = res
-        this.aptLoading = false
+        this.appointmentList = res;
+        this.aptLoading = false;
       },
       error: (err) => {
         console.log(err);
-        this.aptLoading = false
-      }
-    })
+        this.aptLoading = false;
+      },
+    });
   }
   changeSelection(e: any) {
     if (e) {
-      this.getDashboardAppointment(e.target.value)
-      return
+      this.getDashboardAppointment(e.target.value);
+      return;
     }
   }
 }

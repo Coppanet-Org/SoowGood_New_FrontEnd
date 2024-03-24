@@ -75,9 +75,9 @@ export class AppointmentCardComponent implements AfterViewInit {
 
   openPdfDialog(id: any): void {
     this.dialog.open(ShowPrescriptionModalComponent, {
-      minWidth: '820px',
-      maxWidth: '100%',
-      height: '1000px',
+      // minWidth: '820px',
+      // maxWidth: '100%',
+      // height: '1000px',
       data: { appointmentId: id },
     });
   }

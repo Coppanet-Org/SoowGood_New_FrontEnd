@@ -1,15 +1,15 @@
 import { Router } from '@angular/router';
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DynamicDialogComponent } from '../dynamic-dialog/dynamic-dialog.component';
 import { MenuService } from '../../services/menu.service';
-import * as signalR from '@microsoft/signalr';
-import { environment } from '../../../../environments/environment';
 import { NotificationService } from '../../../proxy/services';
-import { NotificationDto } from '../../../proxy/dto-models';
-
+import { environment } from 'src/environments/environment';
+import * as signalR from '@microsoft/signalr';
+import { NotificationDto } from 'src/app/proxy/dto-models';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -18,25 +18,23 @@ import { NotificationDto } from '../../../proxy/dto-models';
 export class DashboardHeaderComponent {
   authInfo: any;
   isVisible!: boolean;
-  notificationCount: any;
+  notificationCount!: any;
   messageList: NotificationDto[] = [];
   constructor(
     private NormalAuth: AuthService,
     private Router: Router,
     public dialog: MatDialog,
     private menuService: MenuService,
-    private notificationService:NotificationService
+    private notificationService: NotificationService
   ) {}
 
   onClickMobileMenu(status: boolean) {
-    console.log(status);
-
     this.menuService.visible(status);
   }
 
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
-
+    this.getNotificationMessage();
     this.authInfo = this.NormalAuth.authInfo();
     this.getNotificationCount();
     const connection = new signalR.HubConnectionBuilder()
@@ -44,17 +42,21 @@ export class DashboardHeaderComponent {
       .withUrl(environment.apis.default.url + '/notify')
       .build();
 
-      //.start().done(function () {
-      //  myHub.server.sndMessage("Hello world");
-      //});
-    connection.start().then(function () {
-    }).catch(function (err) {
-      return console.error(err.toString());
-    });
+    connection
+      .start()
+      .then(function () {
+        console.log('SignalR Connected!');
+      })
+      .catch(function (err) {
+        console.log(err);
+        //return console.error(err.toString());
+      });
 
-    connection.on("BroadcastMessage", () => {
+    connection.on('BroadcastMessage', () => {
+      console.log('notif');
+
       this.getNotificationCount();
-    });  
+    });
   }
   signOut(): void {
     // this.NormalAuth.signOut();
@@ -73,7 +75,7 @@ export class DashboardHeaderComponent {
 
   getNotificationCount() {
     this.notificationService.getCount().subscribe(
-      notification => {
+      (notification) => {
         this.notificationCount = notification;
       }
       //,      error => this.errorMessage = <any>error
@@ -82,7 +84,9 @@ export class DashboardHeaderComponent {
 
   getNotificationMessage() {
     this.notificationService.getList().subscribe(
-      messages => {
+      (messages) => {
+        console.log(messages);
+
         this.messageList = messages;
       }
       //,      error => this.errorMessage = <any>error

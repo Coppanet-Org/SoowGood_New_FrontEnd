@@ -99,6 +99,42 @@ export class BannerComponent implements OnInit {
         },
       },
     });
+
+    this.swiper = new Swiper('.service', {
+      speed: 2000,
+      spaceBetween: 0,
+      slidesPerView: 2,
+
+      modules: [Navigation, Pagination, Autoplay],
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        // when window width is >= 480px
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        // when window width is >= 640px
+        992: {
+          slidesPerView: 6,
+          spaceBetween: 20,
+        },
+        1200: {
+          slidesPerView: 8,
+          spaceBetween: 20,
+        },
+      },
+    });
   }
 
   getPlatformList() {

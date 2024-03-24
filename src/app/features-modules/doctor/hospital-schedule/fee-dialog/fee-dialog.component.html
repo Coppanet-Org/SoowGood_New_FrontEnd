@@ -1,5 +1,5 @@
 <div class="flex justify-between py-4 px-6 border-b-[1px] items-center">
-  <h1 class="dashbord-heading-text">
+  <h1 class="dashbord-heading-text text-[15px] md:text-[18px]">
     <i class="fa-solid fa-plus"></i> {{ editData ? "Update" : "Add" }} Fees
     Options
   </h1>
@@ -8,9 +8,9 @@
   </button>
 </div>
 
-<div class="px-10 py-6">
+<div class="md:px-10 px-5 md:py-6 py-4">
   <form [formGroup]="form">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
       <div class="w-full px-3 sm:w-full">
         <label for="appointmentType" class="mb-2"> AppointmentType </label>
         <select
@@ -186,5 +186,7 @@
       </div>
     </div>
   </form>
-  <button class="btn-secondary mt-5" (click)="submit()">Submit</button>
+  <button class="btn-secondary mt-5 w-full sm:w-fit" (click)="submit()">
+    Save
+  </button>
 </div>
