@@ -1,4 +1,4 @@
-<div class="min-w-[900px] max-w-full m-auto">
+<div class="max-w-full m-auto">
   <div
     class="bg-white h-full border-gray-200 border-[1px] lg:px-12 p-8 shadow-blue"
   >
@@ -18,14 +18,20 @@
       </div>
       <form [formGroup]="form">
         <div class="p-head-bottom my-10">
-          <div class="flex justify-between">
+          <div class="grid md:grid-cols-4 grid-cols-2 justify-between">
             <!-- <span>Patient Code : </span> <b> <input type="text" formControlName="patientCode"> </b> -->
-            <span>Patient Name : </span>
-            <b> <input type="text" formControlName="patientName" /> </b>
-            <span>Age :</span>
-            <b> <input type="text" formControlName="age" /> </b>
-            <span>Blood Group :</span>
-            <b> <input type="text" formControlName="bloodGroup" /> </b>
+            <div>
+              <span>Patient Name : </span>
+              <b> <input type="text" formControlName="patientName" /> </b>
+            </div>
+            <div>
+              <span>Age :</span>
+              <b> <input type="text" formControlName="age" /> </b>
+            </div>
+            <div>
+              <span>Blood Group :</span>
+              <b> <input type="text" formControlName="bloodGroup" /> </b>
+            </div>
             <span
               >Date : <b> <input [value]="today" /> </b
             ></span>
@@ -65,7 +71,7 @@
 
     <!-- patientAdditionalInfo -->
     <form [formGroup]="prescriptionForm" class="mt-5">
-      <div class="grid grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <div class="p-body">
           <div class="p-body-item col-span-12 mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
@@ -148,7 +154,7 @@
       <!-- History start -->
 
       <!-- Compliments start -->
-      <div class="p-body" id="complients">
+      <div class="p-body overflow-x-scroll lg:overflow-none" id="complients">
         <div class="p-body-item col-span-12 mt-7">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -286,7 +292,7 @@
       </div>
 
       <!-- Findings/ On Examination* start -->
-      <div class="p-body" id="findings">
+      <div class="p-body overflow-x-scroll lg:overflow-none" id="findings">
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -380,7 +386,7 @@
       </div>
 
       <!-- Medication & Schedule * start -->
-      <div class="p-body" id="medicine">
+      <div class="p-body overflow-x-scroll lg:overflow-none" id="medicine">
         <div class="p-body-item col-span-12 mt-5">
           <div class="flex justify-between">
             <h1 class="font-Roboto text-[18px] text-primary/90 font-semibold">
@@ -572,7 +578,7 @@
       </div>
 
       <!-- Diagnosis * start -->
-      <div class="p-body">
+      <div class="p-body overflow-x-scroll lg:overflow-none">
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
             <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -661,8 +667,8 @@
       </div>
 
       <!-- Follow us & Advice * start -->
-      <div class="p-body">
-        <div class="grid grid-cols-2 gap-4">
+      <div class="p-body overflow-x-scroll lg:overflow-none">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-body-item mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
               <i class="fa-solid fa-circle-stop text-[16px]"></i>
@@ -732,7 +738,9 @@
       </div>
     </form>
 
-    <div class="btns flex justify-center mt-6">
+    <div
+      class="btns flex justify-center mt-6 overflow-x-scroll lg:overflow-none"
+    >
       <button
         class="btn-secondary rounded-[25px]"
         (click)="submitPrescription()"

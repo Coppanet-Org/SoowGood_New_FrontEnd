@@ -1,11 +1,19 @@
 import { TosterService } from './../../../shared/services/toster.service';
 
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MenuService } from 'src/app/shared/services/menu.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -27,7 +35,7 @@ export class HeaderComponent implements OnInit {
     private UserinfoStateService: UserinfoStateService,
     private router: Router,
     private TosterService: TosterService,
-    private menuService: MenuService
+    private ElementRef: ElementRef
   ) {}
   ngOnInit(): void {
     //let id = this.NormalAuth.authInfo().id;
@@ -71,5 +79,16 @@ export class HeaderComponent implements OnInit {
       }
     }
     return;
+  }
+  openHomeMenu() {
+    // this.menuService.homeMenuVisible(true);
+    this.isVisible = !this.isVisible;
+  }
+  @HostListener('document:click', ['$event.target'])
+  onClick(target: any) {
+    const clickedInside = this.ElementRef.nativeElement.contains(target);
+    if (!clickedInside) {
+      this.isVisible = false;
+    }
   }
 }

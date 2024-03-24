@@ -7,7 +7,10 @@
       layout == 'admin' || layout == 'spreed' ? 'container-full' : 'container'
     "
   >
-    <div class="container-items" *ngIf="layout == 'public' || 'spreed'">
+    <div
+      class="container-items relative"
+      *ngIf="layout == 'public' || 'spreed'"
+    >
       <div
         class="header-logo w-[170px] md:w-[200px] lg:w-[220px]"
         routerLink="/"
@@ -110,8 +113,8 @@
                   {{
                     authInfo.userType === "doctor" ? authInfo?.doctorTitle : ""
                   }}
-                  {{ authInfo.fullName }}</span
-                >
+                  {{ authInfo.fullName }}
+                </span>
                 <li [routerLink]="'/' + userType + '/dashboard'">
                   <a class="font-Roboto text-[16px] text-primary py-2">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i>Dashboard
@@ -133,6 +136,7 @@
 
       <svg
         version="1.1"
+        (click)="openHomeMenu()"
         id="_x32_"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -193,6 +197,157 @@
           </g>
         </g>
       </svg>
+    </div>
+    <div
+      [class]="
+        isVisible
+          ? 'home-menu relative show-home-menu bg-primary/90 backdrop-blur-md '
+          : 'home-menu relative hide-home-menu bg-primary/90 backdrop-blur-md'
+      "
+    >
+      <ul class="flex flex-col items-center justify-center py-5">
+        <li>
+          <div class="flex items-center">
+            <div class="rounded-full overflow-hidden w-20 h-20">
+              <img src="../../../../assets/person.png" class="w-full h-full" />
+            </div>
+          </div>
+        </li>
+
+        @if (isAuthLogin) {
+        <li class="text-[20px] mt-4 text-center">
+          {{ authInfo.userType === "doctor" ? authInfo?.doctorTitle : "" }}
+          {{ authInfo.fullName }}
+        </li>
+        <li
+          [routerLink]="'/' + userType + '/dashboard'"
+          class="cursor-pointer mt-3"
+        >
+          <a class="text-[16px] py-2 flex gap-1 items-center">
+            <svg
+              viewBox="0 0 24 24"
+              class="w-5 h-5"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <rect width="24" height="24"></rect>
+                <path
+                  d="M15.024 22C16.2771 22 17.3524 21.9342 18.2508 21.7345C19.1607 21.5323 19.9494 21.1798 20.5646 20.5646C21.1798 19.9494 21.5323 19.1607 21.7345 18.2508C21.9342 17.3524 22 16.2771 22 15.024V12C22 10.8954 21.1046 10 20 10H12C10.8954 10 10 10.8954 10 12V20C10 21.1046 10.8954 22 12 22H15.024Z"
+                  fill="#fff"
+                ></path>
+                <path
+                  d="M2 15.024C2 16.2771 2.06584 17.3524 2.26552 18.2508C2.46772 19.1607 2.82021 19.9494 3.43543 20.5646C4.05065 21.1798 4.83933 21.5323 5.74915 21.7345C5.83628 21.7538 5.92385 21.772 6.01178 21.789C7.09629 21.9985 8 21.0806 8 19.976L8 12C8 10.8954 7.10457 10 6 10H4C2.89543 10 2 10.8954 2 12V15.024Z"
+                  fill="#fff"
+                ></path>
+                <path
+                  d="M8.97597 2C7.72284 2 6.64759 2.06584 5.74912 2.26552C4.8393 2.46772 4.05062 2.82021 3.4354 3.43543C2.82018 4.05065 2.46769 4.83933 2.26549 5.74915C2.24889 5.82386 2.23327 5.89881 2.2186 5.97398C2.00422 7.07267 2.9389 8 4.0583 8H19.976C21.0806 8 21.9985 7.09629 21.789 6.01178C21.772 5.92385 21.7538 5.83628 21.7345 5.74915C21.5322 4.83933 21.1798 4.05065 20.5645 3.43543C19.9493 2.82021 19.1606 2.46772 18.2508 2.26552C17.3523 2.06584 16.2771 2 15.024 2H8.97597Z"
+                  fill="#fff"
+                ></path>
+              </g></svg
+            >Dashboard
+          </a>
+        </li>
+        }
+      </ul>
+      <ul class="border-t-[1px] border-gray-500 px-5 py-3">
+        <li
+          class="py-2 cursor-pointer hover:text-secondary flex gap-1"
+          (click)="navigator('soowgood-point')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#fff"
+            width="25px"
+            height="25px"
+            viewBox="0 0 24 24"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"
+              ></path>
+            </g>
+          </svg>
+          Soowgood Point
+        </li>
+        <li
+          class="py-2 cursor-pointer hover:text-secondary flex gap-2"
+          (click)="navigator('soowgood-booth')"
+        >
+          <svg
+            fill="#ffffff"
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="20px"
+            height="20px"
+            viewBox="0 0 256 253"
+            enable-background="new 0 0 256 253"
+            xml:space="preserve"
+            stroke="#ffffff"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M122,219H76v-45h18v14h10v-14h18V219z M182,219h-46v-45h18v14h10v-14h18V219z M152,160h-46v-45h18v14h10v-14h18V160z M2,69 c0,13.678,9.625,25.302,22,29.576V233H2v18h252v-18h-22V98.554c12.89-3.945,21.699-15.396,22-29.554v-8H2V69z M65.29,68.346 c0,6.477,6.755,31.47,31.727,31.47c21.689,0,31.202-19.615,31.202-31.47c0,11.052,7.41,31.447,31.464,31.447 c21.733,0,31.363-20.999,31.363-31.447c0,14.425,9.726,26.416,22.954,30.154V233H42V98.594C55.402,94.966,65.29,82.895,65.29,68.346 z M222.832,22H223V2H34v20L2,54h252L222.832,22z"
+              ></path>
+            </g>
+          </svg>
+          Village Booth
+        </li>
+      </ul>
+
+      @if (!isAuthLogin) {
+      <ul class="border-t-[1px] border-gray-500 px-5 py-3">
+        <li
+          class="py-1 cursor-pointer hover:text-secondary"
+          routerLink="/login"
+        >
+          Login
+        </li>
+        <li
+          class="py-1 cursor-pointer hover:text-secondary"
+          routerLink="/signup"
+        >
+          Registration
+        </li>
+      </ul>
+      <div class="divider text-white after:bg-white before:bg-white">OR</div>
+      <p class="text-white">
+        If you are agent
+        <span class="text-secondary cursor-pointer" routerLink="/agent/login"
+          >click here</span
+        >
+      </p>
+
+      } @if (isAuthLogin) {
+      <div
+        (click)="signOut()"
+        class="absolute w-full text-center cursor-pointer bottom-16 bg-secondary hover:bg-secondary/80 duration-150 left-0 py-3 text-white"
+      >
+        <a class="font-Roboto text-[18px] text-white py-2">
+          <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+        </a>
+      </div>
+      }
     </div>
   </div>
 </div>

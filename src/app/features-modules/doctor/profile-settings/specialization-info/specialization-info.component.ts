@@ -1,7 +1,5 @@
 import { DoctorProfileService } from '../../../../proxy/services/doctor-profile.service';
-import {
-  DoctorSpecializationDto,
-} from '../../../../proxy/dto-models/models';
+import { DoctorSpecializationDto } from '../../../../proxy/dto-models/models';
 import { Component, OnInit } from '@angular/core';
 import {
   DoctorSpecializationService,
@@ -13,7 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { SubSink } from 'subsink';
 import { MatDialog } from '@angular/material/dialog';
 import { SpecializationDialogComponent } from '../specialization-dialog/specialization-dialog.component';
-import {forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-specialization-info',
@@ -35,7 +33,7 @@ export class SpecializationInfoComponent implements OnInit {
     private normalAuth: AuthService,
     private doctorProfileService: DoctorProfileService,
     private doctorDocService: DocumentsAttachmentService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     let authId = this.normalAuth.authInfo().id;
@@ -46,11 +44,9 @@ export class SpecializationInfoComponent implements OnInit {
       //this.doctorProfileService.get(authId).subscribe((res) => {
       //  if (res.specialityId) {
       //    this.specialityId = res.specialityId;
-      this.doctorSpeciality
-        .get(this.specialityId)
-        .subscribe((res) => {
-          this.specialityName = res.specialityName
-        });
+      this.doctorSpeciality.get(this.specialityId).subscribe((res) => {
+        this.specialityName = res.specialityName;
+      });
       //}
       //this.getSpecializations(this.specialityId);
       //});
@@ -58,43 +54,39 @@ export class SpecializationInfoComponent implements OnInit {
       //  .subscribe(res => {
       //    this.allSpecializations = res;
       //  })
-      this.combineObservables(this.doctorId, specId)
+      this.combineObservables(this.doctorId, specId);
     }
   }
 
-
-
   combineObservables(id: any, spId: any): void {
-    const doctorSpecialization$ = this.doctorSpecializationService.getListByDoctorIdSpId(id, spId);
-    const profilePic$ = this.doctorDocService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
-      'Doctor',
-      this.doctorId,
-      'DoctorSpecialityDoc'
+    const doctorSpecialization$ =
+      this.doctorSpecializationService.getListByDoctorIdSpId(id, spId);
+    const profilePic$ =
+      this.doctorDocService.getDocumentInfoByEntityTypeAndEntityIdAndAttachmentType(
+        'Doctor',
+        this.doctorId,
+        'DoctorSpecialityDoc'
+      );
+
+    forkJoin([doctorSpecialization$, profilePic$]).subscribe(
+      ([specializations, at]) => {
+        // const mergedResult = [...specializations, at];
+        this.allSpecializations = specializations;
+
+        // if (at) {
+        //   let prePaths: string = '';
+        //   var re = /wwwroot/gi;
+        //   prePaths = at.path ? at.path : '';
+        //   this.profilePic = prePaths.replace(re, '');
+        //   this.url = this.picUrl + this.profilePic;
+        // }
+      }
     );
-
-    forkJoin([doctorSpecialization$, profilePic$]).subscribe(([specializations, at]) => {
-      // const mergedResult = [...specializations, at];
-      this.allSpecializations = specializations;
-
-
-      // if (at) {
-      //   let prePaths: string = '';
-      //   var re = /wwwroot/gi;
-      //   prePaths = at.path ? at.path : '';
-      //   this.profilePic = prePaths.replace(re, '');
-      //   this.url = this.picUrl + this.profilePic;
-      // }
-    });
   }
 
-
-
-
-
-
-  getDoctorSpecializationList(docId: any, spid:any): void {
+  getDoctorSpecializationList(docId: any, spid: any): void {
     this.doctorSpecializationService
-      .getListByDoctorIdSpId(docId,spid)
+      .getListByDoctorIdSpId(docId, spid)
       .subscribe((res) => {
         this.allSpecializations = res;
       });
@@ -118,25 +110,21 @@ export class SpecializationInfoComponent implements OnInit {
   //           });
   //         }
 
-
   getSpecializations(id: any) {
-    return this.specializationService
-      .getBySpecialityId(id)
-      .subscribe((res) => {
-        this.specializationName = res.specializationName
-      });
+    return this.specializationService.getBySpecialityId(id).subscribe((res) => {
+      this.specializationName = res.specializationName;
+    });
   }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(SpecializationDialogComponent, {
-      width: '40vw',
+      maxHeight: '450px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         //this.getDoctorSpecializationList(this.doctorId);
-        this.getDoctorSpecializationList(this.doctorId,this.specialityId);
+        this.getDoctorSpecializationList(this.doctorId, this.specialityId);
       }
     });
   }
@@ -144,12 +132,12 @@ export class SpecializationInfoComponent implements OnInit {
     this.dialog
       .open(SpecializationDialogComponent, {
         data: row,
-        width: '40vw',
+        maxHeight: '450px',
       })
       .afterClosed()
       .subscribe((result) => {
         if (result == true) {
-          this.getDoctorSpecializationList(this.doctorId,this.specialityId);
+          this.getDoctorSpecializationList(this.doctorId, this.specialityId);
         }
       });
   }

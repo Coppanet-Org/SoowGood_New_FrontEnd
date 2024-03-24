@@ -4,11 +4,11 @@
 >
   <form
     [formGroup]="filterForm"
-    class="grid lg:grid-cols-[2fr,10fr] grid-cols-1 w-full"
+    class="grid md:grid-cols-[2fr,10fr] grid-cols-1 w-full mt-5 lg:mt-0"
   >
     <div class="flex sm:gap-8 items-center">
       <div
-        class="lg:max-w-[300px] max-w-full lg:focus-within:shadow-xl pr-2 lg:focus-within:max-w-[350px] duration-300 py-3 max-h-[50px] overflow-hidden rounded-md bg-slate-100 flex items-center border-gray-200 border-[1px]"
+        class="w-full max-w-full lg:focus-within:shadow-xl pr-2 duration-300 py-3 max-h-[50px] overflow-hidden rounded-md bg-slate-100 flex items-center border-gray-200 border-[1px]"
       >
         <span class="p-3 bg-secondary cursor-pointer mr-2">
           <i class="fa-solid fa-magnifying-glass text-white"></i>
@@ -16,13 +16,13 @@
         <input
           type="search"
           [formControlName]="filterInput.fields.searchField.formControlName"
-          class="outline-none bg-transparent font-poppins w-[400px] text-black/80 placeholder:text-black/50"
+          class="outline-none bg-transparent w-full font-poppins text-black/80 placeholder:text-black/50"
           placeholder="Search"
         />
       </div>
     </div>
     <div class="flex sm:ml-auto sm:justify-end">
-      <div class="flex w-full mt-3 sm:flex-row flex-col sm:gap-3 sm:mt-5">
+      <div class="flex w-full sm:flex-row flex-col sm:gap-3 mt-5">
         <mat-form-field *ngFor="let item of filterInput.fields.filterField">
           <mat-select
             *ngIf="item.fieldType == 'select'"

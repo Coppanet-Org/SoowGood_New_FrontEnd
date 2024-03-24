@@ -1,11 +1,13 @@
 <div
-  class="doctor-dashboard_midcontent_container w-full p-8 bg-white overflow-hidden"
+  class="doctor-dashboard_midcontent_container w-full p-4 md:p-8 bg-white overflow-hidden"
 >
-  <div class="flex gap-6">
-    <div class="w-[90px] h-[90px] rounded-full overflow-hidden border-[3px]">
+  <div class="grid grid-cols-1 md:grid-cols-[1fr,11fr] items-center gap-6">
+    <div
+      class="md:w-[90px] md:h-[90px] w-[70px] h-[70px] rounded-full overflow-hidden md:border-[3px] border-[1px]"
+    >
       <img
         class="w-full h-full object-cover"
-        src="/assets/doctor/dr.jpeg"
+        src="/assets/doctor/avater.png"
         alt=""
       />
     </div>
@@ -13,26 +15,31 @@
       <h1 class="text-[24px] font-medium text-primary">
         {{ patientProfileInfo?.patientName }}
       </h1>
-      <div class="flex gap-16 font-Roboto">
+      <div
+        class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 font-Roboto"
+      >
         <div>
-          <!-- <p class="text-gray-600 my-2 text-[15px"><b>ID: </b>SG25621 </p> -->
-          <p class="text-gray-600 my-2 text-[15px">
-            <b>Age : </b>{{ patientProfileInfo?.age }}
+          <!-- <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px"><b>ID: </b>SG25621 </p> -->
+          <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px">
+            <b>Age : </b>{{ patientProfileInfo?.age }} Years
           </p>
         </div>
+
         <div>
-          <p class="text-gray-600 my-2 text-[15px">
+          <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px">
             <b>Blood Group :</b> {{ patientProfileInfo?.bloodGroup }}
           </p>
-          <!-- <p class="text-gray-600 my-2 text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p> -->
+          <!-- <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px"><b>Address : </b> Runway Road Dhaka, 1215</p> -->
         </div>
+
         <div>
-          <p class="text-gray-600 my-2 text-[15px">
+          <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px">
             <b>Mobile :</b> {{ patientProfileInfo?.patientMobileNo }}
           </p>
         </div>
+
         <div>
-          <p class="text-gray-600 my-2 text-[15px">
+          <p class="text-gray-600 my-1 sm:my-2 text-[14px] sm:text-[15px">
             <b>Email : </b> {{ patientProfileInfo?.patientEmail }}
           </p>
         </div>
@@ -40,7 +47,7 @@
     </div>
   </div>
 
-  <div class="flex gap-5 mt-12">
+  <div class="flex gap-5 md:mt-12 mt-6">
     <div
       class="h-[500px] w-full border-[1px] rounded-xl overflow-hidden shadow-secondary/10 shadow-2xl"
     >
@@ -64,16 +71,16 @@
         </mat-tab>
       </mat-tab-group>
     </div>
-    <div
+    <!-- <div
       class="min-w-[320px] h-[500px] overflow-hidden border-[1px] rounded-xl shadow-secondary/10 shadow-2xl"
     >
       <h1
         class="w-full bg-white/90 p-4 text-primary/90 font-Roboto border-b-[1px]"
       >
         <i class="fa-solid fa-clock text-primary mr-2"></i> History
-      </h1>
+      </h1> -->
 
-      <!-- <div class="p-4 text-[14px]">
+    <!-- <div class="p-4 text-[14px]">
                 <p class="relative"> <i
                         class=" after:content-[' '] after:w-[1px] after:h-[30px] after:bg-secondary after:absolute after:top-[17px] after:left-[7px] fa-regular fa-circle-dot mb-[20px] text-primary text-[16px]"></i>
                     <span>-----</span> Dr. John - 20/05/23 : 05.00pm
@@ -97,6 +104,6 @@
                 </p>
 
             </div> -->
-    </div>
+    <!-- </div> -->
   </div>
 </div>

@@ -1,11 +1,19 @@
-<div class="">
+<div class="max-w-[400px]">
   <div class="bg-white">
-    <div class="pl-10 pt-4 pb-4 border-b-gray-300 border-[1px]">
-      <h1 class="font-Roboto text-[22px] font-semibold">Patient Information</h1>
-      <span (click)="this.dialogRef.close()">Close</span>
+    <div
+      class="md:pl-10 pl-5 pt-4 pb-4 flex items-center justify-between border-b-gray-300 border-[1px]"
+    >
+      <h1 class="font-Roboto text-[15px] md:text-[22px] font-semibold">
+        Patient Information
+      </h1>
+      <span class="btn-secondary-light" (click)="this.dialogRef.close()"
+        >Close</span
+      >
     </div>
     <form [formGroup]="createPatientForm">
-      <div class="px-10 py-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div
+        class="md:px-10 px-5 py-3 md:py-6 grid grid-cols-1 md:grid-cols-2 md:gap-5"
+      >
         <div class="mb-5">
           <label
             for="name"

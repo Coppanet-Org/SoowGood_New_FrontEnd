@@ -75,9 +75,9 @@ export class AppointmentCardComponent implements AfterViewInit {
 
   openPdfDialog(id: any): void {
     this.dialog.open(ShowPrescriptionModalComponent, {
-      minWidth: '820px',
-      maxWidth: '100%',
-      height: '1000px',
+      // minWidth: '820px',
+      // maxWidth: '100%',
+      // height: '1000px',
       data: { appointmentId: id },
     });
   }
@@ -190,7 +190,7 @@ export class AppointmentCardComponent implements AfterViewInit {
       data: data?.patientProfileId,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   openDialog(data: string): void {
@@ -199,7 +199,7 @@ export class AppointmentCardComponent implements AfterViewInit {
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   cancellAppointment(id: any) {

@@ -1,15 +1,15 @@
 <div class="main_right border-l-[1px] border-box -z-10 bg-white">
   <div class="box-border">
     <div class="card w-full bg-white border-none border-b-[1px]">
-      <figure class="px-10 pt-10">
+      <figure class="px-10 lg:pt-10 pt-5">
         <img
           [src]="url || ''"
           alt="profile"
-          class="rounded-full w-[100px] h-[100px] object-cover border-2 border-secondary"
+          class="rounded-full max-w-[70px] max-h-[70px] lg:w-[100px] lg:h-[100px] object-cover border-2 border-secondary"
         />
       </figure>
       <div
-        class="card-body pb-3 items-center text-center rounded-none border-none"
+        class="card-body p-4 pb-2 lg:pb-3 items-center text-center rounded-none border-none"
       >
         <span
           class="py-.5 px-4 bg-sky-300/30 text-primary font-Roboto text-[12px] font-semibold"
@@ -17,14 +17,16 @@
           <!--{{userInfo.doctorTitle ? 'Doctor' : userInfo.hasOwnProperty('patientName') ? 'Patient' : 'Agent'}}-->
           {{ profileTile }}
         </span>
-        <h2 class="card-title text-primary">
+        <h2 class="card-title text-[18px] lg:text-[20px] text-primary">
           <!--{{userInfo.doctorTitle ?userInfo.fullName:userInfo.hasOwnProperty('patientName') ?userInfo.patientName:userInfo.agentName}}-->
           {{ userInfo?.fullName }}
         </h2>
         <p class="text-primary">{{ userInfo?.designation }}</p>
 
         <div *ngIf="authInfo.userType == 'doctor'">
-          <label class="relative inline-flex items-center mb-5 cursor-pointer">
+          <label
+            class="relative inline-flex items-center mb-3 lg:mb-5 cursor-pointer"
+          >
             <input
               [style]="isProfileLoad ? 'display:none' : 'display:block'"
               type="checkbox"
