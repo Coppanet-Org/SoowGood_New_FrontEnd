@@ -17,10 +17,11 @@ export class NotificationService {
     { apiName: this.apiName,...config });
   
 
-  getByUserIdCountByUserId = (userId: number, config?: Partial<Rest.Config>) =>
+  getByUserIdCountByUserIdAndRole = (userId: number, role: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
       url: `/api/app/notification/by-user-id-count/${userId}`,
+      params: { role },
     },
     { apiName: this.apiName,...config });
   
