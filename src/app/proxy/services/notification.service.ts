@@ -1,36 +1,25 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { NotificationDto } from '../dto-models/models';
+import type { SendNotificationInputDto } from '../input-dto/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   apiName = 'Default';
-  
 
-  get = (id: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, NotificationDto>({
-      method: 'GET',
-      url: `/api/app/notification/${id}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getCount = (config?: Partial<Rest.Config>) =>
-    this.restService.request<any, number>({
-      method: 'GET',
-      url: '/api/app/notification/count',
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getList = (config?: Partial<Rest.Config>) =>
-    this.restService.request<any, NotificationDto[]>({
-      method: 'GET',
-      url: '/api/app/notification',
-    },
-    { apiName: this.apiName,...config });
+  sendNotification = (
+    input: SendNotificationInputDto,
+    config?: Partial<Rest.Config>
+  ) =>
+    this.restService.request<any, void>(
+      {
+        method: 'POST',
+        url: '/api/app/notification/send-notification',
+        body: input,
+      },
+      { apiName: this.apiName, ...config }
+    );
 
   constructor(private restService: RestService) {}
 }
