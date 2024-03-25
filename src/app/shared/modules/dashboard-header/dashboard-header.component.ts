@@ -35,8 +35,8 @@ export class DashboardHeaderComponent {
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
     this.authInfo = this.NormalAuth.authInfo();
-    this.getNotification();
-
+    // this.getNotification();
+    this.getNotificationMessage();
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(environment.apis.default.url + '/notify')
@@ -78,6 +78,7 @@ export class DashboardHeaderComponent {
         console.log(notification);
 
         this.notificationCount = notification;
+        this.getNotificationMessage();
       }
       //,      error => this.errorMessage = <any>error
     );
