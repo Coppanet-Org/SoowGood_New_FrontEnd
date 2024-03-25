@@ -138,7 +138,7 @@ export class BannerComponent implements OnInit {
   }
 
   getPlatformList() {
-    this.PlatformFacilityService.getList().subscribe({
+    this.PlatformFacilityService.getServiceList().subscribe({
       next: (res) => {
         this.serviceList = res;
       },
