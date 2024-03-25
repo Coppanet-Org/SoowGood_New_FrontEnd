@@ -14,10 +14,6 @@ import type { AttachmentType } from '../enums/attachment-type.enum';
 import type { FacilityEntityType } from '../enums/facility-entity-type.enum';
 import type { OtpStatus } from '../enums/otp-status.enum';
 
-export interface AccessUserName {
-  userNmae?: string;
-}
-
 export interface AccountDeteleResponsesDto {
   userName?: string;
   name?: string;
