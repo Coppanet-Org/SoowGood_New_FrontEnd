@@ -7,7 +7,8 @@ import { Environment } from '@abp/ng.core';
 const baseUrl = 'https://soowgoodbeta.com';
 const apiUrl = 'https://apisoowgoodbeta.com';
 const issuerUrl = 'https://authsoowgoodbeta.com';
-
+export const serviceBaseUrl = 'http://localhost:3000'; //
+export const USER_SECRATE = 'soowgood@@2024';
 export const environment = {
   production: true,
   application: {
