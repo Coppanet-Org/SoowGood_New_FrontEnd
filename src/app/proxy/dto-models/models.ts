@@ -509,6 +509,15 @@ export interface LoginResponseDto {
 export interface NotificationDto extends FullAuditedEntityDto<number> {
   message?: string;
   transactionType?: string;
+  creatorEntityId?: number;
+  creatorName?: string;
+  creatorRole?: string;
+  createForName?: string;
+  notifyToEntityId?: number;
+  notifyToName?: string;
+  notifyToRole?: string;
+  noticeFromEntity?: string;
+  noticeFromEntityId?: number;
 }
 
 export interface OtpDto extends FullAuditedEntityDto<number> {
