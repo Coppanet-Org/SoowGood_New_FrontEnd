@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\app"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\app\\shared\\modules\\booking-review\\booking-review.component.ts",
+  "SelectedNode": "\\src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
   "PreviewInSolutionExplorer": false
 }
