@@ -82,7 +82,7 @@ export class PublicDoctorsComponent implements OnInit {
     };
 
     const specialitySubscription =
-      this.SpecializationService.getList().subscribe({
+      this.SpecializationService.getListFiltering().subscribe({
         next: (res) => {
           this.filterInput = {
             fields: {
@@ -119,8 +119,8 @@ export class PublicDoctorsComponent implements OnInit {
       const name = params['doctorname']
         ? params['doctorname']
         : params['patientname']
-        ? params['patientname']
-        : undefined;
+          ? params['patientname']
+          : undefined;
       const consultancyType = params['consultancyType'];
       const specialization = params['specialization'];
       console.log(specialization);

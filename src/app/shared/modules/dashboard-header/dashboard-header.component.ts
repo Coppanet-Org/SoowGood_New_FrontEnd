@@ -35,8 +35,8 @@ export class DashboardHeaderComponent {
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
     this.authInfo = this.NormalAuth.authInfo();
+    // this.getNotification();
     this.getNotification();
-
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(environment.apis.default.url + '/notify')
@@ -53,6 +53,7 @@ export class DashboardHeaderComponent {
       });
 
     connection.on('BroadcastMessage', () => {
+      console.log('notif');
       this.getNotification();
     });
   }
@@ -72,35 +73,29 @@ export class DashboardHeaderComponent {
   }
 
   //getNotificationCount() {
-
-
-  //  this.notificationService.getList().subscribe(
+  //  this.notificationService.getCount().subscribe(
   //    (notification) => {
-  //      let nlist = notification;
-  //      if (this.authInfo.userType == "doctor") {
-  //        this.notificationCount = nlist.filter(n => n.notifyToEntityId == this.authInfo.id).length;
-  //      }
-  //      else {
-  //        this.notificationCount = nlist.filter(n => n.creatorEntityId == this.authInfo.id).length;
-  //      }
+  //      console.log(notification);
+
+  //      this.notificationCount = notification;
+  //      this.getNotificationMessage();
   //    }
+  //    //,      error => this.errorMessage = <any>error
   //  );
-
   //}
-  //Message
-  getNotification() {
-    this.notificationService.getList().subscribe(
-      (messages) => {
-        if (this.authInfo.userType == "doctor") {
 
-          this.messageList = messages.filter(m => m.notifyToEntityId == this.authInfo.id);
-          
-        }
-        else {
-          this.messageList = messages.filter(m => m.creatorEntityId == this.authInfo.id);
-        }
-        this.notificationCount = this.messageList.length;
+  getNotification() {
+    this.notificationService.getList().subscribe((messages) => {
+      if (this.authInfo.userType == 'doctor') {
+        this.messageList = messages.filter(
+          (m) => m.notifyToEntityId == this.authInfo.id
+        );
+      } else {
+        this.messageList = messages.filter(
+          (m) => m.creatorEntityId == this.authInfo.id
+        );
       }
-    );
+      this.notificationCount = this.messageList.length;
+    });
   }
 }
