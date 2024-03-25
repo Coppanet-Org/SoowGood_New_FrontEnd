@@ -94,7 +94,7 @@ export class DashboardHeaderComponent {
         if (this.authInfo.userType == "doctor") {
 
           this.messageList = messages.filter(m => m.notifyToEntityId == this.authInfo.id);
-          
+
         }
         else {
           this.messageList = messages.filter(m => m.creatorEntityId == this.authInfo.id);

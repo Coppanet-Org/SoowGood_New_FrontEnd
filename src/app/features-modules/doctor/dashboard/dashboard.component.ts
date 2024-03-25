@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
     this.authInfo = this.NormalAuth.authInfo();
     let authId = this.NormalAuth.authInfo()?.id;
     this.doctorId = authId;
-    //this.getNotification();
+    this.getNotification();
     this.getDashboardStatisticData(authId);
     this.getDashboardAppointment(this.selectedValue);
     const connection = new signalR.HubConnectionBuilder()
