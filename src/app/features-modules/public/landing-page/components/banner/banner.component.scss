@@ -12,3 +12,17 @@
     background-size: cover;
     background-position: bottom center;
 }
+
+.swiper-button-prev.service,
+.swiper-button-next.service
+{
+    background: #30bced;
+    opacity: 1!important;
+}
+.swiper-button-prev.service::after,
+.swiper-button-next.service::after
+{
+   font-size: 24px;
+   color: white!important;
+   opacity: 1!important;
+}

@@ -30,6 +30,21 @@
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"
     ></script>
+    <!-- Smartsupp Live Chat script -->
+    <!-- <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/65cdc6a18d261e1b5f60afa9/1hmlsvqoh";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script> -->
+    <!-- <script type=”text/javascript”  src=”https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js"></script> -->
     <style>
       #loader {
         width: 100%;
@@ -43,13 +58,28 @@
         flex-direction: column;
         gap: 10px;
       }
+      /* .tawk-flex .tawk-branding {
+        display: none !important;
+        visibility: hidden;
+        opacity: 0;
+      } */
     </style>
+    <!-- Manychat -->
+    <!-- <script
+      src="//widget.manychat.com/107853268289628.js"
+      defer="defer"
+    ></script>
+    <script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script> -->
   </head>
   <body class="relative">
     <app-root>
       <div id="loader">
-        <img src="/assets/SoowGood-Logo.png" alt="logo" />
-        Loading...
+        <img
+          class="max-w-[200px] md:max-w-[220px] lg:max-w-[250px]"
+          src="/assets/SoowGood-Logo.png"
+          alt="logo"
+        />
+        <span class="tex-[16px]"> Loading...</span>
       </div>
     </app-root>
   </body>

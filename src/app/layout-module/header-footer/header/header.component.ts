@@ -2,16 +2,17 @@ import { TosterService } from './../../../shared/services/toster.service';
 
 import {
   Component,
+  Directive,
   ElementRef,
   HostListener,
   Input,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -20,18 +21,21 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent implements OnInit {
   @Input() layout: string = '';
+
   isAuthLogin!: boolean;
   userType: string = '';
   scrolled: boolean = false;
   logoPath: string = 'assets/SoowGood-Logo.png';
   authInfo: any;
+  isVisible!: boolean;
 
   constructor(
     private NormalAuth: AuthService,
     private MainAuth: AuthService,
     private UserinfoStateService: UserinfoStateService,
     private router: Router,
-    private TosterService: TosterService
+    private TosterService: TosterService,
+    private ElementRef: ElementRef
   ) {}
   ngOnInit(): void {
     //let id = this.NormalAuth.authInfo().id;
@@ -75,5 +79,16 @@ export class HeaderComponent implements OnInit {
       }
     }
     return;
+  }
+  openHomeMenu() {
+    // this.menuService.homeMenuVisible(true);
+    this.isVisible = !this.isVisible;
+  }
+  @HostListener('document:click', ['$event.target'])
+  onClick(target: any) {
+    const clickedInside = this.ElementRef.nativeElement.contains(target);
+    if (!clickedInside) {
+      this.isVisible = false;
+    }
   }
 }

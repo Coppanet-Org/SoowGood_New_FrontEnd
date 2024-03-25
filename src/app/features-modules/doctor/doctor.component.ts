@@ -1,6 +1,6 @@
-
 import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-st
   styleUrls: ['./doctor.component.scss'],
 })
 export class DoctorComponent {
-
   menuList: any = [
     {
       menuName: 'Dashboard',
@@ -31,23 +30,23 @@ export class DoctorComponent {
       route: 'hospital-schedule',
       icon: 'fa-solid fa-calendar-days',
     },
-    {
-      menuName: 'Billing',
-      route: 'billing',
-      icon: 'fa-solid fa-money-bill-transfer',
-    },
+    // {
+    //   menuName: 'Billing',
+    //   route: 'billing',
+    //   icon: 'fa-solid fa-money-bill-transfer',
+    // },
     {
       menuName: 'Profile Settings',
       route: 'profile-settings',
       icon: 'fa-solid fa-gear',
     },
   ];
-
+  visiblemenu!: boolean;
 
   constructor(
     private NormalAuth: AuthService,
     private UserinfoStateService: UserinfoStateService,
-
+    private menuService: MenuService
   ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -55,14 +54,8 @@ export class DoctorComponent {
     if (user.id) {
       this.UserinfoStateService.getProfileInfo(user.id, user.userType);
     }
+    this.menuService.menuVisibility$.subscribe(
+      (res) => (this.visiblemenu = res)
+    );
   }
-
-
-
-
-
-
-
-
-
 }

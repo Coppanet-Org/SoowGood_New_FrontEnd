@@ -22,7 +22,7 @@ export class LiveDoctorCardComponent {
   userType: string = '';
   picUrls: any;
   @Input() doctorDetails: any;
-  defaultImage = 'assets/doctor/dr.jpeg';
+  defaultImage = 'assets/doctor/avater.png';
   public picUrl = `${environment.apis.default.url}/`;
 
   constructor(
@@ -58,7 +58,7 @@ export class LiveDoctorCardComponent {
             this.isLoading = false;
             this.dialog.open(LiveConsultBookingDialogComponent, {
               maxWidth: 600,
-              minWidth: 450,
+              minWidth: 320,
               data: {
                 doctorDetails: data,
                 doctorScheduleInfo: detailsScheduleRes,
@@ -67,16 +67,12 @@ export class LiveDoctorCardComponent {
                 serviceFeeList: financialSetupRes, // Add the serviceFeeList to the data object
               },
             });
-          } else {
-            this.isLoading = false;
-
-            this.TosterService.customToast(
-              `No Details/Schedule found`,
-              'warning'
-            );
           }
         }
       );
+    } else {
+      this.isLoading = false;
+      this.TosterService.customToast(`No Details/Schedule found`, 'warning');
     }
   }
 }

@@ -2,22 +2,37 @@
 <div #scrolltop></div>
 <div class="relative w-full">
   <app-banner></app-banner>
+
+  <app-live-doctors></app-live-doctors>
+
   @defer (on viewport; prefetch on idle) {
-  <app-live-doctors></app-live-doctors> }@placeholder {
-  <app-skeleton></app-skeleton> } @defer (on viewport; prefetch on idle) {
+  <app-app-marketing></app-app-marketing> }@placeholder {
+  <div class="flex flex-shrink-1 w-full h-[300px] justify-center items-center">
+    Loading...
+  </div>
+  } @defer (on viewport; prefetch on idle) {
   <app-signup-marketing-banner></app-signup-marketing-banner>
   }@placeholder {
-  <h1>Laoding</h1>
-  } @defer (on viewport; prefetch on idle) {
-  <app-app-marketing></app-app-marketing> }@placeholder {
-  <h1>Laoding</h1>
+  <div class="flex flex-shrink-1 w-full h-[300px] justify-center items-center">
+    Loading...
+  </div>
   } @defer (on viewport; prefetch on idle) {
   <app-pricing></app-pricing> }@placeholder {
-  <h1>Laoding</h1>
+  <div class="flex flex-shrink-1 w-full h-[300px] justify-center items-center">
+    Loading...
+  </div>
+  } @defer (on viewport; prefetch on idle) {
+  <app-partners> </app-partners>
+  }@placeholder {
+  <div class="flex flex-shrink-1 w-full h-[300px] justify-center items-center">
+    Loading...
+  </div>
   } @defer (on viewport; prefetch on idle) {
   <app-newsletter></app-newsletter>
   }@placeholder {
-  <h1>Laoding</h1>
+  <div class="flex flex-shrink-1 w-full h-[300px] justify-center items-center">
+    Loading...
+  </div>
   }
 </div>
 

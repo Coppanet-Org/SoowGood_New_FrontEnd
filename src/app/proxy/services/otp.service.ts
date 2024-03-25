@@ -18,6 +18,15 @@ export class OtpService {
     { apiName: this.apiName,...config });
   
 
+  applyOtpForPasswordResetByClientKeyAndRoleAndMobileNo = (clientKey: string, role: string, mobileNo: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/otp/apply-otp-for-password-reset',
+      params: { clientKey, role, mobileNo },
+    },
+    { apiName: this.apiName,...config });
+  
+
   isAgentExistByMobile = (mobile: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, boolean>({
       method: 'POST',

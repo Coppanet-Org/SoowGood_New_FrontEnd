@@ -1,9 +1,12 @@
+import { PlatformFacilityService } from './../../../../../proxy/services/platform-facility.service';
 import Swiper, { Autoplay, Navigation, Pagination } from 'swiper';
 import { UserinfoStateService } from 'src/app/shared/services/states/userinfo-state.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { PlatformFacilityDto } from 'src/app/proxy/dto-models';
+import { PlatformFacilityInputDto } from 'src/app/proxy/input-dto';
 
 @Component({
   selector: 'app-banner',
@@ -11,20 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
-  serviceList: any = [
-    {
-      name: 'Doctors',
-      id: 1,
-    },
-    {
-      name: 'Ambulance',
-      id: 2,
-    },
-    {
-      name: 'Medical Test',
-      id: 3,
-    },
-  ];
+  serviceList!: PlatformFacilityInputDto[];
   searchForm!: FormGroup;
   service: any;
   searchText = '';
@@ -36,11 +26,13 @@ export class BannerComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private NormalAuth: AuthService
+    private NormalAuth: AuthService,
+    private PlatformFacilityService: PlatformFacilityService
   ) {}
 
   ngOnInit(): void {
     this.loadForm();
+    this.getPlatformList();
     this.authUser = this.NormalAuth.authInfo();
     this.profileStep = this.authUser ? this.authUser.profileStep : null;
     this.userRole = this.authUser ? this.authUser.userType : null;
@@ -105,6 +97,53 @@ export class BannerComponent implements OnInit {
           slidesPerView: 1,
           spaceBetween: 40,
         },
+      },
+    });
+
+    this.swiper = new Swiper('.service', {
+      speed: 2000,
+      spaceBetween: 0,
+      slidesPerView: 2,
+
+      modules: [Navigation, Pagination, Autoplay],
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        // when window width is >= 480px
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        // when window width is >= 640px
+        992: {
+          slidesPerView: 6,
+          spaceBetween: 20,
+        },
+        1200: {
+          slidesPerView: 8,
+          spaceBetween: 20,
+        },
+      },
+    });
+  }
+
+  getPlatformList() {
+    this.PlatformFacilityService.getList().subscribe({
+      next: (res) => {
+        this.serviceList = res;
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }

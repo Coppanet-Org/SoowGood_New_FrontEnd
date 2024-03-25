@@ -1,6 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { AccountDeteleResponsesDto, LoginDto, LoginResponseDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
+import type { AccountDeteleResponsesDto, DeleteUserDataDto, JAccessToken, LoginDto, LoginResponseDto, PatientDetailsForServiceDto, ResetPasswordInputDto, ResetPasswordResponseDto, UserInfoDto, UserSignUpResultDto } from '../dto-models/models';
 import type { IdentityUser } from '../volo/abp/identity/models';
 
 @Injectable({
@@ -10,11 +10,11 @@ export class UserAccountsService {
   apiName = 'Default';
   
 
-  delete = (mobile: string, role: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, AccountDeteleResponsesDto>({
-      method: 'DELETE',
-      url: '/api/app/user-accounts',
-      params: { mobile, role },
+  decodeJwtByJwt = (jwt: JAccessToken, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PatientDetailsForServiceDto>({
+      method: 'POST',
+      url: '/api/app/user-accounts/decode-jwt',
+      body: jwt,
     },
     { apiName: this.apiName,...config });
   
@@ -70,6 +70,16 @@ export class UserAccountsService {
       url: '/api/app/user-accounts/signup-user',
       params: { password, role },
       body: userDto,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  userDataRemove = (userData: DeleteUserDataDto, role: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AccountDeteleResponsesDto>({
+      method: 'POST',
+      url: '/api/app/user-accounts/user-data-remove',
+      params: { role },
+      body: userData,
     },
     { apiName: this.apiName,...config });
 
