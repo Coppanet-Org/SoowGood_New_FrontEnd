@@ -310,13 +310,13 @@ export class LiveConsultBookingDialogComponent implements OnInit {
     this.formSubmitted = true;
     console.log(this.createPatientForm.value);
 
-    if (!this.createPatientForm.valid) {
-      this.TosterService.customToast(
-        'Please field all the required fields',
-        'warning'
-      );
-      return;
-    }
+    // if (!this.createPatientForm.valid) {
+    //   this.TosterService.customToast(
+    //     'Please field all the required fields',
+    //     'warning'
+    //   );
+    //   return;
+    // }
 
     if (this.isNewUser) {
       try {

@@ -33,8 +33,6 @@ export class AppointmentCardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.appointment);
-
     const currentDate = new Date();
     const appointmentDate = new Date(this.appointment.appointmentDate);
 
@@ -190,7 +188,7 @@ export class AppointmentCardComponent implements AfterViewInit {
       data: data?.patientProfileId,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   openDialog(data: string): void {
@@ -199,7 +197,7 @@ export class AppointmentCardComponent implements AfterViewInit {
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   cancellAppointment(id: any) {

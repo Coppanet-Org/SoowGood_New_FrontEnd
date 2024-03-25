@@ -154,7 +154,7 @@ export class AllAppointmentsComponent implements OnInit {
   }
 
   loadData(data: any) {
-    console.log(data);
+    //console.log(data);
 
     const { consultancy, startDate, endDate, name } = data;
 
@@ -274,6 +274,7 @@ export class AllAppointmentsComponent implements OnInit {
     });
 
     connection.on("BroadcastMessage", () => {
+      //"Hello";
       //this.getEmployeeData();
     }); 
   }
