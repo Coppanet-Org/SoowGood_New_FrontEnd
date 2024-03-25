@@ -184,6 +184,19 @@ const routes: Route[] = [
           },
         ],
       },
+      {
+        path: 'complete-profile',
+        component: PublicLayoutComponent,
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import(
+                '../../../core-modules/auth/complete-profile/complete-profile.module'
+              ).then((m) => m.CompleteProfileModule),
+          },
+        ],
+      },
     ],
   },
 ];

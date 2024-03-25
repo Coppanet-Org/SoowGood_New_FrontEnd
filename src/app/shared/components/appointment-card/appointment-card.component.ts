@@ -33,8 +33,6 @@ export class AppointmentCardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.appointment);
-
     const currentDate = new Date();
     const appointmentDate = new Date(this.appointment.appointmentDate);
 
