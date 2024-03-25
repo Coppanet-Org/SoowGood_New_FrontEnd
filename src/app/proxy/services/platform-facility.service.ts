@@ -35,6 +35,14 @@ export class PlatformFacilityService {
     { apiName: this.apiName,...config });
   
 
+  getServiceList = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PlatformFacilityDto[]>({
+      method: 'GET',
+      url: '/api/app/platform-facility/service-list',
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: PlatformFacilityInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PlatformFacilityDto>({
       method: 'PUT',
