@@ -82,7 +82,7 @@ export class PublicDoctorsComponent implements OnInit {
     };
 
     const specialitySubscription =
-      this.SpecializationService.getList().subscribe({
+      this.SpecializationService.getListFiltering().subscribe({
         next: (res) => {
           this.filterInput = {
             fields: {
