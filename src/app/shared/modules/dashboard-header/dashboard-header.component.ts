@@ -54,7 +54,6 @@ export class DashboardHeaderComponent {
 
     connection.on('BroadcastMessage', () => {
       console.log('notif');
-
       this.getNotificationCount();
     });
   }
@@ -76,6 +75,8 @@ export class DashboardHeaderComponent {
   getNotificationCount() {
     this.notificationService.getCount().subscribe(
       (notification) => {
+        console.log(notification);
+
         this.notificationCount = notification;
       }
       //,      error => this.errorMessage = <any>error

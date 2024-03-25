@@ -1,6 +1,6 @@
 <div class="max-w-full m-auto">
   <div
-    class="bg-white h-full border-gray-200 border-[1px] lg:px-12 p-8 shadow-blue"
+    class="bg-white h-full border-gray-200 border-[1px] lg:px-12 md:p-8 p-3 shadow-blue"
   >
     <div class="p-heade">
       <div class="p-head-top flex justify-between">
@@ -25,8 +25,9 @@
               <b> <input type="text" formControlName="patientName" /> </b>
             </div>
             <div>
-              <span>Age :</span>
-              <b> <input type="text" formControlName="age" /> </b>
+              <span
+                >Age : <b> <input type="text" formControlName="age" /> </b
+              ></span>
             </div>
             <div>
               <span>Blood Group :</span>
@@ -46,7 +47,7 @@
       <div class="p-body">
         <div class="p-body-item col-span-12">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
             Previous Documents
             <div class="badge bg-secondary text-white">
               +{{ this.docFileUrl.length }}
@@ -75,13 +76,13 @@
         <div class="p-body">
           <div class="p-body-item col-span-12 mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
               Patient Additional Info
             </div>
             <div class="mt-5">
               <textarea
                 formControlName="patientAdditionalInfo"
-                class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
+                class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                 placeholder="Write Info"
               >
               </textarea>
@@ -91,13 +92,13 @@
         <div class="p-body">
           <div class="p-body-item col-span-12 mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
               Patient Life Style
             </div>
             <div class="mt-5">
               <textarea
                 formControlName="lifeStyle"
-                class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary text-[16px]"
+                class="w-full p-2 h-[80px] border-2 flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                 placeholder="Write Lifestyle"
               >
               </textarea>
@@ -107,7 +108,7 @@
         <div class="p-body">
           <div class="p-body-item col-span-12 mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
               Patient History
             </div>
 
@@ -127,7 +128,7 @@
                 placeholder="Add History"
                 #diseaseInput
                 formControlName="history"
-                class="w-full mt-1 px-3 py-2 border-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                class="w-full mt-1 px-3 py-2 border-[1px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary"
                 [matChipInputFor]="chipGrid"
                 [matAutocomplete]="auto"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -157,7 +158,7 @@
       <div class="p-body overflow-x-scroll lg:overflow-none" id="complients">
         <div class="p-body-item col-span-12 mt-7">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
             Chief Complaints
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm">
@@ -214,8 +215,8 @@
                     formControlName="symptom"
                     [class]="
                       formSubmitted && complaint.get('symptom')?.invalid
-                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                        ? 'border-red-500 border-[1px] w-full bg-transparent min-w-[250px] p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent p-2 min-w-[250px] h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary'
                     "
                   />
                 </td>
@@ -224,13 +225,13 @@
                   <div class="flex w-full">
                     <input
                       formControlName="durationDay"
-                      class="w-[50px] h-[47px] px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                      class="w-[50px] h-[47px] px-3 py-2 border-r-[1px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary"
                       value="1"
                     />
                     <mat-select
                       [value]="'day'"
                       formControlName="durationTime"
-                      class="text-[16px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
+                      class="md:text-[16px] text-[14px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
                     >
                       <mat-option value="day">Day</mat-option>
                       <mat-option value="week">Week</mat-option>
@@ -244,8 +245,8 @@
                     formControlName="problems"
                     [class]="
                       formSubmitted && complaint.get('problems')?.invalid
-                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                        ? 'border-red-500 min-w-[200px] border-[1px] w-full bg-transparent p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent min-w-[200px] p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary'
                     "
                     placeholder="Problems"
                   />
@@ -253,7 +254,7 @@
                 <td class="p-0 w-[22%]">
                   <textarea
                     formControlName="physicianRecommendedAction"
-                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full min-w-[250px] p-2 h-[47px] flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                     placeholder="Write comment"
                   ></textarea>
                 </td>
@@ -295,7 +296,7 @@
       <div class="p-body overflow-x-scroll lg:overflow-none" id="findings">
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
             Findings / On Examination
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm">
@@ -337,8 +338,8 @@
                     placeholder="Observation"
                     [class]="
                       formSubmitted && finding.get('observation')?.invalid
-                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                        ? 'border-red-500 min-w-[250px] border-[1px] w-full bg-transparent p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent min-w-[250px] p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary'
                     "
                     formControlName="observation"
                   />
@@ -347,7 +348,7 @@
                 <td class="p-0">
                   <textarea
                     formControlName="comments"
-                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full min-w-[200px] p-2 h-[47px] flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                     placeholder="Write comment"
                   ></textarea>
                 </td>
@@ -390,8 +391,8 @@
         <div class="p-body-item col-span-12 mt-5">
           <div class="flex justify-between">
             <h1 class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i> Medication &
-              Schedule
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
+              Medication & Schedule
             </h1>
           </div>
 
@@ -450,8 +451,8 @@
                     [matAutocomplete]="auto"
                     [class]="
                       formSubmitted && medicine.get('drugName')?.invalid
-                        ? 'border-red-500 border-[1px] w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-red-500'
-                        : 'w-full bg-transparent p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary'
+                        ? 'border-red-500 min-w-[250px] border-[1px] w-full bg-transparent p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-red-500'
+                        : 'w-full bg-transparent min-w-[250px] p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary'
                     "
                   />
                   <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -473,13 +474,13 @@
                   <div class="flex w-full">
                     <input
                       formControlName="durationDay"
-                      class="w-[50px] h-[47px] bg-transparent px-3 py-2 border-r-[1px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                      class="w-[50px] h-[47px] bg-transparent px-3 py-2 border-r-[1px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary"
                       value="1"
                     />
                     <mat-select
                       [value]="'day'"
                       formControlName="durationTime"
-                      class="text-[16px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
+                      class="md:text-[16px] text-[14px] text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
                     >
                       <mat-option value="day">Day</mat-option>
                       <mat-option value="week">Week</mat-option>
@@ -506,8 +507,8 @@
                       [class]="
                         formSubmitted &&
                         medicine.get('drugDoseSchedule')?.invalid
-                          ? 'border-red-500 border-[1px] text-[16px]  p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
-                          : 'text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
+                          ? 'border-red-500 border-[1px] md:text-[16px] text-[14px]  p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
+                          : 'md:text-[16px] text-[14px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary'
                       "
                     >
                       <mat-option value="1 + 1 + 1"> 1 + 1 + 1</mat-option>
@@ -523,7 +524,7 @@
                       multiple
                       formControlName="drugDoseScheduleDays"
                       placeholder="Select Day"
-                      class="text-[16px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
+                      class="md:text-[16px] text-[14px] border-[1px] p-1 text-primary font-Roboto placeholder:text-primary focus:outline-secondary"
                       *ngIf="medicine.get('specialCaseChecked')?.value"
                     >
                       <mat-option value="Sun"> Sun</mat-option>
@@ -539,7 +540,7 @@
                 <td class="p-0 w-[22%]">
                   <textarea
                     formControlName="instruction"
-                    class="w-full p-2 h-[84px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full min-w-[200px] p-2 h-[84px] flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                     placeholder="Write comment"
                   ></textarea>
                 </td>
@@ -578,10 +579,10 @@
       </div>
 
       <!-- Diagnosis * start -->
-      <div class="p-body overflow-x-scroll lg:overflow-none">
+      <div class="p-body overflow-x-scroll md:overflow-none">
         <div class="p-body-item col-span-12 mt-5">
           <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-            <i class="fa-solid fa-circle-stop text-[16px]"></i>
+            <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
             Diagnosis
           </div>
           <table class="table text-gray-400 border-separate space-y-6 text-sm">
@@ -620,7 +621,7 @@
                   <input
                     type="text"
                     placeholder="Test name"
-                    class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                    class="w-full min-w-[200px] p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary"
                     formControlName="testName"
                   />
                 </td>
@@ -628,7 +629,7 @@
                 <td class="p-0">
                   <textarea
                     formControlName="comments"
-                    class="w-full p-2 h-[47px] flex bg-transparent focus:outline-secondary text-[16px]"
+                    class="w-full min-w-[200px] p-2 h-[47px] flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                     placeholder="Write comment"
                   ></textarea>
                 </td>
@@ -667,11 +668,11 @@
       </div>
 
       <!-- Follow us & Advice * start -->
-      <div class="p-body overflow-x-scroll lg:overflow-none">
+      <div class="p-body">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-body-item mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
               Follow Up
             </div>
             <table
@@ -695,7 +696,7 @@
                     <input
                       type="date"
                       formControlName="followUp"
-                      class="w-full p-2 h-[47px] text-[16px] text-primary font-Roboto focus:outline-secondary"
+                      class="w-full p-2 h-[47px] md:text-[16px] text-[14px] text-primary font-Roboto focus:outline-secondary"
                     />
                   </td>
                 </tr>
@@ -705,7 +706,7 @@
 
           <div class="p-body-item mt-5">
             <div class="font-Roboto text-[18px] text-primary/90 font-semibold">
-              <i class="fa-solid fa-circle-stop text-[16px]"></i>
+              <i class="fa-solid fa-circle-stop md:text-[16px] text-[14px]"></i>
               Advice
             </div>
             <table
@@ -726,7 +727,7 @@
                   <td class="p-0">
                     <textarea
                       formControlName="advice"
-                      class="w-full p-2 h-[100px] flex bg-transparent focus:outline-secondary text-[16px]"
+                      class="w-full p-2 h-[100px] flex bg-transparent focus:outline-secondary md:text-[16px] text-[14px]"
                       placeholder="Write comment"
                     ></textarea>
                   </td>

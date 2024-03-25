@@ -338,11 +338,6 @@ export interface RtcTokenBuilerDto {
   uid: number;
 }
 
-export interface SendNotificationInputDto {
-  targetUserName?: string;
-  message?: string;
-}
-
 export interface ServiceProviderInputDto extends FullAuditedEntityDto<number> {
   platformFacilityId?: number;
   providerOrganizationName?: string;

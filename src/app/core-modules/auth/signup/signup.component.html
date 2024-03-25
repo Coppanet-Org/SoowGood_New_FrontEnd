@@ -35,7 +35,7 @@
       </h1>
       <p class="text-slate-500 mt-2">Hi, Welcome to SoowGood!</p>
       <form action="" class="mt-6" [formGroup]="formGroup">
-        <div class="grid-wrapper grid-col-auto">
+        <div class="grid sm:gap-6 grid-cols-1 sm:grid-cols-2">
           <label for="radio-card-1" class="radio-card">
             <input
               autocomplete="off"
@@ -244,7 +244,7 @@
     </div>
 
     <div
-      class="bg-white lg:p-16 shadow shadow-slate-300"
+      class="bg-white p-8 lg:p-16 shadow shadow-slate-300"
       [style]="
         userInfoModal == true && completeDegreeSpecilizationInfoModal == false
           ? ''

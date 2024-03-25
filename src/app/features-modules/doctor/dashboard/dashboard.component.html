@@ -30,47 +30,56 @@
         <div
           class="bottom-box border-[1px] mt-5 bg-white rounded-lg box-border overflow-auto"
         >
-          <div class="flex justify-between p-2 border-b-[1px] items-center">
-            <h2 class="text-[20px] font-semibold h-fit">Appointments</h2>
+          <div
+            class="flex justify-between py-2 pl-3 bg-gray-100 border-b-[1px] items-center"
+          >
+            <h2 class="text-[18px] font-semibold h-fit">Today's Patient</h2>
             <div>
               <select
                 [(ngModel)]="selectedValue"
-                (change)="changeSelection($event)"
+                (change)="({})"
                 [value]="selectedValue"
               >
-                <option value="All">All</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Completed">Completed</option>
+                <option value="All">Session one</option>
+                <option value="Confirmed">Session two</option>
+                <option value="Completed">Session three</option>
               </select>
             </div>
-            <button
+            <!-- <button
               class="btn-secondary-light h-fit"
               routerLink="../appointments"
             >
               View all
-            </button>
+            </button> -->
           </div>
           <div
             *ngIf="!aptLoading"
             class="overflow-y-auto h-[400px] custom-scrollbar"
           >
             <table
-              class="w-full text-sm text-left rounded-lg text-gray-500 border-[1px] table table-xs table-pin-rows table-pin-cols"
+              class="w-full z-0 text-sm text-left rounded-lg text-gray-500 border-[1px] table table-xs table-pin-rows table-pin-cols"
             >
               <thead
                 class="text-xs rounded-lg text-gray-800 uppercase bg-black/5"
               >
                 <tr>
                   <th scope="col" class="px-6 py-3">Patient's Name</th>
-                  <th scope="col" class="px-6 py-3">App. Date</th>
-                  <th scope="col" class="px-6 py-3">App. Time</th>
-                  <th scope="col" class="px-6 py-3">App. Type</th>
+                  <th scope="col" class="px-6 py-3">Serial No</th>
+                  <th scope="col" class="px-6 py-3">Age</th>
+                  <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
               </thead>
               <tbody>
+                @for (apt of appointmentList; track $index) {
                 <tr
-                  *ngFor="let apt of appointmentList"
                   class="bg-white hover:bg-gray-50"
+                  [ngClass]="
+                    $index < 5
+                      ? ' opacity-40 hover:bg-none'
+                      : $index == 5
+                      ? ' font-bold text-secondary-dark'
+                      : ''
+                  "
                 >
                   <td class="px-6 py-4">
                     {{ apt.patientName }}
@@ -83,9 +92,10 @@
                     {{ apt.appointmentTime }}
                   </td>
                   <td class="px-6 py-4">
-                    {{ apt.consultancyTypeName }}
+                    <button>Call Now</button>
                   </td>
                 </tr>
+                }
               </tbody>
             </table>
           </div>
@@ -124,7 +134,7 @@
             class="overflow-y-auto h-[400px] custom-scrollbar"
           >
             <table
-              class="w-full text-sm text-left rounded-lg text-gray-500 border-[1px] table table-xs table-pin-rows table-pin-cols"
+              class="w-full z-0 text-sm text-left rounded-lg text-gray-500 border-[1px] table table-xs table-pin-rows table-pin-cols"
             >
               <thead
                 class="text-xs rounded-lg text-gray-800 uppercase bg-black/5"
@@ -167,7 +177,8 @@
         </div>
       </div>
     </div>
-    <div class="grid w-full relative">
+
+    <!-- <div class="grid w-full relative">
       <div
         class="bg-white lg:fixed overflow-y-scroll custom-scrollbar h-full dark:bg-gray-800 rounded-xl mx-auto border p-6 shadow-sm"
       >
@@ -272,6 +283,6 @@
           Clear all notifications
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

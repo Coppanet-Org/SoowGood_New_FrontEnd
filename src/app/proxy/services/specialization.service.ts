@@ -51,6 +51,14 @@ export class SpecializationService {
     { apiName: this.apiName,...config });
   
 
+  getListFiltering = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SpecializationDto[]>({
+      method: 'GET',
+      url: '/api/app/specialization/filtering',
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: SpecializationInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, SpecializationDto>({
       method: 'PUT',
