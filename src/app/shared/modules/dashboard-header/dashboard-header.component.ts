@@ -34,9 +34,10 @@ export class DashboardHeaderComponent {
 
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
-    this.getNotificationMessage();
+    
     this.authInfo = this.NormalAuth.authInfo();
-    this.getNotificationCount();
+    //this.getNotificationCount();
+    this.getNotification();
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(environment.apis.default.url + '/notify')
@@ -55,7 +56,7 @@ export class DashboardHeaderComponent {
     connection.on('BroadcastMessage', () => {
       console.log('notif');
 
-      this.getNotificationCount();
+      this.getNotification();
     });
   }
   signOut(): void {
@@ -73,22 +74,22 @@ export class DashboardHeaderComponent {
     });
   }
 
-  getNotificationCount() {
-    this.notificationService.getCount().subscribe(
-      (notification) => {
-        this.notificationCount = notification;
-      }
-      //,      error => this.errorMessage = <any>error
-    );
-  }
+  //getNotificationCount() {
+  //  this.notificationService.getCount().subscribe(
+  //    (notification) => {
+  //      this.notificationCount = notification;
+  //    }
+  //    //,      error => this.errorMessage = <any>error
+  //  );
+  //}
 
-  getNotificationMessage() {
+  getNotification() {
     this.notificationService.getList().subscribe(
       (messages) => {
-        console.log(messages);
 
-        this.messageList = messages;
+        this.messageList = messages.filter(a => a.notifyToEntityId == this.authInfo.id);
       }
+      //this.notificationCount = this.messageList.length;
       //,      error => this.errorMessage = <any>error
     );
   }
