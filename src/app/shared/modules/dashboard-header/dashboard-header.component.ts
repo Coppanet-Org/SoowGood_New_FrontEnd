@@ -9,7 +9,7 @@ import { NotificationService } from '../../../proxy/services';
 import { environment } from 'src/environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { NotificationDto } from 'src/app/proxy/dto-models';
-import { Observable } from 'rxjs';
+import { Observable, elementAt } from 'rxjs';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -26,7 +26,7 @@ export class DashboardHeaderComponent {
     public dialog: MatDialog,
     private menuService: MenuService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   onClickMobileMenu(status: boolean) {
     this.menuService.visible(status);
@@ -34,9 +34,8 @@ export class DashboardHeaderComponent {
 
   ngOnInit(): void {
     this.menuService.menuVisibility$.subscribe((res) => (this.isVisible = res));
-    
     this.authInfo = this.NormalAuth.authInfo();
-    //this.getNotificationCount();
+    // this.getNotification();
     this.getNotification();
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
@@ -55,7 +54,6 @@ export class DashboardHeaderComponent {
 
     connection.on('BroadcastMessage', () => {
       console.log('notif');
-
       this.getNotification();
     });
   }
@@ -77,20 +75,27 @@ export class DashboardHeaderComponent {
   //getNotificationCount() {
   //  this.notificationService.getCount().subscribe(
   //    (notification) => {
+  //      console.log(notification);
+
   //      this.notificationCount = notification;
+  //      this.getNotificationMessage();
   //    }
   //    //,      error => this.errorMessage = <any>error
   //  );
   //}
 
   getNotification() {
-    this.notificationService.getList().subscribe(
-      (messages) => {
-
-        this.messageList = messages.filter(a => a.notifyToEntityId == this.authInfo.id);
+    this.notificationService.getList().subscribe((messages) => {
+      if (this.authInfo.userType == 'doctor') {
+        this.messageList = messages.filter(
+          (m) => m.notifyToEntityId == this.authInfo.id
+        );
+      } else {
+        this.messageList = messages.filter(
+          (m) => m.creatorEntityId == this.authInfo.id
+        );
       }
-      //this.notificationCount = this.messageList.length;
-      //,      error => this.errorMessage = <any>error
-    );
+      this.notificationCount = this.messageList.length;
+    });
   }
 }
