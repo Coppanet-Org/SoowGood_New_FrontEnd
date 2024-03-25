@@ -55,27 +55,27 @@ export class DashboardComponent implements OnInit {
     this.authInfo = this.NormalAuth.authInfo();
     let authId = this.NormalAuth.authInfo()?.id;
     this.doctorId = authId;
-    this.getNotification();
+    //this.getNotification();
     this.getDashboardStatisticData(authId);
     this.getDashboardAppointment(this.selectedValue);
-    const connection = new signalR.HubConnectionBuilder()
-      .configureLogging(signalR.LogLevel.Information)
-      .withUrl(environment.apis.default.url + '/notify')
-      .build();
+    //const connection = new signalR.HubConnectionBuilder()
+    //  .configureLogging(signalR.LogLevel.Information)
+    //  .withUrl(environment.apis.default.url + '/notify')
+    //  .build();
 
-    connection
-      .start()
-      .then(function () {
-        console.log('SignalR Connected!');
-      })
-      .catch(function (err) {
-        console.log(err);
-        //return console.error(err.toString());
-      });
+    //connection
+    //  .start()
+    //  .then(function () {
+    //    console.log('SignalR Connected!');
+    //  })
+    //  .catch(function (err) {
+    //    console.log(err);
+    //    //return console.error(err.toString());
+    //  });
 
-    connection.on('BroadcastMessage', () => {
-      this.getNotification();
-    });
+    //connection.on('BroadcastMessage', () => {
+    //  this.getNotification();
+    //});
   }
   getDashboardStatisticData(id: number) {
     this.DashboardService.getDashboadDataForDoctor(id).subscribe({
@@ -109,21 +109,21 @@ export class DashboardComponent implements OnInit {
       return;
     }
   }
-  getNotification() {
-    this.notificationService.getList().subscribe(
-      (messages) => {
-        if (this.authInfo.userType == "doctor") {
+  //getNotification() {
+  //  this.notificationService.getList().subscribe(
+  //    (messages) => {
+  //      if (this.authInfo.userType == "doctor") {
 
-          this.messageList = messages.filter(m => m.notifyToEntityId == this.authInfo.id);
-          this.todayMessageList = this.messageList.filter(d => d.creationTime?.toString() == this.myDate.toDateString())
-          this.lastdayMessageList = this.messageList.filter(d => d.creationTime == this.myDate)
+  //        this.messageList = messages.filter(m => m.notifyToEntityId == this.authInfo.id);
+  //        this.todayMessageList = this.messageList.filter(d => d.creationTime?.toString() == this.myDate.toDateString())
+  //        this.lastdayMessageList = this.messageList.filter(d => d.creationTime == this.myDate)
 
-        }
-        else {
-          this.messageList = messages.filter(m => m.creatorEntityId == this.authInfo.id);
-        }
-        this.notificationCount = this.messageList.length;
-      }
-    );
-  }
+  //      }
+  //      else {
+  //        this.messageList = messages.filter(m => m.creatorEntityId == this.authInfo.id);
+  //      }
+  //      this.notificationCount = this.messageList.length;
+  //    }
+  //  );
+  //}
 }
