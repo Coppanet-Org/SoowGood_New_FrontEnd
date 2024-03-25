@@ -66,5 +66,11 @@
     "tailwindcss": "^3.3.2",
     "typescript": "5.2",
     "webpack-bundle-analyzer": "^4.4.2"
+  },
+  "browser": {
+    "http": false,
+    "https": false,
+    "url": false,
+    "util": false
   }
 }
