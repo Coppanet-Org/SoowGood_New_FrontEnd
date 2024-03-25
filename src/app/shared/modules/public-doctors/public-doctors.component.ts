@@ -119,8 +119,8 @@ export class PublicDoctorsComponent implements OnInit {
       const name = params['doctorname']
         ? params['doctorname']
         : params['patientname']
-        ? params['patientname']
-        : undefined;
+          ? params['patientname']
+          : undefined;
       const consultancyType = params['consultancyType'];
       const specialization = params['specialization'];
       console.log(specialization);
