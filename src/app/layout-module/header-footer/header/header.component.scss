@@ -6,3 +6,31 @@
     transition: 0.4s;
     border-bottom: 1px solid #30bced;
   }
+
+
+
+  .home-menu{
+    width: 320px;
+    position: absolute;
+    top: 65px;
+    height: 100vh;
+    transition: 0.3s;
+    padding: 15px;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    ul{
+      li{
+        color: white;
+        transition: 0.3s;
+      }&:hover{
+        color: #30bced;
+      }
+    }
+
+  }
+  .show-home-menu{
+    left: 0%;
+  }
+  .hide-home-menu{
+    left: -150%;
+  }

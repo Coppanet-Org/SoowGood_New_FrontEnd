@@ -1,4 +1,4 @@
-<div class="p-12 h-[100%]">
+<div class="p-4 lg:p-10 h-[100%]">
   <!-- <div class="pb-6">
     <h2 class="text-[20px] font-Roboto text-primary/90">
       <i class="fa-solid fa-address-card mb-3 mr-2"></i> About me
@@ -13,17 +13,17 @@
     </p>
   </div> -->
 
-  <div class="grid grid-cols-4 pt-10 w-full">
-    <div class="pb-6 col-span-2">
+  <div class="grid grid-cols-1 lg:grid-cols-2 pt-4 w-full">
+    <div class="pb-6 w-full">
       <h2 class="text-[20px] font-Roboto text-primary/90">
         <i class="fa-solid fa-briefcase mb-3 mr-2"></i>Hospital & Location :-
       </h2>
       @for (schedule of scheduleInfo; track $index) {
       <!-- {{ schedule | json }} -->
-      <p class="relative mt-5 ml-6 flex gap-3">
+      <p class="relative mt-5 lg:ml-6 flex gap-3">
         <i
           [class]="
-            $index == degreeDetails.length - 1
+            $index == degreeDetails?.length - 1
               ? 'fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]'
               : 'after:content-[] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]'
           "
@@ -39,11 +39,15 @@
           <div class="text-[15px] font-Roboto text-gray-500 ml-2 space-y-4">
             Available Day & Time
 
-            <div class="grid grid-cols-3 gap-3 mt-2">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 mt-2">
               @for(scession of schedule.doctorScheduleDaySession; track $index)
-              {<span class="bg-secondary/10 text-secondary-dark py-1 px-4">
-                <p>{{ scession.scheduleDayofWeek }}</p>
-                {{ scession.startTime }} -- {{ scession.endTime }} </span
+              {<span
+                class="bg-secondary/10 text-secondary-dark py-1 px-4 text-[13px] md:text-[16px]"
+              >
+                <p>
+                  {{ scession.scheduleDayofWeek }}
+                </p>
+                {{ scession.startTime }} - {{ scession.endTime }} </span
               >}
             </div>
           </div>
@@ -51,7 +55,7 @@
       </p>
       }
     </div>
-    <div class="pb-6 col-span-1">
+    <div class="pb-6 w-full">
       <h2 class="text-[20px] font-Roboto text-primary/90">
         <i class="fa-solid fa-school mb-3 mr-2"></i>Education :-
       </h2>
@@ -79,60 +83,6 @@
       </p>
       }
     </div>
-
-    <!-- <div class="pb-6 col-span-1">
-      <h2 class="text-[20px] font-Roboto text-primary/90">
-        <i class="fa-solid fa-school mb-3 mr-2"></i>Awards :-
-      </h2>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:content-[' '] after:w-[1px] after:h-[80px] after:bg-secondary after:absolute after:top-[16px] after:left-[8px] fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-      <p class="relative mt-5 ml-6 flex gap-3">
-        <i
-          class="after:bg-secondary fa-regular fa-circle-dot mb-[20px] text-secondary text-[16px]"
-        ></i>
-        <span class="flex flex-col">
-          <span class="text-[16px] font-semibold font-Roboto text-primary/80"
-            >American Dental Medical University
-          </span>
-          <span class="text-[15px] text-gray-500 ml-2">BDS </span>
-          <span class="text-[15px] text-gray-500 ml-2">1998 - 2003</span>
-        </span>
-      </p>
-    </div> -->
   </div>
 
   <div class="py-10">
@@ -140,7 +90,7 @@
       <i class="fa-solid fa-briefcase mb-3 mr-2"></i>Specializations & Tags:-
     </h2>
 
-    <div class="flex gap-4">
+    <div class="flex gap-4 flex-wrap">
       <div
         class="py-2 bg-secondary-light px-8 rounded-md border-[1px] font-Roboto text-primary/80 text-[15px]"
       >

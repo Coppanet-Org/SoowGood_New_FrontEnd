@@ -1,17 +1,100 @@
 <!-- <span class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded  ">Popular</span> -->
 
 <div
-  class="w-full my-5 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 m-auto custom-scrollbar max-h-[460px] overflow-y-scroll"
+  class="w-full my-3 p-4 max-w-[470px] border-[1px] border-secondary-dark/50 rounded-lg shadow m-auto custom-scrollbar max-h-[470px] overflow-y-scroll"
 >
-  <h5 class="text-base font-semibold text-primary md:text-xl">
-    {{ bookingInfo?.doctorName }}
+  <h5 class="text-[22px] md:text-[26px] font-semibold text-primary text-center">
+    Dr. {{ bookingInfo?.doctorName }}
   </h5>
+  <h2 class="text-[14px] md:text-[18px] text-primary text-center">
+    <span> Patient name: </span>{{ bookingInfo?.patientName }}
+  </h2>
+  <div class="grid grid-cols-1 gap-6 mt-5">
+    <div class="col-span-1">
+      <div
+        class="mt-6 relative grid grid-cols-3 gap-6 text-center place-items-center justify-center lg:text-left bg-slate-100 pt-8 pb-4 px-4 border-[1px] border-secondary-dark/50"
+      >
+        <span
+          class="absolute text-[15px] md:text-[16px] left-1/2 font-Roboto font-semibold text-primary bg-white rounded-full -top-4 -translate-x-1/2 py-1 px-3 border-[1px] border-secondary-dark/50"
+          >Appointment</span
+        >
+        <div class="text-center min-w-[100px]">
+          <p
+            class="font-bold text-[12px] sm:text-[14px] md:text-[16px] text-primary"
+          >
+            {{ bookingInfo?.appointmentDate | date }}
+          </p>
+          <p class="text-[12px] sm:text-sm text-primary">Date</p>
+        </div>
+
+        <div class="text-center">
+          <p
+            class="font-bold text-primary text-[12px] sm:text-[14px] md:text-[16px]"
+          >
+            @if (bookingInfo?.doctorChamberName) {
+            {{ bookingInfo?.doctorChamberName }}
+            }@else{ Soowgood Online Platform }
+          </p>
+
+          <p class="text-[12px] sm:text-sm text-primary">Place</p>
+        </div>
+
+        <div class="text-center">
+          <p
+            class="font-bold text-primary text-[12px] sm:text-[14px] md:text-[16px]"
+          >
+            {{ getDayOfWeek(bookingInfo?.appointmentDate) }}
+          </p>
+          <p class="text-[12px] sm:text-sm text-primary">Day</p>
+        </div>
+      </div>
+      <div
+        class="text-center grid gap-5 grid-cols-2 items-center lg:text-left mt-5"
+      >
+        <div>
+          <p class="mt-2 text-[14px] md:text-[16px] text-gray-500">
+            Doctor Fee : {{ bookingInfo?.doctorFee }} tk.
+          </p>
+          @if (userType !=='patient') {
+
+          <p class="mt-2 text-[14px] md:text-[16px] text-gray-500">
+            Booth Fee : {{ bookingInfo?.agentFee }} tk.
+          </p>
+          }
+          <p class="mt-2 text-[14px] md:text-[16px] text-gray-500">
+            Platform Fee : {{ bookingInfo?.platformFee }} tk.
+          </p>
+        </div>
+        <div class="flex justify-center">
+          <p
+            class="mt-2 inline-block text-secondary text-[22px] md:text-[28px] font-bold"
+          >
+            Total : {{ bookingInfo?.totalAppointmentFee }} tk.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-[1fr,2fr] sm:grid-cols-2 gap-4">
+        <button
+          class="btn-secondary bg-primary mt-6 text-[14px] md:text-[15px] tracking-[1px] py-1 w-full"
+          (click)="gotToBack.emit(1)"
+        >
+          Back
+        </button>
+        <button
+          class="btn-secondary mt-6 text-[16px] tracking-[1px] py-2 w-full"
+          (click)="createAppointmentAndPayment()"
+        >
+          {{ loading ? "Loading..." : "Confirm & Pay" }}
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- <p class="text-sm font-normal text-gray-500 ">
     General Medicine
   </p> -->
 
-  <div class="relative overflow-x-auto">
+  <!-- <div class="relative overflow-x-auto">
     <table class="w-full mt-6 text-sm text-left text-gray-500">
       <tbody>
         <tr class="bg-white border-b">
@@ -25,14 +108,7 @@
             {{ bookingInfo?.patientName }}
           </td>
         </tr>
-        <!-- <tr class="bg-white border-b   ">
-                  <th scope="row" class=" py-2 font-medium text-primary whitespace-nowrap   ">
-                    Appointment Day :
-                  </th>
-                  <td class=" py-2">
-                    {{bookingInfo?.scheduleDayofWeek}}
-                  </td>
-                </tr> -->
+
         <tr class="bg-white border-b">
           <th
             scope="row"
@@ -44,17 +120,7 @@
             {{ bookingInfo?.appointmentDate | date }}
           </td>
         </tr>
-        <!-- <tr class="bg-white border-b">
-          <th
-            scope="row"
-            class="py-2 font-medium text-primary whitespace-nowrap"
-          >
-            Appointment Type :
-          </th>
-          <td class="py-2">
-            {{ bookingInfo?.appointmentTypeName }}
-          </td>
-        </tr> -->
+
         <tr class="bg-white border-b">
           <th
             scope="row"
@@ -63,7 +129,6 @@
             Hospital name :
           </th>
           <td class="py-2">
-            <!--{{getChamber(bookingInfo?.doctorChamberId)}}-->
             @if (bookingInfo?.doctorChamberName) {
             {{ bookingInfo?.doctorChamberName }}
             }@else{ Soowgood Online Platform }
@@ -127,5 +192,5 @@
         {{ loading ? "Loading..." : "Confirm & Pay" }}
       </button>
     </div>
-  </div>
+  </div> -->
 </div>

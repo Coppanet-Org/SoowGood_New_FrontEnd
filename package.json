@@ -30,12 +30,15 @@
     "@angular/platform-browser": "^17.1.2",
     "@angular/platform-browser-dynamic": "^17.1.2",
     "@angular/router": "^17.1.2",
+    "@microsoft/signalr": "^8.0.0",
     "@ngneat/hot-toast": "^5.0.2",
     "@ngneat/overview": "^3.0.0",
     "angular-animations": "^0.11.0",
+    "crypto-js": "^4.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "ng-otp-input": "^1.9.2",
+    "ngx-facebook-messenger": "^1.2.0",
     "rxjs": "~7.8.0",
     "subsink": "^1.0.2",
     "swiper": "^9.4.1",
@@ -48,6 +51,7 @@
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.1.2",
     "@angular/localize": "^17.1.2",
+    "@types/crypto-js": "^4.2.2",
     "@types/jasmine": "~4.3.0",
     "@types/jspdf": "^2.0.0",
     "autoprefixer": "^10.4.14",
@@ -62,5 +66,11 @@
     "tailwindcss": "^3.3.2",
     "typescript": "5.2",
     "webpack-bundle-analyzer": "^4.4.2"
+  },
+  "browser": {
+    "http": false,
+    "https": false,
+    "url": false,
+    "util": false
   }
 }

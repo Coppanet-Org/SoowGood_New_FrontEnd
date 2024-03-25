@@ -5,7 +5,13 @@
 ::ng-deep .mat-mdc-text-field-wrapper{
     border: 1px solid rgb(211, 211, 211);
     height: 45px!important;
+    background: white!important;
 }
+
+::ng-deep .mat-mdc-text-field-wrapper:focus-within{
+  background: red;
+}
+
 ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
     top: 30px;
 }
@@ -26,4 +32,10 @@
 ::ng-deep .mat-mdc-form-field-infix {
     padding-top: 9px!important;
     padding-bottom: 0px;
+  }
+
+  @media (min-width:320px) and (max-width:576px) {
+    ::ng-deep .mat-mdc-form-field{
+      margin-left: 0px;
+   }
   }

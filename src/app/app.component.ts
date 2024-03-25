@@ -8,6 +8,8 @@ import { LoaderService } from './shared/services/loader.service';
 })
 export class AppComponent implements OnInit {
   isLoading: boolean = false;
+  key: any = 'soowgood2024';
+  userInfo: any;
   constructor(
     private loaderService: LoaderService,
     private cdr: ChangeDetectorRef

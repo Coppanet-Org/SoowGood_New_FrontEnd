@@ -52,7 +52,7 @@ export class PublicPatientsComponent implements OnInit {
 
   addNewPatient() {
     this.dialog.open(CreatePatientComponent, {
-      width: '40vw',
+      maxHeight: '450px',
     });
   }
 

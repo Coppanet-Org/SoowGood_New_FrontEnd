@@ -8,13 +8,14 @@
           <app-filter
             [filterInput]="filterInput"
             [filterForm]="filter"
-            (selectedValueForFilter)="selectedFilterData($event)"
-            (getSpecializations)="getSpecializations()"
-            (searchValue)="searchData($event)"
           ></app-filter>
           <div
             *ngIf="dataLoading"
-            class="grid grid-cols-4 gap-10 flex-wrap p-5"
+            [ngClass]="
+              from == 'globalSearch'
+                ? 'w-full  grid lg:grid-cols-3 xl:grid-cols-4 gap-7 p-5  flex-wrap  pb-[50px]'
+                : 'w-full grid lg:grid-cols-3 gap-10 p-5  flex-wrap  pb-[50px]'
+            "
           >
             <app-skeleton></app-skeleton>
             <app-skeleton></app-skeleton>
@@ -46,16 +47,18 @@
                 : 'w-full grid lg:grid-cols-3 gap-10 p-5  flex-wrap  pb-[50px]'
             "
           >
-            <div *ngFor="let doctorDetails of doctorList" class="h-full">
+            @for (doctorDetails of doctorList; track $index) {
+            <div class="h-full">
               <app-doctor-card
                 [doctorDetails]="doctorDetails"
                 class="max-w-[350px] min-w-[310px]"
               >
               </app-doctor-card>
             </div>
+            }
           </div>
 
-          <div class="w-full flex justify-center">
+          <!-- <div class="w-full flex justify-center">
             <mat-paginator
               class="bg-primary/5 w-fit py-2 px-2.5 rounded-xl shadow-2xl shadow-secondary/10"
               [length]="totalCount"
@@ -65,7 +68,7 @@
               (page)="pageChanged($event)"
             >
             </mat-paginator>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

@@ -45,7 +45,11 @@ export class AgentLoginComponent implements OnInit {
   ngOnInit(): void {
     this.loadForm();
   }
-
+  goToForgotPassword() {
+    this._router.navigate(['/forgot-password'], {
+      queryParams: { redirect: 'agent/login' },
+    });
+  }
   loadForm() {
     this.loginForm = this.fb.group({
       mobileNo: [this.defaultAuth.mobileNo, Validators.required],

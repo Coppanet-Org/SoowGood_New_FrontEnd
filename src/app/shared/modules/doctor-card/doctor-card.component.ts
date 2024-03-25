@@ -28,8 +28,7 @@ export class DoctorCardComponent implements OnInit {
     private DoctorScheduleService: DoctorScheduleService,
     private router: Router,
     private TosterService: TosterService,
-    private NormalAuth: AuthService,
-    private UserinfoStateService: UserinfoStateService
+    private NormalAuth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +36,13 @@ export class DoctorCardComponent implements OnInit {
     const prePaths: string = this.doctorDetails.profilePic;
     const re = /wwwroot/gi;
     const profilePic = prePaths?.replace(re, '');
-    this.doctorPicurl = this.picUrl + profilePic;
+
+    if (profilePic) {
+      this.doctorPicurl = this.picUrl + profilePic;
+    } else {
+      this.doctorPicurl = '';
+    }
+
     //this.doctorPicurl = this.picUrl + this.doctorDetails.profilePic;
   }
 
@@ -63,7 +68,7 @@ export class DoctorCardComponent implements OnInit {
                 picUrl: this.doctorPicurl,
               },
               doctorScheduleInfo: res,
-              userAccess: this.isAuthUser.userType == 'doctor' ? false : true,
+              userAccess: this.isAuthUser?.userType == 'doctor' ? false : true,
               isAuthUser: this.isAuthUser?.id ? true : false,
             },
           });
@@ -75,6 +80,9 @@ export class DoctorCardComponent implements OnInit {
           );
         }
       });
+    } else {
+      this.isLoading = false;
+      this.TosterService.customToast(`No Details/Schedule found`, 'warning');
     }
   }
   goToProfile() {

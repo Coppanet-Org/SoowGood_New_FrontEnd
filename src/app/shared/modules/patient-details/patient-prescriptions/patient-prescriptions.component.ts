@@ -6,17 +6,16 @@ import { ShowPrescriptionModalComponent } from '../../show-prescription-modal/sh
 @Component({
   selector: 'app-patient-prescriptions',
   templateUrl: './patient-prescriptions.component.html',
-  styleUrls: ['./patient-prescriptions.component.scss']
+  styleUrls: ['./patient-prescriptions.component.scss'],
 })
 export class PatientPrescriptionsComponent {
-@Input() prescriptionListDetails!:PrescriptionMasterDto[]
-constructor( public dialog: MatDialog) {}
-openPdfDialog(id:any): void {
-  this.dialog.open(ShowPrescriptionModalComponent, {
-    minWidth: '820px',
-    maxWidth: '100%',
-    height:"1000px",
-    data: { prescriptionId: id }
-  });
-}
+  @Input() prescriptionListDetails!: PrescriptionMasterDto[];
+  constructor(public dialog: MatDialog) {}
+  openPdfDialog(id: any): void {
+    this.dialog.open(ShowPrescriptionModalComponent, {
+      maxWidth: '820px',
+
+      data: { prescriptionId: id },
+    });
+  }
 }

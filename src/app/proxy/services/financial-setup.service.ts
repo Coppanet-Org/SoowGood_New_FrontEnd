@@ -43,6 +43,15 @@ export class FinancialSetupService {
     { apiName: this.apiName,...config });
   
 
+  getToalDiscountAmountTotalProviderAmount = (amount: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/financial-setup/toal-discount-amount-total-provider-amount',
+      params: { amount },
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (input: FinancialSetupInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, FinancialSetupDto>({
       method: 'PUT',
