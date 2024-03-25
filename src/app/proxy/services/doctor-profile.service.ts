@@ -1,7 +1,6 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { DataFilterModel, DoctorProfileDto, FilterModel } from '../dto-models/models';
-import type { ConsultancyType } from '../enums/consultancy-type.enum';
 import type { DoctorProfileInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -32,15 +31,6 @@ export class DoctorProfileService {
     this.restService.request<any, DoctorProfileDto[]>({
       method: 'GET',
       url: '/api/app/doctor-profile/active-doctor-list',
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getAllDoctorsSearchList = (name: string, consultType: number, speciality: number, specialization: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DoctorProfileDto[]>({
-      method: 'GET',
-      url: '/api/app/doctor-profile/doctors-search-list',
-      params: { name, consultType, speciality, specialization },
     },
     { apiName: this.apiName,...config });
   
@@ -87,38 +77,11 @@ export class DoctorProfileService {
     { apiName: this.apiName,...config });
   
 
-  getDoctorListSearchByName = (name: string, filterModel: FilterModel, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DoctorProfileDto[]>({
-      method: 'GET',
-      url: '/api/app/doctor-profile/doctor-list-search-by-name',
-      params: { name, offset: filterModel.offset, limit: filterModel.limit, pageNo: filterModel.pageNo, pageSize: filterModel.pageSize, sortBy: filterModel.sortBy, sortOrder: filterModel.sortOrder, isDesc: filterModel.isDesc },
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getDoctorListWithSearchFilter = (name: string, consultancy: ConsultancyType, speciality: number, specialization: number, skipValue: number, currentLimit: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, DoctorProfileDto[]>({
-      method: 'GET',
-      url: '/api/app/doctor-profile/doctor-list-with-search-filter',
-      params: { name, consultancy, speciality, specialization, skipValue, currentLimit },
-    },
-    { apiName: this.apiName,...config });
-  
-
   getDoctorsCountByFilters = (doctorFilterModel: DataFilterModel, config?: Partial<Rest.Config>) =>
     this.restService.request<any, number>({
       method: 'GET',
       url: '/api/app/doctor-profile/doctors-count-by-filters',
       params: { name: doctorFilterModel.name, consultancyType: doctorFilterModel.consultancyType, specialityId: doctorFilterModel.specialityId, specializationId: doctorFilterModel.specializationId, appointmentStatus: doctorFilterModel.appointmentStatus, fromDate: doctorFilterModel.fromDate, toDate: doctorFilterModel.toDate, isCurrentOnline: doctorFilterModel.isCurrentOnline },
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getDoctorsCountByName = (name: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, number>({
-      method: 'GET',
-      url: '/api/app/doctor-profile/doctors-count-by-name',
-      params: { name },
     },
     { apiName: this.apiName,...config });
   
