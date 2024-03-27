@@ -90,15 +90,15 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
@@ -127,8 +127,7 @@
               "RelativeToolTip": "src\\app\\shared\\modules\\public-doctors\\public-doctors.component.html",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAABUAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-25T08:28:30.415Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T08:28:30.415Z"
             },
             {
               "$type": "Document",
@@ -140,8 +139,7 @@
               "RelativeToolTip": "src\\app\\features-modules\\public\\search-page\\search-page.component.html",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-25T08:26:53.647Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T08:26:53.647Z"
             },
             {
               "$type": "Document",
@@ -153,8 +151,7 @@
               "RelativeToolTip": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.html",
               "ViewState": "AQIAABUAAAAAAAAAAAAAAHYAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-25T08:24:17.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T08:24:17.303Z"
             },
             {
               "$type": "Document",
@@ -166,8 +163,7 @@
               "RelativeToolTip": "src\\app\\core-modules\\auth\\signup\\signup.component.html",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-25T08:23:23.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T08:23:23.519Z"
             },
             {
               "$type": "Document",
@@ -179,8 +175,7 @@
               "RelativeToolTip": "src\\app\\core-modules\\auth\\signup\\signup.component.ts",
               "ViewState": "AQIAADwDAAAAAAAAAAAAAFUFAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-03-25T08:20:26.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T08:20:26.304Z"
             },
             {
               "$type": "Document",
@@ -192,8 +187,7 @@
               "RelativeToolTip": "src\\app\\shared\\modules\\dashboard-header\\dashboard-header.component.ts",
               "ViewState": "AQIAAEQAAAAAAAAAAAAwwCYAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-03-25T07:39:26.629Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-25T07:39:26.629Z"
             }
           ]
         }
