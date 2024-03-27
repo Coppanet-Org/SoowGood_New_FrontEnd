@@ -5,7 +5,7 @@ export enum ConsultancyType {
   Online = 2,
   PhysicalVisit = 3,
   OnDemand = 4,
-  OnlineRT = 5,
+  Instant = 5,
 }
 
 export const consultancyTypeOptions = mapEnumToOptions(ConsultancyType);

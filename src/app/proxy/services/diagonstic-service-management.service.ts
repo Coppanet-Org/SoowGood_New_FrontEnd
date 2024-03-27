@@ -1,6 +1,7 @@
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { DiagonsticPathologyServiceManagementDto } from '../dto-models/models';
+import type { ServiceRequestStatus } from '../enums/service-request-status.enum';
 import type { DiagonsticPathologyServiceManagementInputDto } from '../input-dto/models';
 
 @Injectable({
@@ -40,6 +41,15 @@ export class DiagonsticServiceManagementService {
       method: 'PUT',
       url: '/api/app/diagonstic-service-management',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateServiceRequestStatusByAdminByIdAndServiceRequestStatus = (Id: number, serviceRequestStatus: ServiceRequestStatus, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, DiagonsticPathologyServiceManagementDto>({
+      method: 'PUT',
+      url: `/api/app/diagonstic-service-management/service-request-status-by-admin/${Id}`,
+      params: { serviceRequestStatus },
     },
     { apiName: this.apiName,...config });
 

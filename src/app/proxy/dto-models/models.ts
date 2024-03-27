@@ -221,7 +221,7 @@ export interface DiagonsticPackageTestDto extends FullAuditedEntityDto<number> {
 export interface DiagonsticPathologyServiceManagementDto extends FullAuditedEntityDto<number> {
   serviceRequestCode?: string;
   serviceProviderId?: number;
-  serviceProviderName?: number;
+  serviceProviderName?: string;
   diagonsticServiceType?: DiagonsticServiceType;
   diagonsticServiceTypeName?: string;
   diagonsticCategoryName?: string;
@@ -355,7 +355,10 @@ export interface DoctorProfileDto extends FullAuditedEntityDto<number> {
   createFrom?: string;
   profileRole?: string;
   profilePic?: string;
-  displayFee?: number;
+  displayInstantFee?: number;
+  displayScheduledChamberFee?: number;
+  displayScheduledOnlineFee?: number;
+  displayIndividualInstantOnlineFee?: number;
 }
 
 export interface DoctorScheduleDaySessionDto extends FullAuditedEntityDto<number> {
