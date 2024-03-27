@@ -3,26 +3,23 @@ import { CommonModule } from '@angular/common';
 import { PublicPatientsComponent } from './public-patients.component';
 import { AgentAppointmentsModule } from '../agent-appointments/agent-appointments.module';
 import { Route, RouterModule } from '@angular/router';
-
+import { TableSkeletonModule } from '../table-skeleton/table-skeleton.module';
 
 const routes: Route[] = [
   {
     path: '',
     component: PublicPatientsComponent,
-  }
-]
-
+  },
+];
 
 @NgModule({
   declarations: [PublicPatientsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    AgentAppointmentsModule
+    AgentAppointmentsModule,
+    TableSkeletonModule,
   ],
-  exports:[
-    PublicPatientsComponent,
-
-  ]
+  exports: [PublicPatientsComponent],
 })
-export class PublicPatientsModule { }
+export class PublicPatientsModule {}

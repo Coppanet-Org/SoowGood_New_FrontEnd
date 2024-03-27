@@ -41,7 +41,7 @@
         </div>
 
         <div
-          class="w-full overflow-x-scroll flex flex-wrap justify-evenly px-5 pb-[50px]"
+          class="w-full overflow-x-scroll lg:overflow-auto flex flex-wrap justify-evenly px-5 pb-[50px]"
         >
           <div class="px-4 py-3 w-full">
             <table
@@ -97,9 +97,9 @@
             </table>
             <div
               *ngIf="patientLoader"
-              class="w-full h-[300px] flex justify-center items-center"
+              class="w-full h-full flex justify-center items-center"
             >
-              Data is loading ...
+              <app-table-skeleton class="w-full"></app-table-skeleton>
             </div>
           </div>
         </div>

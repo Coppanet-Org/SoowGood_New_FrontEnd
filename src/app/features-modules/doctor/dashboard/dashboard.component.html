@@ -101,9 +101,9 @@
           </div>
           <div
             *ngIf="aptLoading"
-            class="w-full h-[300px] flex justify-center items-center"
+            class="w-full h-fit flex justify-center items-center"
           >
-            Data is Loading...
+            <app-table-skeleton class="w-full h-fit" />
           </div>
         </div>
         <div
@@ -170,9 +170,9 @@
           </div>
           <div
             *ngIf="aptLoading"
-            class="w-full h-[300px] flex justify-center items-center"
+            class="w-full h-fit flex justify-center items-center"
           >
-            Data is Loading...
+            <app-table-skeleton class="w-full h-fit"></app-table-skeleton>
           </div>
         </div>
       </div>

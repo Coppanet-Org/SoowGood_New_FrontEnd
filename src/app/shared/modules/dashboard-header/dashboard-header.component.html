@@ -14,11 +14,11 @@
   <div class="flex items-center">
     <div class="dropdown dropdown-end">
       <label tabindex="0" class="flex">
-        <div class="relative mx-4 inline-flex items-center">
+        <div class="relative mr-2 inline-flex items-center cursor-pointer">
           <svg
             width="30px"
             height="30px"
-            class="w-[30px] h-[30px]"
+            class="md:w-[30px] w-[20px] h-[20px] md:h-[30px]"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -199,17 +199,21 @@
                   </g>
                 </g>
               </svg>
-              <h3 class="font-bold text-base text-gray-800">New Appointment</h3>
+              <h3 class="font-bold text-[14px] text-gray-800 ml-2">
+                New Appointment
+              </h3>
             </div>
-            <p class="text-xs text-gray-500">1 hour ago</p>
+            <p class="text-xs text-gray-500">
+              {{ getNotificationTime(item.creationTime) + " " + "ago" }}
+            </p>
           </div>
-          <p class="mt-1 text-sm">You have a new message</p>
+          <p class="mt-1 text-sm">{{ item.message }}</p>
         </div>
 
         }
       </ul>
     </div>
-    <div class="dropdown dropdown-end">
+    <div class="dropdown dropdown-end mr-2">
       <label tabindex="0" class="btn btn-ghost btn-circle avatar flex">
         <div
           class="w-8 rounded-full border-2 border-secondary relative bg-slate-700"

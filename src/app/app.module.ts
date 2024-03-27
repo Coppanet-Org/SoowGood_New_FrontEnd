@@ -74,7 +74,7 @@ import { CacheInterceptor } from './shared/utils/interceptors/CacheInterceptor';
     //   multi: true,
     // },
 
-    // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   exports: [

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-
+import { formatDistance, formatDistanceStrict } from 'date-fns';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -90,6 +90,7 @@ export class DashboardHeaderComponent {
         this.messageList = messages.filter(
           (m) => m.notifyToEntityId == this.authInfo.id
         );
+        console.log(this.messageList);
       } else {
         this.messageList = messages.filter(
           (m) => m.creatorEntityId == this.authInfo.id
@@ -98,4 +99,8 @@ export class DashboardHeaderComponent {
       this.notificationCount = this.messageList.length;
     });
   }
+
+  getNotificationTime = (createAt: any) => {
+    return formatDistanceStrict(new Date(createAt), new Date());
+  };
 }
