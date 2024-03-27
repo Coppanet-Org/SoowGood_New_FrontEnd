@@ -29,7 +29,7 @@ export class DoctorCardComponent implements OnInit {
     private router: Router,
     private TosterService: TosterService,
     private NormalAuth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isAuthUser = this.NormalAuth.authInfo();

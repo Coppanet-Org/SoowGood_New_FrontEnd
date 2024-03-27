@@ -69,11 +69,20 @@ export class BookingReviewComponent implements OnInit {
     try {
       this.AppointmentService.create(this.bookingInfo).subscribe({
         next: (res) => {
-          this.payWithSslCommerz(res.appointmentCode),
-            localStorage.setItem(
-              'patientAppointmentCode',
-              JSON.stringify(res.appointmentCode)
-            );
+          if (this.userType == "agent") {
+            this.payWithEkpay(res.appointmentCode),
+              localStorage.setItem(
+                'patientAppointmentCode',
+                JSON.stringify(res.appointmentCode)
+              );
+          }
+          else {
+            this.payWithSslCommerz(res.appointmentCode),
+              localStorage.setItem(
+                'patientAppointmentCode',
+                JSON.stringify(res.appointmentCode)
+              );
+          }
         },
         error: (err) => {
           console.log(err);
@@ -91,26 +100,56 @@ export class BookingReviewComponent implements OnInit {
 
   payWithSslCommerz(appointmentCode: any): void {
     if (this.bookingInfo) {
-      //const sslCommerzInputDto: EkPayInputDto = {} as EkPayInputDto;
       const sslCommerzInputDto: SslCommerzInputDto = {} as SslCommerzInputDto;
       sslCommerzInputDto.applicationCode = appointmentCode;
       sslCommerzInputDto.totalAmount = String(
         this.bookingInfo.totalAppointmentFee
       );
-      //sslCommerzInputDto.totalAmount = this.bookingInfo.totalAppointmentFee;
       sslCommerzInputDto.transactionId = '';
       this.sslCommerzService.initiateTestPayment(sslCommerzInputDto).subscribe({
-        // this.sslCommerzService.initiatePayment(sslCommerzInputDto).subscribe({
-        //this.ekPayService.initiateTestPayment(sslCommerzInputDto).subscribe({
         next: (response) => {
-          // if (
-          //   response &&
-          //   response.status === '1000' &&
-          //   response.gatewayPageURL
-          // ) {
           if (
             response &&
             response.status === 'SUCCESS' &&
+            response.gatewayPageURL
+          ) {
+            window.location.href = response.gatewayPageURL;
+            this.loading = false;
+          } else {
+            this.loading = false;
+            this.ToasterService.customToast(
+              'Unable to initiate your payment request. Please contact our support team.',
+              'error'
+            );
+          }
+        },
+        error: (err) => {
+          this.loading = false;
+          this.ToasterService.customToast(
+            String(err.error.error.message),
+            'error'
+          );
+        },
+      });
+    } else {
+      this.loading = false;
+      this.ToasterService.customToast('Booking info not found', 'error');
+    }
+  }
+
+  payWithEkpay(appointmentCode: any): void {
+    if (this.bookingInfo) {
+      const ekpayInputDto: EkPayInputDto = {} as EkPayInputDto;
+      ekpayInputDto.applicationCode = appointmentCode;
+      ekpayInputDto.totalAmount = String(
+        this.bookingInfo.totalAppointmentFee
+      );
+      ekpayInputDto.transactionId = '';
+      this.ekPayService.initiateTestPayment(ekpayInputDto).subscribe({
+        next: (response) => {
+          if (
+            response &&
+            response.status === '1000' &&
             response.gatewayPageURL
           ) {
             window.location.href = response.gatewayPageURL;

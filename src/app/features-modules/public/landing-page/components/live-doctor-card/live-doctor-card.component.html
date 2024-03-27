@@ -1,24 +1,16 @@
-<div
-  class="live-card w-full hover:border-secondary/50 group relative border-[1px] overflow-hidden max-w-[300px] rounded-[10px] h-[300px] bg-white"
->
-  <img
-    class="absolute card-img"
-    ngSrc="assets/banner/shape-24.jpg"
-    alt="shape"
-    width="200"
-    height="90"
-  />
+<div class="live-card w-full hover:border-secondary/50 group relative border-[1px] overflow-hidden max-w-[300px] rounded-[10px] h-[300px] bg-white">
+  <img class="absolute card-img"
+       ngSrc="assets/banner/shape-24.jpg"
+       alt="shape"
+       width="200"
+       height="90" />
   <div class="absolute top-0 left-0 w-full h-full z-10">
-    <div
-      class="w-[90px] relative after:w-[15px] after:h-[15px] after:border-[2px] after:bg-green-400 after:rounded-full after:absolute after:bottom-0 after:right-0 ml-6 mt-6 overflow-hidden p-1 h-[90px] rounded-[10px] border-[1px] bg-secondary/10"
-    >
-      <img
-        class="object-cover rounded-lg w-full h-full"
-        width="90"
-        height="90"
-        [src]="doctorDetails.profilePicUrl || defaultImage"
-        alt="doctor"
-      />
+    <div class="w-[90px] relative after:w-[15px] after:h-[15px] after:border-[2px] after:bg-green-400 after:rounded-full after:absolute after:bottom-0 after:right-0 ml-6 mt-6 overflow-hidden p-1 h-[90px] rounded-[10px] border-[1px] bg-secondary/10">
+      <img class="object-cover rounded-lg w-full h-full"
+           width="90"
+           height="90"
+           [src]="doctorDetails.profilePicUrl || defaultImage"
+           alt="doctor" />
     </div>
     <div>
       <div class="px-6 mt-6">
@@ -45,24 +37,17 @@
           </div>
       </div> -->
 
-      <div
-        class="group-hover:border-t-secondary/50 border-t-[1px] w-full absolute bottom-0 flex justify-between"
-      >
+      <div class="group-hover:border-t-secondary/50 border-t-[1px] w-full absolute bottom-0 flex justify-between">
         @if (userType !== 'doctor') {
-        <button
-          [disabled]="isLoading"
-          (click)="onClickConsultNow(doctorDetails)"
-          class="border-r-[1px] disabled:bg-gray-400 hover:bg-primary/90 hover:text-white group-hover:border-r-secondary/50 flex-1 py-3 font-semibold font-Roboto/80 text-primary/80 bg-secondary/10"
-        >
-          <i class="text-secondary mr-2 fa-solid fa-video-slash"></i
-          >{{ isLoading ? "Loading" : "Consult Now" }}
+        <button [disabled]="isLoading"
+                (click)="onClickConsultNow(doctorDetails)"
+                class="border-r-[1px] disabled:bg-gray-400 hover:bg-primary/90 hover:text-white group-hover:border-r-secondary/50 flex-1 py-3 font-semibold font-Roboto/80 text-primary/80 bg-secondary/10">
+          <i class="text-secondary mr-2 fa-solid fa-video-slash"></i>{{ isLoading ? "Loading" : "Consult Now" }}
         </button>
         }
 
-        <button
-          (click)="goToProfile(this.doctorDetails.id)"
-          class="flex-1 py-2 font-semibold hover:bg-primary/90 hover:text-white font-Roboto/80 text-primary/80 bg-secondary/10"
-        >
+        <button (click)="goToProfile(this.doctorDetails.id)"
+                class="flex-1 py-2 font-semibold hover:bg-primary/90 hover:text-white font-Roboto/80 text-primary/80 bg-secondary/10">
           <i class="text-secondary mr-2 fa-solid fa-user-tie"></i>Profile
         </button>
       </div>
